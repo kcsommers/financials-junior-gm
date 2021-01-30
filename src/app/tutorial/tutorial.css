@@ -1,0 +1,49 @@
+div.tutorial-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: aquamarine;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+img.sharkie-img {
+  width: 350px;
+}
+
+div.cartoon-wrap {
+  position: relative;
+  width: 40%;
+  height: 295px;
+  background-color: blueviolet;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+p.tutorial-msg {
+  position: relative;
+  z-index: 101;
+  padding: 1rem;
+  text-align: center;
+  font-size: 4vw;
+}
+
+img.speech-bubble-img {
+  position: absolute;
+  left: 0;
+  width: 110%;
+  top: 0;
+  z-index: 100;
+}
+
+img.sharkie-img {
+  position: absolute;
+  width: 400px;
+  right: 0;
+  width: 100%;
+}
