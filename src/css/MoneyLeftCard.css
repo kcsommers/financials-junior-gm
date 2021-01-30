@@ -1,0 +1,6 @@
+.money-left-card {
+  position: relative;
+  border: 5px solid rgb(75,75,75);
+  border-radius: 20px;
+  height: 33vh;
+}

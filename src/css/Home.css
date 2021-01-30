@@ -1,0 +1,23 @@
+body {
+  background: url("http://www.w3.org/1999/xlink");
+}
+
+.home-cards-row {
+  display: flex;
+  width: 90%;
+  margin: 0 auto;
+}
+
+.team-rank-card-box{
+  flex: 1;
+  margin: 0 2rem;
+}
+
+.middle-card-box {
+  flex: 2;
+}
+
+.money-left-card-box {
+  flex: 1;
+  margin: 0 2rem;
+}

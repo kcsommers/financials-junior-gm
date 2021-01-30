@@ -1,0 +1,34 @@
+.team-rank-card {
+  position: relative;
+  border: 5px solid rgb(75,75,75);
+  border-radius: 20px;
+  height: 33vh;
+}
+
+.team-rank-title {
+  position: absolute;
+  top: 50%;
+  left: 25%;
+}
+
+.team-rank-circle {
+  border: 10px solid rgb(75, 75, 75);
+  border-radius: 50%;
+  width: 30%;
+  padding: .1rem;
+  position: absolute;
+  top: 10%;
+  left: 40%;
+}
+
+.team-rank-circle h1 {
+  text-align: center;
+}
+
+.team-rank-hockey-stick-box {
+  height: 100%;
+  position: absolute;
+  top: 10%;
+  left: 40%;
+  transform: scale(1.1);
+}
