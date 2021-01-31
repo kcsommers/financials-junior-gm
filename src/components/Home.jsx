@@ -5,6 +5,10 @@ import '../css/Home.css';
 import TeamRankCard from './HomeComponents/TeamRankCard';
 import MiddleCard from './HomeComponents/MiddleCard';
 import MoneyCardLeft from './HomeComponents/MoneyCardLeft';
+import Season from './HomeComponents/Season';
+import Logo from './HomeComponents/Logo';
+import Budget from './HomeComponents/Budget';
+import Trophies from './HomeComponents/Trophies';
 
 export default function Home() {
   return (
@@ -21,7 +25,20 @@ export default function Home() {
           <MoneyCardLeft/>
         </div>
       </div>
-      <Team/>
+      <div className="hockey-stick-buttons-container">
+        <div>
+          <Team/>
+          <Season/>
+        </div>
+        <div className="logo-container">
+          <Logo/>
+        </div>
+        <div>
+          <Budget/>
+          <Trophies/>
+        </div>
+      </div>
+      
     </div>
   )
 }

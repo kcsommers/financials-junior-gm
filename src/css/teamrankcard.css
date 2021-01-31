@@ -3,6 +3,7 @@
   border: 5px solid rgb(75,75,75);
   border-radius: 20px;
   height: 33vh;
+  background: white;
 }
 
 .team-rank-title {
@@ -30,5 +31,4 @@
   position: absolute;
   top: 10%;
   left: 40%;
-  transform: scale(1.1);
 }

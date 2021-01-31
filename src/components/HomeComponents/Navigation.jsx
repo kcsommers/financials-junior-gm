@@ -9,23 +9,23 @@ function Navigation() {
         {/* exit hockey stick link */}
         <svg className="exit-hockey-stick" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="271" height="84" viewBox="0 0 271 84">
           <defs>
-            <clipPath id="clip-path">
-              <rect id="Rectangle_99" data-name="Rectangle 99" width="271" height="84" transform="translate(32)" fill="#fff" stroke="#707070" stroke-width="1"/>
+            <clipPath id="clipPath">
+              <rect id="Rectangle_99" data-name="Rectangle 99" width="271" height="84" transform="translate(32)" fill="#fff" stroke="#707070" strokeWidth="1"/>
             </clipPath>
           </defs>
-          <g id="Mask_Group_22" data-name="Mask Group 22" transform="translate(-32)" clip-path="url(#clip-path)">
+          <g id="Mask_Group_22" data-name="Mask Group 22" transform="translate(-32)" clipPath="url(#clipPath)">
             <g id="Exit_Button" data-name="Exit Button" transform="translate(32 -195)">
               <g id="Shape" transform="translate(0)">
                 <g id="Group_1" data-name="Group 1" transform="translate(0)">
                   <g id="Layer_2" data-name="Layer 2" transform="translate(0 235.207)">
                     <g id="logos">
-                      <path id="Path_4" data-name="Path 4" d="M110.169,344.823c2.659,0,5.482-3.376,4.775-7.883l-3.724-21.515c-.447-3.126-2.413-5.387-4.693-5.394H8.44c-2.235.083-4.179,2.314-4.655,5.394L.1,336.94c-.685,4.507,2.138,7.906,4.76,7.883h105.3" transform="translate(0 -310.03)" fill="#4b4b4b" stroke="#000" stroke-width="2"/>
+                      <path id="Path_4" data-name="Path 4" d="M110.169,344.823c2.659,0,5.482-3.376,4.775-7.883l-3.724-21.515c-.447-3.126-2.413-5.387-4.693-5.394H8.44c-2.235.083-4.179,2.314-4.655,5.394L.1,336.94c-.685,4.507,2.138,7.906,4.76,7.883h105.3" transform="translate(0 -310.03)" fill="#4b4b4b" stroke="#000" strokeWidth="2"/>
                     </g>
                   </g>
-                  <path id="Path_5" data-name="Path 5" d="M144.64,235.187s5.959.144,14.466-10.485l7.657-12.093L179.6,191.731l8.514-13.535,12.134-20.81,9.17-15.515,13.155-21.136,15.7-25.795,14.9-24.384L266.9,47.8l17.691-28.943,10-16.038s-.38-2.041,4.469-2.6c0,0,3.069-.91,5.043,1.039l3.389,3.642a6.611,6.611,0,0,1,0,5.462c-1.341,2.86-16.09,27.509-16.09,27.509l-9.773,15.864L271.606,70.64l-10.92,17.882L250.6,105.167l-7.859,13.466L229.46,140.938l-19.367,31.1-10.808,17.92-10.026,16.691-13.721,22.5-10.026,16.387-9.832,15.864-5.319,6.828" transform="translate(-36.9 0)" fill="#4b4b4b" stroke="#000" stroke-width="2"/>
+                  <path id="Path_5" data-name="Path 5" d="M144.64,235.187s5.959.144,14.466-10.485l7.657-12.093L179.6,191.731l8.514-13.535,12.134-20.81,9.17-15.515,13.155-21.136,15.7-25.795,14.9-24.384L266.9,47.8l17.691-28.943,10-16.038s-.38-2.041,4.469-2.6c0,0,3.069-.91,5.043,1.039l3.389,3.642a6.611,6.611,0,0,1,0,5.462c-1.341,2.86-16.09,27.509-16.09,27.509l-9.773,15.864L271.606,70.64l-10.92,17.882L250.6,105.167l-7.859,13.466L229.46,140.938l-19.367,31.1-10.808,17.92-10.026,16.691-13.721,22.5-10.026,16.387-9.832,15.864-5.319,6.828" transform="translate(-36.9 0)" fill="#4b4b4b" stroke="#000" strokeWidth="2"/>
                 </g>
               </g>
-              <text id="Text" transform="translate(60 239)" fill="#fff" font-size="24" font-family="Helvetica"><tspan x="-26.672" y="18">EXIT</tspan></text>
+              <text id="Text" transform="translate(60 239)" fill="#fff" fontFamily="24" fontFamily="Helvetica"><tspan x="-26.672" y="18">EXIT</tspan></text>
             </g>
           </g>
         </svg>
@@ -47,6 +47,7 @@ function Navigation() {
             <text id="HOME_2" data-name="HOME " transform="translate(125 66)" fill="#006d75" stroke="#ea7200" stroke-width="2" font-size="67.5" font-family="Helvetica"><tspan x="-110.627" y="0">HOME </tspan></text>
           </g>
         </svg>
+
       </div>
 
       <div className="settings-link-box">
@@ -54,21 +55,21 @@ function Navigation() {
         <svg className="settings-link" id="Settings" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="64" height="64" viewBox="0 0 64 64">
           <defs>
             <radialGradient id="radial-gradient" cx="0.5" cy="0.5" r="0.5" gradientUnits="objectBoundingBox">
-              <stop offset="0" stop-color="#070707"/>
-              <stop offset="0.611" stop-color="#393939"/>
-              <stop offset="1" stop-color="#595959"/>
+              <stop offset="0" stopColor="#070707"/>
+              <stop offset="0.611" stopColor="#393939"/>
+              <stop offset="1" stopColor="#595959"/>
             </radialGradient>
             <radialGradient id="radial-gradient-2" cx="0.5" cy="0.5" r="0.597" gradientUnits="objectBoundingBox">
               <stop offset="0"/>
-              <stop offset="1" stop-color="#595959"/>
+              <stop offset="1" stopColor="#595959"/>
             </radialGradient>
           </defs>
           <g id="Component_3_2" data-name="Component 3 – 2">
-            <g id="Ellipse_2" data-name="Ellipse 2" stroke="#707070" stroke-width="1" fill="url(#radial-gradient)">
+            <g id="Ellipse_2" data-name="Ellipse 2" stroke="#707070" strokeWidth="1" fill="url(#radial-gradient)">
               <circle cx="32" cy="32" r="32" stroke="none"/>
               <circle cx="32" cy="32" r="31.5" fill="none"/>
             </g>
-            <g id="Ellipse_3" data-name="Ellipse 3" transform="translate(6.4 6.4)" stroke="#fff" stroke-width="1" fill="url(#radial-gradient-2)">
+            <g id="Ellipse_3" data-name="Ellipse 3" transform="translate(6.4 6.4)" stroke="#fff" strokeWidth="1" fill="url(#radial-gradient-2)">
               <circle cx="25.6" cy="25.6" r="25.6" stroke="none"/>
               <circle cx="25.6" cy="25.6" r="25.1" fill="none"/>
             </g>

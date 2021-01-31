@@ -1,5 +1,14 @@
+
+
 body {
-  background: url("http://www.w3.org/1999/xlink");
+  background-image: url("./field.png");
+  background-repeat: no-repeat;
+  background-position-x: center;
+  background-size: 160%;
+  background-position-y: 700%;
+  max-height: 100vh;
+  overflow-y: hidden;
+  width: 100%;
 }
 
 .home-cards-row {
@@ -14,10 +23,27 @@ body {
 }
 
 .middle-card-box {
-  flex: 2;
+  flex: 3;
 }
 
 .money-left-card-box {
   flex: 1;
   margin: 0 2rem;
+}
+
+.hockey-stick-buttons-container {
+  display: flex;
+  /* position: absolute; */
+  width: 100%;
+  transform: translate(0%, -25%);
+}
+
+.hockey-stick-buttons-container > div {
+  flex: 1;
+}
+
+.logo-container {
+  display: flex;
+  justify-content: center;
+  transform: translate(1vw, 25vh);
 }
