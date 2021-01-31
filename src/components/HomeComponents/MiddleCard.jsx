@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../css/MiddleCard.css';
+import '../../css/home_page/MiddleCard.css';
 
 function MiddleCard() {
   return (

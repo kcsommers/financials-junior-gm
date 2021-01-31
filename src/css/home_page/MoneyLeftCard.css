@@ -1,0 +1,35 @@
+.money-left-card {
+  position: relative;
+  border: 5px solid rgb(75,75,75);
+  border-radius: 20px;
+  height: 33vh;
+  width: 185px;
+  height: 240px;
+  background: white;
+}
+
+.money-left-circle {
+  border: 10px solid rgb(75, 75, 75);
+  border-radius: 50%;
+  width: 30%;
+  padding: .1rem;
+  position: absolute;
+  top: 30%;
+  left: 25%;
+}
+
+.money-left-circle p {
+  text-align: center;
+}
+
+.money-left-hockey-stick-box {
+  position: absolute;
+  top: 5%;
+  left: -35%;
+}
+
+.money-left-title {
+  position: absolute;
+  top: 55%;
+  left: 45%;
+}

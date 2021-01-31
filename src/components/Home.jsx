@@ -1,10 +1,10 @@
 import React from 'react';
 import Navigation from './HomeComponents/Navigation';
 import Team from './HomeComponents/Team';
-import '../css/Home.css';
+import '../css/home_page/Home.css';
 import TeamRankCard from './HomeComponents/TeamRankCard';
 import MiddleCard from './HomeComponents/MiddleCard';
-import MoneyCardLeft from './HomeComponents/MoneyCardLeft';
+import MoneyLeftCard from './HomeComponents/MoneyLeftCard';
 import Season from './HomeComponents/Season';
 import Logo from './HomeComponents/Logo';
 import Budget from './HomeComponents/Budget';
@@ -22,7 +22,7 @@ export default function Home() {
           <MiddleCard/>
         </div>
         <div className="money-left-card-box">
-          <MoneyCardLeft/>
+          <MoneyLeftCard/>
         </div>
       </div>
       <div className="hockey-stick-buttons-container">

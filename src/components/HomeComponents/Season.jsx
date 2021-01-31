@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../css/Season.css';
+import '../../css/home_page/Season.css';
 import { ReactSVG } from 'react-svg';
 import icon from '../../icons/season-hockey-stick.svg';
 

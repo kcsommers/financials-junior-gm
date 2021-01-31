@@ -20,6 +20,7 @@ body {
 .team-rank-card-box{
   flex: 1;
   margin: 0 2rem;
+  text-align: center;
 }
 
 .middle-card-box {
@@ -29,13 +30,13 @@ body {
 .money-left-card-box {
   flex: 1;
   margin: 0 2rem;
+  text-align: center;
 }
 
 .hockey-stick-buttons-container {
   display: flex;
-  /* position: absolute; */
   width: 100%;
-  transform: translate(0%, -25%);
+  transform: translate(0%, -12%);
 }
 
 .hockey-stick-buttons-container > div {
@@ -45,5 +46,5 @@ body {
 .logo-container {
   display: flex;
   justify-content: center;
-  transform: translate(1vw, 25vh);
+  transform: translate(1%, 20%);
 }

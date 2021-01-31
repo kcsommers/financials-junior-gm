@@ -1,0 +1,9 @@
+.budget-hockey-stick {
+  text-align: end;
+}
+
+.budget-text {
+  text-align: center;
+  font-size: 2rem;
+  transform: translate(0, -50%);
+}
