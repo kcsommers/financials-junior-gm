@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import './tutorials.css';
-import { Slides } from './tutorials';
-import speechBubble from '../../assets/images/speech-bubble.svg';
+import React, { useState } from 'react';
+import '../tutorials.css';
+import { slides } from './intro-tutorial';
+import speechBubble from '../../../assets/images/speech-bubble.svg';
 import { motion, AnimatePresence } from 'framer-motion';
 
 let timer = 0;
@@ -12,17 +12,14 @@ const speechBubbleVariants = {
   exit: { opacity: 0, scale: 1.5 },
 };
 
-const HomePageTutorial = () => {
+const IntroTutorial = () => {
   const [msgIndex, setMsgIndex] = useState(0);
 
   if (timer) {
     window.clearTimeout(timer);
   }
 
-  const currentMsg = Slides.home[msgIndex];
-  if (!currentMsg) {
-    return null;
-  }
+  const currentMsg = slides[msgIndex];
 
   if (currentMsg.timer) {
     timer = window.setTimeout(() => {
@@ -69,6 +66,12 @@ const HomePageTutorial = () => {
             exit='exit'
             variants={sharkieVariants}
             transition={{
+              y: {
+                type: 'spring',
+                stiffness: 500,
+                damping: 30,
+                duration: 0.2,
+              },
               scale: {
                 type: 'spring',
                 stiffness: 500,
@@ -88,4 +91,4 @@ const HomePageTutorial = () => {
   );
 };
 
-export default HomePageTutorial;
+export default IntroTutorial;
