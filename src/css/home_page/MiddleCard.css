@@ -1,3 +1,8 @@
+@font-face {
+  font-family: 'interstate';
+  src: url('../../fonts/interstate-regular-comp-58b641cc0aca1.otf');
+}
+
 .middle-card {
   border: 10px solid #00788A;
   border-radius: 15px;
@@ -5,6 +10,7 @@
   background: rgb(75,75,75);
   color: white;
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  font-family: 'interstate';
 }
 
 .objective-level-box {

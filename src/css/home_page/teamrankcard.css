@@ -1,4 +1,11 @@
+@font-face {
+  font-family: 'interstate';
+  src: url('../../fonts/interstate-regular-comp-58b641cc0aca1.otf');
+}
+
 .team-rank-card {
+  font-family: 'interstate';
+  color: #006B77;
   border: 5px solid rgb(75,75,75);
   border-radius: 20px;
   height: 100%;
@@ -9,17 +16,19 @@
 }
 
 .team-rank-circle {
-  border: 10px solid rgb(75, 75, 75);
+  border: 5px solid rgb(75, 75, 75);
   border-radius: 50%;
-  width: 30%;
+  width: 20%;
   padding: .1rem;
   position: absolute;
-  top: 10%;
-  left: 30%;
+  top: 15%;
+  left: 50%;
 }
 
 .team-rank-circle p {
   text-align: center;
+  margin: 5px 0px;
+  font-size: 30px;
 }
 
 .team-rank-hockey-stick-box {

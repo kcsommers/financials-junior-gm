@@ -7,7 +7,7 @@ function Budget() {
   return (
     <div className="budget-hockey-stick">
       <ReactSVG src={icon} />
-      <p className="budget-text">Manage your team's budget.</p>
+      <p className="budget-text">Manage your team's money.</p>
     </div>
   )
 }

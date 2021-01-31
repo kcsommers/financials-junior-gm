@@ -7,7 +7,7 @@ function Trophies() {
   return (
     <div className="trophies-hockey-stick">
       <ReactSVG src={icon} />
-      <p className="trophies-text">See your badges and</p>
+      <p className="trophies-text">See your badges and trophies!</p>
     </div>
   )
 }

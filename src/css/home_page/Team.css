@@ -1,5 +1,13 @@
+@font-face {
+  font-family: 'interstate';
+  src: url('../../fonts/interstate-regular-comp-58b641cc0aca1.otf');
+}
+
 .team-text {
   text-align: center;
-  font-size: 2rem;
+  font-size: 30px;
   transform: translate(0, -50%);
+  color: #006B77;
+  font-family: 'interstate';
+  padding-left: 10%;
 }

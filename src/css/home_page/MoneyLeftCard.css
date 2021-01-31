@@ -1,4 +1,11 @@
+@font-face {
+  font-family: 'interstate';
+  src: url('../../fonts/interstate-regular-comp-58b641cc0aca1.otf');
+}
+
 .money-left-card {
+  font-family: 'interstate';
+  color: #006B77;
   position: relative;
   border: 5px solid rgb(75,75,75);
   border-radius: 20px;
@@ -9,17 +16,18 @@
 }
 
 .money-left-circle {
-  border: 10px solid rgb(75, 75, 75);
+  border: 5px solid rgb(75, 75, 75);
   border-radius: 50%;
-  width: 30%;
-  padding: .1rem;
+  width: 20%;
   position: absolute;
-  top: 30%;
-  left: 25%;
+  top: 40%;
+  left: 20%;
 }
 
 .money-left-circle p {
   text-align: center;
+  font-size: 30px;
+  margin: 5px 0px;
 }
 
 .money-left-hockey-stick-box {
@@ -31,5 +39,5 @@
 .money-left-title {
   position: absolute;
   top: 55%;
-  left: 45%;
+  left: 55%;
 }

@@ -5,8 +5,8 @@ function MiddleCard() {
   return (
     <div className="middle-card">
       <div className="objective-level-box">
-        <div>Objective</div>
-        <div>Level</div>
+        <div>Objectives</div>
+        <div>Level 1</div>
       </div>
       <div className="ordered-list">
         <div>1. Learn about your budget.</div>
