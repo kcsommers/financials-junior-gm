@@ -1,8 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import IntroTutorial from './app/tutorial/intro/IntroTutorial';
 import './App.css';
 import Signup from './components/pages/Signup';
+import IntroTutorial from './app/tutorial/intro/IntroTutorial';
 
 const App = () => {
   return (

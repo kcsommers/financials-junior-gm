@@ -1,94 +1,95 @@
 import React, { useState } from 'react';
 import '../tutorials.css';
-import { slides } from './intro-tutorial';
-import speechBubble from '../../../assets/images/speech-bubble.svg';
+import slides from './intro-slides';
+import tutorial from '../TutorialHOC';
+import { SharkieComponent } from '../components/Sharkie/Sharkie';
+import refreshBtn from '../../../assets/images/refresh-btn.svg';
+import checkBtn from '../../../assets/images/check-btn.svg';
 import { motion, AnimatePresence } from 'framer-motion';
 
 let timer = 0;
 
-const speechBubbleVariants = {
-  enter: { opacity: 0.5, scale: 0.3 },
-  center: { opacity: 1, scale: 1 },
-  exit: { opacity: 0, scale: 1.5 },
+const buttonVariants = {
+  enter: {
+    opacity: 0,
+    y: '100%',
+  },
+  center: {
+    opacity: 1,
+    y: 0,
+  },
+  exit: { opacity: 0 },
+  clicked: {
+    opacity: 1,
+    y: '-100%',
+  },
 };
 
 const IntroTutorial = () => {
   const [msgIndex, setMsgIndex] = useState(0);
+  const [buttonClicked, setButtonClicked] = useState(false);
 
   if (timer) {
     window.clearTimeout(timer);
   }
 
-  const currentMsg = slides[msgIndex];
+  const currentSlide = slides[msgIndex];
 
-  if (currentMsg.timer) {
+  if (currentSlide.timer) {
     timer = window.setTimeout(() => {
       setMsgIndex(msgIndex + 1);
-    }, currentMsg.timer);
+    }, currentSlide.timer);
   }
 
-  const sharkieVariants = currentMsg.image.variants;
+  const next = () => {
+    setButtonClicked(true);
+    setTimeout(() => {
+      setButtonClicked(false);
+      setMsgIndex(msgIndex + 1);
+    }, 800);
+  };
+
+  const prev = () => {
+    setButtonClicked(true);
+    setTimeout(() => {
+      setButtonClicked(false);
+      setMsgIndex(msgIndex - 1);
+    }, 800);
+  };
+
+  const buttons = currentSlide.hasButtons ? (
+    <AnimatePresence>
+      <motion.div
+        className='btns-wrap'
+        variants={buttonVariants}
+        initial='enter'
+        animate={buttonClicked ? 'clicked' : 'center'}
+        exit='exit'
+        duration='10'
+        transition={{
+          duration: 1,
+        }}
+      >
+        <button onClick={prev.bind(this)} className='slide-btn'>
+          <img className='action-btn' src={refreshBtn} alt='Repeat' />
+          <span className='color-primary'>Repeat</span>
+        </button>
+        <button onClick={next.bind(this)} className='slide-btn'>
+          <img className='action-btn' src={checkBtn} alt='Yes!' />
+          <span className='color-primary'>Yes!</span>
+        </button>
+      </motion.div>
+    </AnimatePresence>
+  ) : null;
 
   return (
     <div className='tutorial-container'>
-      <div className='cartoon-wrap'>
-        <AnimatePresence initial={true}>
-          <motion.div
-            key={msgIndex}
-            className='speech-bubble-wrap'
-            initial='enter'
-            animate='center'
-            exit='exit'
-            transition={{
-              scale: {
-                type: 'spring',
-                stiffness: 500,
-                damping: 30,
-                duration: 0.2,
-              },
-            }}
-            variants={speechBubbleVariants}
-          >
-            <img
-              className='speech-bubble-img'
-              src={speechBubble}
-              alt={currentMsg.message.text}
-            />
-            {currentMsg.message.jsx}
-          </motion.div>
-        </AnimatePresence>
-        <AnimatePresence initial={true}>
-          <motion.div
-            key={currentMsg.image.key}
-            className='sharkie-img-wrap'
-            initial='enter'
-            animate='center'
-            exit='exit'
-            variants={sharkieVariants}
-            transition={{
-              y: {
-                type: 'spring',
-                stiffness: 500,
-                damping: 30,
-                duration: 0.2,
-              },
-              scale: {
-                type: 'spring',
-                stiffness: 500,
-                damping: 30,
-                duration: 0.2,
-              },
-              opacity: {
-                duration: 0.2,
-              },
-            }}
-          >
-            {currentMsg.image.jsx}
-          </motion.div>
-        </AnimatePresence>
+      <div className='slide-wrap'>
+        {buttons}
+        <SharkieComponent slide={currentSlide}></SharkieComponent>
       </div>
     </div>
   );
 };
 
-export default IntroTutorial;
+export default tutorial(IntroTutorial);

@@ -5,49 +5,38 @@ div.tutorial-container {
   bottom: 0;
   right: 0;
   overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-img.sharkie-img {
-  width: 350px;
-}
-
-div.cartoon-wrap {
-  width: 350px;
-  height: 260px;
-  position: relative;
-}
-
-div.speech-bubble-wrap {
-  position: absolute;
+  background-color: rgba(0, 0, 0, 0.2);
   display: flex;
   align-items: center;
   justify-content: center;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 100%;
 }
-
-p.tutorial-msg {
+div.slide-wrap {
   position: relative;
-  z-index: 101;
-  padding: 1rem;
-  text-align: center;
+  height: 307px;
+  width: 40%;
 }
 
-img.speech-bubble-img {
+div.btns-wrap {
   position: absolute;
-  left: 0;
-  width: 110%;
+  left: -100px;
   top: 0;
-  z-index: 100;
+  right: -100px;
+  display: flex;
+  justify-content: space-between;
 }
 
-.sharkie-img-wrap {
-  position: absolute;
-  right: 0;
-  width: 100%;
+img.action-btn {
+  width: 85px;
+  height: 85px;
+}
+
+button.slide-btn {
+  display: inline-flex;
+  flex-direction: column;
+  border: none;
+  outline: none;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  background: none;
 }
