@@ -1,0 +1,50 @@
+
+
+body {
+  background-image: url("./field.png");
+  background-repeat: no-repeat;
+  background-position-x: center;
+  background-size: 160%;
+  background-position-y: 700%;
+  max-height: 100vh;
+  overflow-y: hidden;
+  width: 100%;
+}
+
+.home-cards-row {
+  display: flex;
+  width: 90%;
+  margin: 0 auto;
+}
+
+.team-rank-card-box{
+  flex: 1;
+  margin: 0 2rem;
+  text-align: center;
+}
+
+.middle-card-box {
+  flex: 3;
+}
+
+.money-left-card-box {
+  flex: 1;
+  margin: 0 2rem;
+  text-align: center;
+}
+
+.hockey-stick-buttons-container {
+  display: flex;
+  width: 100%;
+  transform: translate(0%, -12%);
+}
+
+.hockey-stick-buttons-container > div {
+  flex: 1;
+}
+
+.logo-container {
+  display: flex;
+  justify-content: center;
+  transform: translate(1%, 22%);
+}
