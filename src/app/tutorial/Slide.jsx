@@ -1,13 +1,18 @@
 export default class Slide {
   static SLIDE_DURATION = 3000;
+  static SLIDE_DURATION_LONG = 5000;
 
-  constructor(message, sharkie, hasButtons, timer, accentText) {
+  constructor(config) {
     this.id = Math.floor(Math.random() * 1000000);
-    this.message = message;
-    this.sharkie = sharkie;
-    this.hasButtons = hasButtons;
-    this.timer = timer;
-    this.accentText = accentText;
+    this.message = config.message;
+    this.sharkie = config.sharkie;
+    this.hasButtons = config.hasButtons;
+    this.timer = config.timer;
+    this.accentText = config.accentText;
+    this.x = config.x;
+    this.y = config.y;
+    this.repeatIndex = config.repeatIndex;
+    this.bubbleDelay = config.bubbleDelay;
   }
 
   getJsx() {

@@ -4,8 +4,8 @@ const slideConfigs = [
   {
     message: 'Hello there!',
     sharkie: 'play',
-    hasButtons: false,
-    timer: Slide.SLIDE_DURATION,
+    bubbleDelay: 1000,
+    timer: Slide.SLIDE_DURATION + 1000,
   },
   {
     message: 'Are you here to deliver my fish?',
@@ -104,6 +104,4 @@ const slideConfigs = [
   },
 ];
 
-export default slideConfigs.map(
-  (c) => new Slide(c.message, c.sharkie, c.hasButtons, c.timer, c.accentText)
-);
+export default slideConfigs.map((c) => new Slide(c));
