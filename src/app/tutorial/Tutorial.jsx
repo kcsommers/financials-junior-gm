@@ -8,6 +8,13 @@ import teamRankSlides from './slides/team-rank-slides';
 import refreshBtn from '../../assets/images/refresh-btn.svg';
 import checkBtn from '../../assets/images/check-btn.svg';
 import './tutorials.css';
+import { useDispatch } from 'react-redux';
+import { setAnimationState } from './../redux/actions';
+import { SET_ANIMATION_STATE } from './../redux/actionTypes';
+
+const actions = {
+  [SET_ANIMATION_STATE]: setAnimationState,
+};
 
 let timer = 0;
 
@@ -24,7 +31,7 @@ const buttonVariants = {
   },
   exit: { opacity: 0 },
   clicked: {
-    opacity: 1,
+    opacity: 0.5,
     y: '-100%',
   },
 };
@@ -37,6 +44,8 @@ const Tutorial = () => {
     isActive: true,
   });
 
+  const dispatch = useDispatch();
+
   if (timer) {
     window.clearTimeout(timer);
   }
@@ -47,6 +56,12 @@ const Tutorial = () => {
     timer = window.setTimeout(() => {
       updateSlide(state.slideIndex + 1);
     }, currentSlide.timer);
+  }
+
+  if (currentSlide.actions) {
+    currentSlide.actions.forEach((a) => {
+      dispatch(actions[a.type](a.payload));
+    });
   }
 
   const updateSlide = (index) => {
@@ -85,7 +100,11 @@ const Tutorial = () => {
     }
   };
 
-  const onButtonClick = (nextIndex) => {
+  const onButtonClick = (nextIndex, onCompleteAction) => {
+    if (onCompleteAction) {
+      dispatch(actions[onCompleteAction.type](onCompleteAction.payload));
+    }
+
     setState({
       ...state,
       buttonClicked: true,
@@ -119,8 +138,12 @@ const Tutorial = () => {
           <span className='color-primary'>Repeat</span>
         </button>
         <button
-          onClick={onButtonClick.bind(this, state.slideIndex + 1)}
           className='slide-btn'
+          onClick={onButtonClick.bind(
+            this,
+            state.slideIndex + 1,
+            currentSlide.onCompleteAction
+          )}
         >
           <img className='action-btn' src={checkBtn} alt='Yes!' />
           <span className='color-primary'>Yes!</span>

@@ -8,6 +8,7 @@ div.tutorial-container {
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: rgba(255, 255, 255, 0.75);
 }
 div.slide-wrap {
   position: relative;
