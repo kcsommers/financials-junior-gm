@@ -1,14 +1,14 @@
 import React from 'react';
-import Navigation from './HomeComponents/Navigation';
-import Team from './HomeComponents/Team';
-import '../css/home_page/Home.css';
-import TeamRankCard from './HomeComponents/TeamRankCard';
-import MiddleCard from './HomeComponents/MiddleCard';
-import MoneyLeftCard from './HomeComponents/MoneyLeftCard';
-import Season from './HomeComponents/Season';
-import Logo from './HomeComponents/Logo';
-import Budget from './HomeComponents/Budget';
-import Trophies from './HomeComponents/Trophies';
+import Navigation from './Navigation';
+import Team from './Team';
+import '../../css/home_page/Home.css';
+import TeamRankCard from './TeamRankCard';
+import MiddleCard from './MiddleCard';
+import MoneyLeftCard from './MoneyLeftCard';
+import Season from './Season';
+import Logo from './Logo';
+import Budget from './Budget';
+import Trophies from './Trophies';
 
 export default function Home() {
   return (
