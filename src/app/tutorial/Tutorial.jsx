@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useMotionValue } from 'framer-motion';
 import { SharkieComponent } from './components/Sharkie/Sharkie';
 import introSlides from './slides/intro-slides';
 import objectivesSlides from './slides/objectives-slides';
@@ -12,13 +12,13 @@ import { useDispatch } from 'react-redux';
 import { setAnimationState } from './../redux/actions';
 import { SET_ANIMATION_STATE } from './../redux/actionTypes';
 
-const actions = {
+const allActions = {
   [SET_ANIMATION_STATE]: setAnimationState,
 };
 
 let timer = 0;
 
-const slides = [introSlides, objectivesSlides, teamRankSlides, moneyLeftSlides];
+const slides = [moneyLeftSlides];
 
 const buttonVariants = {
   enter: {
@@ -30,18 +30,27 @@ const buttonVariants = {
     y: 0,
   },
   exit: { opacity: 0 },
-  clicked: {
+  transition: {
     opacity: 0.5,
     y: '-100%',
   },
 };
 
-const Tutorial = () => {
+const containerVariants = {
+  visible: {
+    opacity: 1,
+  },
+  hidden: {
+    opacity: 0,
+  },
+};
+
+const Tutorial = ({ onComplete }) => {
+  console.log('tutorialRender::::');
   const [state, setState] = useState({
     slideIndex: 0,
-    buttonClicked: false,
     currentSlides: slides[0],
-    isActive: true,
+    inTransition: false,
   });
 
   const dispatch = useDispatch();
@@ -58,58 +67,54 @@ const Tutorial = () => {
     }, currentSlide.timer);
   }
 
-  if (currentSlide.actions) {
-    currentSlide.actions.forEach((a) => {
-      dispatch(actions[a.type](a.payload));
+  if (currentSlide.enterActions) {
+    currentSlide.enterActions.forEach((a) => {
+      dispatch(allActions[a.type](a.payload));
     });
   }
+
+  const setNextLesson = (nextSlides) => {
+    setState({
+      ...state,
+      inTransition: true,
+    });
+
+    window.setTimeout(() => {
+      setState({
+        currentSlides: nextSlides,
+        slideIndex: 0,
+        inTransition: false,
+      });
+    }, 2000);
+  };
 
   const updateSlide = (index) => {
     const nextSlide = state.currentSlides[index];
 
+    if (currentSlide.exitActions) {
+      currentSlide.exitActions.forEach((a) => {
+        dispatch(allActions[a.type](a.payload));
+      });
+    }
+
     if (nextSlide) {
       setState({
         ...state,
-        buttonClicked: false,
         slideIndex: index,
       });
     } else {
-      // we've reached the end of this lesson, animate out
-      setState({
-        ...state,
-        isActive: false,
-      });
-
       // check for next lesson
       const currentSlidesIndex = slides.indexOf(state.currentSlides);
       const nextSlides = slides[currentSlidesIndex + 1];
       if (!nextSlides) {
         // if none, we're done
+        onComplete();
         return;
       }
 
-      // otherwise set timer to start the next one
-      window.setTimeout(() => {
-        setState({
-          slideIndex: 0,
-          buttonClicked: false,
-          currentSlides: nextSlides,
-          isActive: true,
-        });
-      }, 2000);
+      // we've reached the end of this lesson, transition to next
+      setNextLesson(nextSlides);
     }
-  };
-
-  const onButtonClick = (nextIndex, onCompleteAction) => {
-    if (onCompleteAction) {
-      dispatch(actions[onCompleteAction.type](onCompleteAction.payload));
-    }
-
-    setState({
-      ...state,
-      buttonClicked: true,
-    });
-    setTimeout(updateSlide.bind(this, nextIndex), 800);
   };
 
   const buttons = currentSlide.hasButtons ? (
@@ -118,7 +123,7 @@ const Tutorial = () => {
         className='btns-wrap'
         variants={buttonVariants}
         initial='enter'
-        animate={state.buttonClicked ? 'clicked' : 'center'}
+        animate={state.inTransition ? 'transition' : 'center'}
         exit='exit'
         duration='10'
         transition={{
@@ -126,24 +131,20 @@ const Tutorial = () => {
         }}
       >
         <button
-          onClick={onButtonClick.bind(
+          className='slide-btn'
+          onClick={updateSlide.bind(
             this,
             !isNaN(currentSlide.repeatIndex)
               ? currentSlide.repeatIndex
               : state.slideIndex - 1
           )}
-          className='slide-btn'
         >
           <img className='action-btn' src={refreshBtn} alt='Repeat' />
           <span className='color-primary'>Repeat</span>
         </button>
         <button
           className='slide-btn'
-          onClick={onButtonClick.bind(
-            this,
-            state.slideIndex + 1,
-            currentSlide.onCompleteAction
-          )}
+          onClick={updateSlide.bind(this, state.slideIndex + 1)}
         >
           <img className='action-btn' src={checkBtn} alt='Yes!' />
           <span className='color-primary'>Yes!</span>
@@ -153,11 +154,13 @@ const Tutorial = () => {
   ) : null;
 
   return (
-    <AnimatePresence>
-      {state.isActive && (
+    <div className='tutorial-container'>
+      <AnimatePresence>
         <motion.div
-          className='tutorial-container'
-          exit={{ opacity: 0 }}
+          className='tutorial-container-inner'
+          animate={state.inTransition ? 'hidden' : 'visible'}
+          variants={containerVariants}
+          exit='hidden'
           transition={{
             duration: 1,
           }}
@@ -173,8 +176,8 @@ const Tutorial = () => {
             <SharkieComponent slide={currentSlide}></SharkieComponent>
           </motion.div>
         </motion.div>
-      )}
-    </AnimatePresence>
+      </AnimatePresence>
+    </div>
   );
 };
 

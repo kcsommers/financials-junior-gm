@@ -13,8 +13,8 @@ export default class Slide {
     this.y = config.y;
     this.repeatIndex = config.repeatIndex;
     this.bubbleDelay = config.bubbleDelay;
-    this.actions = config.actions;
-    this.onCompleteAction = config.onCompleteAction;
+    this.enterActions = config.enterActions;
+    this.exitActions = config.exitActions;
   }
 
   getJsx() {
