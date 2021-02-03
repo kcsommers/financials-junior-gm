@@ -4,6 +4,7 @@ import '../../css/home_page/ObjectivesBoard.css';
 import { motion } from 'framer-motion';
 
 const ObjectivesBoard = ({ tutorialActive }) => {
+  console.log('objecttives render::::');
   const animationState = useSelector(
     (state) => state.tutorials.home.objectivesBoard
   );
@@ -31,7 +32,7 @@ const ObjectivesBoard = ({ tutorialActive }) => {
       {card}
     </motion.div>
   ) : (
-    <div className='middle-card'>card</div>
+    <div className='middle-card'>{card}</div>
   );
 };
 

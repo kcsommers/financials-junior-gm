@@ -9,19 +9,23 @@ const slideConfigs = [
     timer: Slide.SLIDE_DURATION + 1000,
     y: '60%',
     bubbleDelay: 500,
-    actions: [
+    enterActions: [
       {
         type: SET_ANIMATION_STATE,
         payload: {
           page: 'home',
-          component: 'objectivesBoard',
-          state: {
-            scale: 1.5,
-            zIndex: 1,
-            y: '15%',
-            opacity: 1,
-            transition: { delay: 0.5, duration: 1 },
-          },
+          animationStates: [
+            {
+              component: 'objectivesBoard',
+              state: {
+                scale: 1.5,
+                zIndex: 1,
+                y: '15%',
+                opacity: 1,
+                transition: { delay: 0.5, duration: 1 },
+              },
+            },
+          ],
         },
       },
     ],
@@ -41,20 +45,40 @@ const slideConfigs = [
     repeatIndex: 0,
     timer: 0,
     y: '60%',
-    onCompleteAction: {
-      type: SET_ANIMATION_STATE,
-      payload: {
-        page: 'home',
-        component: 'objectivesBoard',
-        state: {
-          scale: 1,
-          zIndex: 0,
-          y: '0%',
-          opacity: 1,
-          transition: { duration: 1, zIndex: { delay: 1 } },
+    exitActions: [
+      {
+        type: SET_ANIMATION_STATE,
+        payload: {
+          page: 'home',
+          animationStates: [
+            {
+              component: 'objectivesBoard',
+              state: {
+                scale: 1,
+                zIndex: 0,
+                y: '0%',
+                opacity: [null, 0.75, 1],
+                transition: {
+                  delay: 0,
+                  duration: 1,
+                  times: [0, 0.1, 1],
+                },
+              },
+            },
+            {
+              component: 'teamRank',
+              state: {
+                scale: 1.5,
+                zIndex: 102,
+                y: '15%',
+                opacity: 1,
+                transition: { delay: 0.5, duration: 1 },
+              },
+            },
+          ],
         },
       },
-    },
+    ],
   },
 ];
 

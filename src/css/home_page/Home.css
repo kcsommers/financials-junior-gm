@@ -1,7 +1,5 @@
-
-
 body {
-  background-image: url("./field.png");
+  background-image: url('./field.png');
   background-repeat: no-repeat;
   background-position-x: center;
   background-size: 160%;
@@ -17,7 +15,7 @@ body {
   margin: 0 auto;
 }
 
-.team-rank-card-box{
+.team-rank-card-box {
   flex: 1;
   margin: 0 2rem;
   text-align: center;
@@ -47,4 +45,8 @@ body {
   display: flex;
   justify-content: center;
   transform: translate(1%, 22%);
+}
+
+.hidden {
+  opacity: 0;
 }

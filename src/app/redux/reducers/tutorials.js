@@ -9,22 +9,37 @@ const initialState = {
       zIndex: 0,
       opacity: 0,
     },
+    teamRank: {
+      x: 0,
+      y: 0,
+      scale: 1,
+      zIndex: 0,
+      opacity: 0,
+    },
   },
 };
 
 const tutorialsReducer = (state = initialState, action) => {
+  console.log('tutorialsReducer:::: ', state);
   switch (action.type) {
     case SET_ANIMATION_STATE: {
-      console.log('PAYLOAD:::: ', action.payload.state);
-      const newState = action.payload.state;
+      const payload = action.payload.state;
+
+      const componentStates = {};
+      if (payload.animationStates && payload.animationStates.length) {
+        payload.animationStates.forEach((s) => {
+          componentStates[s.component] = {
+            ...state[payload.page][s.component],
+            ...s.state,
+          };
+        });
+      }
+
       return {
         ...state,
-        [newState.page]: {
-          ...state[newState.page],
-          [newState.component]: {
-            ...state[newState.page][newState.component],
-            ...newState.state,
-          },
+        [payload.page]: {
+          ...state[payload.page],
+          ...componentStates,
         },
       };
     }

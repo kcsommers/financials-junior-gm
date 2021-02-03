@@ -1,4 +1,5 @@
-div.tutorial-container {
+div.tutorial-container,
+div.tutorial-container-inner {
   position: absolute;
   top: 0;
   left: 0;
@@ -8,8 +9,16 @@ div.tutorial-container {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+div.tutorial-container {
   background-color: rgba(255, 255, 255, 0.75);
 }
+
+.tutorial-container-inner {
+  flex: 1;
+}
+
 div.slide-wrap {
   position: relative;
   height: 307px;
