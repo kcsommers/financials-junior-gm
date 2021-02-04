@@ -1,7 +1,7 @@
 import React from 'react';
 import '../../../css/home_page/Navigation.css';
 
-function Navigation() {
+export const Navigation = () => {
   return (
     <div className='nav-menu'>
       <div className='exit-hockey-stick-box'>
@@ -213,6 +213,4 @@ function Navigation() {
       </div>
     </div>
   );
-}
-
-export default Navigation;
+};

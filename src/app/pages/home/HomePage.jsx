@@ -1,16 +1,18 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import Navigation from './../../components/home-page/Navigation';
-import TeamRankCard from './../../components/home-page/TeamRankCard';
-import ObjectivesBoard from './../../components/home-page/ObjectivesBoard';
-import MoneyLeftCard from './../../components/home-page/MoneyLeftCard';
-import Season from './../../components/home-page/Season';
-import Team from './../../components/home-page/Team';
-import Logo from './../../components/home-page/Logo';
-import Budget from './../../components/home-page/Budget';
-import Trophies from './../../components/home-page/Trophies';
-import HomeTutorial from './../../tutorial/components/HomeTutorial';
+import HomeTutorial from '../../tutorial/components/HomeTutorial';
 import '../../../css/home_page/Home.css';
+import {
+  TeamRankCard,
+  ObjectivesBoard,
+  MoneyLeftCard,
+  SeasonStick,
+  TeamStick,
+  TrophiesStick,
+  Navigation,
+  BudgetStick,
+} from '@components';
+import sharksLogo from '@images/sharks-comerica-logo.svg';
 
 const isFirstTime = false;
 
@@ -37,15 +39,15 @@ export default function Home() {
       </div>
       <div className='hockey-stick-buttons-container'>
         <div>
-          <Team tutorialActive={tutorialActive} />
-          <Season tutorialActive={tutorialActive} />
+          <TeamStick tutorialActive={tutorialActive} />
+          <SeasonStick tutorialActive={tutorialActive} />
         </div>
         <div className='logo-container'>
-          <Logo />
+          <img src={sharksLogo} alt='Sharks Logo' />
         </div>
         <div>
-          <Budget tutorialActive={tutorialActive} />
-          <Trophies tutorialActive={tutorialActive} />
+          <BudgetStick tutorialActive={tutorialActive} />
+          <TrophiesStick tutorialActive={tutorialActive} />
         </div>
       </div>
       <AnimatePresence>

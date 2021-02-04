@@ -1,8 +1,8 @@
-import sharkiePlay from '../../../../assets/images/sharkie-play.svg';
-import sharkieSpeak from '../../../../assets/images/sharkie-speak.svg';
-import sharkiePresent from '../../../../assets/images/sharkie-present.svg';
-import sharkieLean from '../../../../assets/images/sharkie-lean.svg';
-import speechBubble from '../../../../assets/images/speech-bubble.svg';
+import sharkiePlay from '@images/sharkie-play.svg';
+import sharkieSpeak from '@images/sharkie-speak.svg';
+import sharkiePresent from '@images/sharkie-present.svg';
+import sharkieLean from '@images/sharkie-lean.svg';
+import speechBubble from '@images/speech-bubble.svg';
 import { motion, AnimatePresence } from 'framer-motion';
 import './Sharkie.css';
 import { useState } from 'react';

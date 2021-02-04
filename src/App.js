@@ -2,8 +2,8 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './App.css';
 import Intro from './app/pages/Intro';
-import Home from './app/pages/home/Home';
-import Team from './app/components/home-page/Team';
+import HomePage from './app/pages/home/HomePage';
+import TeamPage from './app/pages/team/TeamPage';
 
 const App = () => {
   return (
@@ -11,8 +11,8 @@ const App = () => {
       <div className='app-container'>
         <Switch>
           <Route exact path='/' component={Intro} />
-          <Route exact path='/home' component={Home} />
-          <Route exact path='/team' component={Team} />
+          <Route exact path='/home' component={HomePage} />
+          <Route exact path='/team' component={TeamPage} />
         </Switch>
       </div>
     </Router>

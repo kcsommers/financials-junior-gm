@@ -1,11 +1,11 @@
 import React from 'react';
 import { ReactSVG } from 'react-svg';
-import icon from '../../../assets/images/icons/trophies-hockey-stick.svg';
+import icon from '@images/icons/trophies-hockey-stick.svg';
 import { useSelector } from 'react-redux';
 import { motion } from 'framer-motion';
 import '../../../css/home_page/trophies.css';
 
-function Trophies({ tutorialActive }) {
+export const TrophiesStick = ({ tutorialActive }) => {
   const animationState = useSelector(
     (state) => state.tutorials.home.trophiesStick
   );
@@ -28,6 +28,4 @@ function Trophies({ tutorialActive }) {
   ) : (
     <div className='trophies-hockey-stick'>{card}</div>
   );
-}
-
-export default Trophies;
+};

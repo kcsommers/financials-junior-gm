@@ -1,14 +1,14 @@
 import React from 'react';
 import { ReactSVG } from 'react-svg';
-import teamPageHockeyStick from '../../../assets/images/icons/team-page-hockey-stick.svg';
-import dualLogo from '../../../assets/images/icons/sharks-logo.svg';
-import hockeyVisual1 from '../../../assets/images/icons/hockey-visual-1.svg';
-import hockeyVisual2 from '../../../assets/imagesicons/hockey-visual-2.svg';
-import signPlayer from '../../../assets/images/icons/sign-player.svg';
-import scout from '../../../assets/images/icons/scout.svg';
-import jrSharksLogo from '../../../assets/images/icons/jr-sharks-logo.svg';
-import cancel from '../../../assets/images/icons/cancel.svg';
-import playerImage from '../../../assets/images/icons/player-image.svg';
+import teamPageHockeyStick from '@images/icons/team-page-hockey-stick.svg';
+import dualLogo from '@images/icons/sharks-logo.svg';
+import hockeyVisual1 from '@images/icons/hockey-visual-1.svg';
+import hockeyVisual2 from '@images/icons/hockey-visual-2.svg';
+import signPlayer from '@images/icons/sign-player.svg';
+import scout from '@images/icons/scout.svg';
+import jrSharksLogo from '@images/icons/jr-sharks-logo.svg';
+import cancel from '@images/icons/cancel.svg';
+import playerImage from '@images/icons/player-image.svg';
 import '../../../css/team_page/team_page.css';
 
 function TeamPage() {
