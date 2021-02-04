@@ -1,7 +1,9 @@
-
-
 body {
+<<<<<<< HEAD
+  background-image: url('./field.png');
+=======
   background-image: url("../field.png");
+>>>>>>> 000e2c4222fba7133a64767b41e94acd10a1c654
   background-repeat: no-repeat;
   background-position-x: center;
   background-size: 160%;
@@ -17,7 +19,7 @@ body {
   margin: 0 auto;
 }
 
-.team-rank-card-box{
+.team-rank-card-box {
   flex: 1;
   margin: 0 2rem;
   text-align: center;
@@ -36,7 +38,6 @@ body {
 .hockey-stick-buttons-container {
   display: flex;
   width: 100%;
-  transform: translate(0%, -12%);
 }
 
 .hockey-stick-buttons-container > div {
@@ -46,5 +47,9 @@ body {
 .logo-container {
   display: flex;
   justify-content: center;
-  transform: translate(1%, 22%);
+}
+
+.hidden {
+  position: relative;
+  opacity: 0;
 }
