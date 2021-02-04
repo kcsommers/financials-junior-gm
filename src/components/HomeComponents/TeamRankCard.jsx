@@ -6,7 +6,6 @@ import { useSelector } from 'react-redux';
 import { motion } from 'framer-motion';
 
 function TeamRankCard({ tutorialActive }) {
-  console.log('teamRank render::::');
   const animationState = useSelector((state) => state.tutorials.home.teamRank);
 
   const card = (

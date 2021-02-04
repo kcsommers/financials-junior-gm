@@ -1,5 +1,5 @@
-import Slide from '../Slide';
-import { SET_ANIMATION_STATE } from './../../redux/actionTypes';
+import Slide from '../../Slide';
+import { SET_ANIMATION_STATE } from '../../../redux/actionTypes';
 
 const slideConfigs = [
   {
@@ -35,13 +35,15 @@ const slideConfigs = [
               component: 'teamRank',
               state: {
                 scale: 1,
-                zIndex: 0,
                 y: '0%',
-                opacity: [null, 0.75, 1],
+                opacity: [null, 0.5],
                 transition: {
                   delay: 0,
                   duration: 1,
-                  times: [0, 0.1, 1],
+                  times: [0, 1],
+                  zIndex: {
+                    delay: 1,
+                  },
                 },
               },
             },

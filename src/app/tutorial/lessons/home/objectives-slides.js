@@ -1,5 +1,5 @@
-import Slide from '../Slide';
-import { SET_ANIMATION_STATE } from './../../redux/actionTypes';
+import Slide from '../../Slide';
+import { SET_ANIMATION_STATE } from '../../../redux/actionTypes';
 
 const slideConfigs = [
   {
@@ -9,26 +9,6 @@ const slideConfigs = [
     timer: Slide.SLIDE_DURATION + 1000,
     y: '60%',
     bubbleDelay: 500,
-    enterActions: [
-      {
-        type: SET_ANIMATION_STATE,
-        payload: {
-          page: 'home',
-          animationStates: [
-            {
-              component: 'objectivesBoard',
-              state: {
-                scale: 1.5,
-                zIndex: 1,
-                y: '15%',
-                opacity: 1,
-                transition: { delay: 0.5, duration: 1 },
-              },
-            },
-          ],
-        },
-      },
-    ],
   },
   {
     message:
@@ -55,13 +35,15 @@ const slideConfigs = [
               component: 'objectivesBoard',
               state: {
                 scale: 1,
-                zIndex: 0,
                 y: '0%',
-                opacity: [null, 0.75, 1],
+                opacity: [null, 0.5],
                 transition: {
                   delay: 0,
                   duration: 1,
-                  times: [0, 0.1, 1],
+                  times: [0, 1],
+                  zIndex: {
+                    delay: 1,
+                  },
                 },
               },
             },

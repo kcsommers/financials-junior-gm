@@ -20,9 +20,23 @@ div.tutorial-container {
 }
 
 div.slide-wrap {
+  z-index: 103;
   position: relative;
   height: 307px;
   width: 40%;
+}
+
+div.slide-wrap-small {
+  height: 228px;
+  width: 30%;
+}
+
+p.slide-msg {
+  font-size: 3rem;
+}
+
+div.slide-wrap-small p.slide-msg {
+  font-size: 2.25rem;
 }
 
 div.btns-wrap {

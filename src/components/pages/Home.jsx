@@ -9,7 +9,7 @@ import Season from '../HomeComponents/Season';
 import Logo from '../HomeComponents/Logo';
 import Budget from '../HomeComponents/Budget';
 import Trophies from '../HomeComponents/Trophies';
-import Tutorial from './../../app/tutorial/Tutorial';
+import HomeTutorial from './../../app/tutorial/components/HomeTutorial';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const isFirstTime = true;
@@ -18,7 +18,6 @@ export default function Home() {
   const [tutorialActive, setTutorialActive] = React.useState(isFirstTime);
 
   const onTutorialComplete = () => {
-    console.log('TUTORIAL COMPLTE');
     setTutorialActive(false);
   };
 
@@ -27,32 +26,32 @@ export default function Home() {
       <Navigation />
       <div className='home-cards-row'>
         <div className='team-rank-card-box'>
-          <TeamRankCard tutorialActive={isFirstTime} />
+          <TeamRankCard tutorialActive={tutorialActive} />
         </div>
         <div className='middle-card-box'>
-          <ObjectivesBoard tutorialActive={isFirstTime} />
+          <ObjectivesBoard tutorialActive={tutorialActive} />
         </div>
         <div className='money-left-card-box'>
-          <MoneyLeftCard tutorialActive={isFirstTime} />
+          <MoneyLeftCard tutorialActive={tutorialActive} />
         </div>
       </div>
       <div className='hockey-stick-buttons-container'>
         <div>
-          <Team />
-          <Season />
+          <Team tutorialActive={tutorialActive} />
+          <Season tutorialActive={tutorialActive} />
         </div>
         <div className='logo-container'>
           <Logo />
         </div>
         <div>
-          <Budget />
-          <Trophies />
+          <Budget tutorialActive={tutorialActive} />
+          <Trophies tutorialActive={tutorialActive} />
         </div>
       </div>
       <AnimatePresence>
         {tutorialActive && (
           <motion.div animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-            <Tutorial onComplete={onTutorialComplete} />
+            <HomeTutorial onComplete={onTutorialComplete} />
           </motion.div>
         )}
       </AnimatePresence>
