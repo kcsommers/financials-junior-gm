@@ -1,9 +1,9 @@
 import React from 'react';
-import '../../css/home_page/Season.css';
 import { ReactSVG } from 'react-svg';
-import icon from '../../icons/season-hockey-stick.svg';
+import icon from '../../../assets/images/icons/season-hockey-stick.svg';
 import { useSelector } from 'react-redux';
 import { motion } from 'framer-motion';
+import '../../../css/home_page/Season.css';
 
 function Season({ tutorialActive }) {
   const animationState = useSelector(

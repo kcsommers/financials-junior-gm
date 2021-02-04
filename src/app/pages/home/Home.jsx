@@ -1,16 +1,16 @@
 import React from 'react';
-import Navigation from '../HomeComponents/Navigation';
-import Team from '../HomeComponents/Team';
-import '../../css/home_page/Home.css';
-import TeamRankCard from '../HomeComponents/TeamRankCard';
-import ObjectivesBoard from '../HomeComponents/ObjectivesBoard';
-import MoneyLeftCard from '../HomeComponents/MoneyLeftCard';
-import Season from '../HomeComponents/Season';
-import Logo from '../HomeComponents/Logo';
-import Budget from '../HomeComponents/Budget';
-import Trophies from '../HomeComponents/Trophies';
-import HomeTutorial from './../../app/tutorial/components/HomeTutorial';
 import { motion, AnimatePresence } from 'framer-motion';
+import Navigation from './../../components/home-page/Navigation';
+import TeamRankCard from './../../components/home-page/TeamRankCard';
+import ObjectivesBoard from './../../components/home-page/ObjectivesBoard';
+import MoneyLeftCard from './../../components/home-page/MoneyLeftCard';
+import Season from './../../components/home-page/Season';
+import Team from './../../components/home-page/Team';
+import Logo from './../../components/home-page/Logo';
+import Budget from './../../components/home-page/Budget';
+import Trophies from './../../components/home-page/Trophies';
+import HomeTutorial from './../../tutorial/components/HomeTutorial';
+import '../../../css/home_page/Home.css';
 
 const isFirstTime = false;
 

@@ -1,9 +1,9 @@
 import React from 'react';
-import '../../css/home_page/teamrankcard.css';
 import { ReactSVG } from 'react-svg';
-import icon from '../../icons/hockey-visual-1.svg';
+import icon from '../../../assets/images/icons/hockey-visual-1.svg';
 import { useSelector } from 'react-redux';
 import { motion } from 'framer-motion';
+import '../../../css/home_page/teamrankcard.css';
 
 function TeamRankCard({ tutorialActive }) {
   const animationState = useSelector((state) => state.tutorials.home.teamRank);

@@ -1,5 +1,5 @@
 body {
-  background: url("../field.png");
+  background: url('../../assets/images/field.png');
   background-repeat: no-repeat;
   background-position-x: center;
   background-size: 160%;
@@ -25,12 +25,12 @@ body {
 
 .objectives-board {
   flex: 1;
-  border: 8px solid #00788A;
+  border: 8px solid #00788a;
   border-radius: 15px;
-  padding: .5rem;
-  background: rgb(75,75,75);
+  padding: 0.5rem;
+  background: rgb(75, 75, 75);
   color: white;
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
   font-family: 'interstate';
   margin-top: 1rem;
 }
@@ -38,7 +38,7 @@ body {
 .team-dashboard {
   border: 5px solid #707070;
   border-radius: 15px;
-  background: #E5E5E5;
+  background: #e5e5e5;
   width: 87%;
   margin: 0 auto;
   display: flex;
@@ -47,8 +47,8 @@ body {
 .team-state-visual {
   margin: 1em;
   font-family: 'interstate';
-  color: #006B77;
-  border: 5px solid rgb(75,75,75);
+  color: #006b77;
+  border: 5px solid rgb(75, 75, 75);
   border-radius: 15px;
   background: white;
   position: relative;
@@ -80,7 +80,7 @@ body {
   border: 5px solid rgb(75, 75, 75);
   border-radius: 50%;
   width: 15%;
-  padding: .1rem;
+  padding: 0.1rem;
   position: absolute;
   top: 10%;
   left: 15%;
@@ -90,7 +90,7 @@ body {
   border: 5px solid rgb(75, 75, 75);
   border-radius: 50%;
   width: 15%;
-  padding: .1rem;
+  padding: 0.1rem;
   position: absolute;
   top: 45%;
   left: 60%;
@@ -111,7 +111,7 @@ body {
 }
 
 .add-players-text {
-  color: #006B77;
+  color: #006b77;
   font-family: 'interstate';
   font-size: 20px;
   transform: translate(5%, -110%);
@@ -124,7 +124,7 @@ body {
 }
 
 .scout-text {
-  color: #006B77;
+  color: #006b77;
   font-family: 'interstate';
   font-size: 20px;
   transform: translate(10%, -60%);
@@ -144,7 +144,7 @@ body {
 
 .team-dashboard-title {
   font-size: 30px;
-  color: #006B77;
+  color: #006b77;
   font-family: 'interstate';
   position: absolute;
   bottom: 0px;
@@ -160,12 +160,12 @@ body {
 .team-dashboard-players {
   border: 5px solid #707070;
   border-radius: 15px;
-  background-image: url('../team-dashboard-players-background.png');
+  background-image: url('/src/assets/images/team-dashboard-players-background.png');
   background-repeat: no-repeat;
   background-size: cover;
   background-position-x: center;
   margin-bottom: 1rem;
-  padding: .5rem 0;
+  padding: 0.5rem 0;
 }
 
 .player-card-position-2,
@@ -181,23 +181,23 @@ body {
 .player-card-title {
   text-align: center;
   font-size: 12px;
-  color: #006B77;
+  color: #006b77;
   font-family: 'interstate';
-  margin: .2rem;
+  margin: 0.2rem;
 }
 
 .player-card-title-transparent {
   font-size: 12px;
   color: transparent;
   font-family: 'interstate';
-  margin: .2rem;
+  margin: 0.2rem;
 }
 
 .team-dashboard-players-card-top {
   display: flex;
   justify-content: space-between;
-  background: #EA7200;
-  padding: .2rem;
+  background: #ea7200;
+  padding: 0.2rem;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
 }
@@ -223,15 +223,15 @@ body {
 }
 
 .team-dashboard-players-card {
-  padding: .2rem;
-  background-color: #E5E5E5;
+  padding: 0.2rem;
+  background-color: #e5e5e5;
   border-bottom-left-radius: 15px;
   border-bottom-right-radius: 15px;
   font-family: 'interstate';
   font-size: 24px;
   text-align: center;
-  color: #006B77;
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  color: #006b77;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
 }
 
 .player-meters-row {
@@ -239,7 +239,7 @@ body {
 }
 
 .player-meters-row > div {
-  margin: .1rem;
+  margin: 0.1rem;
 }
 
 .player-meters-row > div > p {
@@ -251,25 +251,25 @@ body {
 .offense-meter {
   width: 20px;
   height: 20px;
-  border: 2px solid #DC2D2D;
+  border: 2px solid #dc2d2d;
   border-radius: 50%;
-  background: radial-gradient(#D32B2B, #6E1717);
+  background: radial-gradient(#d32b2b, #6e1717);
 }
 
 .passing-meter {
   width: 20px;
   height: 20px;
-  border: 2px solid #00788A;
+  border: 2px solid #00788a;
   border-radius: 50%;
-  background: radial-gradient(#00788A, #003C45);
+  background: radial-gradient(#00788a, #003c45);
 }
 
 .defense-meter {
   width: 20px;
   height: 20px;
-  border: 2px solid #002F6C;
+  border: 2px solid #002f6c;
   border-radius: 50%;
-  background: radial-gradient(#002F6C, #001836);
+  background: radial-gradient(#002f6c, #001836);
 }
 
 .team-dashboard-players-bottom-row {
@@ -281,15 +281,15 @@ body {
   border: 5px solid #707070;
   border-radius: 15px;
   background: white;
-  padding: 0 1rem .5rem 1rem;
+  padding: 0 1rem 0.5rem 1rem;
 }
 
 .team-dashboard-bench-title {
   font-family: 'interstate';
   font-size: 24px;
   text-align: center;
-  color: #006B77;
-  margin: .2rem;
+  color: #006b77;
+  margin: 0.2rem;
   -webkit-text-stroke: 1px black;
 }
 
@@ -299,20 +299,20 @@ body {
 }
 
 .add-player-card {
-  background-color: #E5E5E5;
-  border: 2px solid #006B77;
+  background-color: #e5e5e5;
+  border: 2px solid #006b77;
   border-radius: 15px;
   font-family: 'interstate';
   font-size: 24px;
   text-align: center;
-  color: #006B77;
+  color: #006b77;
   height: 122px;
   width: 87px;
-  -webkit-text-stroke: 1px #EA7200;
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  -webkit-text-stroke: 1px #ea7200;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
 }
 
-.add-player-card > div{
+.add-player-card > div {
   margin: 1rem;
 }
 
