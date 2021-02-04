@@ -1,5 +1,5 @@
-import Slide from '../Slide';
-import { SET_ANIMATION_STATE } from './../../redux/actionTypes';
+import Slide from '../../Slide';
+import { SET_ANIMATION_STATE } from '../../../redux/actionTypes';
 
 const slideConfigs = [
   {
@@ -24,6 +24,14 @@ const slideConfigs = [
     repeatIndex: 0,
     y: '50%',
     timer: Slide.SLIDE_DURATION,
+  },
+  {
+    message: 'Got it?',
+    sharkie: 'playInverse',
+    hasButtons: true,
+    repeatIndex: 0,
+    timer: 0,
+    y: '50%',
     exitActions: [
       {
         type: SET_ANIMATION_STATE,
@@ -34,13 +42,30 @@ const slideConfigs = [
               component: 'moneyLeft',
               state: {
                 scale: 1,
-                zIndex: 0,
                 y: '0%',
-                opacity: [null, 0.75, 1],
+                opacity: [null, 0.5],
                 transition: {
                   delay: 0,
                   duration: 1,
-                  times: [0, 0.1, 1],
+                  times: [0, 1],
+                  zIndex: {
+                    delay: 1,
+                  },
+                },
+              },
+            },
+            {
+              component: 'teamStick',
+              state: {
+                scale: [1, 1, 1, 1.2],
+                y: ['-200%', '0%', '0%', '-33%'],
+                x: ['0%', '0%', '0%', '5%'],
+                times: [0, 0.5, 1.5, 2],
+                opacity: 1,
+                zIndex: 102,
+                transition: {
+                  delay: 0.5,
+                  duration: 2,
                 },
               },
             },

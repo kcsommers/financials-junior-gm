@@ -1,4 +1,5 @@
-import Slide from '../Slide';
+import Slide from '../../Slide';
+import { SET_ANIMATION_STATE } from '../../../redux/actionTypes';
 
 const slideConfigs = [
   {
@@ -101,6 +102,26 @@ const slideConfigs = [
     sharkie: 'speak',
     hasButtons: true,
     timer: 0,
+    exitActions: [
+      {
+        type: SET_ANIMATION_STATE,
+        payload: {
+          page: 'home',
+          animationStates: [
+            {
+              component: 'objectivesBoard',
+              state: {
+                scale: 1.5,
+                zIndex: 1,
+                y: '15%',
+                opacity: 1,
+                transition: { duration: 1 },
+              },
+            },
+          ],
+        },
+      },
+    ],
   },
 ];
 

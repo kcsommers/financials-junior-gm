@@ -3,15 +3,36 @@ import { SET_ANIMATION_STATE } from '../actionTypes';
 const initialState = {
   home: {
     objectivesBoard: {
-      x: 0,
-      y: 0,
+      x: '0%',
+      y: '0%',
       scale: 1,
       zIndex: 0,
       opacity: 0,
     },
     teamRank: {
-      x: 0,
-      y: 0,
+      x: '0%',
+      y: '0%',
+      scale: 1,
+      zIndex: 0,
+      opacity: 0,
+    },
+    moneyLeft: {
+      x: '0%',
+      y: '0%',
+      scale: 1,
+      zIndex: 0,
+      opacity: 0,
+    },
+    teamStick: {
+      x: '0%',
+      y: '0%',
+      scale: 1,
+      zIndex: 0,
+      opacity: 0,
+    },
+    budgetStick: {
+      x: '0%',
+      y: '0%',
       scale: 1,
       zIndex: 0,
       opacity: 0,
@@ -20,7 +41,6 @@ const initialState = {
 };
 
 const tutorialsReducer = (state = initialState, action) => {
-  console.log('tutorialsReducer:::: ', state);
   switch (action.type) {
     case SET_ANIMATION_STATE: {
       const payload = action.payload.state;

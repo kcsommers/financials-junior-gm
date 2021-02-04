@@ -17,35 +17,33 @@ const sharkieImgs = {
   lean: sharkieLean,
 };
 
-const sharkieVariants = {
+const defaultSharkieVariants = {
   play: {
-    enter: { opacity: 0, x: '50%', y: '50%' },
+    enter: { opacity: 0 },
     center: { opacity: 1, x: '110%', y: '20%' },
-    exit: { opacity: 0 },
   },
   playInverse: {
-    enter: { opacity: 0, x: '50%', y: '50%' },
+    enter: { opacity: 0 },
     center: { opacity: 1, x: '-92%', y: '20%' },
-    exit: { opacity: 0 },
   },
   speak: {
-    enter: { opacity: 0, x: '50%', y: '50%' },
+    enter: { opacity: 0 },
     center: { opacity: 1, x: '104%', y: '25%' },
   },
   speakInverse: {
-    enter: { opacity: 0, x: '50%', y: '50%' },
+    enter: { opacity: 0 },
     center: { opacity: 1, x: '-86%', y: '25%' },
   },
   present: {
-    enter: { opacity: 0, x: '50%', y: '50%' },
-    center: { opacity: 1, x: '63%', y: '22%' },
+    enter: { opacity: 0 },
+    center: { opacity: 1, x: '74%', y: '27%' },
   },
   presentInverse: {
-    enter: { opacity: 0, x: '50%', y: '50%' },
-    center: { opacity: 1, x: '-85%', y: '22%' },
+    enter: { opacity: 0 },
+    center: { opacity: 1, x: '-84%', y: '27%' },
   },
   lean: {
-    enter: { opacity: 0, x: '50%', y: '250%' },
+    enter: { opacity: 0 },
     center: { opacity: 1, x: '-80%', y: '27%' },
   },
 };
@@ -56,22 +54,25 @@ const speechBubbleVariants = {
   exit: { opacity: 0, scale: 1.2 },
 };
 
-export const SharkieComponent = (props) => {
-  const [showBubble, setShowBubble] = useState(!props.slide.bubbleDelay);
+export const SharkieComponent = ({ slide, inTransition }) => {
+  const [showBubble, setShowBubble] = useState(!slide.bubbleDelay);
 
-  const sharkieInverse = props.slide.sharkie.endsWith('Inverse');
-  const bubbleInverse = sharkieInverse || props.slide.sharkie === 'lean';
+  const sharkieInverse = slide.sharkie.endsWith('Inverse');
+  const bubbleInverse = sharkieInverse || slide.sharkie === 'lean';
 
-  if (props.slide.bubbleDelay) {
-    window.setTimeout(setShowBubble.bind(this, true), props.slide.bubbleDelay);
+  if (slide.bubbleDelay) {
+    const bubbleDelay = slide.bubbleDelay;
+    window.setTimeout(setShowBubble.bind(this, true), slide.bubbleDelay);
+    slide.bubbleDelay = 0;
+    setShowBubble(false);
   }
 
   return (
-    <div className={`sharkie-wrap sharkie-${props.slide.sharkie}-wrap`}>
+    <div className={`sharkie-wrap sharkie-${slide.sharkie}-wrap`}>
       <AnimatePresence>
         {showBubble && (
           <motion.div
-            key={props.slide.id}
+            key={slide.id}
             className={`bubble-wrap${bubbleInverse ? ' bubble-inverse' : ''}`}
             variants={speechBubbleVariants}
             initial='enter'
@@ -84,30 +85,32 @@ export const SharkieComponent = (props) => {
               },
             }}
           >
-            {props.slide.getJsx()}
+            {slide.getJsx()}
             <img
               className='bubble-img'
               src={speechBubble}
-              alt={props.slide.message}
+              alt={slide.message}
             />
           </motion.div>
         )}
       </AnimatePresence>
       <AnimatePresence>
         <motion.div
-          key={props.slide.sharkie}
+          key={slide.sharkie}
           className={`sharkie-img-wrap${
             sharkieInverse ? ' sharkie-inverse' : ''
           }`}
-          variants={sharkieVariants[props.slide.sharkie]}
+          variants={
+            slide.sharkieVariants || defaultSharkieVariants[slide.sharkie]
+          }
           initial='enter'
           animate='center'
           exit='exit'
         >
           <img
             className='sharkie-img'
-            src={sharkieImgs[props.slide.sharkie]}
-            alt={`Sharkie ${props.slide.sharkie}`}
+            src={sharkieImgs[slide.sharkie]}
+            alt={`Sharkie ${slide.sharkie}`}
           />
         </motion.div>
       </AnimatePresence>

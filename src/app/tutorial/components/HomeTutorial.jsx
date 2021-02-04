@@ -1,16 +1,22 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence, useMotionValue } from 'framer-motion';
-import { SharkieComponent } from './components/Sharkie/Sharkie';
-import introSlides from './slides/intro-slides';
-import objectivesSlides from './slides/objectives-slides';
-import moneyLeftSlides from './slides/money-left-slides';
-import teamRankSlides from './slides/team-rank-slides';
-import refreshBtn from '../../assets/images/refresh-btn.svg';
-import checkBtn from '../../assets/images/check-btn.svg';
-import './tutorials.css';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useDispatch } from 'react-redux';
-import { setAnimationState } from './../redux/actions';
-import { SET_ANIMATION_STATE } from './../redux/actionTypes';
+import { SharkieComponent } from './Sharkie/Sharkie';
+import introSlides from '../lessons/home/intro-slides';
+import objectivesSlides from '../lessons/home/objectives-slides';
+import teamRankSlides from '../lessons/home/team-rank-slides';
+import moneyLeftSlides from '../lessons/home/money-left-slides';
+import {
+  teamStickSlides,
+  budgetStickSlides,
+  trophiesStickSlides,
+  seasonStickSlides,
+} from '../lessons/home/hockey-stick-slides';
+import refreshBtn from '../../../assets/images/refresh-btn.svg';
+import checkBtn from '../../../assets/images/check-btn.svg';
+import '../tutorials.css';
+import { setAnimationState } from '../../redux/actions';
+import { SET_ANIMATION_STATE } from '../../redux/actionTypes';
 
 const allActions = {
   [SET_ANIMATION_STATE]: setAnimationState,
@@ -18,20 +24,35 @@ const allActions = {
 
 let timer = 0;
 
-const slides = [moneyLeftSlides];
+const slides = [
+  introSlides,
+  objectivesSlides,
+  teamRankSlides,
+  moneyLeftSlides,
+  teamStickSlides,
+  budgetStickSlides,
+  trophiesStickSlides,
+  seasonStickSlides,
+];
 
 const buttonVariants = {
   enter: {
     opacity: 0,
     y: '100%',
+    transition: {
+      duration: 1,
+    },
   },
   center: {
     opacity: 1,
     y: 0,
+    transition: {
+      duration: 1,
+    },
   },
   exit: { opacity: 0 },
-  transition: {
-    opacity: 0.5,
+  inTransition: {
+    opacity: 0,
     y: '-100%',
   },
 };
@@ -45,8 +66,7 @@ const containerVariants = {
   },
 };
 
-const Tutorial = ({ onComplete }) => {
-  console.log('tutorialRender::::');
+const HomeTutorial = ({ onComplete }) => {
   const [state, setState] = useState({
     slideIndex: 0,
     currentSlides: slides[0],
@@ -77,6 +97,7 @@ const Tutorial = ({ onComplete }) => {
     setState({
       ...state,
       inTransition: true,
+      inPreTransition: false,
     });
 
     window.setTimeout(() => {
@@ -84,23 +105,22 @@ const Tutorial = ({ onComplete }) => {
         currentSlides: nextSlides,
         slideIndex: 0,
         inTransition: false,
+        inPreTransition: false,
       });
     }, 2000);
   };
 
-  const updateSlide = (index) => {
-    const nextSlide = state.currentSlides[index];
-
+  const updateSlide = (newIndex) => {
     if (currentSlide.exitActions) {
       currentSlide.exitActions.forEach((a) => {
         dispatch(allActions[a.type](a.payload));
       });
     }
 
-    if (nextSlide) {
+    if (state.currentSlides[newIndex]) {
       setState({
         ...state,
-        slideIndex: index,
+        slideIndex: newIndex,
       });
     } else {
       // check for next lesson
@@ -117,22 +137,34 @@ const Tutorial = ({ onComplete }) => {
     }
   };
 
+  const onButtonClick = (newIndex) => {
+    setState({
+      ...state,
+      inPreTransition: true,
+    });
+    window.setTimeout(updateSlide.bind(this, newIndex), 500);
+  };
+
   const buttons = currentSlide.hasButtons ? (
     <AnimatePresence>
       <motion.div
+        key={currentSlide.id}
         className='btns-wrap'
         variants={buttonVariants}
         initial='enter'
-        animate={state.inTransition ? 'transition' : 'center'}
+        animate={
+          state.inPreTransition || state.inTransition
+            ? 'inTransition'
+            : 'center'
+        }
         exit='exit'
-        duration='10'
         transition={{
-          duration: 1,
+          duration: 0.5,
         }}
       >
         <button
           className='slide-btn'
-          onClick={updateSlide.bind(
+          onClick={onButtonClick.bind(
             this,
             !isNaN(currentSlide.repeatIndex)
               ? currentSlide.repeatIndex
@@ -144,7 +176,7 @@ const Tutorial = ({ onComplete }) => {
         </button>
         <button
           className='slide-btn'
-          onClick={updateSlide.bind(this, state.slideIndex + 1)}
+          onClick={onButtonClick.bind(this, state.slideIndex + 1)}
         >
           <img className='action-btn' src={checkBtn} alt='Yes!' />
           <span className='color-primary'>Yes!</span>
@@ -166,14 +198,19 @@ const Tutorial = ({ onComplete }) => {
           }}
         >
           <motion.div
-            className='slide-wrap'
+            className={`slide-wrap${
+              currentSlide.small ? ' slide-wrap-small' : ''
+            }`}
             animate={{
               x: currentSlide.x || 0,
               y: currentSlide.y || 0,
             }}
           >
             {buttons}
-            <SharkieComponent slide={currentSlide}></SharkieComponent>
+            <SharkieComponent
+              slide={currentSlide}
+              inTransition={state.inTransition}
+            ></SharkieComponent>
           </motion.div>
         </motion.div>
       </AnimatePresence>
@@ -181,4 +218,4 @@ const Tutorial = ({ onComplete }) => {
   );
 };
 
-export default Tutorial;
+export default HomeTutorial;

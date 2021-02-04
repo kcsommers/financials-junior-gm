@@ -15,18 +15,19 @@ export default class Slide {
     this.bubbleDelay = config.bubbleDelay;
     this.enterActions = config.enterActions;
     this.exitActions = config.exitActions;
+    this.small = config.small;
   }
 
   getJsx() {
     if (!this.accentText) {
-      return <p className='slide-msg color-primary font-lg'>{this.message}</p>;
+      return <p className='slide-msg color-primary'>{this.message}</p>;
     }
 
     console.log('ACCENT:::: ', this.accentText);
 
     const messageSplit = this.message.split(this.accentText);
     return (
-      <p className='slide-msg color-primary font-lg'>
+      <p className='slide-msg color-primary'>
         {messageSplit[0]}
         <span className='color-accent font-xl'>{messageSplit[1]}</span>
         {messageSplit[2]}

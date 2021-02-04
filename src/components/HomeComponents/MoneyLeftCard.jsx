@@ -6,8 +6,6 @@ import { motion } from 'framer-motion';
 import { useSelector } from 'react-redux';
 
 function MoneyLeftCard({ tutorialActive }) {
-  console.log('moneyLeft render::::');
-
   const animationState = useSelector((state) => state.tutorials.home.moneyLeft);
 
   const card = (
