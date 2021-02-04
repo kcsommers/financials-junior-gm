@@ -12,7 +12,7 @@ import Trophies from '../HomeComponents/Trophies';
 import HomeTutorial from './../../app/tutorial/components/HomeTutorial';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const isFirstTime = true;
+const isFirstTime = false;
 
 export default function Home() {
   const [tutorialActive, setTutorialActive] = React.useState(isFirstTime);
