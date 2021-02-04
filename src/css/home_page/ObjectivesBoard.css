@@ -4,20 +4,25 @@
 }
 
 .middle-card {
-  border: 10px solid #00788A;
+  border: 10px solid #00788a;
   border-radius: 15px;
   padding: 1rem;
-  background: rgb(75,75,75);
+  background: rgb(75, 75, 75);
   color: white;
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
   font-family: 'interstate';
+  position: relative;
 }
 
 .objective-level-box {
   display: flex;
   justify-content: space-between;
   font-size: 36px;
+<<<<<<< HEAD:src/css/home_page/ObjectivesBoard.css
+  font-family: interstate;
+=======
   font-family: 'interstate';
+>>>>>>> 000e2c4222fba7133a64767b41e94acd10a1c654:src/css/home_page/MiddleCard.css
 }
 
 .ordered-list {

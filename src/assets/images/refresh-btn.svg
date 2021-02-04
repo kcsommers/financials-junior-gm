@@ -1,0 +1,21 @@
+<svg id="Check_Button" data-name="Check Button" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100px" height="100px" viewBox="0 0 100px 100px">
+  <defs>
+    <radialGradient id="radial-gradient" cx="0.5" cy="0.5" r="0.5" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#070707"/>
+      <stop offset="0.611" stop-color="#393939"/>
+      <stop offset="1" stop-color="#595959"/>
+    </radialGradient>
+  </defs>
+  <g id="Button_-_Secondary" data-name="Button - Secondary">
+    <g id="Ellipse_2" data-name="Ellipse 2" stroke="#707070" stroke-width="1" fill="url(#radial-gradient)">
+      <circle cx="50" cy="50" r="50" stroke="none"/>
+      <circle cx="50" cy="50" r="49.5" fill="none"/>
+    </g>
+    <g id="Ellipse_3" data-name="Ellipse 3" transform="translate(10 10)" fill="#00788a" stroke="#fff" stroke-width="3">
+      <circle cx="40" cy="40" r="40" stroke="none"/>
+      <circle cx="40" cy="40" r="38.5" fill="none"/>
+    </g>
+  </g>
+
+  <path id="iconmonstr-refresh-1" d="M32.143,2A25.01,25.01,0,0,0,7.2,25.81H0L11.9,41.583,23.81,25.81H16.726a15.5,15.5,0,1,1,4.16,11.779l-5.779,7.657A24.984,24.984,0,1,0,32.143,2Z" transform="translate(18 24.471)" fill="#ea7200"/>
+</svg>

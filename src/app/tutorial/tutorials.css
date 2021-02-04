@@ -1,0 +1,66 @@
+div.tutorial-container,
+div.tutorial-container-inner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+div.tutorial-container {
+  background-color: rgba(255, 255, 255, 0.75);
+}
+
+.tutorial-container-inner {
+  flex: 1;
+}
+
+div.slide-wrap {
+  z-index: 103;
+  position: relative;
+  height: 307px;
+  width: 40%;
+}
+
+div.slide-wrap-small {
+  height: 228px;
+  width: 30%;
+}
+
+p.slide-msg {
+  font-size: 3rem;
+}
+
+div.slide-wrap-small p.slide-msg {
+  font-size: 2.25rem;
+}
+
+div.btns-wrap {
+  position: absolute;
+  left: -100px;
+  top: 0;
+  right: -100px;
+  display: flex;
+  justify-content: space-between;
+  z-index: 102;
+}
+
+img.action-btn {
+  width: 85px;
+  height: 85px;
+}
+
+button.slide-btn {
+  display: inline-flex;
+  flex-direction: column;
+  border: none;
+  outline: none;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  background: none;
+}
