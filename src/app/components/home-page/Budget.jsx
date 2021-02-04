@@ -1,19 +1,19 @@
 import React from 'react';
 import { ReactSVG } from 'react-svg';
-import icon from '../../icons/trophies-hockey-stick.svg';
-import '../../css/home_page/trophies.css';
 import { useSelector } from 'react-redux';
 import { motion } from 'framer-motion';
+import icon from '../../../assets/images/icons/budget-hockey-stick.svg';
+import '../../../css/home_page/budget.css';
 
-function Trophies({ tutorialActive }) {
+function Budget({ tutorialActive }) {
   const animationState = useSelector(
-    (state) => state.tutorials.home.trophiesStick
+    (state) => state.tutorials.home.budgetStick
   );
 
   const card = (
-    <div className='trophies-hockey-stick-inner'>
+    <div className='budget-hockey-stick-inner'>
       <ReactSVG src={icon} />
-      <p className='trophies-text'>See your badges and trophies!</p>
+      <p className='budget-text'>Manage your team's money.</p>
     </div>
   );
 
@@ -26,8 +26,8 @@ function Trophies({ tutorialActive }) {
       {card}
     </motion.div>
   ) : (
-    <div className='trophies-hockey-stick'>{card}</div>
+    <div className='budge-hockey-stick'>{card}</div>
   );
 }
 
-export default Trophies;
+export default Budget;

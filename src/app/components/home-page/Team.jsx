@@ -1,9 +1,9 @@
 import React from 'react';
-import '../../css/home_page/Team.css';
 import { ReactSVG } from 'react-svg';
-import icon from '../../icons/team-hockey-stick.svg';
+import icon from '../../../assets/images/icons/team-hockey-stick.svg';
 import { motion } from 'framer-motion';
 import { useSelector } from 'react-redux';
+import '../../../css/home_page/Team.css';
 
 function Team({ tutorialActive }) {
   const animationState = useSelector((state) => state.tutorials.home.teamStick);
