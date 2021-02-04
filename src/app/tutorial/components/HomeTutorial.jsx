@@ -12,8 +12,8 @@ import {
   trophiesStickSlides,
   seasonStickSlides,
 } from '../lessons/home/hockey-stick-slides';
-import refreshBtn from '../../../assets/images/refresh-btn.svg';
-import checkBtn from '../../../assets/images/check-btn.svg';
+import refreshBtn from '@images/refresh-btn.svg';
+import checkBtn from '@images/check-btn.svg';
 import '../tutorials.css';
 import { setAnimationState } from '../../redux/actions';
 import { SET_ANIMATION_STATE } from '../../redux/actionTypes';

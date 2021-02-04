@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { motion } from 'framer-motion';
 import '../../../css/home_page/ObjectivesBoard.css';
 
-const ObjectivesBoard = ({ tutorialActive }) => {
+export const ObjectivesBoard = ({ tutorialActive }) => {
   const animationState = useSelector(
     (state) => state.tutorials.home.objectivesBoard
   );
@@ -34,5 +34,3 @@ const ObjectivesBoard = ({ tutorialActive }) => {
     <div className='middle-card'>{card}</div>
   );
 };
-
-export default ObjectivesBoard;

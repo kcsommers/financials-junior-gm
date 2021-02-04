@@ -2,10 +2,10 @@ import React from 'react';
 import { ReactSVG } from 'react-svg';
 import { useSelector } from 'react-redux';
 import { motion } from 'framer-motion';
-import icon from '../../../assets/images/icons/budget-hockey-stick.svg';
+import icon from '@images/icons/budget-hockey-stick.svg';
 import '../../../css/home_page/budget.css';
 
-function Budget({ tutorialActive }) {
+export const BudgetStick = ({ tutorialActive }) => {
   const animationState = useSelector(
     (state) => state.tutorials.home.budgetStick
   );
@@ -28,6 +28,4 @@ function Budget({ tutorialActive }) {
   ) : (
     <div className='budge-hockey-stick'>{card}</div>
   );
-}
-
-export default Budget;
+};

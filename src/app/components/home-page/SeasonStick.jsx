@@ -1,11 +1,11 @@
 import React from 'react';
 import { ReactSVG } from 'react-svg';
-import icon from '../../../assets/images/icons/season-hockey-stick.svg';
+import icon from '@images/icons/season-hockey-stick.svg';
 import { useSelector } from 'react-redux';
 import { motion } from 'framer-motion';
 import '../../../css/home_page/Season.css';
 
-function Season({ tutorialActive }) {
+export const SeasonStick = ({ tutorialActive }) => {
   const animationState = useSelector(
     (state) => state.tutorials.home.seasonStick
   );
@@ -28,6 +28,4 @@ function Season({ tutorialActive }) {
   ) : (
     <div className='season-hockey-stick'>{card}</div>
   );
-}
-
-export default Season;
+};

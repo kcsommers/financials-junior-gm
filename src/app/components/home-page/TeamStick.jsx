@@ -1,11 +1,11 @@
 import React from 'react';
 import { ReactSVG } from 'react-svg';
-import icon from '../../../assets/images/icons/team-hockey-stick.svg';
+import icon from '@images/icons/team-hockey-stick.svg';
 import { motion } from 'framer-motion';
 import { useSelector } from 'react-redux';
 import '../../../css/home_page/Team.css';
 
-function Team({ tutorialActive }) {
+export const TeamStick = ({ tutorialActive }) => {
   const animationState = useSelector((state) => state.tutorials.home.teamStick);
 
   const card = (
@@ -26,6 +26,4 @@ function Team({ tutorialActive }) {
   ) : (
     <div>{card}</div>
   );
-}
-
-export default Team;
+};
