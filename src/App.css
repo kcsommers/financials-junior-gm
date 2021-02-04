@@ -15,8 +15,3 @@ div.app-container {
   overflow: auto;
   position: relative;
 }
-
-body {
-  margin: 0;
-  padding: 0;
-}
