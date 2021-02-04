@@ -1,9 +1,5 @@
 body {
-<<<<<<< HEAD
-  background-image: url('./field.png');
-=======
-  background-image: url("../field.png");
->>>>>>> 000e2c4222fba7133a64767b41e94acd10a1c654
+  background-image: url('../field.png');
   background-repeat: no-repeat;
   background-position-x: center;
   background-size: 160%;
