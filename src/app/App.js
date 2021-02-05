@@ -1,8 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Intro from './pages/Intro';
-import HomePage from './pages/home/HomePage';
-import TeamPage from './pages/team/TeamPage';
+import HomePage from './pages/HomePage';
+import TeamPage from './pages/TeamPage';
 import '@css/App.css';
 
 const App = () => {

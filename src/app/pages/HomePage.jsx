@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import HomeTutorial from '../../tutorial/components/HomeTutorial';
+import HomeTutorial from '../tutorial/components/HomeTutorial';
 import '@css/pages/HomePage.css';
 import {
   TeamRankCard,
