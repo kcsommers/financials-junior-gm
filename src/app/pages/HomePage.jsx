@@ -14,7 +14,7 @@ import {
 } from '@components';
 import sharksLogo from '@images/sharks-comerica-logo.svg';
 
-const isFirstTime = true;
+const isFirstTime = false;
 
 export default function Home() {
   const [tutorialActive, setTutorialActive] = React.useState(isFirstTime);

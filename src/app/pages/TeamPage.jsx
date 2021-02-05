@@ -106,15 +106,15 @@ function TeamPage() {
                   <div className='player-meters-row'>
                     <div>
                       <p>Off</p>
-                      <div class='offense-meter'></div>
+                      <div className='offense-meter'></div>
                     </div>
                     <div>
                       <p>Pass</p>
-                      <div class='passing-meter'></div>
+                      <div className='passing-meter'></div>
                     </div>
                     <div>
                       <p>Def</p>
-                      <div class='defense-meter'></div>
+                      <div className='defense-meter'></div>
                     </div>
                   </div>
                 </div>
@@ -134,15 +134,15 @@ function TeamPage() {
                   <div className='player-meters-row'>
                     <div>
                       <p>Off</p>
-                      <div class='offense-meter'></div>
+                      <div className='offense-meter'></div>
                     </div>
                     <div>
                       <p>Pass</p>
-                      <div class='passing-meter'></div>
+                      <div className='passing-meter'></div>
                     </div>
                     <div>
                       <p>Def</p>
-                      <div class='defense-meter'></div>
+                      <div className='defense-meter'></div>
                     </div>
                   </div>
                 </div>
@@ -162,15 +162,15 @@ function TeamPage() {
                   <div className='player-meters-row'>
                     <div>
                       <p>Off</p>
-                      <div class='offense-meter'></div>
+                      <div className='offense-meter'></div>
                     </div>
                     <div>
                       <p>Pass</p>
-                      <div class='passing-meter'></div>
+                      <div className='passing-meter'></div>
                     </div>
                     <div>
                       <p>Def</p>
-                      <div class='defense-meter'></div>
+                      <div className='defense-meter'></div>
                     </div>
                   </div>
                 </div>
@@ -191,15 +191,15 @@ function TeamPage() {
                   <div className='player-meters-row'>
                     <div>
                       <p>Off</p>
-                      <div class='offense-meter'></div>
+                      <div className='offense-meter'></div>
                     </div>
                     <div>
                       <p>Pass</p>
-                      <div class='passing-meter'></div>
+                      <div className='passing-meter'></div>
                     </div>
                     <div>
                       <p>Def</p>
-                      <div class='defense-meter'></div>
+                      <div className='defense-meter'></div>
                     </div>
                   </div>
                 </div>
@@ -219,15 +219,15 @@ function TeamPage() {
                   <div className='player-meters-row'>
                     <div>
                       <p>Off</p>
-                      <div class='offense-meter'></div>
+                      <div className='offense-meter'></div>
                     </div>
                     <div>
                       <p>Pass</p>
-                      <div class='passing-meter'></div>
+                      <div className='passing-meter'></div>
                     </div>
                     <div>
                       <p>Def</p>
-                      <div class='defense-meter'></div>
+                      <div className='defense-meter'></div>
                     </div>
                   </div>
                 </div>
