@@ -38,6 +38,9 @@ export default function Home() {
         </div>
       </div>
       <div className='hockey-sticks-container'>
+        <div className='sharks-logo-wrap'>
+          <img src={sharksLogo} alt='Sharks Logo' />
+        </div>
         <div className='hockey-sticks-row'>
           <TeamStick tutorialActive={tutorialActive} />
           <BudgetStick tutorialActive={tutorialActive} />
@@ -46,7 +49,6 @@ export default function Home() {
           <SeasonStick tutorialActive={tutorialActive} />
           <TrophiesStick tutorialActive={tutorialActive} />
         </div>
-        {/* <img src={sharksLogo} alt='Sharks Logo' /> */}
         <div></div>
       </div>
       <AnimatePresence>
