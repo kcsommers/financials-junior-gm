@@ -68,7 +68,7 @@
           </g>
         </g>
       </g>
-      <text id="Text_" data-name="Text " transform="translate(252 123)" fill="#fff" stroke="#000" stroke-width="2" font-size="54" font-family="Helvetica"><tspan x="1.977" y="42">Team</tspan></text>
+      <!-- <text id="Text_" data-name="Text " transform="translate(252 123)" fill="#fff" stroke="#000" stroke-width="2" font-size="54" font-family="Helvetica"><tspan x="1.977" y="42">Team</tspan></text> -->
       <text id="Subtext" transform="translate(16 210)" fill="#006b77" font-size="30" font-family="Helvetica"><tspan x="19.045" y="23">See your squad. Sign or scout </tspan><tspan x="135.793" y="59">new players!</tspan></text>
       <g id="Mask_Group_22" data-name="Mask Group 22" transform="translate(-402.887 -571.119)" clip-path="url(#clip-path-2)">
         <g id="shape">
@@ -130,7 +130,7 @@
             </g>
           </g>
         </g>
-        <text id="Text_2" data-name="Text " transform="translate(654.887 694.119)" fill="#fff" stroke="#000" stroke-width="2" font-size="54" font-family="Helvetica"><tspan x="1.977" y="42">Team</tspan></text>
+        <!-- <text id="Text_2" data-name="Text " transform="translate(654.887 694.119)" fill="#fff" stroke="#000" stroke-width="2" font-size="54" font-family="Helvetica"><tspan x="1.977" y="42">Team</tspan></text> -->
         <text id="Subtext-2" data-name="Subtext" transform="translate(418.887 781.119)" fill="#006b77" font-size="30" font-family="Helvetica"><tspan x="19.045" y="23">See your squad. Sign or scout </tspan><tspan x="135.793" y="59">new players!</tspan></text>
       </g>
     </g>

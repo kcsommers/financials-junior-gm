@@ -1,5 +1,4 @@
 import React from 'react';
-import { ReactSVG } from 'react-svg';
 import { useSelector } from 'react-redux';
 import { motion } from 'framer-motion';
 import icon from '@images/icons/budget-hockey-stick.svg';
@@ -11,21 +10,22 @@ export const BudgetStick = ({ tutorialActive }) => {
   );
 
   const card = (
-    <div className='budget-hockey-stick-inner'>
-      <ReactSVG src={icon} />
-      <p className='budget-text'>Manage your team's money.</p>
+    <div className='budget-stick-inner'>
+      <img className='season-stick-img' src={icon} alt='Budget' />
+      <h2 className='hockey-stick-title'>Budget</h2>
+      <p className='budget-stick-text'>Manage your team's money.</p>
     </div>
   );
 
   return tutorialActive ? (
     <motion.div
-      className='hidden'
+      className='hidden budget-stick-wrap'
       animate={animationState}
       transition={{ default: { duration: 1 } }}
     >
       {card}
     </motion.div>
   ) : (
-    <div className='budge-hockey-stick'>{card}</div>
+    <div className='budge-stick-wrap'>{card}</div>
   );
 };

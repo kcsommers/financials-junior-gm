@@ -11,21 +11,22 @@ export const TrophiesStick = ({ tutorialActive }) => {
   );
 
   const card = (
-    <div className='trophies-hockey-stick-inner'>
-      <ReactSVG src={icon} />
-      <p className='trophies-text'>See your badges and trophies!</p>
+    <div className='trophies-stick-inner'>
+      <img className='trophies-stick-img' src={icon} alt='Trophies' />
+      <h2 className='hockey-stick-title'>Trophies</h2>
+      <p className='trophies-stick-text'>See your badges and trophies!</p>
     </div>
   );
 
   return tutorialActive ? (
     <motion.div
-      className='hidden'
+      className='hidden trophies-stick-wrap'
       animate={animationState}
       transition={{ default: { duration: 1 } }}
     >
       {card}
     </motion.div>
   ) : (
-    <div className='trophies-hockey-stick'>{card}</div>
+    <div className='trophies-stick-wrap'>{card}</div>
   );
 };

@@ -1,13 +1,24 @@
-@font-face {
-  font-family: 'interstate';
-  src: url('../../../fonts/interstate-regular-comp-58b641cc0aca1.otf');
+div.team-stick-inner {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  height: 102px;
+  width: 420px;
 }
 
-.team-text {
-  text-align: center;
+h2.hockey-stick-title {
+  padding-right: 2rem;
+}
+
+img.team-stick-img {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+}
+
+p.team-stick-text {
+  margin-top: 1rem;
   font-size: 30px;
-  transform: translate(0, -50%);
   color: #006b77;
-  font-family: 'interstate';
-  padding-left: 10%;
 }

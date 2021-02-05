@@ -1,51 +1,47 @@
-body {
-  background-image: url(../../images/field.png);
-  background-repeat: no-repeat;
-  background-position-x: center;
-  background-size: 160%;
-  background-position-y: 700%;
-  max-height: 100vh;
-  overflow-y: hidden;
+div.home-page-container {
   width: 100%;
+  height: 100%;
+  overflow-x: hidden;
 }
 
 .home-cards-row {
   display: flex;
-  width: 90%;
-  margin: 0 auto;
+}
+
+.objectives-board-box {
+  flex: 1;
 }
 
 .team-rank-card-box {
-  flex: 1;
-  margin: 0 2rem;
-  text-align: center;
-}
-
-.middle-card-box {
-  flex: 3;
+  padding: 0 3.5rem;
 }
 
 .money-left-card-box {
-  flex: 1;
-  margin: 0 2rem;
-  text-align: center;
+  padding: 0 3.5rem;
 }
 
-.hockey-stick-buttons-container {
+div.hockey-sticks-container {
+  position: relative;
+  margin-top: 3rem;
+}
+
+div.sharks-logo-wrap {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
   display: flex;
-  width: 100%;
-}
-
-.hockey-stick-buttons-container > div {
-  flex: 1;
-}
-
-.logo-container {
-  display: flex;
+  align-items: center;
   justify-content: center;
 }
 
-.hidden {
-  position: relative;
-  opacity: 0;
+div.hockey-sticks-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+div.hockey-sticks-row-2 {
+  margin-top: 6rem;
 }
