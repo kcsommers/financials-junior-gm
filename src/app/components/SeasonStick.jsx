@@ -2,7 +2,7 @@ import React from 'react';
 import icon from '@images/icons/season-hockey-stick.svg';
 import { useSelector } from 'react-redux';
 import { motion } from 'framer-motion';
-import '@css/components/home-page/SeasonStick.css';
+import '@css/components/SeasonStick.css';
 
 export const SeasonStick = ({ tutorialActive }) => {
   const animationState = useSelector(

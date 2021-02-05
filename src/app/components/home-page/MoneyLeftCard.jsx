@@ -1,8 +1,7 @@
 import React from 'react';
-import { ReactSVG } from 'react-svg';
-import icon from '@images/icons/hockey-visual-2.svg';
 import { motion } from 'framer-motion';
 import { useSelector } from 'react-redux';
+import { MoneyLeftStick } from './../MoneyLeftStick';
 import '@css/components/home-page/MoneyLeftCard.css';
 
 export const MoneyLeftCard = ({ tutorialActive }) => {
@@ -10,18 +9,7 @@ export const MoneyLeftCard = ({ tutorialActive }) => {
 
   const card = (
     <div className='money-left-card-inner'>
-      <div className='money-left-circle'>
-        <p>25</p>
-      </div>
-
-      <div className='money-left-hockey-stick-box'>
-        <ReactSVG src={icon} />
-      </div>
-
-      <h1 className='money-left-title'>
-        Money <br />
-        Left
-      </h1>
+      <MoneyLeftStick></MoneyLeftStick>
     </div>
   );
 
