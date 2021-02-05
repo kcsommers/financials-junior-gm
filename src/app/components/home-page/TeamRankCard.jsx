@@ -15,13 +15,13 @@ export const TeamRankCard = ({ tutorialActive }) => {
 
   return tutorialActive ? (
     <motion.div
-      className='team-rank-card hidden'
+      className='card hidden'
       animate={animationState}
       transition={{ default: { duration: 1 } }}
     >
       {card}
     </motion.div>
   ) : (
-    <div className='team-rank-card'>{card}</div>
+    <div className='card'>{card}</div>
   );
 };
