@@ -1,0 +1,26 @@
+div.nav-container {
+  height: 100px;
+  display: flex;
+  align-items: center;
+  padding: 0 2rem;
+  background-color: #efefef;
+}
+
+div.exit-stick-box,
+div.home-title-box,
+div.settings-link-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+}
+
+div.exit-stick-box {
+  justify-content: flex-start;
+  position: relative;
+  top: -110px;
+}
+
+div.settings-link-box {
+  justify-content: flex-end;
+}

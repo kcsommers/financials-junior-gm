@@ -1,0 +1,11 @@
+<svg id="Speech_Bubble" data-name="Speech Bubble" xmlns="http://www.w3.org/2000/svg" width="437.594" height="326.471" viewBox="0 0 437.594 326.471">
+  <g id="Rectangle_65" data-name="Rectangle 65" fill="#fff" stroke="#000" stroke-width="4">
+    <rect width="399" height="300" rx="10" stroke="none"/>
+    <rect x="2" y="2" width="395" height="296" rx="8" fill="none"/>
+  </g>
+  <g id="Polygon_3" data-name="Polygon 3" transform="matrix(-0.574, 0.819, -0.819, -0.574, 437.594, 300.258)" fill="#fff">
+    <path d="M 29.26009368896484 48 L 2.739905118942261 48 L 15.99999904632568 6.562206268310547 L 29.26009368896484 48 Z" stroke="none"/>
+    <path d="M 15.99999904632568 13.12441253662109 L 5.47981071472168 46 L 26.52018737792969 46 L 15.99999904632568 13.12441253662109 M 15.99999904632568 0 L 32 50 L -1.9073486328125e-06 50 L 15.99999904632568 0 Z" stroke="none" fill="#000"/>
+  </g>
+  <path id="Path_238" data-name="Path 238" d="M-1326.727,4391.841l-1.914-4.858-15.824,22.375h6.953Z" transform="translate(1723.586 -4113.323)" fill="#fff"/>
+</svg>
