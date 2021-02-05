@@ -9,21 +9,24 @@ export const TeamStick = ({ tutorialActive }) => {
   const animationState = useSelector((state) => state.tutorials.home.teamStick);
 
   const card = (
-    <div>
-      <ReactSVG src={icon} />
-      <p className='team-text'>See your squad. Sign or scout new players!</p>
+    <div class='team-stick-inner'>
+      <img className='team-stick-img' src={icon} alt='Team' />
+      <h2 className='hockey-stick-title'>Team</h2>
+      <p className='team-stick-text'>
+        See your squad. Sign or scout new players!
+      </p>
     </div>
   );
 
   return tutorialActive ? (
     <motion.div
-      className='hidden'
+      className='hidden team-stick-wrap'
       animate={animationState}
       transition={{ default: { duration: 1 } }}
     >
       {card}
     </motion.div>
   ) : (
-    <div>{card}</div>
+    <div className='team-stick-wrap'>{card}</div>
   );
 };

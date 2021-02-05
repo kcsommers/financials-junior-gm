@@ -7,15 +7,15 @@ import '@css/App.css';
 
 const App = () => {
   return (
-    <Router>
-      <div className='app-container'>
+    <div className='app-container'>
+      <Router>
         <Switch>
           <Route exact path='/' component={Intro} />
           <Route exact path='/home' component={HomePage} />
           <Route exact path='/team' component={TeamPage} />
         </Switch>
-      </div>
-    </Router>
+      </Router>
+    </div>
   );
 };
 

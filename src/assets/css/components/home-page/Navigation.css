@@ -1,26 +1,26 @@
-.nav-menu {
+div.nav-container {
+  height: 100px;
   display: flex;
-  width: 90%;
-  margin: 0 auto;
-}
-
-.exit-hockey-stick-box {
-  flex: 1;
- }
-
-.home-title-box {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-}
-
-.home-title {
-  transform: translate(10%, 10%);
-}
-
-.settings-link-box {
-  flex: 1;
-  display: flex;
-  justify-content: flex-end;
   align-items: center;
+  padding: 0 2rem;
+  background-color: #efefef;
+}
+
+div.exit-stick-box,
+div.home-title-box,
+div.settings-link-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+}
+
+div.exit-stick-box {
+  justify-content: flex-start;
+  position: relative;
+  top: -110px;
+}
+
+div.settings-link-box {
+  justify-content: flex-end;
 }

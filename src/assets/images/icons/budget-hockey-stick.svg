@@ -27,7 +27,7 @@
         </g>
       </g>
       <text id="Icon_" data-name="Icon " transform="translate(217 684.839)" fill="#00788a" stroke="#000" stroke-width="2" font-size="68.58" font-family="Helvetica-Bold, Helvetica" font-weight="700"><tspan x="-0.845" y="53">$</tspan></text>
-      <text id="Text" transform="translate(16.477 691.839)" fill="#fff" stroke="#000" stroke-width="2" font-size="54" font-family="Helvetica"><tspan x="20.425" y="42">Budget</tspan></text>
+      <!-- <text id="Text" transform="translate(16.477 691.839)" fill="#fff" stroke="#000" stroke-width="2" font-size="54" font-family="Helvetica"><tspan x="20.425" y="42">Budget</tspan></text> -->
       <text id="Subtext" transform="translate(2 783.839)" fill="#006b77" font-size="30" font-family="Helvetica"><tspan x="18.568" y="23">Manage your team&apos;s </tspan></text>
     </g>
   </g>
