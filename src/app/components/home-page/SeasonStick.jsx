@@ -1,5 +1,4 @@
 import React from 'react';
-import { ReactSVG } from 'react-svg';
 import icon from '@images/icons/season-hockey-stick.svg';
 import { useSelector } from 'react-redux';
 import { motion } from 'framer-motion';
@@ -11,21 +10,23 @@ export const SeasonStick = ({ tutorialActive }) => {
   );
 
   const card = (
-    <div className='season-hockey-stick-inner'>
-      <ReactSVG src={icon} />
-
-      <p className='season-text'>Play matches and win the championship!</p>
+    <div class='season-stick-inner'>
+      <img className='season-stick-img' src={icon} alt='Season' />
+      <h2 className='hockey-stick-title'>Season</h2>
+      <p className='season-stick-text'>
+        Play matches and win the championship!
+      </p>
     </div>
   );
   return tutorialActive ? (
     <motion.div
-      className='hidden'
+      className='hidden season-stick-wrap'
       animate={animationState}
       transition={{ default: { duration: 1 } }}
     >
       {card}
     </motion.div>
   ) : (
-    <div className='season-hockey-stick'>{card}</div>
+    <div className='season-stick-wrap'>{card}</div>
   );
 };

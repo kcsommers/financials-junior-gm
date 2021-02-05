@@ -45,7 +45,7 @@ export default function Home() {
           <TeamStick tutorialActive={tutorialActive} />
           <BudgetStick tutorialActive={tutorialActive} />
         </div>
-        <div className='hockey-sticks-row'>
+        <div className='hockey-sticks-row hockey-sticks-row-2'>
           <SeasonStick tutorialActive={tutorialActive} />
           <TrophiesStick tutorialActive={tutorialActive} />
         </div>
