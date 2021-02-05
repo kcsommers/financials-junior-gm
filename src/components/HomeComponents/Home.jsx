@@ -12,7 +12,7 @@ import Trophies from './Trophies';
 
 export default function Home() {
   return (
-    <div>
+    <div className="home-page">
       <Navigation/>
       <div className="home-cards-row">
         <div className="team-rank-card-box">
