@@ -1,3 +1,14 @@
+.team-page {
+  background-image: url("../field.png");
+  background-repeat: no-repeat;
+  background-position-x: center;
+  background-size: 160%;
+  background-position-y: 700%;
+  max-height: 100vh;
+  overflow-y: hidden;
+  width: 100%;
+}
+
 .team-page-header {
   display: flex;
   width: 94%;
