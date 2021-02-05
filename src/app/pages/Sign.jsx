@@ -13,9 +13,9 @@ import forwardtab from '../../assets/images/icons/forward-tab.svg';
 import defensetab from '../../assets/images/icons/defense-tab.svg';
 import goalietab from '../../assets/images/icons/goalie-tab.svg';
 import '../../assets/css/pages/sign.css';
-import AvailableForwards from './AvailableForwards';
-import AvailableDefense from './AvailableDefense';
-import AvailableGoalies from './AvailableGoalies';
+import AvailableForwards from '../components/sign-page/AvailableForwards';
+import AvailableDefense from '../components/sign-page/AvailableDefense';
+import AvailableGoalies from '../components/sign-page/AvailableGoalies';
 
 const Sign = () => {
 

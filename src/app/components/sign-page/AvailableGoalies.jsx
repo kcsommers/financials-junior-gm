@@ -1,6 +1,6 @@
 import React from 'react';
 import { ReactSVG } from 'react-svg';
-import playerImage from '../../icons/player-image.svg';
+import playerImage from '../../../assets/images/icons/player-image.svg';
 
 const AvailableGoalies = () => {
   return (
