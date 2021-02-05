@@ -1,0 +1,38 @@
+.team-rank-card {
+  font-family: 'interstate';
+  color: #006b77;
+  border: 5px solid rgb(75, 75, 75);
+  border-radius: 20px;
+  background: white;
+  position: relative;
+  width: 185px;
+  height: 240px;
+}
+
+.team-rank-circle {
+  border: 5px solid rgb(75, 75, 75);
+  border-radius: 50%;
+  width: 20%;
+  padding: 0.1rem;
+  position: absolute;
+  top: 15%;
+  left: 50%;
+}
+
+.team-rank-circle p {
+  text-align: center;
+  margin: 5px 0px;
+  font-size: 30px;
+}
+
+.team-rank-hockey-stick-box {
+  position: absolute;
+  top: 8%;
+  left: 20%;
+}
+
+.team-rank-title {
+  position: absolute;
+  top: 55%;
+  left: 10%;
+}
