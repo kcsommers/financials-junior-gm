@@ -1,9 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import Home from './components/pages/Home';
-import TeamPage from './components/TeamComponents/TeamPage';
-import Intro from './components/Intro';
-import './App.css';
+import Intro from './pages/Intro';
+import HomePage from './pages/HomePage';
+import TeamPage from './pages/TeamPage';
+import '@css/App.css';
 
 const App = () => {
   return (
@@ -11,7 +11,7 @@ const App = () => {
       <div className='app-container'>
         <Switch>
           <Route exact path='/' component={Intro} />
-          <Route exact path='/home' component={Home} />
+          <Route exact path='/home' component={HomePage} />
           <Route exact path='/team' component={TeamPage} />
         </Switch>
       </div>

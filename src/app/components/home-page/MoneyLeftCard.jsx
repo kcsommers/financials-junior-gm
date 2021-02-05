@@ -1,11 +1,11 @@
 import React from 'react';
-import '../../css/home_page/MoneyLeftCard.css';
 import { ReactSVG } from 'react-svg';
-import icon from '../../icons/hockey-visual-2.svg';
+import icon from '@images/icons/hockey-visual-2.svg';
 import { motion } from 'framer-motion';
 import { useSelector } from 'react-redux';
+import '@css/components/home-page/MoneyLeftCard.css';
 
-function MoneyLeftCard({ tutorialActive }) {
+export const MoneyLeftCard = ({ tutorialActive }) => {
   const animationState = useSelector((state) => state.tutorials.home.moneyLeft);
 
   const card = (
@@ -36,6 +36,4 @@ function MoneyLeftCard({ tutorialActive }) {
   ) : (
     <div className='money-left-card'>{card}</div>
   );
-}
-
-export default MoneyLeftCard;
+};
