@@ -10,7 +10,7 @@ export const SeasonStick = ({ tutorialActive }) => {
   );
 
   const card = (
-    <div class='season-stick-inner'>
+    <div className='season-stick-inner'>
       <img className='season-stick-img' src={icon} alt='Season' />
       <h2 className='hockey-stick-title'>Season</h2>
       <p className='season-stick-text'>
