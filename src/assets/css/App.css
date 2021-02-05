@@ -1,17 +1,16 @@
-#app-wrapper {
-  min-height: 100vh;
-  width: 100vw;
-  background-color: #00788a;
-}
 div.app-container {
   width: 1024px;
   height: 768px;
   margin: auto;
-  background-color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.75);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  overflow: auto;
   position: relative;
+  background: url('../images/field.png');
+  background-attachment: fixed;
+  background-position: center 100px;
+  background-repeat: no-repeat;
+  background-size: cover;
 }

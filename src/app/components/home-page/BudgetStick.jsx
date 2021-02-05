@@ -1,5 +1,4 @@
 import React from 'react';
-import { ReactSVG } from 'react-svg';
 import { useSelector } from 'react-redux';
 import { motion } from 'framer-motion';
 import icon from '@images/icons/budget-hockey-stick.svg';
@@ -12,7 +11,7 @@ export const BudgetStick = ({ tutorialActive }) => {
 
   const card = (
     <div className='budget-hockey-stick-inner'>
-      <ReactSVG src={icon} />
+      <img src={icon} alt='Budget' />
       <p className='budget-text'>Manage your team's money.</p>
     </div>
   );
