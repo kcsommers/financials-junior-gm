@@ -31,7 +31,14 @@ export default function Home() {
           <TeamRankCard tutorialActive={tutorialActive} />
         </div>
         <div className='objectives-board-box'>
-          <ObjectivesBoard tutorialActive={tutorialActive} />
+          <ObjectivesBoard
+            tutorialActive={tutorialActive}
+            objectivesArray={[
+              '1. Learn about your budget.',
+              '2. Fill your team by signing a player.',
+              '3. Scout three more players to add to your team.',
+            ]}
+          />
         </div>
         <div className='money-left-card-box'>
           <MoneyLeftCard tutorialActive={tutorialActive} />

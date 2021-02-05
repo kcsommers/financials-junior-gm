@@ -1,7 +1,7 @@
 import React from 'react';
-import '@css/components/home-page/Navigation.css';
 import exitBtn from '@images/exit-btn.svg';
 import settingsBtn from '@images/settings-btn.svg';
+import '@css/components/home-page/Navigation.css';
 
 export const Navigation = () => {
   return (

@@ -1,8 +1,7 @@
 import React from 'react';
-import { ReactSVG } from 'react-svg';
-import icon from '@images/icons/hockey-visual-1.svg';
 import { useSelector } from 'react-redux';
 import { motion } from 'framer-motion';
+import { TeamRankStick } from './../TeamRankStick';
 import '@css/components/home-page/TeamRankCard.css';
 
 export const TeamRankCard = ({ tutorialActive }) => {
@@ -10,18 +9,7 @@ export const TeamRankCard = ({ tutorialActive }) => {
 
   const card = (
     <div className='team-rank-card-inner'>
-      <div className='hockey-stick-title-container'>
-        <h1 className='team-rank-title'>
-          Team <br />
-          Rank
-        </h1>
-        <div className='team-rank-hockey-stick-box'>
-          <ReactSVG src={icon} />
-        </div>
-      </div>
-      <div className='team-rank-circle'>
-        <p>85</p>
-      </div>
+      <TeamRankStick></TeamRankStick>
     </div>
   );
 
