@@ -3,7 +3,7 @@ import { ReactSVG } from 'react-svg';
 import icon from '@images/icons/hockey-visual-1.svg';
 import { useSelector } from 'react-redux';
 import { motion } from 'framer-motion';
-import '../../../css/home_page/teamrankcard.css';
+import '@css/components/home-page/TeamRankCard.css';
 
 export const TeamRankCard = ({ tutorialActive }) => {
   const animationState = useSelector((state) => state.tutorials.home.teamRank);

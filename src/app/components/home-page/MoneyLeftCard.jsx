@@ -3,7 +3,7 @@ import { ReactSVG } from 'react-svg';
 import icon from '@images/icons/hockey-visual-2.svg';
 import { motion } from 'framer-motion';
 import { useSelector } from 'react-redux';
-import '../../../css/home_page/MoneyLeftCard.css';
+import '@css/components/home-page/MoneyLeftCard.css';
 
 export const MoneyLeftCard = ({ tutorialActive }) => {
   const animationState = useSelector((state) => state.tutorials.home.moneyLeft);

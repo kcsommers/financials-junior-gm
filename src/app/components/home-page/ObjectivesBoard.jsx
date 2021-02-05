@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { motion } from 'framer-motion';
-import '../../../css/home_page/ObjectivesBoard.css';
+import '@css/components/home-page/ObjectivesBoard.css';
 
 export const ObjectivesBoard = ({ tutorialActive }) => {
   const animationState = useSelector(

@@ -1,12 +1,12 @@
 @font-face {
   font-family: 'interstate';
-  src: url('../../fonts/interstate-regular-comp-58b641cc0aca1.otf');
+  src: url('../../../fonts/interstate-regular-comp-58b641cc0aca1.otf');
 }
 
 .team-rank-card {
   font-family: 'interstate';
-  color: #006B77;
-  border: 5px solid rgb(75,75,75);
+  color: #006b77;
+  border: 5px solid rgb(75, 75, 75);
   border-radius: 20px;
   background: white;
   position: relative;
@@ -18,7 +18,7 @@
   border: 5px solid rgb(75, 75, 75);
   border-radius: 50%;
   width: 20%;
-  padding: .1rem;
+  padding: 0.1rem;
   position: absolute;
   top: 15%;
   left: 50%;

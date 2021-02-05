@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import HomeTutorial from '../../tutorial/components/HomeTutorial';
-import '../../../css/home_page/Home.css';
+import '@css/pages/HomePage.css';
 import {
   TeamRankCard,
   ObjectivesBoard,
