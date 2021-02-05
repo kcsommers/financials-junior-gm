@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .team-page {
   background-image: url("../field.png");
   background-repeat: no-repeat;
@@ -9,6 +10,8 @@
   width: 100%;
 }
 
+=======
+>>>>>>> 6dd05f11a36a2b43746b744f84acf31d4cadfb0b
 .team-page-header {
   display: flex;
   width: 94%;
