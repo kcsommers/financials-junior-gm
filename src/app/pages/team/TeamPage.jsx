@@ -9,7 +9,7 @@ import scout from '@images/icons/scout.svg';
 import jrSharksLogo from '@images/icons/jr-sharks-logo.svg';
 import cancel from '@images/icons/cancel.svg';
 import playerImage from '@images/icons/player-image.svg';
-import '../../../css/team_page/team_page.css';
+import '@css/pages/TeamPage.css';
 
 function TeamPage() {
   return (

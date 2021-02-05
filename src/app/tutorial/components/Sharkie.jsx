@@ -4,8 +4,8 @@ import sharkiePresent from '@images/sharkie-present.svg';
 import sharkieLean from '@images/sharkie-lean.svg';
 import speechBubble from '@images/speech-bubble.svg';
 import { motion, AnimatePresence } from 'framer-motion';
-import './Sharkie.css';
 import { useState } from 'react';
+import '@css/tutorial/Sharkie.css';
 
 const sharkieImgs = {
   play: sharkiePlay,

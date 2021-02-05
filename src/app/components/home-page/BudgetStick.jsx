@@ -3,7 +3,7 @@ import { ReactSVG } from 'react-svg';
 import { useSelector } from 'react-redux';
 import { motion } from 'framer-motion';
 import icon from '@images/icons/budget-hockey-stick.svg';
-import '../../../css/home_page/budget.css';
+import '@css/components/home-page/BudgetStick.css';
 
 export const BudgetStick = ({ tutorialActive }) => {
   const animationState = useSelector(
