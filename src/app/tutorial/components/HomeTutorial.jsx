@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useDispatch } from 'react-redux';
-import { SharkieComponent } from './Sharkie/Sharkie';
+import { SharkieComponent } from './Sharkie';
 import introSlides from '../lessons/home/intro-slides';
 import objectivesSlides from '../lessons/home/objectives-slides';
 import teamRankSlides from '../lessons/home/team-rank-slides';
@@ -12,11 +12,11 @@ import {
   trophiesStickSlides,
   seasonStickSlides,
 } from '../lessons/home/hockey-stick-slides';
-import refreshBtn from '../../../assets/images/refresh-btn.svg';
-import checkBtn from '../../../assets/images/check-btn.svg';
-import '../tutorials.css';
+import refreshBtn from '@images/refresh-btn.svg';
+import checkBtn from '@images/check-btn.svg';
 import { setAnimationState } from '../../redux/actions';
 import { SET_ANIMATION_STATE } from '../../redux/actionTypes';
+import '@css/tutorial/tutorials.css';
 
 const allActions = {
   [SET_ANIMATION_STATE]: setAnimationState,
