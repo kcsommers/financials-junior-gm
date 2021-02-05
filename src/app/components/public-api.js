@@ -1,8 +1,10 @@
-export { BudgetStick } from './home-page/BudgetStick.jsx';
+export { BudgetStick } from './BudgetStick.jsx';
 export { MoneyLeftCard } from './home-page/MoneyLeftCard.jsx';
 export { Navigation } from './home-page/Navigation.jsx';
-export { ObjectivesBoard } from './home-page/ObjectivesBoard.jsx';
-export { SeasonStick } from './home-page/SeasonStick.jsx';
-export { TeamStick } from './home-page/TeamStick.jsx';
+export { ObjectivesBoard } from './ObjectivesBoard.jsx';
+export { SeasonStick } from './SeasonStick.jsx';
+export { TeamStick } from './TeamStick.jsx';
 export { TeamRankCard } from './home-page/TeamRankCard.jsx';
-export { TrophiesStick } from './home-page/TrophiesStick.jsx';
+export { TrophiesStick } from './TrophiesStick.jsx';
+export { TeamRankStick } from './TeamRankStick.jsx';
+export { MoneyLeftStick } from './MoneyLeftStick';
