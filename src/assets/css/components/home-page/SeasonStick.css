@@ -1,9 +1,31 @@
-.season-hockey-stick {
-}
-
 .season-text {
   text-align: center;
   font-size: 30px;
   color: #006b77;
   font-family: 'interstate';
+}
+
+div.season-stick-inner {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  height: 102px;
+  width: 420px;
+}
+
+h2.hockey-stick-title {
+  padding-right: 2rem;
+}
+
+img.season-stick-img {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+}
+
+p.season-stick-text {
+  margin-top: 1rem;
+  font-size: 30px;
+  color: #006b77;
 }

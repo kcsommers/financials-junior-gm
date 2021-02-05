@@ -10,7 +10,7 @@ div.app-container {
   position: relative;
   background: url('../images/field.png');
   background-attachment: fixed;
-  background-position: center 100px;
+  background-position: center 160px;
   background-repeat: no-repeat;
   background-size: cover;
 }

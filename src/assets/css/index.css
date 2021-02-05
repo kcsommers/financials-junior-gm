@@ -40,3 +40,11 @@ h1.page-title {
     0 0 5px #f3901d;
   font-size: 5.25rem;
 }
+
+h2.hockey-stick-title {
+  color: #fff;
+  text-shadow: 0 0 5px #000, 0 0 5px #000, 0 0 5px #000, 0 0 5px #000;
+  font-size: 5.25rem;
+  position: relative;
+  z-index: 99;
+}

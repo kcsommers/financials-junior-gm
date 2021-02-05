@@ -22,6 +22,7 @@ div.home-page-container {
 
 div.hockey-sticks-container {
   position: relative;
+  margin-top: 3rem;
 }
 
 div.sharks-logo-wrap {
@@ -39,5 +40,8 @@ div.hockey-sticks-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: -50px;
+}
+
+div.hockey-sticks-row-2 {
+  margin-top: 6rem;
 }
