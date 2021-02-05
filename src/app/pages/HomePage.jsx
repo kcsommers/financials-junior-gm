@@ -24,31 +24,30 @@ export default function Home() {
   };
 
   return (
-    <div>
+    <div className='home-page-container'>
       <Navigation />
       <div className='home-cards-row'>
         <div className='team-rank-card-box'>
           <TeamRankCard tutorialActive={tutorialActive} />
         </div>
-        <div className='middle-card-box'>
+        <div className='objectives-board-box'>
           <ObjectivesBoard tutorialActive={tutorialActive} />
         </div>
         <div className='money-left-card-box'>
           <MoneyLeftCard tutorialActive={tutorialActive} />
         </div>
       </div>
-      <div className='hockey-stick-buttons-container'>
-        <div>
+      <div className='hockey-sticks-container'>
+        <div className='hockey-sticks-row'>
           <TeamStick tutorialActive={tutorialActive} />
-          <SeasonStick tutorialActive={tutorialActive} />
-        </div>
-        <div className='logo-container'>
-          <img src={sharksLogo} alt='Sharks Logo' />
-        </div>
-        <div>
           <BudgetStick tutorialActive={tutorialActive} />
+        </div>
+        <div className='hockey-sticks-row'>
+          <SeasonStick tutorialActive={tutorialActive} />
           <TrophiesStick tutorialActive={tutorialActive} />
         </div>
+        {/* <img src={sharksLogo} alt='Sharks Logo' /> */}
+        <div></div>
       </div>
       <AnimatePresence>
         {tutorialActive && (
