@@ -1,22 +1,22 @@
 import React from 'react';
-import '../../css/home_page/Season.css';
 import { ReactSVG } from 'react-svg';
-import icon from '../../icons/season-hockey-stick.svg';
+import icon from '@images/icons/trophies-hockey-stick.svg';
 import { useSelector } from 'react-redux';
 import { motion } from 'framer-motion';
+import '@css/components/home-page/TrophiesStick.css';
 
-function Season({ tutorialActive }) {
+export const TrophiesStick = ({ tutorialActive }) => {
   const animationState = useSelector(
-    (state) => state.tutorials.home.seasonStick
+    (state) => state.tutorials.home.trophiesStick
   );
 
   const card = (
-    <div className='season-hockey-stick-inner'>
+    <div className='trophies-hockey-stick-inner'>
       <ReactSVG src={icon} />
-
-      <p className='season-text'>Play matches and win the championship!</p>
+      <p className='trophies-text'>See your badges and trophies!</p>
     </div>
   );
+
   return tutorialActive ? (
     <motion.div
       className='hidden'
@@ -26,8 +26,6 @@ function Season({ tutorialActive }) {
       {card}
     </motion.div>
   ) : (
-    <div className='season-hockey-stick'>{card}</div>
+    <div className='trophies-hockey-stick'>{card}</div>
   );
-}
-
-export default Season;
+};

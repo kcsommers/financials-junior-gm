@@ -1,22 +1,22 @@
 import React from 'react';
 import { ReactSVG } from 'react-svg';
-import icon from '../../icons/budget-hockey-stick.svg';
-import '../../css/home_page/budget.css';
+import icon from '@images/icons/season-hockey-stick.svg';
 import { useSelector } from 'react-redux';
 import { motion } from 'framer-motion';
+import '@css/components/home-page/SeasonStick.css';
 
-function Budget({ tutorialActive }) {
+export const SeasonStick = ({ tutorialActive }) => {
   const animationState = useSelector(
-    (state) => state.tutorials.home.budgetStick
+    (state) => state.tutorials.home.seasonStick
   );
 
   const card = (
-    <div className='budget-hockey-stick-inner'>
+    <div className='season-hockey-stick-inner'>
       <ReactSVG src={icon} />
-      <p className='budget-text'>Manage your team's money.</p>
+
+      <p className='season-text'>Play matches and win the championship!</p>
     </div>
   );
-
   return tutorialActive ? (
     <motion.div
       className='hidden'
@@ -26,8 +26,6 @@ function Budget({ tutorialActive }) {
       {card}
     </motion.div>
   ) : (
-    <div className='budge-hockey-stick'>{card}</div>
+    <div className='season-hockey-stick'>{card}</div>
   );
-}
-
-export default Budget;
+};

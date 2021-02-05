@@ -1,13 +1,13 @@
 @font-face {
   font-family: 'interstate';
-  src: url('../../fonts/interstate-regular-comp-58b641cc0aca1.otf');
+  src: url('../../../fonts/interstate-regular-comp-58b641cc0aca1.otf');
 }
 
 .money-left-card {
   font-family: 'interstate';
-  color: #006B77;
+  color: #006b77;
   position: relative;
-  border: 5px solid rgb(75,75,75);
+  border: 5px solid rgb(75, 75, 75);
   border-radius: 20px;
   height: 33vh;
   width: 185px;
