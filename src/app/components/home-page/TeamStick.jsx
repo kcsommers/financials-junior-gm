@@ -9,7 +9,7 @@ export const TeamStick = ({ tutorialActive }) => {
   const animationState = useSelector((state) => state.tutorials.home.teamStick);
 
   const card = (
-    <div class='team-stick-inner'>
+    <div className='team-stick-inner'>
       <img className='team-stick-img' src={icon} alt='Team' />
       <h2 className='hockey-stick-title'>Team</h2>
       <p className='team-stick-text'>
