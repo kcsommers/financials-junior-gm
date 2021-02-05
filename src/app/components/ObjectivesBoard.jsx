@@ -1,12 +1,16 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { motion } from 'framer-motion';
-import '@css/components/home-page/ObjectivesBoard.css';
+import '@css/components/ObjectivesBoard.css';
 
-export const ObjectivesBoard = ({ tutorialActive }) => {
+export const ObjectivesBoard = ({ tutorialActive, objectivesArray }) => {
   const animationState = useSelector(
     (state) => state.tutorials.home.objectivesBoard
   );
+
+  const objectives = objectivesArray
+    ? objectivesArray.map((o) => <div key={o}>{o}</div>)
+    : null;
 
   const card = (
     <div className='middle-card-inner'>
@@ -14,11 +18,7 @@ export const ObjectivesBoard = ({ tutorialActive }) => {
         <div>Objectives</div>
         <div>Level 1</div>
       </div>
-      <div className='ordered-list'>
-        <div>1. Learn about your budget.</div>
-        <div>2. Fill your team by signing a player.</div>
-        <div>3. Scout three more players to add to your team.</div>
-      </div>
+      <div className='ordered-list'>{objectives}</div>
     </div>
   );
 

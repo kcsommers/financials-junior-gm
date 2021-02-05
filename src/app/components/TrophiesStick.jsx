@@ -3,7 +3,7 @@ import { ReactSVG } from 'react-svg';
 import icon from '@images/icons/trophies-hockey-stick.svg';
 import { useSelector } from 'react-redux';
 import { motion } from 'framer-motion';
-import '@css/components/home-page/TrophiesStick.css';
+import '@css/components/TrophiesStick.css';
 
 export const TrophiesStick = ({ tutorialActive }) => {
   const animationState = useSelector(
