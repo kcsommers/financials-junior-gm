@@ -6,7 +6,7 @@ import TeamPage from './pages/TeamPage';
 import Sign from './pages/Sign';
 import Scout from './pages/Scout';
 import '@css/App.css';
-import { Modal } from '@components';
+import { Overlay } from '@components';
 
 const App = () => {
   return (
@@ -20,7 +20,7 @@ const App = () => {
           <Route exact path='/scout' component={Scout} />
         </Switch>
       </Router>
-      <Modal />
+      <Overlay />
     </div>
   );
 };

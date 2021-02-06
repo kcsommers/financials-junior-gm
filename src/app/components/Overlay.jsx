@@ -1,21 +1,21 @@
 import { useSelector, useDispatch } from 'react-redux';
-import '@css/components/Modal.css';
+import '@css/components/Overlay.css';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ReactSVG } from 'react-svg';
 import closeBtn from '@images/icons/cancel.svg';
-import { toggleModal } from '../redux/actions';
+import { toggleOverlay } from '../redux/actions';
 
-export const Modal = () => {
-  const modalConfig = useSelector((state) => state.modal);
+export const Overlay = () => {
+  const overlayConfig = useSelector((state) => state.overlay);
 
   const tutorialActive = useSelector((state) => state.tutorial.isActive);
 
-  console.log('MODAL CONFIG:"::: ', modalConfig, tutorialActive);
+  console.log('MODAL CONFIG:"::: ', overlayConfig, tutorialActive);
 
   const dispatch = useDispatch();
 
-  const closeModal = () => {
-    dispatch(toggleModal({ isOpen: false, template: null }));
+  const closeOverlay = () => {
+    dispatch(toggleOverlay({ isOpen: false, template: null }));
   };
 
   const variants = {
@@ -32,20 +32,20 @@ export const Modal = () => {
 
   return (
     <AnimatePresence>
-      {modalConfig.isOpen && (
+      {overlayConfig.isOpen && (
         <motion.div
           initial='enter'
           animate='center'
           exit='exit'
           variants={variants}
-          className='modal-container'
+          className='overlay-container'
         >
-          {modalConfig.template}
+          {overlayConfig.template}
           {!tutorialActive && (
             <ReactSVG
               className='close-btn box-shadow'
               src={closeBtn}
-              onClick={closeModal.bind(this)}
+              onClick={closeOverlay.bind(this)}
             />
           )}
         </motion.div>

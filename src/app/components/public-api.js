@@ -11,4 +11,4 @@ export { TeamRankStick } from './TeamRankStick.jsx';
 export { MoneyLeftStick } from './MoneyLeftStick';
 export { SignStick } from './SignStick';
 export { ScoutStick } from './ScoutStick';
-export { Modal } from './Modal';
+export { Overlay } from './Overlay';

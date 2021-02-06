@@ -30,7 +30,7 @@ p.position-text {
   text-align: center;
 }
 
-div.player-modal-container {
+div.player-overlay-container {
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -38,7 +38,7 @@ div.player-modal-container {
   justify-content: center;
 }
 
-div.player-modal-buttons-wrap {
+div.player-overlay-buttons-wrap {
   display: flex;
   align-items: center;
   justify-content: space-around;
@@ -48,7 +48,7 @@ div.player-modal-buttons-wrap {
   align-self: stretch;
 }
 
-button.player-modal-button {
+button.player-overlay-button {
   background-color: #f3901d;
   border-radius: 25px;
   color: #fff;

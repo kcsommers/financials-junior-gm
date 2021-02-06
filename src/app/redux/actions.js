@@ -1,6 +1,6 @@
 import {
   SET_ANIMATION_STATE,
-  TOGGLE_MODAL,
+  TOGGLE_OVERLAY,
   SET_TUTORIAL_IS_ACTIVE,
 } from './actionTypes';
 
@@ -14,7 +14,7 @@ export const setTutorialIsActive = (state) => ({
   payload: { state },
 });
 
-export const toggleModal = (state) => ({
-  type: TOGGLE_MODAL,
+export const toggleOverlay = (state) => ({
+  type: TOGGLE_OVERLAY,
   payload: { state },
 });
