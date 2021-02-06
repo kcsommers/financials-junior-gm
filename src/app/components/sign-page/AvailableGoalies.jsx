@@ -4,43 +4,40 @@ import playerImage from '../../../assets/images/icons/player-image.svg';
 
 const AvailableGoalies = () => {
   return (
-    <div className="available-players">
-      <p className="available-players-title">Goalies you can sign</p>
-      
-      <div className="available-players-cards">
+    <div className='available-players'>
+      <p className='available-players-title'>Goalies you can sign</p>
 
+      <div className='available-players-cards'>
         <div>
-          <p className="player-card-title">Position</p>
-          <div className="team-dashboard-players-card-top card-top-border">
+          <p className='player-card-title'>Position</p>
+          <div className='team-dashboard-players-card-top card-top-border'>
             <div>
-              <div className="rank-text">Rank</div>
-              <div className="rank-number">50</div>
+              <div className='rank-text'>Rank</div>
+              <div className='rank-number'>50</div>
             </div>
-            <div className="player-cost">$2</div>
+            <div className='player-cost'>$2</div>
           </div>
-          <div className="team-dashboard-players-card card-border">
+          <div className='team-dashboard-players-card card-border'>
             <ReactSVG src={playerImage} />
-            <div className="player-meters-row">
+            <div className='player-meters-row'>
               <div>
                 <p>Off</p>
-                <div class="offense-meter"></div>
+                <div className='offense-meter'></div>
               </div>
               <div>
                 <p>Pass</p>
-                <div class="passing-meter"></div>
+                <div className='passing-meter'></div>
               </div>
               <div>
                 <p>Def</p>
-                <div class="defense-meter"></div>
+                <div className='defense-meter'></div>
               </div>
             </div>
           </div>
         </div>
-
       </div>
-
     </div>
-  )
-}
+  );
+};
 
 export default AvailableGoalies;
