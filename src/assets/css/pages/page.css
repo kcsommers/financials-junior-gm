@@ -46,3 +46,8 @@ div.page-board {
   top: 1rem;
   right: 1rem;
 }
+
+div.page-board-card {
+  width: 100%;
+  height: auto;
+}
