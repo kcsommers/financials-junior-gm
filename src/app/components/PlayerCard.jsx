@@ -1,16 +1,21 @@
 import { motion } from 'framer-motion';
 import { useDispatch } from 'react-redux';
-import { toggleModal } from '../redux/actions';
+import { toggleOverlay } from '../redux/actions';
 import '@css/components/PlayerCard.css';
 
-export const PlayerCard = ({ player, tutorialActive, highlight, inModal }) => {
+export const PlayerCard = ({
+  player,
+  tutorialActive,
+  highlight,
+  inOverlay,
+}) => {
   const dispatch = useDispatch();
 
-  const openModal = () => {
+  const openOverlay = () => {
     dispatch(
-      toggleModal({
+      toggleOverlay({
         isOpen: true,
-        template: modalTemplate,
+        template: overlayTemplate,
       })
     );
   };
@@ -22,7 +27,7 @@ export const PlayerCard = ({ player, tutorialActive, highlight, inModal }) => {
         className={`box-shadow player-card-inner${
           player ? ' border-primary' : ' border-accent'
         }`}
-        onClick={openModal.bind(this)}
+        onClick={openOverlay.bind(this)}
       >
         <div className='player-card-header'>
           <div className='player-rank'>
@@ -49,7 +54,7 @@ export const PlayerCard = ({ player, tutorialActive, highlight, inModal }) => {
         className={`box-shadow player-card-inner${
           player ? ' border-primary' : ' border-accent'
         }${highlight ? ' border-highlight' : ''}`}
-        onClick={openModal.bind(this)}
+        onClick={openOverlay.bind(this)}
       >
         <p className='add-player-text color-primary outline-accent'>
           Add Player
@@ -58,14 +63,14 @@ export const PlayerCard = ({ player, tutorialActive, highlight, inModal }) => {
     </div>
   );
 
-  const modalTemplate = (
-    <div className='player-modal-container'>
+  const overlayTemplate = (
+    <div className='player-overlay-container'>
       <div className='player-card-wrap player-card-large'>{inner}</div>
-      <div className='player-modal-buttons-wrap'>
-        <button className='player-modal-button outline-black box-shadow'>
+      <div className='player-overlay-buttons-wrap'>
+        <button className='player-overlay-button outline-black box-shadow'>
           Trade
         </button>
-        <button className='player-modal-button outline-black box-shadow'>
+        <button className='player-overlay-button outline-black box-shadow'>
           Release
         </button>
       </div>
@@ -84,5 +89,5 @@ export const PlayerCard = ({ player, tutorialActive, highlight, inModal }) => {
     </div>
   );
 
-  return inModal ? modalTemplate : mainTemplate;
+  return inOverlay ? overlayTemplate : mainTemplate;
 };

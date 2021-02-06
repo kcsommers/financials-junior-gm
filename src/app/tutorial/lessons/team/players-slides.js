@@ -1,5 +1,5 @@
 import Slide from '../../Slide';
-import { SET_ANIMATION_STATE, TOGGLE_MODAL } from '@redux/actionTypes';
+import { SET_ANIMATION_STATE, TOGGLE_OVERLAY } from '@redux/actionTypes';
 import { PlayerCard } from '@components';
 
 const slideConfigs = [
@@ -50,10 +50,10 @@ const slideConfigs = [
     transparentBg: true,
     exitActions: [
       {
-        type: TOGGLE_MODAL,
+        type: TOGGLE_OVERLAY,
         payload: {
           isOpen: true,
-          template: <PlayerCard inModal={true} tutorialActive={true} />,
+          template: <PlayerCard inOverlay={true} tutorialActive={true} />,
         },
       },
       {
@@ -190,7 +190,7 @@ const slideConfigs = [
     transparentBg: true,
     exitActions: [
       {
-        type: TOGGLE_MODAL,
+        type: TOGGLE_OVERLAY,
         payload: {
           isOpen: false,
           template: null,

@@ -4,13 +4,13 @@ import { useDispatch } from 'react-redux';
 import { SharkieComponent } from './Sharkie';
 import refreshBtn from '@images/refresh-btn.svg';
 import checkBtn from '@images/check-btn.svg';
-import { setAnimationState, toggleModal } from '@redux/actions';
-import { SET_ANIMATION_STATE, TOGGLE_MODAL } from '@redux/actionTypes';
+import { setAnimationState, toggleOverlay } from '@redux/actions';
+import { SET_ANIMATION_STATE, TOGGLE_OVERLAY } from '@redux/actionTypes';
 import '@css/tutorial/tutorials.css';
 
 const allActions = {
   [SET_ANIMATION_STATE]: setAnimationState,
-  [TOGGLE_MODAL]: toggleModal,
+  [TOGGLE_OVERLAY]: toggleOverlay,
 };
 
 let timer = 0;
