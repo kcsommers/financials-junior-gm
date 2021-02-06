@@ -3,8 +3,6 @@ import { ReactSVG } from 'react-svg';
 import sign from '../../assets/images/icons/sign.svg';
 import sharksLogo from '../../assets/images/icons/sharks-logo.svg';
 import comericaLogo from '../../assets/images/icons/comerica-logo.svg';
-import hockeyVisual1 from '../../assets/images/icons/hockey-visual-1.svg';
-import hockeyVisual2 from '../../assets/images/icons/hockey-visual-2.svg';
 import cancel from '../../assets/images/icons/cancel.svg';
 import forwardTabSelected from '../../assets/images/icons/forward-tab-selected.svg';
 import defenseTabSelected from '../../assets/images/icons/defense-tab-selected.svg';
@@ -16,6 +14,7 @@ import '../../assets/css/pages/sign.css';
 import AvailableForwards from '../components/sign-page/AvailableForwards';
 import AvailableDefense from '../components/sign-page/AvailableDefense';
 import AvailableGoalies from '../components/sign-page/AvailableGoalies';
+import {ObjectivesBoard, TeamRankStick, MoneyLeftStick} from '../components/public-api';
 
 const Sign = () => {
 
@@ -54,15 +53,7 @@ const Sign = () => {
       <div className="team-page-header">
         <ReactSVG className="team-page-hockey-stick" src={sign} />
         <ReactSVG className="sharks-logo" src={sharksLogo} />
-        <div className="objectives-board">
-          <div className="objective-level-box">
-            <div>Objectives</div>
-            <div>Lv1</div>
-          </div>
-          <div className="ordered-list">
-            <div>1. Learn about your budget.</div>
-          </div>
-        </div>
+        <ObjectivesBoard/>
       </div>
 
       {/* Team Dashboard */}
@@ -70,17 +61,9 @@ const Sign = () => {
         <div className="sign-dashboard-top-row">{/* top row of sign dashboard */}
           <div className="sign-state-visual">
             <div className="team-state-visual-container">
-              <h1 className="team-dashboard-rank-title">Team <br/>Rank</h1>
-              <div className="team-dashboard-rank-hockey-stick-box">
-                <ReactSVG src={hockeyVisual1} />
-              </div>
+              <TeamRankStick/>
+              <MoneyLeftStick/>
             </div>
-            <div className="team-dashboard-rank-circle"><p>85</p></div>
-            <div className="team-money-left-circle"><p>25</p></div>
-            <div className="team-money-left-hockey-stick-box">
-              <ReactSVG src={hockeyVisual2} />
-            </div>
-            <h1 className="team-money-left-title">Money <br/>Left</h1>
           </div>
 
           <ReactSVG src={comericaLogo}/>
