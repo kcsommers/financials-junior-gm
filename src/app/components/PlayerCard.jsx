@@ -1,10 +1,9 @@
-import React from 'react';
 import { motion } from 'framer-motion';
-import '@css/components/PlayerCard.css';
 import { useDispatch } from 'react-redux';
 import { toggleModal } from '../redux/actions';
+import '@css/components/PlayerCard.css';
 
-export const PlayerCard = ({ player, tutorialActive }) => {
+export const PlayerCard = ({ player, tutorialActive, highlight }) => {
   const dispatch = useDispatch();
 
   const openModal = () => {
@@ -61,7 +60,7 @@ export const PlayerCard = ({ player, tutorialActive }) => {
       <div
         className={`box-shadow player-card-inner${
           player ? ' border-primary' : ' border-accent'
-        }`}
+        }${highlight ? ' border-highlight' : ''}`}
         onClick={openModal.bind(this)}
       >
         <p className='add-player-text color-primary outline-accent'>
