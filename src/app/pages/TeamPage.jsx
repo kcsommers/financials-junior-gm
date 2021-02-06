@@ -2,7 +2,6 @@ import React from 'react';
 import { ReactSVG } from 'react-svg';
 import jrSharksLogo from '@images/icons/jr-sharks-logo.svg';
 import closeBtn from '@images/icons/cancel.svg';
-import '@css/pages/TeamPage.css';
 import {
   TeamStick,
   ObjectivesBoard,
@@ -18,6 +17,8 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { Tutorial, playersSlides } from '@tutorial';
 import { Link } from 'react-router-dom';
 import { setTutorialIsActive } from '@redux/actions';
+import '@css/pages/page.css';
+import '@css/pages/TeamPage.css';
 
 const teamSlides = [playersSlides];
 
@@ -25,8 +26,6 @@ function TeamPage() {
   // GET TEAM FROM STORE
 
   const tutorialActive = useSelector((state) => state.tutorial.isActive);
-
-  console.log('TUTORIAL ACTIVE:::: ', tutorialActive);
 
   const dispatch = useDispatch();
 
@@ -39,12 +38,12 @@ function TeamPage() {
   );
 
   return (
-    <div className='team-page-container'>
-      <div className='team-page-header'>
-        <div className='header-logo-wrap'>
+    <div className='page-container'>
+      <div className='page-header'>
+        <div className='page-header-logo-wrap'>
           <img src={sharksLogo} alt='Sharks Logo' />
         </div>
-        <div className='team-stick-wrap'>
+        <div className='page-header-stick-wrap'>
           <TeamStick></TeamStick>
         </div>
         <div className='page-header-objectives-board-wrap'>
@@ -53,10 +52,10 @@ function TeamPage() {
           ></ObjectivesBoard>
         </div>
       </div>
-      <div className='team-page-body'>
-        <div className='team-page-board'>
+      <div className='page-body'>
+        <div className='page-board'>
           <Link to='/home'>
-            <ReactSVG className='team-page-board-close-btn' src={closeBtn} />
+            <ReactSVG className='page-board-close-btn' src={closeBtn} />
           </Link>
           <div className='team-page-board-left'>
             <div className='sticks-card card'>
