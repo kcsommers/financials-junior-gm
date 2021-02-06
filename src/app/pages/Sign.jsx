@@ -1,21 +1,21 @@
 import React, {useState} from 'react';
 import { ReactSVG } from 'react-svg';
-import sign from '../../icons/sign.svg';
-import sharksLogo from '../../icons/sharks-logo.svg';
-import comericaLogo from '../../icons/comerica-logo.svg';
-import hockeyVisual1 from '../../icons/hockey-visual-1.svg';
-import hockeyVisual2 from '../../icons/hockey-visual-2.svg';
-import cancel from '../../icons/cancel.svg';
-import forwardTabSelected from '../../icons/forward-tab-selected.svg';
-import defenseTabSelected from '../../icons/defense-tab-selected.svg';
-import goalieTabSelected from '../../icons/goalie-tab-selected.svg';
-import forwardtab from '../../icons/forward-tab.svg';
-import defensetab from '../../icons/defense-tab.svg';
-import goalietab from '../../icons/goalie-tab.svg';
-import '../../css/sign_page/sign.css';
-import AvailableForwards from './AvailableForwards';
-import AvailableDefense from './AvailableDefense';
-import AvailableGoalies from './AvailableGoalies';
+import sign from '../../assets/images/icons/sign.svg';
+import sharksLogo from '../../assets/images/icons/sharks-logo.svg';
+import comericaLogo from '../../assets/images/icons/comerica-logo.svg';
+import hockeyVisual1 from '../../assets/images/icons/hockey-visual-1.svg';
+import hockeyVisual2 from '../../assets/images/icons/hockey-visual-2.svg';
+import cancel from '../../assets/images/icons/cancel.svg';
+import forwardTabSelected from '../../assets/images/icons/forward-tab-selected.svg';
+import defenseTabSelected from '../../assets/images/icons/defense-tab-selected.svg';
+import goalieTabSelected from '../../assets/images/icons/goalie-tab-selected.svg';
+import forwardtab from '../../assets/images/icons/forward-tab.svg';
+import defensetab from '../../assets/images/icons/defense-tab.svg';
+import goalietab from '../../assets/images/icons/goalie-tab.svg';
+import '../../assets/css/pages/sign.css';
+import AvailableForwards from '../components/sign-page/AvailableForwards';
+import AvailableDefense from '../components/sign-page/AvailableDefense';
+import AvailableGoalies from '../components/sign-page/AvailableGoalies';
 
 const Sign = () => {
 
