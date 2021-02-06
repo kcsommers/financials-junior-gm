@@ -1,3 +1,32 @@
 div.scout-page-header-stick-wrap {
   left: 5%;
 }
+
+div.scout-page-board-header p {
+  text-align: center;
+  font-size: 1.5rem;
+}
+
+div.scout-page-board {
+  flex-direction: column;
+}
+
+div.scout-page-board-inner {
+  display: flex;
+}
+
+div.scout-page-board-left,
+div.scout-page-board-right {
+  flex: 1;
+}
+
+div.scout-page-board-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+div.scout-page-board-footer p,
+div.scout-page-board-footer span {
+  font-size: 1.5rem;
+}

@@ -1,4 +1,5 @@
 export { BudgetStick } from './BudgetStick.jsx';
+export { MoneyLevel } from './MoneyLevel';
 export { PlayerCard } from './PlayerCard';
 export { MoneyLeftCard } from './home-page/MoneyLeftCard.jsx';
 export { Navigation } from './home-page/Navigation.jsx';

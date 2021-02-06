@@ -59,6 +59,11 @@ h1.page-title {
   height: 240px;
 }
 
+.auto-card {
+  width: 100%;
+  height: auto;
+}
+
 .outline-black {
   text-shadow: 0 0 5px #000, 0 0 5px #000, 0 0 5px #000, 0 0 5px #000;
 }
