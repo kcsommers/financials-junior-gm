@@ -1,6 +1,7 @@
-import { SET_ANIMATION_STATE } from '../actionTypes';
+import { SET_ANIMATION_STATE, SET_TUTORIAL_IS_ACTIVE } from '../actionTypes';
 
 const initialState = {
+  isActive: true,
   home: {
     objectivesBoard: {
       x: '0%',
@@ -47,8 +48,16 @@ const initialState = {
 
 const tutorialsReducer = (state = initialState, action) => {
   switch (action.type) {
+    case SET_TUTORIAL_IS_ACTIVE: {
+      return {
+        ...state,
+        isActive: action.payload.state.isActive,
+      };
+    }
     case SET_ANIMATION_STATE: {
       const payload = action.payload.state;
+
+      console.log('PAYLOAD:::: ', payload);
 
       const componentStates = {};
       if (payload.animationStates && payload.animationStates.length) {

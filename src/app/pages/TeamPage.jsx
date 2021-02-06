@@ -13,26 +13,30 @@ import {
   PlayerCard,
 } from '@components';
 import sharksLogo from '@images/sharks-comerica-logo.svg';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Tutorial, playersSlides } from '@tutorial';
-
-const isFirstTime = true;
+import { Link } from 'react-router-dom';
+import { setTutorialIsActive } from '@redux/actions';
 
 const teamSlides = [playersSlides];
 
 function TeamPage() {
   // GET TEAM FROM STORE
 
-  const [tutorialActive, setTutorialActive] = React.useState(isFirstTime);
+  const tutorialActive = useSelector((state) => state.tutorial.isActive);
 
-  const highlightPlayerCards = useSelector(
-    (state) => state.tutorials.team.playerCard.highlight
-  );
+  console.log('TUTORIAL ACTIVE:::: ', tutorialActive);
+
+  const dispatch = useDispatch();
 
   const onTutorialComplete = () => {
-    setTutorialActive(false);
+    dispatch(setTutorialIsActive({ isActive: false }));
   };
+
+  const highlightPlayerCards = useSelector(
+    (state) => state.tutorial.team.playerCard.highlight
+  );
 
   return (
     <div className='team-page-container'>
@@ -51,7 +55,9 @@ function TeamPage() {
       </div>
       <div className='team-page-body'>
         <div className='team-page-board'>
-          <ReactSVG className='team-page-board-close-btn' src={closeBtn} />
+          <Link to='/home'>
+            <ReactSVG className='team-page-board-close-btn' src={closeBtn} />
+          </Link>
           <div className='team-page-board-left'>
             <div className='sticks-card card'>
               <TeamRankStick></TeamRankStick>
@@ -82,9 +88,9 @@ function TeamPage() {
                 <PlayerCard highlight={highlightPlayerCards} />
               </div>
               <div className='team-page-players-row'>
-                <PlayerCard highlight={highlightPlayerCards} />
-                <PlayerCard highlight={highlightPlayerCards} />
-                <PlayerCard highlight={highlightPlayerCards} />
+                <PlayerCard />
+                <PlayerCard />
+                <PlayerCard />
               </div>
             </div>
             <div className='team-page-bench-container card'>

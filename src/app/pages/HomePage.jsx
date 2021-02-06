@@ -23,8 +23,8 @@ import {
   Tutorial,
 } from '@tutorial';
 import sharksLogo from '@images/sharks-comerica-logo.svg';
-
-const isFirstTime = false;
+import { useDispatch, useSelector } from 'react-redux';
+import { setTutorialIsActive } from '@redux/actions';
 
 const tutorialSlides = [
   introSlides,
@@ -38,10 +38,14 @@ const tutorialSlides = [
 ];
 
 export default function Home() {
-  const [tutorialActive, setTutorialActive] = React.useState(isFirstTime);
+  const tutorialActive = useSelector((state) => state.tutorial.isActive);
+
+  console.log('TUTORIAL ACTIVE:::: ', tutorialActive);
+
+  const dispatch = useDispatch();
 
   const onTutorialComplete = () => {
-    setTutorialActive(false);
+    dispatch(setTutorialIsActive({ isActive: false }));
   };
 
   return (
