@@ -49,6 +49,7 @@ const initialState = {
 const tutorialsReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_TUTORIAL_IS_ACTIVE: {
+      console.log('SET TUTORIAL ACTIVE:::: ', action);
       return {
         ...state,
         isActive: action.payload.state.isActive,
@@ -56,9 +57,6 @@ const tutorialsReducer = (state = initialState, action) => {
     }
     case SET_ANIMATION_STATE: {
       const payload = action.payload.state;
-
-      console.log('PAYLOAD:::: ', payload);
-
       const componentStates = {};
       if (payload.animationStates && payload.animationStates.length) {
         payload.animationStates.forEach((s) => {

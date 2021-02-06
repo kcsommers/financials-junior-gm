@@ -166,7 +166,11 @@ export const Tutorial = ({ slides, onComplete }) => {
   ) : null;
 
   return (
-    <div className='tutorial-container'>
+    <div
+      className={`tutorial-container${
+        currentSlide.transparentBg ? ' transparent' : ''
+      }`}
+    >
       <AnimatePresence>
         <motion.div
           className='tutorial-container-inner'

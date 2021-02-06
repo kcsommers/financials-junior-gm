@@ -15,7 +15,7 @@ export const Modal = () => {
   const dispatch = useDispatch();
 
   const closeModal = () => {
-    dispatch(toggleModal({ isOpen: false, template: 'HI' }));
+    dispatch(toggleModal({ isOpen: false, template: null }));
   };
 
   const variants = {
