@@ -15,8 +15,12 @@ export const PlayerCard = ({ player, tutorialActive }) => {
           <div className='player-modal-container'>
             <div className='player-card-wrap player-card-large'>{inner}</div>
             <div className='player-modal-buttons-wrap'>
-              <button class='player-modal-button outline-black'>Trade</button>
-              <button class='player-modal-button outline-black'>Release</button>
+              <button class='player-modal-button outline-black box-shadow'>
+                Trade
+              </button>
+              <button class='player-modal-button outline-black box-shadow'>
+                Release
+              </button>
             </div>
           </div>
         ),
