@@ -2,12 +2,9 @@ import React from 'react';
 import { ReactSVG } from 'react-svg';
 import teamPageHockeyStick from '@images/icons/team-page-hockey-stick.svg';
 import dualLogo from '@images/icons/sharks-logo.svg';
-import hockeyVisual1 from '@images/icons/hockey-visual-1.svg';
-import hockeyVisual2 from '@images/icons/hockey-visual-2.svg';
-import signPlayer from '@images/icons/sign-player.svg';
 import scout from '@images/icons/scout.svg';
 import jrSharksLogo from '@images/icons/jr-sharks-logo.svg';
-import cancel from '@images/icons/cancel.svg';
+import closeBtn from '@images/icons/cancel.svg';
 import playerImage from '@images/icons/player-image.svg';
 import '@css/pages/TeamPage.css';
 import {
@@ -15,10 +12,15 @@ import {
   ObjectivesBoard,
   TeamRankStick,
   MoneyLeftStick,
+  SignStick,
+  ScoutStick,
+  PlayerCard,
 } from '@components';
 import sharksLogo from '@images/sharks-comerica-logo.svg';
 
 function TeamPage() {
+  // GET TEAM FROM STORE
+
   return (
     <div className='team-page-container'>
       <div className='team-page-header'>
@@ -36,18 +38,50 @@ function TeamPage() {
       </div>
       <div className='team-page-body'>
         <div className='team-page-board'>
+          <ReactSVG className='team-page-board-close-btn' src={closeBtn} />
           <div className='team-page-board-left'>
             <div className='sticks-card card'>
               <TeamRankStick></TeamRankStick>
               <MoneyLeftStick></MoneyLeftStick>
             </div>
-            <div></div>
+            <div className='team-page-stick-btns-wrap'>
+              <div className='team-page-stick-btn-wrap'>
+                <SignStick includeSubtext={true} />
+              </div>
+              <div className='team-page-stick-btn-wrap'>
+                <ScoutStick includeSubtext={true} />
+              </div>
+            </div>
           </div>
           <div className='team-page-board-right'>
-            sadfsadf
-            <div></div>
-            <div></div>
-            <div></div>
+            <div className='team-page-board-header'>
+              <div className='team-page-board-header-logo-wrap'>
+                <ReactSVG src={jrSharksLogo} />
+              </div>
+              <h3 className='team-page-board-title color-primary outline-black'>
+                San Jose Jr Sharks
+              </h3>
+            </div>
+            <div className='team-page-players-container card'>
+              <div className='team-page-players-row'>
+                <PlayerCard />
+                <PlayerCard />
+                <PlayerCard />
+              </div>
+              <div className='team-page-players-row'>
+                <PlayerCard />
+                <PlayerCard />
+                <PlayerCard />
+              </div>
+            </div>
+            <div className='team-page-bench-container card'>
+              <p className='color-primary on-the-bench-text'>On the Bench</p>
+              <div className='team-page-bench-row'>
+                <PlayerCard />
+                <PlayerCard />
+                <PlayerCard />
+              </div>
+            </div>
           </div>
         </div>
       </div>

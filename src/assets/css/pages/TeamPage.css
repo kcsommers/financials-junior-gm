@@ -4,12 +4,13 @@ div.team-page-container {
 }
 
 div.team-page-header {
-  height: 150px;
+  height: 130px;
   position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding-right: 2rem;
+  margin-bottom: 0.5rem;
 }
 
 div.team-stick-wrap {
@@ -41,343 +42,87 @@ div.team-page-board {
   border-radius: 15px;
   background: #e5e5e5;
   display: flex;
+  position: relative;
+}
+
+.team-page-board-close-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
 }
 
 div.team-page-board-left {
   flex: 0;
-  padding: 1rem;
-  background-color: rebeccapurple;
+  padding: 1rem 1rem 1rem 0;
 }
 
 div.sticks-card {
-  width: 350px;
+  width: 320px;
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-left: 2rem;
 }
 
 div.team-page-board-right {
   flex: 1;
-  background-color: #707070;
+  padding: 0.5rem 2rem 0.5rem 1rem;
 }
 
-/* .team-page {
-  max-height: 100vh;
-  overflow-y: hidden;
-  width: 100%;
+div.team-page-stick-btns-wrap {
+  margin-top: 3rem;
 }
 
-.team-page-header {
-  display: flex;
-  width: 94%;
+div.team-page-board-header {
   position: relative;
-}
-
-.team-page-hockey-stick {
-  flex: 1;
-}
-
-.sharks-logo {
-  flex: 1;
-  justify-content: center;
-  text-align: center;
-  padding-top: 1rem;
-}
-
-.objectives-board {
-  flex: 1;
-  border: 8px solid #00788a;
-  border-radius: 15px;
-  padding: 0.5rem;
-  background: rgb(75, 75, 75);
-  color: white;
-  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-  font-family: 'interstate';
-  margin-top: 1rem;
-}
-
-.team-dashboard {
-  border: 5px solid #707070;
-  border-radius: 15px;
-  background: #e5e5e5;
-  width: 87%;
-  margin: 0 auto;
-  display: flex;
-}
-
-.team-state-visual {
-  margin: 1em;
-  font-family: 'interstate';
-  color: #006b77;
-  border: 5px solid rgb(75, 75, 75);
-  border-radius: 15px;
-  background: white;
-  position: relative;
-  width: 327px;
-  height: 252px;
-}
-
-.team-dashboard-rank-title {
-  position: absolute;
-  top: 60%;
-  left: 8%;
-  -webkit-text-stroke: 1px #707070;
-}
-
-.team-money-left-title {
-  position: absolute;
-  top: 60%;
-  left: 75%;
-  -webkit-text-stroke: 1px #707070;
-}
-
-.team-dashboard-rank-hockey-stick-box {
-  position: absolute;
-  top: 11%;
-  left: 2%;
-}
-
-.team-dashboard-rank-circle {
-  border: 5px solid rgb(75, 75, 75);
-  border-radius: 50%;
-  width: 15%;
-  padding: 0.1rem;
-  position: absolute;
-  top: 10%;
-  left: 15%;
-}
-
-.team-money-left-circle {
-  border: 5px solid rgb(75, 75, 75);
-  border-radius: 50%;
-  width: 15%;
-  padding: 0.1rem;
-  position: absolute;
-  top: 45%;
-  left: 60%;
-}
-
-.team-dashboard-rank-circle p,
-.team-money-left-circle p {
-  text-align: center;
-  margin: 5px 0px;
-  font-size: 30px;
-  -webkit-text-stroke: 1px #707070;
-}
-
-.team-money-left-hockey-stick-box {
-  position: absolute;
-  top: 11%;
-  left: 30%;
-}
-
-.add-players-text {
-  color: #006b77;
-  font-family: 'interstate';
-  font-size: 20px;
-  transform: translate(5%, -110%);
-  -webkit-text-stroke: 1px black;
-}
-
-.team-scout-player {
-  position: absolute;
-  top: 70%;
-}
-
-.scout-text {
-  color: #006b77;
-  font-family: 'interstate';
-  font-size: 20px;
-  transform: translate(10%, -60%);
-  width: 80%;
-  -webkit-text-stroke: 1px black;
-}
-
-.team-page-scout {
-  transform: translate(0, -50%);
-}
-
-.team-dashboard-header {
-  display: flex;
-  justify-content: space-between;
-  position: relative;
-}
-
-.team-dashboard-title {
-  font-size: 30px;
-  color: #006b77;
-  font-family: 'interstate';
-  position: absolute;
-  bottom: 0px;
-  left: 50%;
-  transform: translate(-50%, 0);
-  -webkit-text-stroke: 1px black;
-}
-
-.team-dashboard-title p {
-  margin: 0px;
-}
-
-.team-dashboard-players {
-  border: 5px solid #707070;
-  border-radius: 15px;
-  background-image: url('/src/assets/images/team-dashboard-players-background.png');
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position-x: center;
-  margin-bottom: 1rem;
-  padding: 0.5rem 0;
-}
-
-.player-card-position-2,
-.player-card-position-5 {
-  padding-top: 1rem;
-}
-
-.team-dashboard-players-top-row {
-  display: flex;
-  justify-content: space-around;
-}
-
-.player-card-title {
-  text-align: center;
-  font-size: 12px;
-  color: #006b77;
-  font-family: 'interstate';
-  margin: 0.2rem;
-}
-
-.player-card-title-transparent {
-  font-size: 12px;
-  color: transparent;
-  font-family: 'interstate';
-  margin: 0.2rem;
-}
-
-.team-dashboard-players-card-top {
-  display: flex;
-  justify-content: space-between;
-  background: #ea7200;
-  padding: 0.2rem;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
-}
-
-.rank-text {
-  text-align: center;
-  font-size: 6px;
-  font-family: 'interstate';
-}
-
-.rank-number {
-  text-align: center;
-  font-size: 12px;
-  font-family: 'interstate';
-}
-
-.player-cost {
-  text-align: center;
-  font-size: 12px;
-  font-family: 'interstate';
+  height: 65px;
   display: flex;
   align-items: center;
 }
 
-.team-dashboard-players-card {
-  padding: 0.2rem;
-  background-color: #e5e5e5;
-  border-bottom-left-radius: 15px;
-  border-bottom-right-radius: 15px;
-  font-family: 'interstate';
-  font-size: 24px;
+h3.team-page-board-title {
+  font-size: 3rem;
   text-align: center;
-  color: #006b77;
-  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  flex: 1;
 }
 
-.player-meters-row {
+div.team-page-board-header-logo-wrap {
+  position: absolute;
+  left: 8%;
+  right: 0;
+  top: 0;
+}
+
+div.team-page-players-container {
+  width: auto;
+  height: auto;
   display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0.5rem 0;
 }
 
-.player-meters-row > div {
-  margin: 0.1rem;
-}
-
-.player-meters-row > div > p {
-  color: black;
-  font-size: 8px;
-  margin: 0;
-}
-
-.offense-meter {
-  width: 20px;
-  height: 20px;
-  border: 2px solid #dc2d2d;
-  border-radius: 50%;
-  background: radial-gradient(#d32b2b, #6e1717);
-}
-
-.passing-meter {
-  width: 20px;
-  height: 20px;
-  border: 2px solid #00788a;
-  border-radius: 50%;
-  background: radial-gradient(#00788a, #003c45);
-}
-
-.defense-meter {
-  width: 20px;
-  height: 20px;
-  border: 2px solid #002f6c;
-  border-radius: 50%;
-  background: radial-gradient(#002f6c, #001836);
-}
-
-.team-dashboard-players-bottom-row {
+div.team-page-players-row,
+div.team-page-bench-row {
   display: flex;
   justify-content: space-around;
+  align-items: center;
+  flex: 1;
+  height: 155px;
 }
 
-.team-dashboard-bench {
-  border: 5px solid #707070;
-  border-radius: 15px;
-  background: white;
-  padding: 0 1rem 0.5rem 1rem;
-}
-
-.team-dashboard-bench-title {
-  font-family: 'interstate';
-  font-size: 24px;
-  text-align: center;
-  color: #006b77;
-  margin: 0.2rem;
-  -webkit-text-stroke: 1px black;
-}
-
-.team-dashboard-bench-row {
+div.team-page-bench-container {
   display: flex;
-  justify-content: space-around;
-}
-
-.add-player-card {
-  background-color: #e5e5e5;
-  border: 2px solid #006b77;
-  border-radius: 15px;
-  font-family: 'interstate';
-  font-size: 24px;
-  text-align: center;
-  color: #006b77;
-  height: 122px;
-  width: 87px;
-  -webkit-text-stroke: 1px #ea7200;
-  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-}
-
-.add-player-card > div {
-  margin: 1rem;
-}
-
-.team-dashboard-right-half {
+  flex-direction: column;
+  justify-content: center;
+  padding: 0.5rem 0;
   width: 100%;
-  padding: 1rem;
-} */
+  height: auto;
+  margin-top: 0.5rem;
+}
+
+p.on-the-bench-text {
+  text-align: center;
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
