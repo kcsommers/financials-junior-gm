@@ -49,14 +49,6 @@ h1.page-title {
   font-size: 5.25rem;
 }
 
-h2.hockey-stick-title {
-  color: #fff;
-  text-shadow: 0 0 5px #000, 0 0 5px #000, 0 0 5px #000, 0 0 5px #000;
-  font-size: 5.25rem;
-  position: relative;
-  z-index: 99;
-}
-
 .card {
   color: #006b77;
   border: 5px solid rgb(75, 75, 75);
@@ -69,4 +61,21 @@ h2.hockey-stick-title {
 
 .outline-black {
   text-shadow: 0 0 5px #000, 0 0 5px #000, 0 0 5px #000, 0 0 5px #000;
+}
+
+.outline-accent {
+  text-shadow: 0 0 5px #f3901d, 0 0 5px #f3901d, 0 0 5px #f3901d,
+    0 0 5px #f3901d;
+}
+
+.border-primary {
+  border: 3px solid #00788a;
+}
+
+.border-accent {
+  border: 3px solid #f3901d;
+}
+
+.box-shadow {
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 }

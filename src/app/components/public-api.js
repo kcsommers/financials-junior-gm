@@ -1,4 +1,5 @@
 export { BudgetStick } from './BudgetStick.jsx';
+export { PlayerCard } from './PlayerCard';
 export { MoneyLeftCard } from './home-page/MoneyLeftCard.jsx';
 export { Navigation } from './home-page/Navigation.jsx';
 export { ObjectivesBoard } from './ObjectivesBoard.jsx';
@@ -8,3 +9,5 @@ export { TeamRankCard } from './home-page/TeamRankCard.jsx';
 export { TrophiesStick } from './TrophiesStick.jsx';
 export { TeamRankStick } from './TeamRankStick.jsx';
 export { MoneyLeftStick } from './MoneyLeftStick';
+export { SignStick } from './SignStick';
+export { ScoutStick } from './ScoutStick';

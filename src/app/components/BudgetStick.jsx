@@ -3,29 +3,36 @@ import { useSelector } from 'react-redux';
 import { motion } from 'framer-motion';
 import icon from '@images/icons/budget-hockey-stick.svg';
 import '@css/components/BudgetStick.css';
+import { ReactSVG } from 'react-svg';
 
-export const BudgetStick = ({ tutorialActive }) => {
+export const BudgetStick = ({ tutorialActive, includeSubtext }) => {
   const animationState = useSelector(
     (state) => state.tutorials.home.budgetStick
   );
 
   const card = (
-    <div className='budget-stick-inner'>
-      <img className='season-stick-img' src={icon} alt='Budget' />
-      <h2 className='hockey-stick-title'>Budget</h2>
-      <p className='budget-stick-text'>Manage your team's money.</p>
+    <div
+      className={`stick-btn-inner stick-btn-inverse${
+        includeSubtext ? ' has-sub-text' : ''
+      }`}
+    >
+      <ReactSVG className='stick-btn-img' src={icon} />
+      <div className='stick-btn-title-wrap'>
+        <h2 className='stick-btn-title'>Budget</h2>
+      </div>
+      <p className='stick-btn-text'>Manage your team's money.</p>
     </div>
   );
 
   return tutorialActive ? (
     <motion.div
-      className='hidden budget-stick-wrap'
+      className='hidden stick-btn-wrap'
       animate={animationState}
       transition={{ default: { duration: 1 } }}
     >
       {card}
     </motion.div>
   ) : (
-    <div className='budge-stick-wrap'>{card}</div>
+    <div className='stick-btn-wrap'>{card}</div>
   );
 };

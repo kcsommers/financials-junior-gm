@@ -1,7 +1,7 @@
 .middle-card {
   border: 10px solid #00788a;
   border-radius: 15px;
-  padding: 1rem;
+  padding: 0.5rem 1rem;
   background: rgb(75, 75, 75);
   color: white;
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);

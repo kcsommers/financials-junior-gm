@@ -50,11 +50,14 @@ export default function Home() {
         </div>
         <div className='hockey-sticks-row'>
           <TeamStick tutorialActive={tutorialActive} includeSubtext={true} />
-          <BudgetStick tutorialActive={tutorialActive} />
+          <BudgetStick tutorialActive={tutorialActive} includeSubtext={true} />
         </div>
         <div className='hockey-sticks-row hockey-sticks-row-2'>
-          <SeasonStick tutorialActive={tutorialActive} />
-          <TrophiesStick tutorialActive={tutorialActive} />
+          <SeasonStick tutorialActive={tutorialActive} includeSubtext={true} />
+          <TrophiesStick
+            tutorialActive={tutorialActive}
+            includeSubtext={true}
+          />
         </div>
         <div></div>
       </div>
