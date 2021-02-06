@@ -1,8 +1,33 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import '@css/components/PlayerCard.css';
+import { useDispatch } from 'react-redux';
+import { toggleModal } from '../redux/actions';
 
 export const PlayerCard = ({ player, tutorialActive }) => {
+  const dispatch = useDispatch();
+
+  const openModal = () => {
+    dispatch(
+      toggleModal({
+        isOpen: true,
+        template: (
+          <div className='player-modal-container'>
+            <div className='player-card-wrap player-card-large'>{inner}</div>
+            <div className='player-modal-buttons-wrap'>
+              <button class='player-modal-button outline-black box-shadow'>
+                Trade
+              </button>
+              <button class='player-modal-button outline-black box-shadow'>
+                Release
+              </button>
+            </div>
+          </div>
+        ),
+      })
+    );
+  };
+
   const inner = player ? (
     <div>
       <p className='position-text'>Position</p>
@@ -10,6 +35,7 @@ export const PlayerCard = ({ player, tutorialActive }) => {
         className={`box-shadow player-card-inner${
           player ? ' border-primary' : ' border-accent'
         }`}
+        onClick={openModal.bind(this)}
       >
         <div className='player-card-header'>
           <div className='player-rank'>
@@ -36,6 +62,7 @@ export const PlayerCard = ({ player, tutorialActive }) => {
         className={`box-shadow player-card-inner${
           player ? ' border-primary' : ' border-accent'
         }`}
+        onClick={openModal.bind(this)}
       >
         <p className='add-player-text color-primary outline-accent'>
           Add Player
