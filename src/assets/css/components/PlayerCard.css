@@ -3,6 +3,13 @@ div.player-card-inner {
   height: 124px;
   border-radius: 15px;
   cursor: pointer;
+  background-color: #e5e5e5;
+}
+
+div.player-card-large div.player-card-inner {
+  width: 300px;
+  height: 372px;
+  cursor: initial;
 }
 
 p.add-player-text {
@@ -16,4 +23,36 @@ p.add-player-text {
 
 p.position-text {
   text-align: center;
+}
+
+div.player-modal-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+div.player-modal-buttons-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  position: relative;
+  top: 4rem;
+  flex: 1;
+  align-self: stretch;
+}
+
+button.player-modal-button {
+  background-color: #f3901d;
+  border-radius: 25px;
+  color: #fff;
+  font-size: 4rem;
+  display: flex;
+  width: 350px;
+  padding: 2rem 0;
+  border: none;
+  text-align: center;
+  justify-content: center;
+  outline: none;
 }

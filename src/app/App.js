@@ -5,6 +5,7 @@ import HomePage from './pages/HomePage';
 import TeamPage from './pages/TeamPage';
 import Sign from './pages/Sign';
 import '@css/App.css';
+import { Modal } from '@components';
 
 const App = () => {
   return (
@@ -17,6 +18,7 @@ const App = () => {
           <Route exact path='/sign' component={Sign} />
         </Switch>
       </Router>
+      <Modal />
     </div>
   );
 };
