@@ -1,6 +1,5 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import HomeTutorial from '../tutorial/components/HomeTutorial';
 import '@css/pages/HomePage.css';
 import {
   TeamRankCard,
@@ -12,9 +11,31 @@ import {
   Navigation,
   BudgetStick,
 } from '@components';
+import {
+  introSlides,
+  objectivesSlides,
+  teamRankSlides,
+  moneyLeftSlides,
+  teamStickSlides,
+  budgetStickSlides,
+  trophiesStickSlides,
+  seasonStickSlides,
+  Tutorial,
+} from '@tutorial';
 import sharksLogo from '@images/sharks-comerica-logo.svg';
 
 const isFirstTime = false;
+
+const tutorialSlides = [
+  introSlides,
+  objectivesSlides,
+  teamRankSlides,
+  moneyLeftSlides,
+  teamStickSlides,
+  budgetStickSlides,
+  trophiesStickSlides,
+  seasonStickSlides,
+];
 
 export default function Home() {
   const [tutorialActive, setTutorialActive] = React.useState(isFirstTime);
@@ -64,7 +85,7 @@ export default function Home() {
       <AnimatePresence>
         {tutorialActive && (
           <motion.div animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-            <HomeTutorial onComplete={onTutorialComplete} />
+            <Tutorial slides={tutorialSlides} onComplete={onTutorialComplete} />
           </motion.div>
         )}
       </AnimatePresence>

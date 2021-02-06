@@ -1,3 +1,7 @@
+div.tutorial-container {
+  z-index: 1000;
+}
+
 div.tutorial-container,
 div.tutorial-container-inner {
   position: absolute;

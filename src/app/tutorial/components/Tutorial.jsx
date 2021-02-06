@@ -2,20 +2,10 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useDispatch } from 'react-redux';
 import { SharkieComponent } from './Sharkie';
-import introSlides from '../lessons/home/intro-slides';
-import objectivesSlides from '../lessons/home/objectives-slides';
-import teamRankSlides from '../lessons/home/team-rank-slides';
-import moneyLeftSlides from '../lessons/home/money-left-slides';
-import {
-  teamStickSlides,
-  budgetStickSlides,
-  trophiesStickSlides,
-  seasonStickSlides,
-} from '../lessons/home/hockey-stick-slides';
 import refreshBtn from '@images/refresh-btn.svg';
 import checkBtn from '@images/check-btn.svg';
-import { setAnimationState } from '../../redux/actions';
-import { SET_ANIMATION_STATE } from '../../redux/actionTypes';
+import { setAnimationState } from '@redux/actions';
+import { SET_ANIMATION_STATE } from '@redux/actionTypes';
 import '@css/tutorial/tutorials.css';
 
 const allActions = {
@@ -23,17 +13,6 @@ const allActions = {
 };
 
 let timer = 0;
-
-const slides = [
-  introSlides,
-  objectivesSlides,
-  teamRankSlides,
-  moneyLeftSlides,
-  teamStickSlides,
-  budgetStickSlides,
-  trophiesStickSlides,
-  seasonStickSlides,
-];
 
 const buttonVariants = {
   enter: {
@@ -66,7 +45,7 @@ const containerVariants = {
   },
 };
 
-const HomeTutorial = ({ onComplete }) => {
+export const Tutorial = ({ slides, onComplete }) => {
   const [state, setState] = useState({
     slideIndex: 0,
     currentSlides: slides[0],
@@ -217,5 +196,3 @@ const HomeTutorial = ({ onComplete }) => {
     </div>
   );
 };
-
-export default HomeTutorial;

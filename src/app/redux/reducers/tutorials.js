@@ -38,6 +38,11 @@ const initialState = {
       opacity: 0,
     },
   },
+  team: {
+    playerCard: {
+      highlight: false,
+    },
+  },
 };
 
 const tutorialsReducer = (state = initialState, action) => {
