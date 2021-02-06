@@ -15,13 +15,13 @@ export const MoneyLeftCard = ({ tutorialActive }) => {
 
   return tutorialActive ? (
     <motion.div
-      className='money-left-card hidden'
+      className='card hidden'
       animate={animationState}
       transition={{ default: { duration: 1 } }}
     >
       {card}
     </motion.div>
   ) : (
-    <div className='money-left-card'>{card}</div>
+    <div className='card'>{card}</div>
   );
 };

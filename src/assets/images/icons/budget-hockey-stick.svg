@@ -26,9 +26,9 @@
           <path id="Path_5" data-name="Path 5" d="M141.425,671.022A41.62,41.62,0,0,0,159.4,666.1c7.3-3.887,17.39-11.316,29.063-25.053l23.2-34.5,38.88-59.564,25.791-38.612L313.086,449l27.777-44.262,39.849-60.3,47.566-73.589,45.13-69.563L515,136.356l53.592-82.571L598.869,8.03s11.34-22.736,35.144-5.27c12.039,8.573,6.323,21.842,3.938,26.784-4.062,8.16-48.74,78.481-48.74,78.481l-29.6,45.257-30.35,48.244-33.08,51.015-30.553,47.487-23.806,38.418-40.233,63.633-58.669,88.74L310.175,541.94,279.8,589.556l-41.564,64.2L207.866,700.5l-30.593,44.223-6.337,8.623-8.1,11.024" transform="translate(181.737 0)" fill="#002f6c" stroke="#000" stroke-width="2"/>
         </g>
       </g>
-      <text id="Icon_" data-name="Icon " transform="translate(217 684.839)" fill="#00788a" stroke="#000" stroke-width="2" font-size="68.58" font-family="Helvetica-Bold, Helvetica" font-weight="700"><tspan x="-0.845" y="53">$</tspan></text>
-      <!-- <text id="Text" transform="translate(16.477 691.839)" fill="#fff" stroke="#000" stroke-width="2" font-size="54" font-family="Helvetica"><tspan x="20.425" y="42">Budget</tspan></text> -->
-      <text id="Subtext" transform="translate(2 783.839)" fill="#006b77" font-size="30" font-family="Helvetica"><tspan x="18.568" y="23">Manage your team&apos;s </tspan></text>
+      <text id="Icon_" data-name="Icon " transform="translate(217 684.839)" fill="#00788a" stroke="#000" stroke-width="2" font-size="90.58" font-family="Helvetica-Bold, Helvetica" font-weight="700"><tspan x="20.845" y="70">$</tspan></text>
+      <!-- <text id="Text" transform="translate(16.477 691.839)" fill="#fff" stroke="#000" stroke-width="2" font-size="54" font-family="Helvetica"><tspan x="20.425" y="42">Budget</tspan></text>
+      <text id="Subtext" transform="translate(2 783.839)" fill="#006b77" font-size="30" font-family="Helvetica"><tspan x="18.568" y="23">Manage your team&apos;s </tspan></text> -->
     </g>
   </g>
 </svg>

@@ -5,6 +5,7 @@ div.home-page-container {
 }
 
 .home-cards-row {
+  justify-content: center;
   display: flex;
 }
 
@@ -43,5 +44,5 @@ div.hockey-sticks-row {
 }
 
 div.hockey-sticks-row-2 {
-  margin-top: 6rem;
+  margin-top: 2.5rem;
 }
