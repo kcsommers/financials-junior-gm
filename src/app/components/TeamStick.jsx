@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import '@css/components/stick-btn.css';
 
 export const TeamStick = ({ tutorialActive, includeSubtext }) => {
-  const animationState = useSelector((state) => state.tutorials.home.teamStick);
+  const animationState = useSelector((state) => state.tutorial.home.teamStick);
 
   const card = (
     <div className={`stick-btn-inner${includeSubtext ? ' has-sub-text' : ''}`}>

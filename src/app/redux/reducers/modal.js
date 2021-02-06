@@ -3,6 +3,7 @@ import { TOGGLE_MODAL } from '../actionTypes';
 const initialState = {
   isOpen: false,
   template: null,
+  tutorialActive: false,
 };
 
 const tutorialsReducer = (state = initialState, action) => {

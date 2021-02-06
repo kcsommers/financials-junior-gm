@@ -7,7 +7,7 @@ import '@css/components/TrophiesStick.css';
 
 export const TrophiesStick = ({ tutorialActive, includeSubtext }) => {
   const animationState = useSelector(
-    (state) => state.tutorials.home.trophiesStick
+    (state) => state.tutorial.home.trophiesStick
   );
 
   const card = (

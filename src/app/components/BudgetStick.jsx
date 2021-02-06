@@ -7,7 +7,7 @@ import { ReactSVG } from 'react-svg';
 
 export const BudgetStick = ({ tutorialActive, includeSubtext }) => {
   const animationState = useSelector(
-    (state) => state.tutorials.home.budgetStick
+    (state) => state.tutorial.home.budgetStick
   );
 
   const card = (

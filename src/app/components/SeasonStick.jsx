@@ -7,7 +7,7 @@ import { ReactSVG } from 'react-svg';
 
 export const SeasonStick = ({ tutorialActive, includeSubtext }) => {
   const animationState = useSelector(
-    (state) => state.tutorials.home.seasonStick
+    (state) => state.tutorial.home.seasonStick
   );
 
   const card = (
