@@ -4,7 +4,7 @@ import Intro from './pages/Intro';
 import HomePage from './pages/HomePage';
 import TeamPage from './pages/TeamPage';
 import Sign from './pages/Sign';
-import Scout from './pages/Scout';
+import Scout from './pages/ScoutPage';
 import '@css/App.css';
 import { Overlay } from '@components';
 
