@@ -30,7 +30,7 @@ export default function Home() {
         <div className='team-rank-card-box'>
           <TeamRankCard tutorialActive={tutorialActive} />
         </div>
-        <div className='objectives-board-box'>
+        <div className='objectives-board-wrap'>
           <ObjectivesBoard
             tutorialActive={tutorialActive}
             objectivesArray={[
@@ -49,12 +49,15 @@ export default function Home() {
           <img src={sharksLogo} alt='Sharks Logo' />
         </div>
         <div className='hockey-sticks-row'>
-          <TeamStick tutorialActive={tutorialActive} />
-          <BudgetStick tutorialActive={tutorialActive} />
+          <TeamStick tutorialActive={tutorialActive} includeSubtext={true} />
+          <BudgetStick tutorialActive={tutorialActive} includeSubtext={true} />
         </div>
         <div className='hockey-sticks-row hockey-sticks-row-2'>
-          <SeasonStick tutorialActive={tutorialActive} />
-          <TrophiesStick tutorialActive={tutorialActive} />
+          <SeasonStick tutorialActive={tutorialActive} includeSubtext={true} />
+          <TrophiesStick
+            tutorialActive={tutorialActive}
+            includeSubtext={true}
+          />
         </div>
         <div></div>
       </div>

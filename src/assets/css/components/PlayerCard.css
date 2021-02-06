@@ -1,0 +1,22 @@
+div.player-card-wrap {
+}
+
+div.player-card-inner {
+  width: 100px;
+  height: 124px;
+  border-radius: 15px;
+  cursor: pointer;
+}
+
+p.add-player-text {
+  font-size: 2.25rem;
+  text-align: center;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+p.position-text {
+  text-align: center;
+}
