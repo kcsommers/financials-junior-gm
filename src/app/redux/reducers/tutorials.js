@@ -1,6 +1,7 @@
-import { SET_ANIMATION_STATE } from '../actionTypes';
+import { SET_ANIMATION_STATE, SET_TUTORIAL_IS_ACTIVE } from '../actionTypes';
 
 const initialState = {
+  isActive: true,
   home: {
     objectivesBoard: {
       x: '0%',
@@ -38,13 +39,24 @@ const initialState = {
       opacity: 0,
     },
   },
+  team: {
+    playerCard: {
+      highlight: false,
+    },
+  },
 };
 
 const tutorialsReducer = (state = initialState, action) => {
   switch (action.type) {
+    case SET_TUTORIAL_IS_ACTIVE: {
+      console.log('SET TUTORIAL ACTIVE:::: ', action);
+      return {
+        ...state,
+        isActive: action.payload.state.isActive,
+      };
+    }
     case SET_ANIMATION_STATE: {
       const payload = action.payload.state;
-
       const componentStates = {};
       if (payload.animationStates && payload.animationStates.length) {
         payload.animationStates.forEach((s) => {

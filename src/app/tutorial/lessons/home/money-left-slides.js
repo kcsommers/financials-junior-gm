@@ -1,5 +1,5 @@
 import Slide from '../../Slide';
-import { SET_ANIMATION_STATE } from '../../../redux/actionTypes';
+import { SET_ANIMATION_STATE } from '@redux/actionTypes';
 
 const slideConfigs = [
   {
@@ -76,4 +76,4 @@ const slideConfigs = [
   },
 ];
 
-export default slideConfigs.map((c) => new Slide(c));
+export const moneyLeftSlides = slideConfigs.map((c) => new Slide(c));

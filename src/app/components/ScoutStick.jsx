@@ -6,9 +6,7 @@ import { useSelector } from 'react-redux';
 import '@css/components/stick-btn.css';
 
 export const ScoutStick = ({ tutorialActive, includeSubtext }) => {
-  const animationState = useSelector(
-    (state) => state.tutorials.home.scoutStick
-  );
+  const animationState = useSelector((state) => state.tutorial.home.scoutStick);
 
   const card = (
     <div
