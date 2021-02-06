@@ -4,6 +4,7 @@ import Intro from './pages/Intro';
 import HomePage from './pages/HomePage';
 import TeamPage from './pages/TeamPage';
 import Sign from './pages/Sign';
+import Scout from './pages/Scout';
 import '@css/App.css';
 
 const App = () => {
@@ -15,6 +16,7 @@ const App = () => {
           <Route exact path='/home' component={HomePage} />
           <Route exact path='/team' component={TeamPage} />
           <Route exact path='/sign' component={Sign} />
+          <Route exact path='/scout' component={Scout} />
         </Switch>
       </Router>
     </div>
