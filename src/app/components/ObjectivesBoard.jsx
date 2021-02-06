@@ -5,7 +5,7 @@ import '@css/components/ObjectivesBoard.css';
 
 export const ObjectivesBoard = ({ tutorialActive, objectivesArray }) => {
   const animationState = useSelector(
-    (state) => state.tutorials.home.objectivesBoard
+    (state) => state.tutorial.home.objectivesBoard
   );
 
   const objectives = objectivesArray

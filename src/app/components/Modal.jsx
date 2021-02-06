@@ -8,7 +8,9 @@ import { toggleModal } from '../redux/actions';
 export const Modal = () => {
   const modalConfig = useSelector((state) => state.modal);
 
-  console.log('MODAL CONFIG:"::: ', modalConfig);
+  const tutorialActive = useSelector((state) => state.tutorial.isActive);
+
+  console.log('MODAL CONFIG:"::: ', modalConfig, tutorialActive);
 
   const dispatch = useDispatch();
 
@@ -39,11 +41,13 @@ export const Modal = () => {
           className='modal-container'
         >
           {modalConfig.template}
-          <ReactSVG
-            className='close-btn box-shadow'
-            src={closeBtn}
-            onClick={closeModal.bind(this)}
-          />
+          {!tutorialActive && (
+            <ReactSVG
+              className='close-btn box-shadow'
+              src={closeBtn}
+              onClick={closeModal.bind(this)}
+            />
+          )}
         </motion.div>
       )}
     </AnimatePresence>

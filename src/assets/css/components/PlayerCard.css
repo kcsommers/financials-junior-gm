@@ -1,3 +1,7 @@
+div.player-card-wrap.highlighted {
+  z-index: 1001;
+}
+
 div.player-card-inner {
   width: 100px;
   height: 124px;
