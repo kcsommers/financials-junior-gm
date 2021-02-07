@@ -17,6 +17,7 @@ export default class Slide {
     this.exitActions = config.exitActions;
     this.small = config.small;
     this.transparentBg = config.transparentBg;
+    this.slideAnimate = config.slideAnimate;
   }
 
   getJsx() {

@@ -8,22 +8,28 @@ const slideConfigs = [
     sharkie: 'speak',
     hasButtons: false,
     timer: Slide.SLIDE_DURATION,
-    y: '50%',
+    slideAnimate: {
+      y: '50%',
+    },
   },
   {
     message:
       'The higher your rank is, the better chance you will have to win the season!',
     sharkie: 'speak',
     hasButtons: false,
-    y: '50%',
+    slideAnimate: {
+      y: '50%',
+    },
     timer: Slide.SLIDE_DURATION,
   },
   {
-    message: 'You can sign new players to r team rank!',
+    message: 'You can sign new players to improve your team rank!',
     sharkie: 'speak',
     hasButtons: false,
     repeatIndex: 0,
-    y: '50%',
+    slideAnimate: {
+      y: '50%',
+    },
     timer: Slide.SLIDE_DURATION,
     exitActions: [
       {

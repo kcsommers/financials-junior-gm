@@ -7,7 +7,9 @@ const slideConfigs = [
     sharkie: 'play',
     hasButtons: false,
     timer: Slide.SLIDE_DURATION + 1000,
-    y: '60%',
+    slideAnimate: {
+      y: '60%',
+    },
     bubbleDelay: 500,
   },
   {
@@ -16,7 +18,9 @@ const slideConfigs = [
     sharkie: 'play',
     hasButtons: false,
     timer: Slide.SLIDE_DURATION,
-    y: '60%',
+    slideAnimate: {
+      y: '60%',
+    },
   },
   {
     message: 'Got it?',
@@ -24,7 +28,9 @@ const slideConfigs = [
     hasButtons: true,
     repeatIndex: 0,
     timer: 0,
-    y: '60%',
+    slideAnimate: {
+      y: '60%',
+    },
     exitActions: [
       {
         type: SET_ANIMATION_STATE,

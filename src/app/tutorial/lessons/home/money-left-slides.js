@@ -6,14 +6,18 @@ const slideConfigs = [
     message: 'Signing new players to improve your team rank will cost money.',
     sharkie: 'speakInverse',
     hasButtons: false,
-    y: '50%',
+    slideAnimate: {
+      y: '50%',
+    },
     timer: Slide.SLIDE_DURATION,
   },
   {
     message: 'This is the money that you have left to spend on your team.',
     sharkie: 'speakInverse',
     hasButtons: false,
-    y: '50%',
+    slideAnimate: {
+      y: '50%',
+    },
     timer: Slide.SLIDE_DURATION,
   },
   {
@@ -22,7 +26,9 @@ const slideConfigs = [
     sharkie: 'playInverse',
     hasButtons: false,
     repeatIndex: 0,
-    y: '50%',
+    slideAnimate: {
+      y: '50%',
+    },
     timer: Slide.SLIDE_DURATION,
   },
   {
@@ -31,7 +37,9 @@ const slideConfigs = [
     hasButtons: true,
     repeatIndex: 0,
     timer: 0,
-    y: '50%',
+    slideAnimate: {
+      y: '50%',
+    },
     exitActions: [
       {
         type: SET_ANIMATION_STATE,

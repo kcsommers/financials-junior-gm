@@ -103,13 +103,9 @@ function TeamPage() {
           </div>
         </div>
       </div>
-      <AnimatePresence>
-        {tutorialActive && (
-          <motion.div animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-            <Tutorial slides={teamSlides} onComplete={onTutorialComplete} />
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {tutorialActive && (
+        <Tutorial slides={teamSlides} onComplete={onTutorialComplete} />
+      )}
     </div>
   );
 }
