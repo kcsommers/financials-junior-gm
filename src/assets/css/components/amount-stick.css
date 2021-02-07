@@ -1,3 +1,7 @@
+div.stick-btn-wrap.stick-large {
+  transform: scale(1.4);
+}
+
 div.amount-stick-wrap {
   display: inline-flex;
   position: relative;
