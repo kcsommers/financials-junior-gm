@@ -51,7 +51,7 @@ const slideConfigs = [
               component: 'teamRank',
               state: {
                 scale: 1.5,
-                zIndex: 102,
+                zIndex: 1001,
                 y: '15%',
                 opacity: 1,
                 transition: { delay: 0.5, duration: 1 },

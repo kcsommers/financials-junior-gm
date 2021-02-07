@@ -20,6 +20,7 @@ export default class Slide {
   }
 
   getJsx() {
+    return <p className='slide-msg color-primary'>{this.message}</p>;
     if (!this.accentText) {
       return <p className='slide-msg color-primary'>{this.message}</p>;
     }

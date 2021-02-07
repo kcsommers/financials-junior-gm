@@ -112,7 +112,7 @@ const slideConfigs = [
               component: 'objectivesBoard',
               state: {
                 scale: 1.5,
-                zIndex: 1,
+                zIndex: 1001,
                 y: '15%',
                 opacity: 1,
                 transition: { duration: 1 },
