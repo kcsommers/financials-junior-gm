@@ -1,9 +1,14 @@
+div.money-level-container {
+  flex: 1;
+  overflow: hidden;
+}
+
 div.money-level-container p.header {
   font-size: 1.25rem;
   text-align: center;
 }
 
-div.money-level-container span {
+div.money-level-container span.contract-amount {
   font-size: 1.75rem;
   position: absolute;
   top: 0.5rem;
@@ -14,6 +19,6 @@ div.money-level-container > .card {
   position: relative;
   display: flex;
   align-items: center;
-  justify-content: space-center;
+  justify-content: space-around;
   padding: 0.5rem 0;
 }

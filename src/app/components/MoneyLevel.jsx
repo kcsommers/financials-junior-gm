@@ -18,11 +18,11 @@ const levels = {
 export const MoneyLevel = ({ level, children }) => {
   return (
     <div className='money-level-container'>
-      <p className='header'>
+      <p className='header color-primary'>
         These players get a {levels[level].long} contract
       </p>
       <div className='card auto-card'>
-        <span>{levels[level].short}</span>
+        <span className='contract-amount'>{levels[level].short}</span>
         {children}
       </div>
     </div>
