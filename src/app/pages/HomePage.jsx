@@ -72,14 +72,27 @@ export default function Home() {
           <img src={sharksLogo} alt='Sharks Logo' />
         </div>
         <div className='hockey-sticks-row'>
-          <TeamStick tutorialActive={tutorialActive} includeSubtext={true} />
-          <BudgetStick tutorialActive={tutorialActive} includeSubtext={true} />
+          <TeamStick
+            tutorialActive={tutorialActive}
+            includeSubtext={true}
+            link='/team'
+          />
+          <BudgetStick
+            tutorialActive={tutorialActive}
+            includeSubtext={true}
+            link='/budget'
+          />
         </div>
         <div className='hockey-sticks-row hockey-sticks-row-2'>
-          <SeasonStick tutorialActive={tutorialActive} includeSubtext={true} />
+          <SeasonStick
+            tutorialActive={tutorialActive}
+            includeSubtext={true}
+            link='/season'
+          />
           <TrophiesStick
             tutorialActive={tutorialActive}
             includeSubtext={true}
+            link='/trophies'
           />
         </div>
         <div></div>
