@@ -1,6 +1,9 @@
 div.scout-page-container div.page-body {
   padding-top: 0;
 }
+div.scout-page-container div.page-header {
+  margin-bottom: 0;
+}
 
 div.scout-page-header-stick-wrap {
   left: 5%;
