@@ -15,6 +15,7 @@ import { Tutorial, scoutSlides } from '@tutorial';
 import { setTutorialIsActive } from '@redux/actions';
 import '@css/pages/page.css';
 import '@css/pages/ScoutPage.css';
+import { Link } from 'react-router-dom';
 
 const teamSlides = [scoutSlides];
 
@@ -60,6 +61,28 @@ function TeamPage() {
   const newPlayersAnimationState = useSelector(
     (state) => state.tutorial.scout.newPlayersBoard
   );
+
+  const ml1AnimationState = useSelector(
+    (state) => state.tutorial.scout.moneyLevel1
+  );
+
+  const ml2AnimationState = useSelector(
+    (state) => state.tutorial.scout.moneyLevel2
+  );
+
+  const ml3AnimationState = useSelector(
+    (state) => state.tutorial.scout.moneyLevel3
+  );
+
+  const finishedBtnAnimationState = useSelector(
+    (state) => state.tutorial.scout.finishedBtn
+  );
+
+  const moneyLevelAnimationStates = [
+    ml1AnimationState,
+    ml2AnimationState,
+    ml3AnimationState,
+  ];
 
   const tutorialActive = useSelector((state) => state.tutorial.isActive);
 
@@ -137,7 +160,10 @@ function TeamPage() {
       >
         {(provided) => (
           <DropContainer provided={provided} innerRef={provided.innerRef}>
-            <MoneyLevel level='twoDollars'>
+            <MoneyLevel
+              level='twoDollars'
+              animationState={moneyLevelAnimationStates[i]}
+            >
               {row.map((p, j) => (
                 <Draggable
                   key={`signed-${i}-${j}`}
@@ -203,7 +229,15 @@ function TeamPage() {
               <p className='color-primary'>
                 Remember to tap a player to learn more about them!
               </p>
-              <span className='color-primary'>Click here when you finish!</span>
+              <motion.div
+                className='color-primary finished-btn'
+                animate={finishedBtnAnimationState}
+              >
+                <Link class='text-link' to='/sign'>
+                  <span>Click here when you finish!</span>
+                  <div className='check-btn-small'></div>
+                </Link>
+              </motion.div>
             </div>
           </div>
         </div>

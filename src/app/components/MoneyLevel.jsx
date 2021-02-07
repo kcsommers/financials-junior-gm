@@ -1,4 +1,5 @@
 import '@css/components/MoneyLevel.css';
+import { motion } from 'framer-motion';
 
 const levels = {
   oneDollar: {
@@ -15,16 +16,16 @@ const levels = {
   },
 };
 
-export const MoneyLevel = ({ level, children }) => {
+export const MoneyLevel = ({ level, children, animationState }) => {
   return (
-    <div className='money-level-container'>
+    <div className='money-level-container' animate={animationState}>
       <p className='header color-primary'>
         These players get a {levels[level].long} contract
       </p>
-      <div className='card auto-card'>
+      <motion.div className='card auto-card' animate={animationState}>
         <span className='contract-amount'>{levels[level].short}</span>
         {children}
-      </div>
+      </motion.div>
     </div>
   );
 };
