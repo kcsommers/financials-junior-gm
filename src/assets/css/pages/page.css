@@ -9,16 +9,29 @@ div.page-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+div.page-header:not(.page-header-inverse) {
   padding-right: 2rem;
-  margin-bottom: 0.5rem;
+}
+
+div.page-header.page-header-inverse {
+  padding-left: 2rem;
 }
 
 div.page-header-stick-wrap {
   position: relative;
+}
+
+div.page-header:not(.page-header-inverse) div.page-header-stick-wrap {
   left: -4%;
 }
 
-div.page-header-objectives-board-wrap {
+div.page-header.page-header-inverse div.page-header-stick-wrap {
+  right: 0%;
+}
+
+div.page-header-objectives-board-container {
   width: 325px;
 }
 
@@ -49,6 +62,7 @@ div.page-board {
   position: absolute;
   top: 1rem;
   right: 1rem;
+  z-index: 1;
 }
 
 div.page-board-card {

@@ -55,7 +55,7 @@ const fiftyCents = [
 
 const players = [...oneDollar, ...twoDollar, ...fiftyCents];
 
-function TeamPage() {
+const TeamPage = () => {
   // GET TEAM FROM STORE
 
   const newPlayersAnimationState = useSelector(
@@ -194,7 +194,7 @@ function TeamPage() {
           <div className='page-header-stick-wrap scout-page-header-stick-wrap'>
             <ScoutStick large={true}></ScoutStick>
           </div>
-          <div className='page-header-objectives-board-wrap'>
+          <div className='page-header-objectives-board-container'>
             <ObjectivesBoard
               objectivesArray={['1. Scout players to sign to your bench!']}
             ></ObjectivesBoard>
@@ -251,6 +251,6 @@ function TeamPage() {
       </div>
     </DragDropContext>
   );
-}
+};
 
 export default TeamPage;

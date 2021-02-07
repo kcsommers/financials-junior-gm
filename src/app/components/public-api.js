@@ -1,4 +1,6 @@
 export { BudgetStick } from './BudgetStick.jsx';
+export { BudgetSlider } from './budget-page/BudgetSlider';
+export { BudgetEquation } from './budget-page/BudgetEquation';
 export { MoneyLevel } from './MoneyLevel';
 export { PlayerCard } from './PlayerCard';
 export { MoneyLeftCard } from './home-page/MoneyLeftCard.jsx';

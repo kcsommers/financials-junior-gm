@@ -6,7 +6,7 @@ div.scout-page-container div.page-header {
 }
 
 div.scout-page-header-stick-wrap {
-  left: 5%;
+  left: 5% !important;
 }
 
 div.scout-page-board-header p {

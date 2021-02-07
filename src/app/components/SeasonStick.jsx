@@ -2,9 +2,9 @@ import React from 'react';
 import icon from '@images/icons/season-hockey-stick.svg';
 import { useSelector } from 'react-redux';
 import { motion } from 'framer-motion';
-import '@css/components/stick-btn.css';
 import { ReactSVG } from 'react-svg';
 import { Link } from 'react-router-dom';
+import '@css/components/stick-btn.css';
 
 export const SeasonStick = ({ tutorialActive, includeSubtext, link }) => {
   const animationState = useSelector(
@@ -14,12 +14,12 @@ export const SeasonStick = ({ tutorialActive, includeSubtext, link }) => {
   const card = (
     <div className={`stick-btn-inner${includeSubtext ? ' has-sub-text' : ''}`}>
       <ReactSVG className='stick-btn-img' src={icon} />
-      <Link className='text-link' to={link}>
-        <div className='stick-btn-title-wrap'>
-          <h2 className='stick-btn-title'>Season</h2>
-        </div>
+      <Link className='text-link stick-btn-title-link' to={link}>
+        <h2 className='stick-btn-title'>Season</h2>
       </Link>
-      <p className='stick-btn-text'>Play matches and win the championship!</p>
+      {includeSubtext && (
+        <p className='stick-btn-text'>Play matches and win the championship!</p>
+      )}
     </div>
   );
   return tutorialActive ? (

@@ -18,12 +18,12 @@ export const BudgetStick = ({ tutorialActive, includeSubtext, link }) => {
       }`}
     >
       <ReactSVG className='stick-btn-img' src={icon} />
-      <Link className='text-link' to={link}>
-        <div className='stick-btn-title-wrap'>
-          <h2 className='stick-btn-title'>Budget</h2>
-        </div>
+      <Link className='text-link stick-btn-title-link' to={link}>
+        <h2 className='stick-btn-title'>Budget</h2>
       </Link>
-      <p className='stick-btn-text'>Manage your team's money.</p>
+      {includeSubtext && (
+        <p className='stick-btn-text'>Manage your team's money.</p>
+      )}
     </div>
   );
 
