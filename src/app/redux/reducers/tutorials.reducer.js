@@ -1,7 +1,7 @@
 import { SET_ANIMATION_STATE, SET_TUTORIAL_IS_ACTIVE } from '../actionTypes';
 
 const initialState = {
-  isActive: false,
+  isActive: true,
   home: {
     objectivesBoard: {
       x: '0%',

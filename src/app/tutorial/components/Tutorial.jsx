@@ -187,10 +187,7 @@ export const Tutorial = ({ slides, onComplete }) => {
           className={`slide-wrap${
             currentSlide.small ? ' slide-wrap-small' : ''
           }`}
-          animate={{
-            x: currentSlide.x || 0,
-            y: currentSlide.y || 0,
-          }}
+          animate={currentSlide.slideAnimate}
         >
           <SharkieComponent
             slide={currentSlide}
