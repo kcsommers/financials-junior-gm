@@ -40,8 +40,6 @@ const tutorialSlides = [
 export default function Home() {
   const tutorialActive = useSelector((state) => state.tutorial.isActive);
 
-  console.log('TUTORIAL ACTIVE:::: ', tutorialActive);
-
   const dispatch = useDispatch();
 
   const onTutorialComplete = () => {
@@ -74,25 +72,34 @@ export default function Home() {
           <img src={sharksLogo} alt='Sharks Logo' />
         </div>
         <div className='hockey-sticks-row'>
-          <TeamStick tutorialActive={tutorialActive} includeSubtext={true} />
-          <BudgetStick tutorialActive={tutorialActive} includeSubtext={true} />
+          <TeamStick
+            tutorialActive={tutorialActive}
+            includeSubtext={true}
+            link='/team'
+          />
+          <BudgetStick
+            tutorialActive={tutorialActive}
+            includeSubtext={true}
+            link='/budget'
+          />
         </div>
         <div className='hockey-sticks-row hockey-sticks-row-2'>
-          <SeasonStick tutorialActive={tutorialActive} includeSubtext={true} />
+          <SeasonStick
+            tutorialActive={tutorialActive}
+            includeSubtext={true}
+            link='/season'
+          />
           <TrophiesStick
             tutorialActive={tutorialActive}
             includeSubtext={true}
+            link='/trophies'
           />
         </div>
         <div></div>
       </div>
-      <AnimatePresence>
-        {tutorialActive && (
-          <motion.div animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-            <Tutorial slides={tutorialSlides} onComplete={onTutorialComplete} />
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {tutorialActive && (
+        <Tutorial slides={tutorialSlides} onComplete={onTutorialComplete} />
+      )}
     </div>
   );
 }

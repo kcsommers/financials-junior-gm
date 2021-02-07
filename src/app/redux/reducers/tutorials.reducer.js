@@ -1,47 +1,48 @@
 import { SET_ANIMATION_STATE, SET_TUTORIAL_IS_ACTIVE } from '../actionTypes';
 
 const initialState = {
-  isActive: false,
+  isActive: true,
   home: {
     objectivesBoard: {
       x: '0%',
       y: '0%',
       scale: 1,
-      zIndex: 0,
       opacity: 0,
     },
     teamRank: {
       x: '0%',
       y: '0%',
       scale: 1,
-      zIndex: 0,
       opacity: 0,
     },
     moneyLeft: {
       x: '0%',
       y: '0%',
       scale: 1,
-      zIndex: 0,
       opacity: 0,
     },
     teamStick: {
       x: '0%',
       y: '0%',
       scale: 1,
-      zIndex: 0,
       opacity: 0,
     },
     budgetStick: {
       x: '0%',
       y: '0%',
       scale: 1,
-      zIndex: 0,
       opacity: 0,
     },
   },
   team: {
     playerCard: {
       highlight: false,
+    },
+  },
+  scout: {
+    newPlayersBoard: {
+      scale: 1,
+      opacity: 1,
     },
   },
 };

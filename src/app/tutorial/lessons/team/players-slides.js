@@ -8,8 +8,10 @@ const slideConfigs = [
     sharkie: 'speakInverse',
     hasButtons: false,
     timer: Slide.SLIDE_DURATION,
-    y: '63%',
-    x: '-63%',
+    slideAnimate: {
+      y: '63%',
+      x: '-63%',
+    },
     small: true,
     transparentBg: true,
     exitActions: [
@@ -35,8 +37,10 @@ const slideConfigs = [
     hasButtons: false,
     timer: Slide.SLIDE_DURATION,
     small: true,
-    y: '63%',
-    x: '-63%',
+    slideAnimate: {
+      y: '63%',
+      x: '-63%',
+    },
     transparentBg: true,
   },
   {
@@ -45,8 +49,10 @@ const slideConfigs = [
     hasButtons: false,
     timer: Slide.SLIDE_DURATION,
     small: true,
-    y: '63%',
-    x: '-63%',
+    slideAnimate: {
+      y: '63%',
+      x: '-63%',
+    },
     transparentBg: true,
     exitActions: [
       {
@@ -79,8 +85,11 @@ const slideConfigs = [
     hasButtons: false,
     timer: Slide.SLIDE_DURATION,
     small: true,
-    y: '91%',
-    x: '-63%',
+    slideAnimate: {
+      y: '91%',
+      x: '-63%',
+      zIndex: 1000,
+    },
     transparentBg: true,
   },
   {
@@ -89,8 +98,11 @@ const slideConfigs = [
     hasButtons: false,
     timer: Slide.SLIDE_DURATION,
     small: true,
-    y: '91%',
-    x: '-63%',
+    slideAnimate: {
+      y: '91%',
+      x: '-63%',
+      zIndex: 1000,
+    },
     transparentBg: true,
   },
   {
@@ -100,8 +112,11 @@ const slideConfigs = [
     hasButtons: false,
     timer: Slide.SLIDE_DURATION,
     small: true,
-    y: '91%',
-    x: '-63%',
+    slideAnimate: {
+      y: '91%',
+      x: '-63%',
+      zIndex: 1000,
+    },
     transparentBg: true,
   },
   {
@@ -111,8 +126,11 @@ const slideConfigs = [
     hasButtons: false,
     timer: Slide.SLIDE_DURATION,
     small: true,
-    y: '91%',
-    x: '-63%',
+    slideAnimate: {
+      y: '91%',
+      x: '-63%',
+      zIndex: 1000,
+    },
     transparentBg: true,
   },
   {
@@ -122,8 +140,11 @@ const slideConfigs = [
     hasButtons: false,
     timer: Slide.SLIDE_DURATION,
     small: true,
-    y: '91%',
-    x: '-63%',
+    slideAnimate: {
+      y: '91%',
+      x: '-63%',
+      zIndex: 1000,
+    },
     transparentBg: true,
   },
   {
@@ -132,8 +153,11 @@ const slideConfigs = [
     hasButtons: false,
     timer: Slide.SLIDE_DURATION,
     small: true,
-    y: '91%',
-    x: '-63%',
+    slideAnimate: {
+      y: '91%',
+      x: '-63%',
+      zIndex: 1000,
+    },
     transparentBg: true,
   },
   {
@@ -143,8 +167,11 @@ const slideConfigs = [
     hasButtons: false,
     timer: Slide.SLIDE_DURATION,
     small: true,
-    y: '91%',
-    x: '-63%',
+    slideAnimate: {
+      y: '91%',
+      x: '-63%',
+      zIndex: 1000,
+    },
     transparentBg: true,
   },
   {
@@ -154,8 +181,11 @@ const slideConfigs = [
     hasButtons: false,
     timer: Slide.SLIDE_DURATION,
     small: true,
-    y: '91%',
-    x: '-63%',
+    slideAnimate: {
+      y: '91%',
+      x: '-63%',
+      zIndex: 1000,
+    },
     transparentBg: true,
   },
   {
@@ -164,8 +194,11 @@ const slideConfigs = [
     hasButtons: false,
     timer: Slide.SLIDE_DURATION,
     small: true,
-    y: '91%',
-    x: '-63%',
+    slideAnimate: {
+      y: '91%',
+      x: '-63%',
+      zIndex: 1000,
+    },
     transparentBg: true,
   },
   {
@@ -174,8 +207,11 @@ const slideConfigs = [
     hasButtons: false,
     timer: Slide.SLIDE_DURATION,
     small: true,
-    y: '91%',
-    x: '-63%',
+    slideAnimate: {
+      y: '91%',
+      x: '-63%',
+      zIndex: 1000,
+    },
     transparentBg: true,
   },
   {
@@ -185,8 +221,11 @@ const slideConfigs = [
     hasButtons: false,
     timer: Slide.SLIDE_DURATION,
     small: true,
-    y: '91%',
-    x: '50%',
+    slideAnimate: {
+      y: '91%',
+      x: '50%',
+      zIndex: 1000,
+    },
     transparentBg: true,
     exitActions: [
       {
