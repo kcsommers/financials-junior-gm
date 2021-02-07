@@ -18,7 +18,7 @@ import '@css/pages/ScoutPage.css';
 
 const teamSlides = [playersSlides];
 
-const players = [
+const oneDollar = [
   {
     name: 'Kacy Sommers',
   },
@@ -28,6 +28,8 @@ const players = [
   {
     name: 'Joni Blue',
   },
+];
+const twoDollar = [
   {
     name: 'Emmylou Bee',
   },
@@ -37,6 +39,8 @@ const players = [
   {
     name: 'Andrew Andrews',
   },
+];
+const fiftyCents = [
   {
     name: 'Steve Stevens',
   },
@@ -47,6 +51,8 @@ const players = [
     name: 'PJ Peters',
   },
 ];
+
+const players = [...oneDollar, ...twoDollar, ...fiftyCents];
 
 function TeamPage() {
   // GET TEAM FROM STORE
@@ -60,9 +66,8 @@ function TeamPage() {
   };
 
   let row = 0;
-  const playersRows = players
+  const unsignedPlayerRows = players
     .reduce((rows, player, i) => {
-      console.log('ROWSSS:::: ', i, (i + 1) % 3);
       if (rows[row]) {
         rows[row].push(player);
       } else {
@@ -76,7 +81,7 @@ function TeamPage() {
     .map((row, i) => (
       <Droppable
         key={`droppable-${i}`}
-        droppableId={`droppable-${i}`}
+        droppableId={`unsigned-droppable-${i}`}
         direction='horizontal'
       >
         {(provided) => (
@@ -85,8 +90,8 @@ function TeamPage() {
               <div className='scout-page-players-row-inner'>
                 {row.map((p, j) => (
                   <Draggable
-                    key={`draggable-${i}-${j}`}
-                    draggableId={`draggable-${i}-${j}`}
+                    key={`unsigned-${i}-${j}`}
+                    draggableId={`unsigned-${i}-${j}`}
                     index={j}
                   >
                     {(provided) => (
@@ -107,9 +112,51 @@ function TeamPage() {
       </Droppable>
     ));
 
+  row = 0;
+  const signedPlayers = players
+    .reduce((rows, player, i) => {
+      if (rows[row]) {
+        rows[row].push(player);
+      } else {
+        rows.push([player]);
+      }
+      if ((i + 1) % 3 === 0) {
+        row++;
+      }
+      return rows;
+    }, [])
+    .map((row, i) => (
+      <Droppable
+        key={`signed-droppable-${i}`}
+        droppableId={`signed-droppable-${i}`}
+        direction='horizontal'
+      >
+        {(provided) => (
+          <DropContainer provided={provided} innerRef={provided.innerRef}>
+            <MoneyLevel level='twoDollars'>
+              {row.map((p, j) => (
+                <Draggable
+                  key={`signed-${i}-${j}`}
+                  draggableId={`signed-${i}-${j}`}
+                  index={j}
+                >
+                  {(provided) => (
+                    <DragItem provided={provided} innerRef={provided.innerRef}>
+                      <PlayerCard player={p} isDraggable={true} />
+                    </DragItem>
+                  )}
+                </Draggable>
+              ))}
+              {/* {provided.placeholder} */}
+            </MoneyLevel>
+          </DropContainer>
+        )}
+      </Droppable>
+    ));
+
   return (
     <DragDropContext>
-      <div className='page-container'>
+      <div className='page-container scout-page-container'>
         <div className='page-header'>
           <div className='page-header-logo-wrap'>
             <img src={sharksLogo} alt='Sharks Logo' />
@@ -134,30 +181,9 @@ function TeamPage() {
 
             <div className='scout-page-board-inner'>
               <div className='scout-page-board-left'>
-                <div className='card auto-card'>{playersRows}</div>
+                <div className='card auto-card'>{unsignedPlayerRows}</div>
               </div>
-              <div className='scout-page-board-right'>
-                <div className='card auto-card'>
-                  <MoneyLevel level='twoDollars'>
-                    <div className='money-level-players-wrap'>
-                      <PlayerCard />
-                      <PlayerCard />
-                    </div>
-                  </MoneyLevel>
-                  <MoneyLevel level='oneDollar'>
-                    <div className='money-level-players-wrap'>
-                      <PlayerCard />
-                      <PlayerCard />
-                    </div>
-                  </MoneyLevel>
-                  <MoneyLevel level='fiftyCents'>
-                    <div className='money-level-players-wrap'>
-                      <PlayerCard />
-                      <PlayerCard />
-                    </div>
-                  </MoneyLevel>
-                </div>
-              </div>
+              <div className='scout-page-board-right'>{signedPlayers}</div>
             </div>
             <div className='scout-page-board-footer'>
               <p className='color-primary'>
