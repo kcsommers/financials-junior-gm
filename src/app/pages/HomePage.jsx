@@ -40,8 +40,6 @@ const tutorialSlides = [
 export default function Home() {
   const tutorialActive = useSelector((state) => state.tutorial.isActive);
 
-  console.log('TUTORIAL ACTIVE:::: ', tutorialActive);
-
   const dispatch = useDispatch();
 
   const onTutorialComplete = () => {
@@ -86,13 +84,9 @@ export default function Home() {
         </div>
         <div></div>
       </div>
-      <AnimatePresence>
-        {tutorialActive && (
-          <motion.div animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-            <Tutorial slides={tutorialSlides} onComplete={onTutorialComplete} />
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {tutorialActive && (
+        <Tutorial slides={tutorialSlides} onComplete={onTutorialComplete} />
+      )}
     </div>
   );
 }

@@ -19,7 +19,7 @@ const slideConfigs = [
     timer: Slide.SLIDE_DURATION,
   },
   {
-    message: 'You can sign new players to improve you team rank!',
+    message: 'You can sign new players to r team rank!',
     sharkie: 'speak',
     hasButtons: false,
     repeatIndex: 0,
@@ -36,14 +36,10 @@ const slideConfigs = [
               state: {
                 scale: 1,
                 y: '0%',
-                opacity: [null, 0.5],
+                opacity: 0.6,
                 transition: {
                   delay: 0,
                   duration: 1,
-                  times: [0, 1],
-                  zIndex: {
-                    delay: 1,
-                  },
                 },
               },
             },
@@ -51,9 +47,9 @@ const slideConfigs = [
               component: 'moneyLeft',
               state: {
                 scale: 1.5,
-                zIndex: 1001,
                 y: '15%',
                 opacity: 1,
+                zIndex: 1,
                 transition: { delay: 0.5, duration: 1 },
               },
             },

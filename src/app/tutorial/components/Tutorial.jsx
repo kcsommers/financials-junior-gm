@@ -15,6 +15,15 @@ const allActions = {
 
 let timer = 0;
 
+const containerVariants = {
+  visible: {
+    opacity: 1,
+  },
+  hidden: {
+    opacity: 0,
+  },
+};
+
 const buttonVariants = {
   enter: {
     opacity: 0,
@@ -37,20 +46,12 @@ const buttonVariants = {
   },
 };
 
-const containerVariants = {
-  visible: {
-    opacity: 1,
-  },
-  hidden: {
-    opacity: 0,
-  },
-};
-
 export const Tutorial = ({ slides, onComplete }) => {
   const [state, setState] = useState({
     slideIndex: 0,
     currentSlides: slides[0],
     inTransition: false,
+    isComplete: false,
   });
 
   const dispatch = useDispatch();
@@ -82,6 +83,7 @@ export const Tutorial = ({ slides, onComplete }) => {
 
     window.setTimeout(() => {
       setState({
+        ...state,
         currentSlides: nextSlides,
         slideIndex: 0,
         inTransition: false,
@@ -108,7 +110,14 @@ export const Tutorial = ({ slides, onComplete }) => {
       const nextSlides = slides[currentSlidesIndex + 1];
       if (!nextSlides) {
         // if none, we're done
-        onComplete();
+        setState({
+          ...state,
+          isComplete: true,
+        });
+        // allow a second to animate out
+        window.setTimeout(() => {
+          onComplete();
+        }, 1000);
         return;
       }
 
@@ -166,38 +175,30 @@ export const Tutorial = ({ slides, onComplete }) => {
   ) : null;
 
   return (
-    <div
+    <motion.div
       className={`tutorial-container${
         currentSlide.transparentBg ? ' transparent' : ''
       }`}
+      animate={state.isComplete ? 'hidden' : 'visible'}
+      variants={containerVariants}
     >
-      <AnimatePresence>
+      <div className='tutorial-container-inner'>
         <motion.div
-          className='tutorial-container-inner'
-          animate={state.inTransition ? 'hidden' : 'visible'}
-          variants={containerVariants}
-          exit='hidden'
-          transition={{
-            duration: 1,
+          className={`slide-wrap${
+            currentSlide.small ? ' slide-wrap-small' : ''
+          }`}
+          animate={{
+            x: currentSlide.x || 0,
+            y: currentSlide.y || 0,
           }}
         >
-          <motion.div
-            className={`slide-wrap${
-              currentSlide.small ? ' slide-wrap-small' : ''
-            }`}
-            animate={{
-              x: currentSlide.x || 0,
-              y: currentSlide.y || 0,
-            }}
-          >
-            {buttons}
-            <SharkieComponent
-              slide={currentSlide}
-              inTransition={state.inTransition}
-            ></SharkieComponent>
-          </motion.div>
+          <SharkieComponent
+            slide={currentSlide}
+            inTransition={state.inTransition}
+          ></SharkieComponent>
+          {buttons}
         </motion.div>
-      </AnimatePresence>
-    </div>
+      </div>
+    </motion.div>
   );
 };

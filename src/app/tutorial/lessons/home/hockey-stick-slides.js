@@ -22,7 +22,7 @@ const teamStickSlideConfigs = [
                 scale: 1,
                 y: '0%',
                 x: '0%',
-                opacity: 0.5,
+                opacity: 0.6,
                 transition: {
                   delay: 0,
                   duration: 1,
@@ -37,7 +37,7 @@ const teamStickSlideConfigs = [
                 x: ['0%', '0%', '0%', '-5%'],
                 times: [0, 0.5, 1.5, 2],
                 opacity: 1,
-                zIndex: 1001,
+                zIndex: 1,
                 transition: {
                   delay: 0.5,
                   duration: 2,
@@ -83,7 +83,7 @@ const budgetStickSlideConfigs = [
                 scale: 1,
                 y: '0%',
                 x: '0%',
-                opacity: 0.5,
+                opacity: 0.6,
                 transition: {
                   delay: 0,
                   duration: 1,
@@ -98,7 +98,7 @@ const budgetStickSlideConfigs = [
                 x: ['0%', '0%', '0%', '-5%'],
                 times: [0, 0.5, 1.5, 2],
                 opacity: 1,
-                zIndex: 1001,
+                zIndex: 1,
                 transition: {
                   delay: 0.5,
                   duration: 2,
@@ -143,7 +143,7 @@ const trophiesStickSlideConfigs = [
                 scale: 1,
                 y: '0%',
                 x: '0%',
-                opacity: 0.5,
+                opacity: 0.6,
                 transition: {
                   delay: 0,
                   duration: 1,
@@ -158,7 +158,7 @@ const trophiesStickSlideConfigs = [
                 x: ['0%', '0%', '0%', '5%'],
                 times: [0, 0.5, 1.5, 2],
                 opacity: 1,
-                zIndex: 1001,
+                zIndex: 1,
                 transition: {
                   delay: 0.5,
                   duration: 2,
@@ -205,7 +205,7 @@ const seasonStickSlideConfigs = [
                 scale: 1,
                 y: '0%',
                 x: '0%',
-                opacity: 0.5,
+                opacity: 0.6,
                 transition: {
                   delay: 0,
                   duration: 1,
@@ -231,7 +231,7 @@ const seasonStickSlideConfigs = [
     hasButtons: true,
     y: '12%',
     x: '0%',
-    timer: Slide.SLIDE_DURATION,
+    timer: 0,
     repeatIndex: 0,
   },
   {
@@ -277,6 +277,28 @@ const seasonStickSlideConfigs = [
     y: '12%',
     x: '0%',
     timer: Slide.SLIDE_DURATION,
+    exitActions: [
+      {
+        type: SET_ANIMATION_STATE,
+        payload: {
+          page: 'home',
+          animationStates: [
+            'objectivesBoard',
+            'teamRank',
+            'moneyLeft',
+            'teamStick',
+            'budgetStick',
+            'seasonStick',
+            'trophiesStick',
+          ].map((c) => ({
+            component: c,
+            state: {
+              opacity: 1,
+            },
+          })),
+        },
+      },
+    ],
   },
 ];
 
