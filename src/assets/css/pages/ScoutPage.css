@@ -60,6 +60,15 @@ div.scout-page-board-footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.5rem;
+  padding: 0.2rem 0.5rem;
   font-size: 1.5rem;
+}
+
+div.finished-btn > a.text-link {
+  display: flex;
+  align-items: center;
+}
+
+.check-btn-small {
+  margin-left: 0.5rem;
 }

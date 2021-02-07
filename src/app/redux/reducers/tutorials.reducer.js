@@ -44,6 +44,22 @@ const initialState = {
       scale: 1,
       opacity: 1,
     },
+    moneyLevel1: {
+      scale: 1,
+      opacity: 1,
+    },
+    moneyLevel2: {
+      scale: 1,
+      opacity: 1,
+    },
+    moneyLevel3: {
+      scale: 1,
+      opacity: 1,
+    },
+    finishedBtn: {
+      scale: 1,
+      opacity: 1,
+    },
   },
 };
 
