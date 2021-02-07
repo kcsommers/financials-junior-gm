@@ -11,12 +11,12 @@ import {
 import sharksLogo from '@images/sharks-comerica-logo.svg';
 import { useSelector, useDispatch } from 'react-redux';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Tutorial, playersSlides } from '@tutorial';
+import { Tutorial, scoutSlides } from '@tutorial';
 import { setTutorialIsActive } from '@redux/actions';
 import '@css/pages/page.css';
 import '@css/pages/ScoutPage.css';
 
-const teamSlides = [playersSlides];
+const teamSlides = [scoutSlides];
 
 const oneDollar = [
   {
@@ -57,6 +57,10 @@ const players = [...oneDollar, ...twoDollar, ...fiftyCents];
 function TeamPage() {
   // GET TEAM FROM STORE
 
+  const newPlayersAnimationState = useSelector(
+    (state) => state.tutorial.scout.newPlayersBoard
+  );
+
   const tutorialActive = useSelector((state) => state.tutorial.isActive);
 
   const dispatch = useDispatch();
@@ -66,7 +70,7 @@ function TeamPage() {
   };
 
   let row = 0;
-  const unsignedPlayerRows = players
+  const newPlayerRows = players
     .reduce((rows, player, i) => {
       if (rows[row]) {
         rows[row].push(player);
@@ -81,7 +85,7 @@ function TeamPage() {
     .map((row, i) => (
       <Droppable
         key={`droppable-${i}`}
-        droppableId={`unsigned-droppable-${i}`}
+        droppableId={`new-droppable-${i}`}
         direction='horizontal'
       >
         {(provided) => (
@@ -90,8 +94,8 @@ function TeamPage() {
               <div className='scout-page-players-row-inner'>
                 {row.map((p, j) => (
                   <Draggable
-                    key={`unsigned-${i}-${j}`}
-                    draggableId={`unsigned-${i}-${j}`}
+                    key={`new-${i}-${j}`}
+                    draggableId={`new-${i}-${j}`}
                     index={j}
                   >
                     {(provided) => (
@@ -181,7 +185,17 @@ function TeamPage() {
 
             <div className='scout-page-board-inner'>
               <div className='scout-page-board-left'>
-                <div className='card auto-card'>{unsignedPlayerRows}</div>
+                {tutorialActive ? (
+                  <motion.div
+                    className='card auto-card'
+                    animate={newPlayersAnimationState}
+                    transition={{ default: { duration: 1 } }}
+                  >
+                    {newPlayerRows}
+                  </motion.div>
+                ) : (
+                  <div className='card auto-card'>{newPlayerRows}</div>
+                )}
               </div>
               <div className='scout-page-board-right'>{signedPlayers}</div>
             </div>
