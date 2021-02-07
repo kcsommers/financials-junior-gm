@@ -1,14 +1,21 @@
+div.player-card-wrap {
+  display: inline-block;
+}
+
 div.player-card-wrap.highlighted {
   z-index: 1001;
 }
 
 div.player-card-inner {
-  width: 100px;
-  height: 124px;
+  width: 90px;
+  height: 114px;
   border-radius: 15px;
-  cursor: pointer;
   background-color: #e5e5e5;
   transition: all 0.3s ease;
+}
+
+div.player-card-clickable .player-card-inner {
+  cursor: pointer;
 }
 
 div.player-card-large div.player-card-inner {

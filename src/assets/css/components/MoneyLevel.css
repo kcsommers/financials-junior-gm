@@ -1,7 +1,19 @@
-div.money-level-container p {
-  font-size: 1.5rem;
+div.money-level-container p.header {
+  font-size: 1.25rem;
+  text-align: center;
 }
 
 div.money-level-container span {
   font-size: 1.75rem;
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+}
+
+div.money-level-container > .card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-center;
+  padding: 0.5rem 0;
 }

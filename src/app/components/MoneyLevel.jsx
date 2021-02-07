@@ -15,12 +15,15 @@ const levels = {
   },
 };
 
-export const MoneyLevel = ({ level }) => {
+export const MoneyLevel = ({ level, children }) => {
   return (
     <div className='money-level-container'>
-      <p>These players get a ${levels[level].long} contract</p>
+      <p className='header'>
+        These players get a {levels[level].long} contract
+      </p>
       <div className='card auto-card'>
         <span>{levels[level].short}</span>
+        {children}
       </div>
     </div>
   );
