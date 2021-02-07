@@ -8,6 +8,7 @@ export const PlayerCard = ({
   tutorialActive,
   highlight,
   inOverlay,
+  isDraggable,
 }) => {
   const dispatch = useDispatch();
 
@@ -27,7 +28,11 @@ export const PlayerCard = ({
         className={`box-shadow player-card-inner${
           player ? ' border-primary' : ' border-accent'
         }`}
-        onClick={openOverlay.bind(this)}
+        onClick={() => {
+          if (!isDraggable) {
+            openOverlay();
+          }
+        }}
       >
         <div className='player-card-header'>
           <div className='player-rank'>
@@ -38,7 +43,7 @@ export const PlayerCard = ({
           </div>
         </div>
         <div className='player-card-body'>
-          <div className='player-card-img'></div>
+          <div className='player-card-img'>{player.name}</div>
           <div className='player-scores'>
             <div className='player-score player-score-off'>80</div>
             <div className='player-score player-score-pass'>80</div>
@@ -49,12 +54,10 @@ export const PlayerCard = ({
     </div>
   ) : (
     <div>
-      <p className='position-text'>Position</p>
       <div
         className={`box-shadow player-card-inner${
           player ? ' border-primary' : ' border-accent'
         }${highlight ? ' border-highlight' : ''}`}
-        onClick={openOverlay.bind(this)}
       >
         <p className='add-player-text color-primary outline-accent'>
           Add Player
@@ -84,7 +87,11 @@ export const PlayerCard = ({
       {inner}
     </motion.div>
   ) : (
-    <div className={`player-card-wrap${highlight ? ' highlighted' : ''}`}>
+    <div
+      className={`player-card-wrap${highlight ? ' highlighted' : ''}${
+        player && !isDraggable ? ' player-card-clickable' : ''
+      }`}
+    >
       {inner}
     </div>
   );

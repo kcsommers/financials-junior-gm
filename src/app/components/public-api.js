@@ -12,4 +12,6 @@ export { TeamRankStick } from './TeamRankStick.jsx';
 export { MoneyLeftStick } from './MoneyLeftStick';
 export { SignStick } from './SignStick';
 export { ScoutStick } from './ScoutStick';
+export { DropContainer } from './DropContainer';
 export { Overlay } from './Overlay';
+export { DragItem } from './DragItem';
