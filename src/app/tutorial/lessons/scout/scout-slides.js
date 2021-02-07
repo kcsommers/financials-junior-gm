@@ -79,7 +79,6 @@ const slideConfigs = [
             {
               component: 'newPlayersBoard',
               state: {
-                zIndex: 1001,
                 opacity: [0, 1],
                 scale: [1, 1.1],
               },

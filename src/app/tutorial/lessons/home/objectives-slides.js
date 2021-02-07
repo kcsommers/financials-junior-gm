@@ -36,14 +36,10 @@ const slideConfigs = [
               state: {
                 scale: 1,
                 y: '0%',
-                opacity: [null, 0.5],
+                opacity: 0.6,
                 transition: {
                   delay: 0,
                   duration: 1,
-                  times: [0, 1],
-                  zIndex: {
-                    delay: 1,
-                  },
                 },
               },
             },
@@ -51,10 +47,10 @@ const slideConfigs = [
               component: 'teamRank',
               state: {
                 scale: 1.5,
-                zIndex: 1001,
                 y: '15%',
                 opacity: 1,
                 transition: { delay: 0.5, duration: 1 },
+                zIndex: 1,
               },
             },
           ],

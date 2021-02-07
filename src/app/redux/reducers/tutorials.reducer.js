@@ -7,35 +7,30 @@ const initialState = {
       x: '0%',
       y: '0%',
       scale: 1,
-      zIndex: 0,
       opacity: 0,
     },
     teamRank: {
       x: '0%',
       y: '0%',
       scale: 1,
-      zIndex: 0,
       opacity: 0,
     },
     moneyLeft: {
       x: '0%',
       y: '0%',
       scale: 1,
-      zIndex: 0,
       opacity: 0,
     },
     teamStick: {
       x: '0%',
       y: '0%',
       scale: 1,
-      zIndex: 0,
       opacity: 0,
     },
     budgetStick: {
       x: '0%',
       y: '0%',
       scale: 1,
-      zIndex: 0,
       opacity: 0,
     },
   },
@@ -46,7 +41,6 @@ const initialState = {
   },
   scout: {
     newPlayersBoard: {
-      zIndex: 1,
       scale: 1,
       opacity: 1,
     },
