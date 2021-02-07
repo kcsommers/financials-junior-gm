@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import { useSelector } from 'react-redux';
 import '@css/components/stick-btn.css';
 
-export const ScoutStick = ({ tutorialActive, includeSubtext }) => {
+export const ScoutStick = ({ tutorialActive, includeSubtext, large }) => {
   const animationState = useSelector((state) => state.tutorial.home.scoutStick);
 
   const card = (
@@ -28,13 +28,13 @@ export const ScoutStick = ({ tutorialActive, includeSubtext }) => {
 
   return tutorialActive ? (
     <motion.div
-      className='hidden stick-btn-wrap'
+      className={`hidden stick-btn-wrap${large ? ' stick-large' : ''}`}
       animate={animationState}
       transition={{ default: { duration: 1 } }}
     >
       {card}
     </motion.div>
   ) : (
-    <div className='stick-btn-wrap'>{card}</div>
+    <div className={`stick-btn-wrap${large ? ' stick-large' : ''}`}>{card}</div>
   );
 };
