@@ -82,12 +82,12 @@ function TeamPage() {
             </div>
             <div className='team-page-players-container card'>
               <div className='team-page-players-row'>
-                <PlayerCard highlight={highlightPlayerCards} />
+                <PlayerCard player={{ name: 'KACY' }} />
                 <PlayerCard highlight={highlightPlayerCards} />
                 <PlayerCard highlight={highlightPlayerCards} />
               </div>
               <div className='team-page-players-row'>
-                <PlayerCard />
+                <PlayerCard player={{ name: 'KACY' }} />
                 <PlayerCard />
                 <PlayerCard />
               </div>
@@ -95,7 +95,7 @@ function TeamPage() {
             <div className='team-page-bench-container card'>
               <p className='color-primary on-the-bench-text'>On the Bench</p>
               <div className='team-page-bench-row'>
-                <PlayerCard />
+                <PlayerCard player={{ name: 'KACY' }} />
                 <PlayerCard />
                 <PlayerCard />
               </div>
