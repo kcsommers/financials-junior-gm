@@ -13,7 +13,6 @@ import {
 } from '@components';
 import sharksLogo from '@images/sharks-comerica-logo.svg';
 import { useSelector, useDispatch } from 'react-redux';
-import { AnimatePresence, motion } from 'framer-motion';
 import { Tutorial, playersSlides } from '@tutorial';
 import { Link } from 'react-router-dom';
 import { setTutorialIsActive } from '@redux/actions';
@@ -46,7 +45,7 @@ function TeamPage() {
         <div className='page-header-stick-wrap'>
           <TeamStick></TeamStick>
         </div>
-        <div className='page-header-objectives-board-wrap'>
+        <div className='page-header-objectives-board-container'>
           <ObjectivesBoard
             objectivesArray={['1. Learn about your budget.']}
           ></ObjectivesBoard>

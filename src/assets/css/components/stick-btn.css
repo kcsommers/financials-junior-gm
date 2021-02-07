@@ -12,14 +12,14 @@ div.stick-btn-small {
   width: 248px;
 }
 
-div.stick-btn-title-wrap {
+a.stick-btn-title-link {
   height: 113px;
   display: flex;
   align-items: center;
   cursor: pointer;
 }
 
-div.stick-btn-small div.stick-btn-title-wrap {
+div.stick-btn-small a.stick-btn-title-link {
   height: 79px;
 }
 

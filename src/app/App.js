@@ -7,6 +7,7 @@ import Sign from './pages/Sign';
 import Scout from './pages/ScoutPage';
 import '@css/App.css';
 import { Overlay } from '@components';
+import BudgetPage from './pages/BudgetPage';
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
           <Route exact path='/team' component={TeamPage} />
           <Route exact path='/sign' component={Sign} />
           <Route exact path='/scout' component={Scout} />
+          <Route exact path='/budget' component={BudgetPage} />
         </Switch>
       </Router>
       <Overlay />

@@ -1,5 +1,4 @@
 import React from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 import '@css/pages/HomePage.css';
 import {
   TeamRankCard,
@@ -37,7 +36,7 @@ const tutorialSlides = [
   seasonStickSlides,
 ];
 
-export default function Home() {
+const HomePage = () => {
   const tutorialActive = useSelector((state) => state.tutorial.isActive);
 
   const dispatch = useDispatch();
@@ -53,7 +52,7 @@ export default function Home() {
         <div className='team-rank-card-box'>
           <TeamRankCard tutorialActive={tutorialActive} />
         </div>
-        <div className='objectives-board-wrap'>
+        <div className='objectives-board-container'>
           <ObjectivesBoard
             tutorialActive={tutorialActive}
             objectivesArray={[
@@ -102,4 +101,6 @@ export default function Home() {
       )}
     </div>
   );
-}
+};
+
+export default HomePage;

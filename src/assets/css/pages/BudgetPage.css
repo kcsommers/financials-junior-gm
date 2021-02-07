@@ -1,0 +1,10 @@
+div.budget-page-board {
+  height: 600px;
+  flex-direction: column;
+  padding: 1rem;
+}
+
+div.budget-equation-container {
+  width: 66%;
+  margin: 0 auto;
+}
