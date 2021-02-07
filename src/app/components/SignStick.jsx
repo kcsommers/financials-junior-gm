@@ -4,8 +4,9 @@ import signPlayer from '@images/icons/sign-player.svg';
 import { motion } from 'framer-motion';
 import { useSelector } from 'react-redux';
 import '@css/components/stick-btn.css';
+import { Link } from 'react-router-dom';
 
-export const SignStick = ({ tutorialActive, includeSubtext }) => {
+export const SignStick = ({ tutorialActive, includeSubtext, link }) => {
   const animationState = useSelector((state) => state.tutorial.home.signStick);
 
   const card = (
@@ -15,9 +16,11 @@ export const SignStick = ({ tutorialActive, includeSubtext }) => {
       }`}
     >
       <ReactSVG className='stick-btn-img' src={signPlayer} />
-      <div className='stick-btn-title-wrap'>
-        <h2 className='stick-btn-title'>Sign</h2>
-      </div>
+      <Link className='text-link' to={link}>
+        <div className='stick-btn-title-wrap'>
+          <h2 className='stick-btn-title'>Sign</h2>
+        </div>
+      </Link>
       {includeSubtext && (
         <p className='stick-btn-text'>Add new players to your team!</p>
       )}

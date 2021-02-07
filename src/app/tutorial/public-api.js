@@ -11,4 +11,6 @@ export {
 
 export { playersSlides } from './lessons/team/players-slides';
 
+export { scoutSlides } from './lessons/scout/scout-slides';
+
 export { Tutorial } from './components/Tutorial';

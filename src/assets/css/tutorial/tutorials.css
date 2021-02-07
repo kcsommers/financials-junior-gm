@@ -1,5 +1,4 @@
 div.tutorial-container {
-  z-index: 1000;
 }
 
 div.tutorial-container,
@@ -29,10 +28,10 @@ div.tutorial-container.transparent {
 }
 
 div.slide-wrap {
-  z-index: 103;
   position: relative;
   height: 307px;
   width: 40%;
+  z-index: 1;
 }
 
 div.slide-wrap-small {
@@ -55,7 +54,6 @@ div.btns-wrap {
   right: -100px;
   display: flex;
   justify-content: space-between;
-  z-index: 102;
 }
 
 img.action-btn {

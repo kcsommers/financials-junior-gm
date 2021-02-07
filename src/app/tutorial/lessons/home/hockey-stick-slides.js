@@ -6,8 +6,10 @@ const teamStickSlideConfigs = [
     message: 'Go here to manage your team and sign new players!',
     sharkie: 'present',
     hasButtons: false,
-    y: '20%',
-    x: '56%',
+    slideAnimate: {
+      y: '20%',
+      x: '56%',
+    },
     timer: Slide.SLIDE_DURATION,
     small: true,
     exitActions: [
@@ -22,7 +24,7 @@ const teamStickSlideConfigs = [
                 scale: 1,
                 y: '0%',
                 x: '0%',
-                opacity: 0.5,
+                opacity: 0.6,
                 transition: {
                   delay: 0,
                   duration: 1,
@@ -37,7 +39,7 @@ const teamStickSlideConfigs = [
                 x: ['0%', '0%', '0%', '-5%'],
                 times: [0, 0.5, 1.5, 2],
                 opacity: 1,
-                zIndex: 102,
+                zIndex: 1,
                 transition: {
                   delay: 0.5,
                   duration: 2,
@@ -56,8 +58,10 @@ const budgetStickSlideConfigs = [
     message: "Your team's money is also called a budget.",
     sharkie: 'speakInverse',
     hasButtons: false,
-    y: '20%',
-    x: '-56%',
+    slideAnimate: {
+      y: '20%',
+      x: '-56%',
+    },
     timer: Slide.SLIDE_DURATION + 2000,
     bubbleDelay: 2000,
     small: true,
@@ -66,8 +70,10 @@ const budgetStickSlideConfigs = [
     message: 'Go here to manage your budget and learn more about it!',
     sharkie: 'presentInverse',
     hasButtons: false,
-    y: '20%',
-    x: '-56%',
+    slideAnimate: {
+      y: '20%',
+      x: '-56%',
+    },
     timer: Slide.SLIDE_DURATION,
     bubbleDelay: 2000,
     small: true,
@@ -83,7 +89,7 @@ const budgetStickSlideConfigs = [
                 scale: 1,
                 y: '0%',
                 x: '0%',
-                opacity: 0.5,
+                opacity: 0.6,
                 transition: {
                   delay: 0,
                   duration: 1,
@@ -98,7 +104,7 @@ const budgetStickSlideConfigs = [
                 x: ['0%', '0%', '0%', '-5%'],
                 times: [0, 0.5, 1.5, 2],
                 opacity: 1,
-                zIndex: 102,
+                zIndex: 1,
                 transition: {
                   delay: 0.5,
                   duration: 2,
@@ -117,8 +123,10 @@ const trophiesStickSlideConfigs = [
     message: 'You can earn badges and trophies for managing your team!',
     sharkie: 'speakInverse',
     hasButtons: false,
-    y: '50%',
-    x: '-56%',
+    slideAnimate: {
+      y: '50%',
+      x: '-56%',
+    },
     timer: Slide.SLIDE_DURATION + 2000,
     bubbleDelay: 2000,
     small: true,
@@ -127,8 +135,10 @@ const trophiesStickSlideConfigs = [
     message: 'Go to the trophy room to learn more about them!',
     sharkie: 'presentInverse',
     hasButtons: false,
-    y: '50%',
-    x: '-56%',
+    slideAnimate: {
+      y: '50%',
+      x: '-56%',
+    },
     timer: Slide.SLIDE_DURATION,
     small: true,
     exitActions: [
@@ -143,7 +153,7 @@ const trophiesStickSlideConfigs = [
                 scale: 1,
                 y: '0%',
                 x: '0%',
-                opacity: 0.5,
+                opacity: 0.6,
                 transition: {
                   delay: 0,
                   duration: 1,
@@ -158,7 +168,7 @@ const trophiesStickSlideConfigs = [
                 x: ['0%', '0%', '0%', '5%'],
                 times: [0, 0.5, 1.5, 2],
                 opacity: 1,
-                zIndex: 102,
+                zIndex: 1,
                 transition: {
                   delay: 0.5,
                   duration: 2,
@@ -178,8 +188,10 @@ const seasonStickSlideConfigs = [
       'You have to complete your objectives to get your team ready for the season.',
     sharkie: 'speak',
     hasButtons: false,
-    y: '50%',
-    x: '56%',
+    slideAnimate: {
+      y: '50%',
+      x: '56%',
+    },
     timer: Slide.SLIDE_DURATION + 2000,
     bubbleDelay: 2000,
     small: true,
@@ -189,8 +201,10 @@ const seasonStickSlideConfigs = [
       'When your team is ready, go here to see how well it does against other teams.',
     sharkie: 'speak',
     hasButtons: false,
-    y: '50%',
-    x: '56%',
+    slideAnimate: {
+      y: '50%',
+      x: '56%',
+    },
     timer: Slide.SLIDE_DURATION,
     small: true,
     exitActions: [
@@ -205,7 +219,7 @@ const seasonStickSlideConfigs = [
                 scale: 1,
                 y: '0%',
                 x: '0%',
-                opacity: 0.5,
+                opacity: 0.6,
                 transition: {
                   delay: 0,
                   duration: 1,
@@ -221,25 +235,31 @@ const seasonStickSlideConfigs = [
     message: "Okay I'm starting to get really hungry...",
     sharkie: 'speak',
     hasButtons: false,
-    y: '12%',
-    x: '0%',
+    slideAnimate: {
+      y: '12%',
+      x: '0%',
+    },
     timer: Slide.SLIDE_DURATION,
   },
   {
     message: 'Do you know where to go to manage your team?',
     sharkie: 'speak',
     hasButtons: true,
-    y: '12%',
-    x: '0%',
-    timer: Slide.SLIDE_DURATION,
+    slideAnimate: {
+      y: '12%',
+      x: '0%',
+    },
+    timer: 0,
     repeatIndex: 0,
   },
   {
     message: 'Cool! I am going to go find some fish to eat',
     sharkie: 'speak',
     hasButtons: false,
-    y: '12%',
-    x: '0%',
+    slideAnimate: {
+      y: '12%',
+      x: '0%',
+    },
     timer: Slide.SLIDE_DURATION,
     exitActions: [
       {
@@ -266,17 +286,43 @@ const seasonStickSlideConfigs = [
     message: 'Follow the objectives to get your team ready!',
     sharkie: 'speak',
     hasButtons: false,
-    y: '12%',
-    x: '0%',
+    slideAnimate: {
+      y: '12%',
+      x: '0%',
+    },
     timer: Slide.SLIDE_DURATION,
   },
   {
     message: "I'll be around to help!",
     sharkie: 'speak',
     hasButtons: false,
-    y: '12%',
-    x: '0%',
+    slideAnimate: {
+      y: '12%',
+      x: '0%',
+    },
     timer: Slide.SLIDE_DURATION,
+    exitActions: [
+      {
+        type: SET_ANIMATION_STATE,
+        payload: {
+          page: 'home',
+          animationStates: [
+            'objectivesBoard',
+            'teamRank',
+            'moneyLeft',
+            'teamStick',
+            'budgetStick',
+            'seasonStick',
+            'trophiesStick',
+          ].map((c) => ({
+            component: c,
+            state: {
+              opacity: 1,
+            },
+          })),
+        },
+      },
+    ],
   },
 ];
 

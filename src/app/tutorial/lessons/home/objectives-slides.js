@@ -7,7 +7,9 @@ const slideConfigs = [
     sharkie: 'play',
     hasButtons: false,
     timer: Slide.SLIDE_DURATION + 1000,
-    y: '60%',
+    slideAnimate: {
+      y: '60%',
+    },
     bubbleDelay: 500,
   },
   {
@@ -16,7 +18,9 @@ const slideConfigs = [
     sharkie: 'play',
     hasButtons: false,
     timer: Slide.SLIDE_DURATION,
-    y: '60%',
+    slideAnimate: {
+      y: '60%',
+    },
   },
   {
     message: 'Got it?',
@@ -24,7 +28,9 @@ const slideConfigs = [
     hasButtons: true,
     repeatIndex: 0,
     timer: 0,
-    y: '60%',
+    slideAnimate: {
+      y: '60%',
+    },
     exitActions: [
       {
         type: SET_ANIMATION_STATE,
@@ -36,14 +42,10 @@ const slideConfigs = [
               state: {
                 scale: 1,
                 y: '0%',
-                opacity: [null, 0.5],
+                opacity: 0.6,
                 transition: {
                   delay: 0,
                   duration: 1,
-                  times: [0, 1],
-                  zIndex: {
-                    delay: 1,
-                  },
                 },
               },
             },
@@ -51,10 +53,10 @@ const slideConfigs = [
               component: 'teamRank',
               state: {
                 scale: 1.5,
-                zIndex: 102,
                 y: '15%',
                 opacity: 1,
                 transition: { delay: 0.5, duration: 1 },
+                zIndex: 1,
               },
             },
           ],
