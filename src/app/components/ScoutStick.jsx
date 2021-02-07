@@ -4,8 +4,9 @@ import scoutPlayer from '@images/icons/scout.svg';
 import { motion } from 'framer-motion';
 import { useSelector } from 'react-redux';
 import '@css/components/stick-btn.css';
+import { Link } from 'react-router-dom';
 
-export const ScoutStick = ({ tutorialActive, includeSubtext, large }) => {
+export const ScoutStick = ({ tutorialActive, includeSubtext, large, link }) => {
   const animationState = useSelector((state) => state.tutorial.home.scoutStick);
 
   const card = (
@@ -15,9 +16,11 @@ export const ScoutStick = ({ tutorialActive, includeSubtext, large }) => {
       }`}
     >
       <ReactSVG className='stick-btn-img' src={scoutPlayer}></ReactSVG>
-      <div className='stick-btn-title-wrap'>
-        <h2 className='stick-btn-title'>Scout</h2>
-      </div>
+      <Link className='text-link' to={link}>
+        <div className='stick-btn-title-wrap'>
+          <h2 className='stick-btn-title'>Scout</h2>
+        </div>
+      </Link>
       {includeSubtext && (
         <p className='stick-btn-text'>
           Decide which new recruits are the most valuable!

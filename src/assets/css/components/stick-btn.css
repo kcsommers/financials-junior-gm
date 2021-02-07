@@ -1,7 +1,6 @@
 div.stick-btn-inner {
   position: relative;
   width: 415px;
-  cursor: pointer;
   text-align: right;
 }
 
@@ -17,6 +16,7 @@ div.stick-btn-title-wrap {
   height: 113px;
   display: flex;
   align-items: center;
+  cursor: pointer;
 }
 
 div.stick-btn-small div.stick-btn-title-wrap {
