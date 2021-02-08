@@ -4,6 +4,7 @@ import Intro from './pages/Intro';
 import HomePage from './pages/HomePage';
 import TeamPage from './pages/TeamPage';
 import Sign from './pages/Sign';
+import Season from './pages/Season';
 import Scout from './pages/ScoutPage';
 import '@css/App.css';
 import { Overlay } from '@components';
@@ -18,6 +19,7 @@ const App = () => {
           <Route exact path='/team' component={TeamPage} />
           <Route exact path='/sign' component={Sign} />
           <Route exact path='/scout' component={Scout} />
+          <Route exact path='/season' component={Season} />
         </Switch>
       </Router>
       <Overlay />
