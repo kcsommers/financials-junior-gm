@@ -5,7 +5,7 @@ import { TeamRankStick } from './../TeamRankStick';
 import '@css/components/home-page/TeamRankCard.css';
 
 export const TeamRankCard = ({ tutorialActive }) => {
-  const animationState = useSelector((state) => state.tutorials.home.teamRank);
+  const animationState = useSelector((state) => state.tutorial.home.teamRank);
 
   const card = (
     <div className='team-rank-card-inner'>

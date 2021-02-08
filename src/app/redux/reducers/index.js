@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import tutorials from './tutorials';
-import modal from './modal';
+import tutorial from './tutorials.reducer';
+import overlay from './overlay.reducer';
 
-export default combineReducers({ tutorials, modal });
+export default combineReducers({ tutorial, overlay });

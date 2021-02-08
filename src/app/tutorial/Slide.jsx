@@ -16,9 +16,12 @@ export default class Slide {
     this.enterActions = config.enterActions;
     this.exitActions = config.exitActions;
     this.small = config.small;
+    this.transparentBg = config.transparentBg;
+    this.slideAnimate = config.slideAnimate;
   }
 
   getJsx() {
+    return <p className='slide-msg color-primary'>{this.message}</p>;
     if (!this.accentText) {
       return <p className='slide-msg color-primary'>{this.message}</p>;
     }

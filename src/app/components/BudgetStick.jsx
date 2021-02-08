@@ -4,10 +4,11 @@ import { motion } from 'framer-motion';
 import icon from '@images/icons/budget-hockey-stick.svg';
 import '@css/components/BudgetStick.css';
 import { ReactSVG } from 'react-svg';
+import { Link } from 'react-router-dom';
 
-export const BudgetStick = ({ tutorialActive, includeSubtext }) => {
+export const BudgetStick = ({ tutorialActive, includeSubtext, link }) => {
   const animationState = useSelector(
-    (state) => state.tutorials.home.budgetStick
+    (state) => state.tutorial.home.budgetStick
   );
 
   const card = (
@@ -17,9 +18,11 @@ export const BudgetStick = ({ tutorialActive, includeSubtext }) => {
       }`}
     >
       <ReactSVG className='stick-btn-img' src={icon} />
-      <div className='stick-btn-title-wrap'>
-        <h2 className='stick-btn-title'>Budget</h2>
-      </div>
+      <Link className='text-link' to={link}>
+        <div className='stick-btn-title-wrap'>
+          <h2 className='stick-btn-title'>Budget</h2>
+        </div>
+      </Link>
       <p className='stick-btn-text'>Manage your team's money.</p>
     </div>
   );

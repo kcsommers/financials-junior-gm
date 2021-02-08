@@ -2,38 +2,27 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useDispatch } from 'react-redux';
 import { SharkieComponent } from './Sharkie';
-import introSlides from '../lessons/home/intro-slides';
-import objectivesSlides from '../lessons/home/objectives-slides';
-import teamRankSlides from '../lessons/home/team-rank-slides';
-import moneyLeftSlides from '../lessons/home/money-left-slides';
-import {
-  teamStickSlides,
-  budgetStickSlides,
-  trophiesStickSlides,
-  seasonStickSlides,
-} from '../lessons/home/hockey-stick-slides';
 import refreshBtn from '@images/refresh-btn.svg';
 import checkBtn from '@images/check-btn.svg';
-import { setAnimationState } from '../../redux/actions';
-import { SET_ANIMATION_STATE } from '../../redux/actionTypes';
+import { setAnimationState, toggleOverlay } from '@redux/actions';
+import { SET_ANIMATION_STATE, TOGGLE_OVERLAY } from '@redux/actionTypes';
 import '@css/tutorial/tutorials.css';
 
 const allActions = {
   [SET_ANIMATION_STATE]: setAnimationState,
+  [TOGGLE_OVERLAY]: toggleOverlay,
 };
 
 let timer = 0;
 
-const slides = [
-  introSlides,
-  objectivesSlides,
-  teamRankSlides,
-  moneyLeftSlides,
-  teamStickSlides,
-  budgetStickSlides,
-  trophiesStickSlides,
-  seasonStickSlides,
-];
+const containerVariants = {
+  visible: {
+    opacity: 1,
+  },
+  hidden: {
+    opacity: 0,
+  },
+};
 
 const buttonVariants = {
   enter: {
@@ -57,20 +46,12 @@ const buttonVariants = {
   },
 };
 
-const containerVariants = {
-  visible: {
-    opacity: 1,
-  },
-  hidden: {
-    opacity: 0,
-  },
-};
-
-const HomeTutorial = ({ onComplete }) => {
+export const Tutorial = ({ slides, onComplete }) => {
   const [state, setState] = useState({
     slideIndex: 0,
     currentSlides: slides[0],
     inTransition: false,
+    isComplete: false,
   });
 
   const dispatch = useDispatch();
@@ -102,6 +83,7 @@ const HomeTutorial = ({ onComplete }) => {
 
     window.setTimeout(() => {
       setState({
+        ...state,
         currentSlides: nextSlides,
         slideIndex: 0,
         inTransition: false,
@@ -128,7 +110,14 @@ const HomeTutorial = ({ onComplete }) => {
       const nextSlides = slides[currentSlidesIndex + 1];
       if (!nextSlides) {
         // if none, we're done
-        onComplete();
+        setState({
+          ...state,
+          isComplete: true,
+        });
+        // allow a second to animate out
+        window.setTimeout(() => {
+          onComplete();
+        }, 1000);
         return;
       }
 
@@ -186,36 +175,27 @@ const HomeTutorial = ({ onComplete }) => {
   ) : null;
 
   return (
-    <div className='tutorial-container'>
-      <AnimatePresence>
+    <motion.div
+      className={`tutorial-container${
+        currentSlide.transparentBg ? ' transparent' : ''
+      }`}
+      animate={state.isComplete ? 'hidden' : 'visible'}
+      variants={containerVariants}
+    >
+      <div className='tutorial-container-inner'>
         <motion.div
-          className='tutorial-container-inner'
-          animate={state.inTransition ? 'hidden' : 'visible'}
-          variants={containerVariants}
-          exit='hidden'
-          transition={{
-            duration: 1,
-          }}
+          className={`slide-wrap${
+            currentSlide.small ? ' slide-wrap-small' : ''
+          }`}
+          animate={currentSlide.slideAnimate}
         >
-          <motion.div
-            className={`slide-wrap${
-              currentSlide.small ? ' slide-wrap-small' : ''
-            }`}
-            animate={{
-              x: currentSlide.x || 0,
-              y: currentSlide.y || 0,
-            }}
-          >
-            {buttons}
-            <SharkieComponent
-              slide={currentSlide}
-              inTransition={state.inTransition}
-            ></SharkieComponent>
-          </motion.div>
+          <SharkieComponent
+            slide={currentSlide}
+            inTransition={state.inTransition}
+          ></SharkieComponent>
+          {buttons}
         </motion.div>
-      </AnimatePresence>
-    </div>
+      </div>
+    </motion.div>
   );
 };
-
-export default HomeTutorial;
