@@ -8,11 +8,12 @@ export const StickButton = ({
   link,
   image,
   inverse,
+  small,
 }) => {
   console.log('LINK:::: ', link);
 
   return (
-    <div className='stick-btn-wrap'>
+    <div className={`stick-btn-wrap${small ? ' stick-btn-small' : ''}`}>
       <ReactSVG
         className={`stick-btn-img${inverse ? ' stick-btn-img-inverse' : ''}`}
         src={image}
