@@ -6,9 +6,9 @@ import '@css/components/amount-stick.css';
 export const TeamRankStick = () => {
   return (
     <div className='amount-stick-wrap'>
-      <h3 className='amount-stick-title color-primary'>
+      <h4 className='amount-stick-title color-primary'>
         <span>Team Rank</span>
-      </h3>
+      </h4>
       <div className='amount-stick-filler'></div>
       <div className='amount-stick-img-wrap'>
         <ReactSVG src={icon} />

@@ -3,15 +3,15 @@ import { ReactSVG } from 'react-svg';
 import jrSharksLogo from '@images/icons/jr-sharks-logo.svg';
 import closeBtn from '@images/icons/cancel.svg';
 import {
-  TeamStick,
   ObjectivesBoard,
   TeamRankStick,
   MoneyLeftStick,
-  SignStick,
-  ScoutStick,
+  StickButton,
   PlayerCard,
 } from '@components';
 import sharksLogo from '@images/sharks-comerica-logo.svg';
+import scoutStick from '@images/scout-stick.svg';
+import teamStick from '@images/team-stick.svg';
 import { useSelector, useDispatch } from 'react-redux';
 import { Tutorial, playersSlides } from '@tutorial';
 import { Link } from 'react-router-dom';
@@ -43,7 +43,7 @@ function TeamPage() {
           <img src={sharksLogo} alt='Sharks Logo' />
         </div>
         <div className='page-header-stick-wrap'>
-          <TeamStick></TeamStick>
+          <StickButton image={teamStick} />
         </div>
         <div className='page-header-objectives-board-container'>
           <ObjectivesBoard
@@ -63,10 +63,7 @@ function TeamPage() {
             </div>
             <div className='team-page-stick-btns-wrap'>
               <div className='team-page-stick-btn-wrap'>
-                <SignStick includeSubtext={true} link='/sign' />
-              </div>
-              <div className='team-page-stick-btn-wrap'>
-                <ScoutStick includeSubtext={true} link='/scout' />
+                <StickButton image={scoutStick} link='/scout' />
               </div>
             </div>
           </div>

@@ -3,11 +3,12 @@ import { ReactSVG } from 'react-svg';
 import closeBtn from '@images/icons/cancel.svg';
 import {
   ObjectivesBoard,
-  BudgetStick,
+  StickButton,
   BudgetEquation,
   BudgetSlider,
 } from '@components';
 import sharksLogo from '@images/sharks-comerica-logo.svg';
+import budgetStick from '@images/budget-stick.svg';
 import { useSelector, useDispatch } from 'react-redux';
 import { Tutorial, playersSlides } from '@tutorial';
 import { Link } from 'react-router-dom';
@@ -38,7 +39,7 @@ const BudgetPage = () => {
           ></ObjectivesBoard>
         </div>
         <div className='page-header-stick-wrap'>
-          <BudgetStick></BudgetStick>
+          <StickButton image={budgetStick} />
         </div>
       </div>
       <div className='page-body'>
