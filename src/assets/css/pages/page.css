@@ -56,11 +56,12 @@ div.page-board {
   background: #e5e5e5;
   display: flex;
   position: relative;
+  height: 610px;
 }
 
 .page-board-close-btn {
   position: absolute;
-  top: 1rem;
+  top: 0.35rem;
   right: 1rem;
   z-index: 1;
 }
