@@ -4,7 +4,7 @@ import '@css/components/budget-page/BudgetEquation.css';
 export const BudgetEquation = ({ budget }) => {
   return (
     <motion.div
-      className='budget-equation-wrap'
+      className='budget-equation-wrap box-shadow'
       transition={{ default: { duration: 1 } }}
     >
       <h4 className='budget-equation-title'>Budget Equation</h4>

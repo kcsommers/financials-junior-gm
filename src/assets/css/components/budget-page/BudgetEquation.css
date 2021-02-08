@@ -5,7 +5,6 @@ div.budget-equation-wrap {
   background: #4b4b4b;
   color: white;
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-  font-family: 'interstate';
   position: relative;
 }
 
@@ -52,6 +51,7 @@ div.equation-inner.savings > span.equation-amount:after {
   top: 0;
   font-size: 3rem;
 }
+
 div.equation-inner.savings > span.equation-amount:before {
   content: '+';
   left: calc(-100% - 0.5rem);

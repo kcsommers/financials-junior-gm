@@ -1,0 +1,33 @@
+div.budget-slider {
+  display: inline-block;
+  transform: scale(1.1);
+  position: relative;
+}
+
+.stick__savings path {
+  /* fill: none;
+  stroke-width: 3;
+  stroke-opacity: 0.3;
+  stroke-linecap: round;
+  stroke: blue; */
+}
+
+.stick__savings--path path {
+  /* display: none; */
+}
+
+.stick__savings--fill path {
+  display: none;
+}
+
+.savings-indicator {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+.spending-indicator {
+  position: absolute;
+  top: 0;
+  left: 0;
+}

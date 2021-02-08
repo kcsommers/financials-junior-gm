@@ -5,6 +5,13 @@ div.budget-page-board {
 }
 
 div.budget-equation-container {
-  width: 66%;
+  width: 60%;
   margin: 0 auto;
+}
+
+div.budget-slider-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: -2rem;
 }
