@@ -2,6 +2,9 @@ div.team-page-board-left {
   flex: 0.5;
   position: relative;
   padding: 0.5rem;
+  flex-direction: column;
+  justify-content: space-between;
+  display: flex;
 }
 
 div.team-page-board-right {
@@ -19,7 +22,7 @@ div.sticks-card {
 div.team-page-stick-btn-container {
   position: absolute;
   left: -11.5%;
-  top: 60%;
+  top: 53%;
 }
 
 h3.team-page-board-title {
@@ -49,4 +52,17 @@ div.team-page-players-container .card {
 
 div.bench-container {
   margin-top: 0.5rem;
+}
+
+div.jr-logo-wrap {
+  height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: auto;
+}
+
+.jr-logo {
+  display: inline-block;
+  transform: scale(2);
 }
