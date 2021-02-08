@@ -1,3 +1,5 @@
 export const SET_ANIMATION_STATE = 'SET_ANIMATION_STATE';
 
 export const TOGGLE_MODAL = 'TOGGLE_MODAL';
+
+export const SET_SIGN_STATE = 'SET_SIGN_STATE';

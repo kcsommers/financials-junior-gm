@@ -3,6 +3,9 @@ import { motion } from 'framer-motion';
 import '@css/components/PlayerCard.css';
 import { useDispatch } from 'react-redux';
 import { toggleModal } from '../redux/actions';
+import Sign from './Sign';
+import {AddPlayer} from './AddPlayer';
+import {SignPlayer} from './SignPlayer';
 
 export const PlayerCard = ({ player, tutorialActive }) => {
   const dispatch = useDispatch();
@@ -13,7 +16,7 @@ export const PlayerCard = ({ player, tutorialActive }) => {
         isOpen: true,
         template: (
           <div className='player-modal-container'>
-            <div className='player-card-wrap player-card-large'>{inner}</div>
+            {/* <div className='player-card-wrap player-card-large'>{inner}</div>
             <div className='player-modal-buttons-wrap'>
               <button class='player-modal-button outline-black box-shadow'>
                 Trade
@@ -21,7 +24,9 @@ export const PlayerCard = ({ player, tutorialActive }) => {
               <button class='player-modal-button outline-black box-shadow'>
                 Release
               </button>
-            </div>
+            </div> */}
+            {/* <Sign/> */}
+            <SignPlayer/>
           </div>
         ),
       })
