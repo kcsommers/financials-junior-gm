@@ -4,11 +4,10 @@ import scoutPlayer from '@images/icons/scout.svg';
 import { motion } from 'framer-motion';
 import { useSelector } from 'react-redux';
 import '@css/components/stick-btn.css';
+import { Link } from 'react-router-dom';
 
-export const ScoutStick = ({ tutorialActive, includeSubtext }) => {
-  const animationState = useSelector(
-    (state) => state.tutorials.home.scoutStick
-  );
+export const ScoutStick = ({ tutorialActive, includeSubtext, large, link }) => {
+  const animationState = useSelector((state) => state.tutorial.home.scoutStick);
 
   const card = (
     <div
@@ -17,9 +16,11 @@ export const ScoutStick = ({ tutorialActive, includeSubtext }) => {
       }`}
     >
       <ReactSVG className='stick-btn-img' src={scoutPlayer}></ReactSVG>
-      <div className='stick-btn-title-wrap'>
-        <h2 className='stick-btn-title'>Scout</h2>
-      </div>
+      <Link className='text-link' to={link}>
+        <div className='stick-btn-title-wrap'>
+          <h2 className='stick-btn-title'>Scout</h2>
+        </div>
+      </Link>
       {includeSubtext && (
         <p className='stick-btn-text'>
           Decide which new recruits are the most valuable!
@@ -30,13 +31,13 @@ export const ScoutStick = ({ tutorialActive, includeSubtext }) => {
 
   return tutorialActive ? (
     <motion.div
-      className='hidden stick-btn-wrap'
+      className={`hidden stick-btn-wrap${large ? ' stick-large' : ''}`}
       animate={animationState}
       transition={{ default: { duration: 1 } }}
     >
       {card}
     </motion.div>
   ) : (
-    <div className='stick-btn-wrap'>{card}</div>
+    <div className={`stick-btn-wrap${large ? ' stick-large' : ''}`}>{card}</div>
   );
 };

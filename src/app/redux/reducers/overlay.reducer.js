@@ -1,13 +1,14 @@
-import { TOGGLE_MODAL } from '../actionTypes';
+import { TOGGLE_OVERLAY } from '../actionTypes';
 
 const initialState = {
   isOpen: false,
   template: null,
+  tutorialActive: false,
 };
 
-const tutorialsReducer = (state = initialState, action) => {
+const overlayReducer = (state = initialState, action) => {
   switch (action.type) {
-    case TOGGLE_MODAL: {
+    case TOGGLE_OVERLAY: {
       console.log(state, action.payload.state);
       return {
         isOpen: action.payload.state.isOpen,
@@ -19,4 +20,4 @@ const tutorialsReducer = (state = initialState, action) => {
   }
 };
 
-export default tutorialsReducer;
+export default overlayReducer;

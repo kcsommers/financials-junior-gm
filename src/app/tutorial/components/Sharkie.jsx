@@ -17,6 +17,15 @@ const sharkieImgs = {
   lean: sharkieLean,
 };
 
+const containerVariants = {
+  visible: {
+    opacity: 1,
+  },
+  hidden: {
+    opacity: 0,
+  },
+};
+
 const defaultSharkieVariants = {
   play: {
     enter: { opacity: 0 },
@@ -68,32 +77,11 @@ export const SharkieComponent = ({ slide, inTransition }) => {
   }
 
   return (
-    <div className={`sharkie-wrap sharkie-${slide.sharkie}-wrap`}>
-      <AnimatePresence>
-        {showBubble && (
-          <motion.div
-            key={slide.id}
-            className={`bubble-wrap${bubbleInverse ? ' bubble-inverse' : ''}`}
-            variants={speechBubbleVariants}
-            initial='enter'
-            animate='center'
-            exit='exit'
-            transition={{
-              scale: {
-                type: 'spring',
-                stiffness: 500,
-              },
-            }}
-          >
-            {slide.getJsx()}
-            <img
-              className='bubble-img'
-              src={speechBubble}
-              alt={slide.message}
-            />
-          </motion.div>
-        )}
-      </AnimatePresence>
+    <motion.div
+      className={`sharkie-wrap sharkie-${slide.sharkie}-wrap`}
+      animate={inTransition ? 'hidden' : 'visible'}
+      variants={containerVariants}
+    >
       <AnimatePresence>
         <motion.div
           key={slide.sharkie}
@@ -114,6 +102,31 @@ export const SharkieComponent = ({ slide, inTransition }) => {
           />
         </motion.div>
       </AnimatePresence>
-    </div>
+      <AnimatePresence>
+        {showBubble && (
+          <motion.div
+            key={slide.id}
+            className={`bubble-wrap${bubbleInverse ? ' bubble-inverse' : ''}`}
+            variants={speechBubbleVariants}
+            initial='enter'
+            animate='center'
+            exit='exit'
+            transition={{
+              scale: {
+                type: 'spring',
+                stiffness: 500,
+              },
+            }}
+          >
+            <img
+              className='bubble-img'
+              src={speechBubble}
+              alt={slide.message}
+            />
+            {slide.getJsx()}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.div>
   );
 };
