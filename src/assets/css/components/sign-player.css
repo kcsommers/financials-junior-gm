@@ -1,0 +1,101 @@
+.sign-player-dashboard {
+  border: 4px solid #707070;
+  background: white;
+  border-radius: 15px;
+  width: 90%;
+  padding: 1rem;
+}
+
+.player-card-title {
+  text-align: center;
+  font-size: 12px;
+  color: #006b77;
+  font-family: 'interstate';
+  margin: 0.2rem;
+}
+
+.player-card-title-transparent {
+  font-size: 12px;
+  color: transparent;
+  font-family: 'interstate';
+  margin: 0.2rem;
+}
+
+.team-dashboard-players-card-top {
+  display: flex;
+  justify-content: space-between;
+  background: #ea7200;
+  padding: 0.2rem;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.rank-text {
+  text-align: center;
+  font-size: 6px;
+  font-family: 'interstate';
+}
+
+.rank-number {
+  text-align: center;
+  font-size: 12px;
+  font-family: 'interstate';
+}
+
+.player-cost {
+  text-align: center;
+  font-size: 12px;
+  font-family: 'interstate';
+  display: flex;
+  align-items: center;
+}
+
+.team-dashboard-players-card {
+  padding: 0.2rem;
+  background-color: #e5e5e5;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  font-family: 'interstate';
+  font-size: 24px;
+  text-align: center;
+  color: #006b77;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+.player-meters-row {
+  display: flex;
+}
+
+.player-meters-row > div {
+  margin: 0.1rem;
+}
+
+.player-meters-row > div > p {
+  color: black;
+  font-size: 8px;
+  margin: 0;
+}
+
+.offense-meter {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #dc2d2d;
+  border-radius: 50%;
+  background: radial-gradient(#d32b2b, #6e1717);
+}
+
+.passing-meter {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #00788a;
+  border-radius: 50%;
+  background: radial-gradient(#00788a, #003c45);
+}
+
+.defense-meter {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #002f6c;
+  border-radius: 50%;
+  background: radial-gradient(#002f6c, #001836);
+}
