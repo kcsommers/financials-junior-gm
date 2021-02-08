@@ -11,17 +11,12 @@ div.amount-stick-wrap {
   padding-left: 1rem;
 }
 
-h3.amount-stick-title {
-  font-size: 1.75rem;
-}
-
 div.amount-stick-wrap.amount-stick-left h3.amount-stick-title {
   padding-right: 0;
 }
 
-h3.amount-stick-title > span {
+h4.amount-stick-title > span {
   width: 65px;
-  letter-spacing: 0.1rem;
   display: inline-block;
 }
 

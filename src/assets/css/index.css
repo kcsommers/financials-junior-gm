@@ -31,6 +31,7 @@ button {
   font-family: made-tommy, serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-size: 1.25rem;
 }
 
 .color-primary {
@@ -55,6 +56,18 @@ h1.page-title {
   text-shadow: 0 0 5px #f3901d, 0 0 5px #f3901d, 0 0 5px #f3901d,
     0 0 5px #f3901d;
   font-size: 5.25rem;
+}
+
+h2 {
+  font-size: 3.25rem;
+}
+
+h4 {
+  font-size: 1.5rem;
+}
+
+p {
+  color: #00788a;
 }
 
 .card {

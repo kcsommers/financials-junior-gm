@@ -4,11 +4,8 @@ import {
   TeamRankCard,
   ObjectivesBoard,
   MoneyLeftCard,
-  SeasonStick,
-  TeamStick,
-  TrophiesStick,
+  StickButton,
   Navigation,
-  BudgetStick,
 } from '@components';
 import {
   introSlides,
@@ -22,6 +19,10 @@ import {
   Tutorial,
 } from '@tutorial';
 import sharksLogo from '@images/sharks-comerica-logo.svg';
+import teamStick from '@images/team-stick.svg';
+import budgetStick from '@images/budget-stick.svg';
+import seasonStick from '@images/season-stick.svg';
+import trophiesStick from '@images/trophies-stick.svg';
 import { useDispatch, useSelector } from 'react-redux';
 import { setTutorialIsActive } from '@redux/actions';
 
@@ -71,28 +72,46 @@ const HomePage = () => {
           <img src={sharksLogo} alt='Sharks Logo' />
         </div>
         <div className='hockey-sticks-row'>
-          <TeamStick
-            tutorialActive={tutorialActive}
-            includeSubtext={true}
-            link='/team'
-          />
-          <BudgetStick
-            tutorialActive={tutorialActive}
-            includeSubtext={true}
-            link='/budget'
-          />
+          <div className='stick-btn-container'>
+            <StickButton
+              tutorialActive={tutorialActive}
+              link='/team'
+              image={teamStick}
+            />
+            <p className='stick-btn-text'>
+              Build your team by signing players!
+            </p>
+          </div>
+          <div className='stick-btn-container'>
+            <StickButton
+              tutorialActive={tutorialActive}
+              link='/budget'
+              inverse={true}
+              image={budgetStick}
+            />
+            <p className='stick-btn-text'>Manage your team's money.</p>
+          </div>
         </div>
         <div className='hockey-sticks-row hockey-sticks-row-2'>
-          <SeasonStick
-            tutorialActive={tutorialActive}
-            includeSubtext={true}
-            link='/season'
-          />
-          <TrophiesStick
-            tutorialActive={tutorialActive}
-            includeSubtext={true}
-            link='/trophies'
-          />
+          <div className='stick-btn-container'>
+            <StickButton
+              tutorialActive={tutorialActive}
+              link='/season'
+              image={seasonStick}
+            />
+            <p className='stick-btn-text'>
+              Play matches and win the championship!
+            </p>
+          </div>
+          <div className='stick-btn-container'>
+            <StickButton
+              tutorialActive={tutorialActive}
+              inverse={true}
+              link='/trophies'
+              image={trophiesStick}
+            />
+            <p className='stick-btn-text'>See your badges and trophies!</p>
+          </div>
         </div>
         <div></div>
       </div>

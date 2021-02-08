@@ -2,13 +2,14 @@ import React from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import {
   ObjectivesBoard,
-  ScoutStick,
+  StickButton,
   MoneyLevel,
   PlayerCard,
   DropContainer,
   DragItem,
 } from '@components';
 import sharksLogo from '@images/sharks-comerica-logo.svg';
+import scoutStick from '@images/scout-stick.svg';
 import { useSelector, useDispatch } from 'react-redux';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Tutorial, scoutSlides } from '@tutorial';
@@ -192,7 +193,7 @@ const TeamPage = () => {
             <img src={sharksLogo} alt='Sharks Logo' />
           </div>
           <div className='page-header-stick-wrap scout-page-header-stick-wrap'>
-            <ScoutStick large={true}></ScoutStick>
+            <StickButton image={scoutStick} large={true} />
           </div>
           <div className='page-header-objectives-board-container'>
             <ObjectivesBoard

@@ -7,9 +7,9 @@ export const MoneyLeftStick = () => {
   return (
     <div className='amount-stick-wrap amount-stick-left'>
       <div className='amount-stick-filler'></div>
-      <h3 className='amount-stick-title color-primary'>
+      <h4 className='amount-stick-title color-primary'>
         <span>Money Left</span>
-      </h3>
+      </h4>
       <div className='amount-stick-img-wrap'>
         <ReactSVG src={icon} />
       </div>
