@@ -8,6 +8,7 @@ export { TeamStick } from './TeamStick.jsx';
 export { TeamRankCard } from './home-page/TeamRankCard.jsx';
 export { TrophiesStick } from './TrophiesStick.jsx';
 export { TeamRankStick } from './TeamRankStick.jsx';
+export { OpposingTeamRankStick } from './OpposingTeamRankStick.jsx';
 export { MoneyLeftStick } from './MoneyLeftStick';
 export { SignStick } from './SignStick';
 export { ScoutStick } from './ScoutStick';

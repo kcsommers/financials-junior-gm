@@ -5,6 +5,7 @@ import HomePage from './pages/HomePage';
 import TeamPage from './pages/TeamPage';
 import Sign from './pages/Sign';
 import Scout from './pages/Scout';
+import Season from './pages/Season';
 import '@css/App.css';
 import { Modal } from '@components';
 
@@ -18,6 +19,7 @@ const App = () => {
           <Route exact path='/team' component={TeamPage} />
           <Route exact path='/sign' component={Sign} />
           <Route exact path='/scout' component={Scout} />
+          <Route exact path='/season' component={Season} />
         </Switch>
       </Router>
       <Modal />

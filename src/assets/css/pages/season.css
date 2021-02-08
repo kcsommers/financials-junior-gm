@@ -1,0 +1,188 @@
+.season-page {
+  width: 100%;
+}
+
+.season-navigation {
+  display: flex;
+  justify-content: space-between;
+}
+
+.season-dashboard {
+  border: 5px solid #707070;
+  border-radius: 15px;
+  background: #E5E5E5;
+  width: 87%;
+  margin: 0 auto;
+  height: 624px;
+  padding: 0 .5rem 1rem .5rem;
+}
+
+.season-dashboard-top-row {
+  display: flex;
+  margin-bottom: 2rem;
+}
+
+.teams-jumbotron {
+  display: flex;
+}
+
+.season-teams-playing-box {
+  background: #707070;
+  width: 400px;
+  text-align: center;
+  height: 324.19px;
+}
+
+.season-team-left-border {
+  border-top: 324px solid #ABABAB;
+  border-left: 60px solid transparent;
+  height: 100%;
+  width: 80px;
+}
+
+.season-team-right-border {
+  border-top: 324px solid #ABABAB;
+  border-right: 60px solid transparent;
+  height: 100%;
+  width: 80px;
+}
+
+.season-team-place {
+  text-align: center;
+  color: white;
+  font-size: 36px;
+  font-weight: bold;
+  -webkit-text-stroke: .05px black;
+}
+
+.next-opponent-title {
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+  -webkit-text-stroke: .05px black;
+  margin-bottom: .5rem;
+}
+
+.ready-to-play-sign {
+  background: #00788a;
+  text-align: center;
+  border-radius: 5px;
+  padding: .5rem 0 .5rem 0;
+  color: white;
+  font-size: 30px;
+  font-weight: bold;
+  -webkit-text-stroke: .05px black;
+}
+
+.next-opponent-details {
+  display: flex;
+  justify-content: center;
+  padding-bottom: .5rem;
+}
+
+.next-opponent-name {
+  background: white;
+  color: #3B42FF;
+  padding: 1rem;
+  border-radius: 5px;
+  font-size: 18px;
+  font-weight: bold;
+  height: 100%;
+}
+
+.sotr-details {
+  display: flex;
+}
+
+.season-tr-title {
+  font-size: 15px;
+  font-weight: bold;
+  color: white;
+  padding-top: 1rem;
+}
+
+.season-dashboard-bottom-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 1rem;
+}
+
+.season-schedule-title,
+.season-standings-title {
+  font-size: 30px;
+  font-weight: bold;
+  color: black;
+  text-align: center;
+}
+
+.season-schedule-box {
+  background: white;
+  width: 269.07px;
+  border: 4px solid #707070;
+  border-radius: 15px;
+}
+
+.current-upcoming-game {
+  border: 1px solid #070707;
+  margin: 0 1rem;
+  border-radius: 10px;
+}
+
+.season-standings-box {
+  border: 4px solid #707070;
+  border-radius: 15px;
+  background: #E5E5E5;
+}
+
+.upcoming-games > div {
+  display: flex;
+  justify-content: center;
+}
+
+.season-standings-box {
+  display: grid;
+  grid-template-columns: 70% 30%;
+  background: white;
+  width: 263px;
+  line-height: 1.5rem;
+}
+
+.standings-team-name-box {
+  border-right: 1px solid #707070;
+  border-bottom: 1px solid #707070;
+  padding-left: .5rem;
+}
+
+.standings-team-points-box {
+  border-bottom: 1px solid #707070;
+  text-align: center;
+}
+
+.ptn-title,
+.p-title {
+  font-size: 12px;
+}
+
+.standings-teams-box {
+  border-right: 1px solid #707070;
+  padding-left: .5rem;
+}
+
+.standings-teams-points-box {
+  text-align: center;
+}
+
+.your-team-standing {
+  font-size: 18px;
+  color: #006B77;
+}
+
+.player-team-title {
+  color: #006B77;
+  font-size: 16px;
+  font-weight: bold; 
+}
+
+.season-schedule-spacing {
+  margin: 0 1rem;
+}
