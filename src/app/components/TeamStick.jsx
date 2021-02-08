@@ -4,16 +4,19 @@ import icon from '@images/icons/team-hockey-stick.svg';
 import { motion } from 'framer-motion';
 import { useSelector } from 'react-redux';
 import '@css/components/stick-btn.css';
+import { Link } from 'react-router-dom';
 
-export const TeamStick = ({ tutorialActive, includeSubtext }) => {
-  const animationState = useSelector((state) => state.tutorials.home.teamStick);
+export const TeamStick = ({ tutorialActive, includeSubtext, link }) => {
+  const animationState = useSelector((state) => state.tutorial.home.teamStick);
 
-  const card = (
+  const inner = (
     <div className={`stick-btn-inner${includeSubtext ? ' has-sub-text' : ''}`}>
       <ReactSVG className='stick-btn-img' src={icon}></ReactSVG>
-      <div className='stick-btn-title-wrap'>
-        <h2 className='stick-btn-title'>Team</h2>
-      </div>
+      <Link className='text-link' to={link}>
+        <div className='stick-btn-title-wrap'>
+          <h2 className='stick-btn-title'>Team</h2>
+        </div>
+      </Link>
       {includeSubtext && (
         <p className='stick-btn-text'>
           See your squad. Sign or scout new players!
@@ -28,9 +31,9 @@ export const TeamStick = ({ tutorialActive, includeSubtext }) => {
       animate={animationState}
       transition={{ default: { duration: 1 } }}
     >
-      {card}
+      {inner}
     </motion.div>
   ) : (
-    <div className='stick-btn-wrap'>{card}</div>
+    <div className='stick-btn-wrap'>{inner}</div>
   );
 };

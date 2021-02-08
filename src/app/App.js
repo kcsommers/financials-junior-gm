@@ -5,8 +5,9 @@ import HomePage from './pages/HomePage';
 import TeamPage from './pages/TeamPage';
 import Scout from './pages/Scout';
 import Season from './pages/Season';
+import Scout from './pages/ScoutPage';
 import '@css/App.css';
-import { Modal } from '@components';
+import { Overlay } from '@components';
 
 const App = () => {
   return (
@@ -20,7 +21,7 @@ const App = () => {
           <Route exact path='/season' component={Season} />
         </Switch>
       </Router>
-      <Modal />
+      <Overlay />
     </div>
   );
 };

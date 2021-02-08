@@ -1,5 +1,5 @@
 import Slide from '../../Slide';
-import { SET_ANIMATION_STATE } from '../../../redux/actionTypes';
+import { SET_ANIMATION_STATE } from '@redux/actionTypes';
 
 const slideConfigs = [
   {
@@ -112,9 +112,9 @@ const slideConfigs = [
               component: 'objectivesBoard',
               state: {
                 scale: 1.5,
-                zIndex: 1,
                 y: '15%',
                 opacity: 1,
+                zIndex: 1,
                 transition: { duration: 1 },
               },
             },
@@ -125,4 +125,4 @@ const slideConfigs = [
   },
 ];
 
-export default slideConfigs.map((c) => new Slide(c));
+export const introSlides = slideConfigs.map((c) => new Slide(c));

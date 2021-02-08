@@ -1,0 +1,74 @@
+div.scout-page-container div.page-body {
+  padding-top: 0;
+}
+div.scout-page-container div.page-header {
+  margin-bottom: 0;
+}
+
+div.scout-page-header-stick-wrap {
+  left: 5%;
+}
+
+div.scout-page-board-header p {
+  text-align: center;
+  font-size: 1.5rem;
+  padding: 0.5rem 0;
+}
+
+div.scout-page-board {
+  flex-direction: column;
+  padding: 0 0.5rem;
+}
+
+div.scout-page-board-inner {
+  display: flex;
+}
+
+div.scout-page-board-left,
+div.scout-page-board-right {
+  padding: 0 0.5rem;
+  flex: 1;
+}
+
+div.scout-page-board-left {
+  display: flex;
+}
+
+div.scout-page-board-left > .card {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+div.drop-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+div.scout-page-players-row {
+  flex: 1;
+}
+
+div.scout-page-players-row-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+div.scout-page-board-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.2rem 0.5rem;
+  font-size: 1.5rem;
+}
+
+div.finished-btn > a.text-link {
+  display: flex;
+  align-items: center;
+}
+
+.check-btn-small {
+  margin-left: 0.5rem;
+}

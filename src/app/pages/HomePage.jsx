@@ -1,6 +1,5 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import HomeTutorial from '../tutorial/components/HomeTutorial';
 import '@css/pages/HomePage.css';
 import {
   TeamRankCard,
@@ -12,15 +11,39 @@ import {
   Navigation,
   BudgetStick,
 } from '@components';
+import {
+  introSlides,
+  objectivesSlides,
+  teamRankSlides,
+  moneyLeftSlides,
+  teamStickSlides,
+  budgetStickSlides,
+  trophiesStickSlides,
+  seasonStickSlides,
+  Tutorial,
+} from '@tutorial';
 import sharksLogo from '@images/sharks-comerica-logo.svg';
+import { useDispatch, useSelector } from 'react-redux';
+import { setTutorialIsActive } from '@redux/actions';
 
-const isFirstTime = false;
+const tutorialSlides = [
+  introSlides,
+  objectivesSlides,
+  teamRankSlides,
+  moneyLeftSlides,
+  teamStickSlides,
+  budgetStickSlides,
+  trophiesStickSlides,
+  seasonStickSlides,
+];
 
 export default function Home() {
-  const [tutorialActive, setTutorialActive] = React.useState(isFirstTime);
+  const tutorialActive = useSelector((state) => state.tutorial.isActive);
+
+  const dispatch = useDispatch();
 
   const onTutorialComplete = () => {
-    setTutorialActive(false);
+    dispatch(setTutorialIsActive({ isActive: false }));
   };
 
   return (
@@ -49,25 +72,34 @@ export default function Home() {
           <img src={sharksLogo} alt='Sharks Logo' />
         </div>
         <div className='hockey-sticks-row'>
-          <TeamStick tutorialActive={tutorialActive} includeSubtext={true} />
-          <BudgetStick tutorialActive={tutorialActive} includeSubtext={true} />
+          <TeamStick
+            tutorialActive={tutorialActive}
+            includeSubtext={true}
+            link='/team'
+          />
+          <BudgetStick
+            tutorialActive={tutorialActive}
+            includeSubtext={true}
+            link='/budget'
+          />
         </div>
         <div className='hockey-sticks-row hockey-sticks-row-2'>
-          <SeasonStick tutorialActive={tutorialActive} includeSubtext={true} />
+          <SeasonStick
+            tutorialActive={tutorialActive}
+            includeSubtext={true}
+            link='/season'
+          />
           <TrophiesStick
             tutorialActive={tutorialActive}
             includeSubtext={true}
+            link='/trophies'
           />
         </div>
         <div></div>
       </div>
-      <AnimatePresence>
-        {tutorialActive && (
-          <motion.div animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-            <HomeTutorial onComplete={onTutorialComplete} />
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {tutorialActive && (
+        <Tutorial slides={tutorialSlides} onComplete={onTutorialComplete} />
+      )}
     </div>
   );
 }
