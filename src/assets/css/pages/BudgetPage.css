@@ -4,7 +4,7 @@ div.budget-page-board {
 }
 
 div.budget-equation-container {
-  width: 60%;
+  width: 55%;
   margin: 0 auto;
 }
 
@@ -13,4 +13,9 @@ div.budget-slider-container {
   align-items: center;
   justify-content: center;
   margin-top: -2rem;
+}
+
+p.helper-text {
+  width: 50%;
+  padding-left: 3rem;
 }

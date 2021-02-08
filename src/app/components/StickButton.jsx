@@ -10,8 +10,6 @@ export const StickButton = ({
   inverse,
   small,
 }) => {
-  console.log('LINK:::: ', link);
-
   return (
     <div className={`stick-btn-wrap${small ? ' stick-btn-small' : ''}`}>
       <ReactSVG

@@ -43,7 +43,7 @@ function TeamPage() {
           <img src={sharksLogo} alt='Sharks Logo' />
         </div>
         <div className='page-header-stick-wrap'>
-          <StickButton image={teamStick} />
+          <StickButton image={teamStick} link='/home' />
         </div>
         <div className='page-header-objectives-board-container'>
           <ObjectivesBoard

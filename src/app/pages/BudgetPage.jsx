@@ -10,16 +10,23 @@ import {
 import sharksLogo from '@images/sharks-comerica-logo.svg';
 import budgetStick from '@images/budget-stick.svg';
 import { useSelector, useDispatch } from 'react-redux';
-import { Tutorial, playersSlides } from '@tutorial';
+import { Tutorial, budgetSlides } from '@tutorial';
 import { Link } from 'react-router-dom';
 import { setTutorialIsActive } from '@redux/actions';
 import '@css/pages/page.css';
 import '@css/pages/BudgetPage.css';
 
-const teamSlides = [playersSlides];
+const teamSlides = [budgetSlides];
 
 const BudgetPage = () => {
   const tutorialActive = useSelector((state) => state.tutorial.isActive);
+
+  const budgetEquationStates = {
+    board: useSelector((state) => state.tutorial.budget.equationBoard),
+    total: useSelector((state) => state.tutorial.budget.total),
+    savings: useSelector((state) => state.tutorial.budget.savings),
+    spending: useSelector((state) => state.tutorial.budget.spending),
+  };
 
   const dispatch = useDispatch();
 
@@ -48,12 +55,15 @@ const BudgetPage = () => {
             <ReactSVG className='page-board-close-btn' src={closeBtn} />
           </Link>
           <div className='budget-equation-container'>
-            <BudgetEquation budget={{ total: 8, savings: 2, spending: 6 }} />
+            <BudgetEquation
+              budget={{ total: 8, savings: 2, spending: 6 }}
+              animationStates={budgetEquationStates}
+            />
           </div>
           <div className='budget-slider-container'>
             <BudgetSlider />
           </div>
-          <p className='color-primary'>
+          <p className='helper-text color-primary'>
             Move the yellow puck to change how much you save!
           </p>
         </div>

@@ -1,22 +1,23 @@
 div.budget-equation-wrap {
   border: 10px solid #00788a;
   border-radius: 15px;
-  padding: 0.5rem 1rem;
   background: #4b4b4b;
   color: white;
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
   position: relative;
+  padding: 0.25rem 0;
 }
 
 h4.budget-equation-title {
   text-align: center;
-  font-size: 2rem;
+  font-size: 1.75rem;
+  font-weight: bold;
 }
 
 div.equation-wrap {
   display: flex;
   justify-content: center;
-  padding: 1rem;
+  padding: 0.5rem 0 0.25rem 0;
 }
 
 div.equation-inner {
@@ -26,38 +27,25 @@ div.equation-inner {
   align-items: center;
 }
 
+div.equation-inner.savings {
+  margin: 0 1.5rem 0 1rem;
+}
+
 span.equation-title {
-  font-size: 1.25rem;
+  font-size: 1.15rem;
+  font-weight: bold;
 }
 
 span.equation-amount {
-  font-size: 2.75rem;
+  font-size: 2.5rem;
   margin-top: 0.5rem;
-}
-
-div.equation-inner.savings {
-  margin: 0 2rem;
 }
 
 div.equation-inner.savings > span.equation-amount {
   position: relative;
 }
 
-div.equation-inner.savings > span.equation-amount:before,
-div.equation-inner.savings > span.equation-amount:after {
-  position: absolute;
-  content: '=';
-  right: calc(-100% - 1rem);
-  top: 0;
+span.equation-operator {
   font-size: 3rem;
-}
-
-div.equation-inner.savings > span.equation-amount:before {
-  content: '+';
-  left: calc(-100% - 0.5rem);
-}
-
-div.equation-inner.savings > span.equation-amount:after {
-  content: '=';
-  right: calc(-100% - 1rem);
+  align-self: flex-end;
 }
