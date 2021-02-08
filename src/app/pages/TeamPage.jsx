@@ -63,15 +63,15 @@ function TeamPage() {
               <TeamRankStick></TeamRankStick>
               <MoneyLeftStick></MoneyLeftStick>
             </div>
+            <div className='jr-logo-wrap'>
+              <ReactSVG className='jr-logo' src={jrSharksLogo} />
+            </div>
             <div className='team-page-stick-btn-container'>
               <StickButton small={true} image={scoutStick} link='/scout' />
             </div>
           </div>
 
           <div className='team-page-board-right'>
-            {/* <div className='team-page-board-header-logo-wrap'>
-                <ReactSVG src={jrSharksLogo} />
-              </div> */}
             <h3 className='team-page-board-title color-primary outline-black'>
               San Jose Jr Sharks
             </h3>
