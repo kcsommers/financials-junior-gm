@@ -1,19 +1,23 @@
 import Slide from '../../Slide';
-import { SET_ANIMATION_STATE } from '../../../redux/actionTypes';
+import { SET_ANIMATION_STATE } from '@redux/actionTypes';
 
 const slideConfigs = [
   {
     message: 'Signing new players to improve your team rank will cost money.',
     sharkie: 'speakInverse',
     hasButtons: false,
-    y: '50%',
+    slideAnimate: {
+      y: '50%',
+    },
     timer: Slide.SLIDE_DURATION,
   },
   {
     message: 'This is the money that you have left to spend on your team.',
     sharkie: 'speakInverse',
     hasButtons: false,
-    y: '50%',
+    slideAnimate: {
+      y: '50%',
+    },
     timer: Slide.SLIDE_DURATION,
   },
   {
@@ -22,7 +26,9 @@ const slideConfigs = [
     sharkie: 'playInverse',
     hasButtons: false,
     repeatIndex: 0,
-    y: '50%',
+    slideAnimate: {
+      y: '50%',
+    },
     timer: Slide.SLIDE_DURATION,
   },
   {
@@ -31,7 +37,9 @@ const slideConfigs = [
     hasButtons: true,
     repeatIndex: 0,
     timer: 0,
-    y: '50%',
+    slideAnimate: {
+      y: '50%',
+    },
     exitActions: [
       {
         type: SET_ANIMATION_STATE,
@@ -43,14 +51,10 @@ const slideConfigs = [
               state: {
                 scale: 1,
                 y: '0%',
-                opacity: [null, 0.5],
+                opacity: 0.6,
                 transition: {
                   delay: 0,
                   duration: 1,
-                  times: [0, 1],
-                  zIndex: {
-                    delay: 1,
-                  },
                 },
               },
             },
@@ -62,7 +66,7 @@ const slideConfigs = [
                 x: ['0%', '0%', '0%', '5%'],
                 times: [0, 0.5, 1.5, 2],
                 opacity: 1,
-                zIndex: 102,
+                zIndex: 1,
                 transition: {
                   delay: 0.5,
                   duration: 2,
@@ -76,4 +80,4 @@ const slideConfigs = [
   },
 ];
 
-export default slideConfigs.map((c) => new Slide(c));
+export const moneyLeftSlides = slideConfigs.map((c) => new Slide(c));
