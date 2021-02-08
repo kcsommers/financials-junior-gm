@@ -1,18 +1,11 @@
 import React from 'react';
 import { ReactSVG } from 'react-svg';
-import jrSharksLogo from '@images/icons/jr-sharks-logo.svg';
 import closeBtn from '@images/icons/cancel.svg';
 import {
-  TeamStick,
   ObjectivesBoard,
-  TeamRankStick,
-  MoneyLeftStick,
-  SignStick,
-  ScoutStick,
-  PlayerCard,
-  SeasonStick,
   BudgetStick,
   BudgetEquation,
+  BudgetSlider,
 } from '@components';
 import sharksLogo from '@images/sharks-comerica-logo.svg';
 import { useSelector, useDispatch } from 'react-redux';
@@ -25,8 +18,6 @@ import '@css/pages/BudgetPage.css';
 const teamSlides = [playersSlides];
 
 const BudgetPage = () => {
-  // GET TEAM FROM STORE
-
   const tutorialActive = useSelector((state) => state.tutorial.isActive);
 
   const dispatch = useDispatch();
@@ -34,10 +25,6 @@ const BudgetPage = () => {
   const onTutorialComplete = () => {
     dispatch(setTutorialIsActive({ isActive: false }));
   };
-
-  const highlightPlayerCards = useSelector(
-    (state) => state.tutorial.team.playerCard.highlight
-  );
 
   return (
     <div className='page-container'>
@@ -62,7 +49,12 @@ const BudgetPage = () => {
           <div className='budget-equation-container'>
             <BudgetEquation budget={{ total: 8, savings: 2, spending: 6 }} />
           </div>
-          <div className='budget-slider-container'></div>
+          <div className='budget-slider-container'>
+            <BudgetSlider />
+          </div>
+          <p className='color-primary'>
+            Move the yellow puck to change how much you save!
+          </p>
         </div>
       </div>
       {tutorialActive && (
