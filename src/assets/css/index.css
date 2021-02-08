@@ -3,6 +3,16 @@
   src: url('../fonts/interstate-regular-comp-58b641cc0aca1.otf');
 }
 
+@font-face {
+  font-family: 'made-tommy';
+  src: url('../fonts/MADE_TOMMY/MADE\ TOMMY\ Regular.otf');
+}
+
+@font-face {
+  font-family: 'made-tommy-outline';
+  src: url('../fonts/MADE_TOMMY_OUTLINE/MADE\ TOMMY\ Regular\ Outline.otf');
+}
+
 html {
   background-color: #eee;
 }
@@ -18,9 +28,7 @@ html {
 
 body,
 button {
-  font-family: interstate, -apple-system, BlinkMacSystemFont, 'Segoe UI',
-    'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
-    'Helvetica Neue', sans-serif;
+  font-family: made-tommy, serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
