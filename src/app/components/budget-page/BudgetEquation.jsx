@@ -1,26 +1,41 @@
 import { motion } from 'framer-motion';
 import '@css/components/budget-page/BudgetEquation.css';
 
-export const BudgetEquation = ({ budget }) => {
+export const BudgetEquation = ({ budget, animationStates }) => {
   return (
     <motion.div
       className='budget-equation-wrap box-shadow'
       transition={{ default: { duration: 1 } }}
+      animate={animationStates.board}
     >
       <h4 className='budget-equation-title'>Budget Equation</h4>
       <div className='equation-wrap'>
-        <div className='equation-inner total-budget'>
+        <motion.div
+          className='equation-inner total-budget'
+          animate={animationStates.total}
+          transition={{ default: { duration: 1 } }}
+        >
           <span className='equation-title'>Total Budget</span>
           <span className='equation-amount'>${budget.total}</span>
-        </div>
-        <div className='equation-inner savings'>
+        </motion.div>
+        <span className='equation-operator'>-</span>
+        <motion.div
+          className='equation-inner savings'
+          animate={animationStates.savings}
+          transition={{ default: { duration: 1 } }}
+        >
           <span className='equation-title'>Savings</span>
           <span className='equation-amount'>${budget.savings}</span>
-        </div>
-        <div className='equation-inner spending-budget'>
+        </motion.div>
+        <span className='equation-operator equals'>=</span>
+        <motion.div
+          className='equation-inner spending-budget'
+          animate={animationStates.spending}
+          transition={{ default: { duration: 1 } }}
+        >
           <span className='equation-title'>Spending Budget</span>
           <span className='equation-amount'>${budget.spending}</span>
-        </div>
+        </motion.div>
       </div>
     </motion.div>
   );

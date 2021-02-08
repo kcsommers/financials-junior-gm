@@ -61,12 +61,29 @@ const initialState = {
       opacity: 1,
     },
   },
+  budget: {
+    equationBoard: {
+      scale: 1,
+      opacity: 1,
+    },
+    total: {
+      scale: 1,
+      opacity: 1,
+    },
+    spending: {
+      scale: 1,
+      opacity: 1,
+    },
+    savings: {
+      scale: 1,
+      opacity: 1,
+    },
+  },
 };
 
 const tutorialsReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_TUTORIAL_IS_ACTIVE: {
-      console.log('SET TUTORIAL ACTIVE:::: ', action);
       return {
         ...state,
         isActive: action.payload.state.isActive,
