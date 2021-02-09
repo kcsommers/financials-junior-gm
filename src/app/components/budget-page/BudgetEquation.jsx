@@ -16,7 +16,9 @@ export const BudgetEquation = ({ budget, animationStates }) => {
           transition={{ default: { duration: 1 } }}
         >
           <span className='equation-title'>Total Budget</span>
-          <span className='equation-amount'>${budget.total}</span>
+          <span className='equation-amount'>
+            ${budget.total - budget.spent}
+          </span>
         </motion.div>
         <span className='equation-operator'>-</span>
         <motion.div
@@ -34,7 +36,9 @@ export const BudgetEquation = ({ budget, animationStates }) => {
           transition={{ default: { duration: 1 } }}
         >
           <span className='equation-title'>Spending Budget</span>
-          <span className='equation-amount'>${budget.spending}</span>
+          <span className='equation-amount'>
+            ${budget.total - budget.spent - budget.savings}
+          </span>
         </motion.div>
       </div>
     </motion.div>
