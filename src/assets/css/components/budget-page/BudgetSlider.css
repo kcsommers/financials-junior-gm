@@ -1,32 +1,94 @@
-div.budget-slider {
-  display: inline-block;
+div.slider-outer {
+  width: calc(100% - 100px);
+  margin: 0 auto;
+}
+
+div.slider-wrap {
   position: relative;
+  background-color: red;
+  height: 75px;
+  margin-left: auto;
 }
 
-.stick__savings path {
-  /* fill: none;
-  stroke-width: 3;
-  stroke-opacity: 0.3;
-  stroke-linecap: round;
-  stroke: blue; */
-}
-
-.stick__savings--path path {
-  /* display: none; */
-}
-
-.stick__savings--fill path {
-  display: none;
-}
-
-.savings-indicator {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-}
-
-.spending-indicator {
+div.savings-indicator-wrap {
   position: absolute;
   top: 0;
-  left: 0;
+  z-index: 1;
+}
+
+div.budget-slider-stick-wrap {
+  text-align: center;
+  margin: 0 auto;
+}
+
+.slider-wrap input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 75px;
+  height: 75px;
+  border-radius: 50%;
+  background: #37adbf;
+  cursor: pointer;
+  border: 0 !important;
+  transform: translateY(calc(-50% + 4px));
+}
+
+.slider-wrap input::-moz-budget-slider-wrap-thumb {
+  -webkit-appearance: none;
+  width: 75px;
+  height: 75px;
+  margin: -3px 0 0;
+  border-radius: 50%;
+  background: #37adbf;
+  cursor: pointer;
+  border: 0 !important;
+}
+
+.slider-wrap input::-ms-thumb {
+  width: 75px;
+  height: 75px;
+  margin: -3px 0 0;
+  border-radius: 50%;
+  background: #37adbf;
+  cursor: pointer;
+  border: 0 !important;
+}
+
+.slider-wrap input::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 8px;
+  cursor: pointer;
+  background: #b2b2b2;
+  border-radius: 3px;
+}
+
+.slider-wrap input::-moz-budget-slider-wrap-track {
+  width: 100%;
+  height: 8px;
+  cursor: pointer;
+  background: #b2b2b2;
+  border-radius: 3px;
+}
+
+.slider-wrap input::-ms-track {
+  width: 100%;
+  height: 8px;
+  cursor: pointer;
+  background: #b2b2b2;
+  border-radius: 3px;
+}
+
+.slider-wrap input:focus {
+  background: none;
+  outline: none;
+}
+
+.slider-wrap input {
+  width: 100%;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  -webkit-appearance: none;
+  z-index: 2;
+  opacity: 1;
+  direction: rtl;
 }

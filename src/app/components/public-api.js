@@ -1,4 +1,5 @@
 export { StickButton } from './StickButton';
+export { Indicator } from './Indicator';
 export { BudgetSlider } from './budget-page/BudgetSlider';
 export { BudgetEquation } from './budget-page/BudgetEquation';
 export { MoneyLevel } from './MoneyLevel';

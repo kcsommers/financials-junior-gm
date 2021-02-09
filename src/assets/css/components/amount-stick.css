@@ -43,15 +43,15 @@ p.amount-stick-text {
   letter-spacing: 0.1rem;
 }
 
-div.amount-stick-wrap .amount-indicator-wrap {
+div.amount-stick-indicator-wrap {
   position: absolute;
   top: 0%;
 }
 
-div.amount-stick-indicator.amount-indicator-wrap.amount-indicator-right {
+div.amount-stick-indicator-right {
   right: 60px;
 }
 
-div.amount-stick-indicator.amount-indicator-wrap.amount-indicator-left {
+div.amount-stick-indicator-left {
   left: 60px;
 }

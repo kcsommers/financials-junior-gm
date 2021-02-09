@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState } from 'react';
 import { ReactSVG } from 'react-svg';
 import closeBtn from '@images/icons/cancel.svg';
 import {
@@ -21,6 +21,12 @@ const teamSlides = [budgetSlides];
 const BudgetPage = () => {
   const tutorialActive = useSelector((state) => state.tutorial.isActive);
 
+  const [currentBudget, setCurrentBudget] = useState({
+    total: 10,
+    spent: 2,
+    savings: 0,
+  });
+
   const budgetEquationStates = {
     board: useSelector((state) => state.tutorial.budget.equationBoard),
     total: useSelector((state) => state.tutorial.budget.total),
@@ -32,6 +38,13 @@ const BudgetPage = () => {
 
   const onTutorialComplete = () => {
     dispatch(setTutorialIsActive({ isActive: false }));
+  };
+
+  const updateSavings = (value) => {
+    setCurrentBudget({
+      ...currentBudget,
+      savings: +value,
+    });
   };
 
   return (
@@ -46,7 +59,7 @@ const BudgetPage = () => {
           ></ObjectivesBoard>
         </div>
         <div className='page-header-stick-wrap'>
-          <StickButton image={budgetStick} />
+          <StickButton image={budgetStick} link='/home' />
         </div>
       </div>
       <div className='page-body'>
@@ -56,16 +69,16 @@ const BudgetPage = () => {
           </Link>
           <div className='budget-equation-container'>
             <BudgetEquation
-              budget={{ total: 8, savings: 2, spending: 6 }}
+              budget={currentBudget}
               animationStates={budgetEquationStates}
             />
           </div>
           <div className='budget-slider-container'>
-            <BudgetSlider />
+            <BudgetSlider budget={currentBudget} setValue={updateSavings} />
           </div>
-          <p className='helper-text color-primary'>
+          {/* <p className='helper-text color-primary'>
             Move the yellow puck to change how much you save!
-          </p>
+          </p> */}
         </div>
       </div>
       {tutorialActive && (

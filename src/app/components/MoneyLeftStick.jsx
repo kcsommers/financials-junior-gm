@@ -1,6 +1,7 @@
 import React from 'react';
 import { ReactSVG } from 'react-svg';
 import icon from '@images/icons/hockey-visual-2.svg';
+import { Indicator } from '@components';
 import '@css/components/amount-stick.css';
 
 export const MoneyLeftStick = () => {
@@ -13,11 +14,8 @@ export const MoneyLeftStick = () => {
       <div className='amount-stick-img-wrap'>
         <ReactSVG src={icon} />
       </div>
-      <div className='amount-stick-indicator amount-indicator-wrap amount-indicator-left'>
-        <div className='amount-indicator-pointer'></div>
-        <div className='amount-indicator'>
-          <p className='amount-stick-text color-primary'>25</p>
-        </div>
+      <div className='amount-stick-indicator-wrap amount-stick-indicator-left'>
+        <Indicator amount={25} direction='left' />
       </div>
     </div>
   );
