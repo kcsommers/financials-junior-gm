@@ -7,6 +7,7 @@ div.home-page-container {
 .home-cards-row {
   justify-content: center;
   display: flex;
+  margin-top: 1rem;
 }
 
 .objectives-board-box {
@@ -17,13 +18,17 @@ div.home-page-container {
   padding: 0 3.5rem;
 }
 
+.stick-btn-text {
+  transition: all 0.3s ease;
+}
+
 .money-left-card-box {
   padding: 0 3.5rem;
 }
 
 div.hockey-sticks-container {
   position: relative;
-  margin-top: 3rem;
+  margin-top: 4rem;
 }
 
 div.sharks-logo-wrap {
@@ -45,4 +50,8 @@ div.hockey-sticks-row {
 
 div.hockey-sticks-row-2 {
   margin-top: 2.5rem;
+}
+
+div.stick-btn-container:first-child {
+  text-align: right;
 }

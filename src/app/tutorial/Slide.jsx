@@ -21,19 +21,16 @@ export default class Slide {
   }
 
   getJsx() {
-    return <p className='slide-msg color-primary'>{this.message}</p>;
     if (!this.accentText) {
       return <p className='slide-msg color-primary'>{this.message}</p>;
     }
-
-    console.log('ACCENT:::: ', this.accentText);
 
     const messageSplit = this.message.split(this.accentText);
     return (
       <p className='slide-msg color-primary'>
         {messageSplit[0]}
-        <span className='color-accent font-xl'>{messageSplit[1]}</span>
-        {messageSplit[2]}
+        <span className='color-accent font-xl'>{this.accentText}</span>
+        {messageSplit[1]}
       </p>
     );
   }

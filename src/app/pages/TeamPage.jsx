@@ -3,17 +3,16 @@ import { ReactSVG } from 'react-svg';
 import jrSharksLogo from '@images/icons/jr-sharks-logo.svg';
 import closeBtn from '@images/icons/cancel.svg';
 import {
-  TeamStick,
   ObjectivesBoard,
   TeamRankStick,
   MoneyLeftStick,
-  SignStick,
-  ScoutStick,
+  StickButton,
   PlayerCard,
 } from '@components';
 import sharksLogo from '@images/sharks-comerica-logo.svg';
+import scoutStick from '@images/scout-stick.svg';
+import teamStick from '@images/team-stick.svg';
 import { useSelector, useDispatch } from 'react-redux';
-import { AnimatePresence, motion } from 'framer-motion';
 import { Tutorial, playersSlides } from '@tutorial';
 import { Link } from 'react-router-dom';
 import { setTutorialIsActive } from '@redux/actions';
@@ -44,60 +43,59 @@ function TeamPage() {
           <img src={sharksLogo} alt='Sharks Logo' />
         </div>
         <div className='page-header-stick-wrap'>
-          <TeamStick></TeamStick>
+          <StickButton image={teamStick} link='/home' />
         </div>
-        <div className='page-header-objectives-board-wrap'>
+        <div className='page-header-objectives-board-container'>
           <ObjectivesBoard
             objectivesArray={['1. Learn about your budget.']}
           ></ObjectivesBoard>
         </div>
       </div>
+
       <div className='page-body'>
         <div className='page-board'>
           <Link to='/home'>
             <ReactSVG className='page-board-close-btn' src={closeBtn} />
           </Link>
+
           <div className='team-page-board-left'>
-            <div className='sticks-card card'>
+            <div className='sticks-card card auto-card'>
               <TeamRankStick></TeamRankStick>
               <MoneyLeftStick></MoneyLeftStick>
             </div>
-            <div className='team-page-stick-btns-wrap'>
-              <div className='team-page-stick-btn-wrap'>
-                <SignStick includeSubtext={true} link='/sign' />
-              </div>
-              <div className='team-page-stick-btn-wrap'>
-                <ScoutStick includeSubtext={true} link='/scout' />
-              </div>
+            <div className='jr-logo-wrap'>
+              <ReactSVG className='jr-logo' src={jrSharksLogo} />
+            </div>
+            <div className='team-page-stick-btn-container'>
+              <StickButton small={true} image={scoutStick} link='/scout' />
             </div>
           </div>
+
           <div className='team-page-board-right'>
-            <div className='team-page-board-header'>
-              <div className='team-page-board-header-logo-wrap'>
-                <ReactSVG src={jrSharksLogo} />
+            <h3 className='team-page-board-title color-primary outline-black'>
+              San Jose Jr Sharks
+            </h3>
+            <div className='team-page-players-container'>
+              <div className='active-players-container card auto-card'>
+                <div className='team-page-players-row'>
+                  <PlayerCard player={{ name: 'KACY' }} />
+                  <PlayerCard highlight={highlightPlayerCards} />
+                  <PlayerCard highlight={highlightPlayerCards} />
+                </div>
+                <div className='team-page-players-row'>
+                  <PlayerCard player={{ name: 'KACY' }} />
+                  <PlayerCard />
+                  <PlayerCard />
+                </div>
               </div>
-              <h3 className='team-page-board-title color-primary outline-black'>
-                San Jose Jr Sharks
-              </h3>
-            </div>
-            <div className='team-page-players-container card'>
-              <div className='team-page-players-row'>
-                <PlayerCard player={{ name: 'KACY' }} />
-                <PlayerCard highlight={highlightPlayerCards} />
-                <PlayerCard highlight={highlightPlayerCards} />
-              </div>
-              <div className='team-page-players-row'>
-                <PlayerCard player={{ name: 'KACY' }} />
-                <PlayerCard />
-                <PlayerCard />
-              </div>
-            </div>
-            <div className='team-page-bench-container card'>
-              <p className='color-primary on-the-bench-text'>On the Bench</p>
-              <div className='team-page-bench-row'>
-                <PlayerCard player={{ name: 'KACY' }} />
-                <PlayerCard />
-                <PlayerCard />
+
+              <div className='bench-container team-page-players-container card auto-card'>
+                <p className='color-primary on-the-bench-text'>On the Bench</p>
+                <div className='team-page-players-row team-page-bench-row'>
+                  <PlayerCard player={{ name: 'KACY' }} />
+                  <PlayerCard />
+                  <PlayerCard />
+                </div>
               </div>
             </div>
           </div>

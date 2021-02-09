@@ -2,15 +2,17 @@ div.player-card-wrap {
   display: inline-block;
 }
 
-div.player-card-wrap.highlighted {
-}
-
 div.player-card-inner {
   width: 90px;
   height: 114px;
   border-radius: 15px;
   background-color: #e5e5e5;
   transition: all 0.3s ease;
+}
+
+div.player-card-header,
+div.player-card-body {
+  font-size: 1rem;
 }
 
 div.player-card-clickable .player-card-inner {
@@ -24,7 +26,6 @@ div.player-card-large div.player-card-inner {
 }
 
 p.add-player-text {
-  font-size: 2.25rem;
   text-align: center;
   height: 100%;
   display: flex;
@@ -32,8 +33,9 @@ p.add-player-text {
   justify-content: center;
 }
 
-p.position-text {
+span.position-text {
   text-align: center;
+  display: inline-block;
 }
 
 div.player-overlay-container {
@@ -58,7 +60,7 @@ button.player-overlay-button {
   background-color: #f3901d;
   border-radius: 25px;
   color: #fff;
-  font-size: 4rem;
+  font-size: 3rem;
   display: flex;
   width: 350px;
   padding: 2rem 0;

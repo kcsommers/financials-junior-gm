@@ -11,17 +11,12 @@ div.amount-stick-wrap {
   padding-left: 1rem;
 }
 
-h3.amount-stick-title {
-  font-size: 1.75rem;
-}
-
 div.amount-stick-wrap.amount-stick-left h3.amount-stick-title {
   padding-right: 0;
 }
 
-h3.amount-stick-title > span {
+h4.amount-stick-title > span {
   width: 65px;
-  letter-spacing: 0.1rem;
   display: inline-block;
 }
 
@@ -43,57 +38,20 @@ div.amount-stick-filler {
   flex: 1;
 }
 
-div.amount-stick-circle-wrap {
-  position: absolute;
-  top: 0%;
-}
-
-div.amount-stick-wrap:not(.amount-stick-left) div.amount-stick-circle-wrap {
-  right: 60px;
-}
-
-div.amount-stick-wrap.amount-stick-left div.amount-stick-circle-wrap {
-  left: 60px;
-}
-
-div.amount-stick-circle {
-  position: relative;
-  z-index: 2;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-  width: 75px;
-  height: 75px;
-  border: 10px solid #4b4b4b;
-  background-color: #fff;
-  box-sizing: border-box;
-  border-radius: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
 p.amount-stick-text {
   font-size: 2rem;
   letter-spacing: 0.1rem;
 }
 
-div.amount-stick-circle-pointer {
-  content: '';
-  width: 15px;
-  height: 15px;
-  background-color: #4b4b4b;
+div.amount-stick-indicator-wrap {
   position: absolute;
-  right: 0;
-  top: 50%;
-  z-index: 1;
-  right: 0;
+  top: 0%;
 }
 
-div.amount-stick-wrap:not(.amount-stick-left) div.amount-stick-circle-pointer {
-  right: 0;
-  transform: translate(5px, -50%) rotate(45deg);
+div.amount-stick-indicator-right {
+  right: 60px;
 }
 
-div.amount-stick-wrap.amount-stick-left div.amount-stick-circle-pointer {
-  left: 0;
-  transform: translate(-5px, -50%) rotate(45deg);
+div.amount-stick-indicator-left {
+  left: 60px;
 }

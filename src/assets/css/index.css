@@ -3,6 +3,16 @@
   src: url('../fonts/interstate-regular-comp-58b641cc0aca1.otf');
 }
 
+@font-face {
+  font-family: 'made-tommy';
+  src: url('../fonts/MADE_TOMMY/MADE\ TOMMY\ Regular.otf');
+}
+
+@font-face {
+  font-family: 'made-tommy-outline';
+  src: url('../fonts/MADE_TOMMY_OUTLINE/MADE\ TOMMY\ Regular\ Outline.otf');
+}
+
 html {
   background-color: #eee;
 }
@@ -18,11 +28,10 @@ html {
 
 body,
 button {
-  font-family: interstate, -apple-system, BlinkMacSystemFont, 'Segoe UI',
-    'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
-    'Helvetica Neue', sans-serif;
+  font-family: made-tommy, serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-size: 1.25rem;
 }
 
 .color-primary {
@@ -34,7 +43,7 @@ button {
 }
 
 .font-xl {
-  font-size: 2.25rem;
+  font-size: 2.95rem;
 }
 
 *.hidden {
@@ -47,6 +56,18 @@ h1.page-title {
   text-shadow: 0 0 5px #f3901d, 0 0 5px #f3901d, 0 0 5px #f3901d,
     0 0 5px #f3901d;
   font-size: 5.25rem;
+}
+
+h2 {
+  font-size: 3.25rem;
+}
+
+h4 {
+  font-size: 1.5rem;
+}
+
+p {
+  color: #00788a;
 }
 
 .card {
