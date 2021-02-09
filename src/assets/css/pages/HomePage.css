@@ -18,6 +18,10 @@ div.home-page-container {
   padding: 0 3.5rem;
 }
 
+.stick-btn-text {
+  transition: all 0.3s ease;
+}
+
 .money-left-card-box {
   padding: 0 3.5rem;
 }

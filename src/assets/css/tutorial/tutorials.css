@@ -1,6 +1,3 @@
-div.tutorial-container {
-}
-
 div.tutorial-container,
 div.tutorial-container-inner {
   position: absolute;
@@ -44,7 +41,7 @@ p.slide-msg {
 }
 
 div.slide-wrap-small p.slide-msg {
-  font-size: 2.25rem;
+  font-size: 1.85rem;
 }
 
 div.btns-wrap {

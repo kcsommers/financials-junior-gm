@@ -23,8 +23,8 @@ const BudgetPage = () => {
 
   const [currentBudget, setCurrentBudget] = useState({
     total: 10,
-    spent: 0,
-    savings: 0,
+    spent: 3,
+    savings: 2,
   });
 
   const budgetEquationStates = {
@@ -66,7 +66,9 @@ const BudgetPage = () => {
         <div className='page-board budget-page-board'>
           <Link to='/home'>
             <ReactSVG
-              className='page-board-close-btn page-board-close-btn-left'
+              className={`page-board-close-btn page-board-close-btn-left${
+                tutorialActive ? ' hidden' : ''
+              }`}
               src={closeBtn}
             />
           </Link>
@@ -80,7 +82,11 @@ const BudgetPage = () => {
             Move the yellow puck to change how much you save!
           </p>
           <div className='budget-slider-container'>
-            <BudgetSlider budget={currentBudget} setValue={updateSavings} />
+            <BudgetSlider
+              budget={currentBudget}
+              setValue={updateSavings}
+              tutorialActive={tutorialActive}
+            />
           </div>
         </div>
       </div>

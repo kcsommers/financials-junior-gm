@@ -2,7 +2,7 @@ import { Indicator } from '@components';
 import { BudgetSliderSvg } from './BudgetSliderSvg';
 import '@css/components/budget-page/BudgetSlider.css';
 
-export const BudgetSlider = ({ budget, setValue }) => {
+export const BudgetSlider = ({ budget, setValue, tutorialActive }) => {
   const getStops = () => {
     const spentPct = budget.spent / budget.total;
     const savingsPct = budget.savings / budget.total;
@@ -68,7 +68,11 @@ export const BudgetSlider = ({ budget, setValue }) => {
         <BudgetSliderSvg stops={stops} />
       </div>
       <div className='slider-outer'>
-        <div className='top-indicators-container'>
+        <div
+          className={`top-indicators-container${
+            tutorialActive ? ' hidden' : ''
+          }`}
+        >
           {budget.spent > 0 && (
             <div className='spent-indicator-wrap'>
               <p className='color-primary'>
@@ -102,7 +106,9 @@ export const BudgetSlider = ({ budget, setValue }) => {
             }}
           ></input>
           <div
-            className='savings-indicator-wrap'
+            className={`savings-indicator-wrap${
+              tutorialActive ? ' hidden' : ''
+            }`}
             style={savingsIndicatorPosition}
           >
             <Indicator
