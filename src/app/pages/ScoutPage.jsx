@@ -2,13 +2,14 @@ import React from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import {
   ObjectivesBoard,
-  ScoutStick,
+  StickButton,
   MoneyLevel,
   PlayerCard,
   DropContainer,
   DragItem,
 } from '@components';
 import sharksLogo from '@images/sharks-comerica-logo.svg';
+import scoutStick from '@images/scout-stick.svg';
 import { useSelector, useDispatch } from 'react-redux';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Tutorial, scoutSlides } from '@tutorial';
@@ -55,7 +56,7 @@ const fiftyCents = [
 
 const players = [...oneDollar, ...twoDollar, ...fiftyCents];
 
-function TeamPage() {
+const TeamPage = () => {
   // GET TEAM FROM STORE
 
   const newPlayersAnimationState = useSelector(
@@ -192,9 +193,9 @@ function TeamPage() {
             <img src={sharksLogo} alt='Sharks Logo' />
           </div>
           <div className='page-header-stick-wrap scout-page-header-stick-wrap'>
-            <ScoutStick large={true}></ScoutStick>
+            <StickButton image={scoutStick} large={true} />
           </div>
-          <div className='page-header-objectives-board-wrap'>
+          <div className='page-header-objectives-board-container'>
             <ObjectivesBoard
               objectivesArray={['1. Scout players to sign to your bench!']}
             ></ObjectivesBoard>
@@ -251,6 +252,6 @@ function TeamPage() {
       </div>
     </DragDropContext>
   );
-}
+};
 
 export default TeamPage;
