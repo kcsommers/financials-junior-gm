@@ -1,4 +1,5 @@
 export { introSlides } from './lessons/home/intro-slides';
+export { SharkieButton } from './components/SharkieButton';
 export { budgetSlides } from './lessons/budget/budget-slides';
 export { objectivesSlides } from './lessons/home/objectives-slides';
 export { teamRankSlides } from './lessons/home/team-rank-slides';

@@ -84,6 +84,7 @@ const initialState = {
 const tutorialsReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_TUTORIAL_IS_ACTIVE: {
+      console.log('IS ACTIVE?? ', action.payload.state.isActive);
       return {
         ...state,
         isActive: action.payload.state.isActive,

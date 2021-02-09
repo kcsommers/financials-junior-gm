@@ -8,6 +8,7 @@ import ScoutPage from './pages/ScoutPage';
 import '@css/App.css';
 import { Overlay } from '@components';
 import BudgetPage from './pages/BudgetPage';
+import Sign from './components/Sign';
 
 const App = () => {
   return (

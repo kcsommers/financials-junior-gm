@@ -1,9 +1,9 @@
-import React from 'react'
+import React from 'react';
 
 export const AddPlayer = () => {
   return (
     <div>
-      <div className='player-card-wrap player-card-large'>{inner}</div>
+      <div className='player-card-wrap player-card-large'></div>
       <div className='player-modal-buttons-wrap'>
         <button class='player-modal-button outline-black box-shadow'>
           Trade
@@ -13,5 +13,5 @@ export const AddPlayer = () => {
         </button>
       </div>
     </div>
-  )
-}
+  );
+};
