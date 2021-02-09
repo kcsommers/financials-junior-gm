@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="320.346" height="319.237" viewBox="0 0 320.346 319.237">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rectangle_85" data-name="Rectangle 85" width="98" height="199" fill="none" stroke="#707070" stroke-width="1"/>
+    </clipPath>
+  </defs>
+  <g id="Other_Team" data-name="Other Team" transform="translate(-143.738 1.326)">
+    <text id="Team_Rank" data-name="Team 
+Rank" transform="translate(356.084 100.524)" fill="#3b42ff" font-size="15" font-family="MADETOMMY-Bold, MADE TOMMY" font-weight="700" opacity="0"><tspan x="5.447" y="15">Team </tspan><tspan x="7.487" y="35">Rank</tspan></text>
+    <g id="Hockey_Visual" data-name="Hockey Visual" transform="translate(144 0.103)">
+      <g id="shape" transform="matrix(0.839, 0.545, -0.545, 0.839, 121.911, 0)">
+        <g id="Group_46" data-name="Group 46">
+          <g id="Layer_2" data-name="Layer 2" transform="translate(136.243 195.138)">
+            <g id="logos" transform="translate(0)">
+              <path id="Path_4" data-name="Path 4" d="M4.249,338.731a3.625,3.625,0,0,1-2.132-.774c-.07-.051-.138-.1-.274-.217-.048-.039-.095-.08-.207-.184A5.961,5.961,0,0,1,.1,332.229L3.336,314.48c.389-2.579,2.1-4.443,4.081-4.45h85.3c1.943.069,3.634,1.909,4.048,4.45l3.2,17.749c.6,3.717-1.859,6.521-4.139,6.5H4.249" transform="translate(0 -310.03)" fill="#fff" stroke="#000" stroke-width="2"/>
+            </g>
+          </g>
+          <path id="Path_5" data-name="Path 5" d="M284.952,191.3a11.877,11.877,0,0,1-5.159-1.423,29.8,29.8,0,0,1-8.343-7.244l-6.659-9.976L253.63,155.433l-7.4-11.165L235.675,127.1,227.7,114.3,216.262,96.867,202.607,75.589,189.652,55.474,177.714,36.7,162.33,12.823,153.638-.407s-3.255-6.574-10.089-1.524c-3.456,2.479-1.815,6.316-1.13,7.745,1.166,2.359,13.991,22.693,13.991,22.693l8.5,13.086,8.712,13.95,9.5,14.751,8.771,13.731,6.834,11.109,11.549,18.4,16.841,25.659,9.4,14.782,8.719,13.768,11.932,18.562,8.719,13.518,8.782,12.787,1.819,2.493,2.325,3.188" transform="translate(-141.425 3.838)" fill="#fff" stroke="#000" stroke-width="2"/>
+        </g>
+      </g>
+      <g id="Mask_Group_18" data-name="Mask Group 18" transform="translate(115 116.422)" clip-path="url(#clip-path)">
+        <g id="shape-2" data-name="shape" transform="matrix(0.839, 0.545, -0.545, 0.839, 6.911, -116.422)">
+          <g id="Group_46-2" data-name="Group 46">
+            <g id="Layer_2-2" data-name="Layer 2" transform="translate(136.243 195.138)">
+              <g id="logos-2" data-name="logos" transform="translate(0)">
+                <path id="Path_4-2" data-name="Path 4" d="M4.249,338.731a3.625,3.625,0,0,1-2.132-.774c-.07-.051-.138-.1-.274-.217-.048-.039-.095-.08-.207-.184A5.961,5.961,0,0,1,.1,332.229L3.336,314.48c.389-2.579,2.1-4.443,4.081-4.45h85.3c1.943.069,3.634,1.909,4.048,4.45l3.2,17.749c.6,3.717-1.859,6.521-4.139,6.5H4.249" transform="translate(0 -310.03)" fill="#fff" stroke="#000" stroke-width="2"/>
+              </g>
+            </g>
+            <path id="Path_5-2" data-name="Path 5" d="M284.952,191.3a11.877,11.877,0,0,1-5.159-1.423,29.8,29.8,0,0,1-8.343-7.244l-6.659-9.976L253.63,155.433l-7.4-11.165L235.675,127.1,227.7,114.3,216.262,96.867,202.607,75.589,189.652,55.474,177.714,36.7,162.33,12.823,153.638-.407s-3.255-6.574-10.089-1.524c-3.456,2.479-1.815,6.316-1.13,7.745,1.166,2.359,13.991,22.693,13.991,22.693l8.5,13.086,8.712,13.95,9.5,14.751,8.771,13.731,6.834,11.109,11.549,18.4,16.841,25.659,9.4,14.782,8.719,13.768,11.932,18.562,8.719,13.518,8.782,12.787,1.819,2.493,2.325,3.188" transform="translate(-141.425 3.838)" fill="#fff" stroke="#000" stroke-width="2"/>
+          </g>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

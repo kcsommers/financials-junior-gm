@@ -9,6 +9,7 @@ export { Navigation } from './home-page/Navigation.jsx';
 export { ObjectivesBoard } from './ObjectivesBoard.jsx';
 export { TeamRankCard } from './home-page/TeamRankCard.jsx';
 export { TeamRankStick } from './TeamRankStick.jsx';
+export { OpposingTeamRankStick } from './OpposingTeamRankStick.jsx';
 export { MoneyLeftStick } from './MoneyLeftStick';
 export { DropContainer } from './DropContainer';
 export { Overlay } from './Overlay';
