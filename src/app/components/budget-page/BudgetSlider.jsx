@@ -38,7 +38,7 @@ export const BudgetSlider = ({ budget, setValue }) => {
     };
   };
 
-  const getIndicatorPosition = () => {
+  const getSavingsIndicatorPosition = () => {
     const pct = (budget.savings / (budget.total - budget.spent)) * 100;
     return {
       right: `${pct}%`,
@@ -46,7 +46,7 @@ export const BudgetSlider = ({ budget, setValue }) => {
     };
   };
 
-  const indicatorPosition = getIndicatorPosition();
+  const savingsIndicatorPosition = getSavingsIndicatorPosition();
   const stops = getStops();
 
   const sliderWidth = `${
@@ -68,8 +68,30 @@ export const BudgetSlider = ({ budget, setValue }) => {
         <BudgetSliderSvg stops={stops} />
       </div>
       <div className='slider-outer'>
+        <div className='top-indicators-container'>
+          {budget.spent > 0 && (
+            <div className='spent-indicator-wrap'>
+              <p className='color-primary'>
+                {`$${budget.spent}`} <br /> Spent
+              </p>
+            </div>
+          )}
+          <div className='spending-indicator-wrap'>
+            <p className='color-primary'>
+              {`$${budget.total - budget.spent - budget.savings}`} <br />{' '}
+              Spending Budget
+            </p>
+          </div>
+        </div>
         <div className='slider-scale-wrap'>{scaleMarkers}</div>
-        <div className='slider-wrap' style={{ width: sliderWidth }}>
+        <div
+          className='slider-wrap'
+          style={{
+            width: `calc(${sliderWidth} + ${
+              71.46 / (budget.total / budget.spent)
+            }px)`,
+          }}
+        >
           <input
             type='range'
             min='0'
@@ -79,8 +101,16 @@ export const BudgetSlider = ({ budget, setValue }) => {
               setValue(e.target.value);
             }}
           ></input>
-          <div className='savings-indicator-wrap' style={indicatorPosition}>
-            <Indicator amount={budget.savings} direction='top' />
+          <div
+            className='savings-indicator-wrap'
+            style={savingsIndicatorPosition}
+          >
+            <Indicator
+              amount={`$${budget.savings}`}
+              direction='top'
+              highlight={true}
+            />
+            <p className='color-primary'>Savings</p>
           </div>
         </div>
       </div>

@@ -1,6 +1,7 @@
 div.slider-outer {
   width: calc(100% - 100px);
   margin: 1rem auto 0 auto;
+  position: relative;
 }
 
 div.slider-scale-wrap {
@@ -33,10 +34,36 @@ div.slider-wrap {
   margin-top: 1rem;
 }
 
+div.top-indicators-container,
 div.savings-indicator-wrap {
   position: absolute;
   top: 0;
   z-index: 1;
+  text-align: center;
+}
+
+div.top-indicators-container {
+  top: calc(-100% - 35px);
+  display: flex;
+  align-items: baseline;
+}
+
+div.spent-indicator-wrap > p,
+div.spending-indicator-wrap > p {
+  width: 100px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+div.spending-indicator-wrap p {
+  color: #002f6c;
+}
+
+div.spent-indicator-wrap p {
+  color: #dc2d2d;
+  font-weight: bold;
 }
 
 div.budget-slider-stick-wrap {

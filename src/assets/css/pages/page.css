@@ -66,6 +66,14 @@ div.page-board {
   z-index: 1;
 }
 
+.page-board-close-btn:not(.page-board-close-btn-left) {
+  right: 1rem;
+}
+
+.page-board-close-btn-left {
+  left: 1rem;
+}
+
 div.page-board-card {
   width: 100%;
   height: auto;

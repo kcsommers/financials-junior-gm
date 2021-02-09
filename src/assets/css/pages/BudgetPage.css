@@ -9,6 +9,11 @@ div.budget-equation-container {
 }
 
 p.helper-text {
-  width: 50%;
-  padding-left: 3rem;
+  width: 40%;
+  margin: 1rem auto;
+  text-align: center;
+}
+
+div.budget-slider-container {
+  margin-top: -5rem;
 }
