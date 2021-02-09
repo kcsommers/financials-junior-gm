@@ -2,24 +2,24 @@ import Slide from '../../Slide';
 import { SET_ANIMATION_STATE } from '@redux/actionTypes';
 
 const slideConfigs = [
-  // {
-  //   message: 'Hello there!',
-  //   sharkie: 'play',
-  //   bubbleDelay: 1000,
-  //   timer: Slide.SLIDE_DURATION + 1000,
-  // },
-  // {
-  //   message: 'Are you here to deliver my fish?',
-  //   sharkie: 'play',
-  //   hasButtons: false,
-  //   timer: Slide.SLIDE_DURATION,
-  // },
-  // {
-  //   message: 'No?',
-  //   sharkie: 'play',
-  //   hasButtons: false,
-  //   timer: Slide.SLIDE_DURATION,
-  // },
+  {
+    message: 'Hello there!',
+    sharkie: 'play',
+    bubbleDelay: 1000,
+    timer: Slide.SLIDE_DURATION + 1000,
+  },
+  {
+    message: 'Are you here to deliver my fish?',
+    sharkie: 'play',
+    hasButtons: false,
+    timer: Slide.SLIDE_DURATION,
+  },
+  {
+    message: 'No?',
+    sharkie: 'play',
+    hasButtons: false,
+    timer: Slide.SLIDE_DURATION,
+  },
   {
     message: "Wait, aren't you the new Junior Manager of the San Jose Sharks?",
     accentText: 'Junior Manager',

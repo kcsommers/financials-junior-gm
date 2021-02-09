@@ -46,6 +46,13 @@ const HomePage = () => {
     dispatch(setTutorialIsActive({ isActive: false }));
   };
 
+  const animationStates = {
+    teamStick: useSelector((state) => state.tutorial.home.teamStick),
+    seasonStick: useSelector((state) => state.tutorial.home.seasonStick),
+    budgetStick: useSelector((state) => state.tutorial.home.budgetStick),
+    trophiesStick: useSelector((state) => state.tutorial.home.trophiesStick),
+  };
+
   return (
     <div className='home-page-container'>
       <Navigation />
@@ -77,8 +84,9 @@ const HomePage = () => {
               tutorialActive={tutorialActive}
               link='/team'
               image={teamStick}
+              animationState={animationStates.teamStick}
             />
-            <p className='stick-btn-text'>
+            <p className={`stick-btn-text${tutorialActive ? ' hidden' : ''}`}>
               Build your team by signing players!
             </p>
           </div>
@@ -88,8 +96,11 @@ const HomePage = () => {
               link='/budget'
               inverse={true}
               image={budgetStick}
+              animationState={animationStates.budgetStick}
             />
-            <p className='stick-btn-text'>Manage your team's money.</p>
+            <p className={`stick-btn-text${tutorialActive ? ' hidden' : ''}`}>
+              Manage your team's money.
+            </p>
           </div>
         </div>
         <div className='hockey-sticks-row hockey-sticks-row-2'>
@@ -98,8 +109,9 @@ const HomePage = () => {
               tutorialActive={tutorialActive}
               link='/season'
               image={seasonStick}
+              animationState={animationStates.seasonStick}
             />
-            <p className='stick-btn-text'>
+            <p className={`stick-btn-text${tutorialActive ? ' hidden' : ''}`}>
               Play matches and win the championship!
             </p>
           </div>
@@ -109,8 +121,11 @@ const HomePage = () => {
               inverse={true}
               link='/trophies'
               image={trophiesStick}
+              animationState={animationStates.trophiesStick}
             />
-            <p className='stick-btn-text'>See your badges and trophies!</p>
+            <p className={`stick-btn-text${tutorialActive ? ' hidden' : ''}`}>
+              See your badges and trophies!
+            </p>
           </div>
         </div>
         <div></div>
