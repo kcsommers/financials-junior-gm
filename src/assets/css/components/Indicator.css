@@ -18,8 +18,11 @@ div.amount-indicator {
   justify-content: center;
 }
 
+div.amount-indicator-highlight div.amount-indicator {
+  border-color: #ffd782;
+}
+
 div.amount-indicator-pointer {
-  content: '';
   width: 15px;
   height: 15px;
   background-color: #4b4b4b;
@@ -28,6 +31,10 @@ div.amount-indicator-pointer {
   top: 50%;
   z-index: 1;
   right: 0;
+}
+
+div.amount-indicator-highlight div.amount-indicator-pointer {
+  background-color: #ffd782;
 }
 
 div.amount-indicator-right div.amount-indicator-pointer {

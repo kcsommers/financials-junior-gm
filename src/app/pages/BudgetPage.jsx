@@ -65,7 +65,10 @@ const BudgetPage = () => {
       <div className='page-body'>
         <div className='page-board budget-page-board'>
           <Link to='/home'>
-            <ReactSVG className='page-board-close-btn' src={closeBtn} />
+            <ReactSVG
+              className='page-board-close-btn page-board-close-btn-left'
+              src={closeBtn}
+            />
           </Link>
           <div className='budget-equation-container'>
             <BudgetEquation
@@ -73,12 +76,12 @@ const BudgetPage = () => {
               animationStates={budgetEquationStates}
             />
           </div>
+          <p className='helper-text color-primary'>
+            Move the yellow puck to change how much you save!
+          </p>
           <div className='budget-slider-container'>
             <BudgetSlider budget={currentBudget} setValue={updateSavings} />
           </div>
-          {/* <p className='helper-text color-primary'>
-            Move the yellow puck to change how much you save!
-          </p> */}
         </div>
       </div>
       {tutorialActive && (
