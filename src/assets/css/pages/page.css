@@ -64,6 +64,7 @@ div.page-board {
   top: 0.35rem;
   right: 1rem;
   z-index: 1;
+  transition: all 0.3s ease;
 }
 
 .page-board-close-btn:not(.page-board-close-btn-left) {
