@@ -1,21 +1,20 @@
-.middle-card {
+.objectives-board-wrap {
   border: 10px solid #00788a;
   border-radius: 15px;
   padding: 0.5rem 1rem;
   background: #4b4b4b;
   color: white;
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-  font-family: 'interstate';
   position: relative;
 }
 
 .objective-level-box {
   display: flex;
   justify-content: space-between;
-  font-size: 36px;
-  font-family: 'interstate';
+  font-size: 1.75rem;
+  font-weight: bold;
 }
 
-.ordered-list {
-  font-size: 24px;
+.ordered-list > div {
+  margin: 0.5rem 0;
 }

@@ -10,8 +10,6 @@ export const Overlay = () => {
 
   const tutorialActive = useSelector((state) => state.tutorial.isActive);
 
-  console.log('MODAL CONFIG:"::: ', overlayConfig, tutorialActive);
-
   const dispatch = useDispatch();
 
   const closeOverlay = () => {

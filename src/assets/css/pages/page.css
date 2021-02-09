@@ -9,16 +9,29 @@ div.page-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+div.page-header:not(.page-header-inverse) {
   padding-right: 2rem;
-  margin-bottom: 0.5rem;
+}
+
+div.page-header.page-header-inverse {
+  padding-left: 2rem;
 }
 
 div.page-header-stick-wrap {
   position: relative;
+}
+
+div.page-header:not(.page-header-inverse) div.page-header-stick-wrap {
   left: -4%;
 }
 
-div.page-header-objectives-board-wrap {
+div.page-header.page-header-inverse div.page-header-stick-wrap {
+  right: 0%;
+}
+
+div.page-header-objectives-board-container {
   width: 325px;
 }
 
@@ -43,12 +56,23 @@ div.page-board {
   background: #e5e5e5;
   display: flex;
   position: relative;
+  height: 610px;
 }
 
 .page-board-close-btn {
   position: absolute;
-  top: 1rem;
+  top: 0.35rem;
   right: 1rem;
+  z-index: 1;
+  transition: all 0.3s ease;
+}
+
+.page-board-close-btn:not(.page-board-close-btn-left) {
+  right: 1rem;
+}
+
+.page-board-close-btn-left {
+  left: 1rem;
 }
 
 div.page-board-card {
