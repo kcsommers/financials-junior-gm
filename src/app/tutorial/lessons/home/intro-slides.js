@@ -22,7 +22,7 @@ const slideConfigs = [
   },
   {
     message: "Wait, aren't you the new Junior Manager of the San Jose Sharks?",
-    accentText: 'Junior Mananger',
+    accentText: 'Junior Manager',
     sharkie: 'speak',
     hasButtons: true,
     timer: 0,

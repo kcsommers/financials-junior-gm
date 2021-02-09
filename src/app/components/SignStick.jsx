@@ -16,10 +16,8 @@ export const SignStick = ({ tutorialActive, includeSubtext, link }) => {
       }`}
     >
       <ReactSVG className='stick-btn-img' src={signPlayer} />
-      <Link className='text-link' to={link}>
-        <div className='stick-btn-title-wrap'>
-          <h2 className='stick-btn-title'>Sign</h2>
-        </div>
+      <Link className='text-link stick-btn-title-link' to={link}>
+        <h2 className='stick-btn-title'>Sign</h2>
       </Link>
       {includeSubtext && (
         <p className='stick-btn-text'>Add new players to your team!</p>

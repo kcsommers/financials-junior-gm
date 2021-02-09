@@ -12,8 +12,8 @@ export const ObjectivesBoard = ({ tutorialActive, objectivesArray }) => {
     ? objectivesArray.map((o) => <div key={o}>{o}</div>)
     : null;
 
-  const card = (
-    <div className='middle-card-inner'>
+  const inner = (
+    <div className='objectives-board-inner'>
       <div className='objective-level-box'>
         <div>Objectives</div>
         <div>Level 1</div>
@@ -24,13 +24,13 @@ export const ObjectivesBoard = ({ tutorialActive, objectivesArray }) => {
 
   return tutorialActive ? (
     <motion.div
-      className='middle-card hidden'
+      className='objectives-board-wrap hidden'
       animate={animationState}
       transition={{ default: { duration: 1 } }}
     >
-      {card}
+      {inner}
     </motion.div>
   ) : (
-    <div className='middle-card'>{card}</div>
+    <div className='objectives-board-wrap'>{inner}</div>
   );
 };

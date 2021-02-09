@@ -1,0 +1,19 @@
+div.budget-page-board {
+  flex-direction: column;
+  padding: 1rem;
+}
+
+div.budget-equation-container {
+  width: 55%;
+  margin: 0 auto;
+}
+
+p.helper-text {
+  width: 40%;
+  margin: 1rem auto;
+  text-align: center;
+}
+
+div.budget-slider-container {
+  margin-top: -5rem;
+}

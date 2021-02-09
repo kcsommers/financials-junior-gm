@@ -42,7 +42,7 @@ export const PlayerCard = ({
 
   const inner = player ? (
     <div>
-      <p className='position-text'>Position</p>
+      <span className='position-text'>Position</span>
       <div
         className={`box-shadow player-card-inner${
           player ? ' border-primary' : ' border-accent'
