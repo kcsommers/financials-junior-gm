@@ -23,7 +23,7 @@ const BudgetPage = () => {
 
   const [currentBudget, setCurrentBudget] = useState({
     total: 10,
-    spent: 2,
+    spent: 0,
     savings: 0,
   });
 
