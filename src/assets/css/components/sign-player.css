@@ -1,0 +1,144 @@
+.sign-player-dashboard {
+  border: 4px solid #707070;
+  background: white;
+  border-radius: 15px;
+  width: 960px;
+  height: 724px;
+  padding: 2rem;
+}
+
+.sign-player-dashboard-top-row {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 2rem;
+}
+
+.sign-player-visual-state {
+  display: flex;
+  border: 4px solid black;
+  border-radius: 15px;
+  padding: 1rem;
+}
+
+.player-card-title {
+  text-align: center;
+  font-size: 36px;
+  font-weight: bold;
+  color: #006b77;
+  margin-bottom: 1rem;
+}
+
+.team-dashboard-players-card-top {
+  display: flex;
+  justify-content: space-between;
+  background: #ea7200;
+  padding: 0.2rem;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.rank-text {
+  text-align: center;
+  font-size: 12px;
+  font-family: 'interstate';
+}
+
+.rank-number {
+  text-align: center;
+  font-size: 30px;
+  font-family: 'interstate';
+}
+
+.player-cost {
+  text-align: center;
+  font-size: 36px;
+  font-family: 'interstate';
+  display: flex;
+  align-items: center;
+}
+
+.team-dashboard-players-card {
+  padding: 0.2rem;
+  background-color: #e5e5e5;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  border: 1px solid #006b77;
+  font-family: 'interstate';
+  font-size: 24px;
+  text-align: center;
+  color: #006b77;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  width: 186.62px;
+}
+
+.player-meters-row {
+  display: flex;
+  justify-content: center;
+}
+
+.player-meters-row > div {
+  margin: 0.1rem;
+}
+
+.player-meters-row > div > p {
+  color: black;
+  font-size: 13px;
+  margin: 0;
+}
+
+.offense-meter {
+  width: 46.65px;
+  height: 46.65px;
+  border: 2px solid #dc2d2d;
+  border-radius: 50%;
+  background: radial-gradient(#d32b2b, #6e1717);
+}
+
+.passing-meter {
+  width: 46.65px;
+  height: 46.65px;
+  border: 2px solid #00788a;
+  border-radius: 50%;
+  background: radial-gradient(#00788a, #003c45);
+}
+
+.defense-meter {
+  width: 46.65px;
+  height: 46.65px;
+  border: 2px solid #002f6c;
+  border-radius: 50%;
+  background: radial-gradient(#002f6c, #001836);
+}
+
+.sign-player-question {
+  text-align: center;
+  font-size: 48px;
+  font-weight: bold;
+  margin-bottom: 2rem;
+  color: #006D75;
+  -webkit-text-stroke: .05px black;
+}
+
+.sign-player-options {
+  display: flex;
+  justify-content: space-around;
+}
+
+.sign-player-options > div > p {
+  text-align: center;
+  font-size: 30px;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  color: #006D75;
+  -webkit-text-stroke: .05px black;
+}
+
+.changes-to-rank-budget {
+  text-align: center;
+  font-size: 30px;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  color: #006D75;
+  -webkit-text-stroke: .05px black;
+  text-decoration: underline;
+}

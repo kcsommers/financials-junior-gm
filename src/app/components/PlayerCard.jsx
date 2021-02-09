@@ -1,5 +1,9 @@
 import { motion } from 'framer-motion';
 import { useDispatch } from 'react-redux';
+import { toggleModal } from '../redux/actions';
+import Sign from './Sign';
+import {AddPlayer} from './AddPlayer';
+import {SignPlayer} from './SignPlayer';
 import { toggleOverlay } from '../redux/actions';
 import '@css/components/PlayerCard.css';
 
@@ -16,7 +20,22 @@ export const PlayerCard = ({
     dispatch(
       toggleOverlay({
         isOpen: true,
-        template: overlayTemplate,
+        template: (
+          <div className='player-modal-container'>
+            {/* <div className='player-card-wrap player-card-large'>{inner}</div>
+            <div className='player-modal-buttons-wrap'>
+              <button class='player-modal-button outline-black box-shadow'>
+                Trade
+              </button>
+              <button class='player-modal-button outline-black box-shadow'>
+                Release
+              </button>
+            </div> */}
+            {/* <Sign/> */}
+            <SignPlayer/>
+          </div>
+        ),
+        // template: overlayTemplate,
       })
     );
   };
