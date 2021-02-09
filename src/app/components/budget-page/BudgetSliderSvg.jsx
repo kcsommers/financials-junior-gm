@@ -1,6 +1,4 @@
 export const BudgetSliderSvg = ({ stops }) => {
-  console.log('STOPS:::: ', stops);
-
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'

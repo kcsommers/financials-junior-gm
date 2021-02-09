@@ -1,4 +1,3 @@
-import { motion } from 'framer-motion';
 import { Indicator } from '@components';
 import { BudgetSliderSvg } from './BudgetSliderSvg';
 import '@css/components/budget-page/BudgetSlider.css';
@@ -54,12 +53,22 @@ export const BudgetSlider = ({ budget, setValue }) => {
     ((budget.total - budget.spent) / budget.total) * 100
   }%`;
 
+  const scaleMarkers = [];
+  for (let i = budget.total; i >= 0; i--) {
+    scaleMarkers.push(
+      <div key={i} className='slider-scale-marker'>
+        <span>{i}</span>
+      </div>
+    );
+  }
+
   return (
     <div className='budget-slider-wrap'>
       <div className='budget-slider-stick-wrap'>
         <BudgetSliderSvg stops={stops} />
       </div>
       <div className='slider-outer'>
+        <div className='slider-scale-wrap'>{scaleMarkers}</div>
         <div className='slider-wrap' style={{ width: sliderWidth }}>
           <input
             type='range'
