@@ -55,7 +55,7 @@ const HomePage = () => {
 
   return (
     <div className='home-page-container'>
-      <Navigation />
+      <Navigation tutorialActive={tutorialActive} />
       <div className='home-cards-row'>
         <div className='team-rank-card-box'>
           <TeamRankCard tutorialActive={tutorialActive} />

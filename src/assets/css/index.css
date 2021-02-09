@@ -34,6 +34,12 @@ button {
   font-size: 1.25rem;
 }
 
+button.player-overlay-button {
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
 .color-primary {
   color: #00788a;
 }

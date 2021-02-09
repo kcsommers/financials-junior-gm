@@ -1,11 +1,18 @@
 import React from 'react';
 import exitBtn from '@images/exit-btn.svg';
 import settingsBtn from '@images/settings-btn.svg';
+import { SharkieButton } from '@tutorial';
 import '@css/components/home-page/Navigation.css';
 
-export const Navigation = () => {
+export const Navigation = ({ tutorialActive }) => {
   return (
-    <div className='nav-container'>
+    <div
+      className='nav-container'
+      style={{
+        position: 'relative',
+        zIndex: tutorialActive ? 0 : 1,
+      }}
+    >
       <div className='exit-stick-box'>
         <img src={exitBtn} alt='Exit' />
       </div>
@@ -15,6 +22,7 @@ export const Navigation = () => {
       </div>
 
       <div className='settings-link-box'>
+        <SharkieButton />
         <img src={settingsBtn} alt='Settings' />
       </div>
     </div>
