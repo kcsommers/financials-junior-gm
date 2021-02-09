@@ -16,3 +16,6 @@ export { ScoutStick } from './ScoutStick';
 export { DropContainer } from './DropContainer';
 export { Overlay } from './Overlay';
 export { DragItem } from './DragItem';
+export { SpendingBudgetStickBig } from './SpendingBudgetStickBig';
+export { TeamRankStickBig } from './TeamRankStickBig';
+export { NiceJobScouting } from './NiceJobScouting';

@@ -1,8 +1,7 @@
 import {
   SET_ANIMATION_STATE,
   TOGGLE_OVERLAY,
-  SET_TUTORIAL_IS_ACTIVE,
-  SET_SIGN_STATE
+  SET_TUTORIAL_IS_ACTIVE
 } from './actionTypes';
 
 export const setAnimationState = (state) => ({
@@ -19,8 +18,3 @@ export const toggleOverlay = (state) => ({
   type: TOGGLE_OVERLAY,
   payload: { state },
 });
-
-export const setSignState = (state) => ({
-  type: SET_SIGN_STATE,
-  payload: {state}
-})
