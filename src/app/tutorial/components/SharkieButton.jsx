@@ -1,12 +1,7 @@
 import { setTutorialIsActive } from '@redux/actions';
 import { useDispatch } from 'react-redux';
-
-const styles = {
-  width: '70px',
-  height: '70px',
-  borderRadius: '100%',
-  backgroundColor: '#00788a',
-};
+import sharkieBtn from '@images/sharkie-btn.svg';
+import { ReactSVG } from 'react-svg';
 
 export const SharkieButton = () => {
   const dispatch = useDispatch();
@@ -14,11 +9,28 @@ export const SharkieButton = () => {
   return (
     <button
       className='sharkie-btn'
-      style={styles}
+      style={{
+        outline: 'none',
+        border: 'none',
+        background: 'none',
+      }}
       onClick={() => {
         console.log('SETTING');
         dispatch(setTutorialIsActive({ isActive: true }));
       }}
-    ></button>
+    >
+      <ReactSVG src={sharkieBtn} />
+      <span
+        className='color-primary'
+        style={{
+          fontSize: '0.8rem',
+          position: 'relative',
+          top: '-1rem',
+          display: 'inline-block',
+        }}
+      >
+        CALL SHARKIE
+      </span>
+    </button>
   );
 };
