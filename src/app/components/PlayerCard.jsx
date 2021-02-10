@@ -2,10 +2,12 @@ import { motion } from 'framer-motion';
 import { useDispatch } from 'react-redux';
 import { toggleModal } from '../redux/actions';
 import Sign from './Sign';
-import {AddPlayer} from './AddPlayer';
 import {SignPlayer} from './SignPlayer';
+import {PlayerSigned} from './PlayerSigned'
+import {NiceJobScouting} from './public-api';
 import { toggleOverlay } from '../redux/actions';
 import '@css/components/PlayerCard.css';
+import React, {useState} from 'react';
 
 export const PlayerCard = ({
   player,
@@ -16,26 +18,14 @@ export const PlayerCard = ({
 }) => {
   const dispatch = useDispatch();
 
+  const [signState, setSignState] = useState(<Sign/>)
+
   const openOverlay = () => {
     dispatch(
       toggleOverlay({
         isOpen: true,
-        template: (
-          <div className='player-modal-container'>
-            {/* <div className='player-card-wrap player-card-large'>{inner}</div>
-            <div className='player-modal-buttons-wrap'>
-              <button class='player-modal-button outline-black box-shadow'>
-                Trade
-              </button>
-              <button class='player-modal-button outline-black box-shadow'>
-                Release
-              </button>
-            </div> */}
-            {/* <Sign/> */}
-            <SignPlayer/>
-          </div>
-        ),
-        // template: overlayTemplate,
+        template: signState,
+        sign: addPlayerOverlay
       })
     );
   };
@@ -72,7 +62,15 @@ export const PlayerCard = ({
       </div>
     </div>
   ) : (
-    <div>
+    <div style={{cursor: 'pointer'}} onClick={() => {
+      if (!inOverlay) {
+        inOverlay = true;
+        openOverlay();
+      } else {
+        setSignState(<SignPlayer/>)
+        console.log('hello hello')
+      }
+    }}>
       <div
         className={`box-shadow player-card-inner${
           player ? ' border-primary' : ' border-accent'
@@ -98,6 +96,10 @@ export const PlayerCard = ({
       </div>
     </div>
   );
+
+  const addPlayerOverlay = (
+    <Sign/>
+  )
 
   const mainTemplate = tutorialActive ? (
     <motion.div

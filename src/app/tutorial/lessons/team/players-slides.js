@@ -1,6 +1,7 @@
 import Slide from '../../Slide';
 import { SET_ANIMATION_STATE, TOGGLE_OVERLAY } from '@redux/actionTypes';
 import { PlayerCard } from '@components';
+import Sign from '../../../components/Sign';
 
 const slideConfigs = [
   {
@@ -60,6 +61,7 @@ const slideConfigs = [
         payload: {
           isOpen: true,
           template: <PlayerCard inOverlay={true} tutorialActive={true} />,
+          sign: <Sign inOverlay={true} />
         },
       },
       {
@@ -233,6 +235,7 @@ const slideConfigs = [
         payload: {
           isOpen: false,
           template: null,
+          sign: null
         },
       },
     ],

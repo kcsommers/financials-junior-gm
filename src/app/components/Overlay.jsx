@@ -13,7 +13,7 @@ export const Overlay = () => {
   const dispatch = useDispatch();
 
   const closeOverlay = () => {
-    dispatch(toggleOverlay({ isOpen: false, template: null }));
+    dispatch(toggleOverlay({ isOpen: false, template: null, sign: null }));
   };
 
   const variants = {

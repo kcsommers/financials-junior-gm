@@ -1,9 +1,5 @@
 import React, {useState} from 'react';
 import { ReactSVG } from 'react-svg';
-import sign from '@images/icons/sign.svg';
-import sharksLogo from '@images/icons/sharks-logo.svg';
-import comericaLogo from '@images/icons/comerica-logo.svg';
-import cancel from '@images/icons/cancel.svg';
 import forwardTabSelected from '@images/icons/forward-tab-selected.svg';
 import defenseTabSelected from '@images/icons/defense-tab-selected.svg';
 import goalieTabSelected from '@images/icons/goalie-tab-selected.svg';
@@ -14,7 +10,7 @@ import '../../assets/css/pages/sign.css';
 import AvailableForwards from './sign-page/AvailableForwards';
 import AvailableDefense from './sign-page/AvailableDefense';
 import AvailableGoalies from './sign-page/AvailableGoalies';
-import {ObjectivesBoard, TeamRankStick, MoneyLeftStick} from './public-api';
+import {TeamRankStick, MoneyLeftStick} from './public-api';
 
 const Sign = () => {
 
@@ -48,13 +44,6 @@ const Sign = () => {
 
   return (
     <div className="sign-page">
-      
-      {/* header portion
-      <div className="team-page-header">
-        <ReactSVG className="team-page-hockey-stick" src={sign} />
-        <ReactSVG className="sharks-logo" src={sharksLogo} />
-        <ObjectivesBoard/>
-      </div> */}
 
       {/* Team Dashboard */}
       <div className="sign-dashboard">
@@ -65,8 +54,6 @@ const Sign = () => {
               <MoneyLeftStick/>
             </div>
           </div>
-
-          <ReactSVG src={comericaLogo}/>
 
           <div className="sign-top-right-dashboard">
 
@@ -93,10 +80,6 @@ const Sign = () => {
                 </div>
               </div>
             </div>
-
-            {/* <div>
-              <ReactSVG className="sign-cancel" src={cancel} />
-            </div> */}
           </div>
 
         </div>{/* end of top row of sign dashboard */}

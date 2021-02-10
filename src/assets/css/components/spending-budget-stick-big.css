@@ -1,0 +1,20 @@
+.spending-budget-stick-big-container {
+  position: relative;
+}
+
+.spending-budget-stick-big {
+  position: absolute;
+  top: 0px;
+  left: -70px;
+}
+
+.big-right {
+  right: -28%;
+  top: 30%!important;
+}
+
+.spending-budget-stick-title-big {
+  position: absolute;
+  top: 65px;
+  left: 220px;
+}
