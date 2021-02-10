@@ -2,7 +2,6 @@ export { StickButton } from './StickButton';
 export { Indicator } from './Indicator';
 export { BudgetSlider } from './budget-page/BudgetSlider';
 export { BudgetEquation } from './budget-page/BudgetEquation';
-export { MoneyLevel } from './scout-page/MoneyLevel';
 export { PlayerCard } from './PlayerCard';
 export { MoneyLeftCard } from './home-page/MoneyLeftCard.jsx';
 export { Navigation } from './home-page/Navigation.jsx';
