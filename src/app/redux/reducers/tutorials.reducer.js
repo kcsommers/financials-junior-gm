@@ -1,7 +1,7 @@
 import { SET_ANIMATION_STATE, SET_TUTORIAL_IS_ACTIVE } from '../actionTypes';
 
 const initialState = {
-  isActive: false,
+  isActive: true,
   home: {
     objectivesBoard: {
       x: '0%',
@@ -84,7 +84,6 @@ const initialState = {
 const tutorialsReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_TUTORIAL_IS_ACTIVE: {
-      console.log('IS ACTIVE?? ', action.payload.state.isActive);
       return {
         ...state,
         isActive: action.payload.state.isActive,
