@@ -12,6 +12,7 @@ import { Tutorial, scoutSlides } from '@tutorial';
 import { setTutorialIsActive } from '@redux/actions';
 import { Link } from 'react-router-dom';
 import '@css/pages/ScoutPage.css';
+import { PageBoard } from './../components/PageBoard';
 
 const teamSlides = [scoutSlides];
 
@@ -196,51 +197,49 @@ const TeamPage = () => {
           largeStick={true}
           objectives={['1. Scout players to sign to your bench!']}
         />
-        <div className='page-body'>
-          <div className='page-board scout-page-board'>
-            <div className='scout-page-board-header'>
-              <p className='color-primary scout-page-helper-text'>
-                Give each new player a contract value by dragging them to their
-                money level!
-              </p>
-            </div>
-
-            <div className='scout-page-board-inner'>
-              <div className='scout-page-board-left'>
-                {tutorialActive ? (
-                  <motion.div
-                    className='card auto-card scout-board'
-                    animate={newPlayersAnimationState}
-                    transition={{ default: { duration: 1 } }}
-                  >
-                    {newPlayerRows}
-                  </motion.div>
-                ) : (
-                  <div className='card auto-card scout-board'>
-                    {newPlayerRows}
-                  </div>
-                )}
-              </div>
-
-              <div className='scout-page-board-right'>{contractPlayerRows}</div>
-            </div>
-
-            <div className='scout-page-board-footer'>
-              <p className='color-primary'>
-                Remember to tap a player to learn more about them!
-              </p>
-              <motion.div
-                className='color-primary finished-btn'
-                animate={finishedBtnAnimationState}
-              >
-                <Link className='text-link' link='/sign'>
-                  <span>Click here when you finish!</span>
-                  <div className='check-btn-small'></div>
-                </Link>
-              </motion.div>
-            </div>
+        <PageBoard hideCloseBtn={true}>
+          <div className='scout-page-board-header'>
+            <p className='color-primary scout-page-helper-text'>
+              Give each new player a contract value by dragging them to their
+              money level!
+            </p>
           </div>
-        </div>
+
+          <div className='scout-page-board-inner'>
+            <div className='scout-page-board-left'>
+              {tutorialActive ? (
+                <motion.div
+                  className='card auto-card scout-board'
+                  animate={newPlayersAnimationState}
+                  transition={{ default: { duration: 1 } }}
+                >
+                  {newPlayerRows}
+                </motion.div>
+              ) : (
+                <div className='card auto-card scout-board'>
+                  {newPlayerRows}
+                </div>
+              )}
+            </div>
+
+            <div className='scout-page-board-right'>{contractPlayerRows}</div>
+          </div>
+
+          <div className='scout-page-board-footer'>
+            <p className='color-primary'>
+              Remember to tap a player to learn more about them!
+            </p>
+            <motion.div
+              className='color-primary finished-btn'
+              animate={finishedBtnAnimationState}
+            >
+              <Link className='text-link' link='/sign'>
+                <span>Click here when you finish!</span>
+                <div className='check-btn-small'></div>
+              </Link>
+            </motion.div>
+          </div>
+        </PageBoard>
         <AnimatePresence>
           {tutorialActive && (
             <motion.div animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
