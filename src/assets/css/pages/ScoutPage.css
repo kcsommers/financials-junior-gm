@@ -1,72 +1,100 @@
-div.scout-page-container div.page-body {
-  padding-top: 0;
-}
-div.scout-page-container div.page-header {
-  margin-bottom: 0;
-}
-
-div.scout-page-header-stick-wrap {
-  left: 5% !important;
-}
-
-div.scout-page-board-header p {
-  text-align: center;
-  font-size: 1.5rem;
-  padding: 0.5rem 0;
-}
-
 div.scout-page-board {
   flex-direction: column;
-  padding: 0 0.5rem;
 }
 
 div.scout-page-board-inner {
   display: flex;
 }
 
-div.scout-page-board-left,
-div.scout-page-board-right {
+div.scout-page-board-inner > div {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
   padding: 0 0.5rem;
-  flex: 1;
+  height: 530px;
 }
 
 div.scout-page-board-left {
-  display: flex;
+  flex: 1;
 }
 
-div.scout-page-board-left > .card {
+p.scout-page-helper-text,
+p.money-level-text {
+  font-size: 1.2rem;
+  margin: 0.25rem auto;
+  text-align: center;
+}
+
+p.money-level-text {
+  font-size: 1rem;
+}
+
+div.scout-board {
+  flex: 1;
   display: flex;
   flex-direction: column;
-  flex: 1;
+  justify-content: space-between;
+  padding: 1.5rem 0;
 }
 
-div.drop-container {
-  flex: 1;
+div.new-player-row,
+div.contract-player-row {
   display: flex;
+  justify-content: center;
   align-items: center;
 }
 
-div.scout-page-players-row {
-  flex: 1;
-}
-
-div.scout-page-players-row-inner {
-  display: flex;
-  align-items: center;
+div.new-player-row {
   justify-content: space-around;
 }
 
-div.scout-page-board-footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0.2rem 0.5rem;
-  font-size: 1.5rem;
+div.contract-player-row-wrap {
+  position: relative;
 }
 
-div.finished-btn > a.text-link {
-  display: flex;
+div.player-card-drop {
+  min-width: calc(90px + 1rem);
+  min-height: calc(123px + 1rem);
+  overflow: hidden;
+  padding: 0.5rem;
+}
+
+span.money-level-indicator {
+  display: inline-flex;
   align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 45px;
+  height: 45px;
+  border-radius: 100%;
+  background-color: #fff;
+  z-index: 2;
+  transition: opacity 0.3s ease;
+}
+
+div.contract-player-row {
+  height: 144px;
+  padding: 0.5rem 1rem;
+}
+
+div.contract-player-row div.player-card-drop {
+  padding: 0.5rem 0.5rem;
+  margin-top: -0.5rem;
+}
+
+div.scout-page-board-footer {
+  padding: 0.5rem 1rem;
+}
+
+div.scout-page-board-footer,
+div.finished-btn a {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1rem;
 }
 
 .check-btn-small {

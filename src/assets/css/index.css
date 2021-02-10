@@ -123,8 +123,8 @@ p {
 }
 
 .check-btn-small {
-  width: 40px;
-  height: 40px;
+  width: 35px;
+  height: 35px;
   box-sizing: border-box;
   border: 5px solid #4b4b4b;
   border-radius: 50%;
@@ -135,13 +135,13 @@ p {
 
 .check-btn-small:after {
   opacity: 1;
-  height: 18px;
-  width: 8px;
+  height: 14px;
+  width: 6px;
   transform-origin: left top;
   border-right: 5px solid #f3901d;
   border-bottom: 5px solid #f3901d;
   content: '';
-  left: 18px;
+  left: 15px;
   top: 0px;
   position: absolute;
   transform: rotate(45deg);

@@ -32,7 +32,7 @@ div.page-header.page-header-inverse div.page-header-stick-wrap {
 }
 
 div.page-header-objectives-board-container {
-  width: 325px;
+  width: 350px;
 }
 
 div.page-header-logo-wrap {
@@ -47,7 +47,7 @@ div.page-header-logo-wrap {
 }
 
 div.page-body {
-  padding: 1rem 3rem 1rem 3rem;
+  padding: 0rem 2rem 1rem 2rem;
 }
 
 div.page-board {
@@ -56,7 +56,7 @@ div.page-board {
   background: #e5e5e5;
   display: flex;
   position: relative;
-  height: 610px;
+  height: 620px;
 }
 
 .page-board-close-btn {
