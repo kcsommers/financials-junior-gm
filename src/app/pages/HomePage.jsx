@@ -70,7 +70,7 @@ const HomePage = () => {
               '3. Scout three more players to add to your team.',
             ]}
           />
-          <div style={{ textAlign: 'center', marginTop: '0.5rem' }}>
+          <div className='sharkie-btn-container'>
             <SharkieButton />
           </div>
         </div>
