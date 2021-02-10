@@ -2,13 +2,20 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { useSelector } from 'react-redux';
 import { MoneyLeftStick } from './../MoneyLeftStick';
-import '@css/components/home-page/MoneyLeftCard.css';
 
 export const MoneyLeftCard = ({ tutorialActive }) => {
   const animationState = useSelector((state) => state.tutorial.home.moneyLeft);
 
   const card = (
-    <div className='money-left-card-inner'>
+    <div
+      className='money-left-card-inner'
+      style={{
+        height: '100%',
+        width: '100%',
+        display: 'flex',
+        alignItems: 'center',
+      }}
+    >
       <MoneyLeftStick></MoneyLeftStick>
     </div>
   );

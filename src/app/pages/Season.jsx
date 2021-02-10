@@ -12,7 +12,7 @@ import '@css/pages/season.css';
 
 const Season = () => {
   return (
-    <div className='season-page'>
+    <div className='season-page page-container'>
       <HeaderComponent
         stickBtn={seasonStick}
         largeStick={true}
