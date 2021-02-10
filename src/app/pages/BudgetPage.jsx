@@ -1,13 +1,7 @@
 import { useState } from 'react';
 import { ReactSVG } from 'react-svg';
 import closeBtn from '@images/icons/cancel.svg';
-import {
-  ObjectivesBoard,
-  StickButton,
-  BudgetEquation,
-  BudgetSlider,
-} from '@components';
-import sharksLogo from '@images/sharks-comerica-logo.svg';
+import { BudgetEquation, BudgetSlider, HeaderComponent } from '@components';
 import budgetStick from '@images/budget-stick.svg';
 import { useSelector, useDispatch } from 'react-redux';
 import { Tutorial, budgetSlides } from '@tutorial';
@@ -23,7 +17,7 @@ const BudgetPage = () => {
 
   const [currentBudget, setCurrentBudget] = useState({
     total: 10,
-    spent: 3,
+    spent: 1,
     savings: 2,
   });
 
@@ -49,19 +43,12 @@ const BudgetPage = () => {
 
   return (
     <div className='page-container'>
-      <div className='page-header page-header-inverse'>
-        <div className='page-header-logo-wrap'>
-          <img src={sharksLogo} alt='Sharks Logo' />
-        </div>
-        <div className='page-header-objectives-board-container'>
-          <ObjectivesBoard
-            objectivesArray={['1. Learn about your budget.']}
-          ></ObjectivesBoard>
-        </div>
-        <div className='page-header-stick-wrap'>
-          <StickButton image={budgetStick} link='/home' />
-        </div>
-      </div>
+      <HeaderComponent
+        stickBtn={budgetStick}
+        objectives={['1. Learn about your budget.']}
+        inverse={true}
+      />
+
       <div className='page-body'>
         <div className='page-board budget-page-board'>
           <Link to='/home'>

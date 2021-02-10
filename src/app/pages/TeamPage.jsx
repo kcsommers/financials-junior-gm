@@ -3,13 +3,12 @@ import { ReactSVG } from 'react-svg';
 import jrSharksLogo from '@images/icons/jr-sharks-logo.svg';
 import closeBtn from '@images/icons/cancel.svg';
 import {
-  ObjectivesBoard,
   TeamRankStick,
   MoneyLeftStick,
   StickButton,
   PlayerCard,
+  HeaderComponent,
 } from '@components';
-import sharksLogo from '@images/sharks-comerica-logo.svg';
 import scoutStick from '@images/scout-stick.svg';
 import teamStick from '@images/team-stick.svg';
 import { useSelector, useDispatch } from 'react-redux';
@@ -38,19 +37,10 @@ function TeamPage() {
 
   return (
     <div className='page-container'>
-      <div className='page-header'>
-        <div className='page-header-logo-wrap'>
-          <img src={sharksLogo} alt='Sharks Logo' />
-        </div>
-        <div className='page-header-stick-wrap'>
-          <StickButton image={teamStick} link='/home' />
-        </div>
-        <div className='page-header-objectives-board-container'>
-          <ObjectivesBoard
-            objectivesArray={['1. Learn about your budget.']}
-          ></ObjectivesBoard>
-        </div>
-      </div>
+      <HeaderComponent
+        stickBtn={teamStick}
+        objectives={['1. Learn about your budget.']}
+      />
 
       <div className='page-body'>
         <div className='page-board'>

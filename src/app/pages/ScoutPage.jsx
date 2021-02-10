@@ -5,6 +5,7 @@ import {
   StickButton,
   PlayerDropContainer,
   PlayerDragItem,
+  HeaderComponent,
 } from '@components';
 import sharksLogo from '@images/sharks-comerica-logo.svg';
 import scoutStick from '@images/scout-stick.svg';
@@ -194,21 +195,11 @@ const TeamPage = () => {
   return (
     <DragDropContext onDragStart={onDragStart} onDragEnd={onDragEnd}>
       <div className='page-container scout-page-container'>
-        <div className='page-header'>
-          <div className='page-header-logo-wrap'>
-            <img src={sharksLogo} alt='Sharks Logo' />
-          </div>
-          <div className='page-header-stick-wrap scout-page-header-stick-wrap'>
-            <StickButton link='/home' image={scoutStick} large={true} />
-          </div>
-          <div className='page-header-objectives-board-container'>
-            <ObjectivesBoard
-              smallText={true}
-              objectivesArray={['1. Scout players to sign to your bench!']}
-            ></ObjectivesBoard>
-          </div>
-        </div>
-
+        <HeaderComponent
+          stickBtn={scoutStick}
+          largeStick={true}
+          objectives={['1. Scout players to sign to your bench!']}
+        />
         <div className='page-body'>
           <div className='page-board scout-page-board'>
             <div className='scout-page-board-header'>
