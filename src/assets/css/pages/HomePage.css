@@ -2,52 +2,42 @@ div.home-page-container {
   width: 100%;
   height: 100%;
   overflow-x: hidden;
+  position: relative;
+  z-index: 100;
 }
 
 .home-cards-row {
   justify-content: center;
   display: flex;
-  margin-top: 1rem;
+  width: 95%;
+  margin: 0 auto;
 }
 
 .objectives-board-container {
   position: relative;
+  flex: 1;
+}
+
+div.team-rank-card-box,
+div.money-left-card-box {
+  padding: 0 2rem;
 }
 
 .sharkie-btn-container {
   text-align: center;
   position: absolute;
   left: 50%;
-  top: 100%;
+  top: 90%;
   transform: translate(-50%, -25%);
-}
-
-.team-rank-card-box {
-  padding: 0 3.5rem;
 }
 
 .stick-btn-text {
   transition: all 0.3s ease;
 }
 
-.money-left-card-box {
-  padding: 0 3.5rem;
-}
-
 div.hockey-sticks-container {
   position: relative;
-  margin-top: 4rem;
-}
-
-div.sharks-logo-wrap {
-  position: absolute;
-  left: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  margin-top: 3rem;
 }
 
 div.hockey-sticks-row {

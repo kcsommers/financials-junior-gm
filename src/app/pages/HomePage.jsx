@@ -64,7 +64,7 @@ const HomePage = () => {
         <div className='objectives-board-container'>
           <ObjectivesBoard
             tutorialActive={tutorialActive}
-            objectivesArray={[
+            objectives={[
               '1. Learn about your budget.',
               '2. Fill your team by signing a player.',
               '3. Scout three more players to add to your team.',
@@ -79,9 +79,6 @@ const HomePage = () => {
         </div>
       </div>
       <div className='hockey-sticks-container'>
-        <div className='sharks-logo-wrap'>
-          <img src={sharksLogo} alt='Sharks Logo' />
-        </div>
         <div className='hockey-sticks-row'>
           <div className='stick-btn-container'>
             <StickButton
