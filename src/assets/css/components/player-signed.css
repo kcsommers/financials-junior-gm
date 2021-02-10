@@ -1,0 +1,26 @@
+.player-signed-title {
+  text-align: center;
+  font-size: 72px;
+  font-weight: bold;
+  color: #006D75;
+  -webkit-text-stroke: .05px black;
+  margin-bottom: 2rem;
+}
+
+.player-signed-content {
+  display: flex;
+  justify-content: space-around;
+}
+
+.state-visual-big {
+  display: flex;
+  border: 4px solid black;
+  border-radius: 15px;
+  padding: 1rem;
+  width: 467.84px;
+  height: 500.48px;
+}
+
+.margin-bottom-2 {
+  margin-bottom: 2rem;
+}

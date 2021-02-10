@@ -8,6 +8,15 @@ import confirmBig from '@images/icons/confirm-big.svg'
 import '../../assets/css/components/sign-player.css';
 
 export const SignPlayer = () => {
+
+  const handleCancel = () => {
+    console.log('hello cancle')
+  }
+
+  const handleConfirm = () => {
+    console.log('hello confirm')
+  }
+
   return (
     <div className="sign-player-dashboard">
       <div className="sign-player-dashboard-top-row">
@@ -55,11 +64,11 @@ export const SignPlayer = () => {
         <div className="sign-player-options">
           <div>
             <p>Cancel</p>
-            <ReactSVG src={cancelBig}/>
+            <ReactSVG style={{cursor: 'pointer'}} onClick={handleCancel} src={cancelBig}/>
           </div>
           <div>
             <p>Confirm</p>
-            <ReactSVG src={confirmBig}/>
+            <ReactSVG style={{cursor: 'pointer'}} onClick={handleConfirm} src={confirmBig}/>
           </div>
         </div>
         
