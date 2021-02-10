@@ -1,7 +1,12 @@
 import { useState } from 'react';
 import { ReactSVG } from 'react-svg';
 import closeBtn from '@images/icons/cancel.svg';
-import { BudgetEquation, BudgetSlider, HeaderComponent } from '@components';
+import {
+  BudgetEquation,
+  BudgetSlider,
+  HeaderComponent,
+  PageBoard,
+} from '@components';
 import budgetStick from '@images/budget-stick.svg';
 import { useSelector, useDispatch } from 'react-redux';
 import { Tutorial, budgetSlides } from '@tutorial';
@@ -48,16 +53,8 @@ const BudgetPage = () => {
         inverse={true}
       />
 
-      <div className='page-body'>
-        <div className='page-board budget-page-board'>
-          <Link to='/home'>
-            <ReactSVG
-              className={`page-board-close-btn page-board-close-btn-left${
-                tutorialActive ? ' hidden' : ''
-              }`}
-              src={closeBtn}
-            />
-          </Link>
+      <PageBoard closeBtnLeft={true}>
+        <div className='budget-page-board-inner'>
           <div className='budget-equation-container'>
             <BudgetEquation
               budget={currentBudget}
@@ -75,7 +72,7 @@ const BudgetPage = () => {
             />
           </div>
         </div>
-      </div>
+      </PageBoard>
       {tutorialActive && (
         <Tutorial slides={teamSlides} onComplete={onTutorialComplete} />
       )}

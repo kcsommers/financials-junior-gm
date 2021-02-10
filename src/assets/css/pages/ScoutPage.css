@@ -1,7 +1,3 @@
-div.scout-page-board {
-  flex-direction: column;
-}
-
 div.scout-page-board-inner {
   display: flex;
 }
