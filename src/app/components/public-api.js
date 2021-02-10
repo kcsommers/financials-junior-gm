@@ -1,4 +1,5 @@
 export { StickButton } from './StickButton';
+export { IceBackground } from './IceBackground';
 export { Indicator } from './Indicator';
 export { BudgetSlider } from './budget-page/BudgetSlider';
 export { BudgetEquation } from './budget-page/BudgetEquation';
@@ -16,3 +17,4 @@ export { PlayerDragItem } from './scout-page/PlayerDragItem';
 export { SpendingBudgetStickBig } from './SpendingBudgetStickBig';
 export { TeamRankStickBig } from './TeamRankStickBig';
 export { NiceJobScouting } from './NiceJobScouting';
+export { HeaderComponent } from './HeaderComponent';
