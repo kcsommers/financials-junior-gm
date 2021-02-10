@@ -1,13 +1,21 @@
 import React from 'react';
-import { ReactSVG } from 'react-svg';
-import playerImage from '../../../assets/images/icons/player-image.svg';
 import {PlayerCard} from '../PlayerCard';
 import {BrowserRouter as Router} from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { toggleOverlay } from '@redux/actions';
+import {SignPlayer} from '../SignPlayer';
 
 const AvailableForwards = () => {
 
+  const dispatch = useDispatch();
+
   const goToNextSign = () => {
-    
+    dispatch(
+      toggleOverlay({
+        isOpen: true,
+        template: <SignPlayer/>
+      })
+    );
   }
 
   return (
@@ -17,7 +25,7 @@ const AvailableForwards = () => {
 
         <div className='available-players-cards'>
           
-          <PlayerCard onClick={goToNextSign}/>
+          <div onClick={goToNextSign}><PlayerCard /></div>
         </div>
       </div>
     </Router>
