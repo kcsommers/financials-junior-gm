@@ -6,15 +6,12 @@ import {
   HeaderComponent,
 } from '@components';
 import scoutStick from '@images/scout-stick.svg';
-import { useSelector, useDispatch } from 'react-redux';
-import { AnimatePresence, motion } from 'framer-motion';
-import { Tutorial, scoutSlides } from '@tutorial';
-import { setTutorialIsActive } from '@redux/actions';
+import { useSelector } from 'react-redux';
+import { motion } from 'framer-motion';
+import { scoutSlides, SharkieButton } from '@tutorial';
 import { Link } from 'react-router-dom';
 import '@css/pages/ScoutPage.css';
 import { PageBoard } from './../components/PageBoard';
-
-const teamSlides = [scoutSlides];
 
 const moneyLevels = {
   0: {
@@ -85,12 +82,6 @@ const TeamPage = () => {
   );
 
   const tutorialActive = useSelector((state) => state.tutorial.isActive);
-
-  const dispatch = useDispatch();
-
-  const onTutorialComplete = () => {
-    dispatch(setTutorialIsActive({ isActive: false }));
-  };
 
   const onDragStart = (e) => {
     console.log('DRAG START:::: ', e);
@@ -170,11 +161,7 @@ const TeamPage = () => {
     }, [])
     .map((row, i) => (
       <div className='contract-player-row-wrap'>
-        <span
-          className={`color-primary money-level-indicator box-shadow${
-            tutorialActive ? ' hidden' : ''
-          }`}
-        >
+        <span className='color-primary money-level-indicator box-shadow'>
           {moneyLevels[i].short}
         </span>
         <p className='money-level-text'>
@@ -203,6 +190,12 @@ const TeamPage = () => {
               Give each new player a contract value by dragging them to their
               money level!
             </p>
+            <span style={{ position: 'absolute', right: '1rem', top: '1rem' }}>
+              <SharkieButton
+                tutorialSlides={[scoutSlides]}
+                textPosition='left'
+              />
+            </span>
           </div>
 
           <div className='scout-page-board-inner'>
@@ -240,13 +233,6 @@ const TeamPage = () => {
             </motion.div>
           </div>
         </PageBoard>
-        <AnimatePresence>
-          {tutorialActive && (
-            <motion.div animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-              <Tutorial slides={teamSlides} onComplete={onTutorialComplete} />
-            </motion.div>
-          )}
-        </AnimatePresence>
       </div>
     </DragDropContext>
   );

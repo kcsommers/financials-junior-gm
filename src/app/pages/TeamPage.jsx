@@ -12,25 +12,14 @@ import {
 import scoutStick from '@images/scout-stick.svg';
 import teamStick from '@images/team-stick.svg';
 import iceBgSmall from '@images/ice-bg-small.svg';
-import { useSelector, useDispatch } from 'react-redux';
-import { Tutorial, playersSlides, SharkieButton } from '@tutorial';
-import { setTutorialIsActive } from '@redux/actions';
+import { useSelector } from 'react-redux';
+import { playersSlides, SharkieButton } from '@tutorial';
 import '@css/pages/TeamPage.css';
 import { LevelStick } from '../components/LevelStick';
 
 const teamSlides = [playersSlides];
 
 function TeamPage() {
-  // GET TEAM FROM STORE
-
-  const tutorialActive = useSelector((state) => state.tutorial.isActive);
-
-  const dispatch = useDispatch();
-
-  const onTutorialComplete = () => {
-    dispatch(setTutorialIsActive({ isActive: false }));
-  };
-
   const highlightPlayerCards = useSelector(
     (state) => state.tutorial.team.playerCard.highlight
   );
@@ -46,7 +35,7 @@ function TeamPage() {
         <div className='team-page-board-header'>
           <div className='team-page-board-header-inner'>
             <ReactSVG src={jrSharksLogo} />
-            <SharkieButton textPosition='left' />
+            <SharkieButton textPosition='left' tutorialSlides={teamSlides} />
           </div>
           <h2 className='color-primary'>San Jose Jr Sharks</h2>
         </div>
@@ -110,9 +99,6 @@ function TeamPage() {
           </div>
         </div>
       </PageBoard>
-      {tutorialActive && (
-        <Tutorial slides={teamSlides} onComplete={onTutorialComplete} />
-      )}
     </div>
   );
 }

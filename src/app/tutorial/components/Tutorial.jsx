@@ -62,7 +62,7 @@ export const Tutorial = ({ slides, onComplete }) => {
 
   const currentSlide = state.currentSlides[state.slideIndex];
 
-  if (currentSlide.timer) {
+  if (currentSlide.timer && !state.isComplete) {
     timer = window.setTimeout(() => {
       updateSlide(state.slideIndex + 1);
     }, currentSlide.timer);

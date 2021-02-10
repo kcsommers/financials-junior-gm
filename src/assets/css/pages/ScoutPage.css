@@ -10,6 +10,10 @@ div.scout-page-board-inner > div {
   height: 530px;
 }
 
+div.scout-page-board-header {
+  position: relative;
+}
+
 div.scout-page-board-left {
   flex: 1;
 }

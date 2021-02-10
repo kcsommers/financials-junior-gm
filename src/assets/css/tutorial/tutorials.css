@@ -14,6 +14,7 @@ div.tutorial-container-inner {
 div.tutorial-container {
   background-color: rgba(255, 255, 255, 0.75);
   transition: background-color 0.2s ease;
+  z-index: 1000;
 }
 
 div.tutorial-container.transparent {
@@ -28,7 +29,7 @@ div.slide-wrap {
   position: relative;
   height: 307px;
   width: 40%;
-  z-index: 1;
+  z-index: 3;
 }
 
 div.slide-wrap-small {

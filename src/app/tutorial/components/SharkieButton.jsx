@@ -1,4 +1,4 @@
-import { setTutorialIsActive } from '@redux/actions';
+import { setTutorialState } from '@redux/actions';
 import { useDispatch } from 'react-redux';
 import sharkieBtn from '@images/sharkie-btn.svg';
 import { ReactSVG } from 'react-svg';
@@ -8,7 +8,6 @@ const textStyles = {
     bottom: 0,
     transform: 'translateY(calc(100% + 0.15rem))',
     fontSize: '0.8rem',
-    position: 'relative',
     display: 'inline-block',
     fontWeight: 'bold',
     position: 'absolute',
@@ -20,7 +19,6 @@ const textStyles = {
     top: '50%',
     transform: 'translate(calc(-100% - 0.15rem), -50%)',
     fontSize: '0.8rem',
-    position: 'relative',
     display: 'inline-block',
     fontWeight: 'bold',
     position: 'absolute',
@@ -32,17 +30,16 @@ const textStyles = {
     top: '50%',
     transform: 'translate(calc(100% + 0.15rem), -50%)',
     fontSize: '0.8rem',
-    position: 'relative',
     display: 'inline-block',
     fontWeight: 'bold',
     position: 'absolute',
     left: 0,
     right: 0,
-    texAlign: 'center',
+    textAlign: 'left',
   },
 };
 
-export const SharkieButton = ({ textPosition }) => {
+export const SharkieButton = ({ textPosition, tutorialSlides }) => {
   const dispatch = useDispatch();
 
   return (
@@ -60,8 +57,7 @@ export const SharkieButton = ({ textPosition }) => {
         height: '65px',
       }}
       onClick={() => {
-        console.log('SETTING');
-        dispatch(setTutorialIsActive({ isActive: true }));
+        dispatch(setTutorialState({ isActive: true, slides: tutorialSlides }));
       }}
     >
       <ReactSVG src={sharkieBtn} style={{ marginTop: '12px' }} />

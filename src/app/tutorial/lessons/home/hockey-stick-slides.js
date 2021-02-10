@@ -39,7 +39,7 @@ const teamStickSlideConfigs = [
                 x: ['0%', '0%', '0%', '-5%'],
                 times: [0, 0.5, 1.5, 2],
                 opacity: 1,
-                zIndex: 1,
+                zIndex: 2,
                 transition: {
                   delay: 0.5,
                   duration: 2,
@@ -104,7 +104,7 @@ const budgetStickSlideConfigs = [
                 x: ['0%', '0%', '0%', '-5%'],
                 times: [0, 0.5, 1.5, 2],
                 opacity: 1,
-                zIndex: 1,
+                zIndex: 2,
                 transition: {
                   delay: 0.5,
                   duration: 2,
@@ -168,7 +168,7 @@ const trophiesStickSlideConfigs = [
                 x: ['0%', '0%', '0%', '5%'],
                 times: [0, 0.5, 1.5, 2],
                 opacity: 1,
-                zIndex: 1,
+                zIndex: 2,
                 transition: {
                   delay: 0.5,
                   duration: 2,

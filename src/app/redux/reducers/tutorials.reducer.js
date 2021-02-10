@@ -1,7 +1,12 @@
-import { SET_ANIMATION_STATE, SET_TUTORIAL_IS_ACTIVE } from '../actionTypes';
+import {
+  SET_ANIMATION_STATE,
+  SET_TUTORIAL_IS_ACTIVE,
+  SET_TUTORIAL_STATE,
+} from '../actionTypes';
 
 const initialState = {
   isActive: false,
+  slides: null,
   home: {
     objectivesBoard: {
       x: '0%',
@@ -9,13 +14,13 @@ const initialState = {
       scale: 1,
       opacity: 0,
     },
-    teamRank: {
+    teamRankCard: {
       x: '0%',
       y: '0%',
       scale: 1,
       opacity: 0,
     },
-    budget: {
+    budgetCard: {
       x: '0%',
       y: '0%',
       scale: 1,
@@ -83,6 +88,13 @@ const initialState = {
 
 const tutorialsReducer = (state = initialState, action) => {
   switch (action.type) {
+    case SET_TUTORIAL_STATE: {
+      return {
+        ...state,
+        isActive: action.payload.state.isActive,
+        slides: action.payload.state.slides,
+      };
+    }
     case SET_TUTORIAL_IS_ACTIVE: {
       return {
         ...state,
