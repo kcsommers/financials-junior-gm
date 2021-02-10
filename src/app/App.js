@@ -23,9 +23,9 @@ const App = () => {
           <Route exact path='/budget' component={BudgetPage} />
           <Route exact path='/season' component={Season} />
         </Switch>
+        <IceBackground />
+        <Overlay />
       </Router>
-      <Overlay />
-      <IceBackground />
     </div>
   );
 };
