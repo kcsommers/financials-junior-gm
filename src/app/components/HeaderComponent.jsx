@@ -47,7 +47,7 @@ export const HeaderComponent = ({
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          padding: inverse ? '0 0 0 2rem' : '0 2rem 0 0',
+          padding: inverse ? '0 0 0 3.8rem' : '0 3.8rem 0 0',
         }}
       >
         {inner}

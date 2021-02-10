@@ -9,6 +9,7 @@ div.amount-stick-wrap {
   width: 155px;
   align-items: flex-end;
   padding-left: 1rem;
+  background-color: red;
 }
 
 div.amount-stick-wrap.amount-stick-left h3.amount-stick-title {

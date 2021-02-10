@@ -15,7 +15,7 @@ const initialState = {
       scale: 1,
       opacity: 0,
     },
-    moneyLeft: {
+    budget: {
       x: '0%',
       y: '0%',
       scale: 1,
