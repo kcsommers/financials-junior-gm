@@ -1,49 +1,8 @@
 div.page-container {
   width: 100%;
   height: 100%;
-}
-
-div.page-header {
-  height: 130px;
   position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-div.page-header:not(.page-header-inverse) {
-  padding-right: 2rem;
-}
-
-div.page-header.page-header-inverse {
-  padding-left: 2rem;
-}
-
-div.page-header-stick-wrap {
-  position: relative;
-}
-
-div.page-header:not(.page-header-inverse) div.page-header-stick-wrap {
-  left: -4%;
-}
-
-div.page-header.page-header-inverse div.page-header-stick-wrap {
-  right: 0%;
-}
-
-div.page-header-objectives-board-container {
-  width: 350px;
-}
-
-div.page-header-logo-wrap {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  z-index: 100;
 }
 
 div.page-body {

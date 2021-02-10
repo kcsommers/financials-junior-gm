@@ -4,4 +4,5 @@ div.app-container {
   margin: auto;
   position: relative;
   overflow: hidden;
+  background-color: #fff;
 }

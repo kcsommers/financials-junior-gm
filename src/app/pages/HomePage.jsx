@@ -79,9 +79,6 @@ const HomePage = () => {
         </div>
       </div>
       <div className='hockey-sticks-container'>
-        <div className='sharks-logo-wrap'>
-          <img src={sharksLogo} alt='Sharks Logo' />
-        </div>
         <div className='hockey-sticks-row'>
           <div className='stick-btn-container'>
             <StickButton
