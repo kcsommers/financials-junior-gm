@@ -6,7 +6,7 @@ import TeamPage from './pages/TeamPage';
 import Season from './pages/Season';
 import ScoutPage from './pages/ScoutPage';
 import '@css/App.css';
-import { Overlay } from '@components';
+import { Overlay, IceBackground } from '@components';
 import BudgetPage from './pages/BudgetPage';
 import Sign from './components/Sign';
 
@@ -25,6 +25,7 @@ const App = () => {
         </Switch>
       </Router>
       <Overlay />
+      <IceBackground />
     </div>
   );
 };
