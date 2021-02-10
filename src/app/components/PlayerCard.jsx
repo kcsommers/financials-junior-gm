@@ -24,8 +24,7 @@ export const PlayerCard = ({
     dispatch(
       toggleOverlay({
         isOpen: true,
-        template: signState,
-        sign: addPlayerOverlay
+        template: signState
       })
     );
   };
@@ -62,15 +61,16 @@ export const PlayerCard = ({
       </div>
     </div>
   ) : (
-    <div style={{cursor: 'pointer'}} onClick={() => {
-      if (!inOverlay) {
-        inOverlay = true;
-        openOverlay();
-      } else {
-        setSignState(<SignPlayer/>)
-        console.log('hello hello')
-      }
-    }}>
+    <div 
+      style={{cursor: 'pointer'}} onClick={() => {
+        if (!inOverlay) {
+          openOverlay();
+        } else {
+          setSignState(<SignPlayer/>)
+          console.log('hello hello')
+        }
+      }}
+    >
       <div
         className={`box-shadow player-card-inner${
           player ? ' border-primary' : ' border-accent'
@@ -96,10 +96,6 @@ export const PlayerCard = ({
       </div>
     </div>
   );
-
-  const addPlayerOverlay = (
-    <Sign/>
-  )
 
   const mainTemplate = tutorialActive ? (
     <motion.div

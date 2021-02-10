@@ -6,15 +6,31 @@ import playerImageBig from '@images/icons/player-image-big.svg';
 import cancelBig from '@images/icons/cancel-big.svg';
 import confirmBig from '@images/icons/confirm-big.svg'
 import '../../assets/css/components/sign-player.css';
+import { useDispatch } from 'react-redux';
+import { toggleOverlay } from '@redux/actions';
+import {PlayerSigned} from './PlayerSigned';
+import Sign from './Sign';
 
 export const SignPlayer = () => {
 
+  const dispatch = useDispatch();
+
   const handleCancel = () => {
-    console.log('hello cancle')
+    dispatch(
+      toggleOverlay({
+        isOpen: true,
+        template: <Sign/>
+      })
+    );
   }
 
   const handleConfirm = () => {
-    console.log('hello confirm')
+    dispatch(
+      toggleOverlay({
+        isOpen: true,
+        template: <PlayerSigned/>
+      })
+    );
   }
 
   return (
