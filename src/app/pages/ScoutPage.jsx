@@ -3,8 +3,6 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import {
   ObjectivesBoard,
   StickButton,
-  MoneyLevel,
-  PlayerCard,
   PlayerDropContainer,
   PlayerDragItem,
 } from '@components';
@@ -14,9 +12,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Tutorial, scoutSlides } from '@tutorial';
 import { setTutorialIsActive } from '@redux/actions';
+import { Link } from 'react-router-dom';
 import '@css/pages/page.css';
 import '@css/pages/ScoutPage.css';
-import { Link } from 'react-router-dom';
 
 const teamSlides = [scoutSlides];
 
@@ -78,27 +76,15 @@ const TeamPage = () => {
     (state) => state.tutorial.scout.newPlayersBoard
   );
 
-  const ml1AnimationState = useSelector(
-    (state) => state.tutorial.scout.moneyLevel1
-  );
-
-  const ml2AnimationState = useSelector(
-    (state) => state.tutorial.scout.moneyLevel2
-  );
-
-  const ml3AnimationState = useSelector(
-    (state) => state.tutorial.scout.moneyLevel3
-  );
+  const moneyLevelAnimationStates = {
+    0: useSelector((state) => state.tutorial.scout.moneyLevel1),
+    1: useSelector((state) => state.tutorial.scout.moneyLevel2),
+    2: useSelector((state) => state.tutorial.scout.moneyLevel3),
+  };
 
   const finishedBtnAnimationState = useSelector(
     (state) => state.tutorial.scout.finishedBtn
   );
-
-  const moneyLevelAnimationStates = [
-    ml1AnimationState,
-    ml2AnimationState,
-    ml3AnimationState,
-  ];
 
   const tutorialActive = useSelector((state) => state.tutorial.isActive);
 
@@ -188,9 +174,12 @@ const TeamPage = () => {
         <p className='money-level-text'>
           These players get a {moneyLevels[i].long} contract
         </p>
-        <div className='contract-player-row card auto-card'>
+        <motion.div
+          className='contract-player-row card auto-card'
+          animate={moneyLevelAnimationStates[i]}
+        >
           {row.map((p) => p)}
-        </div>
+        </motion.div>
       </div>
     ));
 

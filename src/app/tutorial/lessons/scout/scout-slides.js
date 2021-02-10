@@ -54,7 +54,6 @@ const slideConfigs = [
   {
     message: 'And how much money to give them to join their team!',
     sharkie: 'speak',
-    accentText: 'Scouting',
     timer: Slide.SLIDE_DURATION,
   },
   {
@@ -424,7 +423,7 @@ const slideConfigs = [
     ],
   },
   {
-    message: 'Since there are only three spots in a level...',
+    message: 'Since there are only a few spots in a level...',
     sharkie: 'presentInverse',
     timer: Slide.SLIDE_DURATION,
     slideAnimate: {
