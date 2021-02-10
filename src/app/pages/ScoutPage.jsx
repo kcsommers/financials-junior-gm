@@ -94,6 +94,14 @@ const TeamPage = () => {
     dispatch(setTutorialIsActive({ isActive: false }));
   };
 
+  const onDragStart = (e) => {
+    console.log('DRAG START:::: ', e);
+  };
+
+  const onDragEnd = (e) => {
+    console.log('DRAG END:::: ', e);
+  };
+
   const getDragItem = (player, key) => {
     return (
       <div className='player-card-drop'>
@@ -117,7 +125,7 @@ const TeamPage = () => {
                   ></PlayerDragItem>
                 )}
               </Draggable>
-              {dropProvided.placeholder}
+              {/* {dropProvided.placeholder} */}
             </PlayerDropContainer>
           )}
         </Droppable>
@@ -184,7 +192,7 @@ const TeamPage = () => {
     ));
 
   return (
-    <DragDropContext>
+    <DragDropContext onDragStart={onDragStart} onDragEnd={onDragEnd}>
       <div className='page-container scout-page-container'>
         <div className='page-header'>
           <div className='page-header-logo-wrap'>
@@ -238,7 +246,7 @@ const TeamPage = () => {
                 className='color-primary finished-btn'
                 animate={finishedBtnAnimationState}
               >
-                <Link class='text-link' to='/sign'>
+                <Link className='text-link' link='/sign'>
                   <span>Click here when you finish!</span>
                   <div className='check-btn-small'></div>
                 </Link>
