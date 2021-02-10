@@ -10,11 +10,10 @@ const initialState = {
 const overlayReducer = (state = initialState, action) => {
   switch (action.type) {
     case TOGGLE_OVERLAY: {
-      console.log('hello: ', action.payload);
       return {
         isOpen: action.payload.state.isOpen,
         template: action.payload.state.template,
-        sign: action.playload
+        sign: action.playload,
       };
     }
     default:

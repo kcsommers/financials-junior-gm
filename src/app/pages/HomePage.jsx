@@ -1,5 +1,6 @@
 import React from 'react';
-import '@css/pages/HomePage.css';
+import { motion } from 'framer-motion';
+import { useSelector } from 'react-redux';
 import {
   ObjectivesBoard,
   StickButton,
@@ -15,16 +16,13 @@ import {
   budgetStickSlides,
   trophiesStickSlides,
   seasonStickSlides,
-  Tutorial,
   SharkieButton,
 } from '@tutorial';
 import teamStick from '@images/team-stick.svg';
 import budgetStick from '@images/budget-stick.svg';
 import seasonStick from '@images/season-stick.svg';
 import trophiesStick from '@images/trophies-stick.svg';
-import { useDispatch, useSelector } from 'react-redux';
-import { setTutorialIsActive } from '@redux/actions';
-import { motion } from 'framer-motion';
+import '@css/pages/HomePage.css';
 
 const tutorialSlides = [
   introSlides,
@@ -40,19 +38,13 @@ const tutorialSlides = [
 const HomePage = () => {
   const tutorialActive = useSelector((state) => state.tutorial.isActive);
 
-  const dispatch = useDispatch();
-
-  const onTutorialComplete = () => {
-    dispatch(setTutorialIsActive({ isActive: false }));
-  };
-
   const animationStates = {
     teamStick: useSelector((state) => state.tutorial.home.teamStick),
     seasonStick: useSelector((state) => state.tutorial.home.seasonStick),
     budgetStick: useSelector((state) => state.tutorial.home.budgetStick),
     trophiesStick: useSelector((state) => state.tutorial.home.trophiesStick),
-    teamRankCard: useSelector((state) => state.tutorial.home.teamRank),
-    budget: useSelector((state) => state.tutorial.home.budget),
+    teamRankCard: useSelector((state) => state.tutorial.home.teamRankCard),
+    budgetCard: useSelector((state) => state.tutorial.home.budgetCard),
   };
 
   return (
@@ -61,14 +53,14 @@ const HomePage = () => {
       <div className='home-cards-row'>
         {tutorialActive ? (
           <motion.div
-            className='level-stick-card card hidden'
+            className='level-stick-card hidden'
             animate={animationStates.teamRankCard}
             transition={{ default: { duration: 1 } }}
           >
             <LevelStick type='teamRank' />
           </motion.div>
         ) : (
-          <div className='level-stick-card card'>
+          <div className='level-stick-card'>
             <LevelStick type='teamRank' />
           </div>
         )}
@@ -82,12 +74,15 @@ const HomePage = () => {
             ]}
           />
           <div className='sharkie-btn-container'>
-            <SharkieButton textPosition='bottom' />
+            <SharkieButton
+              textPosition='bottom'
+              tutorialSlides={tutorialSlides}
+            />
           </div>
         </div>
         {tutorialActive ? (
           <motion.div
-            className='level-stick-card card hidden'
+            className='level-stick-card hidden'
             animate={animationStates.budgetCard}
             transition={{ default: { duration: 1 } }}
           >
@@ -152,9 +147,6 @@ const HomePage = () => {
         </div>
         <div></div>
       </div>
-      {tutorialActive && (
-        <Tutorial slides={tutorialSlides} onComplete={onTutorialComplete} />
-      )}
     </div>
   );
 };

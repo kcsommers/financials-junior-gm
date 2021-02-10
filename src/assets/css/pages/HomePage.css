@@ -27,6 +27,12 @@ div.level-stick-card {
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: #fff;
+  border: 5px solid #4b4b4b;
+  border-radius: 10px;
+  position: relative;
+  width: 210px;
+  height: 270px;
 }
 
 .sharkie-btn-container {

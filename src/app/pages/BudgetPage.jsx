@@ -1,6 +1,4 @@
 import { useState } from 'react';
-import { ReactSVG } from 'react-svg';
-import closeBtn from '@images/icons/cancel.svg';
 import {
   BudgetEquation,
   BudgetSlider,
@@ -8,17 +6,11 @@ import {
   PageBoard,
 } from '@components';
 import budgetStick from '@images/budget-stick.svg';
-import { useSelector, useDispatch } from 'react-redux';
-import { Tutorial, budgetSlides } from '@tutorial';
-import { Link } from 'react-router-dom';
-import { setTutorialIsActive } from '@redux/actions';
+import { useSelector } from 'react-redux';
+import { budgetSlides, SharkieButton } from '@tutorial';
 import '@css/pages/BudgetPage.css';
 
-const teamSlides = [budgetSlides];
-
 const BudgetPage = () => {
-  const tutorialActive = useSelector((state) => state.tutorial.isActive);
-
   const [currentBudget, setCurrentBudget] = useState({
     total: 10,
     spent: 1,
@@ -30,12 +22,6 @@ const BudgetPage = () => {
     total: useSelector((state) => state.tutorial.budget.total),
     savings: useSelector((state) => state.tutorial.budget.savings),
     spending: useSelector((state) => state.tutorial.budget.spending),
-  };
-
-  const dispatch = useDispatch();
-
-  const onTutorialComplete = () => {
-    dispatch(setTutorialIsActive({ isActive: false }));
   };
 
   const updateSavings = (value) => {
@@ -53,8 +39,15 @@ const BudgetPage = () => {
         inverse={true}
       />
 
-      <PageBoard closeBtnLeft={true}>
+      <PageBoard hideCloseBtn={true}>
         <div className='budget-page-board-inner'>
+          <span style={{ position: 'absolute', left: '1rem', top: '1rem' }}>
+            <SharkieButton
+              tutorialSlides={[budgetSlides]}
+              textPosition='right'
+            />
+          </span>
+
           <div className='budget-equation-container'>
             <BudgetEquation
               budget={currentBudget}
@@ -65,17 +58,10 @@ const BudgetPage = () => {
             Move the yellow puck to change how much you save!
           </p>
           <div className='budget-slider-container'>
-            <BudgetSlider
-              budget={currentBudget}
-              setValue={updateSavings}
-              tutorialActive={tutorialActive}
-            />
+            <BudgetSlider budget={currentBudget} setValue={updateSavings} />
           </div>
         </div>
       </PageBoard>
-      {tutorialActive && (
-        <Tutorial slides={teamSlides} onComplete={onTutorialComplete} />
-      )}
     </div>
   );
 };
