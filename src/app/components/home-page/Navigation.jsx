@@ -1,7 +1,6 @@
 import React from 'react';
 import exitBtn from '@images/exit-btn.svg';
 import settingsBtn from '@images/settings-btn.svg';
-import { SharkieButton } from '@tutorial';
 import '@css/components/home-page/Navigation.css';
 
 export const Navigation = ({ tutorialActive }) => {
@@ -22,7 +21,6 @@ export const Navigation = ({ tutorialActive }) => {
       </div>
 
       <div className='settings-link-box'>
-        <SharkieButton />
         <img src={settingsBtn} alt='Settings' />
       </div>
     </div>

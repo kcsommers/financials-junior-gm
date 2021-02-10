@@ -17,6 +17,7 @@ import {
   trophiesStickSlides,
   seasonStickSlides,
   Tutorial,
+  SharkieButton,
 } from '@tutorial';
 import sharksLogo from '@images/sharks-comerica-logo.svg';
 import teamStick from '@images/team-stick.svg';
@@ -69,6 +70,9 @@ const HomePage = () => {
               '3. Scout three more players to add to your team.',
             ]}
           />
+          <div style={{ textAlign: 'center', marginTop: '0.5rem' }}>
+            <SharkieButton />
+          </div>
         </div>
         <div className='money-left-card-box'>
           <MoneyLeftCard tutorialActive={tutorialActive} />

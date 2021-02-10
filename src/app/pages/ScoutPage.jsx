@@ -199,7 +199,7 @@ const TeamPage = () => {
             <img src={sharksLogo} alt='Sharks Logo' />
           </div>
           <div className='page-header-stick-wrap scout-page-header-stick-wrap'>
-            <StickButton image={scoutStick} large={true} />
+            <StickButton link='/home' image={scoutStick} large={true} />
           </div>
           <div className='page-header-objectives-board-container'>
             <ObjectivesBoard
