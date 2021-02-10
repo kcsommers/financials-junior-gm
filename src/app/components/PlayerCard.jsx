@@ -24,8 +24,7 @@ export const PlayerCard = ({
     dispatch(
       toggleOverlay({
         isOpen: true,
-        template: signState,
-        sign: addPlayerOverlay,
+        template: signState
       })
     );
   };
@@ -62,15 +61,13 @@ export const PlayerCard = ({
       </div>
     </div>
   ) : (
-    <div
-      style={{ cursor: 'pointer' }}
-      onClick={() => {
+    <div 
+      style={{cursor: 'pointer'}} onClick={() => {
         if (!inOverlay) {
-          inOverlay = true;
           openOverlay();
         } else {
-          setSignState(<SignPlayer />);
-          console.log('hello hello');
+          setSignState(<SignPlayer/>)
+          console.log('hello hello')
         }
       }}
     >
