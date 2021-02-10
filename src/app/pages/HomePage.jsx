@@ -1,11 +1,10 @@
 import React from 'react';
 import '@css/pages/HomePage.css';
 import {
-  TeamRankCard,
   ObjectivesBoard,
-  MoneyLeftCard,
   StickButton,
   Navigation,
+  LevelStick,
 } from '@components';
 import {
   introSlides,
@@ -19,13 +18,13 @@ import {
   Tutorial,
   SharkieButton,
 } from '@tutorial';
-import sharksLogo from '@images/sharks-comerica-logo.svg';
 import teamStick from '@images/team-stick.svg';
 import budgetStick from '@images/budget-stick.svg';
 import seasonStick from '@images/season-stick.svg';
 import trophiesStick from '@images/trophies-stick.svg';
 import { useDispatch, useSelector } from 'react-redux';
 import { setTutorialIsActive } from '@redux/actions';
+import { motion } from 'framer-motion';
 
 const tutorialSlides = [
   introSlides,
@@ -52,15 +51,27 @@ const HomePage = () => {
     seasonStick: useSelector((state) => state.tutorial.home.seasonStick),
     budgetStick: useSelector((state) => state.tutorial.home.budgetStick),
     trophiesStick: useSelector((state) => state.tutorial.home.trophiesStick),
+    teamRankCard: useSelector((state) => state.tutorial.home.teamRank),
+    budget: useSelector((state) => state.tutorial.home.budget),
   };
 
   return (
     <div className='home-page-container'>
       <Navigation tutorialActive={tutorialActive} />
       <div className='home-cards-row'>
-        <div className='team-rank-card-box'>
-          <TeamRankCard tutorialActive={tutorialActive} />
-        </div>
+        {tutorialActive ? (
+          <motion.div
+            className='level-stick-card card hidden'
+            animate={animationStates.teamRankCard}
+            transition={{ default: { duration: 1 } }}
+          >
+            <LevelStick type='teamRank' />
+          </motion.div>
+        ) : (
+          <div className='level-stick-card card'>
+            <LevelStick type='teamRank' />
+          </div>
+        )}
         <div className='objectives-board-container'>
           <ObjectivesBoard
             tutorialActive={tutorialActive}
@@ -71,12 +82,22 @@ const HomePage = () => {
             ]}
           />
           <div className='sharkie-btn-container'>
-            <SharkieButton />
+            <SharkieButton textPosition='bottom' />
           </div>
         </div>
-        <div className='money-left-card-box'>
-          <MoneyLeftCard tutorialActive={tutorialActive} />
-        </div>
+        {tutorialActive ? (
+          <motion.div
+            className='level-stick-card card hidden'
+            animate={animationStates.budgetCard}
+            transition={{ default: { duration: 1 } }}
+          >
+            <LevelStick type='budget' />
+          </motion.div>
+        ) : (
+          <div className='level-stick-card card'>
+            <LevelStick type='budget' />
+          </div>
+        )}
       </div>
       <div className='hockey-sticks-container'>
         <div className='hockey-sticks-row'>

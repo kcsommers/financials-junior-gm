@@ -3,7 +3,46 @@ import { useDispatch } from 'react-redux';
 import sharkieBtn from '@images/sharkie-btn.svg';
 import { ReactSVG } from 'react-svg';
 
-export const SharkieButton = () => {
+const textStyles = {
+  bottom: {
+    bottom: 0,
+    transform: 'translateY(calc(100% + 0.15rem))',
+    fontSize: '0.8rem',
+    position: 'relative',
+    display: 'inline-block',
+    fontWeight: 'bold',
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    texAlign: 'center',
+  },
+  left: {
+    top: '50%',
+    transform: 'translate(calc(-100% - 0.15rem), -50%)',
+    fontSize: '0.8rem',
+    position: 'relative',
+    display: 'inline-block',
+    fontWeight: 'bold',
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    texAlign: 'center',
+  },
+  right: {
+    top: '50%',
+    transform: 'translate(calc(100% + 0.15rem), -50%)',
+    fontSize: '0.8rem',
+    position: 'relative',
+    display: 'inline-block',
+    fontWeight: 'bold',
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    texAlign: 'center',
+  },
+};
+
+export const SharkieButton = ({ textPosition }) => {
   const dispatch = useDispatch();
 
   return (
@@ -13,21 +52,22 @@ export const SharkieButton = () => {
         outline: 'none',
         border: 'none',
         background: 'none',
+        position: 'relative',
+        display: 'inline-flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: '65px',
+        height: '65px',
       }}
       onClick={() => {
         console.log('SETTING');
         dispatch(setTutorialIsActive({ isActive: true }));
       }}
     >
-      <ReactSVG src={sharkieBtn} />
+      <ReactSVG src={sharkieBtn} style={{ marginTop: '12px' }} />
       <span
         className='color-primary'
-        style={{
-          fontSize: '0.8rem',
-          position: 'relative',
-          top: '-1rem',
-          display: 'inline-block',
-        }}
+        style={textStyles[textPosition] || textStyles['bottom']}
       >
         CALL SHARKIE
       </span>

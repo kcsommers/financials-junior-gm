@@ -18,9 +18,15 @@ div.home-page-container {
   flex: 1;
 }
 
-div.team-rank-card-box,
 div.money-left-card-box {
   padding: 0 2rem;
+}
+
+div.level-stick-card {
+  margin: 0 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .sharkie-btn-container {

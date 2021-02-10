@@ -1,3 +1,5 @@
+export { PageBoard } from './PageBoard';
+export { LevelStick } from './LevelStick';
 export { StickButton } from './StickButton';
 export { IceBackground } from './IceBackground';
 export { Indicator } from './Indicator';

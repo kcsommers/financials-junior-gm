@@ -1,20 +1,16 @@
 import React from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import {
-  ObjectivesBoard,
-  StickButton,
   PlayerDropContainer,
   PlayerDragItem,
   HeaderComponent,
 } from '@components';
-import sharksLogo from '@images/sharks-comerica-logo.svg';
 import scoutStick from '@images/scout-stick.svg';
 import { useSelector, useDispatch } from 'react-redux';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Tutorial, scoutSlides } from '@tutorial';
 import { setTutorialIsActive } from '@redux/actions';
 import { Link } from 'react-router-dom';
-import '@css/pages/page.css';
 import '@css/pages/ScoutPage.css';
 
 const teamSlides = [scoutSlides];

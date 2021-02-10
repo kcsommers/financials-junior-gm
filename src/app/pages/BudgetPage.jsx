@@ -7,7 +7,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Tutorial, budgetSlides } from '@tutorial';
 import { Link } from 'react-router-dom';
 import { setTutorialIsActive } from '@redux/actions';
-import '@css/pages/page.css';
 import '@css/pages/BudgetPage.css';
 
 const teamSlides = [budgetSlides];
