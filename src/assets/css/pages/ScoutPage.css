@@ -1,4 +1,99 @@
-div.scout-page-container div.page-body {
+div.scout-page-board {
+  flex-direction: column;
+}
+
+div.scout-page-board-inner {
+  display: flex;
+}
+
+div.scout-page-board-inner > div {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  padding: 0 0.5rem;
+  height: 530px;
+}
+
+div.scout-page-board-left {
+  flex: 1;
+}
+
+p.scout-page-helper-text,
+p.money-level-text {
+  font-size: 1.2rem;
+  margin: 0.25rem auto;
+  text-align: center;
+}
+
+p.money-level-text {
+  font-size: 1rem;
+}
+
+div.scout-board {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1.5rem 0;
+}
+
+div.new-player-row,
+div.contract-player-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+div.new-player-row {
+  justify-content: space-around;
+}
+
+div.contract-player-row-wrap {
+  position: relative;
+}
+
+span.money-level-indicator {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 45px;
+  height: 45px;
+  border-radius: 100%;
+  background-color: #fff;
+  z-index: 2;
+  transition: opacity 0.3s ease;
+}
+
+div.contract-player-row {
+  height: 144px;
+  padding: 0.5rem 1rem;
+}
+
+div.contract-player-row div.player-card-drop {
+  padding: 0.5rem 0.5rem;
+}
+
+div.scout-page-board-footer {
+  padding: 0 1rem;
+}
+
+div.scout-page-board-footer,
+div.finished-btn a {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1rem;
+}
+
+.check-btn-small {
+  margin-left: 0.5rem;
+}
+
+/* div.scout-page-container div.page-body {
   padding-top: 0;
 }
 div.scout-page-container div.page-header {
@@ -71,4 +166,4 @@ div.finished-btn > a.text-link {
 
 .check-btn-small {
   margin-left: 0.5rem;
-}
+} */

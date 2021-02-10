@@ -2,12 +2,12 @@ import { motion } from 'framer-motion';
 import { useDispatch } from 'react-redux';
 import { toggleModal } from '../redux/actions';
 import Sign from './Sign';
-import {SignPlayer} from './SignPlayer';
-import {PlayerSigned} from './PlayerSigned'
-import {NiceJobScouting} from './public-api';
+import { SignPlayer } from './SignPlayer';
+import { PlayerSigned } from './PlayerSigned';
+import { NiceJobScouting } from './public-api';
 import { toggleOverlay } from '../redux/actions';
 import '@css/components/PlayerCard.css';
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 
 export const PlayerCard = ({
   player,
@@ -18,21 +18,21 @@ export const PlayerCard = ({
 }) => {
   const dispatch = useDispatch();
 
-  const [signState, setSignState] = useState(<Sign/>)
+  const [signState, setSignState] = useState(<Sign />);
 
   const openOverlay = () => {
     dispatch(
       toggleOverlay({
         isOpen: true,
         template: signState,
-        sign: addPlayerOverlay
+        sign: addPlayerOverlay,
       })
     );
   };
 
   const inner = player ? (
     <div>
-      <span className='position-text'>Position</span>
+      <p className='position-text'>Position</p>
       <div
         className={`box-shadow player-card-inner${
           player ? ' border-primary' : ' border-accent'
@@ -54,23 +54,26 @@ export const PlayerCard = ({
         <div className='player-card-body'>
           <div className='player-card-img'>{player.name}</div>
           <div className='player-scores'>
-            <div className='player-score player-score-off'>80</div>
+            {/* <div className='player-score player-score-off'>80</div>
             <div className='player-score player-score-pass'>80</div>
-            <div className='player-score player-score-def'>80</div>
+            <div className='player-score player-score-def'>80</div> */}
           </div>
         </div>
       </div>
     </div>
   ) : (
-    <div style={{cursor: 'pointer'}} onClick={() => {
-      if (!inOverlay) {
-        inOverlay = true;
-        openOverlay();
-      } else {
-        setSignState(<SignPlayer/>)
-        console.log('hello hello')
-      }
-    }}>
+    <div
+      style={{ cursor: 'pointer' }}
+      onClick={() => {
+        if (!inOverlay) {
+          inOverlay = true;
+          openOverlay();
+        } else {
+          setSignState(<SignPlayer />);
+          console.log('hello hello');
+        }
+      }}
+    >
       <div
         className={`box-shadow player-card-inner${
           player ? ' border-primary' : ' border-accent'
@@ -97,9 +100,7 @@ export const PlayerCard = ({
     </div>
   );
 
-  const addPlayerOverlay = (
-    <Sign/>
-  )
+  const addPlayerOverlay = <Sign />;
 
   const mainTemplate = tutorialActive ? (
     <motion.div

@@ -3,13 +3,21 @@ import { useSelector } from 'react-redux';
 import { motion } from 'framer-motion';
 import '@css/components/ObjectivesBoard.css';
 
-export const ObjectivesBoard = ({ tutorialActive, objectivesArray }) => {
+export const ObjectivesBoard = ({
+  tutorialActive,
+  objectivesArray,
+  smallText,
+}) => {
   const animationState = useSelector(
     (state) => state.tutorial.home.objectivesBoard
   );
 
   const objectives = objectivesArray
-    ? objectivesArray.map((o) => <div key={o}>{o}</div>)
+    ? objectivesArray.map((o) => (
+        <div className={`${smallText ? 'objective-text-small' : ''}`} key={o}>
+          {o}
+        </div>
+      ))
     : null;
 
   const inner = (
