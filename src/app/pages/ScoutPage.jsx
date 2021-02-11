@@ -4,6 +4,7 @@ import {
   PlayerDropContainer,
   PlayerDragItem,
   HeaderComponent,
+  PlayerCard,
 } from '@components';
 import scoutStick from '@images/scout-stick.svg';
 import { useSelector, useDispatch } from 'react-redux';
@@ -30,7 +31,7 @@ const moneyLevels = {
   },
 };
 
-const TeamPage = () => {
+const ScoutPage = () => {
   const tutorialActive = useSelector((state) => state.tutorial.isActive);
 
   const { available, levelOne, levelTwo, levelThree } = useSelector(
@@ -80,9 +81,31 @@ const TeamPage = () => {
     console.log('DRAG END:::: ', e);
   };
 
-  const getDragItem = (player, key, small = false) => {
+  const getDroppableItem = (player, key, small = false) => {
+    const playerCard = player ? (
+      <Draggable
+        key={`${key}-draggable`}
+        draggableId={`${key}-draggable`}
+        index={0}
+        className='draggable-player'
+      >
+        {(dragProvided) => (
+          <PlayerDragItem
+            provided={dragProvided}
+            innerRef={dragProvided.innerRef}
+            player={player}
+            small={small}
+          ></PlayerDragItem>
+        )}
+        {/* {dropProvided.placeholder} */}
+      </Draggable>
+    ) : (
+      <PlayerCard key={`${key}-empty`} small={small} />
+    );
+
     return (
       <div
+        key={`${key}-droppable-wrap`}
         className={`player-card-drop${small ? ' player-card-drop-small' : ''}`}
       >
         <Droppable key={`${key}-droppable`} droppableId={`${key}-droppable`}>
@@ -92,21 +115,7 @@ const TeamPage = () => {
               innerRef={dropProvided.innerRef}
               player={player}
             >
-              <Draggable
-                key={`${key}-draggable`}
-                draggableId={`${key}-draggable`}
-                index={0}
-              >
-                {(dragProvided) => (
-                  <PlayerDragItem
-                    provided={dragProvided}
-                    innerRef={dragProvided.innerRef}
-                    player={player}
-                    small={small}
-                  ></PlayerDragItem>
-                )}
-              </Draggable>
-              {/* {dropProvided.placeholder} */}
+              {playerCard}
             </PlayerDropContainer>
           )}
         </Droppable>
@@ -117,16 +126,17 @@ const TeamPage = () => {
   const availablePlayers = [];
   for (let i = 0; i < Math.max(9, available.length); i++) {
     if (available[i]) {
-      availablePlayers.push(getDragItem(available[i], `available-${i}`));
+      availablePlayers.push(getDroppableItem(available[i], `available-${i}`));
     } else {
-      availablePlayers.push(<div className='empty-player-slot'></div>);
+      availablePlayers.push(
+        <div key={`available-${i}-empty`} className='empty-player-slot'></div>
+      );
     }
   }
 
   let availablePlayerRowIndex = 0;
   const availablePlayerRows = availablePlayers
-    .reduce((rows, player, i) => {
-      const p = getDragItem(player, `available-player-${i}`);
+    .reduce((rows, p, i) => {
       if (rows[availablePlayerRowIndex]) {
         rows[availablePlayerRowIndex].push(p);
       } else {
@@ -137,8 +147,10 @@ const TeamPage = () => {
       }
       return rows;
     }, [])
-    .map((row) => (
-      <div className='available-player-row'>{row.map((p) => p)}</div>
+    .map((row, j) => (
+      <div key={`available-player-row-${j}`} className='available-player-row'>
+        {row.map((p) => p)}
+      </div>
     ));
 
   const levelOnePlayers = [];
@@ -146,20 +158,22 @@ const TeamPage = () => {
   const levelThreePlayers = [];
 
   for (let i = 0; i < Math.max(2, levelOne.length); i++) {
-    levelOnePlayers.push(getDragItem(levelOne[i], `levelOne-${i}`));
+    levelOnePlayers.push(getDroppableItem(levelOne[i], `levelOne-${i}`));
   }
 
   for (let i = 0; i < Math.max(3, levelTwo.length); i++) {
-    levelTwoPlayers.push(getDragItem(levelTwo[i], `levelTwo-${i}`));
+    levelTwoPlayers.push(getDroppableItem(levelTwo[i], `levelTwo-${i}`));
   }
 
   for (let i = 0; i < Math.max(4, levelThree.length); i++) {
-    levelThreePlayers.push(getDragItem(levelThree[i], `levelThree-${i}`, true));
+    levelThreePlayers.push(
+      getDroppableItem(levelThree[i], `levelThree-${i}`, true)
+    );
   }
 
   const offeredPlayers = [levelOnePlayers, levelTwoPlayers, levelThreePlayers];
   const offeredPlayerRows = offeredPlayers.map((row, i) => (
-    <div className='offered-player-row-wrap'>
+    <div key={`offered-player-row-${i}`} className='offered-player-row-wrap'>
       <p className={`money-level-text money-level-text-${i}`}>
         These players get a {moneyLevels[i].long} offered
       </p>
@@ -226,7 +240,7 @@ const TeamPage = () => {
               className='color-primary finished-btn'
               animate={finishedBtnAnimationState}
             >
-              <Link className='text-link' link='/sign'>
+              <Link className='text-link' to='/sign'>
                 <span>Click here when you finish!</span>
                 <div className='check-btn-small'></div>
               </Link>
@@ -241,4 +255,4 @@ const TeamPage = () => {
   );
 };
 
-export default TeamPage;
+export default ScoutPage;
