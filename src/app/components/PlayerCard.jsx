@@ -8,17 +8,27 @@ import { NiceJobScouting } from './public-api';
 import { toggleOverlay } from '../redux/actions';
 import '@css/components/PlayerCard.css';
 import React, { useState } from 'react';
+import { FindTradePlayer } from './trade-overlay/FindTradePlayer';
 
 export const PlayerCard = ({ player, animationStates, inOverlay, small }) => {
   const dispatch = useDispatch();
 
   const [signState, setSignState] = useState(<Sign />);
 
-  const openOverlay = () => {
+  const handleTrade = () => {
     dispatch(
       toggleOverlay({
         isOpen: true,
-        template: signState,
+        template: <FindTradePlayer/>
+      })
+    );
+  }
+
+  const openOverlay = (component) => {
+    dispatch(
+      toggleOverlay({
+        isOpen: true,
+        template: component,
       })
     );
   };
@@ -29,7 +39,9 @@ export const PlayerCard = ({ player, animationStates, inOverlay, small }) => {
       <motion.div
         animate={animationStates ? animationStates.playerCard : null}
         className='box-shadow player-card-inner'
-        onClick={openOverlay}
+        onClick={() => {
+          openOverlay(overlayTemplate)
+        }}
         transition={{
           default: {
             duration: 1,
@@ -60,9 +72,7 @@ export const PlayerCard = ({ player, animationStates, inOverlay, small }) => {
       animate={animationStates ? animationStates.playerCardEmpty : null}
       onClick={() => {
         if (!inOverlay) {
-          openOverlay();
-        } else {
-          setSignState(<SignPlayer />);
+          openOverlay(<Sign/>);
         }
       }}
     >
@@ -74,7 +84,7 @@ export const PlayerCard = ({ player, animationStates, inOverlay, small }) => {
     <div className='player-overlay-container'>
       <div className='player-card-wrap player-card-large'>{inner}</div>
       <div className='player-overlay-buttons-wrap'>
-        <button className='player-overlay-button outline-black box-shadow'>
+        <button onClick={handleTrade} className='player-overlay-button outline-black box-shadow'>
           Trade
         </button>
         <button className='player-overlay-button outline-black box-shadow'>
@@ -84,9 +94,15 @@ export const PlayerCard = ({ player, animationStates, inOverlay, small }) => {
     </div>
   );
 
-  const addPlayerOverlay = <Sign />;
-
-  const mainTemplate = (
+  const mainTemplate = 
+  // tutorialActive ? (
+  //   <motion.div
+  //     className={`player-card-wrap${highlight ? ' highlighted' : ''}`}
+  //   >
+  //     {inner}
+  //   </motion.div>
+  // ) : 
+  (
     <div
       className={`player-card-wrap ${!player ? ' player-card-wrap-empty' : ''}${
         small ? ' player-card-wrap-small' : ''
