@@ -346,3 +346,21 @@ export const getPlayers = () => {
     }, 1000);
   });
 };
+
+export const getScoutState = () => {};
+
+export const getScoutablePlayers = () => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      const _players = [];
+
+      while (_players.length < 9) {
+        const index = Math.floor(Math.random() * players.length);
+        if (players[index] && _players.indexOf(players[index]) < 0) {
+          _players.push(players[index]);
+        }
+      }
+      resolve(_players);
+    }, 3000);
+  });
+};
