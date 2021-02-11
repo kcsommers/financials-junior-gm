@@ -56,7 +56,7 @@ const slideConfigs = [
                 y: '15%',
                 opacity: 1,
                 transition: { delay: 0.5, duration: 1 },
-                zIndex: 2,
+                zIndex: 1002,
               },
             },
           ],

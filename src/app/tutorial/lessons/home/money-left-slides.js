@@ -66,7 +66,7 @@ const slideConfigs = [
                 x: ['0%', '0%', '0%', '5%'],
                 times: [0, 0.5, 1.5, 2],
                 opacity: 1,
-                zIndex: 2,
+                zIndex: 1002,
                 transition: {
                   delay: 0.5,
                   duration: 2,

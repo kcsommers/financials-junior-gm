@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   ObjectivesBoard,
   StickButton,
@@ -17,11 +17,13 @@ import {
   trophiesStickSlides,
   seasonStickSlides,
   SharkieButton,
+  Tutorial,
 } from '@tutorial';
 import teamStick from '@images/team-stick.svg';
 import budgetStick from '@images/budget-stick.svg';
 import seasonStick from '@images/season-stick.svg';
 import trophiesStick from '@images/trophies-stick.svg';
+import { setTutorialState } from '@redux/actions';
 import '@css/pages/HomePage.css';
 
 const tutorialSlides = [
@@ -38,6 +40,12 @@ const tutorialSlides = [
 const HomePage = () => {
   const tutorialActive = useSelector((state) => state.tutorial.isActive);
 
+  const dispatch = useDispatch();
+
+  const onTutorialComplete = () => {
+    dispatch(setTutorialState({ isActive: false, slides: null, page: null }));
+  };
+
   const animationStates = {
     teamStick: useSelector((state) => state.tutorial.home.teamStick),
     seasonStick: useSelector((state) => state.tutorial.home.seasonStick),
@@ -45,7 +53,20 @@ const HomePage = () => {
     trophiesStick: useSelector((state) => state.tutorial.home.trophiesStick),
     teamRankCard: useSelector((state) => state.tutorial.home.teamRankCard),
     budgetCard: useSelector((state) => state.tutorial.home.budgetCard),
+    objectivesBoard: useSelector(
+      (state) => state.tutorial.home.objectivesBoard
+    ),
   };
+
+  const objectivesBoard = (
+    <ObjectivesBoard
+      objectives={[
+        '1. Learn about your budget.',
+        '2. Fill your team by signing a player.',
+        '3. Scout three more players to add to your team.',
+      ]}
+    />
+  );
 
   return (
     <div className='home-page-container'>
@@ -64,21 +85,22 @@ const HomePage = () => {
             <LevelStick type='teamRank' />
           </div>
         )}
-        <div className='objectives-board-container'>
-          <ObjectivesBoard
-            tutorialActive={tutorialActive}
-            objectives={[
-              '1. Learn about your budget.',
-              '2. Fill your team by signing a player.',
-              '3. Scout three more players to add to your team.',
-            ]}
+        {tutorialActive ? (
+          <motion.div
+            className='objectives-board-container'
+            animate={animationStates.objectivesBoard}
+            transition={{ default: { duration: 1 } }}
+          >
+            {objectivesBoard}
+          </motion.div>
+        ) : (
+          <div className='objectives-board-container'>{objectivesBoard}</div>
+        )}
+        <div className='sharkie-btn-container'>
+          <SharkieButton
+            textPosition='bottom'
+            tutorialSlides={tutorialSlides}
           />
-          <div className='sharkie-btn-container'>
-            <SharkieButton
-              textPosition='bottom'
-              tutorialSlides={tutorialSlides}
-            />
-          </div>
         </div>
         {tutorialActive ? (
           <motion.div
@@ -145,8 +167,10 @@ const HomePage = () => {
             </p>
           </div>
         </div>
-        <div></div>
       </div>
+      {tutorialActive && (
+        <Tutorial slides={tutorialSlides} onComplete={onTutorialComplete} />
+      )}
     </div>
   );
 };

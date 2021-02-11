@@ -6,8 +6,9 @@ import {
   PageBoard,
 } from '@components';
 import budgetStick from '@images/budget-stick.svg';
-import { useSelector } from 'react-redux';
-import { budgetSlides, SharkieButton } from '@tutorial';
+import { useSelector, useDispatch } from 'react-redux';
+import { budgetSlides, SharkieButton, Tutorial } from '@tutorial';
+import { setTutorialState } from '@redux/actions';
 import '@css/pages/BudgetPage.css';
 
 const BudgetPage = () => {
@@ -16,6 +17,14 @@ const BudgetPage = () => {
     spent: 1,
     savings: 2,
   });
+
+  const tutorialActive = useSelector((state) => state.tutorial.isActive);
+
+  const dispatch = useDispatch();
+
+  const onTutorialComplete = () => {
+    dispatch(setTutorialState({ isActive: false, slides: null, page: null }));
+  };
 
   const budgetEquationStates = {
     board: useSelector((state) => state.tutorial.budget.equationBoard),
@@ -62,6 +71,9 @@ const BudgetPage = () => {
           </div>
         </div>
       </PageBoard>
+      {tutorialActive && (
+        <Tutorial slides={[budgetSlides]} onComplete={onTutorialComplete} />
+      )}
     </div>
   );
 };

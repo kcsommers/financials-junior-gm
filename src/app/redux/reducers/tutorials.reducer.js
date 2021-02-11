@@ -6,7 +6,6 @@ import {
 
 const initialState = {
   isActive: false,
-  slides: null,
   home: {
     objectivesBoard: {
       x: '0%',

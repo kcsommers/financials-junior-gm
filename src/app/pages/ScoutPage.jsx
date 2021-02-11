@@ -6,12 +6,13 @@ import {
   HeaderComponent,
 } from '@components';
 import scoutStick from '@images/scout-stick.svg';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { motion } from 'framer-motion';
-import { scoutSlides, SharkieButton } from '@tutorial';
+import { scoutSlides, SharkieButton, Tutorial } from '@tutorial';
 import { Link } from 'react-router-dom';
-import '@css/pages/ScoutPage.css';
 import { PageBoard } from './../components/PageBoard';
+import { setTutorialState } from '@redux/actions';
+import '@css/pages/ScoutPage.css';
 
 const moneyLevels = {
   0: {
@@ -65,7 +66,13 @@ const fiftyCents = [
 const players = [...oneDollar, ...twoDollar, ...fiftyCents];
 
 const TeamPage = () => {
-  // GET TEAM FROM STORE
+  const tutorialActive = useSelector((state) => state.tutorial.isActive);
+
+  const dispatch = useDispatch();
+
+  const onTutorialComplete = () => {
+    dispatch(setTutorialState({ isActive: false, slides: null, page: null }));
+  };
 
   const newPlayersAnimationState = useSelector(
     (state) => state.tutorial.scout.newPlayersBoard
@@ -80,8 +87,6 @@ const TeamPage = () => {
   const finishedBtnAnimationState = useSelector(
     (state) => state.tutorial.scout.finishedBtn
   );
-
-  const tutorialActive = useSelector((state) => state.tutorial.isActive);
 
   const onDragStart = (e) => {
     console.log('DRAG START:::: ', e);
@@ -233,6 +238,9 @@ const TeamPage = () => {
             </motion.div>
           </div>
         </PageBoard>
+        {tutorialActive && (
+          <Tutorial slides={[scoutSlides]} onComplete={onTutorialComplete} />
+        )}
       </div>
     </DragDropContext>
   );

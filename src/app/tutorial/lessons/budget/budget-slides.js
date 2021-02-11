@@ -44,7 +44,7 @@ const slideConfigs = [
               component: 'equationBoard',
               state: {
                 scale: 1.1,
-                zIndex: 1,
+                zIndex: 1000,
               },
             },
             {
