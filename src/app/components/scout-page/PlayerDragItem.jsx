@@ -8,7 +8,7 @@ export const PlayerDragItem = (props) => {
       {...provided.dragHandleProps}
       ref={innerRef}
     >
-      <PlayerCard player={player} isDraggable={true} />
+      <PlayerCard player={player} />
     </div>
   );
 };

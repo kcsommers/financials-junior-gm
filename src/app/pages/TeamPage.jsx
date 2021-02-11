@@ -24,9 +24,12 @@ function TeamPage() {
 
   const dispatch = useDispatch();
 
-  const highlightPlayerCards = useSelector(
-    (state) => state.tutorial.team.playerCard.highlight
-  );
+  const playerCardAnimationStates = {
+    playerCard: useSelector((state) => state.tutorial.team.playerCard),
+    playerCardEmpty: useSelector(
+      (state) => state.tutorial.team.playerCardEmpty
+    ),
+  };
 
   const onTutorialComplete = () => {
     dispatch(setTutorialState({ isActive: false, slides: null, page: null }));
@@ -81,18 +84,24 @@ function TeamPage() {
                 src={iceBgSmall}
               />
               <div className='team-players-row'>
-                <PlayerCard player={{ name: 'KACY' }} />
-                <div style={{ position: 'relative', top: '20px' }}>
-                  <PlayerCard highlight={highlightPlayerCards} />
+                <PlayerCard
+                  animationStates={playerCardAnimationStates}
+                  player={{ name: 'KACY' }}
+                />
+                <div style={{ position: 'relative', top: '15px' }}>
+                  <PlayerCard animationStates={playerCardAnimationStates} />
                 </div>
-                <PlayerCard highlight={highlightPlayerCards} />
+                <PlayerCard animationStates={playerCardAnimationStates} />
               </div>
               <div className='team-players-row'>
-                <PlayerCard player={{ name: 'KACY' }} />
-                <div style={{ position: 'relative', top: '35px' }}>
-                  <PlayerCard />
+                <PlayerCard
+                  player={{ name: 'KACY' }}
+                  animationStates={playerCardAnimationStates}
+                />
+                <div style={{ position: 'relative', top: '30px' }}>
+                  <PlayerCard animationStates={playerCardAnimationStates} />
                 </div>
-                <PlayerCard />
+                <PlayerCard animationStates={playerCardAnimationStates} />
               </div>
             </div>
 

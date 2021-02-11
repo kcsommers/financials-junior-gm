@@ -40,7 +40,16 @@ const initialState = {
   },
   team: {
     playerCard: {
-      highlight: false,
+      borderColor: 'rgba(0,0,0,0)',
+      borderWidth: '3px',
+      borderStyle: 'solid',
+      scale: 1,
+    },
+    playerCardEmpty: {
+      borderColor: '#f3901d',
+      borderWidth: '3px',
+      borderStyle: 'solid',
+      scale: 1,
     },
   },
   scout: {
