@@ -72,7 +72,7 @@ export const PlayerCard = ({ player, animationStates, inOverlay, small }) => {
       animate={animationStates ? animationStates.playerCardEmpty : null}
       onClick={() => {
         if (!inOverlay) {
-          openOverlay(<SignPlayer/>);
+          openOverlay(<Sign/>);
         }
       }}
     >
