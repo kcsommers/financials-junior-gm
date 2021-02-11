@@ -23,7 +23,8 @@ const slideConfigs = [
             {
               component: 'playerCard',
               state: {
-                highlight: true,
+                borderColor: '#ffd782',
+                scale: 1.2,
               },
             },
           ],
@@ -59,7 +60,7 @@ const slideConfigs = [
         type: TOGGLE_OVERLAY,
         payload: {
           isOpen: true,
-          template: <PlayerCard inOverlay={true} tutorialActive={true} />,
+          template: <PlayerCard inOverlay={true} />,
         },
       },
       {
@@ -70,7 +71,8 @@ const slideConfigs = [
             {
               component: 'playerCard',
               state: {
-                highlight: false,
+                borderColor: 'rgba(0,0,0,0)',
+                scale: 1,
               },
             },
           ],
