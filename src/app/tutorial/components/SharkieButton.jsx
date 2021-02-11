@@ -24,7 +24,7 @@ const textStyles = {
     position: 'absolute',
     left: 0,
     right: 0,
-    texAlign: 'center',
+    textAlign: 'right',
   },
   right: {
     top: '50%',
@@ -70,7 +70,7 @@ export const SharkieButton = ({ textPosition, tutorialSlides }) => {
         className='color-primary'
         style={textStyles[textPosition] || textStyles['bottom']}
       >
-        CALL SHARKIE
+        CALL SHARKIE!
       </span>
     </button>
   );

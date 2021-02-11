@@ -166,14 +166,11 @@ const TeamPage = () => {
     }, [])
     .map((row, i) => (
       <div className='contract-player-row-wrap'>
-        <span className='color-primary money-level-indicator box-shadow'>
-          {moneyLevels[i].short}
-        </span>
-        <p className='money-level-text'>
+        <p className={`money-level-text money-level-text-${i}`}>
           These players get a {moneyLevels[i].long} contract
         </p>
         <motion.div
-          className='contract-player-row card auto-card'
+          className='contract-player-row'
           animate={moneyLevelAnimationStates[i]}
         >
           {row.map((p) => p)}
@@ -195,7 +192,9 @@ const TeamPage = () => {
               Give each new player a contract value by dragging them to their
               money level!
             </p>
-            <span style={{ position: 'absolute', right: '1rem', top: '1rem' }}>
+            <span
+              style={{ position: 'absolute', right: '0.5rem', top: '0.25rem' }}
+            >
               <SharkieButton
                 tutorialSlides={[scoutSlides]}
                 textPosition='left'
@@ -207,20 +206,22 @@ const TeamPage = () => {
             <div className='scout-page-board-left'>
               {tutorialActive ? (
                 <motion.div
-                  className='card auto-card scout-board'
+                  className='scout-board'
                   animate={newPlayersAnimationState}
                   transition={{ default: { duration: 1 } }}
                 >
                   {newPlayerRows}
                 </motion.div>
               ) : (
-                <div className='card auto-card scout-board'>
-                  {newPlayerRows}
-                </div>
+                <div className='scout-board'>{newPlayerRows}</div>
               )}
             </div>
 
-            <div className='scout-page-board-right'>{contractPlayerRows}</div>
+            <div className='scout-page-board-right'>
+              <div style={{ position: 'relative', top: '-13px' }}>
+                {contractPlayerRows}
+              </div>
+            </div>
           </div>
 
           <div className='scout-page-board-footer'>
