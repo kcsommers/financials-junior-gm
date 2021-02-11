@@ -75,7 +75,7 @@ const slideConfigs = [
           page: 'scout',
           animationStates: [
             {
-              component: 'newPlayersBoard',
+              component: 'availablePlayersBoard',
               state: {
                 scale: 1.2,
                 zIndex: 1,
@@ -124,7 +124,7 @@ const slideConfigs = [
           page: 'scout',
           animationStates: [
             {
-              component: 'newPlayersBoard',
+              component: 'availablePlayersBoard',
               state: {
                 scale: 1,
                 opacity: 0.5,
@@ -445,7 +445,7 @@ const slideConfigs = [
         payload: {
           page: 'scout',
           animationStates: [
-            'newPlayersBoard',
+            'availablePlayersBoard',
             'moneyLevel1',
             'moneyLevel2',
             'moneyLevel3',

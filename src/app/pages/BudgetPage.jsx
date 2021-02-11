@@ -23,7 +23,7 @@ const BudgetPage = () => {
   const dispatch = useDispatch();
 
   const onTutorialComplete = () => {
-    dispatch(setTutorialState({ isActive: false, slides: null, page: null }));
+    dispatch(setTutorialState({ isActive: false }));
   };
 
   const budgetEquationStates = {
