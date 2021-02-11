@@ -2,27 +2,35 @@ import React from 'react';
 import { ReactSVG } from 'react-svg';
 import jrSharksLogo from '@images/icons/jr-sharks-logo.svg';
 import {
-  TeamRankStick,
-  MoneyLeftStick,
   StickButton,
   PlayerCard,
   PageBoard,
+  Overlay,
   HeaderComponent,
 } from '@components';
 import scoutStick from '@images/scout-stick.svg';
 import teamStick from '@images/team-stick.svg';
 import iceBgSmall from '@images/ice-bg-small.svg';
-import { useSelector } from 'react-redux';
-import { playersSlides, SharkieButton } from '@tutorial';
-import '@css/pages/TeamPage.css';
+import { useSelector, useDispatch } from 'react-redux';
+import { playersSlides, SharkieButton, Tutorial } from '@tutorial';
 import { LevelStick } from '../components/LevelStick';
+import { setTutorialState } from '@redux/actions';
+import '@css/pages/TeamPage.css';
 
 const teamSlides = [playersSlides];
 
 function TeamPage() {
+  const tutorialActive = useSelector((state) => state.tutorial.isActive);
+
+  const dispatch = useDispatch();
+
   const highlightPlayerCards = useSelector(
     (state) => state.tutorial.team.playerCard.highlight
   );
+
+  const onTutorialComplete = () => {
+    dispatch(setTutorialState({ isActive: false, slides: null, page: null }));
+  };
 
   return (
     <div className='page-container'>
@@ -99,6 +107,10 @@ function TeamPage() {
           </div>
         </div>
       </PageBoard>
+      <Overlay />
+      {tutorialActive && (
+        <Tutorial slides={teamSlides} onComplete={onTutorialComplete} />
+      )}
     </div>
   );
 }

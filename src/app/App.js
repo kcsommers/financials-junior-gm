@@ -1,27 +1,16 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Intro from './pages/Intro';
 import HomePage from './pages/HomePage';
 import TeamPage from './pages/TeamPage';
 import Season from './pages/Season';
 import ScoutPage from './pages/ScoutPage';
-import { Overlay, IceBackground } from '@components';
+import { IceBackground } from '@components';
 import BudgetPage from './pages/BudgetPage';
 import Sign from './components/Sign';
-import { setTutorialState } from '@redux/actions';
-import { Tutorial } from '@tutorial';
 import '@css/App.css';
 
 const App = () => {
-  const tutorialState = useSelector((state) => state.tutorial);
-
-  const dispatch = useDispatch();
-
-  const onTutorialComplete = () => {
-    dispatch(setTutorialState({ isActive: false, slides: null }));
-  };
-
   return (
     <div className='app-container'>
       <Router>
@@ -35,13 +24,6 @@ const App = () => {
           <Route exact path='/season' component={Season} />
         </Switch>
         <IceBackground />
-        <Overlay />
-        {tutorialState.isActive && (
-          <Tutorial
-            slides={tutorialState.slides}
-            onComplete={onTutorialComplete}
-          />
-        )}
       </Router>
     </div>
   );

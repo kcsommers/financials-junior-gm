@@ -55,7 +55,7 @@ const slideConfigs = [
                 scale: 1.5,
                 y: '15%',
                 opacity: 1,
-                zIndex: 2,
+                zIndex: 1002,
                 transition: { delay: 0.5, duration: 1 },
               },
             },

@@ -57,7 +57,12 @@ export const SharkieButton = ({ textPosition, tutorialSlides }) => {
         height: '65px',
       }}
       onClick={() => {
-        dispatch(setTutorialState({ isActive: true, slides: tutorialSlides }));
+        dispatch(
+          setTutorialState({
+            isActive: true,
+            slides: tutorialSlides,
+          })
+        );
       }}
     >
       <ReactSVG src={sharkieBtn} style={{ marginTop: '12px' }} />
