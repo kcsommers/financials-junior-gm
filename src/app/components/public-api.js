@@ -28,3 +28,5 @@ export {Cancel} from './Cancel';
 export {PlayerTraded} from './trade-overlay/PlayerTraded';
 export {TeamBudgetState} from './TeamBudgetState';
 export {PlayerTradeExchange} from './trade-overlay/PlayerTradeExchange';
+export {ReleasePlayer} from './release-overlay/ReleasePlayer';
+export {PlayerReleased} from './release-overlay/PlayerReleased';
