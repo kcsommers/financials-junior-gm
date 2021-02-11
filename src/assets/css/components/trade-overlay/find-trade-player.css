@@ -1,0 +1,25 @@
+.trade-dashboard {
+  border: 4px solid #707070;
+  background: white;
+  border-radius: 15px;
+  width: 960px;
+  height: 724px;
+  padding: 1rem;
+}
+
+.player-to-trade-title {
+  font-family: 'interstate';
+  font-size: 30px;
+  font-weight: bold;
+  color: #006D75;
+  -webkit-text-stroke: .05px black;
+}
+
+.find-trade-top-row {
+  display: flex;
+  justify-content: space-around;
+}
+
+.player-being-traded {
+  text-align: center;
+}

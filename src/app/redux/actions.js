@@ -2,6 +2,7 @@ import {
   SET_ANIMATION_STATE,
   TOGGLE_OVERLAY,
   SET_SCOUTING_STATE,
+  SET_TUTORIAL_STATE
 } from './actionTypes';
 
 export const setAnimationState = (state) => ({
