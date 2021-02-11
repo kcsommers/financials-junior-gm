@@ -32,7 +32,7 @@ function TeamPage() {
   };
 
   const onTutorialComplete = () => {
-    dispatch(setTutorialState({ isActive: false, slides: null, page: null }));
+    dispatch(setTutorialState({ isActive: false }));
   };
 
   return (
