@@ -8,6 +8,7 @@ import { NiceJobScouting } from './public-api';
 import { toggleOverlay } from '../redux/actions';
 import '@css/components/PlayerCard.css';
 import React, { useState } from 'react';
+import { FindTradePlayer } from './trade-overlay/FindTradePlayer';
 
 export const PlayerCard = ({
   player,
@@ -19,6 +20,15 @@ export const PlayerCard = ({
   const dispatch = useDispatch();
 
   const [signState, setSignState] = useState(<Sign />);
+
+  const handleTrade = () => {
+    dispatch(
+      toggleOverlay({
+        isOpen: true,
+        template: <FindTradePlayer/>
+      })
+    );
+  }
 
   const openOverlay = () => {
     dispatch(
@@ -38,6 +48,7 @@ export const PlayerCard = ({
         }`}
         onClick={() => {
           if (!isDraggable) {
+            setSignState(overlayTemplate)
             openOverlay();
           }
         }}
@@ -87,7 +98,7 @@ export const PlayerCard = ({
     <div className='player-overlay-container'>
       <div className='player-card-wrap player-card-large'>{inner}</div>
       <div className='player-overlay-buttons-wrap'>
-        <button className='player-overlay-button outline-black box-shadow'>
+        <button onClick={handleTrade} className='player-overlay-button outline-black box-shadow'>
           Trade
         </button>
         <button className='player-overlay-button outline-black box-shadow'>
@@ -96,8 +107,6 @@ export const PlayerCard = ({
       </div>
     </div>
   );
-
-  const addPlayerOverlay = <Sign />;
 
   const mainTemplate = tutorialActive ? (
     <motion.div

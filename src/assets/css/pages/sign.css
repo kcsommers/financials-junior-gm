@@ -27,6 +27,11 @@
   height: 252px;
 }
 
+.team-state-visual-container {
+  display: flex;
+  padding-top: .5rem;
+}
+
 .sign-top-right-dashboard {
   display: flex;
 }
@@ -72,6 +77,7 @@
   width: 100%;
   justify-content: center;
   transform: translate(0px, 40%);
+  cursor: pointer;
 }
 
 .available-players {

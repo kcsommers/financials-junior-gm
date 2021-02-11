@@ -50,8 +50,12 @@ const Sign = () => {
         <div className="sign-dashboard-top-row">{/* top row of sign dashboard */}
           <div className="sign-state-visual">
             <div className="team-state-visual-container">
-              <TeamRankStick/>
-              <MoneyLeftStick/>
+              <div className="team-rank-stick-div">
+                <TeamRankStick/>
+              </div>
+              <div className="money-left-stick-div">
+                <MoneyLeftStick/>
+              </div>
             </div>
           </div>
 

@@ -4,13 +4,13 @@
   border-radius: 15px;
   width: 960px;
   height: 724px;
-  padding: 2rem;
+  padding: 1rem;
 }
 
 .sign-player-dashboard-top-row {
   display: flex;
   justify-content: space-around;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 }
 
 .sign-player-visual-state {
@@ -25,7 +25,7 @@
   font-size: 36px;
   font-weight: bold;
   color: #006b77;
-  margin-bottom: 1rem;
+  margin-bottom: .5rem;
 }
 
 .team-dashboard-players-card-top {
@@ -114,7 +114,7 @@
   text-align: center;
   font-size: 48px;
   font-weight: bold;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
   color: #006D75;
   -webkit-text-stroke: .05px black;
 }
