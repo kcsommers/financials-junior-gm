@@ -45,18 +45,18 @@ div.scout-board {
   height: 480px;
 }
 
-div.new-player-row,
-div.contract-player-row {
+div.available-player-row,
+div.offered-player-row {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-div.new-player-row {
+div.available-player-row {
   justify-content: space-around;
 }
 
-div.contract-player-row-wrap {
+div.offered-player-row-wrap {
   position: relative;
 }
 
@@ -65,9 +65,17 @@ div.player-card-drop {
   min-height: calc(123px + 1rem);
   overflow: hidden;
   padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-div.contract-player-row {
+div.player-card-drop-small {
+  min-width: calc(72px + 0.5rem);
+  min-height: calc(95.76px + 0.5rem);
+}
+
+div.offered-player-row {
   width: 392px;
   height: 144px;
   border: 5px solid #4b4b4b;
@@ -75,9 +83,12 @@ div.contract-player-row {
   background: #fff;
 }
 
-div.contract-player-row div.player-card-drop {
+div.offered-player-row div.player-card-drop {
   padding: 0.5rem 0.5rem;
-  margin-top: -0.5rem;
+}
+
+div.offered-player-row div.player-card-drop-small {
+  padding: 0.5rem 0.25rem;
 }
 
 div.scout-page-board-footer {

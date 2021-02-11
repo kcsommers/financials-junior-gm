@@ -39,7 +39,7 @@ const textStyles = {
   },
 };
 
-export const SharkieButton = ({ textPosition, tutorialSlides }) => {
+export const SharkieButton = ({ textPosition }) => {
   const dispatch = useDispatch();
 
   return (
@@ -60,7 +60,6 @@ export const SharkieButton = ({ textPosition, tutorialSlides }) => {
         dispatch(
           setTutorialState({
             isActive: true,
-            slides: tutorialSlides,
           })
         );
       }}

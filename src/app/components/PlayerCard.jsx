@@ -24,11 +24,11 @@ export const PlayerCard = ({ player, animationStates, inOverlay, small }) => {
     );
   }
 
-  const openOverlay = () => {
+  const openOverlay = (component) => {
     dispatch(
       toggleOverlay({
         isOpen: true,
-        template: signState,
+        template: component,
       })
     );
   };
@@ -40,8 +40,7 @@ export const PlayerCard = ({ player, animationStates, inOverlay, small }) => {
         animate={animationStates ? animationStates.playerCard : null}
         className='box-shadow player-card-inner'
         onClick={() => {
-          setSignState(overlayTemplate)
-          openOverlay()
+          openOverlay(overlayTemplate)
         }}
         transition={{
           default: {
@@ -73,9 +72,7 @@ export const PlayerCard = ({ player, animationStates, inOverlay, small }) => {
       animate={animationStates ? animationStates.playerCardEmpty : null}
       onClick={() => {
         if (!inOverlay) {
-          openOverlay();
-        } else {
-          setSignState(<SignPlayer />);
+          openOverlay(<SignPlayer/>);
         }
       }}
     >
