@@ -9,8 +9,8 @@
 }
 
 .big-right {
-  right: -28%;
-  top: 30%!important;
+  position: absolute;
+  left: 100%!important;
 }
 
 .spending-budget-stick-title-big {
