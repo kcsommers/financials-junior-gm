@@ -1,68 +1,99 @@
-div.team-page-board-left {
-  flex: 0.5;
+div.team-page-board-header {
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   position: relative;
-  padding: 0.5rem;
+}
+
+div.team-page-board-header > h2 {
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+
+div.team-page-board-header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  padding: 0 2rem;
+}
+
+div.team-page-board-inner {
+  display: flex;
+}
+
+div.team-page-board-left {
+  padding: 0 1rem;
+  position: relative;
   flex-direction: column;
   justify-content: space-between;
   display: flex;
 }
 
-div.team-page-board-right {
-  flex: 1;
-  padding: 0.5rem;
+div.level-sticks-card {
+  color: #006b77;
+  border: 5px solid #4b4b4b;
+  border-radius: 5px;
+  background: white;
+  width: 370px;
 }
 
-div.sticks-card {
+div.level-sticks-card-inner {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1rem;
+  position: relative;
+  height: 275px;
+  left: -25px;
+  width: calc(100% + 20px);
 }
 
-div.team-page-stick-btn-container {
-  position: absolute;
-  left: -11.5%;
-  top: 53%;
+div.team-page-board-right {
+  flex: 1;
+  padding-right: 1rem;
 }
 
-h3.team-page-board-title {
-  text-align: center;
-  padding: 0.5rem 0;
-}
-
-div.team-page-players-container {
-  display: flex;
-  flex-direction: column;
-}
-
-div.team-page-players-row {
-  padding: 0.5rem 0;
+div.team-players-row {
   display: flex;
   align-items: flex-end;
   justify-content: space-around;
+  position: relative;
+  z-index: 1;
+}
+
+div.team-players-card {
+  height: 325px;
+  position: relative;
+  overflow: hidden;
+}
+
+div.team-players-card > div.team-players-row {
+  padding-top: 0.75rem;
+}
+
+div.team-players-card,
+div.bench-players-card {
+  color: #006b77;
+  border: 5px solid #4b4b4b;
+  border-radius: 5px;
+  background: white;
+}
+
+div.bench-players-card {
+  margin-top: 1rem;
+}
+
+div.bench-players-card > div.team-players-row {
+  padding: 0.5rem 0;
 }
 
 p.on-the-bench-text {
   text-align: center;
-}
-
-div.team-page-players-container .card {
-  padding: 0.5rem 0;
-}
-
-div.bench-container {
-  margin-top: 0.5rem;
-}
-
-div.jr-logo-wrap {
-  height: 160px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: auto;
-}
-
-.jr-logo {
-  display: inline-block;
-  transform: scale(2);
+  font-weight: bold;
+  margin-top: 0.25rem;
 }

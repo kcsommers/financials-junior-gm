@@ -1,40 +1,48 @@
-div.scout-page-board {
-  flex-direction: column;
-}
-
 div.scout-page-board-inner {
   display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin-top: 1rem;
 }
 
 div.scout-page-board-inner > div {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   flex-direction: column;
   padding: 0 0.5rem;
-  height: 530px;
 }
 
-div.scout-page-board-left {
-  flex: 1;
+div.scout-page-board-header {
+  position: relative;
+  height: 50px;
 }
 
-p.scout-page-helper-text,
-p.money-level-text {
+p.scout-page-helper-text {
   font-size: 1.2rem;
   margin: 0.25rem auto;
   text-align: center;
+  width: 50%;
 }
 
 p.money-level-text {
-  font-size: 1rem;
+  font-size: 0.8rem;
+  text-align: center;
+  height: 17px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
 }
 
 div.scout-board {
-  flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 1.5rem 0;
+  border: 5px solid #4b4b4b;
+  border-radius: 10px;
+  background: #fff;
+  width: 406px;
+  height: 480px;
 }
 
 div.new-player-row,
@@ -59,25 +67,12 @@ div.player-card-drop {
   padding: 0.5rem;
 }
 
-span.money-level-indicator {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1rem;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 45px;
-  height: 45px;
-  border-radius: 100%;
-  background-color: #fff;
-  z-index: 2;
-  transition: opacity 0.3s ease;
-}
-
 div.contract-player-row {
+  width: 392px;
   height: 144px;
-  padding: 0.5rem 1rem;
+  border: 5px solid #4b4b4b;
+  border-radius: 10px;
+  background: #fff;
 }
 
 div.contract-player-row div.player-card-drop {
@@ -86,7 +81,9 @@ div.contract-player-row div.player-card-drop {
 }
 
 div.scout-page-board-footer {
-  padding: 0.5rem 1rem;
+  padding: 0.25rem 1.5rem;
+  position: relative;
+  top: -10px;
 }
 
 div.scout-page-board-footer,

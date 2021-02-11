@@ -5,10 +5,10 @@ import HomePage from './pages/HomePage';
 import TeamPage from './pages/TeamPage';
 import Season from './pages/Season';
 import ScoutPage from './pages/ScoutPage';
-import '@css/App.css';
-import { Overlay } from '@components';
+import { IceBackground } from '@components';
 import BudgetPage from './pages/BudgetPage';
 import Sign from './components/Sign';
+import '@css/App.css';
 
 const App = () => {
   return (
@@ -23,8 +23,8 @@ const App = () => {
           <Route exact path='/budget' component={BudgetPage} />
           <Route exact path='/season' component={Season} />
         </Switch>
+        <IceBackground />
       </Router>
-      <Overlay />
     </div>
   );
 };

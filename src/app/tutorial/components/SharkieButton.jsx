@@ -1,9 +1,45 @@
-import { setTutorialIsActive } from '@redux/actions';
+import { setTutorialState } from '@redux/actions';
 import { useDispatch } from 'react-redux';
 import sharkieBtn from '@images/sharkie-btn.svg';
 import { ReactSVG } from 'react-svg';
 
-export const SharkieButton = () => {
+const textStyles = {
+  bottom: {
+    bottom: 0,
+    transform: 'translateY(calc(100% + 0.15rem))',
+    fontSize: '0.8rem',
+    display: 'inline-block',
+    fontWeight: 'bold',
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    texAlign: 'center',
+  },
+  left: {
+    top: '50%',
+    transform: 'translate(calc(-100% - 0.15rem), -50%)',
+    fontSize: '0.8rem',
+    display: 'inline-block',
+    fontWeight: 'bold',
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    textAlign: 'right',
+  },
+  right: {
+    top: '50%',
+    transform: 'translate(calc(100% + 0.15rem), -50%)',
+    fontSize: '0.8rem',
+    display: 'inline-block',
+    fontWeight: 'bold',
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    textAlign: 'left',
+  },
+};
+
+export const SharkieButton = ({ textPosition, tutorialSlides }) => {
   const dispatch = useDispatch();
 
   return (
@@ -13,23 +49,28 @@ export const SharkieButton = () => {
         outline: 'none',
         border: 'none',
         background: 'none',
+        position: 'relative',
+        display: 'inline-flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: '65px',
+        height: '65px',
       }}
       onClick={() => {
-        console.log('SETTING');
-        dispatch(setTutorialIsActive({ isActive: true }));
+        dispatch(
+          setTutorialState({
+            isActive: true,
+            slides: tutorialSlides,
+          })
+        );
       }}
     >
-      <ReactSVG src={sharkieBtn} />
+      <ReactSVG src={sharkieBtn} style={{ marginTop: '12px' }} />
       <span
         className='color-primary'
-        style={{
-          fontSize: '0.8rem',
-          position: 'relative',
-          top: '-1rem',
-          display: 'inline-block',
-        }}
+        style={textStyles[textPosition] || textStyles['bottom']}
       >
-        CALL SHARKIE
+        CALL SHARKIE!
       </span>
     </button>
   );

@@ -1,43 +1,36 @@
 import { useState } from 'react';
-import { ReactSVG } from 'react-svg';
-import closeBtn from '@images/icons/cancel.svg';
 import {
-  ObjectivesBoard,
-  StickButton,
   BudgetEquation,
   BudgetSlider,
+  HeaderComponent,
+  PageBoard,
 } from '@components';
-import sharksLogo from '@images/sharks-comerica-logo.svg';
 import budgetStick from '@images/budget-stick.svg';
 import { useSelector, useDispatch } from 'react-redux';
-import { Tutorial, budgetSlides } from '@tutorial';
-import { Link } from 'react-router-dom';
-import { setTutorialIsActive } from '@redux/actions';
-import '@css/pages/page.css';
+import { budgetSlides, SharkieButton, Tutorial } from '@tutorial';
+import { setTutorialState } from '@redux/actions';
 import '@css/pages/BudgetPage.css';
 
-const teamSlides = [budgetSlides];
-
 const BudgetPage = () => {
-  const tutorialActive = useSelector((state) => state.tutorial.isActive);
-
   const [currentBudget, setCurrentBudget] = useState({
     total: 10,
-    spent: 3,
+    spent: 1,
     savings: 2,
   });
+
+  const tutorialActive = useSelector((state) => state.tutorial.isActive);
+
+  const dispatch = useDispatch();
+
+  const onTutorialComplete = () => {
+    dispatch(setTutorialState({ isActive: false, slides: null, page: null }));
+  };
 
   const budgetEquationStates = {
     board: useSelector((state) => state.tutorial.budget.equationBoard),
     total: useSelector((state) => state.tutorial.budget.total),
     savings: useSelector((state) => state.tutorial.budget.savings),
     spending: useSelector((state) => state.tutorial.budget.spending),
-  };
-
-  const dispatch = useDispatch();
-
-  const onTutorialComplete = () => {
-    dispatch(setTutorialIsActive({ isActive: false }));
   };
 
   const updateSavings = (value) => {
@@ -49,29 +42,21 @@ const BudgetPage = () => {
 
   return (
     <div className='page-container'>
-      <div className='page-header page-header-inverse'>
-        <div className='page-header-logo-wrap'>
-          <img src={sharksLogo} alt='Sharks Logo' />
-        </div>
-        <div className='page-header-objectives-board-container'>
-          <ObjectivesBoard
-            objectivesArray={['1. Learn about your budget.']}
-          ></ObjectivesBoard>
-        </div>
-        <div className='page-header-stick-wrap'>
-          <StickButton image={budgetStick} link='/home' />
-        </div>
-      </div>
-      <div className='page-body'>
-        <div className='page-board budget-page-board'>
-          <Link to='/home'>
-            <ReactSVG
-              className={`page-board-close-btn page-board-close-btn-left${
-                tutorialActive ? ' hidden' : ''
-              }`}
-              src={closeBtn}
+      <HeaderComponent
+        stickBtn={budgetStick}
+        objectives={['1. Learn about your budget.']}
+        inverse={true}
+      />
+
+      <PageBoard hideCloseBtn={true}>
+        <div className='budget-page-board-inner'>
+          <span style={{ position: 'absolute', left: '1rem', top: '1rem' }}>
+            <SharkieButton
+              tutorialSlides={[budgetSlides]}
+              textPosition='right'
             />
-          </Link>
+          </span>
+
           <div className='budget-equation-container'>
             <BudgetEquation
               budget={currentBudget}
@@ -82,16 +67,12 @@ const BudgetPage = () => {
             Move the yellow puck to change how much you save!
           </p>
           <div className='budget-slider-container'>
-            <BudgetSlider
-              budget={currentBudget}
-              setValue={updateSavings}
-              tutorialActive={tutorialActive}
-            />
+            <BudgetSlider budget={currentBudget} setValue={updateSavings} />
           </div>
         </div>
-      </div>
+      </PageBoard>
       {tutorialActive && (
-        <Tutorial slides={teamSlides} onComplete={onTutorialComplete} />
+        <Tutorial slides={[budgetSlides]} onComplete={onTutorialComplete} />
       )}
     </div>
   );
