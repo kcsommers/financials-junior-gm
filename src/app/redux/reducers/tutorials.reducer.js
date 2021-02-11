@@ -1,8 +1,4 @@
-import {
-  SET_ANIMATION_STATE,
-  SET_TUTORIAL_IS_ACTIVE,
-  SET_TUTORIAL_STATE,
-} from '../actionTypes';
+import { SET_ANIMATION_STATE, SET_TUTORIAL_STATE } from '../actionTypes';
 
 const initialState = {
   isActive: false,
@@ -53,7 +49,7 @@ const initialState = {
     },
   },
   scout: {
-    newPlayersBoard: {
+    availablePlayersBoard: {
       scale: 1,
       opacity: 1,
     },
@@ -97,13 +93,6 @@ const initialState = {
 const tutorialsReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_TUTORIAL_STATE: {
-      return {
-        ...state,
-        isActive: action.payload.state.isActive,
-        slides: action.payload.state.slides,
-      };
-    }
-    case SET_TUTORIAL_IS_ACTIVE: {
       return {
         ...state,
         isActive: action.payload.state.isActive,

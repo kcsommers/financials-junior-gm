@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import {
   PlayerDropContainer,
@@ -11,8 +11,9 @@ import { motion } from 'framer-motion';
 import { scoutSlides, SharkieButton, Tutorial } from '@tutorial';
 import { Link } from 'react-router-dom';
 import { PageBoard } from './../components/PageBoard';
-import { setTutorialState } from '@redux/actions';
+import { setTutorialState, setScoutingState } from '@redux/actions';
 import '@css/pages/ScoutPage.css';
+import { getScoutablePlayers } from '../dummy-data';
 
 const moneyLevels = {
   0: {
@@ -29,53 +30,36 @@ const moneyLevels = {
   },
 };
 
-const oneDollar = [
-  {
-    name: 'Kacy Sommers',
-  },
-  {
-    name: 'Savanna Shai',
-  },
-  {
-    name: 'Joni Blue',
-  },
-];
-const twoDollar = [
-  {
-    name: 'Emmylou Bee',
-  },
-  {
-    name: 'Roger Rogers',
-  },
-  {
-    name: 'Andrew Andrews',
-  },
-];
-const fiftyCents = [
-  {
-    name: 'Steve Stevens',
-  },
-  {
-    name: 'Robert Roberts',
-  },
-  {
-    name: 'PJ Peters',
-  },
-];
-
-const players = [...oneDollar, ...twoDollar, ...fiftyCents];
-
 const TeamPage = () => {
   const tutorialActive = useSelector((state) => state.tutorial.isActive);
 
+  const { available, levelOne, levelTwo, levelThree } = useSelector(
+    (state) => state.scouting
+  );
+
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    getScoutablePlayers()
+      .then((_players) => {
+        dispatch(
+          setScoutingState({
+            levelOne: [],
+            levelTwo: [],
+            levelThree: [],
+            available: _players,
+          })
+        );
+      })
+      .catch((err) => console.error(err));
+  }, []);
+
   const onTutorialComplete = () => {
-    dispatch(setTutorialState({ isActive: false, slides: null, page: null }));
+    dispatch(setTutorialState({ isActive: false }));
   };
 
-  const newPlayersAnimationState = useSelector(
-    (state) => state.tutorial.scout.newPlayersBoard
+  const availablePlayersAnimationState = useSelector(
+    (state) => state.tutorial.scout.availablePlayersBoard
   );
 
   const moneyLevelAnimationStates = {
@@ -96,9 +80,11 @@ const TeamPage = () => {
     console.log('DRAG END:::: ', e);
   };
 
-  const getDragItem = (player, key) => {
+  const getDragItem = (player, key, small = false) => {
     return (
-      <div className='player-card-drop'>
+      <div
+        className={`player-card-drop${small ? ' player-card-drop-small' : ''}`}
+      >
         <Droppable key={`${key}-droppable`} droppableId={`${key}-droppable`}>
           {(dropProvided) => (
             <PlayerDropContainer
@@ -116,6 +102,7 @@ const TeamPage = () => {
                     provided={dragProvided}
                     innerRef={dragProvided.innerRef}
                     player={player}
+                    small={small}
                   ></PlayerDragItem>
                 )}
               </Draggable>
@@ -127,56 +114,63 @@ const TeamPage = () => {
     );
   };
 
-  let newPlayerRowIndex = 0;
-  const newPlayerRows = players
+  const availablePlayers = [];
+  for (let i = 0; i < Math.max(9, available.length); i++) {
+    if (available[i]) {
+      availablePlayers.push(getDragItem(available[i], `available-${i}`));
+    } else {
+      availablePlayers.push(<div className='empty-player-slot'></div>);
+    }
+  }
+
+  let availablePlayerRowIndex = 0;
+  const availablePlayerRows = availablePlayers
     .reduce((rows, player, i) => {
-      const p = getDragItem(player, `new-player-${i}`);
-      if (rows[newPlayerRowIndex]) {
-        rows[newPlayerRowIndex].push(p);
+      const p = getDragItem(player, `available-player-${i}`);
+      if (rows[availablePlayerRowIndex]) {
+        rows[availablePlayerRowIndex].push(p);
       } else {
         rows.push([p]);
       }
       if ((i + 1) % 3 === 0) {
-        newPlayerRowIndex++;
+        availablePlayerRowIndex++;
       }
       return rows;
     }, [])
-    .map((row, i) => (
-      <div className='new-player-row'>{row.map((p, j) => p)}</div>
+    .map((row) => (
+      <div className='available-player-row'>{row.map((p) => p)}</div>
     ));
 
-  let contractPlayerRowIndex = 0;
-  const contractPlayerRows = players
-    .reduce((rows, player, i) => {
-      const p = getDragItem(player, `contract-player-${i}`);
-      if (rows[contractPlayerRowIndex]) {
-        rows[contractPlayerRowIndex].push(p);
-      } else {
-        rows.push([p]);
-      }
+  const levelOnePlayers = [];
+  const levelTwoPlayers = [];
+  const levelThreePlayers = [];
 
-      if (
-        (contractPlayerRowIndex === 0 && i === 1) ||
-        (contractPlayerRowIndex === 1 && i === 4)
-      ) {
-        contractPlayerRowIndex++;
-      }
+  for (let i = 0; i < Math.max(2, levelOne.length); i++) {
+    levelOnePlayers.push(getDragItem(levelOne[i], `levelOne-${i}`));
+  }
 
-      return rows;
-    }, [])
-    .map((row, i) => (
-      <div className='contract-player-row-wrap'>
-        <p className={`money-level-text money-level-text-${i}`}>
-          These players get a {moneyLevels[i].long} contract
-        </p>
-        <motion.div
-          className='contract-player-row'
-          animate={moneyLevelAnimationStates[i]}
-        >
-          {row.map((p) => p)}
-        </motion.div>
-      </div>
-    ));
+  for (let i = 0; i < Math.max(3, levelTwo.length); i++) {
+    levelTwoPlayers.push(getDragItem(levelTwo[i], `levelTwo-${i}`));
+  }
+
+  for (let i = 0; i < Math.max(4, levelThree.length); i++) {
+    levelThreePlayers.push(getDragItem(levelThree[i], `levelThree-${i}`, true));
+  }
+
+  const offeredPlayers = [levelOnePlayers, levelTwoPlayers, levelThreePlayers];
+  const offeredPlayerRows = offeredPlayers.map((row, i) => (
+    <div className='offered-player-row-wrap'>
+      <p className={`money-level-text money-level-text-${i}`}>
+        These players get a {moneyLevels[i].long} offered
+      </p>
+      <motion.div
+        className='offered-player-row'
+        animate={moneyLevelAnimationStates[i]}
+      >
+        {row.map((p) => p)}
+      </motion.div>
+    </div>
+  ));
 
   return (
     <DragDropContext onDragStart={onDragStart} onDragEnd={onDragEnd}>
@@ -189,7 +183,7 @@ const TeamPage = () => {
         <PageBoard hideCloseBtn={true}>
           <div className='scout-page-board-header'>
             <p className='color-primary scout-page-helper-text'>
-              Give each new player a contract value by dragging them to their
+              Give each new player a offered value by dragging them to their
               money level!
             </p>
             <span
@@ -207,19 +201,19 @@ const TeamPage = () => {
               {tutorialActive ? (
                 <motion.div
                   className='scout-board'
-                  animate={newPlayersAnimationState}
+                  animate={availablePlayersAnimationState}
                   transition={{ default: { duration: 1 } }}
                 >
-                  {newPlayerRows}
+                  {availablePlayerRows}
                 </motion.div>
               ) : (
-                <div className='scout-board'>{newPlayerRows}</div>
+                <div className='scout-board'>{availablePlayerRows}</div>
               )}
             </div>
 
             <div className='scout-page-board-right'>
               <div style={{ position: 'relative', top: '-13px' }}>
-                {contractPlayerRows}
+                {offeredPlayerRows}
               </div>
             </div>
           </div>
