@@ -39,7 +39,10 @@ export const PlayerCard = ({ player, animationStates, inOverlay, small }) => {
       <motion.div
         animate={animationStates ? animationStates.playerCard : null}
         className='box-shadow player-card-inner'
-        onClick={openOverlay}
+        onClick={() => {
+          setSignState(overlayTemplate)
+          openOverlay()
+        }}
         transition={{
           default: {
             duration: 1,
@@ -94,13 +97,15 @@ export const PlayerCard = ({ player, animationStates, inOverlay, small }) => {
     </div>
   );
 
-  const mainTemplate = tutorialActive ? (
-    <motion.div
-      className={`player-card-wrap${highlight ? ' highlighted' : ''}`}
-    >
-      {inner}
-    </motion.div>
-  ) : (
+  const mainTemplate = 
+  // tutorialActive ? (
+  //   <motion.div
+  //     className={`player-card-wrap${highlight ? ' highlighted' : ''}`}
+  //   >
+  //     {inner}
+  //   </motion.div>
+  // ) : 
+  (
     <div
       className={`player-card-wrap ${!player ? ' player-card-wrap-empty' : ''}${
         small ? ' player-card-wrap-small' : ''

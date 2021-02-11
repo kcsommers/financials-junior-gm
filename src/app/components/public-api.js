@@ -20,3 +20,6 @@ export { SpendingBudgetStickBig } from './SpendingBudgetStickBig';
 export { TeamRankStickBig } from './TeamRankStickBig';
 export { NiceJobScouting } from './NiceJobScouting';
 export { HeaderComponent } from './HeaderComponent';
+export {FilledPlayerCard} from './FilledPlayerCard';
+export {SpacesInTeam} from './SpacesInTeam';
+export {PlayersAvailable} from './PlayersAvailable';
