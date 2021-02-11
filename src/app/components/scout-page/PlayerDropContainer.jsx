@@ -9,7 +9,13 @@ export const PlayerDropContainer = memo(
         className={`drop-container${
           player ? ' drop-disabled' : ' drag-disabled'
         }`}
-        style={{}}
+        style={
+          !player && isDraggingOver
+            ? {
+                transform: 'scale(1.1)',
+              }
+            : {}
+        }
       >
         {children}
       </div>
