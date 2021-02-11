@@ -10,6 +10,7 @@ export const FindTradePlayer = () => {
       <FilledPlayerCard/>
       <SpacesInTeam/>
       <PlayersAvailable/>
+      <p>test</p>
     </div>
   )
 }
