@@ -28,7 +28,7 @@ div.slide-wrap {
   position: relative;
   height: 307px;
   width: 40%;
-  z-index: 1;
+  z-index: 2000;
 }
 
 div.slide-wrap-small {

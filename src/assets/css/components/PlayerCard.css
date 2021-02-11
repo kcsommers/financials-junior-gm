@@ -1,7 +1,17 @@
 div.player-card-wrap {
   display: inline-block;
   width: 90px;
-  height: 123px;
+  height: 122.4px;
+}
+
+div.player-card-wrap-empty {
+  width: 80px;
+  height: 106.4px;
+}
+
+div.player-card-wrap-small {
+  width: 72px;
+  height: 95.76px;
 }
 
 div.player-card-wrap > div {
@@ -18,6 +28,8 @@ div.player-card-inner {
   border-radius: 15px;
   background-color: #e5e5e5;
   transition: all 0.3s ease;
+  box-sizing: border-box;
+  cursor: pointer;
 }
 
 div.player-card-header,

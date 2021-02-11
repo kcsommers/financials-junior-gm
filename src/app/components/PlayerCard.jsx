@@ -10,13 +10,7 @@ import '@css/components/PlayerCard.css';
 import React, { useState } from 'react';
 import { FindTradePlayer } from './trade-overlay/FindTradePlayer';
 
-export const PlayerCard = ({
-  player,
-  tutorialActive,
-  highlight,
-  inOverlay,
-  isDraggable,
-}) => {
+export const PlayerCard = ({ player, animationStates, inOverlay, small }) => {
   const dispatch = useDispatch();
 
   const [signState, setSignState] = useState(<Sign />);
@@ -34,7 +28,7 @@ export const PlayerCard = ({
     dispatch(
       toggleOverlay({
         isOpen: true,
-        template: signState
+        template: signState,
       })
     );
   };
@@ -42,15 +36,14 @@ export const PlayerCard = ({
   const inner = player ? (
     <div>
       <p className='position-text'>Position</p>
-      <div
-        className={`box-shadow player-card-inner${
-          player ? ' border-primary' : ' border-accent'
-        }`}
-        onClick={() => {
-          if (!isDraggable) {
-            setSignState(overlayTemplate)
-            openOverlay();
-          }
+      <motion.div
+        animate={animationStates ? animationStates.playerCard : null}
+        className='box-shadow player-card-inner'
+        onClick={openOverlay}
+        transition={{
+          default: {
+            duration: 1,
+          },
         }}
       >
         <div className='player-card-header'>
@@ -69,29 +62,22 @@ export const PlayerCard = ({
             <div className='player-score player-score-def'>80</div> */}
           </div>
         </div>
-      </div>
+      </motion.div>
     </div>
   ) : (
-    <div 
-      style={{cursor: 'pointer'}} onClick={() => {
+    <motion.div
+      className='box-shadow player-card-inner border-accent'
+      animate={animationStates ? animationStates.playerCardEmpty : null}
+      onClick={() => {
         if (!inOverlay) {
           openOverlay();
         } else {
-          setSignState(<SignPlayer/>)
-          console.log('hello hello')
+          setSignState(<SignPlayer />);
         }
       }}
     >
-      <div
-        className={`box-shadow player-card-inner${
-          player ? ' border-primary' : ' border-accent'
-        }${highlight ? ' border-highlight' : ''}`}
-      >
-        <p className='add-player-text color-primary outline-accent'>
-          Add Player
-        </p>
-      </div>
-    </div>
+      <p className='add-player-text color-primary outline-accent'>Add Player</p>
+    </motion.div>
   );
 
   const overlayTemplate = (
@@ -116,8 +102,8 @@ export const PlayerCard = ({
     </motion.div>
   ) : (
     <div
-      className={`player-card-wrap${highlight ? ' highlighted' : ''}${
-        player && !isDraggable ? ' player-card-clickable' : ''
+      className={`player-card-wrap ${!player ? ' player-card-wrap-empty' : ''}${
+        small ? ' player-card-wrap-small' : ''
       }`}
     >
       {inner}

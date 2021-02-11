@@ -50,13 +50,13 @@ const slideConfigs = [
               },
             },
             {
-              component: 'teamRank',
+              component: 'teamRankCard',
               state: {
                 scale: 1.5,
                 y: '15%',
                 opacity: 1,
                 transition: { delay: 0.5, duration: 1 },
-                zIndex: 1,
+                zIndex: 1002,
               },
             },
           ],

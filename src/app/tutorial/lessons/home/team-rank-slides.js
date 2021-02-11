@@ -38,7 +38,7 @@ const slideConfigs = [
           page: 'home',
           animationStates: [
             {
-              component: 'teamRank',
+              component: 'teamRankCard',
               state: {
                 scale: 1,
                 y: '0%',
@@ -50,12 +50,12 @@ const slideConfigs = [
               },
             },
             {
-              component: 'moneyLeft',
+              component: 'budgetCard',
               state: {
                 scale: 1.5,
                 y: '15%',
                 opacity: 1,
-                zIndex: 1,
+                zIndex: 1002,
                 transition: { delay: 0.5, duration: 1 },
               },
             },

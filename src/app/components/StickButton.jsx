@@ -10,11 +10,13 @@ export const StickButton = ({
   image,
   inverse,
   small,
+  styles,
 }) => {
   return tutorialActive ? (
     <motion.div
       className={`hidden stick-btn-wrap${small ? ' stick-btn-small' : ''}`}
       animate={animationState}
+      style={styles}
     >
       <ReactSVG
         className={`stick-btn-img${inverse ? ' stick-btn-img-inverse' : ''}`}
@@ -23,7 +25,10 @@ export const StickButton = ({
       <Link className='text-link stick-btn-link' to={link}></Link>
     </motion.div>
   ) : (
-    <div className={`stick-btn-wrap${small ? ' stick-btn-small' : ''}`}>
+    <div
+      className={`stick-btn-wrap${small ? ' stick-btn-small' : ''}`}
+      style={styles}
+    >
       <ReactSVG
         className={`stick-btn-img${inverse ? ' stick-btn-img-inverse' : ''}`}
         src={image}

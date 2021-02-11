@@ -1,22 +1,18 @@
 import React from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import {
-  ObjectivesBoard,
-  StickButton,
   PlayerDropContainer,
   PlayerDragItem,
+  HeaderComponent,
 } from '@components';
-import sharksLogo from '@images/sharks-comerica-logo.svg';
 import scoutStick from '@images/scout-stick.svg';
 import { useSelector, useDispatch } from 'react-redux';
-import { AnimatePresence, motion } from 'framer-motion';
-import { Tutorial, scoutSlides } from '@tutorial';
-import { setTutorialIsActive } from '@redux/actions';
+import { motion } from 'framer-motion';
+import { scoutSlides, SharkieButton, Tutorial } from '@tutorial';
 import { Link } from 'react-router-dom';
-import '@css/pages/page.css';
+import { PageBoard } from './../components/PageBoard';
+import { setTutorialState } from '@redux/actions';
 import '@css/pages/ScoutPage.css';
-
-const teamSlides = [scoutSlides];
 
 const moneyLevels = {
   0: {
@@ -70,7 +66,13 @@ const fiftyCents = [
 const players = [...oneDollar, ...twoDollar, ...fiftyCents];
 
 const TeamPage = () => {
-  // GET TEAM FROM STORE
+  const tutorialActive = useSelector((state) => state.tutorial.isActive);
+
+  const dispatch = useDispatch();
+
+  const onTutorialComplete = () => {
+    dispatch(setTutorialState({ isActive: false, slides: null, page: null }));
+  };
 
   const newPlayersAnimationState = useSelector(
     (state) => state.tutorial.scout.newPlayersBoard
@@ -85,14 +87,6 @@ const TeamPage = () => {
   const finishedBtnAnimationState = useSelector(
     (state) => state.tutorial.scout.finishedBtn
   );
-
-  const tutorialActive = useSelector((state) => state.tutorial.isActive);
-
-  const dispatch = useDispatch();
-
-  const onTutorialComplete = () => {
-    dispatch(setTutorialIsActive({ isActive: false }));
-  };
 
   const onDragStart = (e) => {
     console.log('DRAG START:::: ', e);
@@ -172,18 +166,11 @@ const TeamPage = () => {
     }, [])
     .map((row, i) => (
       <div className='contract-player-row-wrap'>
-        <span
-          className={`color-primary money-level-indicator box-shadow${
-            tutorialActive ? ' hidden' : ''
-          }`}
-        >
-          {moneyLevels[i].short}
-        </span>
-        <p className='money-level-text'>
+        <p className={`money-level-text money-level-text-${i}`}>
           These players get a {moneyLevels[i].long} contract
         </p>
         <motion.div
-          className='contract-player-row card auto-card'
+          className='contract-player-row'
           animate={moneyLevelAnimationStates[i]}
         >
           {row.map((p) => p)}
@@ -194,73 +181,67 @@ const TeamPage = () => {
   return (
     <DragDropContext onDragStart={onDragStart} onDragEnd={onDragEnd}>
       <div className='page-container scout-page-container'>
-        <div className='page-header'>
-          <div className='page-header-logo-wrap'>
-            <img src={sharksLogo} alt='Sharks Logo' />
+        <HeaderComponent
+          stickBtn={scoutStick}
+          largeStick={true}
+          objectives={['1. Scout players to sign to your bench!']}
+        />
+        <PageBoard hideCloseBtn={true}>
+          <div className='scout-page-board-header'>
+            <p className='color-primary scout-page-helper-text'>
+              Give each new player a contract value by dragging them to their
+              money level!
+            </p>
+            <span
+              style={{ position: 'absolute', right: '0.5rem', top: '0.25rem' }}
+            >
+              <SharkieButton
+                tutorialSlides={[scoutSlides]}
+                textPosition='left'
+              />
+            </span>
           </div>
-          <div className='page-header-stick-wrap scout-page-header-stick-wrap'>
-            <StickButton link='/home' image={scoutStick} large={true} />
-          </div>
-          <div className='page-header-objectives-board-container'>
-            <ObjectivesBoard
-              smallText={true}
-              objectivesArray={['1. Scout players to sign to your bench!']}
-            ></ObjectivesBoard>
-          </div>
-        </div>
 
-        <div className='page-body'>
-          <div className='page-board scout-page-board'>
-            <div className='scout-page-board-header'>
-              <p className='color-primary scout-page-helper-text'>
-                Give each new player a contract value by dragging them to their
-                money level!
-              </p>
+          <div className='scout-page-board-inner'>
+            <div className='scout-page-board-left'>
+              {tutorialActive ? (
+                <motion.div
+                  className='scout-board'
+                  animate={newPlayersAnimationState}
+                  transition={{ default: { duration: 1 } }}
+                >
+                  {newPlayerRows}
+                </motion.div>
+              ) : (
+                <div className='scout-board'>{newPlayerRows}</div>
+              )}
             </div>
 
-            <div className='scout-page-board-inner'>
-              <div className='scout-page-board-left'>
-                {tutorialActive ? (
-                  <motion.div
-                    className='card auto-card scout-board'
-                    animate={newPlayersAnimationState}
-                    transition={{ default: { duration: 1 } }}
-                  >
-                    {newPlayerRows}
-                  </motion.div>
-                ) : (
-                  <div className='card auto-card scout-board'>
-                    {newPlayerRows}
-                  </div>
-                )}
+            <div className='scout-page-board-right'>
+              <div style={{ position: 'relative', top: '-13px' }}>
+                {contractPlayerRows}
               </div>
-
-              <div className='scout-page-board-right'>{contractPlayerRows}</div>
-            </div>
-
-            <div className='scout-page-board-footer'>
-              <p className='color-primary'>
-                Remember to tap a player to learn more about them!
-              </p>
-              <motion.div
-                className='color-primary finished-btn'
-                animate={finishedBtnAnimationState}
-              >
-                <Link className='text-link' link='/sign'>
-                  <span>Click here when you finish!</span>
-                  <div className='check-btn-small'></div>
-                </Link>
-              </motion.div>
             </div>
           </div>
-        </div>
-        <AnimatePresence>
-          {tutorialActive && (
-            <motion.div animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-              <Tutorial slides={teamSlides} onComplete={onTutorialComplete} />
+
+          <div className='scout-page-board-footer'>
+            <p className='color-primary'>
+              Remember to tap a player to learn more about them!
+            </p>
+            <motion.div
+              className='color-primary finished-btn'
+              animate={finishedBtnAnimationState}
+            >
+              <Link className='text-link' link='/sign'>
+                <span>Click here when you finish!</span>
+                <div className='check-btn-small'></div>
+              </Link>
             </motion.div>
-          )}
-        </AnimatePresence>
+          </div>
+        </PageBoard>
+        {tutorialActive && (
+          <Tutorial slides={[scoutSlides]} onComplete={onTutorialComplete} />
+        )}
       </div>
     </DragDropContext>
   );
