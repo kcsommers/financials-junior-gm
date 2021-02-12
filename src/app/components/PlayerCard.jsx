@@ -1,6 +1,9 @@
 import { motion } from 'framer-motion';
 import { useDispatch } from 'react-redux';
 import Sign from './Sign';
+import { SignPlayer } from './SignPlayer';
+import { PlayerSigned } from './PlayerSigned';
+import { NiceJobScouting, ReleasePlayer } from './public-api';
 import { toggleOverlay } from '../redux/actions';
 import { FindTradePlayer } from './trade-overlay/FindTradePlayer';
 import '@css/components/PlayerCard.css';
@@ -16,6 +19,15 @@ export const PlayerCard = ({ player, animationStates, inOverlay, small }) => {
       })
     );
   };
+
+  const handleRelease = () => {
+    dispatch(
+      toggleOverlay({
+        isOpen: true,
+        template: <ReleasePlayer/>
+      })
+    );
+  }
 
   const openOverlay = (component) => {
     dispatch(
@@ -83,7 +95,7 @@ export const PlayerCard = ({ player, animationStates, inOverlay, small }) => {
         >
           Trade
         </button>
-        <button className='player-overlay-button outline-black box-shadow'>
+        <button onClick={handleRelease} className='player-overlay-button outline-black box-shadow'>
           Release
         </button>
       </div>

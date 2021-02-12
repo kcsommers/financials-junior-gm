@@ -34,6 +34,7 @@
 }
 
 .rank-budget-title {
+  text-align: center;
   font-family: 'interstate';
   font-size: 30px;
   font-weight: bold;
