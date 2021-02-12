@@ -6,6 +6,7 @@ import {
   TeamRankStick,
   OpposingTeamRankStick,
   HeaderComponent,
+  LevelStick
 } from '@components';
 import { SticklessOpposingTeamRank } from '../components/SticklessOpposingTeamRank';
 import '@css/pages/season.css';
@@ -23,7 +24,7 @@ const Season = () => {
       <div className='season-dashboard'>
         <div className='season-dashboard-top-row'>
           <div style={{ paddingTop: '1rem' }}>
-            <TeamRankStick />
+            <LevelStick type='teamRank' />
           </div>
           <div>
             <div className='teams-jumbotron'>
@@ -53,7 +54,7 @@ const Season = () => {
             </div>
           </div>
           <div style={{ paddingTop: '1rem' }}>
-            <OpposingTeamRankStick />
+            <LevelStick type="opponentTeamRank"/>
           </div>
         </div>
 
@@ -103,26 +104,35 @@ const Season = () => {
           <div>
             <p className='season-standings-title'>Standings</p>
             <div className='season-standings-box'>
-              <div className='standings-team-name-box'>
-                <p className='ptn-title'>Pos. Team Name</p>
+              <div>
+                <div className='standings-team-name-box'>
+                  <p className='ptn-title'>Pos. Team Name</p>
+                </div>
+                
+                <div className='standings-teams-box'>
+                  <p>1. Green Giraffes</p>
+                  <p>2. Orange Owls</p>
+                  <p className='your-team-standing'>3. San Jose Jr Sharks</p>
+                  <p>4. Blue Bears</p>
+                  <p>5. Pink Pandas</p>
+                </div>
               </div>
-              <div className='standings-team-points-box'>
-                <p className='p-title'>Points</p>
+              
+              <div>
+                <div className='standings-team-points-box'>
+                  <p className='p-title'>Points</p>
+                </div>
+
+                <div className='standings-teams-points-box'>
+                  <p>12</p>
+                  <p>11</p>
+                  <p className='your-team-standing'>9</p>
+                  <p>7</p>
+                  <p>6</p>
+                </div>
               </div>
-              <div className='standings-teams-box'>
-                <p>1. Green Giraffes</p>
-                <p>2. Orange Owls</p>
-                <p className='your-team-standing'>3. San Jose Jr Sharks</p>
-                <p>4. Blue Bears</p>
-                <p>5. Pink Pandas</p>
-              </div>
-              <div className='standings-teams-points-box'>
-                <p>12</p>
-                <p>11</p>
-                <p className='your-team-standing'>9</p>
-                <p>7</p>
-                <p>6</p>
-              </div>
+
+              
             </div>
           </div>
         </div>

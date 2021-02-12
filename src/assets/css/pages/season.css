@@ -1,7 +1,3 @@
-.season-page {
-  width: 100%;
-}
-
 .season-navigation {
   display: flex;
   justify-content: space-between;
@@ -11,7 +7,6 @@
   border: 5px solid #707070;
   border-radius: 15px;
   background: #E5E5E5;
-  width: 87%;
   margin: 0 auto;
   height: 624px;
   padding: 0 .5rem 1rem .5rem;
@@ -19,7 +14,7 @@
 
 .season-dashboard-top-row {
   display: flex;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 }
 
 .teams-jumbotron {
@@ -83,7 +78,7 @@
 .next-opponent-name {
   background: white;
   color: #3B42FF;
-  padding: 1rem;
+  padding: .5rem;
   border-radius: 5px;
   font-size: 18px;
   font-weight: bold;
@@ -117,7 +112,6 @@
 
 .season-schedule-box {
   background: white;
-  width: 269.07px;
   border: 4px solid #707070;
   border-radius: 15px;
 }
@@ -140,11 +134,10 @@
 }
 
 .season-standings-box {
-  display: grid;
-  grid-template-columns: 70% 30%;
+  display: flex;
   background: white;
-  width: 263px;
   line-height: 1.5rem;
+  white-space: nowrap;
 }
 
 .standings-team-name-box {
@@ -165,11 +158,12 @@
 
 .standings-teams-box {
   border-right: 1px solid #707070;
-  padding-left: .5rem;
+  padding: .5rem;
 }
 
 .standings-teams-points-box {
   text-align: center;
+  padding: .5rem;
 }
 
 .your-team-standing {

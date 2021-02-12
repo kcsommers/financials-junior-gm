@@ -2,13 +2,9 @@ import {
   SET_ANIMATION_STATE,
   TOGGLE_OVERLAY,
   SET_SCOUTING_STATE,
-<<<<<<< HEAD
-  SET_TUTORIAL_STATE
-=======
   SET_TUTORIAL_STATE,
   SET_STUDENT,
   SET_SAVINGS,
->>>>>>> 2d5c66e44e1139f800b1b9e3d48739a2a590ad0b
 } from './actionTypes';
 
 export const setAnimationState = (state) => ({
