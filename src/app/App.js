@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Intro from './pages/Intro';
 import HomePage from './pages/HomePage';
@@ -8,9 +9,18 @@ import ScoutPage from './pages/ScoutPage';
 import { IceBackground } from '@components';
 import BudgetPage from './pages/BudgetPage';
 import Sign from './components/Sign';
+import { getStudent } from './dummy-data';
+import { setUser } from '@redux/actions';
 import '@css/App.css';
 
 const App = () => {
+  const user = useSelector((state) => state.appState.user);
+  if (!user) {
+    getStudent()
+      .then((s) => setUser(s))
+      .catch((err) => console.error(err));
+  }
+
   return (
     <div className='app-container'>
       <Router>

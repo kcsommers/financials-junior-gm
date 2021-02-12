@@ -9,3 +9,5 @@ export const TOGGLE_OVERLAY = 'TOGGLE_OVERLAY';
 export const SET_TUTORIAL_STATE = 'SET_TUTORIAL_STATE';
 
 export const SET_SCOUTING_STATE = 'SET_SCOUTING_STATE';
+
+export const SET_USER = 'SET_USER';
