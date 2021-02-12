@@ -382,7 +382,7 @@ export const getScoutablePlayers = () => {
         }
       }
       resolve(_players);
-    }, 3000);
+    });
   });
 };
 

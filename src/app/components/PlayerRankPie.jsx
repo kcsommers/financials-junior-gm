@@ -8,7 +8,7 @@ export const PlayerRankPie = ({
   label,
 }) => {
   const calculateRotation = (num) => {
-    const pct = num / 100;
+    const pct = num / 50;
     return 360 * pct;
   };
 
