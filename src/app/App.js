@@ -1,5 +1,5 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Intro from './pages/Intro';
 import HomePage from './pages/HomePage';
@@ -14,12 +14,12 @@ import { setUser } from '@redux/actions';
 import '@css/App.css';
 
 const App = () => {
-  const user = useSelector((state) => state.appState.user);
-  if (!user) {
+  const dispatch = useDispatch();
+  useEffect(() => {
     getStudent()
-      .then((s) => setUser(s))
+      .then((s) => dispatch(setUser(s)))
       .catch((err) => console.error(err));
-  }
+  }, [dispatch]);
 
   return (
     <div className='app-container'>

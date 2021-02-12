@@ -12,6 +12,9 @@ import { setTutorialState } from '@redux/actions';
 import '@css/pages/BudgetPage.css';
 
 const BudgetPage = () => {
+  const user = useSelector((state) => state.appState.user);
+  console.log('USER:::: ', user);
+
   const [currentBudget, setCurrentBudget] = useState({
     total: 10,
     spent: 1,
