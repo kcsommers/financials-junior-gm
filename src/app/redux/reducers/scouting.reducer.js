@@ -5,16 +5,21 @@ const initialState = {
   levelTwo: [],
   levelThree: [],
   available: [],
+  initialized: false,
+  scoutingComplete: false,
 };
 
 const scoutingReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_SCOUTING_STATE: {
+      const newState = Object.keys(action.payload).reduce((obj, k) => {
+        obj[k] = action.payload[k];
+        return obj;
+      }, {});
+
       return {
-        levelOne: action.payload.levelOne,
-        levelTwo: action.payload.levelTwo,
-        levelThree: action.payload.levelThree,
-        available: action.payload.available,
+        ...state,
+        ...newState,
       };
     }
     default:

@@ -61,6 +61,7 @@ const slideConfigs = [
         payload: {
           isOpen: true,
           template: <PlayerCard inOverlay={true} />,
+          canClose: false,
         },
       },
       {
@@ -235,7 +236,7 @@ const slideConfigs = [
         payload: {
           isOpen: false,
           template: null,
-          sign: null,
+          canClose: true,
         },
       },
     ],
