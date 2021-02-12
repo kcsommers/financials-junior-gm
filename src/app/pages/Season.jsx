@@ -10,6 +10,7 @@ import {
 } from '@components';
 import { SticklessOpposingTeamRank } from '../components/SticklessOpposingTeamRank';
 import '@css/pages/season.css';
+import { SeasonTopRow } from '../components/season-page/SeasonTopRow';
 
 const Season = () => {
   return (
@@ -22,42 +23,7 @@ const Season = () => {
 
       {/* season dashboard */}
       <div className='season-dashboard'>
-        <div className='season-dashboard-top-row'>
-          <div style={{ paddingTop: '1rem' }}>
-            <LevelStick type='teamRank' />
-          </div>
-          <div>
-            <div className='teams-jumbotron'>
-              <div className='season-team-left-border'></div>
-              <div className='season-teams-playing-box'>
-                <p className='season-team-place'>3rd</p>
-                <ReactSVG src={jrSharksLogoWhiteBg} />
-                <p className='next-opponent-title'>Next Opponent</p>
-                <div className='next-opponent-details'>
-                  <p className='next-opponent-name'>
-                    Blue
-                    <br /> Bears
-                  </p>
-                  <div className='sotr-details'>
-                    <SticklessOpposingTeamRank />
-                    <p className='season-tr-title'>
-                      Team
-                      <br /> Rank
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div className='season-team-right-border'></div>
-            </div>
-            <div className='ready-to-play-sign'>
-              Your team is ready to play.
-            </div>
-          </div>
-          <div style={{ paddingTop: '1rem' }}>
-            <LevelStick type="opponentTeamRank"/>
-          </div>
-        </div>
-
+        <SeasonTopRow/>
         <div className='season-dashboard-bottom-row'>
           <div>
             <p className='season-schedule-title'>Schedule</p>
