@@ -3,6 +3,7 @@ import {
   TOGGLE_OVERLAY,
   SET_SCOUTING_STATE,
   SET_TUTORIAL_STATE,
+  SET_USER,
 } from './actionTypes';
 
 export const setAnimationState = (state) => ({
@@ -23,4 +24,9 @@ export const toggleOverlay = (state) => ({
 export const setScoutingState = (state) => ({
   type: SET_SCOUTING_STATE,
   payload: state,
+});
+
+export const setUser = (user) => ({
+  type: SET_USER,
+  payload: user,
 });
