@@ -37,7 +37,7 @@ const initialState = {
   team: {
     playerCard: {
       borderColor: 'rgba(0,0,0,0)',
-      borderWidth: '3px',
+      borderWidth: '0px',
       borderStyle: 'solid',
       scale: 1,
     },

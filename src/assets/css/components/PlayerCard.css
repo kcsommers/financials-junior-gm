@@ -1,8 +1,11 @@
 div.player-card-wrap {
-  display: inline-block;
+  display: inline-flex;
+  flex-direction: column;
   width: 90px;
-  height: 122.4px;
+  height: 127.4px;
   animation: fadeIn 0.2s forwards ease;
+  border-radius: 15px;
+  cursor: pointer;
 }
 
 div.player-card-wrap-empty {
@@ -10,32 +13,76 @@ div.player-card-wrap-empty {
   height: 106.4px;
 }
 
-div.player-card-wrap-small {
-  width: 72px;
-  height: 95.76px;
+div.player-card-empty-inner {
+  width: 80px;
+  height: 106.4px;
+  flex: 1;
+  background-color: #e5e5e5;
+  border-radius: 15px;
 }
 
-div.player-card-wrap > div {
-  display: inline-block;
+p.position-text {
+  text-align: center;
+  font-size: 0.8rem;
+  height: 16.25px;
+  font-weight: bold;
+}
+
+div.player-card-header {
+  width: 100%;
+  position: relative;
+  background: linear-gradient(to right, #ea7200, #f3901d);
+}
+
+div.player-card-header-inner {
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #fff;
+  font-size: 1rem;
+  border-radius: 5px;
+  padding: 0 0.5rem;
+}
+
+div.player-card-header:before,
+div.player-card-header:after {
+  content: '';
   width: 100%;
   height: 100%;
-  display: flex;
-  flex-direction: column;
+  position: absolute;
+  background: inherit;
+  z-index: -1;
+  bottom: 0;
+  border-radius: 5px;
 }
 
-div.player-card-inner {
-  flex: 1;
-  width: 100%;
-  border-radius: 15px;
-  background-color: #e5e5e5;
-  transition: all 0.3s ease;
-  box-sizing: border-box;
-  cursor: pointer;
+div.player-card-header:after {
+  transform-origin: left bottom;
+  transform: skewX(-12deg);
 }
 
-div.player-card-header,
+div.player-card-header:before {
+  transform-origin: right bottom;
+  transform: skewX(12deg);
+}
+
 div.player-card-body {
-  font-size: 1rem;
+  text-align: center;
+  background: linear-gradient(to bottom, #00788a, #fff);
+  flex: 1;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  padding-top: 0.25rem;
+}
+
+div.player-card-img-wrap {
+  display: inline-block;
+  width: 45px;
+  height: 45px;
+  border-radius: 100%;
+  background-position: center;
+  background-size: cover;
 }
 
 div.player-card-clickable .player-card-inner {
@@ -48,17 +95,18 @@ div.player-card-large div.player-card-inner {
   cursor: initial;
 }
 
+div.player-scores {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
 p.add-player-text {
   text-align: center;
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-p.position-text {
-  text-align: center;
-  font-size: 0.8rem;
 }
 
 div.player-overlay-container {

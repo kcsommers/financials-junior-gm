@@ -51,7 +51,7 @@ div.scout-page-board-right {
 }
 
 div.available-player-row,
-div.offered-player-row {
+div.offered-player-row-inner {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -59,10 +59,6 @@ div.offered-player-row {
 
 div.available-player-row {
   justify-content: space-around;
-}
-
-div.offered-player-row-wrap {
-  position: relative;
 }
 
 div.player-card-drop {
@@ -85,6 +81,27 @@ div.offered-player-row {
   border: 5px solid #4b4b4b;
   border-radius: 10px;
   background: #fff;
+}
+
+div.offered-player-row-wrap {
+  position: relative;
+}
+
+span.money-level-short {
+  font-size: 1.1rem;
+  position: absolute;
+  top: calc(0.5rem + 17px);
+  left: 0.5rem;
+  font-weight: bold;
+}
+
+div.offered-player-row-inner {
+  height: 100%;
+}
+
+div.offered-player-row-inner.level-3 {
+  width: 88%;
+  margin: 0 auto;
 }
 
 div.offered-player-row div.player-card-drop {

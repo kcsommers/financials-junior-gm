@@ -1,32 +1,3 @@
-export const student = {
-  studentFirstName: 'Joni',
-  studentLastName: 'Blue',
-  studentUserName: 'JoBlue',
-  studentPassword: 'sleepyjo',
-  totalBudget: 10,
-  savingsBudget: 0,
-  fOne: null,
-  fTwo: null,
-  fThree: null,
-  dOne: null,
-  dTwo: null,
-  gOne: null,
-  benchOne: null,
-  benchTwo: null,
-  benchThree: null,
-  season: '',
-  level: 1,
-  timeSpent: 0,
-};
-
-export const getStudent = () => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(student);
-    }, 1000);
-  });
-};
-
 export const players = [
   {
     playerName: 'Marcus Sorensen',
@@ -368,6 +339,27 @@ export const players = [
   },
 ];
 
+export const student = {
+  studentFirstName: 'Joni',
+  studentLastName: 'Blue',
+  studentUserName: 'JoBlue',
+  studentPassword: 'sleepyjo',
+  totalBudget: 10,
+  savingsBudget: 0,
+  fOne: players[0],
+  fTwo: players[2],
+  fThree: null,
+  dOne: players[4],
+  dTwo: null,
+  gOne: players[5],
+  benchOne: null,
+  benchTwo: players[6],
+  benchThree: null,
+  season: '',
+  level: 1,
+  timeSpent: 0,
+};
+
 export const getPlayers = () => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
@@ -390,6 +382,14 @@ export const getScoutablePlayers = () => {
         }
       }
       resolve(_players);
-    }, 3000);
+    });
+  });
+};
+
+export const getStudent = () => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(student);
+    }, 1000);
   });
 };
