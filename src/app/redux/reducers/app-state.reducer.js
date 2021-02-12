@@ -4,12 +4,12 @@ const initialState = {
   user: null,
 };
 
-const overlayReducer = (state = initialState, action) => {
+const appStateReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_USER: {
       return {
         ...state,
-        user: action.payload.user,
+        user: action.payload,
       };
     }
     default:
@@ -17,4 +17,4 @@ const overlayReducer = (state = initialState, action) => {
   }
 };
 
-export default overlayReducer;
+export default appStateReducer;
