@@ -5,6 +5,7 @@ import {
   SET_TUTORIAL_STATE,
   SET_STUDENT,
   SET_SAVINGS,
+  PLAYER_SIGNED,
 } from './actionTypes';
 
 export const setAnimationState = (state) => ({
@@ -35,4 +36,14 @@ export const setStudent = (student) => ({
 export const setSavings = (amount) => ({
   type: SET_SAVINGS,
   payload: amount,
+});
+
+export const setSignablePlayers = (players) => ({
+  type: SET_SAVINGS,
+  payload: players,
+});
+
+export const plaerySigned = (player) => ({
+  type: PLAYER_SIGNED,
+  payload: player,
 });
