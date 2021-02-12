@@ -1,49 +1,11 @@
 import { motion } from 'framer-motion';
-import { useDispatch } from 'react-redux';
-import Sign from './Sign';
-import { ReleasePlayer } from './public-api';
-import { toggleOverlay } from '../redux/actions';
-import { FindTradePlayer } from './trade-overlay/FindTradePlayer';
+
 import playerImage from '@images/icons/player-image.svg';
 import { capitalize, getDollarString } from '@utils';
 import { PlayerRankPie } from './PlayerRankPie';
 import '@css/components/PlayerCard.css';
 
-export const PlayerCard = ({
-  player,
-  animationStates,
-  inOverlay,
-  disableClick = false,
-}) => {
-  const dispatch = useDispatch();
-
-  const handleTrade = () => {
-    dispatch(
-      toggleOverlay({
-        isOpen: true,
-        template: <FindTradePlayer />,
-      })
-    );
-  };
-
-  const handleRelease = () => {
-    dispatch(
-      toggleOverlay({
-        isOpen: true,
-        template: <ReleasePlayer />,
-      })
-    );
-  };
-
-  const openOverlay = (component) => {
-    dispatch(
-      toggleOverlay({
-        isOpen: true,
-        template: component,
-      })
-    );
-  };
-
+export const PlayerCard = ({ player, animationStates, isLarge, onClick }) => {
   const inner = player ? (
     <>
       <p className='position-text'>{capitalize(player.playerPosition)}</p>
@@ -57,8 +19,8 @@ export const PlayerCard = ({
         animate={animationStates ? animationStates.playerCard : null}
         className='box-shadow player-card-body'
         onClick={() => {
-          if (!disableClick) {
-            openOverlay(overlayTemplate);
+          if (onClick) {
+            onClick(player);
           }
         }}
         transition={{
@@ -95,33 +57,13 @@ export const PlayerCard = ({
       className='box-shadow player-card-empty-inner border-accent'
       animate={animationStates ? animationStates.playerCardEmpty : null}
       onClick={() => {
-        if (!inOverlay && !disableClick) {
-          openOverlay(<Sign />);
+        if (onClick) {
+          onClick(player);
         }
       }}
     >
       <p className='add-player-text color-primary outline-accent'>Add Player</p>
     </motion.div>
-  );
-
-  const overlayTemplate = (
-    <div className='player-overlay-container'>
-      <div className='player-card-wrap player-card-large'>{inner}</div>
-      <div className='player-overlay-buttons-wrap'>
-        <button
-          onClick={handleTrade}
-          className='player-overlay-button outline-black box-shadow'
-        >
-          Trade
-        </button>
-        <button
-          onClick={handleRelease}
-          className='player-overlay-button outline-black box-shadow'
-        >
-          Release
-        </button>
-      </div>
-    </div>
   );
 
   const mainTemplate = (
@@ -132,5 +74,5 @@ export const PlayerCard = ({
     </div>
   );
 
-  return inOverlay ? overlayTemplate : mainTemplate;
+  return mainTemplate;
 };
