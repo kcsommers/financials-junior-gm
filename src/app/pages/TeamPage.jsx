@@ -43,22 +43,18 @@ const getBoardMap = (student) => {
 
 const TeamPage = () => {
   const student = useSelector((state) => state.studentState.student);
-  const tutorialActive = useSelector((state) => state.tutorial.isActive);
-
-  const [selectedPosition, setSelectedPosition] = useState('');
-
-  const [boardMap, setBoardMap] = useState(initialBoardMap);
-
   const studentRef = useRef(null);
   useEffect(() => {
     if (!isEqual(student, studentRef.current)) {
-      console.log('USIN EFFECT:::: ');
       studentRef.current = student;
       setBoardMap(getBoardMap(student));
     }
   }, [student]);
 
   const dispatch = useDispatch();
+  const tutorialActive = useSelector((state) => state.tutorial.isActive);
+  const [selectedPosition, setSelectedPosition] = useState('');
+  const [boardMap, setBoardMap] = useState(initialBoardMap);
 
   const playerCardAnimationStates = {
     playerCard: useSelector((state) => state.tutorial.team.playerCard),

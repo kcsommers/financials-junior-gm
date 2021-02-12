@@ -9,7 +9,12 @@ import { capitalize, getDollarString } from '@utils';
 import { PlayerRankPie } from './PlayerRankPie';
 import '@css/components/PlayerCard.css';
 
-export const PlayerCard = ({ player, animationStates, inOverlay }) => {
+export const PlayerCard = ({
+  player,
+  animationStates,
+  inOverlay,
+  disableClick = false,
+}) => {
   const dispatch = useDispatch();
 
   const handleTrade = () => {
@@ -52,7 +57,9 @@ export const PlayerCard = ({ player, animationStates, inOverlay }) => {
         animate={animationStates ? animationStates.playerCard : null}
         className='box-shadow player-card-body'
         onClick={() => {
-          openOverlay(overlayTemplate);
+          if (!disableClick) {
+            openOverlay(overlayTemplate);
+          }
         }}
         transition={{
           default: {
@@ -88,7 +95,7 @@ export const PlayerCard = ({ player, animationStates, inOverlay }) => {
       className='box-shadow player-card-empty-inner border-accent'
       animate={animationStates ? animationStates.playerCardEmpty : null}
       onClick={() => {
-        if (!inOverlay) {
+        if (!inOverlay && !disableClick) {
           openOverlay(<Sign />);
         }
       }}
