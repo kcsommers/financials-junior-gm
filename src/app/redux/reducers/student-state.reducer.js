@@ -1,5 +1,5 @@
 import { SET_STUDENT, SET_SAVINGS } from '../actionTypes';
-import { getMoneySpent } from './../../utils';
+import { getMoneySpent } from '@utils';
 
 const initialState = {
   student: null,

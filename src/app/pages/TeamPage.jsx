@@ -16,7 +16,7 @@ import { playersSlides, SharkieButton, Tutorial } from '@tutorial';
 import { LevelStick } from '../components/LevelStick';
 import { setTutorialState } from '@redux/actions';
 import { isEqual } from 'lodash';
-import { getPlayerProps } from '../utils';
+import { getPlayerProps } from '@utils';
 import '@css/pages/TeamPage.css';
 
 const teamSlides = [playersSlides];

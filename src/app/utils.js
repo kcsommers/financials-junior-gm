@@ -23,3 +23,17 @@ export const getMoneySpent = (student) => {
     return total;
   }, 0);
 };
+
+export const capitalize = (str) => {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+};
+
+export const getDollarString = (num) => {
+  if (!num) {
+    return '$0';
+  }
+  if (num % 1 === 0) {
+    return `$${num}`;
+  }
+  return `$${num.toFixed(2)}`;
+};
