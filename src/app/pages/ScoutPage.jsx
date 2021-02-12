@@ -105,7 +105,7 @@ const ScoutPage = () => {
           )}
         </Draggable>
       ) : (
-        <PlayerCard key={`${key}-empty`} small={small} />
+        <PlayerCard key={`${key}-empty`} />
       )
     ) : (
       <div className='empty-player-slot'></div>

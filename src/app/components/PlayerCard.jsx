@@ -4,9 +4,12 @@ import Sign from './Sign';
 import { ReleasePlayer } from './public-api';
 import { toggleOverlay } from '../redux/actions';
 import { FindTradePlayer } from './trade-overlay/FindTradePlayer';
+import playerImage from '@images/icons/player-image.svg';
+import { capitalize, getDollarString } from '@utils';
+import { PlayerRankPie } from './PlayerRankPie';
 import '@css/components/PlayerCard.css';
 
-export const PlayerCard = ({ player, animationStates, inOverlay, small }) => {
+export const PlayerCard = ({ player, animationStates, inOverlay }) => {
   const dispatch = useDispatch();
 
   const handleTrade = () => {
@@ -37,11 +40,17 @@ export const PlayerCard = ({ player, animationStates, inOverlay, small }) => {
   };
 
   const inner = player ? (
-    <div>
-      <p className='position-text'>{player.playerPosition}</p>
+    <>
+      <p className='position-text'>{capitalize(player.playerPosition)}</p>
+      <div className='player-card-header'>
+        <div className='player-card-header-inner'>
+          <span>{player.overallRank}</span>
+          <span>{getDollarString(player.playerCost)}</span>
+        </div>
+      </div>
       <motion.div
         animate={animationStates ? animationStates.playerCard : null}
-        className='box-shadow player-card-inner'
+        className='box-shadow player-card-body'
         onClick={() => {
           openOverlay(overlayTemplate);
         }}
@@ -51,27 +60,32 @@ export const PlayerCard = ({ player, animationStates, inOverlay, small }) => {
           },
         }}
       >
-        <div className='player-card-header'>
-          <div className='player-rank'>
-            <span>80</span>
-          </div>
-          <div className='player-cost'>
-            <span>$2</span>
-          </div>
-        </div>
-        <div className='player-card-body'>
-          <div className='player-card-img'>{player.playerName}</div>
-          <div className='player-scores'>
-            {/* <div className='player-score player-score-off'>80</div>
-            <div className='player-score player-score-pass'>80</div>
-            <div className='player-score player-score-def'>80</div> */}
-          </div>
+        <div
+          className='player-card-img-wrap'
+          style={{ backgroundImage: `url(${playerImage})` }}
+        ></div>
+        <div className='player-scores'>
+          <PlayerRankPie
+            label='Off'
+            sliceColor='#DC2D2D'
+            score={player.offensiveRank}
+          />
+          <PlayerRankPie
+            label='Pass'
+            sliceColor='#00788a'
+            score={player.passRank}
+          />
+          <PlayerRankPie
+            label='Def'
+            sliceColor='#002f6c'
+            score={player.defensiveRank}
+          />
         </div>
       </motion.div>
-    </div>
+    </>
   ) : (
     <motion.div
-      className='box-shadow player-card-inner border-accent'
+      className='box-shadow player-card-empty-inner border-accent'
       animate={animationStates ? animationStates.playerCardEmpty : null}
       onClick={() => {
         if (!inOverlay) {
@@ -105,9 +119,7 @@ export const PlayerCard = ({ player, animationStates, inOverlay, small }) => {
 
   const mainTemplate = (
     <div
-      className={`player-card-wrap ${!player ? ' player-card-wrap-empty' : ''}${
-        small ? ' player-card-wrap-small' : ''
-      }`}
+      className={`player-card-wrap ${!player ? ' player-card-wrap-empty' : ''}`}
     >
       {inner}
     </div>
