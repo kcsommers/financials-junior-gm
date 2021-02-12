@@ -3,7 +3,7 @@ import { cloneDeep } from 'lodash';
 
 const initialState = {
   signablePlayers: {
-    forwards: [],
+    forward: [],
     defense: [],
     goalie: [],
   },

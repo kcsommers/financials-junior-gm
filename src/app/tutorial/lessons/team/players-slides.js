@@ -60,7 +60,7 @@ const slideConfigs = [
         type: TOGGLE_OVERLAY,
         payload: {
           isOpen: true,
-          template: <PlayerCard inOverlay={true} />,
+          template: <PlayerCard />,
           canClose: false,
         },
       },

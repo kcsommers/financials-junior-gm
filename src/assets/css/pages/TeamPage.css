@@ -72,8 +72,12 @@ div.team-players-card {
   overflow: hidden;
 }
 
+div.team-players-card > div.team-players-row {
+  margin-top: 0.5rem;
+}
+
 div.team-players-card > div.team-players-row-2 {
-  padding-top: 0.25rem;
+  margin-top: 1rem;
 }
 
 div.team-players-card,

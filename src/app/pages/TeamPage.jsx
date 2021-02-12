@@ -7,6 +7,8 @@ import {
   PageBoard,
   Overlay,
   HeaderComponent,
+  PlayerDetailsOverlay,
+  SignPlayerOverlay,
 } from '@components';
 import scoutStick from '@images/scout-stick.svg';
 import teamStick from '@images/team-stick.svg';
@@ -14,7 +16,7 @@ import iceBgSmall from '@images/ice-bg-small.svg';
 import { useSelector, useDispatch } from 'react-redux';
 import { playersSlides, SharkieButton, Tutorial } from '@tutorial';
 import { LevelStick } from '../components/LevelStick';
-import { setTutorialState } from '@redux/actions';
+import { setTutorialState, toggleOverlay } from '@redux/actions';
 import { isEqual } from 'lodash';
 import { getPlayerProps } from '@utils';
 import '@css/pages/TeamPage.css';
@@ -53,8 +55,9 @@ const TeamPage = () => {
 
   const dispatch = useDispatch();
   const tutorialActive = useSelector((state) => state.tutorial.isActive);
-  const [selectedPosition, setSelectedPosition] = useState('');
   const [boardMap, setBoardMap] = useState(initialBoardMap);
+
+  const signablePlayers = useSelector((state) => state.players.signablePlayers);
 
   const playerCardAnimationStates = {
     playerCard: useSelector((state) => state.tutorial.team.playerCard),
@@ -65,6 +68,38 @@ const TeamPage = () => {
 
   const onTutorialComplete = () => {
     dispatch(setTutorialState({ isActive: false }));
+  };
+
+  const openPlayerDetailsOverlay = (player) => {
+    dispatch(
+      toggleOverlay({
+        isOpen: true,
+        template: <PlayerDetailsOverlay player={player} />,
+      })
+    );
+  };
+
+  const openSignPlayerOverlay = (position) => {
+    const availableSlots = {
+      forwards: 3 - signablePlayers.forward.length,
+      defense: 2 - signablePlayers.defense.length,
+      goalie: 1 - signablePlayers.goalie.length,
+      bench:
+        3 -
+        ['benchOne', 'benchTwo', 'benchThree'].filter((p) => student[p]).length,
+    };
+
+    dispatch(
+      toggleOverlay({
+        isOpen: true,
+        template: (
+          <SignPlayerOverlay
+            availableSlots={availableSlots}
+            position={position}
+          />
+        ),
+      })
+    );
   };
 
   return student ? (
@@ -120,32 +155,62 @@ const TeamPage = () => {
                 <PlayerCard
                   animationStates={playerCardAnimationStates}
                   player={boardMap.fOne}
+                  onClick={
+                    boardMap.fOne
+                      ? openPlayerDetailsOverlay
+                      : openSignPlayerOverlay.bind(this, 'fOne')
+                  }
                 />
                 <div style={{ position: 'relative', top: '15px' }}>
                   <PlayerCard
                     animationStates={playerCardAnimationStates}
                     player={boardMap.fTwo}
+                    onClick={
+                      boardMap.fTwo
+                        ? openPlayerDetailsOverlay
+                        : openSignPlayerOverlay.bind(this, 'fTwo')
+                    }
                   />
                 </div>
                 <PlayerCard
                   animationStates={playerCardAnimationStates}
                   player={boardMap.fThree}
+                  onClick={
+                    boardMap.fThree
+                      ? openPlayerDetailsOverlay
+                      : openSignPlayerOverlay.bind(this, 'fThree')
+                  }
                 />
               </div>
               <div className='team-players-row team-players-row-2'>
                 <PlayerCard
                   animationStates={playerCardAnimationStates}
                   player={boardMap.dOne}
+                  onClick={
+                    boardMap.dOne
+                      ? openPlayerDetailsOverlay
+                      : openSignPlayerOverlay.bind(this, 'dOne')
+                  }
                 />
                 <div style={{ position: 'relative', top: '30px' }}>
                   <PlayerCard
                     animationStates={playerCardAnimationStates}
                     player={boardMap.gOne}
+                    onClick={
+                      boardMap.gOne
+                        ? openPlayerDetailsOverlay
+                        : openSignPlayerOverlay.bind(this, 'gOne')
+                    }
                   />
                 </div>
                 <PlayerCard
                   animationStates={playerCardAnimationStates}
                   player={boardMap.dTwo}
+                  onClick={
+                    boardMap.dTwo
+                      ? openPlayerDetailsOverlay
+                      : openSignPlayerOverlay.bind(this, 'dTwo')
+                  }
                 />
               </div>
             </div>
@@ -153,9 +218,30 @@ const TeamPage = () => {
             <div className='bench-players-card'>
               <p className='color-primary on-the-bench-text'>On the Bench</p>
               <div className='team-players-row team-bench-row'>
-                <PlayerCard player={boardMap.benchOne} />
-                <PlayerCard player={boardMap.benchTwo} />
-                <PlayerCard player={boardMap.benchThree} />
+                <PlayerCard
+                  player={boardMap.benchOne}
+                  onClick={
+                    boardMap.benchOne
+                      ? openPlayerDetailsOverlay
+                      : openSignPlayerOverlay.bind(this, 'benchOne')
+                  }
+                />
+                <PlayerCard
+                  player={boardMap.benchTwo}
+                  onClick={
+                    boardMap.benchTwo
+                      ? openPlayerDetailsOverlay
+                      : openSignPlayerOverlay.bind(this, 'benchTwo')
+                  }
+                />
+                <PlayerCard
+                  player={boardMap.benchThree}
+                  onClick={
+                    boardMap.benchThree
+                      ? openPlayerDetailsOverlay
+                      : openSignPlayerOverlay.bind(this, 'benchThree')
+                  }
+                />
               </div>
             </div>
           </div>
