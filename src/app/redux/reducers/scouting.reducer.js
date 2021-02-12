@@ -6,6 +6,7 @@ const initialState = {
   levelThree: [],
   available: [],
   initialized: false,
+  scoutingComplete: false,
 };
 
 const scoutingReducer = (state = initialState, action) => {

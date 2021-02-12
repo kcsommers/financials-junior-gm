@@ -5,14 +5,20 @@ import {
   PlayerDragItem,
   HeaderComponent,
   PlayerCard,
+  ScoutingCompleteOverlay,
+  Overlay,
 } from '@components';
 import scoutStick from '@images/scout-stick.svg';
 import { useSelector, useDispatch } from 'react-redux';
 import { motion } from 'framer-motion';
 import { scoutSlides, SharkieButton, Tutorial } from '@tutorial';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { PageBoard } from './../components/PageBoard';
-import { setTutorialState, setScoutingState } from '@redux/actions';
+import {
+  setTutorialState,
+  setScoutingState,
+  toggleOverlay,
+} from '@redux/actions';
 import { getScoutablePlayers } from '../dummy-data';
 import { isEqual } from 'lodash';
 import '@css/pages/ScoutPage.css';
@@ -40,6 +46,9 @@ const boardMap = {
 };
 
 const ScoutPage = () => {
+  const history = useHistory();
+  const dispatch = useDispatch();
+
   const [availablePlayersBoard, setAvailablePlayersBoard] = useState([]);
   const [offeredPlayersBoard, setOfferedPlayersBoard] = useState([]);
 
@@ -63,7 +72,6 @@ const ScoutPage = () => {
   );
 
   const tutorialActive = useSelector((state) => state.tutorial.isActive);
-  const dispatch = useDispatch();
 
   const scoutingState = useSelector((state) => state.scouting);
 
@@ -249,7 +257,37 @@ const ScoutPage = () => {
     );
   };
 
-  // ComponentDidMount
+  const handleScoutingInvalid = () => {
+    console.log('INVALID SCOUTING');
+  };
+
+  const handleScoutingComplete = () => {
+    dispatch(
+      toggleOverlay({
+        isOpen: true,
+        template: <ScoutingCompleteOverlay />,
+      })
+    );
+    window.setTimeout(() => {
+      dispatch(
+        toggleOverlay({
+          isOpen: false,
+          template: null,
+        })
+      );
+      history.push('/team');
+    }, 5000);
+  };
+
+  const validateScouting = () => {
+    // check that the available board is empty
+    if (!Object.keys(boardMap.available).some((k) => !!boardMap.available[k])) {
+      handleScoutingComplete();
+    } else {
+      handleScoutingInvalid();
+    }
+  };
+
   const prevAvailableRef = useRef([]);
   const prevL1Ref = useRef([]);
   const prevL2Ref = useRef([]);
@@ -359,13 +397,25 @@ const ScoutPage = () => {
             className='color-primary finished-btn'
             animate={finishedBtnAnimationState}
           >
-            <Link className='text-link' to='/sign'>
+            <div
+              onClick={() => {
+                if (scoutingState.initialized) {
+                  validateScouting();
+                }
+              }}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                cursor: 'pointer',
+              }}
+            >
               <span>Click here when you finish!</span>
               <div className='check-btn-small'></div>
-            </Link>
+            </div>
           </motion.div>
         </div>
       </PageBoard>
+      <Overlay />
       {tutorialActive && (
         <Tutorial slides={[scoutSlides]} onComplete={onTutorialComplete} />
       )}
