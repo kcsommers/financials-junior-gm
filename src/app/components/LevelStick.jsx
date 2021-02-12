@@ -44,6 +44,26 @@ const styles = {
       textAlign: 'right',
     },
   },
+  opponentTeamRank: {
+    image: {
+      position: 'relative',
+      left: '-50px',
+      top: 0,
+    },
+    indicator: {
+      position: 'absolute',
+      top: 0,
+      left: '40px',
+    },
+    text: {
+      color: '#002f6c',
+      display: 'inline-block',
+      fontSize: '1rem',
+      marginLeft: '0.25rem',
+      fontWeight: 'bold',
+      textAlign: 'right',
+    },
+  },
 };
 
 const levelTypes = (type) => ({
@@ -71,9 +91,22 @@ const levelTypes = (type) => ({
       </div>
     ),
   },
+  opponentTeamRank: {
+    image: budget,
+    indicator: (
+      <div style={styles[type].indicator}>
+        <span style={styles[type].text}>
+          Team <br />
+          Rank
+        </span>
+        <Indicator amount={25} direction='left' />
+      </div>
+    ),
+  }
 });
 
 export const LevelStick = ({ type }) => {
+  console.log('type: ', styles[type])
   return (
     <div
       style={{
