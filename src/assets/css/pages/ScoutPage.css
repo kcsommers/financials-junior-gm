@@ -68,7 +68,6 @@ div.offered-player-row-wrap {
 div.player-card-drop {
   min-width: calc(90px + 1rem);
   min-height: calc(123px + 1rem);
-  overflow: hidden;
   padding: 0.5rem;
   display: flex;
   align-items: center;
