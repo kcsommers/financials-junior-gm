@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import {
   BudgetEquation,
   BudgetSlider,
@@ -8,18 +7,13 @@ import {
 import budgetStick from '@images/budget-stick.svg';
 import { useSelector, useDispatch } from 'react-redux';
 import { budgetSlides, SharkieButton, Tutorial } from '@tutorial';
-import { setTutorialState } from '@redux/actions';
+import { setTutorialState, setSavings } from '@redux/actions';
 import '@css/pages/BudgetPage.css';
 
-const BudgetPage = () => {
-  const user = useSelector((state) => state.appState.user);
-  console.log('USER:::: ', user);
+let debounceTimeout = 0;
 
-  const [currentBudget, setCurrentBudget] = useState({
-    total: 10,
-    spent: 1,
-    savings: 2,
-  });
+const BudgetPage = () => {
+  const student = useSelector((state) => state.studentState.student);
 
   const tutorialActive = useSelector((state) => state.tutorial.isActive);
 
@@ -36,18 +30,27 @@ const BudgetPage = () => {
     spending: useSelector((state) => state.tutorial.budget.spending),
   };
 
-  const updateSavings = (value) => {
-    setCurrentBudget({
-      ...currentBudget,
-      savings: +value,
-    });
+  const updateSavingsOnServer = () => {
+    console.log('SEND TO SERVER::::');
   };
 
-  return (
+  const updateSavings = (value) => {
+    dispatch(setSavings(+value));
+
+    if (debounceTimeout) {
+      window.clearTimeout(debounceTimeout);
+    }
+    debounceTimeout = window.setTimeout(() => {
+      updateSavingsOnServer();
+    }, 1000);
+  };
+
+  return student ? (
     <div className='page-container'>
       <HeaderComponent
         stickBtn={budgetStick}
         objectives={['1. Learn about your budget.']}
+        level={student.level}
         inverse={true}
       />
 
@@ -62,7 +65,11 @@ const BudgetPage = () => {
 
           <div className='budget-equation-container'>
             <BudgetEquation
-              budget={currentBudget}
+              budget={{
+                total: student.totalBudget,
+                savings: student.savingsBudget,
+                spent: student.moneySpent,
+              }}
               animationStates={budgetEquationStates}
             />
           </div>
@@ -70,7 +77,14 @@ const BudgetPage = () => {
             Move the yellow puck to change how much you save!
           </p>
           <div className='budget-slider-container'>
-            <BudgetSlider budget={currentBudget} setValue={updateSavings} />
+            <BudgetSlider
+              budget={{
+                total: student.totalBudget,
+                savings: student.savingsBudget,
+                spent: student.moneySpent,
+              }}
+              setValue={updateSavings}
+            />
           </div>
         </div>
       </PageBoard>
@@ -78,6 +92,8 @@ const BudgetPage = () => {
         <Tutorial slides={[budgetSlides]} onComplete={onTutorialComplete} />
       )}
     </div>
+  ) : (
+    <div>Loading...</div>
   );
 };
 

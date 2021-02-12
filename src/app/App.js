@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Intro from './pages/Intro';
 import HomePage from './pages/HomePage';
@@ -10,14 +10,14 @@ import { IceBackground } from '@components';
 import BudgetPage from './pages/BudgetPage';
 import Sign from './components/Sign';
 import { getStudent } from './dummy-data';
-import { setUser } from '@redux/actions';
+import { setStudent } from '@redux/actions';
 import '@css/App.css';
 
 const App = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     getStudent()
-      .then((s) => dispatch(setUser(s)))
+      .then((s) => dispatch(setStudent(s)))
       .catch((err) => console.error(err));
   }, [dispatch]);
 
