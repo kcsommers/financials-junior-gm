@@ -1,3 +1,32 @@
+export const student = {
+  studentFirstName: 'Joni',
+  studentLastName: 'Blue',
+  studentUserName: 'JoBlue',
+  studentPassword: 'sleepyjo',
+  totalBudget: 10,
+  savingsBudget: 0,
+  fOne: null,
+  fTwo: null,
+  fThree: null,
+  dOne: null,
+  dTwo: null,
+  gOne: null,
+  benchOne: null,
+  benchTwo: null,
+  benchThree: null,
+  season: '',
+  level: 1,
+  timeSpent: 0,
+};
+
+export const getStudent = () => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(student);
+    }, 1000);
+  });
+};
+
 export const players = [
   {
     playerName: 'Marcus Sorensen',

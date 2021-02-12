@@ -4,16 +4,19 @@ const initialState = {
   isOpen: false,
   template: null,
   sign: null,
-  tutorialActive: false,
+  canClose: true,
 };
 
 const overlayReducer = (state = initialState, action) => {
   switch (action.type) {
     case TOGGLE_OVERLAY: {
       return {
-        isOpen: action.payload.state.isOpen,
-        template: action.payload.state.template,
-        sign: action.playload,
+        isOpen: action.payload.isOpen,
+        template: action.payload.template,
+        canClose:
+          action.payload.canClose === undefined
+            ? true
+            : action.payload.canClose,
       };
     }
     default:

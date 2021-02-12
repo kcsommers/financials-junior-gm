@@ -17,6 +17,7 @@ export const HeaderComponent = ({
   inverse,
   objectives,
   largeStick,
+  level,
 }) => {
   const stick = (
     <StickButton
@@ -29,7 +30,12 @@ export const HeaderComponent = ({
   );
 
   const board = (
-    <ObjectivesBoard key='ob' objectives={objectives} smallText={true} />
+    <ObjectivesBoard
+      key='ob'
+      objectives={objectives}
+      level={level}
+      smallText={true}
+    />
   );
 
   const inner = inverse ? [board, stick] : [stick, board];
