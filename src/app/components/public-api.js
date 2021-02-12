@@ -1,4 +1,6 @@
 export { PageBoard } from './PageBoard';
+export { OverlayBoard } from './OverlayBoard';
+export { ScoutingCompleteOverlay } from './scout-page/ScoutingCompleteOverlay';
 export { LevelStick } from './LevelStick';
 export { StickButton } from './StickButton';
 export { IceBackground } from './IceBackground';
@@ -18,7 +20,6 @@ export { Overlay } from './Overlay';
 export { PlayerDragItem } from './scout-page/PlayerDragItem';
 export { SpendingBudgetStickBig } from './SpendingBudgetStickBig';
 export { TeamRankStickBig } from './TeamRankStickBig';
-export { NiceJobScouting } from './NiceJobScouting';
 export { HeaderComponent } from './HeaderComponent';
 export {FilledPlayerCard} from './FilledPlayerCard';
 export {SpacesInTeam} from './SpacesInTeam';
@@ -30,3 +31,4 @@ export {TeamBudgetState} from './TeamBudgetState';
 export {PlayerTradeExchange} from './trade-overlay/PlayerTradeExchange';
 export {ReleasePlayer} from './release-overlay/ReleasePlayer';
 export {PlayerReleased} from './release-overlay/PlayerReleased';
+
