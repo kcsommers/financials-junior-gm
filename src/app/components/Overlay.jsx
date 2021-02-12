@@ -8,8 +8,6 @@ import { toggleOverlay } from '../redux/actions';
 export const Overlay = () => {
   const overlayConfig = useSelector((state) => state.overlay);
 
-  const tutorialActive = useSelector((state) => state.tutorial.isActive);
-
   const dispatch = useDispatch();
 
   const closeOverlay = () => {
@@ -39,7 +37,7 @@ export const Overlay = () => {
           className='overlay-container'
         >
           {overlayConfig.template}
-          {!tutorialActive && (
+          {overlayConfig.canClose && (
             <ReactSVG
               className='close-btn box-shadow'
               src={closeBtn}
