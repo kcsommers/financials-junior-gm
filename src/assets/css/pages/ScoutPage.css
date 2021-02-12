@@ -45,6 +45,11 @@ div.scout-board {
   height: 480px;
 }
 
+div.scout-page-board-right {
+  min-width: 407.97px;
+  min-height: 512.93px;
+}
+
 div.available-player-row,
 div.offered-player-row {
   display: flex;
@@ -63,7 +68,6 @@ div.offered-player-row-wrap {
 div.player-card-drop {
   min-width: calc(90px + 1rem);
   min-height: calc(123px + 1rem);
-  overflow: hidden;
   padding: 0.5rem;
   display: flex;
   align-items: center;
@@ -107,4 +111,22 @@ div.finished-btn a {
 
 .check-btn-small {
   margin-left: 0.5rem;
+}
+
+div.empty-player-slot {
+  width: 90px;
+  height: 106.4px;
+  border-radius: 15px;
+  border: 3px solid #707070;
+  background-color: #e5e5e5;
+  animation: fadeIn 0.2s forwards ease;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
