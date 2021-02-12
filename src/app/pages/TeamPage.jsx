@@ -136,7 +136,7 @@ const TeamPage = () => {
                   player={boardMap.fThree}
                 />
               </div>
-              <div className='team-players-row'>
+              <div className='team-players-row team-players-row-2'>
                 <PlayerCard
                   animationStates={playerCardAnimationStates}
                   player={boardMap.dOne}

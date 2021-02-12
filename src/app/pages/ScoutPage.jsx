@@ -95,17 +95,29 @@ const ScoutPage = () => {
           className='draggable-player'
         >
           {(dragProvided, dragSnapshot) => (
-            <PlayerDragItem
-              provided={dragProvided}
-              innerRef={dragProvided.innerRef}
-              player={player}
-              small={small}
-              isDragging={dragSnapshot.isDragging}
-            ></PlayerDragItem>
+            <div
+              style={
+                small && !dragSnapshot.isDragging
+                  ? {
+                      transform: 'scale(0.85)',
+                    }
+                  : {}
+              }
+            >
+              <PlayerDragItem
+                small={small}
+                provided={dragProvided}
+                innerRef={dragProvided.innerRef}
+                player={player}
+                isDragging={dragSnapshot.isDragging}
+              ></PlayerDragItem>
+            </div>
           )}
         </Draggable>
       ) : (
-        <PlayerCard key={`${key}-empty`} />
+        <div style={small ? { transform: 'scale(0.85)' } : {}}>
+          <PlayerCard key={`${key}-empty`} />
+        </div>
       )
     ) : (
       <div className='empty-player-slot'></div>
@@ -208,6 +220,9 @@ const ScoutPage = () => {
           key={`offered-player-row-${i}`}
           className='offered-player-row-wrap'
         >
+          <span className='money-level-short color-primary'>
+            {moneyLevels[i].short}
+          </span>
           <p className={`money-level-text money-level-text-${i}`}>
             These players get a {moneyLevels[i].long} offered
           </p>
@@ -215,7 +230,9 @@ const ScoutPage = () => {
             className='offered-player-row'
             animate={moneyLevelAnimationStates[i]}
           >
-            {row.map((p) => p)}
+            <div className={`offered-player-row-inner level-${i + 1}`}>
+              {row.map((p) => p)}
+            </div>
           </motion.div>
         </div>
       ));
