@@ -20,6 +20,7 @@ import '@css/pages/TeamPage.css';
 const teamSlides = [playersSlides];
 
 function TeamPage() {
+  const student = useSelector((state) => state.studentState.student);
   const tutorialActive = useSelector((state) => state.tutorial.isActive);
 
   const dispatch = useDispatch();
@@ -35,11 +36,12 @@ function TeamPage() {
     dispatch(setTutorialState({ isActive: false }));
   };
 
-  return (
+  return student ? (
     <div className='page-container'>
       <HeaderComponent
         stickBtn={teamStick}
         objectives={['1. Learn about your budget.']}
+        level={student.level}
       />
 
       <PageBoard hideCloseBtn={true}>
@@ -121,6 +123,8 @@ function TeamPage() {
         <Tutorial slides={teamSlides} onComplete={onTutorialComplete} />
       )}
     </div>
+  ) : (
+    <div>Loading...</div>
   );
 }
 

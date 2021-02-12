@@ -10,4 +10,6 @@ export const SET_TUTORIAL_STATE = 'SET_TUTORIAL_STATE';
 
 export const SET_SCOUTING_STATE = 'SET_SCOUTING_STATE';
 
-export const SET_USER = 'SET_USER';
+export const SET_STUDENT = 'SET_STUDENT';
+
+export const SET_SAVINGS = 'SET_SAVINGS';

@@ -12,7 +12,7 @@ import scoutStick from '@images/scout-stick.svg';
 import { useSelector, useDispatch } from 'react-redux';
 import { motion } from 'framer-motion';
 import { scoutSlides, SharkieButton, Tutorial } from '@tutorial';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { PageBoard } from './../components/PageBoard';
 import {
   setTutorialState,
@@ -46,6 +46,7 @@ const boardMap = {
 };
 
 const ScoutPage = () => {
+  const student = useSelector((state) => state.studentState.student);
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -348,12 +349,13 @@ const ScoutPage = () => {
     scoutingState.levelThree,
   ]);
 
-  return (
+  return student ? (
     <div className='page-container scout-page-container'>
       <HeaderComponent
         stickBtn={scoutStick}
         largeStick={true}
         objectives={['1. Scout players to sign to your bench!']}
+        level={student.level}
       />
       <PageBoard hideCloseBtn={true}>
         <div className='scout-page-board-header'>
@@ -422,6 +424,8 @@ const ScoutPage = () => {
         <Tutorial slides={[scoutSlides]} onComplete={onTutorialComplete} />
       )}
     </div>
+  ) : (
+    <div>Loading...</div>
   );
 };
 
