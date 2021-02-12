@@ -266,6 +266,7 @@ const ScoutPage = () => {
       toggleOverlay({
         isOpen: true,
         template: <ScoutingCompleteOverlay />,
+        canClose: false,
       })
     );
     window.setTimeout(() => {
@@ -273,6 +274,7 @@ const ScoutPage = () => {
         toggleOverlay({
           isOpen: false,
           template: null,
+          canClose: true,
         })
       );
       history.push('/team');
