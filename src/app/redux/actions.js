@@ -3,7 +3,8 @@ import {
   TOGGLE_OVERLAY,
   SET_SCOUTING_STATE,
   SET_TUTORIAL_STATE,
-  SET_USER,
+  SET_STUDENT,
+  SET_SAVINGS,
 } from './actionTypes';
 
 export const setAnimationState = (state) => ({
@@ -26,7 +27,12 @@ export const setScoutingState = (state) => ({
   payload: state,
 });
 
-export const setUser = (user) => ({
-  type: SET_USER,
-  payload: user,
+export const setStudent = (student) => ({
+  type: SET_STUDENT,
+  payload: student,
+});
+
+export const setSavings = (amount) => ({
+  type: SET_SAVINGS,
+  payload: amount,
 });
