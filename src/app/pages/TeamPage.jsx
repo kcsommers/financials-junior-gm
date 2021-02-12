@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { ReactSVG } from 'react-svg';
 import jrSharksLogo from '@images/icons/jr-sharks-logo.svg';
 import {
@@ -15,13 +15,48 @@ import { useSelector, useDispatch } from 'react-redux';
 import { playersSlides, SharkieButton, Tutorial } from '@tutorial';
 import { LevelStick } from '../components/LevelStick';
 import { setTutorialState } from '@redux/actions';
+import { isEqual } from 'lodash';
+import { getPlayerProps } from '@utils';
 import '@css/pages/TeamPage.css';
 
 const teamSlides = [playersSlides];
 
-function TeamPage() {
+const initialBoardMap = {
+  fOne: null,
+  fTwo: null,
+  fThree: null,
+  dOne: null,
+  dTwo: null,
+  gOne: null,
+  benchOne: null,
+  benchTwo: null,
+  benchThree: null,
+};
+
+const getBoardMap = (student) => {
+  const map = {};
+  getPlayerProps().forEach((p) => {
+    map[p] = student[p];
+  });
+  return map;
+};
+
+const TeamPage = () => {
   const student = useSelector((state) => state.studentState.student);
   const tutorialActive = useSelector((state) => state.tutorial.isActive);
+
+  const [selectedPosition, setSelectedPosition] = useState('');
+
+  const [boardMap, setBoardMap] = useState(initialBoardMap);
+
+  const studentRef = useRef(null);
+  useEffect(() => {
+    if (!isEqual(student, studentRef.current)) {
+      console.log('USIN EFFECT:::: ');
+      studentRef.current = student;
+      setBoardMap(getBoardMap(student));
+    }
+  }, [student]);
 
   const dispatch = useDispatch();
 
@@ -88,31 +123,43 @@ function TeamPage() {
               <div className='team-players-row'>
                 <PlayerCard
                   animationStates={playerCardAnimationStates}
-                  player={{ name: 'KACY' }}
+                  player={boardMap.fOne}
                 />
                 <div style={{ position: 'relative', top: '15px' }}>
-                  <PlayerCard animationStates={playerCardAnimationStates} />
+                  <PlayerCard
+                    animationStates={playerCardAnimationStates}
+                    player={boardMap.fTwo}
+                  />
                 </div>
-                <PlayerCard animationStates={playerCardAnimationStates} />
-              </div>
-              <div className='team-players-row'>
                 <PlayerCard
-                  player={{ name: 'KACY' }}
                   animationStates={playerCardAnimationStates}
+                  player={boardMap.fThree}
+                />
+              </div>
+              <div className='team-players-row team-players-row-2'>
+                <PlayerCard
+                  animationStates={playerCardAnimationStates}
+                  player={boardMap.dOne}
                 />
                 <div style={{ position: 'relative', top: '30px' }}>
-                  <PlayerCard animationStates={playerCardAnimationStates} />
+                  <PlayerCard
+                    animationStates={playerCardAnimationStates}
+                    player={boardMap.gOne}
+                  />
                 </div>
-                <PlayerCard animationStates={playerCardAnimationStates} />
+                <PlayerCard
+                  animationStates={playerCardAnimationStates}
+                  player={boardMap.dTwo}
+                />
               </div>
             </div>
 
             <div className='bench-players-card'>
               <p className='color-primary on-the-bench-text'>On the Bench</p>
               <div className='team-players-row team-bench-row'>
-                <PlayerCard player={{ name: 'KACY' }} />
-                <PlayerCard />
-                <PlayerCard />
+                <PlayerCard player={boardMap.benchOne} />
+                <PlayerCard player={boardMap.benchTwo} />
+                <PlayerCard player={boardMap.benchThree} />
               </div>
             </div>
           </div>
@@ -126,6 +173,6 @@ function TeamPage() {
   ) : (
     <div>Loading...</div>
   );
-}
+};
 
 export default TeamPage;

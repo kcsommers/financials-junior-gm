@@ -72,8 +72,8 @@ div.team-players-card {
   overflow: hidden;
 }
 
-div.team-players-card > div.team-players-row {
-  padding-top: 0.75rem;
+div.team-players-card > div.team-players-row-2 {
+  padding-top: 0.25rem;
 }
 
 div.team-players-card,
