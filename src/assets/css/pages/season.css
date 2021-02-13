@@ -26,6 +26,9 @@
   width: 400px;
   text-align: center;
   height: 324.19px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .season-team-left-border {
@@ -48,6 +51,8 @@
   font-size: 36px;
   font-weight: bold;
   -webkit-text-stroke: .05px black;
+  margin: 0px;
+  padding: 0px;
 }
 
 .next-opponent-title {
@@ -55,7 +60,6 @@
   font-size: 24px;
   font-weight: bold;
   -webkit-text-stroke: .05px black;
-  margin-bottom: .5rem;
 }
 
 .ready-to-play-sign {
@@ -72,13 +76,12 @@
 .next-opponent-details {
   display: flex;
   justify-content: center;
-  padding-bottom: .5rem;
 }
 
 .next-opponent-name {
   background: white;
   color: #3B42FF;
-  padding: .5rem;
+  padding: 1rem;
   border-radius: 5px;
   font-size: 18px;
   font-weight: bold;
@@ -156,6 +159,11 @@
   font-size: 12px;
 }
 
+.p-title {
+  padding-left: .5rem;
+  padding-right: .5rem;
+}
+
 .standings-teams-box {
   border-right: 1px solid #707070;
   padding: .5rem;
@@ -169,6 +177,7 @@
 .your-team-standing {
   font-size: 18px;
   color: #006B77;
+  font-weight: bold;
 }
 
 .player-team-title {
