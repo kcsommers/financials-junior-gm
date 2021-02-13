@@ -27,7 +27,11 @@ class StudentPortal extends Component {
         />
       );
     }
-    return <div style={{ height: '100%' }}>{this.props.screen}</div>;
+    return (
+      <div style={{ height: '100%', overflow: 'hidden' }}>
+        {this.props.screen}
+      </div>
+    );
   }
 }
 export default StudentPortal;
