@@ -1,3 +1,5 @@
+import { PlayerAssignments, PlayerPositions } from './data';
+
 export const getPlayerProps = () => [
   'fOne',
   'fTwo',
@@ -94,5 +96,47 @@ export const getMoneyLevels = (level) => {
           num: 0.5,
         },
       };
+  }
+};
+
+export const isTeamPlayer = (player) => {
+  if (!player) {
+    return false;
+  }
+  return [
+    PlayerAssignments.F_ONE,
+    PlayerAssignments.F_TWO,
+    PlayerAssignments.F_THREE,
+    PlayerAssignments.D_ONE,
+    PlayerAssignments.D_TWO,
+    PlayerAssignments.G_ONE,
+    PlayerAssignments.BENCH_ONE,
+    PlayerAssignments.BENCH_TWO,
+    PlayerAssignments.BENCH_THREE,
+  ].includes(player.playerAssignment);
+};
+
+export const getPlayerPositon = (assignment) => {
+  switch (assignment) {
+    case PlayerAssignments.F_ONE:
+    case PlayerAssignments.F_TWO:
+    case PlayerAssignments.F_THREE: {
+      return PlayerPositions.FORWARD;
+    }
+    case PlayerAssignments.D_ONE:
+    case PlayerAssignments.D_TWO: {
+      return PlayerPositions.DEFENSE;
+    }
+    case PlayerAssignments.G_ONE: {
+      return PlayerPositions.GOALIE;
+    }
+    case PlayerAssignments.BENCH_ONE:
+    case PlayerAssignments.BENCH_TWO:
+    case PlayerAssignments.BENCH_THREE: {
+      return PlayerPositions.BENCH;
+    }
+    default: {
+      return null;
+    }
   }
 };

@@ -1,68 +1,85 @@
 import { useState } from 'react';
 import { PlayerCard, OverlayBoard, LevelStick } from '@components';
 import { useSelector, useDispatch } from 'react-redux';
-import {
-  toggleOverlay,
-  removeSignablePlayer,
-  playerSigned,
-} from '@redux/actions';
+import { toggleOverlay, signPlayer, updateStudent } from '@redux/actions';
 import { ConfirmSignOverlay } from './ConfirmSignOverlay';
+import { updatePlayer } from './../../services/players-service';
+import { updateStudentOnServer } from './../../services/student-service';
+import { getPlayerPositon } from '@utils';
+import { PlayerPositions } from '@data';
 import '@css/components/team-page/SignPlayerOverlay.css';
 
-const getAvailableSlots = (num, props, student) => {
-  return num - props.filter((p) => student[p]).length;
+const getAvailableSlots = (props, team) => {
+  return props.reduce((total, p) => {
+    if (!team[p]) {
+      total++;
+    }
+    return total;
+  }, 0);
 };
 
-export const SignPlayerOverlay = ({ student, position }) => {
+export const SignPlayerOverlay = ({ team, assignment, student }) => {
   const dispatch = useDispatch();
 
-  const signablePlayers = useSelector((state) => state.players.signablePlayers);
+  console.log('ASSIGNMENT:::: ', assignment);
+
+  const marketPlayers = useSelector((state) => state.players.marketPlayers);
   const [currentView, setCurrentView] = useState({
-    players: signablePlayers.forward,
+    players: marketPlayers.forward,
     title: 'Forwards you can sign',
     position: 'forward',
   });
 
   const availableSlots = {
-    forwards: getAvailableSlots(3, ['fOne', 'fTwo', 'fThree'], student),
-    defender: getAvailableSlots(2, ['dOne', 'dTwo'], student),
-    goalie: getAvailableSlots(1, ['gOne'], student),
-    bench: getAvailableSlots(
-      3,
-      ['benchOne', 'benchTwo', 'benchThree'],
-      student
-    ),
+    forwards: getAvailableSlots(['fOne', 'fTwo', 'fThree'], team),
+    defender: getAvailableSlots(['dOne', 'dTwo'], team),
+    goalie: getAvailableSlots(['gOne'], team),
+    bench: getAvailableSlots(['benchOne', 'benchTwo', 'benchThree'], team),
   };
 
   const signCancelled = () => {
     dispatch(
       toggleOverlay({
         isOpen: true,
-        template: <SignPlayerOverlay student={student} position={position} />,
+        template: (
+          <SignPlayerOverlay
+            team={team}
+            assignment={assignment}
+            student={student}
+          />
+        ),
       })
     );
   };
 
-  const signConfirmed = (player) => {
-    dispatch(playerSigned(player, position));
-    dispatch(removeSignablePlayer(player));
-    dispatch(
-      toggleOverlay({
-        isOpen: false,
-        template: null,
+  const signConfirmed = (signedPlayer) => {
+    signedPlayer.playerAssignment = assignment;
+
+    Promise.all([
+      updatePlayer.bind(this, student, { [assignment]: signedPlayer }),
+      updateStudentOnServer.bind(this, signedPlayer),
+    ])
+      .then((res) => {
+        dispatch(signPlayer(signedPlayer, assignment));
+        dispatch(updateStudent({ [assignment]: signedPlayer }));
+        dispatch(
+          toggleOverlay({
+            isOpen: false,
+            template: null,
+          })
+        );
       })
-    );
+      .catch((err) => console.error(err));
   };
 
   const confirmSign = (player) => {
-    console.log('CONFIGM SIGN');
     dispatch(
       toggleOverlay({
         isOpen: true,
         template: (
           <ConfirmSignOverlay
             player={player}
-            position={position}
+            position={assignment}
             confirm={signConfirmed}
             cancel={signCancelled}
           />
@@ -70,6 +87,19 @@ export const SignPlayerOverlay = ({ student, position }) => {
       })
     );
   };
+
+  const activePosition = getPlayerPositon(assignment);
+  const forwardsActive =
+    activePosition === PlayerPositions.FORWARD ||
+    activePosition === PlayerPositions.BENCH;
+  const goaliesActive =
+    activePosition === PlayerPositions.GOALIE ||
+    activePosition === PlayerPositions.BENCH;
+  const defendersActive =
+    activePosition === PlayerPositions.DEFENDER ||
+    activePosition === PlayerPositions.BENCH;
+
+  console.log('PLPL', currentView);
 
   return (
     <OverlayBoard>
@@ -125,13 +155,17 @@ export const SignPlayerOverlay = ({ student, position }) => {
           <div className='to-sign-btns-container'>
             <div
               className={`box-shadow to-sign-tab-btn${
-                currentView.position === 'forward' ? ' active' : ''
+                forwardsActive ? '' : ' disabled'
               }`}
-              onClick={setCurrentView.bind(this, {
-                players: signablePlayers.forward,
-                title: 'Forwards you can sign',
-                position: 'forward',
-              })}
+              onClick={() => {
+                if (forwardsActive) {
+                  setCurrentView({
+                    players: marketPlayers.forward,
+                    title: 'Forwards you can sign',
+                    position: 'forward',
+                  });
+                }
+              }}
             >
               <div className='to-sign-tab-btn-inner'>
                 <span className='outline-black'>Forwards</span>
@@ -139,13 +173,17 @@ export const SignPlayerOverlay = ({ student, position }) => {
             </div>
             <div
               className={`box-shadow to-sign-tab-btn${
-                currentView.position === 'defender' ? ' active' : ''
+                defendersActive ? '' : ' disabled'
               }`}
-              onClick={setCurrentView.bind(this, {
-                players: signablePlayers.defender,
-                title: 'Defenders you can sign',
-                position: 'defender',
-              })}
+              onClick={() => {
+                if (defendersActive) {
+                  setCurrentView({
+                    players: marketPlayers.defender,
+                    title: 'Defenders you can sign',
+                    position: 'defender',
+                  });
+                }
+              }}
             >
               <div className='to-sign-tab-btn-inner'>
                 <span className='outline-black'>Defender</span>
@@ -153,13 +191,17 @@ export const SignPlayerOverlay = ({ student, position }) => {
             </div>
             <div
               className={`box-shadow to-sign-tab-btn${
-                currentView.position === 'goalie' ? ' active' : ''
+                goaliesActive ? '' : ' disabled'
               }`}
-              onClick={setCurrentView.bind(this, {
-                players: signablePlayers.goalie,
-                title: 'Goalies you can sign',
-                position: 'goalie',
-              })}
+              onClick={() => {
+                if (goaliesActive) {
+                  setCurrentView({
+                    players: marketPlayers.goalie,
+                    title: 'Goalies you can sign',
+                    position: 'goalie',
+                  });
+                }
+              }}
             >
               <div className='to-sign-tab-btn-inner'>
                 <span className='outline-black'>Goalies</span>
