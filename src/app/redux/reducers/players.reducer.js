@@ -7,7 +7,7 @@ import {
   UPDATE_SCOUT_PLAYER,
 } from '../actionTypes';
 import { cloneDeep } from 'lodash';
-import { PlayerAssignments, PlayerPositions } from '@data';
+import { PlayerAssignments, PlayerPositions } from '@data/data';
 import { isTeamPlayer } from '@utils';
 
 const initialState = {
@@ -73,7 +73,6 @@ const playersReducer = (state = initialState, action) => {
       const signedPlayer = action.payload.player;
       const assignment = action.payload.assignment;
       const clonedState = cloneDeep(state);
-      console.log(signedPlayer, clonedState.marketPlayers);
       const marketCache =
         clonedState.marketPlayers[signedPlayer.playerPosition];
 

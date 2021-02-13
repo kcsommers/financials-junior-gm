@@ -3,10 +3,10 @@ import { PlayerCard, OverlayBoard, TeamBudgetState } from '@components';
 import { useSelector, useDispatch } from 'react-redux';
 import { toggleOverlay, signPlayer, updateStudent } from '@redux/actions';
 import { ConfirmSignOverlay } from './ConfirmSignOverlay';
-import { updatePlayerOnServer } from './../../services/players-service';
-import { updateStudentOnServer } from './../../services/student-service';
+import { updatePlayerOnServer } from '@data/services/players-service';
+import { updateStudentOnServer } from '@data/services/student-service';
 import { getPlayerPositon } from '@utils';
-import { PlayerPositions } from '@data';
+import { PlayerPositions } from '@data/data';
 import '@css/components/team-page/SignPlayerOverlay.css';
 
 const getAvailableSlots = (props, team) => {

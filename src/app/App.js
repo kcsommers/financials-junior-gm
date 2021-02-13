@@ -9,7 +9,7 @@ import ScoutPage from './pages/ScoutPage';
 import { IceBackground } from '@components';
 import BudgetPage from './pages/BudgetPage';
 import Sign from './components/Sign';
-import { getStudent, getPlayers } from './dummy-data';
+import { getStudent, getPlayers } from './data/dummy-data';
 import { setStudent } from '@redux/actions';
 import '@css/App.css';
 import { setInitialPlayersState } from './redux/actions';
