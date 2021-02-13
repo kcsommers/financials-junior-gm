@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { PlayerCard, OverlayBoard, LevelStick } from '@components';
+import { PlayerCard, OverlayBoard, TeamBudgetState } from '@components';
 import { useSelector, useDispatch } from 'react-redux';
 import { toggleOverlay, signPlayer, updateStudent } from '@redux/actions';
 import { ConfirmSignOverlay } from './ConfirmSignOverlay';
@@ -43,7 +43,6 @@ export const SignPlayerOverlay = ({ team, assignment, student }) => {
   const dispatch = useDispatch();
 
   const marketPlayers = useSelector((state) => state.players.marketPlayers);
-  console.log('MARKETFORWARS::::: ', marketPlayers.forward);
   const [currentView, setCurrentView] = useState({
     players: marketPlayers.forward,
     title: 'Forwards you can sign',
@@ -132,12 +131,7 @@ export const SignPlayerOverlay = ({ team, assignment, student }) => {
       >
         <div className='sign-player-overlay-top' style={{ display: 'flex' }}>
           <div style={{ flex: 1 }}>
-            <div className='level-sticks-card'>
-              <div className='level-sticks-card-inner'>
-                <LevelStick type='teamRank' />
-                <LevelStick type='budget' />
-              </div>
-            </div>
+            <TeamBudgetState />
           </div>
           <div style={{ flex: 1 }}>
             <h3
