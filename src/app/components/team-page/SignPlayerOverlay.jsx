@@ -99,7 +99,7 @@ export const SignPlayerOverlay = ({ team, assignment, student }) => {
           <ConfirmSignOverlay
             player={player}
             position={assignment}
-            confirm={signConfirmed}
+            confirm={signConfirmed.bind(this, player)}
             cancel={signCancelled}
           />
         ),

@@ -63,9 +63,9 @@ export const signPlayer = (player, assignment) => ({
   payload: { player, assignment },
 });
 
-export const releasePlayer = (player) => ({
+export const releasePlayer = (player, prevAssignment) => ({
   type: RELEASE_PLAYER,
-  payload: player,
+  payload: { player, prevAssignment },
 });
 
 export const tradePlayer = (releasedPlayer, signedPlayer, position) => ({

@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
-import { toggleOverlay } from '@redux/actions';
+import { toggleOverlay, updateStudent, releasePlayer } from '@redux/actions';
 import {
   PlayerCard,
   OverlayBoard,
@@ -8,8 +8,12 @@ import {
   // FindTradePlayer,
 } from '@components';
 import '@css/components/team-page/PlayerDetailsOverlay.css';
+import { PlayerAssignments } from '@data';
+import { cloneDeep } from 'lodash';
+import { updatePlayerOnServer } from './../../services/players-service';
+import { updateStudentOnServer } from './../../services/student-service';
 
-export const PlayerDetailsOverlay = ({ player }) => {
+export const PlayerDetailsOverlay = ({ player, student }) => {
   const dispatch = useDispatch();
 
   const releaseCancelled = () => {
@@ -22,12 +26,29 @@ export const PlayerDetailsOverlay = ({ player }) => {
   };
 
   const releaseConfirmed = () => {
-    dispatch(
-      toggleOverlay({
-        isOpen: true,
-        template: <PlayerReleasedOverlay />,
+    const prevAssignment = player.playerAssignment;
+    player.playerAssignment = PlayerAssignments.MARKET;
+    const clonedStudent = cloneDeep(student);
+    clonedStudent[player.playerPosition] = null;
+
+    Promise.all([
+      updatePlayerOnServer.bind(this, player, {
+        playerAssignment: PlayerAssignments.Market,
+      }),
+      updateStudentOnServer.bind(this, clonedStudent),
+    ])
+      .then((res) => {
+        dispatch(releasePlayer(player, prevAssignment));
+        dispatch(updateStudent({ [prevAssignment]: null }));
+        dispatch(
+          toggleOverlay({
+            isOpen: true,
+            template: <PlayerReleasedOverlay player={player} />,
+            canClose: true,
+          })
+        );
       })
-    );
+      .catch((err) => console.error(err));
   };
 
   const confirmTrade = () => {

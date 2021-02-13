@@ -41,7 +41,7 @@ const TeamPage = () => {
     dispatch(
       toggleOverlay({
         isOpen: true,
-        template: <PlayerDetailsOverlay player={player} />,
+        template: <PlayerDetailsOverlay player={player} student={student} />,
       })
     );
   };

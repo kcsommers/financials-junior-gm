@@ -39,7 +39,7 @@ export const Overlay = () => {
           {overlayConfig.template}
           {overlayConfig.canClose && (
             <ReactSVG
-              className='close-btn box-shadow'
+              className='close-btn'
               src={closeBtn}
               onClick={closeOverlay.bind(this)}
             />
