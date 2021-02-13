@@ -72,14 +72,6 @@ div.team-players-card {
   overflow: hidden;
 }
 
-div.team-players-card > div.team-players-row {
-  margin-top: 0.5rem;
-}
-
-div.team-players-card > div.team-players-row-2 {
-  margin-top: 1rem;
-}
-
 div.team-players-card,
 div.bench-players-card {
   color: #006b77;
@@ -90,6 +82,7 @@ div.bench-players-card {
 
 div.bench-players-card {
   margin-top: 1rem;
+  min-height: 150.098px;
 }
 
 div.bench-players-card > div.team-players-row {

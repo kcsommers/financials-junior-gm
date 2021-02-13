@@ -18,10 +18,32 @@ const getAvailableSlots = (props, team) => {
   }, 0);
 };
 
+const getPlayerCardStyles = (arrLength, playerIndex) => {
+  let scale = 1.15;
+  let marginRight = '2rem';
+  if (arrLength > 5 && arrLength < 7) {
+    scale = 1;
+    marginRight = '1rem';
+  } else if (arrLength > 5) {
+    scale = 0.85;
+    marginRight = '0.5rem';
+  }
+
+  if (playerIndex === arrLength - 1) {
+    marginRight = '0rem';
+  }
+
+  return {
+    transform: `scale(${scale})`,
+    marginRight,
+  };
+};
+
 export const SignPlayerOverlay = ({ team, assignment, student }) => {
   const dispatch = useDispatch();
 
   const marketPlayers = useSelector((state) => state.players.marketPlayers);
+  console.log('MARKETFORWARS::::: ', marketPlayers.forward);
   const [currentView, setCurrentView] = useState({
     players: marketPlayers.forward,
     title: 'Forwards you can sign',
@@ -219,11 +241,7 @@ export const SignPlayerOverlay = ({ team, assignment, student }) => {
               {currentView.players.map((p, i) => (
                 <div
                   key={i}
-                  style={{
-                    transform: 'scale(1.15)',
-                    marginRight:
-                      i !== currentView.players.length - 1 ? '2rem' : '0rem',
-                  }}
+                  style={getPlayerCardStyles(currentView.players.length, i)}
                 >
                   <PlayerCard player={p} onClick={confirmSign.bind(this, p)} />
                 </div>
