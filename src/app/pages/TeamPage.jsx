@@ -25,6 +25,7 @@ const TeamPage = () => {
   const tutorialActive = useSelector((state) => state.tutorial.isActive);
   const student = useSelector((state) => state.studentState.student);
   const team = useSelector((state) => state.players.teamPlayers);
+  const scoutingState = useSelector((state) => state.players.scoutingState);
   const playerCardAnimationStates = {
     playerCard: useSelector((state) => state.tutorial.team.playerCard),
     playerCardEmpty: useSelector(
@@ -173,34 +174,40 @@ const TeamPage = () => {
               </div>
             </div>
 
-            <div className='bench-players-card'>
+            <div
+              className={`bench-players-card${
+                !scoutingState.isComplete ? ' disabled' : ''
+              }`}
+            >
               <p className='color-primary on-the-bench-text'>On the Bench</p>
-              <div className='team-players-row team-bench-row'>
-                <PlayerCard
-                  player={team.benchOne}
-                  onClick={
-                    team.benchOne
-                      ? openPlayerDetailsOverlay
-                      : openSignPlayerOverlay.bind(this, 'benchOne')
-                  }
-                />
-                <PlayerCard
-                  player={team.benchTwo}
-                  onClick={
-                    team.benchTwo
-                      ? openPlayerDetailsOverlay
-                      : openSignPlayerOverlay.bind(this, 'benchTwo')
-                  }
-                />
-                <PlayerCard
-                  player={team.benchThree}
-                  onClick={
-                    team.benchThree
-                      ? openPlayerDetailsOverlay
-                      : openSignPlayerOverlay.bind(this, 'benchThree')
-                  }
-                />
-              </div>
+              {scoutingState.isComplete && (
+                <div className='team-players-row team-bench-row'>
+                  <PlayerCard
+                    player={team.benchOne}
+                    onClick={
+                      team.benchOne
+                        ? openPlayerDetailsOverlay
+                        : openSignPlayerOverlay.bind(this, 'benchOne')
+                    }
+                  />
+                  <PlayerCard
+                    player={team.benchTwo}
+                    onClick={
+                      team.benchTwo
+                        ? openPlayerDetailsOverlay
+                        : openSignPlayerOverlay.bind(this, 'benchTwo')
+                    }
+                  />
+                  <PlayerCard
+                    player={team.benchThree}
+                    onClick={
+                      team.benchThree
+                        ? openPlayerDetailsOverlay
+                        : openSignPlayerOverlay.bind(this, 'benchThree')
+                    }
+                  />
+                </div>
+              )}
             </div>
           </div>
         </div>
