@@ -7,6 +7,7 @@ import {
   PlayerCard,
   ScoutingCompleteOverlay,
   Overlay,
+  PlayerDetailsOverlay,
 } from '@components';
 import scoutStick from '@images/scout-stick.svg';
 import { useSelector, useDispatch } from 'react-redux';
@@ -22,8 +23,9 @@ import {
 } from '@redux/actions';
 import { isEqual } from 'lodash';
 import { getMoneyLevels } from '@utils';
-import { updatePlayerOnServer } from './../services/players-service';
+import { updatePlayerOnServer } from '@data/services/players-service';
 import { cloneDeep } from 'lodash';
+import { PlayerAssignments } from '@data/data';
 import '@css/pages/ScoutPage.css';
 
 const boardMap = {
@@ -64,82 +66,106 @@ const ScoutPage = () => {
     dispatch(setTutorialState({ isActive: false }));
   };
 
-  const getDroppableItem = (player, key, small = false) => {
-    const level = key.split('-')[0];
-    boardMap[level][key] = player;
+  const showPlayerDetails = useCallback(
+    (player) => {
+      dispatch(
+        toggleOverlay({
+          isOpen: true,
+          template: (
+            <PlayerDetailsOverlay
+              player={player}
+              includeActions={false}
+              student={student}
+            />
+          ),
+        })
+      );
+    },
+    [dispatch, student]
+  );
 
-    const isEmpty = !player && level === 'available';
-    const playerCard = !isEmpty ? (
-      player ? (
-        <Draggable
-          key={player.playerName}
-          draggableId={player.playerName}
-          index={0}
-          className='draggable-player'
-        >
-          {(dragProvided, dragSnapshot) => (
-            <div
-              style={
-                small && !dragSnapshot.isDragging
-                  ? {
-                      transform: 'scale(0.85)',
-                    }
-                  : {}
-              }
-            >
-              <PlayerDragItem
-                small={small}
-                provided={dragProvided}
-                innerRef={dragProvided.innerRef}
-                player={player}
-                isDragging={dragSnapshot.isDragging}
-              ></PlayerDragItem>
-            </div>
-          )}
-        </Draggable>
-      ) : (
-        <div style={small ? { transform: 'scale(0.85)' } : {}}>
-          <PlayerCard key={`${key}-empty`} disableClick={true} />
-        </div>
-      )
-    ) : (
-      <div className='empty-player-slot'></div>
-    );
+  const getDroppableItem = useCallback(
+    (player, key, small = false) => {
+      const level = key.split('-')[0];
+      boardMap[level][key] = player;
 
-    return (
-      <div
-        key={`${key}-droppable-wrap`}
-        className={`player-card-drop${small ? ' player-card-drop-small' : ''}`}
-        style={
-          !!player && level !== 'available'
-            ? {
-                position: 'relative',
-                top: '-7px',
-              }
-            : {}
-        }
-      >
-        <Droppable
-          key={`${key}-droppable`}
-          droppableId={`${key}`}
-          isDropDisabled={!!player}
-        >
-          {(dropProvided, dropSnapshot) => (
-            <>
-              <PlayerDropContainer
-                provided={dropProvided}
-                innerRef={dropProvided.innerRef}
-                player={player}
-                isDraggingOver={dropSnapshot.isDraggingOver}
+      const isEmpty = !player && level === 'available';
+      const playerCard = !isEmpty ? (
+        player ? (
+          <Draggable
+            key={player.playerName}
+            draggableId={player.playerName}
+            index={0}
+            className='draggable-player'
+          >
+            {(dragProvided, dragSnapshot) => (
+              <div
+                style={
+                  small && !dragSnapshot.isDragging
+                    ? {
+                        transform: 'scale(0.85)',
+                      }
+                    : {}
+                }
               >
-                {playerCard}
-              </PlayerDropContainer>
-            </>
-          )}
-        </Droppable>
-      </div>
-    );
-  };
+                <PlayerDragItem
+                  small={small}
+                  provided={dragProvided}
+                  innerRef={dragProvided.innerRef}
+                  player={player}
+                  isDragging={dragSnapshot.isDragging}
+                  onClick={showPlayerDetails.bind(this, player)}
+                ></PlayerDragItem>
+              </div>
+            )}
+          </Draggable>
+        ) : (
+          <div style={small ? { transform: 'scale(0.85)' } : {}}>
+            <PlayerCard key={`${key}-empty`} />
+          </div>
+        )
+      ) : (
+        <div className='empty-player-slot'></div>
+      );
+
+      return (
+        <div
+          key={`${key}-droppable-wrap`}
+          className={`player-card-drop${
+            small ? ' player-card-drop-small' : ''
+          }`}
+          style={
+            !!player && level !== 'available'
+              ? {
+                  position: 'relative',
+                  top: '-7px',
+                }
+              : {}
+          }
+        >
+          <Droppable
+            key={`${key}-droppable`}
+            droppableId={`${key}`}
+            isDropDisabled={!!player}
+          >
+            {(dropProvided, dropSnapshot) => (
+              <>
+                <PlayerDropContainer
+                  provided={dropProvided}
+                  innerRef={dropProvided.innerRef}
+                  player={player}
+                  isDraggingOver={dropSnapshot.isDraggingOver}
+                >
+                  {playerCard}
+                </PlayerDropContainer>
+              </>
+            )}
+          </Droppable>
+        </div>
+      );
+    },
+    [showPlayerDetails]
+  );
 
   const getAvailablePlayersBoard = useCallback(
     (_players) => {
@@ -174,7 +200,7 @@ const ScoutPage = () => {
           </div>
         ));
     },
-    [scoutPlayers.available]
+    [scoutPlayers.available, getDroppableItem]
   );
 
   const getOfferedPlayersBoard = useCallback(
@@ -228,7 +254,7 @@ const ScoutPage = () => {
         </div>
       ));
     },
-    [moneyLevelAnimationStates, scoutPlayers]
+    [moneyLevelAnimationStates, scoutPlayers, getDroppableItem]
   );
 
   const onPlayerDropped = (e) => {
@@ -273,15 +299,15 @@ const ScoutPage = () => {
 
     levelOneCloned.forEach((p) => {
       p.playerCost = moneyLevels[0].num;
-      p.playerAssignment = 'marketPlayer';
+      p.playerAssignment = PlayerAssignments.MARKET;
     });
     levelTwoCloned.forEach((p) => {
       p.playerCost = moneyLevels[1].num;
-      p.playerAssignment = 'marketPlayer';
+      p.playerAssignment = PlayerAssignments.MARKET;
     });
     levelThreeCloned.forEach((p) => {
       p.playerCost = moneyLevels[2].num;
-      p.playerAssignment = 'marketPlayer';
+      p.playerAssignment = PlayerAssignments.MARKET;
     });
 
     updatePlayerOnServer(null)
@@ -297,6 +323,7 @@ const ScoutPage = () => {
           scoutingComplete(levelOneCloned, levelTwoCloned, levelThreeCloned)
         );
         window.setTimeout(() => {
+          history.push('/team');
           dispatch(
             toggleOverlay({
               isOpen: false,
@@ -304,7 +331,6 @@ const ScoutPage = () => {
               canClose: true,
             })
           );
-          history.push('/team');
         }, 5000);
       })
       .catch((err) => console.error(err));
