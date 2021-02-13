@@ -1,5 +1,4 @@
 import { motion } from 'framer-motion';
-
 import playerImage from '@images/icons/player-image.svg';
 import { capitalize, getDollarString } from '@utils';
 import { PlayerRankPie } from './PlayerRankPie';

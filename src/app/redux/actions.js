@@ -6,6 +6,7 @@ import {
   SET_STUDENT,
   SET_SAVINGS,
   PLAYER_SIGNED,
+  REMOVE_SIGNABLE_PLAYER,
   SET_SIGNABLE_PLAYERS,
 } from './actionTypes';
 
@@ -44,7 +45,12 @@ export const setSignablePlayers = (players) => ({
   payload: players,
 });
 
-export const plaerySigned = (player) => ({
-  type: PLAYER_SIGNED,
+export const removeSignablePlayer = (player) => ({
+  type: REMOVE_SIGNABLE_PLAYER,
   payload: player,
+});
+
+export const playerSigned = (player, position) => ({
+  type: PLAYER_SIGNED,
+  payload: { player, position },
 });

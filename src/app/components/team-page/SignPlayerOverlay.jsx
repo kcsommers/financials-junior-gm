@@ -1,7 +1,12 @@
 import { useState } from 'react';
-import AvailableForwards from './../sign-page/AvailableForwards';
 import { PlayerCard, OverlayBoard, LevelStick } from '@components';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import {
+  toggleOverlay,
+  removeSignablePlayer,
+  playerSigned,
+} from '@redux/actions';
+import { ConfirmSignOverlay } from './ConfirmSignOverlay';
 import '@css/components/team-page/SignPlayerOverlay.css';
 
 const getAvailableSlots = (num, props, student) => {
@@ -9,6 +14,8 @@ const getAvailableSlots = (num, props, student) => {
 };
 
 export const SignPlayerOverlay = ({ student, position }) => {
+  const dispatch = useDispatch();
+
   const signablePlayers = useSelector((state) => state.players.signablePlayers);
   const [currentView, setCurrentView] = useState({
     players: signablePlayers.forward,
@@ -18,8 +25,8 @@ export const SignPlayerOverlay = ({ student, position }) => {
 
   const availableSlots = {
     forwards: getAvailableSlots(3, ['fOne', 'fTwo', 'fThree'], student),
-    defender: getAvailableSlots(3, ['dOne', 'dTwo'], student),
-    goalie: getAvailableSlots(3, ['gOne'], student),
+    defender: getAvailableSlots(2, ['dOne', 'dTwo'], student),
+    goalie: getAvailableSlots(1, ['gOne'], student),
     bench: getAvailableSlots(
       3,
       ['benchOne', 'benchTwo', 'benchThree'],
@@ -27,7 +34,42 @@ export const SignPlayerOverlay = ({ student, position }) => {
     ),
   };
 
-  console.log('SIGNABLE:::: ', signablePlayers);
+  const signCancelled = () => {
+    dispatch(
+      toggleOverlay({
+        isOpen: true,
+        template: <SignPlayerOverlay student={student} position={position} />,
+      })
+    );
+  };
+
+  const signConfirmed = (player) => {
+    dispatch(playerSigned(player, position));
+    dispatch(removeSignablePlayer(player));
+    dispatch(
+      toggleOverlay({
+        isOpen: false,
+        template: null,
+      })
+    );
+  };
+
+  const confirmSign = (player) => {
+    console.log('CONFIGM SIGN');
+    dispatch(
+      toggleOverlay({
+        isOpen: true,
+        template: (
+          <ConfirmSignOverlay
+            player={player}
+            position={position}
+            confirm={signConfirmed}
+            cancel={signCancelled}
+          />
+        ),
+      })
+    );
+  };
 
   return (
     <OverlayBoard>
@@ -145,7 +187,7 @@ export const SignPlayerOverlay = ({ student, position }) => {
                       i !== currentView.players.length - 1 ? '2rem' : '0rem',
                   }}
                 >
-                  <PlayerCard size='medium' player={p} />
+                  <PlayerCard player={p} onClick={confirmSign.bind(this, p)} />
                 </div>
               ))}
             </div>
