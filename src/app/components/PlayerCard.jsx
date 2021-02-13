@@ -11,7 +11,9 @@ export const PlayerCard = ({ player, animationStates, isLarge, onClick }) => {
       <div className='player-card-header'>
         <div className='player-card-header-inner'>
           <span>{player.overallRank}</span>
-          <span>{getDollarString(player.playerCost)}</span>
+          {player.playerCost && (
+            <span>{getDollarString(player.playerCost)}</span>
+          )}
         </div>
       </div>
       <motion.div

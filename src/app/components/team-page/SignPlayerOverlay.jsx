@@ -3,7 +3,7 @@ import { PlayerCard, OverlayBoard, LevelStick } from '@components';
 import { useSelector, useDispatch } from 'react-redux';
 import { toggleOverlay, signPlayer, updateStudent } from '@redux/actions';
 import { ConfirmSignOverlay } from './ConfirmSignOverlay';
-import { updatePlayer } from './../../services/players-service';
+import { updatePlayerOnServer } from './../../services/players-service';
 import { updateStudentOnServer } from './../../services/student-service';
 import { getPlayerPositon } from '@utils';
 import { PlayerPositions } from '@data';
@@ -20,8 +20,6 @@ const getAvailableSlots = (props, team) => {
 
 export const SignPlayerOverlay = ({ team, assignment, student }) => {
   const dispatch = useDispatch();
-
-  console.log('ASSIGNMENT:::: ', assignment);
 
   const marketPlayers = useSelector((state) => state.players.marketPlayers);
   const [currentView, setCurrentView] = useState({
@@ -56,7 +54,7 @@ export const SignPlayerOverlay = ({ team, assignment, student }) => {
     signedPlayer.playerAssignment = assignment;
 
     Promise.all([
-      updatePlayer.bind(this, student, { [assignment]: signedPlayer }),
+      updatePlayerOnServer.bind(this, student, { [assignment]: signedPlayer }),
       updateStudentOnServer.bind(this, signedPlayer),
     ])
       .then((res) => {
@@ -98,8 +96,6 @@ export const SignPlayerOverlay = ({ team, assignment, student }) => {
   const defendersActive =
     activePosition === PlayerPositions.DEFENDER ||
     activePosition === PlayerPositions.BENCH;
-
-  console.log('PLPL', currentView);
 
   return (
     <OverlayBoard>
