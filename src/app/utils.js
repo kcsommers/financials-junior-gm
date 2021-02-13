@@ -96,6 +96,9 @@ export const getMoneyLevels = (level) => {
           num: 0.5,
         },
       };
+    default: {
+      return {};
+    }
   }
 };
 
