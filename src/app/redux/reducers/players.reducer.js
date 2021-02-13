@@ -102,9 +102,7 @@ const playersReducer = (state = initialState, action) => {
       const marketCache =
         clonedState.marketPlayers[releasedPlayer.playerPosition];
 
-      releasedPlayer.playerAssignment = signedPlayer.playerAssignment;
-      signedPlayer.playerAssignment = PlayerAssignments.MARKET;
-      clonedState.teamPlayers[releasedPlayer.playerPosition] = signedPlayer;
+      clonedState.teamPlayers[signedPlayer.playerAssignment] = signedPlayer;
       marketCache.push(releasedPlayer);
 
       return clonedState;
