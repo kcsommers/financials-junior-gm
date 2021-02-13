@@ -1,0 +1,13 @@
+.teams-playing-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.season-teams-vs-your-place,
+.season-teams-vs-opponent-place,
+.season-teams-vs {
+  font-size: 36px;
+  color: white;
+  -webkit-text-stroke: 1px black;
+}
