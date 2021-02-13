@@ -3,7 +3,8 @@ import { toggleOverlay } from '@redux/actions';
 import {
   PlayerCard,
   OverlayBoard,
-  ReleasePlayer,
+  ConfirmReleaseOverlay,
+  PlayerReleasedOverlay,
   // FindTradePlayer,
 } from '@components';
 import '@css/components/team-page/PlayerDetailsOverlay.css';
@@ -11,7 +12,25 @@ import '@css/components/team-page/PlayerDetailsOverlay.css';
 export const PlayerDetailsOverlay = ({ player }) => {
   const dispatch = useDispatch();
 
-  const handleTrade = () => {
+  const releaseCancelled = () => {
+    dispatch(
+      toggleOverlay({
+        isOpen: true,
+        template: null,
+      })
+    );
+  };
+
+  const releaseConfirmed = () => {
+    dispatch(
+      toggleOverlay({
+        isOpen: true,
+        template: <PlayerReleasedOverlay />,
+      })
+    );
+  };
+
+  const confirmTrade = () => {
     // dispatch(
     //   toggleOverlay({
     //     isOpen: true,
@@ -20,11 +39,17 @@ export const PlayerDetailsOverlay = ({ player }) => {
     // );
   };
 
-  const handleRelease = () => {
+  const confirmRelease = () => {
     dispatch(
       toggleOverlay({
         isOpen: true,
-        template: <ReleasePlayer />,
+        template: (
+          <ConfirmReleaseOverlay
+            confirm={releaseConfirmed}
+            cancel={releaseCancelled}
+            player={player}
+          />
+        ),
       })
     );
   };
@@ -48,7 +73,7 @@ export const PlayerDetailsOverlay = ({ player }) => {
         <div className='player-overlay-buttons-wrap'>
           <div
             className={`box-shadow player-overlay-btn`}
-            onClick={handleTrade}
+            onClick={confirmTrade}
           >
             <div className='player-overlay-btn-inner'>
               <span className='outline-black'>Trade</span>
@@ -56,7 +81,7 @@ export const PlayerDetailsOverlay = ({ player }) => {
           </div>
           <div
             className={`box-shadow player-overlay-btn`}
-            onClick={handleRelease}
+            onClick={confirmRelease}
           >
             <div className='player-overlay-btn-inner'>
               <span className='outline-black'>Release</span>

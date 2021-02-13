@@ -1,7 +1,7 @@
 import React from 'react';
 import { LevelStick } from './public-api';
 
-export const TeamBudgetState = ({ title }) => {
+export const TeamBudgetState = ({ title, isLarge }) => {
   return (
     <>
       {title && (
@@ -16,21 +16,22 @@ export const TeamBudgetState = ({ title }) => {
           borderRadius: '5px',
           backgroundColor: '#fff',
           padding: '1rem 0',
-          width: '370px',
+          width: isLarge ? '440px' : '370px',
         }}
       >
         <div
           className='team-budget-state-inner'
           style={{
             position: 'relative',
-            left: '-25px',
-            width: 'calc(390px)',
+            left: isLarge ? '-28px' : '-25px',
+            width: isLarge ? '460px' : '390px',
+            height: isLarge ? '385px' : 'auto',
             display: 'flex',
             alignItems: 'center',
           }}
         >
-          <LevelStick type='teamRank' />
-          <LevelStick type='budget' />
+          <LevelStick type='teamRank' isLarge={isLarge} />
+          <LevelStick type='budget' isLarge={isLarge} />
         </div>
       </div>
     </>
