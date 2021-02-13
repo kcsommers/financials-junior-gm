@@ -47,9 +47,10 @@ const TeamPage = () => {
   const student = useSelector((state) => state.studentState.student);
   const studentRef = useRef(null);
   useEffect(() => {
-    if (!isEqual(student, studentRef.current)) {
+    if (student && !isEqual(student, studentRef.current)) {
       studentRef.current = student;
       setBoardMap(getBoardMap(student));
+      console.log('sTUDTEN:::: ', boardMap, student);
     }
   }, [student]);
 

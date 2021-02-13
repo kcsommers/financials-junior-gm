@@ -1,4 +1,4 @@
-import { SET_SIGNABLE_PLAYERS, PLAYER_SIGNED } from '../actionTypes';
+import { SET_SIGNABLE_PLAYERS, REMOVE_SIGNABLE_PLAYER } from '../actionTypes';
 import { cloneDeep } from 'lodash';
 
 const initialState = {
@@ -37,11 +37,14 @@ const playersReducer = (state = initialState, action) => {
         },
       };
     }
-    case PLAYER_SIGNED: {
-      const signedPlayer = action.paylod;
-      const cache = state.signablePlayers[signedPlayer.playerPosition];
+    case REMOVE_SIGNABLE_PLAYER: {
+      const player = action.payload;
+
+      console.log('PLAYER:::: ', player);
+
+      const cache = state.signablePlayers[player.playerPosition];
       cache.splice(
-        cache.findIndex((p) => p.playerName === signedPlayer.name),
+        cache.findIndex((p) => p.playerName === player.name),
         1
       );
       return cloneDeep(state);

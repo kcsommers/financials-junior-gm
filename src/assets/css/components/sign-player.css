@@ -25,7 +25,7 @@
   font-size: 36px;
   font-weight: bold;
   color: #006b77;
-  margin-bottom: .5rem;
+  margin-bottom: 0.5rem;
 }
 
 .team-dashboard-players-card-top {
@@ -111,15 +111,6 @@
   background: radial-gradient(#002f6c, #001836);
 }
 
-.sign-player-question {
-  text-align: center;
-  font-size: 48px;
-  font-weight: bold;
-  margin-bottom: 1rem;
-  color: #006D75;
-  -webkit-text-stroke: .05px black;
-}
-
 .sign-player-options {
   display: flex;
   justify-content: space-around;
@@ -130,8 +121,8 @@
   font-size: 30px;
   font-weight: bold;
   margin-bottom: 1rem;
-  color: #006D75;
-  -webkit-text-stroke: .05px black;
+  color: #006d75;
+  -webkit-text-stroke: 0.05px black;
 }
 
 .changes-to-rank-budget {
@@ -139,7 +130,7 @@
   font-size: 30px;
   font-weight: bold;
   margin-bottom: 1rem;
-  color: #006D75;
-  -webkit-text-stroke: .05px black;
+  color: #006d75;
+  -webkit-text-stroke: 0.05px black;
   text-decoration: underline;
 }
