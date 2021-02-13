@@ -5,10 +5,74 @@ import {
   MarketPlayersBoard,
 } from '@components';
 import { getPlayerPositon } from '@utils';
+import { useDispatch } from 'react-redux';
+import { toggleOverlay, tradePlayer, updateStudent } from '@redux/actions';
+import { ConfirmTradeOverlay } from './ConfirmTradeOverlay';
+import { PlayerDetailsOverlay } from './PlayerDetailsOverlay';
+import { PlayerAssignments } from '@data/data';
+import { cloneDeep } from 'lodash';
+import { updatePlayerOnServer } from '@data/services/players-service';
+import { updateStudentOnServer } from '@data/services/student-service';
+import { PlayersTradedOverlay } from './PlayersTradedOverlay';
 
-export const TradePlayerOverlay = ({ player }) => {
-  const confirmTrade = (otherPlayer) => {
-    console.log('OTHER PLAYER:::: ', otherPlayer);
+export const TradePlayerOverlay = ({ releasingPlayer, student }) => {
+  const dispatch = useDispatch();
+
+  const tradeCancelled = () => {
+    dispatch(
+      toggleOverlay({
+        isOpen: true,
+        template: <PlayerDetailsOverlay />,
+      })
+    );
+  };
+
+  const tradeConfirmed = (signingPlayer) => {
+    const prevAssignment = releasingPlayer.playerAssignment;
+    releasingPlayer.player = PlayerAssignments.MARKET;
+    signingPlayer.playerAssignment = prevAssignment;
+    const clonedStudent = cloneDeep(student);
+    clonedStudent[prevAssignment] = signingPlayer;
+
+    Promise.all([
+      updatePlayerOnServer.bind(this, signingPlayer, {
+        playerAssignment: PlayerAssignments.Market,
+      }),
+      updateStudentOnServer.bind(this, clonedStudent),
+    ])
+      .then((res) => {
+        dispatch(tradePlayer(releasingPlayer, signingPlayer));
+        dispatch(updateStudent({ [prevAssignment]: null }));
+        dispatch(
+          toggleOverlay({
+            isOpen: true,
+            template: (
+              <PlayersTradedOverlay
+                releasedPlayer={releasingPlayer}
+                signedPlayer={signingPlayer}
+              />
+            ),
+            canClose: true,
+          })
+        );
+      })
+      .catch((err) => console.error(err));
+  };
+
+  const confirmTrade = (signingPlayer) => {
+    dispatch(
+      toggleOverlay({
+        isOpen: true,
+        template: (
+          <ConfirmTradeOverlay
+            releasingPlayer={releasingPlayer}
+            signingPlayer={signingPlayer}
+            cancel={tradeCancelled}
+            confirm={tradeConfirmed.bind(this, signingPlayer)}
+          />
+        ),
+      })
+    );
   };
 
   return (
@@ -27,10 +91,10 @@ export const TradePlayerOverlay = ({ player }) => {
       >
         <div style={{ display: 'flex', width: '100%' }}>
           <div style={{ flex: 1 }}>
-            <TeamBudgetState title='Changes to Rank and Budget' />
+            <TeamBudgetState />
           </div>
           <div style={{ flex: 1 }}>
-            <PlayerCard isLarge={true} player={player} />
+            <PlayerCard isLarge={true} player={releasingPlayer} />
           </div>
         </div>
         <div
@@ -43,7 +107,7 @@ export const TradePlayerOverlay = ({ player }) => {
           }}
         >
           <MarketPlayersBoard
-            initialPosition={getPlayerPositon(player.playerAssignment)}
+            initialPosition={getPlayerPositon(releasingPlayer.playerAssignment)}
             onPlayerCardClick={confirmTrade}
           />
         </div>
