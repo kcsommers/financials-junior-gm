@@ -1,0 +1,54 @@
+.login-div{
+    text-align: center;
+    position: relative;
+    z-index: 100;
+}
+
+.login-form-div{
+    background-color: #E5E5E5;
+    border-radius: 10px;
+    padding: 20px 48px;
+    width: 432px;
+    justify-content: center;
+    display: inline-block;
+}
+
+.login-forgot-pwd{
+    margin-top: 50px;
+    text-decoration: underline;
+}
+
+.login-btn{
+    margin: 42px auto 10px auto;
+    width: 280px;
+    cursor: pointer;
+}
+
+.login-form-field{
+    margin-top: 25px;
+}
+
+.login-form-label{
+    color: #070707;
+    font-size: 1.5rem;
+}
+
+.login-form-ip{
+    border: 1px solid #707070;
+    background-color: #FFF;
+    border-radius: 10px;
+    width: 336px;
+    height:48px;
+    padding: 0px 10px;
+}
+
+.error-text{
+    font-size: 1rem;
+    color: red !important;
+    text-align: center;
+}
+
+.login-back-to-dashboard{
+    cursor: pointer; 
+    color: #00788a;
+}
