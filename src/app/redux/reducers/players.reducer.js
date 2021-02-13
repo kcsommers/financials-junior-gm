@@ -1,9 +1,10 @@
 import {
-  SET_MARKET_PLAYERS,
+  SCOUTING_COMPLETE,
   RELEASE_PLAYER,
   SIGN_PLAYER,
   TRADE_PLAYER,
   SET_INITIAL_PLAYERS_STATE,
+  UPDATE_SCOUT_PLAYER,
 } from '../actionTypes';
 import { cloneDeep } from 'lodash';
 import { PlayerAssignments, PlayerPositions } from '@data';
@@ -16,15 +17,14 @@ const initialState = {
     goalie: [],
   },
   scoutPlayers: {
-    levelOne: [],
-    levelTwo: [],
-    levelThree: [],
-    available: [],
+    levelOne: null,
+    levelTwo: null,
+    levelThree: null,
+    available: null,
   },
   teamPlayers: null,
   scoutingState: {
     isComplete: false,
-    initialized: false,
   },
 };
 
@@ -49,7 +49,7 @@ const playersReducer = (state = initialState, action) => {
           if (p.playerPosition === PlayerPositions.FORWARD) {
             marketPlayers.forward.push(p);
           } else if (p.playerPosition === PlayerPositions.DEFENSE) {
-            marketPlayers.defense.push(p);
+            marketPlayers.defender.push(p);
           } else if (p.playerPosition === PlayerPositions.GOALIE) {
             marketPlayers.goalie.push(p);
           }
@@ -65,37 +65,7 @@ const playersReducer = (state = initialState, action) => {
         teamPlayers,
         scoutPlayers,
         scoutingState: {
-          isComplete: true,
-          initialized: true,
-        },
-      };
-    }
-    case SET_MARKET_PLAYERS: {
-      const forward = [];
-      const defender = [];
-      const goalie = [];
-      const levelOne = action.payload.levelOne;
-      const levelTwo = action.payload.levelTwo;
-      const levelThree = action.payload.levelThree;
-      const moneyLevels = action.payload.moneyLevels;
-
-      action.payload.forEach((player) => {
-        if (player.playerPosition === PlayerPositions.GOALIE) {
-          goalie.push(player);
-        } else if (player.playerPosition === PlayerPositions.FORWARD) {
-          forward.push(player);
-        } else if (player.playerPosition === PlayerPositions.DEFENDER) {
-          defender.push(player);
-        }
-      });
-
-      return {
-        ...state,
-        scoutingComplete: true,
-        marketPlayers: {
-          forward,
-          defender,
-          goalie,
+          isComplete: false,
         },
       };
     }
@@ -135,6 +105,55 @@ const playersReducer = (state = initialState, action) => {
       signedPlayer.playerAssignment = PlayerAssignments.MARKET;
       clonedState.teamPlayers[releasedPlayer.playerPosition] = signedPlayer;
       marketCache.push(releasedPlayer);
+
+      return clonedState;
+    }
+    case UPDATE_SCOUT_PLAYER: {
+      const clonedState = cloneDeep(state);
+      const updatedLevels = Object.keys(action.payload);
+
+      clonedState.scoutPlayers[updatedLevels[0]] =
+        action.payload[updatedLevels[0]];
+      clonedState.scoutPlayers[updatedLevels[1]] =
+        action.payload[updatedLevels[1]];
+
+      return clonedState;
+    }
+    case SCOUTING_COMPLETE: {
+      const { levelOne, levelTwo, levelThree } = action.payload;
+      const forward = [];
+      const defender = [];
+      const goalie = [];
+      const clonedState = cloneDeep(state);
+      const placeByPosition = (player) => {
+        if (player.playerPosition === PlayerPositions.GOALIE) {
+          goalie.push(player);
+        } else if (player.playerPosition === PlayerPositions.FORWARD) {
+          forward.push(player);
+        } else if (player.playerPosition === PlayerPositions.DEFENDER) {
+          defender.push(player);
+        }
+      };
+      levelOne.forEach(placeByPosition);
+      levelTwo.forEach(placeByPosition);
+      levelThree.forEach(placeByPosition);
+
+      clonedState.scoutPlayers.levelOne = levelOne;
+      clonedState.scoutPlayers.levelTwo = levelTwo;
+      clonedState.scoutPlayers.levelThree = levelThree;
+      clonedState.marketPlayers.forward = [
+        ...forward,
+        ...clonedState.marketPlayers.forward,
+      ];
+      clonedState.marketPlayers.defender = [
+        ...defender,
+        ...clonedState.marketPlayers.defender,
+      ];
+      clonedState.marketPlayers.goalie = [
+        ...goalie,
+        ...clonedState.marketPlayers.goalie,
+      ];
+      clonedState.scoutingState.isComplete = true;
 
       return clonedState;
     }

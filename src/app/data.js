@@ -25,7 +25,7 @@ export const PlayerAssignments = {
 export const PlayerPositions = {
   FORWARD: 'forward',
 
-  DEFENSE: 'defense',
+  DEFENSE: 'defender',
 
   GOALIE: 'goalie',
 
