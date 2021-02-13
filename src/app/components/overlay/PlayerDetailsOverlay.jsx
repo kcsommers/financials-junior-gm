@@ -8,12 +8,16 @@ import {
   // FindTradePlayer,
 } from '@components';
 import '@css/components/team-page/PlayerDetailsOverlay.css';
-import { PlayerAssignments } from '@data';
+import { PlayerAssignments } from '@data/data';
 import { cloneDeep } from 'lodash';
-import { updatePlayerOnServer } from './../../services/players-service';
-import { updateStudentOnServer } from './../../services/student-service';
+import { updatePlayerOnServer } from '@data/services/players-service';
+import { updateStudentOnServer } from '@data/services/student-service';
 
-export const PlayerDetailsOverlay = ({ player, student }) => {
+export const PlayerDetailsOverlay = ({
+  player,
+  student,
+  includeActions = true,
+}) => {
   const dispatch = useDispatch();
 
   const releaseCancelled = () => {
@@ -91,24 +95,26 @@ export const PlayerDetailsOverlay = ({ player, student }) => {
         <div className='player-details-player-wrap'>
           <PlayerCard player={player} isLarge={true} />
         </div>
-        <div className='player-overlay-buttons-wrap'>
-          <div
-            className={`box-shadow player-overlay-btn`}
-            onClick={confirmTrade}
-          >
-            <div className='player-overlay-btn-inner'>
-              <span className='outline-black'>Trade</span>
+        {includeActions && (
+          <div className='player-overlay-buttons-wrap'>
+            <div
+              className={`box-shadow player-overlay-btn`}
+              onClick={confirmTrade}
+            >
+              <div className='player-overlay-btn-inner'>
+                <span className='outline-black'>Trade</span>
+              </div>
+            </div>
+            <div
+              className={`box-shadow player-overlay-btn`}
+              onClick={confirmRelease}
+            >
+              <div className='player-overlay-btn-inner'>
+                <span className='outline-black'>Release</span>
+              </div>
             </div>
           </div>
-          <div
-            className={`box-shadow player-overlay-btn`}
-            onClick={confirmRelease}
-          >
-            <div className='player-overlay-btn-inner'>
-              <span className='outline-black'>Release</span>
-            </div>
-          </div>
-        </div>
+        )}
       </div>
     </OverlayBoard>
   );

@@ -1,4 +1,4 @@
-import { PlayerAssignments, PlayerPositions } from './data';
+import { PlayerAssignments, PlayerPositions } from './data/data';
 
 export const getPlayerProps = () => [
   'fOne',
