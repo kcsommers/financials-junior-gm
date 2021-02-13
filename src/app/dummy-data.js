@@ -137,7 +137,7 @@ export const players = [
     defensiveRank: 25,
     overallRank: 15,
     sharkPlayer: 'FALSE',
-    playerCost: 1.5,
+    playerCost: null,
     playerAssignment: 'scoutPlayer',
     imageName: '',
     playerLevel: 1,

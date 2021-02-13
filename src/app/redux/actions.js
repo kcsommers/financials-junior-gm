@@ -1,11 +1,11 @@
 import {
   SET_ANIMATION_STATE,
   TOGGLE_OVERLAY,
-  SET_SCOUTING_STATE,
+  UPDATE_SCOUT_PLAYER,
   SET_TUTORIAL_STATE,
   SET_STUDENT,
   SET_SAVINGS,
-  SET_MARKET_PLAYERS,
+  SCOUTING_COMPLETE,
   SET_INITIAL_PLAYERS_STATE,
   RELEASE_PLAYER,
   SIGN_PLAYER,
@@ -28,8 +28,8 @@ export const toggleOverlay = (state) => ({
   payload: state,
 });
 
-export const setScoutingState = (state) => ({
-  type: SET_SCOUTING_STATE,
+export const updateScoutPlayer = (state) => ({
+  type: UPDATE_SCOUT_PLAYER,
   payload: state,
 });
 
@@ -48,9 +48,9 @@ export const setSavings = (amount) => ({
   payload: amount,
 });
 
-export const setMarketPlayers = (players) => ({
-  type: SET_MARKET_PLAYERS,
-  payload: players,
+export const scoutingComplete = (levelOne, levelTwo, levelThree) => ({
+  type: SCOUTING_COMPLETE,
+  payload: { levelOne, levelTwo, levelThree },
 });
 
 export const setInitialPlayersState = (players) => ({
