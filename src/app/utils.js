@@ -125,7 +125,7 @@ export const getPlayerPositon = (assignment) => {
     }
     case PlayerAssignments.D_ONE:
     case PlayerAssignments.D_TWO: {
-      return PlayerPositions.DEFENSE;
+      return PlayerPositions.DEFENDER;
     }
     case PlayerAssignments.G_ONE: {
       return PlayerPositions.GOALIE;
