@@ -22,21 +22,8 @@ import {
 import { getScoutablePlayers } from '../dummy-data';
 import { isEqual } from 'lodash';
 import '@css/pages/ScoutPage.css';
-
-const moneyLevels = {
-  0: {
-    short: '$1',
-    long: 'one dollar',
-  },
-  1: {
-    short: '$2',
-    long: 'two dollar',
-  },
-  2: {
-    short: '50\u00a2',
-    long: 'fifty cent',
-  },
-};
+import { getMoneyLevels } from './../utils';
+import { setSignablePlayers } from './../redux/actions';
 
 const boardMap = {
   available: {},
@@ -47,8 +34,12 @@ const boardMap = {
 
 const ScoutPage = () => {
   const student = useSelector((state) => state.studentState.student);
+  const studentRef = useRef(null);
+
   const history = useHistory();
   const dispatch = useDispatch();
+  const tutorialActive = useSelector((state) => state.tutorial.isActive);
+  const scoutingState = useSelector((state) => state.scouting);
 
   const [availablePlayersBoard, setAvailablePlayersBoard] = useState([]);
   const [offeredPlayersBoard, setOfferedPlayersBoard] = useState([]);
@@ -56,11 +47,9 @@ const ScoutPage = () => {
   const availablePlayersAnimationState = useSelector(
     (state) => state.tutorial.scout.availablePlayersBoard
   );
-
   const finishedBtnAnimationState = useSelector(
     (state) => state.tutorial.scout.finishedBtn
   );
-
   const moneyLevelAnimationStates = useMemo(() => ({}), []);
   moneyLevelAnimationStates[0] = useSelector(
     (state) => state.tutorial.scout.moneyLevel1
@@ -71,10 +60,6 @@ const ScoutPage = () => {
   moneyLevelAnimationStates[2] = useSelector(
     (state) => state.tutorial.scout.moneyLevel3
   );
-
-  const tutorialActive = useSelector((state) => state.tutorial.isActive);
-
-  const scoutingState = useSelector((state) => state.scouting);
 
   // Local methods
   const onTutorialComplete = () => {
@@ -116,7 +101,7 @@ const ScoutPage = () => {
         </Draggable>
       ) : (
         <div style={small ? { transform: 'scale(0.85)' } : {}}>
-          <PlayerCard key={`${key}-empty`} />
+          <PlayerCard key={`${key}-empty`} disableClick={true} />
         </div>
       )
     ) : (
@@ -191,7 +176,11 @@ const ScoutPage = () => {
   );
 
   const getOfferedPlayersBoard = useCallback(
-    (_levelOne, _levelTwo, _levelThree) => {
+    (_levelOne, _levelTwo, _levelThree, moneyLevels) => {
+      if (!moneyLevels) {
+        return;
+      }
+
       const levelOnePlayers = [];
       const levelTwoPlayers = [];
       const levelThreePlayers = [];
@@ -287,6 +276,13 @@ const ScoutPage = () => {
         canClose: false,
       })
     );
+    dispatch(
+      setSignablePlayers([
+        ...Object.keys(boardMap.levelOne).map((k) => boardMap.levelOne[k]),
+        ...Object.keys(boardMap.levelTwo).map((k) => boardMap.levelTwo[k]),
+        ...Object.keys(boardMap.levelThree).map((k) => boardMap.levelThree[k]),
+      ])
+    );
     window.setTimeout(() => {
       dispatch(
         toggleOverlay({
@@ -308,142 +304,174 @@ const ScoutPage = () => {
     }
   };
 
+  const setBoards = useCallback(
+    (available, offered) => {
+      if (scoutingState.initialized) {
+        if (available) {
+          setAvailablePlayersBoard(
+            getAvailablePlayersBoard(scoutingState.available)
+          );
+        }
+        if (offered) {
+          setOfferedPlayersBoard(
+            getOfferedPlayersBoard(
+              scoutingState.levelOne,
+              scoutingState.levelTwo,
+              scoutingState.levelThree,
+              getMoneyLevels(student.level)
+            )
+          );
+        }
+        return;
+      }
+      getScoutablePlayers()
+        .then((_players) => {
+          setAvailablePlayersBoard(getAvailablePlayersBoard(_players));
+          setOfferedPlayersBoard(
+            getOfferedPlayersBoard([], [], [], getMoneyLevels(student.level))
+          );
+          dispatch(
+            setScoutingState({
+              levelOne: [],
+              levelTwo: [],
+              levelThree: [],
+              available: _players,
+              initialized: true,
+            })
+          );
+        })
+        .catch((err) => console.error(err));
+    },
+    [
+      dispatch,
+      student,
+      getAvailablePlayersBoard,
+      getOfferedPlayersBoard,
+      scoutingState.initialized,
+      scoutingState.available,
+      scoutingState.levelOne,
+      scoutingState.levelTwo,
+      scoutingState.levelThree,
+    ]
+  );
+
   const prevAvailableRef = useRef([]);
   const prevL1Ref = useRef([]);
   const prevL2Ref = useRef([]);
   const prevL3Ref = useRef([]);
   useEffect(() => {
-    if (scoutingState.initialized) {
-      if (!isEqual(scoutingState.available, prevAvailableRef.current)) {
-        setAvailablePlayersBoard(
-          getAvailablePlayersBoard(scoutingState.available)
-        );
-      }
-      if (
-        !isEqual(scoutingState.levelOne, prevL1Ref.current) ||
-        !isEqual(scoutingState.levelTwo, prevL2Ref.current) ||
-        !isEqual(scoutingState.levelThree, prevL3Ref.current)
-      ) {
-        setOfferedPlayersBoard(
-          getOfferedPlayersBoard(
-            scoutingState.levelOne,
-            scoutingState.levelTwo,
-            scoutingState.levelThree
-          )
-        );
-      }
-
-      prevAvailableRef.current = scoutingState.available;
-      prevL1Ref.current = scoutingState.levelOne;
-      prevL2Ref.current = scoutingState.levelTwo;
-      prevL3Ref.current = scoutingState.levelThree;
+    if (!student) {
       return;
     }
 
-    getScoutablePlayers()
-      .then((_players) => {
-        setAvailablePlayersBoard(getAvailablePlayersBoard(_players));
-        setOfferedPlayersBoard(getOfferedPlayersBoard([], [], []));
-        dispatch(
-          setScoutingState({
-            levelOne: [],
-            levelTwo: [],
-            levelThree: [],
-            available: _players,
-            initialized: true,
-          })
-        );
-      })
-      .catch((err) => console.error(err));
-  }, [
-    dispatch,
-    getAvailablePlayersBoard,
-    getOfferedPlayersBoard,
-    scoutingState.initialized,
-    scoutingState.available,
-    scoutingState.levelOne,
-    scoutingState.levelTwo,
-    scoutingState.levelThree,
-  ]);
+    const setAvailable = !isEqual(
+      scoutingState.available,
+      prevAvailableRef.current
+    );
 
-  return student ? (
-    <div className='page-container scout-page-container'>
-      <HeaderComponent
-        stickBtn={scoutStick}
-        largeStick={true}
-        objectives={['1. Scout players to sign to your bench!']}
-        level={student.level}
-      />
-      <PageBoard hideCloseBtn={true}>
-        <div className='scout-page-board-header'>
-          <p className='color-primary scout-page-helper-text'>
-            Give each new player a offered value by dragging them to their money
-            level!
-          </p>
-          <span
-            style={{ position: 'absolute', right: '0.5rem', top: '0.25rem' }}
-          >
-            <SharkieButton tutorialSlides={[scoutSlides]} textPosition='left' />
-          </span>
-        </div>
+    const setOffered =
+      !isEqual(scoutingState.levelOne, prevL1Ref.current) ||
+      !isEqual(scoutingState.levelTwo, prevL2Ref.current) ||
+      !isEqual(scoutingState.levelThree, prevL3Ref.current);
 
-        <DragDropContext onDragEnd={onDragEnd}>
-          <div className='scout-page-board-inner'>
-            <div className='scout-page-board-left'>
-              {tutorialActive ? (
-                <motion.div
-                  className='scout-board'
-                  animate={availablePlayersAnimationState}
-                  transition={{ default: { duration: 1 } }}
-                >
-                  {availablePlayersBoard}
-                </motion.div>
-              ) : (
-                <div className='scout-board'>{availablePlayersBoard}</div>
-              )}
-            </div>
+    setBoards(setAvailable, setOffered);
 
-            <div className='scout-page-board-right'>
-              <div style={{ position: 'relative', top: '-13px' }}>
-                {offeredPlayersBoard}
+    prevAvailableRef.current = scoutingState.available;
+    prevL1Ref.current = scoutingState.levelOne;
+    prevL2Ref.current = scoutingState.levelTwo;
+    prevL3Ref.current = scoutingState.levelThree;
+  }, [setBoards]);
+
+  useEffect(() => {
+    if (student && !studentRef.current) {
+      studentRef.current = student;
+      setBoards();
+    }
+  }, [student, setBoards]);
+
+  if (student) {
+    return (
+      <div className='page-container scout-page-container'>
+        <HeaderComponent
+          stickBtn={scoutStick}
+          largeStick={true}
+          objectives={['1. Scout players to sign to your bench!']}
+          level={student.level}
+        />
+        <PageBoard hideCloseBtn={true}>
+          <div className='scout-page-board-header'>
+            <p className='color-primary scout-page-helper-text'>
+              Give each new player a offered value by dragging them to their
+              money level!
+            </p>
+            <span
+              style={{ position: 'absolute', right: '0.5rem', top: '0.25rem' }}
+            >
+              <SharkieButton
+                tutorialSlides={[scoutSlides]}
+                textPosition='left'
+              />
+            </span>
+          </div>
+
+          <DragDropContext onDragEnd={onDragEnd}>
+            <div className='scout-page-board-inner'>
+              <div className='scout-page-board-left'>
+                {tutorialActive ? (
+                  <motion.div
+                    className='scout-board'
+                    animate={availablePlayersAnimationState}
+                    transition={{ default: { duration: 1 } }}
+                  >
+                    {availablePlayersBoard}
+                  </motion.div>
+                ) : (
+                  <div className='scout-board'>{availablePlayersBoard}</div>
+                )}
+              </div>
+
+              <div className='scout-page-board-right'>
+                <div style={{ position: 'relative', top: '-13px' }}>
+                  {offeredPlayersBoard}
+                </div>
               </div>
             </div>
-          </div>
-        </DragDropContext>
-        <div className='scout-page-board-footer'>
-          <p className='color-primary'>
-            Remember to tap a player to learn more about them!
-          </p>
-          <motion.div
-            className='color-primary finished-btn'
-            animate={finishedBtnAnimationState}
-          >
-            <div
-              onClick={() => {
-                if (scoutingState.initialized) {
-                  validateScouting();
-                }
-              }}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                cursor: 'pointer',
-              }}
+          </DragDropContext>
+          <div className='scout-page-board-footer'>
+            <p className='color-primary'>
+              Remember to tap a player to learn more about them!
+            </p>
+            <motion.div
+              className='color-primary finished-btn'
+              animate={finishedBtnAnimationState}
             >
-              <span>Click here when you finish!</span>
-              <div className='check-btn-small'></div>
-            </div>
-          </motion.div>
-        </div>
-      </PageBoard>
-      <Overlay />
-      {tutorialActive && (
-        <Tutorial slides={[scoutSlides]} onComplete={onTutorialComplete} />
-      )}
-    </div>
-  ) : (
-    <div>Loading...</div>
-  );
+              <div
+                onClick={() => {
+                  if (scoutingState.initialized) {
+                    validateScouting();
+                  }
+                }}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  cursor: 'pointer',
+                }}
+              >
+                <span>Click here when you finish!</span>
+                <div className='check-btn-small'></div>
+              </div>
+            </motion.div>
+          </div>
+        </PageBoard>
+        <Overlay />
+        {tutorialActive && (
+          <Tutorial slides={[scoutSlides]} onComplete={onTutorialComplete} />
+        )}
+      </div>
+    );
+  } else {
+    return <div>Loading...</div>;
+  }
 };
 
 export default ScoutPage;

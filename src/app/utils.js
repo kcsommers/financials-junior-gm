@@ -37,3 +37,62 @@ export const getDollarString = (num) => {
   }
   return `$${num.toFixed(2)}`;
 };
+
+export const getMoneyLevels = (level) => {
+  switch (level) {
+    case 1:
+      return {
+        0: {
+          short: '$2',
+          long: 'two dollar',
+          num: 2,
+        },
+        1: {
+          short: '$1',
+          long: 'one dollar',
+          num: 1,
+        },
+        2: {
+          short: '50\u00a2',
+          long: 'fifty cent',
+          num: 0.5,
+        },
+      };
+    case 2:
+      return {
+        0: {
+          short: '$2',
+          long: 'two dollar',
+          num: 2,
+        },
+        1: {
+          short: '$1',
+          long: 'one dollar',
+          num: 1,
+        },
+        2: {
+          short: '50\u00a2',
+          long: 'fifty cent',
+          num: 0.5,
+        },
+      };
+    case 3:
+      return {
+        0: {
+          short: '$2',
+          long: 'two dollar',
+          num: 2,
+        },
+        1: {
+          short: '$1',
+          long: 'one dollar',
+          num: 1,
+        },
+        2: {
+          short: '50\u00a2',
+          long: 'fifty cent',
+          num: 0.5,
+        },
+      };
+  }
+};
