@@ -1,31 +1,33 @@
-import React, { Component } from "react";
-import { Redirect } from 'react-router'
+import React, { Component } from 'react';
+import { Redirect } from 'react-router';
 
 class StudentPortal extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
-      isLoggedIn: localStorage.getItem('isLoggedIn') == 'true' ? true : localStorage.getItem('isLoggedIn') == true ? true : false,
-      role: localStorage.getItem('userRole') ? localStorage.getItem('userRole') : '',
-    }
+      isLoggedIn:
+        localStorage.getItem('isLoggedIn') == 'true'
+          ? true
+          : localStorage.getItem('isLoggedIn') == true
+          ? true
+          : false,
+      role: localStorage.getItem('userRole')
+        ? localStorage.getItem('userRole')
+        : '',
+    };
   }
 
-
   render() {
-    if (!this.state.isLoggedIn || (this.state.role !== "student")) {
+    if (!this.state.isLoggedIn || this.state.role !== 'student') {
       return (
         <Redirect
           to={{
-            pathname: "/dashboard"
+            pathname: '/dashboard',
           }}
         />
       );
     }
-    return (
-      <div>
-        {this.props.screen}
-      </div>
-    );
+    return <div style={{ height: '100%' }}>{this.props.screen}</div>;
   }
 }
-export default StudentPortal 
+export default StudentPortal;
