@@ -1,4 +1,6 @@
 export { PlayerRankPie } from './PlayerRankPie';
+export { ConfirmTradeOverlay } from './overlay/ConfirmTradeOverlay';
+export { TradePlayerOverlay } from './overlay/TradePlayerOverlay';
 export { PlayerReleasedOverlay } from './overlay/PlayerReleasedOverlay';
 export { ConfirmReleaseOverlay } from './overlay/ConfirmReleaseOverlay';
 export { ConfirmOverlay } from './overlay/ConfirmOverlay';
@@ -37,3 +39,4 @@ export { TeamBudgetState } from './TeamBudgetState';
 export { PlayerTradeExchange } from './trade-overlay/PlayerTradeExchange';
 export { ReleasePlayer } from './release-overlay/ReleasePlayer';
 export { PlayerReleased } from './release-overlay/PlayerReleased';
+export { MarketPlayersBoard } from './MarketPlayersBoard';

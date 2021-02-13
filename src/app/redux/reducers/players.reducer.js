@@ -48,7 +48,7 @@ const playersReducer = (state = initialState, action) => {
         if (p.playerAssignment === PlayerAssignments.MARKET) {
           if (p.playerPosition === PlayerPositions.FORWARD) {
             marketPlayers.forward.push(p);
-          } else if (p.playerPosition === PlayerPositions.DEFENSE) {
+          } else if (p.playerPosition === PlayerPositions.DEFENDER) {
             marketPlayers.defender.push(p);
           } else if (p.playerPosition === PlayerPositions.GOALIE) {
             marketPlayers.goalie.push(p);

@@ -54,6 +54,7 @@ div.player-card-header:after {
   background: inherit;
   z-index: -1;
   bottom: 0;
+  left: 0;
   border-radius: 5px;
 }
 

@@ -5,7 +5,7 @@ import {
   OverlayBoard,
   ConfirmReleaseOverlay,
   PlayerReleasedOverlay,
-  // FindTradePlayer,
+  TradePlayerOverlay,
 } from '@components';
 import '@css/components/team-page/PlayerDetailsOverlay.css';
 import { PlayerAssignments } from '@data/data';
@@ -56,12 +56,12 @@ export const PlayerDetailsOverlay = ({
   };
 
   const confirmTrade = () => {
-    // dispatch(
-    //   toggleOverlay({
-    //     isOpen: true,
-    //     template: <FindTradePlayer />,
-    //   })
-    // );
+    dispatch(
+      toggleOverlay({
+        isOpen: true,
+        template: <TradePlayerOverlay player={player} />,
+      })
+    );
   };
 
   const confirmRelease = () => {
