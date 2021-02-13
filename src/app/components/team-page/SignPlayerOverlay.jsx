@@ -4,6 +4,10 @@ import { PlayerCard, OverlayBoard, LevelStick } from '@components';
 import { useSelector } from 'react-redux';
 import '@css/components/team-page/SignPlayerOverlay.css';
 
+const getAvailableSlots = (num, props, student) => {
+  return num - props.filter((p) => student[p]).length;
+};
+
 export const SignPlayerOverlay = ({ student, position }) => {
   const signablePlayers = useSelector((state) => state.players.signablePlayers);
   const [currentView, setCurrentView] = useState({
@@ -13,15 +17,17 @@ export const SignPlayerOverlay = ({ student, position }) => {
   });
 
   const availableSlots = {
-    forwards: 3 - signablePlayers.forward.length,
-    defense: 2 - signablePlayers.defense.length,
-    goalie: 1 - signablePlayers.goalie.length,
-    bench:
-      3 -
-      ['benchOne', 'benchTwo', 'benchThree'].filter((p) => student[p]).length,
+    forwards: getAvailableSlots(3, ['fOne', 'fTwo', 'fThree'], student),
+    defender: getAvailableSlots(3, ['dOne', 'dTwo'], student),
+    goalie: getAvailableSlots(3, ['gOne'], student),
+    bench: getAvailableSlots(
+      3,
+      ['benchOne', 'benchTwo', 'benchThree'],
+      student
+    ),
   };
 
-  console.log('PLAEYRS:::: ', currentView.players);
+  console.log('SIGNABLE:::: ', signablePlayers);
 
   return (
     <OverlayBoard>
@@ -59,7 +65,7 @@ export const SignPlayerOverlay = ({ student, position }) => {
               </div>
               <div className='team-slots-board-row'>
                 <span className='color-primary'>Defenders:</span>
-                <span className='color-accent'>{availableSlots.defense}</span>
+                <span className='color-accent'>{availableSlots.defender}</span>
               </div>
               <div className='team-slots-board-row'>
                 <span className='color-primary'>Goalie:</span>
@@ -91,16 +97,16 @@ export const SignPlayerOverlay = ({ student, position }) => {
             </div>
             <div
               className={`box-shadow to-sign-tab-btn${
-                currentView.position === 'defense' ? ' active' : ''
+                currentView.position === 'defender' ? ' active' : ''
               }`}
               onClick={setCurrentView.bind(this, {
-                players: signablePlayers.defense,
+                players: signablePlayers.defender,
                 title: 'Defenders you can sign',
-                position: 'defense',
+                position: 'defender',
               })}
             >
               <div className='to-sign-tab-btn-inner'>
-                <span className='outline-black'>Defense</span>
+                <span className='outline-black'>Defender</span>
               </div>
             </div>
             <div
@@ -120,9 +126,27 @@ export const SignPlayerOverlay = ({ student, position }) => {
           </div>
           <div className='to-sign-inner'>
             <h3 className='color-primary to-sign-title'>{currentView.title}</h3>
-            <div className='to-sign-players-wrap'>
-              {currentView.players.map((p) => (
-                <PlayerCard size='medium' player={p} />
+            <div
+              className='to-sign-players-wrap'
+              style={
+                currentView.players.length > 1
+                  ? {
+                      justifyContent: 'space-around',
+                    }
+                  : {}
+              }
+            >
+              {currentView.players.map((p, i) => (
+                <div
+                  key={i}
+                  style={{
+                    transform: 'scale(1.15)',
+                    marginRight:
+                      i !== currentView.players.length - 1 ? '2rem' : '0rem',
+                  }}
+                >
+                  <PlayerCard size='medium' player={p} />
+                </div>
               ))}
             </div>
           </div>

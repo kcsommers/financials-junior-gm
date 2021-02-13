@@ -4,7 +4,7 @@ import { cloneDeep } from 'lodash';
 const initialState = {
   signablePlayers: {
     forward: [],
-    defense: [],
+    defender: [],
     goalie: [],
   },
   scoutingComplete: false,
@@ -14,7 +14,7 @@ const playersReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_SIGNABLE_PLAYERS: {
       const forward = [];
-      const defense = [];
+      const defender = [];
       const goalie = [];
 
       action.payload.forEach((player) => {
@@ -22,8 +22,8 @@ const playersReducer = (state = initialState, action) => {
           goalie.push(player);
         } else if (player.playerPosition === 'forward') {
           forward.push(player);
-        } else if (player.playerPosition === 'defense') {
-          defense.push(player);
+        } else if (player.playerPosition === 'defender') {
+          defender.push(player);
         }
       });
 
@@ -32,7 +32,7 @@ const playersReducer = (state = initialState, action) => {
         scoutingComplete: true,
         signablePlayers: {
           forward,
-          defense,
+          defender,
           goalie,
         },
       };
