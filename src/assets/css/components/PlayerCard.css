@@ -7,10 +7,10 @@ div.player-card-wrap {
   cursor: pointer;
 }
 
-div.player-card-wrap-large {
+/* div.player-card-wrap-large {
   width: 421px;
   height: 596px;
-}
+} */
 
 div.player-card-wrap-empty {
   width: 80px;
