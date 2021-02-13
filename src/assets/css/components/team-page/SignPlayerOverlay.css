@@ -37,12 +37,13 @@ div.to-sign-container {
 div.to-sign-inner {
   border: 5px solid #4b4b4b;
   border-radius: 5px;
-  padding: 1rem;
+  padding: 0 1rem 1rem 1rem;
 }
 
 h3.to-sign-title {
   font-size: 1.5rem;
   text-align: center;
+  padding: 0.5rem 0;
 }
 
 div.to-sign-btns-container {

@@ -5,12 +5,7 @@ import { capitalize, getDollarString } from '@utils';
 import { PlayerRankPie } from './PlayerRankPie';
 import '@css/components/PlayerCard.css';
 
-export const PlayerCard = ({
-  player,
-  animationStates,
-  size = 'small',
-  onClick,
-}) => {
+export const PlayerCard = ({ player, animationStates, isLarge, onClick }) => {
   const inner = player ? (
     <>
       <p className='position-text'>{capitalize(player.playerPosition)}</p>
