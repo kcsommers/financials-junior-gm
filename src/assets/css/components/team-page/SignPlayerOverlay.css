@@ -1,0 +1,125 @@
+div.sign-player-overlay-top {
+  display: flex;
+}
+
+div.team-slots-board {
+  width: 100%;
+  border: 5px solid #4b4b4b;
+  border-radius: 5px;
+  padding: 1rem;
+}
+
+div.team-slots-board-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+div.team-slots-board-row:not(:last-child) {
+  margin-bottom: 0.5rem;
+}
+
+div.team-slots-board-row > span:first-child {
+  font-size: 1.75rem;
+  font-weight: bold;
+}
+
+div.team-slots-board-row > span:last-child {
+  font-size: 2rem;
+}
+
+div.to-sign-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+div.to-sign-inner {
+  border: 5px solid #4b4b4b;
+  border-radius: 5px;
+  padding: 0 1rem 1rem 1rem;
+}
+
+h3.to-sign-title {
+  font-size: 1.5rem;
+  text-align: center;
+  padding: 0.5rem 0;
+}
+
+div.to-sign-btns-container {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 2rem;
+}
+
+div.to-sign-tab-btn.active {
+  background-color: #707070;
+}
+
+div.to-sign-tab-btn {
+  cursor: pointer;
+  display: inline-flex;
+  position: relative;
+  font-size: 1.65rem;
+  color: #fff;
+  align-items: center;
+  justify-content: center;
+  background-color: #ea7200;
+  height: 50px;
+  width: 175px;
+  border-radius: 5px;
+  z-index: 1;
+}
+
+div.to-sign-tab-btn-inner {
+  height: 22px;
+  display: flex;
+  align-items: center;
+  color: #fff;
+}
+
+div.to-sign-tab-btn:before,
+div.to-sign-tab-btn:after {
+  content: '';
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background: inherit;
+  z-index: -1;
+  bottom: 0;
+  border-radius: 5px;
+}
+
+div.to-sign-tab-btn:after {
+  transform-origin: left top;
+  transform: skewX(-10deg);
+}
+
+div.to-sign-tab-btn:before {
+  transform-origin: right top;
+  transform: skewX(10deg);
+}
+
+div.to-sign-inner {
+  flex: 1;
+}
+
+div.to-sign-players-wrap {
+  display: flex;
+  align-items: center;
+}
+
+.sign-player-question {
+  text-align: center;
+  font-size: 2.25rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  color: #006d75;
+  position: relative;
+  transform: translateY(50%);
+  -webkit-text-stroke: 0.05px black;
+}
+
+.sign-player-options {
+  transform: scale(0.75);
+}

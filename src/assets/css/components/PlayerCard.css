@@ -3,7 +3,6 @@ div.player-card-wrap {
   flex-direction: column;
   width: 90px;
   height: 127.4px;
-  animation: fadeIn 0.2s forwards ease;
   border-radius: 15px;
   cursor: pointer;
 }
@@ -31,6 +30,7 @@ p.position-text {
 div.player-card-header {
   width: 100%;
   position: relative;
+  z-index: 1;
   background: linear-gradient(to right, #ea7200, #f3901d);
 }
 
@@ -139,13 +139,4 @@ button.player-overlay-button {
   text-align: center;
   justify-content: center;
   outline: none;
-}
-
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
 }
