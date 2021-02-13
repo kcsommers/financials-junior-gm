@@ -13,10 +13,10 @@ import TeacherLogin from './pages/login/Teacher.jsx';
 import StudentLogin from './pages/login/Student.jsx';
 import TeacherDashboard from './pages/TeacherDashboard';
 import Sign from './components/Sign';
+import { getStudent, getPlayers } from './data/dummy-data';
 import PageNotFound from './components/page-not-found';
 import TeacherPortal from './pages/portal/Teacher';
 import StudentPortal from './pages/portal/Student';
-import { getStudent } from './dummy-data';
 import { setStudent } from '@redux/actions';
 import '@css/App.css';
 

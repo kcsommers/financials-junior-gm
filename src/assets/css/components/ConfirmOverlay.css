@@ -1,0 +1,19 @@
+.confirm-message {
+  text-align: center;
+  font-size: 2.25rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  color: #006d75;
+  position: relative;
+  transform: translateY(50%);
+  -webkit-text-stroke: 0.05px black;
+}
+
+.confirm-options {
+  transform: scale(0.75);
+}
+
+.confirm-overlay-top {
+  flex: 1;
+  width: 100%;
+}

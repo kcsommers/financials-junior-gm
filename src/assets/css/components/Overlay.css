@@ -13,14 +13,13 @@ div.overlay-container {
 
 .close-btn {
   position: absolute;
-  top: 1rem;
-  right: 1rem;
+  top: 2rem;
+  right: 3rem;
   cursor: pointer;
   width: 75px;
   height: 75px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #fff;
   border-radius: 100%;
 }
