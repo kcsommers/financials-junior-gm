@@ -57,8 +57,6 @@ const TeamPage = () => {
   const tutorialActive = useSelector((state) => state.tutorial.isActive);
   const [boardMap, setBoardMap] = useState(initialBoardMap);
 
-  const signablePlayers = useSelector((state) => state.players.signablePlayers);
-
   const playerCardAnimationStates = {
     playerCard: useSelector((state) => state.tutorial.team.playerCard),
     playerCardEmpty: useSelector(
@@ -80,24 +78,10 @@ const TeamPage = () => {
   };
 
   const openSignPlayerOverlay = (position) => {
-    const availableSlots = {
-      forwards: 3 - signablePlayers.forward.length,
-      defense: 2 - signablePlayers.defense.length,
-      goalie: 1 - signablePlayers.goalie.length,
-      bench:
-        3 -
-        ['benchOne', 'benchTwo', 'benchThree'].filter((p) => student[p]).length,
-    };
-
     dispatch(
       toggleOverlay({
         isOpen: true,
-        template: (
-          <SignPlayerOverlay
-            availableSlots={availableSlots}
-            position={position}
-          />
-        ),
+        template: <SignPlayerOverlay student={student} position={position} />,
       })
     );
   };
