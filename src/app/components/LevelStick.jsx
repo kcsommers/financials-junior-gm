@@ -11,6 +11,11 @@ const styles = {
       right: '-50px',
       top: 0,
     },
+    imageLg: {
+      position: 'relative',
+      right: '-40px',
+      top: 0,
+    },
     indicator: {
       position: 'absolute',
       top: 0,
@@ -28,6 +33,11 @@ const styles = {
     image: {
       position: 'relative',
       left: '-50px',
+      top: 0,
+    },
+    imageLg: {
+      position: 'relative',
+      left: '-40px',
       top: 0,
     },
     indicator: {
@@ -48,6 +58,11 @@ const styles = {
     image: {
       position: 'relative',
       left: '-50px',
+      top: 0,
+    },
+    imageLg: {
+      position: 'relative',
+      left: '-40px',
       top: 0,
     },
     indicator: {
@@ -134,20 +149,33 @@ const levelTypes = (type) => ({
   },
 });
 
-export const LevelStick = ({ type }) => {
+export const LevelStick = ({ type, isLarge }) => {
   return (
     <div
       style={{
         display: 'inline-flex',
         alignItems: 'center',
         justifyContent: 'center',
-        width: '190px',
-        height: '225px',
+        width: isLarge ? '220px' : '190px',
+        height: isLarge ? '355px' : '225px',
         overflow: 'hidden',
         position: 'relative',
       }}
     >
-      <ReactSVG style={styles[type].image} src={levelTypes(type)[type].image} />
+      <div
+        style={
+          isLarge
+            ? {
+                transform: 'scale(1.4)',
+              }
+            : {}
+        }
+      >
+        <ReactSVG
+          style={isLarge ? styles[type].imageLg : styles[type].image}
+          src={levelTypes(type)[type].image}
+        />
+      </div>
       {levelTypes(type)[type].indicator}
     </div>
   );

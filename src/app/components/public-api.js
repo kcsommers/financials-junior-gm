@@ -1,4 +1,6 @@
 export { PlayerRankPie } from './PlayerRankPie';
+export { PlayerReleasedOverlay } from './overlay/PlayerReleasedOverlay';
+export { ConfirmReleaseOverlay } from './overlay/ConfirmReleaseOverlay';
 export { ConfirmOverlay } from './overlay/ConfirmOverlay';
 export { PlayerDetailsOverlay } from './overlay/PlayerDetailsOverlay';
 export { SignPlayerOverlay } from './team-page/SignPlayerOverlay';
