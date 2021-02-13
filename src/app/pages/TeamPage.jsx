@@ -33,8 +33,6 @@ const TeamPage = () => {
     ),
   };
 
-  console.log('TEAM:::: ', team);
-
   const onTutorialComplete = () => {
     dispatch(setTutorialState({ isActive: false }));
   };
