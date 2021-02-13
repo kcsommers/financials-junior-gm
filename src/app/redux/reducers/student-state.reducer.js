@@ -1,4 +1,4 @@
-import { SET_STUDENT, SET_SAVINGS, PLAYER_SIGNED } from '../actionTypes';
+import { SET_STUDENT, SET_SAVINGS, UPDATE_STUDENT } from '../actionTypes';
 import { getMoneySpent } from '@utils';
 import { cloneDeep } from 'lodash';
 
@@ -11,27 +11,29 @@ const studentStateReducer = (state = initialState, action) => {
     case SET_STUDENT: {
       // total up money spent on players
       const student = action.payload;
-      student.moneySpent = getMoneySpent(student);
+      const clonedState = cloneDeep(state);
 
-      return { ...state, student };
+      student.moneySpent = getMoneySpent(student);
+      clonedState.student = student;
+
+      return clonedState;
+    }
+    case UPDATE_STUDENT: {
+      // total up money spent on players
+      const clonedState = cloneDeep(state);
+      clonedState.student = {
+        ...clonedState.student,
+        ...action.payload,
+      };
+      clonedState.student.moneySpent = getMoneySpent(clonedState.student);
+      return clonedState;
     }
     case SET_SAVINGS: {
       const amount = action.payload;
-      return {
-        ...state,
-        student: {
-          ...state.student,
-          savingsBudget: amount,
-        },
-      };
-    }
-    case PLAYER_SIGNED: {
-      const player = action.payload.player;
-      const position = action.payload.position;
-      const student = state.student;
+      const clonedState = cloneDeep(state);
+      clonedState.student.savingsBudget = amount;
 
-      student[position] = player;
-      return cloneDeep(state);
+      return clonedState;
     }
     default:
       return state;

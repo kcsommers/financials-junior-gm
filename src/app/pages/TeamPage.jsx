@@ -1,4 +1,3 @@
-import { useEffect, useState, useRef } from 'react';
 import { ReactSVG } from 'react-svg';
 import jrSharksLogo from '@images/icons/jr-sharks-logo.svg';
 import {
@@ -17,47 +16,15 @@ import { useSelector, useDispatch } from 'react-redux';
 import { playersSlides, SharkieButton, Tutorial } from '@tutorial';
 import { LevelStick } from '../components/LevelStick';
 import { setTutorialState, toggleOverlay } from '@redux/actions';
-import { isEqual } from 'lodash';
-import { getPlayerProps } from '@utils';
 import '@css/pages/TeamPage.css';
 
 const teamSlides = [playersSlides];
 
-const initialBoardMap = {
-  fOne: null,
-  fTwo: null,
-  fThree: null,
-  dOne: null,
-  dTwo: null,
-  gOne: null,
-  benchOne: null,
-  benchTwo: null,
-  benchThree: null,
-};
-
-const getBoardMap = (student) => {
-  const map = {};
-  getPlayerProps().forEach((p) => {
-    map[p] = student[p];
-  });
-  return map;
-};
-
 const TeamPage = () => {
-  const student = useSelector((state) => state.studentState.student);
-  const studentRef = useRef(null);
-  useEffect(() => {
-    if (student && !isEqual(student, studentRef.current)) {
-      studentRef.current = student;
-      setBoardMap(getBoardMap(student));
-      console.log('sTUDTEN:::: ', boardMap, student);
-    }
-  }, [student]);
-
   const dispatch = useDispatch();
   const tutorialActive = useSelector((state) => state.tutorial.isActive);
-  const [boardMap, setBoardMap] = useState(initialBoardMap);
-
+  const student = useSelector((state) => state.studentState.student);
+  const team = useSelector((state) => state.players.teamPlayers);
   const playerCardAnimationStates = {
     playerCard: useSelector((state) => state.tutorial.team.playerCard),
     playerCardEmpty: useSelector(
@@ -78,16 +45,22 @@ const TeamPage = () => {
     );
   };
 
-  const openSignPlayerOverlay = (position) => {
+  const openSignPlayerOverlay = (assignment) => {
     dispatch(
       toggleOverlay({
         isOpen: true,
-        template: <SignPlayerOverlay student={student} position={position} />,
+        template: (
+          <SignPlayerOverlay
+            team={team}
+            assignment={assignment}
+            student={student}
+          />
+        ),
       })
     );
   };
 
-  return student ? (
+  return team ? (
     <div className='page-container'>
       <HeaderComponent
         stickBtn={teamStick}
@@ -139,9 +112,9 @@ const TeamPage = () => {
               <div className='team-players-row'>
                 <PlayerCard
                   animationStates={playerCardAnimationStates}
-                  player={boardMap.fOne}
+                  player={team.fOne}
                   onClick={
-                    boardMap.fOne
+                    team.fOne
                       ? openPlayerDetailsOverlay
                       : openSignPlayerOverlay.bind(this, 'fOne')
                   }
@@ -149,9 +122,9 @@ const TeamPage = () => {
                 <div style={{ position: 'relative', top: '15px' }}>
                   <PlayerCard
                     animationStates={playerCardAnimationStates}
-                    player={boardMap.fTwo}
+                    player={team.fTwo}
                     onClick={
-                      boardMap.fTwo
+                      team.fTwo
                         ? openPlayerDetailsOverlay
                         : openSignPlayerOverlay.bind(this, 'fTwo')
                     }
@@ -159,9 +132,9 @@ const TeamPage = () => {
                 </div>
                 <PlayerCard
                   animationStates={playerCardAnimationStates}
-                  player={boardMap.fThree}
+                  player={team.fThree}
                   onClick={
-                    boardMap.fThree
+                    team.fThree
                       ? openPlayerDetailsOverlay
                       : openSignPlayerOverlay.bind(this, 'fThree')
                   }
@@ -170,9 +143,9 @@ const TeamPage = () => {
               <div className='team-players-row team-players-row-2'>
                 <PlayerCard
                   animationStates={playerCardAnimationStates}
-                  player={boardMap.dOne}
+                  player={team.dOne}
                   onClick={
-                    boardMap.dOne
+                    team.dOne
                       ? openPlayerDetailsOverlay
                       : openSignPlayerOverlay.bind(this, 'dOne')
                   }
@@ -180,9 +153,9 @@ const TeamPage = () => {
                 <div style={{ position: 'relative', top: '30px' }}>
                   <PlayerCard
                     animationStates={playerCardAnimationStates}
-                    player={boardMap.gOne}
+                    player={team.gOne}
                     onClick={
-                      boardMap.gOne
+                      team.gOne
                         ? openPlayerDetailsOverlay
                         : openSignPlayerOverlay.bind(this, 'gOne')
                     }
@@ -190,9 +163,9 @@ const TeamPage = () => {
                 </div>
                 <PlayerCard
                   animationStates={playerCardAnimationStates}
-                  player={boardMap.dTwo}
+                  player={team.dTwo}
                   onClick={
-                    boardMap.dTwo
+                    team.dTwo
                       ? openPlayerDetailsOverlay
                       : openSignPlayerOverlay.bind(this, 'dTwo')
                   }
@@ -204,25 +177,25 @@ const TeamPage = () => {
               <p className='color-primary on-the-bench-text'>On the Bench</p>
               <div className='team-players-row team-bench-row'>
                 <PlayerCard
-                  player={boardMap.benchOne}
+                  player={team.benchOne}
                   onClick={
-                    boardMap.benchOne
+                    team.benchOne
                       ? openPlayerDetailsOverlay
                       : openSignPlayerOverlay.bind(this, 'benchOne')
                   }
                 />
                 <PlayerCard
-                  player={boardMap.benchTwo}
+                  player={team.benchTwo}
                   onClick={
-                    boardMap.benchTwo
+                    team.benchTwo
                       ? openPlayerDetailsOverlay
                       : openSignPlayerOverlay.bind(this, 'benchTwo')
                   }
                 />
                 <PlayerCard
-                  player={boardMap.benchThree}
+                  player={team.benchThree}
                   onClick={
-                    boardMap.benchThree
+                    team.benchThree
                       ? openPlayerDetailsOverlay
                       : openSignPlayerOverlay.bind(this, 'benchThree')
                   }

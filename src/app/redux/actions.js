@@ -5,9 +5,12 @@ import {
   SET_TUTORIAL_STATE,
   SET_STUDENT,
   SET_SAVINGS,
-  PLAYER_SIGNED,
-  REMOVE_SIGNABLE_PLAYER,
-  SET_SIGNABLE_PLAYERS,
+  SET_MARKET_PLAYERS,
+  SET_INITIAL_PLAYERS_STATE,
+  RELEASE_PLAYER,
+  SIGN_PLAYER,
+  UPDATE_STUDENT,
+  TRADE_PLAYER,
 } from './actionTypes';
 
 export const setAnimationState = (state) => ({
@@ -35,22 +38,37 @@ export const setStudent = (student) => ({
   payload: student,
 });
 
+export const updateStudent = (newData) => ({
+  type: UPDATE_STUDENT,
+  payload: newData,
+});
+
 export const setSavings = (amount) => ({
   type: SET_SAVINGS,
   payload: amount,
 });
 
-export const setSignablePlayers = (players) => ({
-  type: SET_SIGNABLE_PLAYERS,
+export const setMarketPlayers = (players) => ({
+  type: SET_MARKET_PLAYERS,
   payload: players,
 });
 
-export const removeSignablePlayer = (player) => ({
-  type: REMOVE_SIGNABLE_PLAYER,
+export const setInitialPlayersState = (players) => ({
+  type: SET_INITIAL_PLAYERS_STATE,
+  payload: players,
+});
+
+export const signPlayer = (player, assignment) => ({
+  type: SIGN_PLAYER,
+  payload: { player, assignment },
+});
+
+export const releasePlayer = (player) => ({
+  type: RELEASE_PLAYER,
   payload: player,
 });
 
-export const playerSigned = (player, position) => ({
-  type: PLAYER_SIGNED,
-  payload: { player, position },
+export const tradePlayer = (releasedPlayer, signedPlayer, position) => ({
+  type: TRADE_PLAYER,
+  payload: { releasedPlayer, signedPlayer, position },
 });

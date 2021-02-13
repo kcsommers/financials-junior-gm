@@ -52,8 +52,9 @@ div.to-sign-btns-container {
   margin-top: 2rem;
 }
 
-div.to-sign-tab-btn.active {
+div.to-sign-tab-btn.disabled {
   background-color: #707070;
+  cursor: initial;
 }
 
 div.to-sign-tab-btn {

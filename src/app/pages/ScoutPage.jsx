@@ -21,9 +21,9 @@ import {
 } from '@redux/actions';
 import { getScoutablePlayers } from '../dummy-data';
 import { isEqual } from 'lodash';
-import '@css/pages/ScoutPage.css';
 import { getMoneyLevels } from './../utils';
-import { setSignablePlayers } from './../redux/actions';
+import { setMarketPlayers } from './../redux/actions';
+import '@css/pages/ScoutPage.css';
 
 const boardMap = {
   available: {},
@@ -277,7 +277,7 @@ const ScoutPage = () => {
       })
     );
     dispatch(
-      setSignablePlayers([
+      setMarketPlayers([
         ...Object.keys(boardMap.levelOne).map((k) => boardMap.levelOne[k]),
         ...Object.keys(boardMap.levelTwo).map((k) => boardMap.levelTwo[k]),
         ...Object.keys(boardMap.levelThree).map((k) => boardMap.levelThree[k]),
