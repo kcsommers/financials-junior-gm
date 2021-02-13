@@ -1,7 +1,7 @@
 import { ReactSVG } from 'react-svg';
 import binoculars from '@images/icons/binoculars.svg';
 import confirmBig from '@images/icons/confirm-big.svg';
-import { OverlayBoard } from '../OverlayBoard';
+import { OverlayBoard } from '@components';
 
 export const ScoutingCompleteOverlay = () => {
   return (

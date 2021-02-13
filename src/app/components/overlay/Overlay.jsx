@@ -3,7 +3,7 @@ import '@css/components/Overlay.css';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ReactSVG } from 'react-svg';
 import closeBtn from '@images/icons/cancel.svg';
-import { toggleOverlay } from '../redux/actions';
+import { toggleOverlay } from '@redux/actions';
 
 export const Overlay = () => {
   const overlayConfig = useSelector((state) => state.overlay);

@@ -8,13 +8,13 @@ import {
   HeaderComponent,
   PlayerDetailsOverlay,
   SignPlayerOverlay,
+  TeamBudgetState,
 } from '@components';
 import scoutStick from '@images/scout-stick.svg';
 import teamStick from '@images/team-stick.svg';
 import iceBgSmall from '@images/ice-bg-small.svg';
 import { useSelector, useDispatch } from 'react-redux';
 import { playersSlides, SharkieButton, Tutorial } from '@tutorial';
-import { LevelStick } from '../components/LevelStick';
 import { setTutorialState, toggleOverlay } from '@redux/actions';
 import '@css/pages/TeamPage.css';
 
@@ -80,12 +80,7 @@ const TeamPage = () => {
 
         <div className='team-page-board-inner'>
           <div className='team-page-board-left'>
-            <div className='level-sticks-card'>
-              <div className='level-sticks-card-inner'>
-                <LevelStick type='teamRank' />
-                <LevelStick type='budget' />
-              </div>
-            </div>
+            <TeamBudgetState />
             <div
               style={{
                 position: 'absolute',

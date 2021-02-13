@@ -1,19 +1,23 @@
 import { useDispatch } from 'react-redux';
-import { ReleasePlayer } from './public-api';
-import { toggleOverlay } from '../redux/actions';
-import { FindTradePlayer } from './trade-overlay/FindTradePlayer';
-import { PlayerCard, OverlayBoard } from '@components';
+import { toggleOverlay } from '@redux/actions';
+import {
+  PlayerCard,
+  OverlayBoard,
+  ReleasePlayer,
+  // FindTradePlayer,
+} from '@components';
+import '@css/components/team-page/PlayerDetailsOverlay.css';
 
 export const PlayerDetailsOverlay = ({ player }) => {
   const dispatch = useDispatch();
 
   const handleTrade = () => {
-    dispatch(
-      toggleOverlay({
-        isOpen: true,
-        template: <FindTradePlayer />,
-      })
-    );
+    // dispatch(
+    //   toggleOverlay({
+    //     isOpen: true,
+    //     template: <FindTradePlayer />,
+    //   })
+    // );
   };
 
   const handleRelease = () => {
@@ -42,18 +46,22 @@ export const PlayerDetailsOverlay = ({ player }) => {
           <PlayerCard player={player} isLarge={true} />
         </div>
         <div className='player-overlay-buttons-wrap'>
-          <button
+          <div
+            className={`box-shadow player-overlay-btn`}
             onClick={handleTrade}
-            className='player-overlay-button outline-black box-shadow'
           >
-            Trade
-          </button>
-          <button
+            <div className='player-overlay-btn-inner'>
+              <span className='outline-black'>Trade</span>
+            </div>
+          </div>
+          <div
+            className={`box-shadow player-overlay-btn`}
             onClick={handleRelease}
-            className='player-overlay-button outline-black box-shadow'
           >
-            Release
-          </button>
+            <div className='player-overlay-btn-inner'>
+              <span className='outline-black'>Release</span>
+            </div>
+          </div>
         </div>
       </div>
     </OverlayBoard>
