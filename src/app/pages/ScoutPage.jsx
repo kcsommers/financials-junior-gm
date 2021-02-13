@@ -24,6 +24,7 @@ import { isEqual } from 'lodash';
 import { getMoneyLevels } from '@utils';
 import { updatePlayerOnServer } from './../services/players-service';
 import { cloneDeep } from 'lodash';
+import { PlayerAssignments } from '@data';
 import '@css/pages/ScoutPage.css';
 
 const boardMap = {
@@ -273,15 +274,15 @@ const ScoutPage = () => {
 
     levelOneCloned.forEach((p) => {
       p.playerCost = moneyLevels[0].num;
-      p.playerAssignment = 'marketPlayer';
+      p.playerAssignment = PlayerAssignments.MARKET;
     });
     levelTwoCloned.forEach((p) => {
       p.playerCost = moneyLevels[1].num;
-      p.playerAssignment = 'marketPlayer';
+      p.playerAssignment = PlayerAssignments.MARKET;
     });
     levelThreeCloned.forEach((p) => {
       p.playerCost = moneyLevels[2].num;
-      p.playerAssignment = 'marketPlayer';
+      p.playerAssignment = PlayerAssignments.MARKET;
     });
 
     updatePlayerOnServer(null)

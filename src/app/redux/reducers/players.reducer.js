@@ -73,6 +73,7 @@ const playersReducer = (state = initialState, action) => {
       const signedPlayer = action.payload.player;
       const assignment = action.payload.assignment;
       const clonedState = cloneDeep(state);
+      console.log(signedPlayer, clonedState.marketPlayers);
       const marketCache =
         clonedState.marketPlayers[signedPlayer.playerPosition];
 
@@ -86,13 +87,13 @@ const playersReducer = (state = initialState, action) => {
     }
     case RELEASE_PLAYER: {
       const releasedPlayer = action.payload.player;
+      const prevAssignment = action.payload.prevAssignment;
       const clonedState = cloneDeep(state);
       const marketCache =
         clonedState.marketPlayers[releasedPlayer.playerPosition];
 
-      releasedPlayer.playerAssignment = PlayerAssignments.MARKET;
+      clonedState.teamPlayers[prevAssignment] = null;
       marketCache.push(releasedPlayer);
-
       return clonedState;
     }
     case TRADE_PLAYER: {

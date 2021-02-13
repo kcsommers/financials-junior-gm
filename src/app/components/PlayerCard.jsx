@@ -6,7 +6,14 @@ import '@css/components/PlayerCard.css';
 
 export const PlayerCard = ({ player, animationStates, isLarge, onClick }) => {
   const inner = player ? (
-    <>
+    <div
+      style={{ display: 'inline-block' }}
+      onClick={() => {
+        if (onClick) {
+          onClick(player);
+        }
+      }}
+    >
       <p className='position-text'>{capitalize(player.playerPosition)}</p>
       <div className='player-card-header'>
         <div className='player-card-header-inner'>
@@ -19,11 +26,6 @@ export const PlayerCard = ({ player, animationStates, isLarge, onClick }) => {
       <motion.div
         animate={animationStates ? animationStates.playerCard : null}
         className='box-shadow player-card-body'
-        onClick={() => {
-          if (onClick) {
-            onClick(player);
-          }
-        }}
         transition={{
           default: {
             duration: 1,
@@ -52,7 +54,7 @@ export const PlayerCard = ({ player, animationStates, isLarge, onClick }) => {
           />
         </div>
       </motion.div>
-    </>
+    </div>
   ) : (
     <motion.div
       className='box-shadow player-card-empty-inner border-accent'
