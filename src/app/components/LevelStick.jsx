@@ -62,7 +62,7 @@ const styles = {
       marginLeft: '0.25rem',
       fontWeight: 'bold',
       textAlign: 'right',
-      transform: 'translate(130px, 0)'
+      transform: 'translate(130px, 0)',
     },
   },
   noStickOpponentTeamRank: {
@@ -78,9 +78,9 @@ const styles = {
       marginLeft: '0.25rem',
       fontWeight: 'bold',
       textAlign: 'right',
-      transform: 'translate(130px, 0)'
-    }, 
-  }
+      transform: 'translate(130px, 0)',
+    },
+  },
 };
 
 const levelTypes = (type) => ({
@@ -131,11 +131,10 @@ const levelTypes = (type) => ({
         <Indicator amount={25} direction='left' />
       </div>
     ),
-  }
+  },
 });
 
 export const LevelStick = ({ type }) => {
-  console.log('type: ', styles[type])
   return (
     <div
       style={{
