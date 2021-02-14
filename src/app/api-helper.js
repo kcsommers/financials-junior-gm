@@ -108,12 +108,19 @@ export function deleteStudent(id) {
   return axios.put(`${getHostName()}/api/v1/student/?studentId=${id}`);
 }
 
-// Get all players
-export const getAllPlayers = () => {
-  return axios.get(`${getHostName()}/api/v1/player`);
+// get current student
+export const getCurrentUser = () => {
+  return axios.get(`${getHostName()}/api/v1/auth/user`);
 };
 
-// Update player
-export const updatePlayer = (id) => {
-  return axios.get(`${getHostName()}/api/v1/auth/player/${id}`);
+// init players
+export const initPlayersByLevel = (level) => {
+  return axios.get(
+    `${getHostName()}/api/v1/student/init/players/level/${level}`
+  );
+};
+
+// update student
+export const updateStudentById = (id) => {
+  return axios.get(`${getHostName()}/api/v1/student/${id}`);
 };

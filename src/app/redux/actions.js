@@ -11,6 +11,7 @@ import {
   SIGN_PLAYER,
   UPDATE_STUDENT,
   TRADE_PLAYER,
+  SET_LOGIN_STATE,
 } from './actionTypes';
 
 export const setAnimationState = (state) => ({
@@ -71,4 +72,9 @@ export const releasePlayer = (player, prevAssignment) => ({
 export const tradePlayer = (releasedPlayer, signedPlayer) => ({
   type: TRADE_PLAYER,
   payload: { releasedPlayer, signedPlayer },
+});
+
+export const setLoginState = (isLoggedIn, role) => ({
+  type: SET_LOGIN_STATE,
+  payload: { isLoggedIn, role },
 });
