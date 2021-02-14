@@ -84,16 +84,16 @@ const styles = {
     indicator: {
       position: 'absolute',
       top: 0,
-      left: '0px',
+      left: '-35px',
     },
     text: {
-      color: 'white',
+      color: 'black',
       display: 'inline-block',
       fontSize: '1rem',
       marginLeft: '0.25rem',
       fontWeight: 'bold',
       textAlign: 'right',
-      transform: 'translate(130px, 0)',
+      transform: 'translate(120px, 0)',
     },
   },
 };

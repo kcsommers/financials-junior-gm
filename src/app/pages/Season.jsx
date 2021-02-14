@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { ReactSVG } from 'react-svg';
 import seasonStick from '@images/season-stick.svg';
 import jrSharksLogoWhiteBg from '@images/icons/jr-sharks-logo-white-bg.svg';
+import play from '@images/icons/play.svg';
 import {
   TeamRankStick,
   OpposingTeamRankStick,
@@ -11,8 +12,21 @@ import {
 import { SticklessOpposingTeamRank } from '../components/SticklessOpposingTeamRank';
 import '@css/pages/season.css';
 import { SeasonTopRow } from '../components/season-page/SeasonTopRow';
+import { useDispatch } from 'react-redux';
+import { setScore } from '@redux/actions';
 
 const Season = () => {
+
+  const dispatch = useDispatch();
+
+  const handlePlay = () => {
+    dispatch(
+      setScore({
+        score: [0,0]
+      })
+    );
+  }
+
   return (
     <div className='season-page page-container'>
       <HeaderComponent
@@ -66,6 +80,8 @@ const Season = () => {
               </div>
             </div>
           </div>
+
+          <ReactSVG src={play} onClick={handlePlay}/>
 
           <div>
             <p className='season-standings-title'>Standings</p>
