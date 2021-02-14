@@ -26,6 +26,12 @@ export const getMoneySpent = (student) => {
   }, 0);
 };
 
+export const getTeamRank = (student) => {
+  if (!student) {
+    return 0;
+  }
+};
+
 export const capitalize = (str) => {
   return str.charAt(0).toUpperCase() + str.slice(1);
 };

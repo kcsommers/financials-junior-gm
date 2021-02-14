@@ -62,7 +62,7 @@ export const SignPlayerOverlay = ({ team, assignment, student }) => {
             template: (
               <PlayerChangeSuccessOverlay
                 player={signedPlayer}
-                message='Player has been signed!'
+                message=' Player has been signed!'
               />
             ),
           })
@@ -136,6 +136,7 @@ export const SignPlayerOverlay = ({ team, assignment, student }) => {
           <MarketPlayersBoard
             initialPosition={getPlayerPositon(assignment)}
             onPlayerCardClick={confirmSign}
+            student={student}
           />
         </div>
       </div>
