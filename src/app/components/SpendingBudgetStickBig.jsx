@@ -6,7 +6,7 @@ import { Indicator } from '@components';
 
 export const SpendingBudgetStickBig = () => {
   return (
-    <div className="spending-budget-stick-big-container">
+    <div className='spending-budget-stick-big-container'>
       <div className='amount-stick-wrap amount-stick-left'>
         <div className='amount-stick-filler'></div>
         <h4 className='amount-stick-title color-primary big-right'>
@@ -16,9 +16,9 @@ export const SpendingBudgetStickBig = () => {
           <Indicator amount={25} direction='left' />
         </div>
       </div>
-      <div className="spending-budget-stick-big">
-        <ReactSVG src={spendingBudgetStickBig}/>
+      <div className='spending-budget-stick-big'>
+        <ReactSVG src={spendingBudgetStickBig} />
       </div>
     </div>
-  )
-}
+  );
+};
