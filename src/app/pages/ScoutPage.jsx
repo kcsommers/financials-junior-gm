@@ -23,9 +23,9 @@ import {
 } from '@redux/actions';
 import { isEqual } from 'lodash';
 import { getMoneyLevels } from '@utils';
-import { updatePlayerOnServer } from '@data/services/players-service';
+import { updatePlayerOnServer } from '@data/players/players-service';
 import { cloneDeep } from 'lodash';
-import { PlayerAssignments } from '@data/data';
+import { PlayerAssignments } from '@data/players/players';
 import '@css/pages/ScoutPage.css';
 
 const boardMap = {

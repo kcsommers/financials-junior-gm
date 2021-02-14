@@ -7,7 +7,7 @@ import {
   UPDATE_SCOUT_PLAYER,
 } from '../actionTypes';
 import { cloneDeep } from 'lodash';
-import { PlayerAssignments, PlayerPositions } from '@data/data';
+import { PlayerAssignments, PlayerPositions } from '@data/players/players';
 import { isTeamPlayer } from '@utils';
 
 const initialState = {
@@ -26,12 +26,13 @@ const initialState = {
   scoutingState: {
     isComplete: false,
   },
+  initialized: false,
 };
 
 const playersReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_INITIAL_PLAYERS_STATE: {
-      const players = action.payload;
+      const { players, student } = action.payload;
       const marketPlayers = {
         forward: [],
         defender: [],
@@ -44,7 +45,19 @@ const playersReducer = (state = initialState, action) => {
         available: [],
       };
       const teamPlayers = {};
+      players.filter((p) => p.playerLevel === student.level);
       players.forEach((p) => {
+        if (p.playerName === 'Matthew Nieto') {
+          p.playerAssignment = PlayerAssignments.F_ONE;
+        } else if (p.playerName === 'Sam Greenfeld') {
+          p.playerAssignment = PlayerAssignments.F_TWO;
+        } else if (p.playerName === 'Andrew Park') {
+          p.playerAssignment = PlayerAssignments.G_ONE;
+        } else if (p.playerName === 'Emily Burch') {
+          p.playerAssignment = PlayerAssignments.D_ONE;
+        } else if (p.playerName === 'Theo Johnson') {
+          p.playerAssignment = PlayerAssignments.D_TWO;
+        }
         if (p.playerAssignment === PlayerAssignments.MARKET) {
           if (p.playerPosition === PlayerPositions.FORWARD) {
             marketPlayers.forward.push(p);
@@ -61,6 +74,7 @@ const playersReducer = (state = initialState, action) => {
       });
 
       return {
+        initialized: true,
         marketPlayers,
         teamPlayers,
         scoutPlayers,
@@ -76,6 +90,7 @@ const playersReducer = (state = initialState, action) => {
       const marketCache =
         clonedState.marketPlayers[signedPlayer.playerPosition];
 
+      signedPlayer.playerAssignment = assignment;
       marketCache.splice(
         marketCache.findIndex((p) => p.playerName === signedPlayer.name),
         1

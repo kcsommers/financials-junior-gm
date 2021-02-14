@@ -53,9 +53,9 @@ export const scoutingComplete = (levelOne, levelTwo, levelThree) => ({
   payload: { levelOne, levelTwo, levelThree },
 });
 
-export const setInitialPlayersState = (players) => ({
+export const setInitialPlayersState = (players, student) => ({
   type: SET_INITIAL_PLAYERS_STATE,
-  payload: players,
+  payload: { players, student },
 });
 
 export const signPlayer = (player, assignment) => ({

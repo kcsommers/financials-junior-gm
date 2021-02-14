@@ -1,4 +1,4 @@
-import { PlayerAssignments, PlayerPositions } from './data/data';
+import { PlayerAssignments, PlayerPositions } from './data/players/players';
 
 export const getPlayerProps = () => [
   'fOne',
@@ -20,7 +20,7 @@ export const getMoneySpent = (student) => {
   return getPlayerProps().reduce((total, p) => {
     const player = student[p];
     if (player) {
-      total += player.playerCost;
+      total += +player.playerCost;
     }
     return total;
   }, 0);
@@ -30,6 +30,14 @@ export const getTeamRank = (student) => {
   if (!student) {
     return 0;
   }
+
+  return getPlayerProps().reduce((total, p) => {
+    const player = student[p];
+    if (player) {
+      total += +player.overallRank;
+    }
+    return total;
+  }, 0);
 };
 
 export const capitalize = (str) => {
@@ -37,13 +45,14 @@ export const capitalize = (str) => {
 };
 
 export const getDollarString = (num) => {
-  if (!num) {
+  if (!num || num === 'null') {
     return '$0';
   }
-  if (num % 1 === 0) {
+  if (+num % 1 === 0) {
     return `$${num}`;
   }
-  return `$${num.toFixed(2)}`;
+
+  return `$${parseFloat(num).toFixed(2)}`;
 };
 
 export const getMoneyLevels = (level) => {
