@@ -56,12 +56,22 @@ const getViewConfig = (position, marketPlayers) => {
   }
 };
 
-export const MarketPlayersBoard = ({ initialPosition, onPlayerCardClick }) => {
+export const MarketPlayersBoard = ({
+  initialPosition,
+  onPlayerCardClick,
+  student,
+}) => {
   const marketPlayers = useSelector((state) => state.players.marketPlayers);
 
   const [activePosition, setActivePosition] = useState(initialPosition);
 
   const currentView = getViewConfig(activePosition, marketPlayers);
+
+  const checkBudget = (player) => {
+    const budget = student.totalBudget - student.savings - student.moneySpent;
+    if (budget - player.playerCost < 0) {
+    }
+  };
 
   const forwardsActive =
     activePosition === PlayerPositions.FORWARD ||
@@ -138,10 +148,7 @@ export const MarketPlayersBoard = ({ initialPosition, onPlayerCardClick }) => {
               key={i}
               style={getPlayerCardStyles(currentView.players.length, i)}
             >
-              <PlayerCard
-                player={p}
-                onClick={onPlayerCardClick.bind(this, p)}
-              />
+              <PlayerCard player={p} onClick={checkBudget.bind(this, p)} />
             </div>
           ))}
         </div>

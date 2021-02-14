@@ -22,6 +22,7 @@ import '@css/App.css';
 
 const App = () => {
   const dispatch = useDispatch();
+
   useEffect(() => {
     getStudent()
       .then((s) => dispatch(setStudent(s)))
