@@ -4,8 +4,8 @@ import {
   PlayerCard,
   OverlayBoard,
   ConfirmReleaseOverlay,
-  PlayerReleasedOverlay,
   TradePlayerOverlay,
+  PlayerChangeSuccessOverlay,
 } from '@components';
 import '@css/components/team-page/PlayerDetailsOverlay.css';
 import { PlayerAssignments } from '@data/data';
@@ -47,7 +47,12 @@ export const PlayerDetailsOverlay = ({
         dispatch(
           toggleOverlay({
             isOpen: true,
-            template: <PlayerReleasedOverlay player={player} />,
+            template: (
+              <PlayerChangeSuccessOverlay
+                message='Player has been released!'
+                player={player}
+              />
+            ),
             canClose: true,
           })
         );

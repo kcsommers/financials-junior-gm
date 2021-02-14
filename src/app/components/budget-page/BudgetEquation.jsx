@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { getDollarString } from '@utils';
 import '@css/components/budget-page/BudgetEquation.css';
 
 export const BudgetEquation = ({ budget, animationStates }) => {
@@ -17,7 +18,7 @@ export const BudgetEquation = ({ budget, animationStates }) => {
         >
           <span className='equation-title'>Total Budget</span>
           <span className='equation-amount'>
-            ${budget.total - budget.spent}
+            {getDollarString(budget.total - budget.spent)}
           </span>
         </motion.div>
         <span className='equation-operator'>-</span>
@@ -27,7 +28,9 @@ export const BudgetEquation = ({ budget, animationStates }) => {
           transition={{ default: { duration: 1 } }}
         >
           <span className='equation-title'>Savings</span>
-          <span className='equation-amount'>${budget.savings}</span>
+          <span className='equation-amount'>
+            {getDollarString(budget.savings)}
+          </span>
         </motion.div>
         <span className='equation-operator equals'>=</span>
         <motion.div
@@ -37,7 +40,7 @@ export const BudgetEquation = ({ budget, animationStates }) => {
         >
           <span className='equation-title'>Spending Budget</span>
           <span className='equation-amount'>
-            ${budget.total - budget.spent - budget.savings}
+            {getDollarString(budget.total - budget.spent - budget.savings)}
           </span>
         </motion.div>
       </div>
