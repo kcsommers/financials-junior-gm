@@ -1,5 +1,5 @@
-import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useEffect, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Intro from './pages/Intro';
 import HomePage from './pages/HomePage';
@@ -17,24 +17,23 @@ import PageNotFound from './components/page-not-found';
 import TeacherPortal from './pages/portal/Teacher';
 import StudentPortal from './pages/portal/Student';
 import { setStudent, setInitialPlayersState } from '@redux/actions';
-import { getAllPlayers } from './api-helper';
+import { getAllPlayers, getCurrentUser } from './api-helper';
 import '@css/App.css';
 
 const App = () => {
   const dispatch = useDispatch();
 
   // check storage or listen for login to fetch student and players
+  const loginState = useSelector((state) => state.loginState);
 
-  useEffect(() => {
-    getStudent()
-      .then((s) => {
-        dispatch(setStudent(s));
-        getAllPlayers()
-          .then((res) => dispatch(setInitialPlayersState(res.data, s)))
-          .catch((err) => console.error(err));
-      })
-      .catch((err) => console.error(err));
-  }, [dispatch]);
+  console.log('LOGIN STATE:::: ', loginState);
+  const loginRef = useRef(loginState.isLoggedIn);
+  if (loginState.isLoggedIn && loginState.isLoggedIn !== loginRef.current) {
+    getCurrentUser().then((res) => {
+      console.log('GOT STUDENT::::: ', res);
+    });
+  }
+  loginRef.current = loginState.isLoggedIn;
 
   return (
     <div className='app-container'>
