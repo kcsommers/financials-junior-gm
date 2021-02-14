@@ -1,4 +1,9 @@
-import { OverlayBoard, TeamBudgetState, MarketPlayersBoard } from '@components';
+import {
+  OverlayBoard,
+  TeamBudgetState,
+  MarketPlayersBoard,
+  PlayerChangeSuccessOverlay,
+} from '@components';
 import { useDispatch } from 'react-redux';
 import { toggleOverlay, signPlayer, updateStudent } from '@redux/actions';
 import { ConfirmSignOverlay } from './ConfirmSignOverlay';
@@ -53,8 +58,13 @@ export const SignPlayerOverlay = ({ team, assignment, student }) => {
         dispatch(updateStudent({ [assignment]: signedPlayer }));
         dispatch(
           toggleOverlay({
-            isOpen: false,
-            template: null,
+            isOpen: true,
+            template: (
+              <PlayerChangeSuccessOverlay
+                player={signedPlayer}
+                message='Player has been signed!'
+              />
+            ),
           })
         );
       })
