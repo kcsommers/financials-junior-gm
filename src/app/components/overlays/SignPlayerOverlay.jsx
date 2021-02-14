@@ -7,8 +7,7 @@ import {
 import { useDispatch } from 'react-redux';
 import { toggleOverlay, signPlayer, updateStudent } from '@redux/actions';
 import { ConfirmSignOverlay } from './ConfirmSignOverlay';
-import { updatePlayerOnServer } from '@data/services/players-service';
-import { updateStudentOnServer } from '@data/services/student-service';
+import { updatePlayerOnServer } from '@data/players/players-service';
 import { getPlayerPositon } from '@utils';
 import '@css/components/team-page/SignPlayerOverlay.css';
 
