@@ -1,4 +1,5 @@
 export { PlayerRankPie } from './PlayerRankPie';
+export { InsufficientFundsOverlay } from './overlays/InsufficientFundsOverlay';
 export { PlayerChangeSuccessOverlay } from './overlays/PlayerSignedOverlay';
 export { PlayersTradedOverlay } from './overlays/PlayersTradedOverlay';
 export { ConfirmTradeOverlay } from './overlays/ConfirmTradeOverlay';

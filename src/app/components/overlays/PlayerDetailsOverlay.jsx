@@ -7,11 +7,11 @@ import {
   TradePlayerOverlay,
   PlayerChangeSuccessOverlay,
 } from '@components';
-import '@css/components/team-page/PlayerDetailsOverlay.css';
 import { PlayerAssignments } from '@data/data';
 import { cloneDeep } from 'lodash';
 import { updatePlayerOnServer } from '@data/services/players-service';
 import { updateStudentOnServer } from '@data/services/student-service';
+import '@css/components/overlay-btns.css';
 
 export const PlayerDetailsOverlay = ({
   player,
@@ -103,20 +103,14 @@ export const PlayerDetailsOverlay = ({
           <PlayerCard player={player} isLarge={true} />
         </div>
         {includeActions && (
-          <div className='player-overlay-buttons-wrap'>
-            <div
-              className={`box-shadow player-overlay-btn`}
-              onClick={confirmTrade}
-            >
-              <div className='player-overlay-btn-inner'>
+          <div className='overlay-buttons-wrap'>
+            <div className={`box-shadow overlay-btn`} onClick={confirmTrade}>
+              <div className='overlay-btn-inner'>
                 <span className='outline-black'>Trade</span>
               </div>
             </div>
-            <div
-              className={`box-shadow player-overlay-btn`}
-              onClick={confirmRelease}
-            >
-              <div className='player-overlay-btn-inner'>
+            <div className={`box-shadow overlay-btn`} onClick={confirmRelease}>
+              <div className='overlay-btn-inner'>
                 <span className='outline-black'>Release</span>
               </div>
             </div>
