@@ -13,7 +13,8 @@ import { SticklessOpposingTeamRank } from '../components/SticklessOpposingTeamRa
 import '@css/pages/season.css';
 import { SeasonTopRow } from '../components/season-page/SeasonTopRow';
 import { useDispatch } from 'react-redux';
-import { setScore } from '@redux/actions';
+import { setScore, setJumbotronDisplay } from '@redux/actions';
+import { PlayingGame } from '../components/season-page/PlayingGame';
 
 const Season = () => {
 
@@ -23,6 +24,11 @@ const Season = () => {
     dispatch(
       setScore({
         score: [0,0]
+      })
+    );
+    dispatch(
+      setJumbotronDisplay({
+        jumbotronDisplay: <PlayingGame/>
       })
     );
   }

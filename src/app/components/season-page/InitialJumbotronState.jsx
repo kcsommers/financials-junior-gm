@@ -1,11 +1,9 @@
 import React from 'react';
 import { ReactSVG } from 'react-svg';
 import {LevelStick} from '../LevelStick'
-import jrSharksLogoWhiteBg from '@images/icons/jr-sharks-logo-white-bg.svg';
 import blueBearsLogo from '@images/icons/blue-bears-logo.svg'
 import '../../../assets/css/components/season-page/initial-jumbotron-state.css'
 import { useDispatch, useSelector } from 'react-redux';
-import { setImage, setStats, setStandings, setNextOpponent, setUpcomingGames} from '@redux/actions';
 
 export const InitialJumbotronState = () => {
 
@@ -29,7 +27,7 @@ export const InitialJumbotronState = () => {
   return (
     <div className="season-initial-container">
       <div>
-        <ReactSVG src={jrSharksLogoWhiteBg} />
+        <ReactSVG src={image} />
         <div>
           <p className="your-stats-title">Stats</p>
           <div className="your-stats-container">
@@ -65,7 +63,7 @@ export const InitialJumbotronState = () => {
               
               <div className="upcoming-game"  style={{transform: 'scale(0.7)'}}>
                 <div className="opponent-logo-container">
-                  <ReactSVG src={blueBearsLogo}/>
+                  <ReactSVG src={upcomingGames[0].image}/>
                 </div>
                 <div className='sotr-details'>
                   <LevelStick type='noStickOpponentTeamRank' />
@@ -74,7 +72,7 @@ export const InitialJumbotronState = () => {
             
               <div className="upcoming-game" style={{transform: 'scale(0.7)'}}>
                 <div className="opponent-logo-container">
-                  <ReactSVG src={blueBearsLogo}/>
+                  <ReactSVG src={upcomingGames[1].image}/>
                 </div>
                 <div className='sotr-details'>
                   <LevelStick type='noStickOpponentTeamRank' />
@@ -83,7 +81,7 @@ export const InitialJumbotronState = () => {
               
               <div className="upcoming-game" style={{transform: 'scale(0.7)'}}>
                 <div className="opponent-logo-container">
-                  <ReactSVG src={blueBearsLogo}/>
+                  <ReactSVG src={upcomingGames[2].image}/>
                 </div>
                 <div className='sotr-details'>
                   <LevelStick type='noStickOpponentTeamRank' />
@@ -94,18 +92,6 @@ export const InitialJumbotronState = () => {
           </div>
         </div>
       </div>
-      {/* <p className='season-team-place'>3rd</p>
-      <ReactSVG src={jrSharksLogoWhiteBg} />
-      <p className='next-opponent-title'>Next Opponent</p>
-      <div className='next-opponent-details'>
-        <p className='next-opponent-name'>
-          Blue
-          <br /> Bears
-        </p>
-        <div className='sotr-details'>
-          <LevelStick type='noStickOpponentTeamRank' />
-        </div>
-      </div> */}
     </div>
   )
 }

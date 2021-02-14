@@ -6,10 +6,15 @@ import {
   SET_STATS,
   SET_STANDINGS,
   SET_NEXT_OPPONENT,
-  SET_UPCOMING_GAMES
+  SET_UPCOMING_GAMES,
+  SET_JUMBOTRON_DISPLAY
 } from '../actionTypes'
 import blueBears from '../../../assets/images/icons/blue-bears-logo.svg'
 import jrSharksLogoWhiteBg from '@images/icons/jr-sharks-logo-white-bg.svg';
+import redRabbits from '@images/icons/red-rabbits.svg';
+import purplePanthers from '@images/icons/purple-panthers.svg';
+import whiteWolves from '@images/icons/white-wolves.svg';
+import {InitialJumbotronState} from '../../components/season-page/InitialJumbotronState'
 
 const initialState = {
   score: [0,0],
@@ -32,26 +37,27 @@ const initialState = {
   upcomingGames: [
     {
       rank: 280,
-      image: blueBears,
+      image: redRabbits,
       name: 'Red Rabbits',
       stats: {wins: 0, losses: 0, points: 0},
       standings: 12
     },
     {
       rank: 300,
-      image: blueBears,
+      image: purplePanthers,
       name: 'Purple Panthers',
       stats: {wins: 0, losses: 0, points: 0},
       standings: 10
     },
     {
       rank: 325,
-      image: blueBears,
+      image: whiteWolves,
       name: 'White Wolves',
       stats: {wins: 0, losses: 0, points: 0},
       standings: 6
     }
-  ]
+  ],
+  jumbotronDisplay: <InitialJumbotronState/>
 }
 
 export default function(state = initialState, action) {
@@ -97,6 +103,11 @@ export default function(state = initialState, action) {
       return {
         ...state,
         upcomingGames: action.payload
+      }
+    case SET_JUMBOTRON_DISPLAY:
+      return {
+        ...state,
+        jumbotronDisplay: action.payload
       }
     default: 
       return state;
