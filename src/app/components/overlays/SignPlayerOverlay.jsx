@@ -7,8 +7,8 @@ import {
 import { useDispatch } from 'react-redux';
 import { toggleOverlay, signPlayer, updateStudent } from '@redux/actions';
 import { ConfirmSignOverlay } from './ConfirmSignOverlay';
-import { updatePlayerOnServer } from '@data/players/players-service';
 import { getPlayerPositon } from '@utils';
+import { updatePlayer as updatePlayerOnServer } from '../../api-helper';
 import '@css/components/team-page/SignPlayerOverlay.css';
 
 const getAvailableSlots = (props, team) => {
@@ -46,28 +46,24 @@ export const SignPlayerOverlay = ({ team, assignment, student }) => {
   };
 
   const signConfirmed = (signedPlayer) => {
-    signedPlayer.playerAssignment = assignment;
-
-    Promise.all([
-      updatePlayerOnServer.bind(this, student, { [assignment]: signedPlayer }),
-      updateStudentOnServer.bind(this, signedPlayer),
-    ])
-      .then((res) => {
-        dispatch(signPlayer(signedPlayer, assignment));
-        dispatch(updateStudent({ [assignment]: signedPlayer }));
-        dispatch(
-          toggleOverlay({
-            isOpen: true,
-            template: (
-              <PlayerChangeSuccessOverlay
-                player={signedPlayer}
-                message=' Player has been signed!'
-              />
-            ),
-          })
-        );
-      })
-      .catch((err) => console.error(err));
+    const p1 = new Promise((r) => r(true));
+    // updatePlayerOnServer(signedPlayer._id)
+    p1.then((res) => {
+      console.log('RES:::: ', res);
+      dispatch(signPlayer(signedPlayer, assignment));
+      dispatch(updateStudent({ [assignment]: signedPlayer }));
+      dispatch(
+        toggleOverlay({
+          isOpen: true,
+          template: (
+            <PlayerChangeSuccessOverlay
+              player={signedPlayer}
+              message=' Player has been signed!'
+            />
+          ),
+        })
+      );
+    }).catch((err) => console.error(err));
   };
 
   const confirmSign = (player) => {
