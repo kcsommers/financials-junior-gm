@@ -10,12 +10,16 @@ const initialState = {
 const studentStateReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_STUDENT: {
-      // total up money spent on players
       const student = action.payload;
-      const clonedState = cloneDeep(state);
+      if (!student) {
+        return state;
+      }
 
-      clonedState.student.moneySpent = getMoneySpent(student);
-      clonedState.student.teamRank = getTeamRank(student);
+      // total up money spend and teamRank
+      student.moneySpent = getMoneySpent(student);
+      student.teamRank = getTeamRank(student);
+
+      const clonedState = cloneDeep(state);
       clonedState.student = student;
 
       return clonedState;

@@ -112,3 +112,8 @@ export function deleteStudent(id) {
 export const getAllPlayers = () => {
   return axios.get(`${getHostName()}/api/v1/player`);
 };
+
+// Update player
+export const updatePlayer = (id) => {
+  return axios.get(`${getHostName()}/api/v1/auth/player/${id}`);
+};
