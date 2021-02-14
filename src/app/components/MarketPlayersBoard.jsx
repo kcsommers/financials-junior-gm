@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { PlayerPositions } from '@data/data';
+import { PlayerPositions } from '@data/players/players';
 import { PlayerCard, InsufficientFundsOverlay } from '@components';
 import { useSelector, useDispatch } from 'react-redux';
 import { toggleOverlay } from '@redux/actions';

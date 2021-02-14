@@ -1,5 +1,5 @@
 import { SET_STUDENT, SET_SAVINGS, UPDATE_STUDENT } from '../actionTypes';
-import { getMoneySpent } from '@utils';
+import { getMoneySpent, getTeamRank } from '@utils';
 import { cloneDeep } from 'lodash';
 
 const initialState = {
@@ -14,7 +14,8 @@ const studentStateReducer = (state = initialState, action) => {
       const student = action.payload;
       const clonedState = cloneDeep(state);
 
-      student.moneySpent = getMoneySpent(student);
+      clonedState.student.moneySpent = getMoneySpent(student);
+      clonedState.student.teamRank = getTeamRank(student);
       clonedState.student = student;
 
       return clonedState;
@@ -27,6 +28,7 @@ const studentStateReducer = (state = initialState, action) => {
         ...action.payload,
       };
       clonedState.student.moneySpent = getMoneySpent(clonedState.student);
+      clonedState.student.teamRank = getTeamRank(clonedState.student);
       return clonedState;
     }
     case SET_SAVINGS: {

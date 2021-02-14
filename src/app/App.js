@@ -13,23 +13,27 @@ import TeacherLogin from './pages/login/Teacher.jsx';
 import StudentLogin from './pages/login/Student.jsx';
 import TeacherDashboard from './pages/TeacherDashboard';
 import Sign from './components/Sign';
-import { getStudent, getPlayers } from './data/dummy-data';
+import { getStudent } from './data/dummy-data';
 import PageNotFound from './components/page-not-found';
 import TeacherPortal from './pages/portal/Teacher';
 import StudentPortal from './pages/portal/Student';
 import { setStudent, setInitialPlayersState } from '@redux/actions';
+import { getAllPlayers } from './api-helper';
 import '@css/App.css';
 
 const App = () => {
   const dispatch = useDispatch();
 
+  // check storage or listen for login to fetch student and players
+
   useEffect(() => {
     getStudent()
-      .then((s) => dispatch(setStudent(s)))
-      .catch((err) => console.error(err));
-
-    getPlayers()
-      .then((p) => dispatch(setInitialPlayersState(p)))
+      .then((s) => {
+        dispatch(setStudent(s));
+        getAllPlayers()
+          .then((res) => dispatch(setInitialPlayersState(res.data, s)))
+          .catch((err) => console.error(err));
+      })
       .catch((err) => console.error(err));
   }, [dispatch]);
 
