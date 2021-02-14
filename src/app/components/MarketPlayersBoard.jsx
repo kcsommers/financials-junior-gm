@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { PlayerPositions } from '@data/data';
-import { PlayerCard } from '@components';
-import { useSelector } from 'react-redux';
-import { getPlayerPositon } from '@utils';
+import { PlayerCard, InsufficientFundsOverlay } from '@components';
+import { useSelector, useDispatch } from 'react-redux';
+import { toggleOverlay } from '@redux/actions';
 import '@css/components/MarketPlayersBoard.css';
 
 const getPlayerCardStyles = (arrLength, playerIndex) => {
@@ -53,6 +53,9 @@ const getViewConfig = (position, marketPlayers) => {
         title: 'Goalies you can sign',
         position: 'goalie',
       };
+    default: {
+      return {};
+    }
   }
 };
 
@@ -61,6 +64,7 @@ export const MarketPlayersBoard = ({
   onPlayerCardClick,
   student,
 }) => {
+  const dispatch = useDispatch();
   const marketPlayers = useSelector((state) => state.players.marketPlayers);
 
   const [activePosition, setActivePosition] = useState(initialPosition);
@@ -68,9 +72,19 @@ export const MarketPlayersBoard = ({
   const currentView = getViewConfig(activePosition, marketPlayers);
 
   const checkBudget = (player) => {
-    const budget = student.totalBudget - student.savings - student.moneySpent;
+    const budget =
+      student.totalBudget - student.savingsBudget - student.moneySpent;
     if (budget - player.playerCost < 0) {
+      dispatch(
+        toggleOverlay({
+          isOpen: true,
+          template: <InsufficientFundsOverlay />,
+        })
+      );
+      return;
     }
+
+    onPlayerCardClick(player);
   };
 
   const forwardsActive =
