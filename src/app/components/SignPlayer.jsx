@@ -8,18 +8,16 @@ import '../../assets/css/components/sign-player.css';
 import { useDispatch } from 'react-redux';
 import { toggleOverlay } from '@redux/actions';
 import { PlayerSigned } from './PlayerSigned';
-import Sign from './Sign';
 
 export const SignPlayer = () => {
   const dispatch = useDispatch();
 
   const handleCancel = () => {
-    dispatch(
-      toggleOverlay({
-        isOpen: true,
-        template: <Sign />,
-      })
-    );
+    dispatch();
+    // toggleOverlay({
+    //   isOpen: true,
+    //   template: <Sign />,
+    // })
   };
 
   const handleConfirm = () => {

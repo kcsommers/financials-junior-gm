@@ -33,6 +33,7 @@ const playersReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_INITIAL_PLAYERS_STATE: {
       const { players, student } = action.payload;
+      console.log('PLAYERS:::: ', players);
       const marketPlayers = {
         forward: [],
         defender: [],

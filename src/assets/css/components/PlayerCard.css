@@ -1,16 +1,17 @@
 div.player-card-wrap {
   display: inline-flex;
   flex-direction: column;
-  width: 90px;
-  height: 127.4px;
   border-radius: 15px;
+}
+
+div.player-card-wrap.player-card-clickable {
   cursor: pointer;
 }
 
-/* div.player-card-wrap-large {
-  width: 421px;
-  height: 596px;
-} */
+div.player-card-wrap-large {
+  width: 300px;
+  height: 425px;
+}
 
 div.player-card-wrap-empty {
   width: 80px;
@@ -27,8 +28,6 @@ div.player-card-empty-inner {
 
 p.position-text {
   text-align: center;
-  font-size: 0.8rem;
-  height: 16.25px;
   font-weight: bold;
 }
 
@@ -40,12 +39,10 @@ div.player-card-header {
 }
 
 div.player-card-header-inner {
-  height: 22px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   color: #fff;
-  font-size: 1rem;
   border-radius: 5px;
   padding: 0 0.5rem;
 }
@@ -73,6 +70,21 @@ div.player-card-header:before {
   transform: skewX(12deg);
 }
 
+div.player-card-wrap-large div.player-card-header {
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+
+div.player-card-wrap-large div.player-card-header:before {
+  border-top-left-radius: 20px;
+  transform: skewX(12deg);
+}
+
+div.player-card-wrap-large div.player-card-header:after {
+  border-top-right-radius: 20px;
+  transform: skewX(-12deg);
+}
+
 div.player-card-body {
   text-align: center;
   background: linear-gradient(to bottom, #00788a, #fff);
@@ -84,24 +96,20 @@ div.player-card-body {
 
 div.player-card-img-wrap {
   display: inline-block;
-  width: 45px;
-  height: 45px;
   border-radius: 100%;
   background-position: center;
   background-size: cover;
+}
+
+p.player-card-player-name {
+  color: #fff;
 }
 
 div.player-card-clickable .player-card-inner {
   cursor: pointer;
 }
 
-div.player-card-large div.player-card-inner {
-  width: 300px;
-  height: 372px;
-  cursor: initial;
-}
-
-div.player-scores {
+div.player-ranks {
   display: flex;
   align-items: center;
   justify-content: space-around;
