@@ -98,10 +98,10 @@ export const PlayerDetailsOverlay = ({
         }}
       >
         <div className='player-details-player-wrap'>
-          <PlayerCard player={player} isLarge={true} />
+          <PlayerCard player={player} size='large' />
         </div>
         {includeActions && (
-          <div className='overlay-buttons-wrap'>
+          <div className='overlay-buttons-wrap' style={{ marginTop: '3rem' }}>
             <div className={`box-shadow overlay-btn`} onClick={confirmTrade}>
               <div className='overlay-btn-inner'>
                 <span className='outline-black'>Trade</span>

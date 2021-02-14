@@ -12,7 +12,6 @@ import Dashboard from './pages/Dashboard';
 import TeacherLogin from './pages/login/Teacher.jsx';
 import StudentLogin from './pages/login/Student.jsx';
 import TeacherDashboard from './pages/TeacherDashboard';
-import Sign from './components/Sign';
 import { getStudent } from './data/dummy-data';
 import PageNotFound from './components/page-not-found';
 import TeacherPortal from './pages/portal/Teacher';
@@ -56,11 +55,6 @@ const App = () => {
             exact
             path='/scout'
             render={(props) => <StudentPortal screen={<ScoutPage />} />}
-          />
-          <Route
-            exact
-            path='/sign'
-            render={(props) => <StudentPortal screen={<Sign />} />}
           />
           <Route
             exact
