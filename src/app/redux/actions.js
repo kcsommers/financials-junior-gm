@@ -11,6 +11,14 @@ import {
   SIGN_PLAYER,
   UPDATE_STUDENT,
   TRADE_PLAYER,
+  SET_SCORE,
+  SET_RANK,
+  SET_IMAGE,
+  SET_NAME,
+  SET_STATS,
+  SET_STANDINGS,
+  SET_NEXT_OPPONENT,
+  SET_UPCOMING_GAMES
 } from './actionTypes';
 
 export const setAnimationState = (state) => ({
@@ -72,3 +80,43 @@ export const tradePlayer = (releasedPlayer, signedPlayer) => ({
   type: TRADE_PLAYER,
   payload: { releasedPlayer, signedPlayer },
 });
+
+export const setScore = (state) => ({
+  type: SET_SCORE,
+  payload: {state}
+})
+
+export const setRank = (state) => ({
+  type: SET_RANK,
+  payload: {state}
+})
+
+export const setImage = (state) => ({
+  type: SET_IMAGE,
+  payload: {state}
+})
+
+export const setName = (state) => ({
+  type: SET_NAME,
+  payload: {state}
+})
+
+export const setStats = (state) => ({
+  type: SET_STATS,
+  payload: {state}
+})
+
+export const setStandings = (state) => ({
+  type: SET_STANDINGS,
+  payload: {state}
+})
+
+export const setNextOpponent = (state) => ({
+  type: SET_NEXT_OPPONENT,
+  payload: {state}
+})
+
+export const setUpcomingGames = (state) => ({
+  type: SET_UPCOMING_GAMES,
+  payload: {state}
+})

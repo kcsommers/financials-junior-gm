@@ -2,6 +2,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
 }
 
 .season-teams-vs-your-place,
@@ -10,4 +11,14 @@
   font-size: 36px;
   color: white;
   -webkit-text-stroke: 1px black;
+}
+
+.season-teams-vs-container {
+  display: flex;
+}
+
+.team-scores-container {
+  display: flex;
+  justify-content: space-between;
+  width: 300px
 }
