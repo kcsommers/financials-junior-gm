@@ -4,6 +4,7 @@ import { cloneDeep } from 'lodash';
 
 const initialState = {
   student: null,
+  pagesVisited: null,
 };
 
 const studentStateReducer = (state = initialState, action) => {
