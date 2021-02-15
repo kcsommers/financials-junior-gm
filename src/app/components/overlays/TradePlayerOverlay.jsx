@@ -52,7 +52,6 @@ export const TradePlayerOverlay = ({ releasingPlayer, student }) => {
       players: playersCopy,
     })
       .then((res) => {
-        console.log('RES:::: ', res);
         dispatch(tradePlayer(releasingPlayer, signingPlayer));
         dispatch(setStudent(res.updatedStudent));
         dispatch(
