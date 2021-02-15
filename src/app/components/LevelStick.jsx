@@ -84,7 +84,7 @@ export const LevelStick = ({
         style={
           isLarge
             ? {
-                transform: 'scale(1.3)',
+                transform: 'scale(1.4)',
               }
             : {}
         }

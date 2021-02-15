@@ -1,4 +1,5 @@
 export { BackButton } from './BackButton';
+export { BadScoutOverlay } from './overlays/BadScoutOverlay';
 export { LevelStickSvg } from './LevelStickSvg';
 export { PlayerRankPie } from './PlayerRankPie';
 export { LoadingSpinner } from './LoadingSpinner';

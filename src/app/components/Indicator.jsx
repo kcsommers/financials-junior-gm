@@ -1,6 +1,12 @@
 import { getDollarString } from '@utils';
 import '@css/components/Indicator.css';
 
+const getFontSize = (amount) => {
+  const _amount = typeof amount !== 'string' ? String(amount) : amount;
+
+  return _amount && _amount.length > 2 ? '1.2rem' : '2rem';
+};
+
 export const Indicator = ({
   amount,
   direction,
@@ -23,9 +29,12 @@ export const Indicator = ({
           className={`amount-indicator-amount color-primary${
             isMoney ? ' amount-indicator-amount-money' : ''
           }`}
-          style={{ transform: `rotate(-${rotate}deg)` }}
+          style={{
+            transform: `rotate(-${rotate}deg)`,
+            fontSize: getFontSize(amount),
+          }}
         >
-          {isMoney ? getDollarString(amount) : amount}
+          {isMoney ? getDollarString(amount, true) : amount}
         </p>
       </div>
     </div>
