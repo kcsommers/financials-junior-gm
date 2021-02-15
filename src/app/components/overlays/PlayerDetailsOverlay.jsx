@@ -39,14 +39,11 @@ export const PlayerDetailsOverlay = ({
       player
     );
 
-    console.log('PLAYERS COPY:::: ', playersCopy);
-
     updateStudentById(student._id, {
       [prevAssignment]: null,
       players: playersCopy,
     })
       .then((res) => {
-        console.log('UPDATE RES:::: ', res);
         dispatch(releasePlayer(player, prevAssignment));
         dispatch(setStudent(res.updatedStudent));
         dispatch(

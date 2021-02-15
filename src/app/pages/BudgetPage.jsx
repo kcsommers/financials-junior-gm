@@ -33,7 +33,6 @@ const BudgetPage = () => {
   };
 
   const updateSavingsOnServer = (value) => {
-    console.log('SEND TO SERVER::::');
     updateStudentById(student._id, { savingsBudget: value })
       .then((res) => {
         console.log('UPDATED SAVINGS:::: ', res);

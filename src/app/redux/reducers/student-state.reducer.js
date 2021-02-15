@@ -16,7 +16,6 @@ const studentStateReducer = (state = initialState, action) => {
       }
 
       // total up money spend and teamRank
-      console.log('[reducer]:::: ', student.players);
       student.moneySpent = getMoneySpent(student.players);
       student.teamRank = getTeamRank(student.players);
 

@@ -41,7 +41,6 @@ const ScoutPage = () => {
   const history = useHistory();
   const tutorialActive = useSelector((state) => state.tutorial.isActive);
   const student = useSelector((state) => state.studentState.student);
-  console.log('STUDENT:::: ', student);
   const { scoutPlayers, scoutingState } = useSelector((state) => state.players);
   const availablePlayersAnimationState = useSelector(
     (state) => state.tutorial.scout.availablePlayersBoard

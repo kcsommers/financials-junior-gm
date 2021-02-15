@@ -61,7 +61,6 @@ export const SignPlayerOverlay = ({ team, assignment, student }) => {
       players: playersCopy,
     })
       .then((res) => {
-        console.log('RES:::: ', res);
         dispatch(signPlayer(signedPlayer, assignment));
         dispatch(setStudent(res.updatedStudent));
         dispatch(

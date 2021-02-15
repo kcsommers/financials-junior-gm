@@ -16,14 +16,7 @@ export const getMoneySpent = (players) => {
   if (!players) {
     return 0;
   }
-
-  console.log('[getMOneySpent]:::: ', players);
   return players.reduce((total, p) => {
-    console.log(
-      'PPPP:::: ',
-      p.playerAssignment,
-      playerProps.includes(p.playerAssignment)
-    );
     if (playerProps.includes(p.playerAssignment)) {
       total += +p.playerCost;
     }
