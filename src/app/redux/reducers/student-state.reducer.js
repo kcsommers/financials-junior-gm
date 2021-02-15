@@ -16,8 +16,9 @@ const studentStateReducer = (state = initialState, action) => {
       }
 
       // total up money spend and teamRank
-      student.moneySpent = getMoneySpent(student);
-      student.teamRank = getTeamRank(student);
+      console.log('[reducer]:::: ', student.players);
+      student.moneySpent = getMoneySpent(student.players);
+      student.teamRank = getTeamRank(student.players);
 
       const clonedState = cloneDeep(state);
       clonedState.student = student;

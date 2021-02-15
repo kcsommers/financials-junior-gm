@@ -1,5 +1,6 @@
 import { useDispatch } from 'react-redux';
-import { toggleOverlay, updateStudent, releasePlayer } from '@redux/actions';
+import { toggleOverlay, setStudent, releasePlayer } from '@redux/actions';
+import { updateStudentById } from '../../api-helper';
 import {
   PlayerCard,
   OverlayBoard,
@@ -30,32 +31,38 @@ export const PlayerDetailsOverlay = ({
   const releaseConfirmed = () => {
     const prevAssignment = player.playerAssignment;
     player.playerAssignment = PlayerAssignments.MARKET;
-    const clonedStudent = cloneDeep(student);
-    clonedStudent[player.playerPosition] = null;
 
-    // Promise.all([
-    //   updatePlayerOnServer.bind(this, player, {
-    //     playerAssignment: PlayerAssignments.Market,
-    //   }),
-    //   updateStudentOnServer.bind(this, clonedStudent),
-    // ])
-    //   .then((res) => {
-    //     dispatch(releasePlayer(player, prevAssignment));
-    //     dispatch(updateStudent({ [prevAssignment]: null }));
-    //     dispatch(
-    //       toggleOverlay({
-    //         isOpen: true,
-    //         template: (
-    //           <PlayerChangeSuccessOverlay
-    //             message='Player has been released!'
-    //             player={player}
-    //           />
-    //         ),
-    //         canClose: true,
-    //       })
-    //     );
-    //   })
-    //   .catch((err) => console.error(err));
+    const playersCopy = cloneDeep(student.players);
+    playersCopy.splice(
+      playersCopy.findIndex((p) => p._id === player._id),
+      1,
+      player
+    );
+
+    console.log('PLAYERS COPY:::: ', playersCopy);
+
+    updateStudentById(student._id, {
+      [prevAssignment]: null,
+      players: playersCopy,
+    })
+      .then((res) => {
+        console.log('UPDATE RES:::: ', res);
+        dispatch(releasePlayer(player, prevAssignment));
+        dispatch(setStudent(res.updatedStudent));
+        dispatch(
+          toggleOverlay({
+            isOpen: true,
+            template: (
+              <PlayerChangeSuccessOverlay
+                message='Player has been released!'
+                player={player}
+              />
+            ),
+            canClose: true,
+          })
+        );
+      })
+      .catch((err) => console.error(err));
   };
 
   const confirmTrade = () => {
@@ -98,10 +105,10 @@ export const PlayerDetailsOverlay = ({
         }}
       >
         <div className='player-details-player-wrap'>
-          <PlayerCard player={player} isLarge={true} />
+          <PlayerCard player={player} size='large' />
         </div>
         {includeActions && (
-          <div className='overlay-buttons-wrap'>
+          <div className='overlay-buttons-wrap' style={{ marginTop: '3rem' }}>
             <div className={`box-shadow overlay-btn`} onClick={confirmTrade}>
               <div className='overlay-btn-inner'>
                 <span className='outline-black'>Trade</span>

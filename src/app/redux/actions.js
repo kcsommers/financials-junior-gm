@@ -11,6 +11,7 @@ import {
   SIGN_PLAYER,
   UPDATE_STUDENT,
   TRADE_PLAYER,
+  SET_LOGIN_STATE,
   SET_SCORE,
   SET_RANK,
   SET_IMAGE,
@@ -84,6 +85,11 @@ export const tradePlayer = (releasedPlayer, signedPlayer) => ({
   payload: { releasedPlayer, signedPlayer },
 });
 
+export const setLoginState = (isLoggedIn, role) => ({
+  type: SET_LOGIN_STATE,
+  payload: { isLoggedIn, role },
+});
+
 export const setScore = (state) => ({
   type: SET_SCORE,
   payload: {state}
@@ -138,3 +144,4 @@ export const setSimulationButton = (simulation) => ({
   type: SET_SIMULATION_BUTTON,
   payload: simulation
 })
+

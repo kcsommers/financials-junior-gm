@@ -1,19 +1,19 @@
 import '@css/components/PlayerRankPie.css';
 
 export const PlayerRankPie = ({
-  score,
+  rank,
   sliceColor = '#0099ff',
   emptyColor = '#fff',
   size = 20,
   label,
 }) => {
   const calculateRotation = (num) => {
-    const pct = num / 50;
+    const pct = num / 100;
     return 360 * pct;
   };
 
-  const scoreRotate = calculateRotation(score);
-  const emptyRotate = calculateRotation(100 - score);
+  const rankRotate = calculateRotation(rank);
+  const emptyRotate = calculateRotation(100 - rank);
 
   return (
     <div
@@ -36,41 +36,41 @@ export const PlayerRankPie = ({
         </p>
       )}
       <div
-        className='player-score-pie'
+        className='player-rank-pie'
         style={{
           width: `${size}px`,
           height: `${size}px`,
         }}
       >
         <div
-          className='player-score-slice'
+          className='player-rank-slice'
           style={{
             clipPath:
-              scoreRotate > 180
+              rankRotate > 180
                 ? 'none'
                 : 'polygon(50% 0%, 50% 100%, 100% 100%, 100% 0%)',
           }}
         >
           <div
-            className='player-score-slice-fill'
+            className='player-rank-slice-fill'
             style={{
-              transform: `rotate(${scoreRotate}deg)`,
+              transform: `rotate(${rankRotate}deg)`,
               background: sliceColor,
             }}
           ></div>
           <div
-            className='player-score-bg-fill'
+            className='player-rank-bg-fill'
             style={{
-              display: scoreRotate > 180 ? 'block' : 'none',
+              display: rankRotate > 180 ? 'block' : 'none',
               background: sliceColor,
             }}
           ></div>
         </div>
 
         <div
-          className='player-score-slice'
+          className='player-rank-slice'
           style={{
-            transform: `rotate(${scoreRotate}deg)`,
+            transform: `rotate(${rankRotate}deg)`,
             clipPath:
               emptyRotate > 180
                 ? 'none'
@@ -78,14 +78,14 @@ export const PlayerRankPie = ({
           }}
         >
           <div
-            className='player-score-slice-fill'
+            className='player-rank-slice-fill'
             style={{
               transform: `rotate(${emptyRotate}deg)`,
               background: emptyColor,
             }}
           ></div>
           <div
-            className='player-score-bg-fill'
+            className='player-rank-bg-fill'
             style={{
               display: emptyRotate > 180 ? 'block' : 'none',
               background: emptyColor,

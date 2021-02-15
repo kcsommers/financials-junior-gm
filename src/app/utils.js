@@ -1,6 +1,6 @@
 import { PlayerAssignments, PlayerPositions } from './data/players/players';
 
-export const getPlayerProps = () => [
+export const playerProps = [
   'fOne',
   'fTwo',
   'fThree',
@@ -12,29 +12,33 @@ export const getPlayerProps = () => [
   'benchThree',
 ];
 
-export const getMoneySpent = (student) => {
-  if (!student) {
+export const getMoneySpent = (players) => {
+  if (!players) {
     return 0;
   }
 
-  return getPlayerProps().reduce((total, p) => {
-    const player = student[p];
-    if (player) {
-      total += +player.playerCost;
+  console.log('[getMOneySpent]:::: ', players);
+  return players.reduce((total, p) => {
+    console.log(
+      'PPPP:::: ',
+      p.playerAssignment,
+      playerProps.includes(p.playerAssignment)
+    );
+    if (playerProps.includes(p.playerAssignment)) {
+      total += +p.playerCost;
     }
     return total;
   }, 0);
 };
 
-export const getTeamRank = (student) => {
-  if (!student) {
+export const getTeamRank = (players) => {
+  if (!players) {
     return 0;
   }
 
-  return getPlayerProps().reduce((total, p) => {
-    const player = student[p];
-    if (player) {
-      total += +player.overallRank;
+  return players.reduce((total, p) => {
+    if (playerProps.includes(p.playerAssignment)) {
+      total += +p.overallRank;
     }
     return total;
   }, 0);

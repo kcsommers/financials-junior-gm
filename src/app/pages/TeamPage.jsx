@@ -97,7 +97,7 @@ const TeamPage = () => {
               <ReactSVG
                 style={{
                   position: 'absolute',
-                  top: '0',
+                  top: '25px',
                   left: '0',
                   right: '0',
                   bottom: '0',
