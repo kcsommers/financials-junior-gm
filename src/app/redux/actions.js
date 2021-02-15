@@ -17,8 +17,8 @@ import {
   SET_NAME,
   SET_STATS,
   SET_STANDINGS,
-  SET_NEXT_OPPONENT,
-  SET_UPCOMING_GAMES,
+  UPDATE_CURRENT_OPPONENT,
+  SET_TEAMS,
   SET_JUMBOTRON_DISPLAY,
   SET_SEASON_SIGN,
   SET_SIMULATION_BUTTON,
@@ -107,7 +107,7 @@ export const setName = (state) => ({
 
 export const setStats = (state) => ({
   type: SET_STATS,
-  payload: {state}
+  payload: state
 })
 
 export const setStandings = (state) => ({
@@ -115,13 +115,13 @@ export const setStandings = (state) => ({
   payload: {state}
 })
 
-export const setNextOpponent = (state) => ({
-  type: SET_NEXT_OPPONENT,
-  payload: {state}
+export const updateCurrentOpponent = (currentOpponent) => ({
+  type: UPDATE_CURRENT_OPPONENT,
+  payload: currentOpponent
 })
 
 export const setUpcomingGames = (state) => ({
-  type: SET_UPCOMING_GAMES,
+  type: SET_TEAMS,
   payload: {state}
 })
 
