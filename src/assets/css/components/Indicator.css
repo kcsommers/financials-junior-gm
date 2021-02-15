@@ -60,12 +60,7 @@ div.amount-indicator-top div.amount-indicator-pointer {
 }
 
 p.amount-indicator-amount {
-  font-size: 2rem;
   letter-spacing: 0.1rem;
-}
-
-p.amount-indicator-amount-money {
-  font-size: 1.2rem;
 }
 
 p.indicator-label {

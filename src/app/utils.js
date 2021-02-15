@@ -41,9 +41,9 @@ export const capitalize = (str) => {
   return str.charAt(0).toUpperCase() + str.slice(1);
 };
 
-export const getDollarString = (num) => {
+export const getDollarString = (num, showZero = false) => {
   if (!num || num === 'null') {
-    return '';
+    return showZero ? '$0' : '';
   }
   if (+num % 1 === 0) {
     return `$${num}`;
