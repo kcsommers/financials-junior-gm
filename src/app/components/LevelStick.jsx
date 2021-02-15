@@ -1,11 +1,12 @@
-import React from 'react';
-import { ReactSVG } from 'react-svg';
-import teamRank from '@images/icons/hockey-visual-1.svg';
-import budget from '@images/icons/hockey-visual-2.svg';
-import { Indicator, TeamRankSvg, MoneyLeftSvg } from '@components';
+import { Indicator, LevelStickSvg } from '@components';
 
 const styles = {
-  teamRank: {
+  right: {
+    indicator: {
+      position: 'absolute',
+      top: 0,
+      right: '40px',
+    },
     image: {
       position: 'relative',
       right: '-50px',
@@ -16,11 +17,6 @@ const styles = {
       right: '-40px',
       top: 0,
     },
-    indicator: {
-      position: 'absolute',
-      top: 0,
-      right: '40px',
-    },
     text: {
       color: '#ea7200',
       display: 'inline-block',
@@ -29,32 +25,12 @@ const styles = {
       fontWeight: 'bold',
     },
   },
-  budget: {
-    image: {
-      position: 'relative',
-      left: '-50px',
-      top: 0,
-    },
-    imageLg: {
-      position: 'relative',
-      left: '-40px',
-      top: 0,
-    },
+  left: {
     indicator: {
       position: 'absolute',
       top: 0,
       left: '40px',
     },
-    text: {
-      color: '#002f6c',
-      display: 'inline-block',
-      fontSize: '1rem',
-      marginLeft: '0.25rem',
-      fontWeight: 'bold',
-      textAlign: 'right',
-    },
-  },
-  opponentTeamRank: {
     image: {
       position: 'relative',
       left: '-50px',
@@ -65,11 +41,6 @@ const styles = {
       left: '-40px',
       top: 0,
     },
-    indicator: {
-      position: 'absolute',
-      top: 0,
-      left: '0px',
-    },
     text: {
       color: '#002f6c',
       display: 'inline-block',
@@ -77,83 +48,62 @@ const styles = {
       marginLeft: '0.25rem',
       fontWeight: 'bold',
       textAlign: 'right',
-      transform: 'translate(130px, 0)',
     },
   },
-  noStickOpponentTeamRank: {
-    indicator: {
-      position: 'absolute',
-      top: 0,
-      left: '-30px',
-    },
-    text: {
-      color: 'black',
-      display: 'inline-block',
-      fontSize: '1rem',
-      marginLeft: '0.25rem',
-      fontWeight: 'bold',
-      textAlign: 'right',
-      transform: 'translate(120px, 0)',
-    },
-  },
+  // noStickOpponentTeamRank: {
+  //   indicator: {
+  //     position: 'absolute',
+  //     top: 0,
+  //     left: '-30px',
+  //   },
+  //   text: {
+  //     color: 'black',
+  //     display: 'inline-block',
+  //     fontSize: '1rem',
+  //     marginLeft: '0.25rem',
+  //     fontWeight: 'bold',
+  //     textAlign: 'right',
+  //     transform: 'translate(120px, 0)',
+  //   },
+  // },
 };
 
-const levelTypes = (type, amount) => ({
-  budget: {
-    image: budget,
-    // imageJsx: <MoneyLeftSvg moneyLeft={amount} />,
-    indicator: (
-      <div style={styles[type].indicator}>
-        <Indicator amount={25} direction='left' />
-        <span style={styles[type].text}>
-          Spending <br />
-          Budget
-        </span>
-      </div>
-    ),
-  },
-  teamRank: {
-    image: teamRank,
-    // imageJsx: <TeamRankSvg rank={amount} />,
-    indicator: (
-      <div style={styles[type].indicator}>
-        <span style={styles[type].text}>
-          Team <br />
-          Rank
-        </span>
-        <Indicator amount={amount} direction='right' />
-      </div>
-    ),
-  },
-  opponentTeamRank: {
-    image: budget,
-    indicator: (
-      <div style={styles[type].indicator}>
-        <span style={styles[type].text}>
-          Team <br />
-          Rank
-        </span>
-        <Indicator amount={25} direction='left' />
-      </div>
-    ),
-  },
-  noStickOpponentTeamRank: {
-    image: null,
-    indicator: (
-      <div style={styles[type].indicator}>
-        <span style={styles[type].text}>
-          Team <br />
-          Rank
-        </span>
-        <Indicator amount={25} direction='left' />
-      </div>
-    ),
-  },
-});
+//   opponentTeamRank: {
+//     image: budget,
+//     indicator: (
+//       <div style={styles[type].indicator}>
+//         <span style={styles[type].text}>
+//           Team <br />
+//           Rank
+//         </span>
+//         <Indicator amount={25} direction='left' />
+//       </div>
+//     ),
+//   },
+//   noStickOpponentTeamRank: {
+//     image: null,
+//     indicator: (
+//       <div style={styles[type].indicator}>
+//         <span style={styles[type].text}>
+//           Team <br />
+//           Rank
+//         </span>
+//         <Indicator amount={25} direction='left' />
+//       </div>
+//     ),
+//   },
+// });
 
-export const LevelStick = ({ type, isLarge, amount }) => {
-  const view = levelTypes(type, amount)[type];
-
+export const LevelStick = ({
+  type,
+  isLarge,
+  amount,
+  denom = 100,
+  indicatorDirection,
+  color,
+  textJsx,
+  inverse,
+}) => {
   return (
     <div
       style={{
@@ -175,18 +125,36 @@ export const LevelStick = ({ type, isLarge, amount }) => {
             : {}
         }
       >
-        {view.imageJsx ? (
-          <div style={isLarge ? styles[type].imageLg : styles[type].image}>
-            {view.imageJsx}
-          </div>
-        ) : (
-          <ReactSVG
-            style={isLarge ? styles[type].imageLg : styles[type].image}
-            src={view.image}
+        <div
+          style={
+            isLarge
+              ? styles[indicatorDirection].imageLg
+              : styles[indicatorDirection].image
+          }
+        >
+          <LevelStickSvg
+            rank={amount}
+            num={amount}
+            denom={denom}
+            color={color}
+            inverse={inverse}
           />
+        </div>
+      </div>
+      <div style={styles[indicatorDirection].indicator}>
+        {indicatorDirection === 'right' || indicatorDirection === 'bottom' ? (
+          <>
+            <span style={styles[indicatorDirection].text}>{textJsx}</span>
+            <Indicator amount={amount} direction={indicatorDirection} />
+          </>
+        ) : (
+          <>
+            <Indicator amount={amount} direction={indicatorDirection} />
+            <span style={styles[indicatorDirection].text}>{textJsx}</span>
+          </>
         )}
       </div>
-      {view.indicator}
+      {/* {view.indicator} */}
     </div>
   );
 };
