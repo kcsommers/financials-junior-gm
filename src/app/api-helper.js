@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { PlayerAssignments } from '@data/players/players';
 
 let HOST_SERVER_NAME = 'TEST';
 // let HOST_SERVER_NAME = "PROD";
@@ -121,6 +122,32 @@ export const initPlayersByLevel = (level) => {
 };
 
 // update student
-export const updateStudentById = (id) => {
-  return axios.get(`${getHostName()}/api/v1/student/${id}`);
+export const updateStudentById = (id, data) => {
+  const fd = new FormData();
+  Object.keys(data).forEach((k) => {
+    fd.append(k, data[k]);
+  });
+
+  console.log('UPDATE DATA:::: ', data);
+
+  return axios.put(`${getHostName()}/api/v1/student/${id}`, fd);
+};
+
+// set initial team
+export const setInitialTeam = (student) => {
+  student.players.forEach((p) => {
+    if (p.playerName === 'Matthew Nieto') {
+      p.playerAssignment = PlayerAssignments.F_ONE;
+    } else if (p.playerName === 'Sam Greenfeld') {
+      p.playerAssignment = PlayerAssignments.F_TWO;
+    } else if (p.playerName === 'Andrew Park') {
+      p.playerAssignment = PlayerAssignments.G_ONE;
+    } else if (p.playerName === 'Emily Burch') {
+      p.playerAssignment = PlayerAssignments.D_ONE;
+    } else if (p.playerName === 'Theo Johnson') {
+      p.playerAssignment = PlayerAssignments.D_TWO;
+    }
+  });
+
+  return updateStudentById(student._id, { players: student.players });
 };

@@ -264,7 +264,11 @@ export const PlayerCard = ({
   ) : null;
 
   const noPlayerTemplate = (
-    <div className='player-card-wrap player-card-wrap-empty'>
+    <div
+      className={`player-card-wrap player-card-wrap-empty${
+        !!onClick ? ' player-card-clickable' : ''
+      }`}
+    >
       <motion.div
         className='box-shadow player-card-empty-inner border-accent'
         animate={animationStates ? animationStates.playerCardEmpty : null}

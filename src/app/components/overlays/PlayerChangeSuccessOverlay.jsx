@@ -40,9 +40,15 @@ export const PlayerChangeSuccessOverlay = ({ player, message }) => {
           </div>
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
             <div style={{ flex: 1 }}>
-              <PlayerCard size='large' player={player} />
+              <PlayerCard size='medium' player={player} />
             </div>
-            <div style={{ flex: 0.75 }}>
+            <div
+              style={{
+                flex: 0.75,
+                transform: 'scale(0.75)',
+                transformOrigin: '70% 100%',
+              }}
+            >
               <ReactSVG src={notepad} />
             </div>
           </div>
