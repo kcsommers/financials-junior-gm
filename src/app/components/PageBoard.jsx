@@ -1,10 +1,12 @@
 import closeBtn from '@images/icons/cancel.svg';
 import { ReactSVG } from 'react-svg';
 import { Link } from 'react-router-dom';
+import { BackButton } from '@components';
 
 const styles = {
   container: {
     flex: 1,
+    position: 'relative',
   },
   board: {
     width: '88%',
@@ -31,9 +33,25 @@ const styles = {
   },
 };
 
-export const PageBoard = ({ closeBtnLeft, children, hideCloseBtn }) => {
+export const PageBoard = ({
+  closeBtnLeft,
+  children,
+  hideCloseBtn,
+  includeBackButton,
+}) => {
   return (
     <div style={styles.container}>
+      <div
+        style={{
+          display: 'inline-block',
+          position: 'absolute',
+          left: 0,
+          top: '50%',
+          transform: 'translate(0px, -50%)',
+        }}
+      >
+        {includeBackButton && <BackButton />}
+      </div>
       <div style={styles.board}>
         {!hideCloseBtn && (
           <Link

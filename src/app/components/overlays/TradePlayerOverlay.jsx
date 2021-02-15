@@ -6,13 +6,12 @@ import {
 } from '@components';
 import { getPlayerPositon } from '@utils';
 import { useDispatch } from 'react-redux';
-import { toggleOverlay, tradePlayer, updateStudent } from '@redux/actions';
+import { toggleOverlay, tradePlayer, setStudent } from '@redux/actions';
 import { ConfirmTradeOverlay } from './ConfirmTradeOverlay';
 import { PlayerDetailsOverlay } from './PlayerDetailsOverlay';
-import { PlayerAssignments } from '@data/data';
+import { PlayerAssignments } from '@data/players/players';
 import { cloneDeep } from 'lodash';
-import { updatePlayerOnServer } from '@data/services/players-service';
-import { updateStudentOnServer } from '@data/services/student-service';
+import { updateStudentById } from '../../api-helper';
 import { PlayersTradedOverlay } from './PlayersTradedOverlay';
 
 export const TradePlayerOverlay = ({ releasingPlayer, student }) => {
@@ -31,18 +30,31 @@ export const TradePlayerOverlay = ({ releasingPlayer, student }) => {
     const prevAssignment = releasingPlayer.playerAssignment;
     releasingPlayer.player = PlayerAssignments.MARKET;
     signingPlayer.playerAssignment = prevAssignment;
-    const clonedStudent = cloneDeep(student);
-    clonedStudent[prevAssignment] = signingPlayer;
 
-    Promise.all([
-      updatePlayerOnServer.bind(this, signingPlayer, {
-        playerAssignment: PlayerAssignments.Market,
-      }),
-      updateStudentOnServer.bind(this, clonedStudent),
-    ])
+    const playersCopy = cloneDeep(student.players).reduce((arr, p) => {
+      if (p._id === releasingPlayer._id) {
+        arr.push(releasingPlayer);
+        return arr;
+      }
+
+      if (p._id === signingPlayer._id) {
+        arr.push(signingPlayer);
+        return arr;
+      }
+
+      arr.push(p);
+      return arr;
+    }, []);
+
+    updateStudentById(student._id, {
+      [signingPlayer.playerAssignment]: signingPlayer._id,
+      [releasingPlayer.playerAssignment]: releasingPlayer._id,
+      players: playersCopy,
+    })
       .then((res) => {
+        console.log('RES:::: ', res);
         dispatch(tradePlayer(releasingPlayer, signingPlayer));
-        dispatch(updateStudent({ [prevAssignment]: null }));
+        dispatch(setStudent(res.updatedStudent));
         dispatch(
           toggleOverlay({
             isOpen: true,
@@ -94,7 +106,7 @@ export const TradePlayerOverlay = ({ releasingPlayer, student }) => {
             <TeamBudgetState />
           </div>
           <div style={{ flex: 1 }}>
-            <PlayerCard isLarge={true} player={releasingPlayer} />
+            <PlayerCard size='medium' player={releasingPlayer} />
           </div>
         </div>
         <div
@@ -109,6 +121,7 @@ export const TradePlayerOverlay = ({ releasingPlayer, student }) => {
           <MarketPlayersBoard
             initialPosition={getPlayerPositon(releasingPlayer.playerAssignment)}
             onPlayerCardClick={confirmTrade}
+            student={student}
           />
         </div>
       </div>

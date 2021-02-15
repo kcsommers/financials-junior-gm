@@ -6,7 +6,7 @@ import { Indicator } from '@components';
 
 export const TeamRankStickBig = () => {
   return (
-    <div className="team-rank-stick-big-container">
+    <div className='team-rank-stick-big-container'>
       <div className='amount-stick-wrap'>
         <h4 className='amount-stick-title color-primary'>
           <span>Team Rank</span>
@@ -17,9 +17,9 @@ export const TeamRankStickBig = () => {
         </div>
       </div>
 
-      <div className="team-rank-stick-big">
-        <ReactSVG src={teamRankStickBig}/>
+      <div className='team-rank-stick-big'>
+        <ReactSVG src={teamRankStickBig} />
       </div>
     </div>
-  )
-}
+  );
+};

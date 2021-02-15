@@ -3,11 +3,13 @@ import {
   BudgetSlider,
   HeaderComponent,
   PageBoard,
+  LoadingSpinner,
 } from '@components';
 import budgetStick from '@images/budget-stick.svg';
 import { useSelector, useDispatch } from 'react-redux';
 import { budgetSlides, SharkieButton, Tutorial } from '@tutorial';
 import { setTutorialState, setSavings } from '@redux/actions';
+import { updateStudentById } from '../api-helper';
 import '@css/pages/BudgetPage.css';
 
 let debounceTimeout = 0;
@@ -30,8 +32,13 @@ const BudgetPage = () => {
     spending: useSelector((state) => state.tutorial.budget.spending),
   };
 
-  const updateSavingsOnServer = () => {
+  const updateSavingsOnServer = (value) => {
     console.log('SEND TO SERVER::::');
+    updateStudentById(student._id, { savingsBudget: value })
+      .then((res) => {
+        console.log('UPDATED SAVINGS:::: ', res);
+      })
+      .catch((err) => console.error(err));
   };
 
   const updateSavings = (value) => {
@@ -41,7 +48,7 @@ const BudgetPage = () => {
       window.clearTimeout(debounceTimeout);
     }
     debounceTimeout = window.setTimeout(() => {
-      updateSavingsOnServer();
+      updateSavingsOnServer(+value);
     }, 1000);
   };
 
@@ -54,7 +61,7 @@ const BudgetPage = () => {
         inverse={true}
       />
 
-      <PageBoard hideCloseBtn={true}>
+      <PageBoard hideCloseBtn={true} includeBackButton={true}>
         <div className='budget-page-board-inner'>
           <span style={{ position: 'absolute', left: '1rem', top: '1rem' }}>
             <SharkieButton
@@ -93,7 +100,20 @@ const BudgetPage = () => {
       )}
     </div>
   ) : (
-    <div>Loading...</div>
+    <div
+      style={{
+        position: 'absolute',
+        top: 0,
+        bottom: 0,
+        left: 0,
+        right: 0,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+    >
+      <LoadingSpinner />
+    </div>
   );
 };
 

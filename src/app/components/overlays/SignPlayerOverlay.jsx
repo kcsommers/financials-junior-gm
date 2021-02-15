@@ -5,11 +5,11 @@ import {
   PlayerChangeSuccessOverlay,
 } from '@components';
 import { useDispatch } from 'react-redux';
-import { toggleOverlay, signPlayer, updateStudent } from '@redux/actions';
+import { toggleOverlay, signPlayer, setStudent } from '@redux/actions';
 import { ConfirmSignOverlay } from './ConfirmSignOverlay';
-import { updatePlayerOnServer } from '@data/services/players-service';
-import { updateStudentOnServer } from '@data/services/student-service';
 import { getPlayerPositon } from '@utils';
+import { updateStudentById } from '../../api-helper';
+import { cloneDeep } from 'lodash';
 import '@css/components/team-page/SignPlayerOverlay.css';
 
 const getAvailableSlots = (props, team) => {
@@ -49,20 +49,28 @@ export const SignPlayerOverlay = ({ team, assignment, student }) => {
   const signConfirmed = (signedPlayer) => {
     signedPlayer.playerAssignment = assignment;
 
-    Promise.all([
-      updatePlayerOnServer.bind(this, student, { [assignment]: signedPlayer }),
-      updateStudentOnServer.bind(this, signedPlayer),
-    ])
+    const playersCopy = cloneDeep(student.players);
+    playersCopy.splice(
+      playersCopy.findIndex((p) => p._id === signedPlayer._id),
+      1,
+      signedPlayer
+    );
+
+    updateStudentById(student._id, {
+      [assignment]: signedPlayer._id,
+      players: playersCopy,
+    })
       .then((res) => {
+        console.log('RES:::: ', res);
         dispatch(signPlayer(signedPlayer, assignment));
-        dispatch(updateStudent({ [assignment]: signedPlayer }));
+        dispatch(setStudent(res.updatedStudent));
         dispatch(
           toggleOverlay({
             isOpen: true,
             template: (
               <PlayerChangeSuccessOverlay
                 player={signedPlayer}
-                message='Player has been signed!'
+                message=' Player has been signed!'
               />
             ),
           })
@@ -136,6 +144,7 @@ export const SignPlayerOverlay = ({ team, assignment, student }) => {
           <MarketPlayersBoard
             initialPosition={getPlayerPositon(assignment)}
             onPlayerCardClick={confirmSign}
+            student={student}
           />
         </div>
       </div>

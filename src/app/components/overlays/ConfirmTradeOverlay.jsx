@@ -16,14 +16,21 @@ export const ConfirmTradeOverlay = ({
       confirm={confirm}
     >
       <div className='confirm-trade-overlay'>
-        <div style={{ display: 'flex' }}>
+        <div style={{ display: 'flex', padding: '2rem 0rem 0 3rem' }}>
           <div style={{ flex: 1 }}>
             <TeamBudgetState title='Changes to Rank and Budget' />
           </div>
-          <div style={{ flex: 1, display: 'flex' }}>
+          <div
+            style={{
+              flex: 1,
+              display: 'flex',
+              transform: 'scale(0.8)',
+              transformOrigin: '20% 0',
+            }}
+          >
             <div style={{ flex: 1 }}>
               <h4 className='color-accent'>OUT</h4>
-              <PlayerCard player={releasingPlayer} />
+              <PlayerCard player={releasingPlayer} size='medium' />
             </div>
             <div
               className='trade-arrows-wrap'
@@ -39,7 +46,7 @@ export const ConfirmTradeOverlay = ({
             </div>
             <div style={{ flex: 1 }}>
               <h4 className='color-primary'>IN</h4>
-              <PlayerCard player={signingPlayer} />
+              <PlayerCard player={signingPlayer} size='medium' />
             </div>
           </div>
         </div>

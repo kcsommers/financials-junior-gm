@@ -11,6 +11,7 @@ import {
   SIGN_PLAYER,
   UPDATE_STUDENT,
   TRADE_PLAYER,
+  SET_LOGIN_STATE,
   SET_SCORE,
   SET_RANK,
   SET_IMAGE,
@@ -65,9 +66,9 @@ export const scoutingComplete = (levelOne, levelTwo, levelThree) => ({
   payload: { levelOne, levelTwo, levelThree },
 });
 
-export const setInitialPlayersState = (players) => ({
+export const setInitialPlayersState = (players, student) => ({
   type: SET_INITIAL_PLAYERS_STATE,
-  payload: players,
+  payload: { players, student },
 });
 
 export const signPlayer = (player, assignment) => ({
@@ -83,6 +84,11 @@ export const releasePlayer = (player, prevAssignment) => ({
 export const tradePlayer = (releasedPlayer, signedPlayer) => ({
   type: TRADE_PLAYER,
   payload: { releasedPlayer, signedPlayer },
+});
+
+export const setLoginState = (isLoggedIn, role) => ({
+  type: SET_LOGIN_STATE,
+  payload: { isLoggedIn, role },
 });
 
 export const setScore = (state) => ({
@@ -140,7 +146,3 @@ export const setSimulationButton = (simulation) => ({
   payload: simulation
 })
 
-export const setSimulateGame = (state) => ({
-  type: SET_SIMULATE_GAME,
-  payload: state
-})

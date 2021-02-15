@@ -8,6 +8,7 @@ import {
   ScoutingCompleteOverlay,
   Overlay,
   PlayerDetailsOverlay,
+  LoadingSpinner,
 } from '@components';
 import scoutStick from '@images/scout-stick.svg';
 import { useSelector, useDispatch } from 'react-redux';
@@ -23,9 +24,9 @@ import {
 } from '@redux/actions';
 import { isEqual } from 'lodash';
 import { getMoneyLevels } from '@utils';
-import { updatePlayerOnServer } from '@data/services/players-service';
+import { updatePlayerOnServer } from '@data/players/players-service';
 import { cloneDeep } from 'lodash';
-import { PlayerAssignments } from '@data/data';
+import { PlayerAssignments } from '@data/players/players';
 import '@css/pages/ScoutPage.css';
 
 const boardMap = {
@@ -40,6 +41,7 @@ const ScoutPage = () => {
   const history = useHistory();
   const tutorialActive = useSelector((state) => state.tutorial.isActive);
   const student = useSelector((state) => state.studentState.student);
+  console.log('STUDENT:::: ', student);
   const { scoutPlayers, scoutingState } = useSelector((state) => state.players);
   const availablePlayersAnimationState = useSelector(
     (state) => state.tutorial.scout.availablePlayersBoard
@@ -291,7 +293,7 @@ const ScoutPage = () => {
   };
 
   const handleScoutingComplete = () => {
-    const moneyLevels = getMoneyLevels(student.level);
+    const moneyLevels = getMoneyLevels(student.level || 1);
 
     const levelOneCloned = cloneDeep(scoutPlayers.levelOne);
     const levelTwoCloned = cloneDeep(scoutPlayers.levelTwo);
@@ -362,7 +364,7 @@ const ScoutPage = () => {
             scoutPlayers.levelOne,
             scoutPlayers.levelTwo,
             scoutPlayers.levelThree,
-            getMoneyLevels(student.level)
+            getMoneyLevels(student.level || 1)
           )
         );
       }
@@ -405,7 +407,7 @@ const ScoutPage = () => {
         objectives={['1. Scout players to sign to your bench!']}
         level={student.level}
       />
-      <PageBoard hideCloseBtn={true}>
+      <PageBoard hideCloseBtn={true} includeBackButton={true}>
         <div className='scout-page-board-header'>
           <p className='color-primary scout-page-helper-text'>
             Give each new player a offered value by dragging them to their money
@@ -474,7 +476,20 @@ const ScoutPage = () => {
       )}
     </div>
   ) : (
-    <div>Loading...</div>
+    <div
+      style={{
+        position: 'absolute',
+        top: 0,
+        bottom: 0,
+        left: 0,
+        right: 0,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+    >
+      <LoadingSpinner />
+    </div>
   );
 };
 
