@@ -70,7 +70,7 @@ const TeamPage = () => {
         level={student.level}
       />
 
-      <PageBoard hideCloseBtn={true}>
+      <PageBoard hideCloseBtn={true} includeBackButton={true}>
         <div className='team-page-board-header'>
           <div className='team-page-board-header-inner'>
             <ReactSVG src={jrSharksLogo} />
