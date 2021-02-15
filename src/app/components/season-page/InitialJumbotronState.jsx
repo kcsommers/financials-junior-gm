@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 export const InitialJumbotronState = () => {
 
   const dispatch = useDispatch();
+
   const image = useSelector((state) => {
     return state.season.image
   });
