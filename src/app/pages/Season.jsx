@@ -117,7 +117,6 @@ const Season = () => {
         })
       )
     }
-    setTimeout(()=> {console.log('the final statisics: ', stats)}, 3000)
   }
 
   const handleSimulation = () => {
