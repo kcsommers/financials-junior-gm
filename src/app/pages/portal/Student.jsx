@@ -1,31 +1,51 @@
-import React, { Component } from "react";
-import { Redirect } from 'react-router'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router';
+import { setLoginState } from '@redux/actions';
 
 class StudentPortal extends Component {
   constructor(props) {
-    super(props)
-    this.state = {
-      isLoggedIn: localStorage.getItem('isLoggedIn') == 'true' ? true : localStorage.getItem('isLoggedIn') == true ? true : false,
-      role: localStorage.getItem('userRole') ? localStorage.getItem('userRole') : '',
+    super(props);
+
+    const initialState = {
+      isLoggedIn:
+        localStorage.getItem('isLoggedIn') == 'true'
+          ? true
+          : localStorage.getItem('isLoggedIn') == true
+          ? true
+          : false,
+      role: localStorage.getItem('userRole')
+        ? localStorage.getItem('userRole')
+        : '',
+    };
+
+    if (
+      this.props.loginState.isLoggedIn !== initialState.isLoggedIn ||
+      this.props.loginState.role !== initialState.role
+    ) {
+      this.props.setLoginState(initialState.isLoggedIn, initialState.role);
     }
+
+    this.state = initialState;
   }
 
-
   render() {
-    if (!this.state.isLoggedIn || (this.state.role !== "student")) {
+    if (!this.state.isLoggedIn || this.state.role !== 'student') {
       return (
         <Redirect
           to={{
-            pathname: "/dashboard"
+            pathname: '/dashboard',
           }}
         />
       );
     }
     return (
-      <div>
+      <div style={{ height: '100%', overflow: 'hidden' }}>
         {this.props.screen}
       </div>
     );
   }
 }
-export default StudentPortal 
+const actionsToProps = (state) => ({ loginState: state.loginState });
+const dispatchToProps = { setLoginState };
+export default connect(actionsToProps, dispatchToProps)(StudentPortal);

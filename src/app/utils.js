@@ -1,6 +1,6 @@
-import { PlayerAssignments, PlayerPositions } from './data';
+import { PlayerAssignments, PlayerPositions } from './data/players/players';
 
-export const getPlayerProps = () => [
+export const playerProps = [
   'fOne',
   'fTwo',
   'fThree',
@@ -12,15 +12,26 @@ export const getPlayerProps = () => [
   'benchThree',
 ];
 
-export const getMoneySpent = (student) => {
-  if (!student) {
+export const getMoneySpent = (players) => {
+  if (!players) {
+    return 0;
+  }
+  return players.reduce((total, p) => {
+    if (playerProps.includes(p.playerAssignment)) {
+      total += +p.playerCost;
+    }
+    return total;
+  }, 0);
+};
+
+export const getTeamRank = (players) => {
+  if (!players) {
     return 0;
   }
 
-  return getPlayerProps().reduce((total, p) => {
-    const player = student[p];
-    if (player) {
-      total += player.playerCost;
+  return players.reduce((total, p) => {
+    if (playerProps.includes(p.playerAssignment)) {
+      total += +p.overallRank;
     }
     return total;
   }, 0);
@@ -31,18 +42,20 @@ export const capitalize = (str) => {
 };
 
 export const getDollarString = (num) => {
-  if (!num) {
+  if (!num || num === 'null') {
     return '$0';
   }
-  if (num % 1 === 0) {
+  if (+num % 1 === 0) {
     return `$${num}`;
   }
-  return `$${num.toFixed(2)}`;
+
+  return `$${parseFloat(num).toFixed(2)}`;
 };
 
 export const getMoneyLevels = (level) => {
   switch (level) {
     case 1:
+    case '1':
       return {
         0: {
           short: '$2',
@@ -61,6 +74,7 @@ export const getMoneyLevels = (level) => {
         },
       };
     case 2:
+    case '2':
       return {
         0: {
           short: '$2',
@@ -79,6 +93,7 @@ export const getMoneyLevels = (level) => {
         },
       };
     case 3:
+    case '3':
       return {
         0: {
           short: '$2',
@@ -96,6 +111,13 @@ export const getMoneyLevels = (level) => {
           num: 0.5,
         },
       };
+    default: {
+      return {
+        short: '?',
+        long: 'unknown',
+        num: 0,
+      };
+    }
   }
 };
 
@@ -125,7 +147,7 @@ export const getPlayerPositon = (assignment) => {
     }
     case PlayerAssignments.D_ONE:
     case PlayerAssignments.D_TWO: {
-      return PlayerPositions.DEFENSE;
+      return PlayerPositions.DEFENDER;
     }
     case PlayerAssignments.G_ONE: {
       return PlayerPositions.GOALIE;

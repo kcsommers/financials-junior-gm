@@ -11,6 +11,19 @@ import {
   SIGN_PLAYER,
   UPDATE_STUDENT,
   TRADE_PLAYER,
+  SET_LOGIN_STATE,
+  SET_SCORE,
+  SET_RANK,
+  SET_IMAGE,
+  SET_NAME,
+  SET_STATS,
+  SET_STANDINGS,
+  UPDATE_CURRENT_OPPONENT,
+  SET_TEAMS,
+  SET_JUMBOTRON_DISPLAY,
+  SET_SEASON_SIGN,
+  SET_SIMULATION_BUTTON,
+  SET_SIMULATE_GAME
 } from './actionTypes';
 
 export const setAnimationState = (state) => ({
@@ -53,9 +66,9 @@ export const scoutingComplete = (levelOne, levelTwo, levelThree) => ({
   payload: { levelOne, levelTwo, levelThree },
 });
 
-export const setInitialPlayersState = (players) => ({
+export const setInitialPlayersState = (players, student) => ({
   type: SET_INITIAL_PLAYERS_STATE,
-  payload: players,
+  payload: { players, student },
 });
 
 export const signPlayer = (player, assignment) => ({
@@ -63,12 +76,73 @@ export const signPlayer = (player, assignment) => ({
   payload: { player, assignment },
 });
 
-export const releasePlayer = (player) => ({
+export const releasePlayer = (player, prevAssignment) => ({
   type: RELEASE_PLAYER,
-  payload: player,
+  payload: { player, prevAssignment },
 });
 
-export const tradePlayer = (releasedPlayer, signedPlayer, position) => ({
+export const tradePlayer = (releasedPlayer, signedPlayer) => ({
   type: TRADE_PLAYER,
-  payload: { releasedPlayer, signedPlayer, position },
+  payload: { releasedPlayer, signedPlayer },
 });
+
+export const setLoginState = (isLoggedIn, role) => ({
+  type: SET_LOGIN_STATE,
+  payload: { isLoggedIn, role },
+});
+
+export const setScore = (state) => ({
+  type: SET_SCORE,
+  payload: state
+})
+
+export const setRank = (state) => ({
+  type: SET_RANK,
+  payload: {state}
+})
+
+export const setImage = (state) => ({
+  type: SET_IMAGE,
+  payload: {state}
+})
+
+export const setName = (state) => ({
+  type: SET_NAME,
+  payload: {state}
+})
+
+export const setStats = (state) => ({
+  type: SET_STATS,
+  payload: state
+})
+
+export const setStandings = (state) => ({
+  type: SET_STANDINGS,
+  payload: {state}
+})
+
+export const updateCurrentOpponent = (currentOpponent) => ({
+  type: UPDATE_CURRENT_OPPONENT,
+  payload: currentOpponent
+})
+
+export const setUpcomingGames = (state) => ({
+  type: SET_TEAMS,
+  payload: {state}
+})
+
+export const setJumbotronDisplay = (display) => ({
+  type: SET_JUMBOTRON_DISPLAY,
+  payload: display
+})
+
+export const setSeasonSign = (sign) => ({
+  type: SET_SEASON_SIGN,
+  payload: sign
+})
+
+export const setSimulationButton = (simulation) => ({
+  type: SET_SIMULATION_BUTTON,
+  payload: simulation
+})
+

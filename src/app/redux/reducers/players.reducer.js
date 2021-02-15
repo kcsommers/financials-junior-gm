@@ -7,7 +7,7 @@ import {
   UPDATE_SCOUT_PLAYER,
 } from '../actionTypes';
 import { cloneDeep } from 'lodash';
-import { PlayerAssignments, PlayerPositions } from '@data';
+import { PlayerAssignments, PlayerPositions } from '@data/players/players';
 import { isTeamPlayer } from '@utils';
 
 const initialState = {
@@ -26,12 +26,13 @@ const initialState = {
   scoutingState: {
     isComplete: false,
   },
+  initialized: false,
 };
 
 const playersReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_INITIAL_PLAYERS_STATE: {
-      const players = action.payload;
+      const { players, student } = action.payload;
       const marketPlayers = {
         forward: [],
         defender: [],
@@ -44,11 +45,12 @@ const playersReducer = (state = initialState, action) => {
         available: [],
       };
       const teamPlayers = {};
+      players.filter((p) => p.playerLevel === student.level);
       players.forEach((p) => {
         if (p.playerAssignment === PlayerAssignments.MARKET) {
           if (p.playerPosition === PlayerPositions.FORWARD) {
             marketPlayers.forward.push(p);
-          } else if (p.playerPosition === PlayerPositions.DEFENSE) {
+          } else if (p.playerPosition === PlayerPositions.DEFENDER) {
             marketPlayers.defender.push(p);
           } else if (p.playerPosition === PlayerPositions.GOALIE) {
             marketPlayers.goalie.push(p);
@@ -61,6 +63,7 @@ const playersReducer = (state = initialState, action) => {
       });
 
       return {
+        initialized: true,
         marketPlayers,
         teamPlayers,
         scoutPlayers,
@@ -72,9 +75,11 @@ const playersReducer = (state = initialState, action) => {
     case SIGN_PLAYER: {
       const signedPlayer = action.payload.player;
       const assignment = action.payload.assignment;
-      const marketCache = state.marketPlayers[signedPlayer.playerPosition];
       const clonedState = cloneDeep(state);
+      const marketCache =
+        clonedState.marketPlayers[signedPlayer.playerPosition];
 
+      signedPlayer.playerAssignment = assignment;
       marketCache.splice(
         marketCache.findIndex((p) => p.playerName === signedPlayer.name),
         1
@@ -85,13 +90,13 @@ const playersReducer = (state = initialState, action) => {
     }
     case RELEASE_PLAYER: {
       const releasedPlayer = action.payload.player;
+      const prevAssignment = action.payload.prevAssignment;
       const clonedState = cloneDeep(state);
       const marketCache =
         clonedState.marketPlayers[releasedPlayer.playerPosition];
 
-      releasedPlayer.playerAssignment = PlayerAssignments.MARKET;
+      clonedState.teamPlayers[prevAssignment] = null;
       marketCache.push(releasedPlayer);
-
       return clonedState;
     }
     case TRADE_PLAYER: {
@@ -101,9 +106,7 @@ const playersReducer = (state = initialState, action) => {
       const marketCache =
         clonedState.marketPlayers[releasedPlayer.playerPosition];
 
-      releasedPlayer.playerAssignment = signedPlayer.playerAssignment;
-      signedPlayer.playerAssignment = PlayerAssignments.MARKET;
-      clonedState.teamPlayers[releasedPlayer.playerPosition] = signedPlayer;
+      clonedState.teamPlayers[signedPlayer.playerAssignment] = signedPlayer;
       marketCache.push(releasedPlayer);
 
       return clonedState;
