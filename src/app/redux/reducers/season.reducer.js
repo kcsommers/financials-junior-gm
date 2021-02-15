@@ -22,6 +22,7 @@ import play from '@images/icons/play.svg';
 import jrSharksLogo from '@images/icons/jr-sharks-logo.svg';
 
 const initialState = {
+  score: [0,0],
   gamesPlayed: [],
   teams: [
     {
@@ -70,29 +71,6 @@ const initialState = {
     standings: '12th'
   },
   currentOpponentIndex: 0,
-  teams: [
-    {
-      rank: 280,
-      image: redRabbits,
-      name: 'Red Rabbits',
-      stats: {wins: 0, losses: 0, points: 0},
-      standings: '12th'
-    },
-    {
-      rank: 300,
-      image: purplePanthers,
-      name: 'Purple Panthers',
-      stats: {wins: 0, losses: 0, points: 0},
-      standings: '10th'
-    },
-    {
-      rank: 325,
-      image: whiteWolves,
-      name: 'White Wolves',
-      stats: {wins: 0, losses: 0, points: 0},
-      standings: '6th'
-    }
-  ],
   jumbotronDisplay: <InitialJumbotronState/>,
   seasonSign: 'Your team is ready to play.',
   simulationButton: play,
@@ -122,6 +100,7 @@ export default function(state = initialState, action) {
         name: action.payload
       }
     case SET_STATS:
+      console.log('here is the actual stats: ', action.payload)
       return {
         ...state,
         wins: action.payload.wins,
