@@ -10,7 +10,8 @@ import {
   SET_JUMBOTRON_DISPLAY,
   SET_SEASON_SIGN,
   SET_SIMULATION_BUTTON,
-  SET_SIMULATE_GAME
+  SET_SIMULATE_GAME,
+  UPDATE_OPPONENT_INDEX
 } from '../actionTypes'
 import blueBears from '../../../assets/images/icons/blue-bears-logo.svg'
 import jrSharksLogoWhiteBg from '@images/icons/jr-sharks-logo-white-bg.svg';
@@ -26,9 +27,9 @@ const initialState = {
   gamesPlayed: [],
   teams: [
     {
-      rank: 280,
-      image: jrSharksLogo,
-      name: 'jr Sharks',
+      rank: 270,
+      image: blueBears,
+      name: 'Blue Bears',
       stats: {wins: 0, losses: 0, points: 0},
       standings: '12th'
     },
@@ -57,11 +58,9 @@ const initialState = {
   rank: 320,
   image: jrSharksLogoWhiteBg,
   name: 'Jr Sharks',
-  stats: {
-    wins: 0,
-    losses: 0,
-    points: 0
-  },
+  wins: 0,
+  losses: 0,
+  points: 0,
   standings: '13th',
   currentOpponent: {
     rank: 270,
@@ -100,13 +99,17 @@ export default function(state = initialState, action) {
         name: action.payload
       }
     case SET_STATS:
-      console.log('here is the actual stats: ', action.payload)
       return {
         ...state,
         wins: action.payload.wins,
         losses: action.payload.losses,
         points: action.payload.points
       }
+    case UPDATE_OPPONENT_INDEX:
+      return {
+        ...state,
+        currentOpponentIndex: action.payload
+      } 
     case SET_STANDINGS:
       return {
         ...state,
@@ -116,8 +119,7 @@ export default function(state = initialState, action) {
       return {
         ...state,
         currentOpponent: {
-          ...state.currentOpponent,
-          ...action.payload
+          ...state.teams[state.currentOpponentIndex]
         }
       }
     case SET_TEAMS:
