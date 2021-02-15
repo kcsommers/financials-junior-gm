@@ -1,4 +1,6 @@
 export { BackButton } from './BackButton';
+export { MoneyLeftSvg } from './MoneyLeftSvg';
+export { TeamRankSvg } from './TeamRankSvg';
 export { PlayerRankPie } from './PlayerRankPie';
 export { LoadingSpinner } from './LoadingSpinner';
 export { PlayerRankGraph } from './PlayerRankGraph';
@@ -34,8 +36,5 @@ export { PlayerDragItem } from './scout-page/PlayerDragItem';
 export { SpendingBudgetStickBig } from './SpendingBudgetStickBig';
 export { TeamRankStickBig } from './TeamRankStickBig';
 export { HeaderComponent } from './HeaderComponent';
-export { FilledPlayerCard } from './FilledPlayerCard';
-export { SpacesInTeam } from './SpacesInTeam';
-export { Cancel } from './Cancel';
 export { TeamBudgetState } from './TeamBudgetState';
 export { MarketPlayersBoard } from './MarketPlayersBoard';

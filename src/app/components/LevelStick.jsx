@@ -2,7 +2,7 @@ import React from 'react';
 import { ReactSVG } from 'react-svg';
 import teamRank from '@images/icons/hockey-visual-1.svg';
 import budget from '@images/icons/hockey-visual-2.svg';
-import { Indicator } from '@components';
+import { Indicator, TeamRankSvg, MoneyLeftSvg } from '@components';
 
 const styles = {
   teamRank: {
@@ -98,9 +98,10 @@ const styles = {
   },
 };
 
-const levelTypes = (type) => ({
+const levelTypes = (type, amount) => ({
   budget: {
     image: budget,
+    // imageJsx: <MoneyLeftSvg moneyLeft={amount} />,
     indicator: (
       <div style={styles[type].indicator}>
         <Indicator amount={25} direction='left' />
@@ -113,13 +114,14 @@ const levelTypes = (type) => ({
   },
   teamRank: {
     image: teamRank,
+    // imageJsx: <TeamRankSvg rank={amount} />,
     indicator: (
       <div style={styles[type].indicator}>
         <span style={styles[type].text}>
           Team <br />
           Rank
         </span>
-        <Indicator amount={25} direction='right' />
+        <Indicator amount={amount} direction='right' />
       </div>
     ),
   },
@@ -149,7 +151,9 @@ const levelTypes = (type) => ({
   },
 });
 
-export const LevelStick = ({ type, isLarge }) => {
+export const LevelStick = ({ type, isLarge, amount }) => {
+  const view = levelTypes(type, amount)[type];
+
   return (
     <div
       style={{
@@ -171,12 +175,18 @@ export const LevelStick = ({ type, isLarge }) => {
             : {}
         }
       >
-        <ReactSVG
-          style={isLarge ? styles[type].imageLg : styles[type].image}
-          src={levelTypes(type)[type].image}
-        />
+        {view.imageJsx ? (
+          <div style={isLarge ? styles[type].imageLg : styles[type].image}>
+            {view.imageJsx}
+          </div>
+        ) : (
+          <ReactSVG
+            style={isLarge ? styles[type].imageLg : styles[type].image}
+            src={view.image}
+          />
+        )}
       </div>
-      {levelTypes(type)[type].indicator}
+      {view.indicator}
     </div>
   );
 };
