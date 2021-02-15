@@ -1,0 +1,31 @@
+<svg id="Component_43_4" data-name="Component 43 – 4" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="60" height="60" viewBox="0 0 60 60">
+  <defs>
+    <radialGradient id="radial-gradient" cx="0.5" cy="0.5" r="0.5" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#070707"/>
+      <stop offset="0.611" stop-color="#393939"/>
+      <stop offset="1" stop-color="#595959"/>
+    </radialGradient>
+    <radialGradient id="radial-gradient-2" cx="0.5" cy="0.5" r="0.597" gradientUnits="objectBoundingBox">
+      <stop offset="0"/>
+      <stop offset="1" stop-color="#595959"/>
+    </radialGradient>
+  </defs>
+  <g id="Ellipse_2" data-name="Ellipse 2" stroke="#707070" stroke-width="1" fill="url(#radial-gradient)">
+    <circle cx="30" cy="30" r="30" stroke="none"/>
+    <circle cx="30" cy="30" r="29.5" fill="none"/>
+  </g>
+  <g id="Ellipse_3" data-name="Ellipse 3" transform="translate(6 6)" stroke="#fff" stroke-width="3" fill="url(#radial-gradient-2)">
+    <circle cx="24" cy="24" r="24" stroke="none"/>
+    <circle cx="24" cy="24" r="22.5" fill="none"/>
+  </g>
+  <g id="Layer_2" data-name="Layer 2" transform="translate(19.146 29.646) rotate(-45)">
+    <g id="logos" transform="translate(0 0)">
+      <path id="Path_3" data-name="Path 3" d="M20.308,4.57a.961.961,0,0,0,.92-1.074L20.652.68A.807.807,0,0,0,19.813,0L1.7.678a.994.994,0,0,0-.885.744L.026,4.29A.815.815,0,0,0,.866,5.3L20.308,4.57" fill="#fff"/>
+    </g>
+  </g>
+  <g id="Layer_2-2" data-name="Layer 2" transform="translate(34.521 45.767) rotate(-135)">
+    <g id="logos-2" data-name="logos" transform="translate(0 0)">
+      <path id="Path_3-2" data-name="Path 3" d="M20.309.728a.961.961,0,0,1,.92,1.074l-.576,2.817a.807.807,0,0,1-.839.68L1.7,4.62a.994.994,0,0,1-.885-.744L.026,1.009A.815.815,0,0,1,.866,0L20.309.728" fill="#fff"/>
+    </g>
+  </g>
+</svg>

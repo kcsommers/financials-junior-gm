@@ -1,5 +1,6 @@
 import { useDispatch } from 'react-redux';
-import { toggleOverlay, updateStudent, releasePlayer } from '@redux/actions';
+import { toggleOverlay, setStudent, releasePlayer } from '@redux/actions';
+import { updateStudentById } from '../../api-helper';
 import {
   PlayerCard,
   OverlayBoard,
@@ -7,11 +8,9 @@ import {
   TradePlayerOverlay,
   PlayerChangeSuccessOverlay,
 } from '@components';
-import '@css/components/team-page/PlayerDetailsOverlay.css';
-import { PlayerAssignments } from '@data/data';
+import { PlayerAssignments } from '@data/players/players';
 import { cloneDeep } from 'lodash';
-import { updatePlayerOnServer } from '@data/services/players-service';
-import { updateStudentOnServer } from '@data/services/student-service';
+import '@css/components/overlay-btns.css';
 
 export const PlayerDetailsOverlay = ({
   player,
@@ -32,18 +31,24 @@ export const PlayerDetailsOverlay = ({
   const releaseConfirmed = () => {
     const prevAssignment = player.playerAssignment;
     player.playerAssignment = PlayerAssignments.MARKET;
-    const clonedStudent = cloneDeep(student);
-    clonedStudent[player.playerPosition] = null;
 
-    Promise.all([
-      updatePlayerOnServer.bind(this, player, {
-        playerAssignment: PlayerAssignments.Market,
-      }),
-      updateStudentOnServer.bind(this, clonedStudent),
-    ])
+    const playersCopy = cloneDeep(student.players);
+    playersCopy.splice(
+      playersCopy.findIndex((p) => p._id === player._id),
+      1,
+      player
+    );
+
+    console.log('PLAYERS COPY:::: ', playersCopy);
+
+    updateStudentById(student._id, {
+      [prevAssignment]: null,
+      players: playersCopy,
+    })
       .then((res) => {
+        console.log('UPDATE RES:::: ', res);
         dispatch(releasePlayer(player, prevAssignment));
-        dispatch(updateStudent({ [prevAssignment]: null }));
+        dispatch(setStudent(res.updatedStudent));
         dispatch(
           toggleOverlay({
             isOpen: true,
@@ -100,23 +105,17 @@ export const PlayerDetailsOverlay = ({
         }}
       >
         <div className='player-details-player-wrap'>
-          <PlayerCard player={player} isLarge={true} />
+          <PlayerCard player={player} size='large' />
         </div>
         {includeActions && (
-          <div className='player-overlay-buttons-wrap'>
-            <div
-              className={`box-shadow player-overlay-btn`}
-              onClick={confirmTrade}
-            >
-              <div className='player-overlay-btn-inner'>
+          <div className='overlay-buttons-wrap' style={{ marginTop: '3rem' }}>
+            <div className={`box-shadow overlay-btn`} onClick={confirmTrade}>
+              <div className='overlay-btn-inner'>
                 <span className='outline-black'>Trade</span>
               </div>
             </div>
-            <div
-              className={`box-shadow player-overlay-btn`}
-              onClick={confirmRelease}
-            >
-              <div className='player-overlay-btn-inner'>
+            <div className={`box-shadow overlay-btn`} onClick={confirmRelease}>
+              <div className='overlay-btn-inner'>
                 <span className='outline-black'>Release</span>
               </div>
             </div>

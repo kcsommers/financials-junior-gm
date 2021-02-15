@@ -1,4 +1,3 @@
-const { truncate } = require('fs');
 const path = require('path');
 
 module.exports = {
