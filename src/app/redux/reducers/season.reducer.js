@@ -111,6 +111,11 @@ export default function(state = initialState, action) {
         losses: action.payload.losses,
         points: action.payload.points
       }
+    case UPDATE_OPPONENT_INDEX:
+      return {
+        ...state,
+        currentOpponentIndex: action.payload
+      } 
     case SET_STANDINGS:
       return {
         ...state,

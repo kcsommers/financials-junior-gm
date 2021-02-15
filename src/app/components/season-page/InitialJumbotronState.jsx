@@ -13,31 +13,29 @@ export const InitialJumbotronState = () => {
   });
 
   const wins = useSelector((state) => {
-    //console.log('getting stats')
     return state.season.wins
   });
 
   const losses = useSelector((state) => {
-    //console.log('getting stats')
     return state.season.losses
   });
 
   const points = useSelector((state) => {
-    //console.log('getting stats')
     return state.season.points
   });
-
-  //console.log('component rendered: ', stats)
 
   const standings = useSelector((state) => {
     return state.season.standings;
   });
-  const nextOpponent = useSelector((state) => {
-    return state.season.currentOpponent
+  const currentOpponent = useSelector((state) => {
+    return state.season.points
   });
+
   const teams = useSelector((state) => {
     return state.season.teams;
   });
+
+  console.log('the current opponent: ', currentOpponent)
 
   return (
     <div className='season-initial-container'>
@@ -65,7 +63,7 @@ export const InitialJumbotronState = () => {
         <p className='next-opponent-title'>Next Opponent</p>
         <div className='next-opponent-container'>
           <div className="opponent-logo-container" style={{transform: 'scale(0.9)'}}>
-            <ReactSVG src={nextOpponent.image}/>
+            <ReactSVG src={currentOpponent.image}/>
           </div>
           <div className='sotr-details' style={{ transform: 'scale(0.9)' }}>
             <Indicator amount={25} />
