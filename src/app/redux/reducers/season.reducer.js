@@ -9,7 +9,8 @@ import {
   SET_UPCOMING_GAMES,
   SET_JUMBOTRON_DISPLAY,
   SET_SEASON_SIGN,
-  SET_SIMULATION_BUTTON
+  SET_SIMULATION_BUTTON,
+  SET_SIMULATE_GAME
 } from '../actionTypes'
 import blueBears from '../../../assets/images/icons/blue-bears-logo.svg'
 import jrSharksLogoWhiteBg from '@images/icons/jr-sharks-logo-white-bg.svg';
@@ -62,7 +63,8 @@ const initialState = {
   ],
   jumbotronDisplay: <InitialJumbotronState/>,
   seasonSign: 'Your team is ready to play.',
-  simulationButton: play
+  simulationButton: play,
+  simulateGame: null
 }
 
 export default function(state = initialState, action) {
@@ -123,6 +125,11 @@ export default function(state = initialState, action) {
       return {
         ...state,
         simulationButton: action.payload
+      }
+    case SET_SIMULATE_GAME:
+      return {
+        ...state,
+        simulationGame: action.payload
       }
     default: 
       return state;
