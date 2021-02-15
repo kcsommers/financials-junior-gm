@@ -15,19 +15,28 @@ import '@css/pages/season.css';
 import { SeasonTopRow } from '../components/season-page/SeasonTopRow';
 import { SeasonTopRowSign } from '../components/season-page/SeasonTopRowSign';
 import { useDispatch, useSelector } from 'react-redux';
-import { setScore, setJumbotronDisplay, setSeasonSign, setSimulationButton, setSimulateGame, setStats} from '@redux/actions';
+import { setScore, setJumbotronDisplay, setSeasonSign, setSimulationButton, setSimulateGame, setStats, updateCurrentOpponent} from '@redux/actions';
 import { PlayingGame } from '../components/season-page/PlayingGame';
 
 const Season = () => {
+
+  const opponentIndex = useSelector(state => {
+    return state.season.currentOpponentIndex
+  })
+
+  const opponents = useSelector(state => {
+    return state.season.teams
+  })
+
+  const currentOpponents = opponents[opponentIndex]
+
+
+  const [score, setScore ] = useState([0,0]);
 
   const dispatch = useDispatch();
 
   const stats = useSelector(state => {
     return state.season.stats
-  })
-
-  const score = useSelector(state => {
-    return state.season.score
   })
 
   const jumbotronDisplay = useSelector((state) => {
@@ -50,12 +59,12 @@ const Season = () => {
     return state.season.rank
   })
 
-  const nextOpponent = useSelector(state => {
-    return state.season.nextOpponent
+  const currentOpponent = useSelector(state => {
+    return state.season.currentOpponent
   })
 
   const theResultScore = () => {
-    let rankDiff = rank - nextOpponent.rank
+    let rankDiff = rank - currentOpponent.rank
     if(rankDiff > 5) {
       return [rankDiff / 10,  0]
     } else if (Math.abs(rankDiff) >= 0 && Math.abs(rankDiff) < 5) {
@@ -66,6 +75,7 @@ const Season = () => {
   }
 
   const theResultStats = () => {
+    console.log('hello hello: ', currentOpponent)
     if(score[0] - score[1] > 1) {
       dispatch(
         setStats({
@@ -73,20 +83,27 @@ const Season = () => {
           points: stats.points + 2
         })
       )
+      // dispatch(
+      //   updateCurrentOpponent({
+      //     losses: losses + 1
+      //   })
+      // )
     }
-    console.log('stats: ', stats)
   }
+
+
 
   const simulateGameNow = () => {
     theResultScore();
     theResultStats();
+    // update opponent index with dispatch action
   }
 
   console.log('test: ', simulateGameNow())
 
   const handlePlay = () => {
     dispatch(
-      setJumbotronDisplay(<PlayingGame/>)
+      setJumbotronDisplay(<PlayingGame score={score}/>)
     );
     dispatch(
       setSeasonSign('Jr Sharks vs Blue Bears')
@@ -94,9 +111,7 @@ const Season = () => {
     dispatch(
       setSimulationButton(hockeySticksButton)
     )
-    dispatch(
-      setScore(theResultScore())
-    )
+    setScore(theResultScore())
     console.log('the score: ', score)
   }
 

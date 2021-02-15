@@ -20,8 +20,8 @@ export const InitialJumbotronState = () => {
   const nextOpponent = useSelector((state) => {
     return state.season.nextOpponent
   });
-  const upcomingGames = useSelector((state) => {
-    return state.season.upcomingGames
+  const teams = useSelector((state) => {
+    return state.season.teams
   });
 
   return (
@@ -63,7 +63,7 @@ export const InitialJumbotronState = () => {
               
               <div className="upcoming-game"  style={{transform: 'scale(0.7)'}}>
                 <div className="opponent-logo-container">
-                  <ReactSVG src={upcomingGames[0].image}/>
+                  <ReactSVG src={teams[0].image}/>
                 </div>
                 <div className='sotr-details'>
                   <LevelStick type='noStickOpponentTeamRank' />
@@ -72,7 +72,7 @@ export const InitialJumbotronState = () => {
             
               <div className="upcoming-game" style={{transform: 'scale(0.7)'}}>
                 <div className="opponent-logo-container">
-                  <ReactSVG src={upcomingGames[1].image}/>
+                  <ReactSVG src={teams[1].image}/>
                 </div>
                 <div className='sotr-details'>
                   <LevelStick type='noStickOpponentTeamRank' />
@@ -81,7 +81,7 @@ export const InitialJumbotronState = () => {
               
               <div className="upcoming-game" style={{transform: 'scale(0.7)'}}>
                 <div className="opponent-logo-container">
-                  <ReactSVG src={upcomingGames[2].image}/>
+                  <ReactSVG src={teams[2].image}/>
                 </div>
                 <div className='sotr-details'>
                   <LevelStick type='noStickOpponentTeamRank' />
