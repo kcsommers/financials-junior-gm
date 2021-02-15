@@ -1,20 +1,21 @@
 div.player-card-wrap {
   display: inline-flex;
   flex-direction: column;
-  width: 90px;
-  height: 127.4px;
   border-radius: 15px;
+}
+
+div.player-card-wrap.player-card-clickable {
   cursor: pointer;
 }
 
 div.player-card-wrap-empty {
-  width: 80px;
-  height: 106.4px;
+  width: 85px;
+  height: 118px;
 }
 
 div.player-card-empty-inner {
-  width: 80px;
-  height: 106.4px;
+  width: 100%;
+  height: 100%;
   flex: 1;
   background-color: #e5e5e5;
   border-radius: 15px;
@@ -22,8 +23,6 @@ div.player-card-empty-inner {
 
 p.position-text {
   text-align: center;
-  font-size: 0.8rem;
-  height: 16.25px;
   font-weight: bold;
 }
 
@@ -35,12 +34,10 @@ div.player-card-header {
 }
 
 div.player-card-header-inner {
-  height: 22px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   color: #fff;
-  font-size: 1rem;
   border-radius: 5px;
   padding: 0 0.5rem;
 }
@@ -54,6 +51,7 @@ div.player-card-header:after {
   background: inherit;
   z-index: -1;
   bottom: 0;
+  left: 0;
   border-radius: 5px;
 }
 
@@ -67,6 +65,21 @@ div.player-card-header:before {
   transform: skewX(12deg);
 }
 
+div.player-card-wrap-large div.player-card-header {
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+
+div.player-card-wrap-large div.player-card-header:before {
+  border-top-left-radius: 20px;
+  transform: skewX(12deg);
+}
+
+div.player-card-wrap-large div.player-card-header:after {
+  border-top-right-radius: 20px;
+  transform: skewX(-12deg);
+}
+
 div.player-card-body {
   text-align: center;
   background: linear-gradient(to bottom, #00788a, #fff);
@@ -78,24 +91,20 @@ div.player-card-body {
 
 div.player-card-img-wrap {
   display: inline-block;
-  width: 45px;
-  height: 45px;
   border-radius: 100%;
   background-position: center;
   background-size: cover;
+}
+
+p.player-card-player-name {
+  color: #fff;
 }
 
 div.player-card-clickable .player-card-inner {
   cursor: pointer;
 }
 
-div.player-card-large div.player-card-inner {
-  width: 300px;
-  height: 372px;
-  cursor: initial;
-}
-
-div.player-scores {
+div.player-ranks {
   display: flex;
   align-items: center;
   justify-content: space-around;
@@ -107,36 +116,4 @@ p.add-player-text {
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-div.player-overlay-container {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-div.player-overlay-buttons-wrap {
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  position: relative;
-  top: 4rem;
-  flex: 1;
-  align-self: stretch;
-}
-
-button.player-overlay-button {
-  background-color: #f3901d;
-  border-radius: 25px;
-  color: #fff;
-  font-size: 3rem;
-  display: flex;
-  width: 350px;
-  padding: 2rem 0;
-  border: none;
-  text-align: center;
-  justify-content: center;
-  outline: none;
 }

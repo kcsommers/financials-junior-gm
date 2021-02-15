@@ -1,22 +1,57 @@
 import React from 'react'
 import { ReactSVG } from 'react-svg';
 import '../../../assets/css/components/season-page/playing-game.css'
-import jrSharksLogoWhiteBg from '@images/icons/jr-sharks-logo-white-bg.svg';
-import jrSharksLogoWhite from '@images/icons/jr-sharks-logo-white.svg';
-import blueBears from '@images/icons/blue-bears.svg';
+import jrSharksLogoBig from '@images/icons/jr-sharks-logo-big.svg';
+import blueBearsLogoBig from '@images/icons/blue-bears-logo-big.svg';
+import { useSelector } from 'react-redux';
 
-export const PlayingGame = () => {
+export const PlayingGame = (score) => {
+  console.log('yo hello hey: ', score)
+
+  const yourStanding = useSelector((state) => {
+    return state.season.standings
+  });
+  const opponentStanding = useSelector((state) => {
+    return state.season.currentOpponent.standings
+  });
+
+  console.log('yoyoyo: ', useSelector(state => {
+    return state.season.currentOpponent;
+  }))
+
   return (
     <div className="teams-playing-container">
-      <div>
-        <p className="season-teams-vs-your-place">3rd</p>
-        <ReactSVG src={jrSharksLogoWhite} />
+      <div className="season-teams-vs-container">
+        <div className="team-container">
+          <p className="text-white your-standings">{yourStanding}</p>
+          <ReactSVG src={jrSharksLogoBig} />
+        </div>
+        <p className="season-teams-vs">vs</p>
+        <div className="team-container">
+          <p className="text-white opponent-standings">{opponentStanding}</p>
+          <ReactSVG src={blueBearsLogoBig} />
+        </div>
       </div>
-      <p className="season-teams-vs">vs</p>
+      
       <div>
-        <p className="season-teams-vs-opponent-place">4th</p>
-        <ReactSVG src={blueBears} />
+        <p className="season-score-title">Score</p>
+        <div className="team-scores-container">
+          
+          <div>
+            <div className="score-container">
+              <p className="score-value">{score.score[0]}</p>
+            </div>
+          </div>
+          
+          <div>
+            <div className="score-container">
+              <p className="score-value">{score.score[1]}</p>
+            </div>
+          </div>
+          
+        </div>
       </div>
+      
     </div>
   )
 }

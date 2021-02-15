@@ -35,24 +35,6 @@ div.team-page-board-left {
   display: flex;
 }
 
-div.level-sticks-card {
-  color: #006b77;
-  border: 5px solid #4b4b4b;
-  border-radius: 5px;
-  background: white;
-  width: 370px;
-}
-
-div.level-sticks-card-inner {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  height: 275px;
-  left: -25px;
-  width: calc(100% + 20px);
-}
-
 div.team-page-board-right {
   flex: 1;
   padding-right: 1rem;
@@ -64,20 +46,22 @@ div.team-players-row {
   justify-content: space-around;
   position: relative;
   z-index: 1;
+  flex: 1;
+  padding-top: 0.25rem;
+}
+
+div.team-players-row-2 {
+  flex: 1.5;
+  align-items: flex-start;
+  padding-top: 1.25rem;
 }
 
 div.team-players-card {
-  height: 325px;
+  height: 350px;
   position: relative;
   overflow: hidden;
-}
-
-div.team-players-card > div.team-players-row {
-  margin-top: 0.5rem;
-}
-
-div.team-players-card > div.team-players-row-2 {
-  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
 }
 
 div.team-players-card,
@@ -90,6 +74,7 @@ div.bench-players-card {
 
 div.bench-players-card {
   margin-top: 1rem;
+  min-height: 150.098px;
 }
 
 div.bench-players-card > div.team-players-row {

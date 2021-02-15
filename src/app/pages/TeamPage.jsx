@@ -8,13 +8,14 @@ import {
   HeaderComponent,
   PlayerDetailsOverlay,
   SignPlayerOverlay,
+  TeamBudgetState,
+  LoadingSpinner,
 } from '@components';
 import scoutStick from '@images/scout-stick.svg';
 import teamStick from '@images/team-stick.svg';
 import iceBgSmall from '@images/ice-bg-small.svg';
 import { useSelector, useDispatch } from 'react-redux';
 import { playersSlides, SharkieButton, Tutorial } from '@tutorial';
-import { LevelStick } from '../components/LevelStick';
 import { setTutorialState, toggleOverlay } from '@redux/actions';
 import '@css/pages/TeamPage.css';
 
@@ -25,6 +26,7 @@ const TeamPage = () => {
   const tutorialActive = useSelector((state) => state.tutorial.isActive);
   const student = useSelector((state) => state.studentState.student);
   const team = useSelector((state) => state.players.teamPlayers);
+  const scoutingState = useSelector((state) => state.players.scoutingState);
   const playerCardAnimationStates = {
     playerCard: useSelector((state) => state.tutorial.team.playerCard),
     playerCardEmpty: useSelector(
@@ -40,7 +42,7 @@ const TeamPage = () => {
     dispatch(
       toggleOverlay({
         isOpen: true,
-        template: <PlayerDetailsOverlay player={player} />,
+        template: <PlayerDetailsOverlay player={player} student={student} />,
       })
     );
   };
@@ -68,7 +70,7 @@ const TeamPage = () => {
         level={student.level}
       />
 
-      <PageBoard hideCloseBtn={true}>
+      <PageBoard hideCloseBtn={true} includeBackButton={true}>
         <div className='team-page-board-header'>
           <div className='team-page-board-header-inner'>
             <ReactSVG src={jrSharksLogo} />
@@ -79,12 +81,7 @@ const TeamPage = () => {
 
         <div className='team-page-board-inner'>
           <div className='team-page-board-left'>
-            <div className='level-sticks-card'>
-              <div className='level-sticks-card-inner'>
-                <LevelStick type='teamRank' />
-                <LevelStick type='budget' />
-              </div>
-            </div>
+            <TeamBudgetState />
             <div
               style={{
                 position: 'absolute',
@@ -101,7 +98,7 @@ const TeamPage = () => {
               <ReactSVG
                 style={{
                   position: 'absolute',
-                  top: '0',
+                  top: '25px',
                   left: '0',
                   right: '0',
                   bottom: '0',
@@ -173,34 +170,40 @@ const TeamPage = () => {
               </div>
             </div>
 
-            <div className='bench-players-card'>
+            <div
+              className={`bench-players-card${
+                !scoutingState.isComplete ? ' disabled' : ''
+              }`}
+            >
               <p className='color-primary on-the-bench-text'>On the Bench</p>
-              <div className='team-players-row team-bench-row'>
-                <PlayerCard
-                  player={team.benchOne}
-                  onClick={
-                    team.benchOne
-                      ? openPlayerDetailsOverlay
-                      : openSignPlayerOverlay.bind(this, 'benchOne')
-                  }
-                />
-                <PlayerCard
-                  player={team.benchTwo}
-                  onClick={
-                    team.benchTwo
-                      ? openPlayerDetailsOverlay
-                      : openSignPlayerOverlay.bind(this, 'benchTwo')
-                  }
-                />
-                <PlayerCard
-                  player={team.benchThree}
-                  onClick={
-                    team.benchThree
-                      ? openPlayerDetailsOverlay
-                      : openSignPlayerOverlay.bind(this, 'benchThree')
-                  }
-                />
-              </div>
+              {scoutingState.isComplete && (
+                <div className='team-players-row team-bench-row'>
+                  <PlayerCard
+                    player={team.benchOne}
+                    onClick={
+                      team.benchOne
+                        ? openPlayerDetailsOverlay
+                        : openSignPlayerOverlay.bind(this, 'benchOne')
+                    }
+                  />
+                  <PlayerCard
+                    player={team.benchTwo}
+                    onClick={
+                      team.benchTwo
+                        ? openPlayerDetailsOverlay
+                        : openSignPlayerOverlay.bind(this, 'benchTwo')
+                    }
+                  />
+                  <PlayerCard
+                    player={team.benchThree}
+                    onClick={
+                      team.benchThree
+                        ? openPlayerDetailsOverlay
+                        : openSignPlayerOverlay.bind(this, 'benchThree')
+                    }
+                  />
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -211,7 +214,20 @@ const TeamPage = () => {
       )}
     </div>
   ) : (
-    <div>Loading...</div>
+    <div
+      style={{
+        position: 'absolute',
+        top: 0,
+        bottom: 0,
+        left: 0,
+        right: 0,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+    >
+      <LoadingSpinner />
+    </div>
   );
 };
 
