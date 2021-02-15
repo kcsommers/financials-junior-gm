@@ -27,10 +27,6 @@ const Season = () => {
     return state.season.currentOpponentIndex;
   });
 
-  const opponentIndex = useSelector(state => {
-    return state.season.currentOpponentIndex
-  })
-
   const opponents = useSelector(state => {
     return state.season.teams
   })
