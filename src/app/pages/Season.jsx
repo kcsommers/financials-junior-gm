@@ -18,7 +18,7 @@ import {
   setSimulateGame,
   setStats,
   updateCurrentOpponent,
-  updateOpponentIndex
+  updateOpponentIndex,
 } from '@redux/actions';
 import { PlayingGame } from '../components/season-page/PlayingGame';
 
@@ -27,49 +27,29 @@ const Season = () => {
     return state.season.currentOpponentIndex;
   });
 
-  const opponentIndex = useSelector(state => {
-    return state.season.currentOpponentIndex
-  })
+  const opponents = useSelector((state) => {
+    return state.season.teams;
+  });
 
-  const opponents = useSelector(state => {
-    return state.season.teams
-  })
+  const score = useSelector((state) => {
+    return state.season.score;
+  });
 
-  const score = useSelector(state => {
-    return state.season.score
-  })
-
-  const currentOpponents = opponents[opponentIndex]
+  const currentOpponents = opponents[opponentIndex];
 
   const dispatch = useDispatch();
-  
-  //getting wins stats individually from state as nesting causes issues
+
   const wins = useSelector((state) => {
-    //console.log('getting stats')
-    return state.season.wins
+    return state.season.wins;
   });
 
   const losses = useSelector((state) => {
-    //console.log('getting stats')
-    return state.season.losses
+    return state.season.losses;
   });
 
   const points = useSelector((state) => {
-    //console.log('getting stats')
-    return state.season.points
+    return state.season.points;
   });
-
-  const wins = useSelector(state => {
-    return state.season.wins
-  })
-
-  const losses = useSelector(state => {
-    return state.season.losses
-  })
-
-  const points = useSelector(state => {
-    return state.season.points
-  })
 
   const jumbotronDisplay = useSelector((state) => {
     return state.season.jumbotronDisplay;
@@ -96,119 +76,89 @@ const Season = () => {
   });
 
   const theResultScore = () => {
-    let rankDiff = rank - currentOpponent.rank
-    if(rankDiff > 5) {
-      score[0] = rankDiff / 10
-      score[1] = 0
-      return [rankDiff / 10,  0]
+    let rankDiff = rank - currentOpponent.rank;
+    if (rankDiff > 5) {
+      score[0] = rankDiff / 10;
+      score[1] = 0;
+      return [rankDiff / 10, 0];
     } else if (Math.abs(rankDiff) >= 0 && Math.abs(rankDiff) < 5) {
-      score[0] = 2
-      score[1] = 1
-      return [2, 1]
+      score[0] = 2;
+      score[1] = 1;
+      return [2, 1];
     } else {
-      score[0] = 0
-      score[1] = rankDiff / 10
-      return [0, rankDiff/10]
+      score[0] = 0;
+      score[1] = rankDiff / 10;
+      return [0, rankDiff / 10];
     }
   };
 
   const theResultStats = () => {
-    if(score[0] - score[1] > 1) {
+    if (score[0] - score[1] > 1) {
       dispatch(
         setStats({
           wins: wins + 1,
           points: points + 2,
-          losses: losses + 0
+          losses: losses + 0,
         })
-      )
+      );
     } else if (Math.abs(score[0] - score[1]) == 1) {
       dispatch(
         setStats({
           wins: wins + 1,
           points: points + 1,
-          losses: losses + 0
+          losses: losses + 0,
         })
-      )
+      );
     } else {
       dispatch(
         setStats({
           wins: wins + 0,
           points: points + 0,
-          losses: losses + 1
+          losses: losses + 1,
         })
-      )
+      );
     }
-  }
+  };
 
   const handlePlay = () => {
+    setTimeout(() => {
+      dispatch(setSeasonSign('Coming up next'));
+    }, 100);
+    setTimeout(() => {
+      dispatch(setJumbotronDisplay(<PlayingGame />));
+      dispatch(setSeasonSign(`Jr Sharks vs ${currentOpponent.name}`));
+    }, 3000);
+    setTimeout(() => {
+      dispatch(setSeasonSign('The players are warming up'));
+    }, 6000);
+    setTimeout(() => {
+      dispatch(setSeasonSign('The game is being played'));
+    }, 9000);
+
+    dispatch(setSimulationButton(hockeySticksButton));
+    setTimeout(() => {
+      dispatch(setScore(theResultScore()));
+      dispatch(setSeasonSign('GET LOUD! The Jr Sharks Won!'));
+      theResultStats();
+    }, 12000);
+    setTimeout(function () {
+      dispatch(setJumbotronDisplay(<InitialJumbotronState />));
+      dispatch(updateOpponentIndex(opponentIndex + 1));
+      dispatch(updateCurrentOpponent(currentOpponents));
       setTimeout(() => {
-        dispatch(
-          setSeasonSign('Coming up next')
-        )
-      }, 100)
+        dispatch(setSeasonSign(`The next game starts in ${3}`));
+      }, 1000);
       setTimeout(() => {
-        dispatch(
-          setJumbotronDisplay(<PlayingGame/>)
-        );
-        dispatch(
-          setSeasonSign(`Jr Sharks vs ${currentOpponent.name}`)
-        )
-      }, 3000)
+        dispatch(setSeasonSign(`The next game starts in ${2}`));
+      }, 2000);
       setTimeout(() => {
-        dispatch(
-          setSeasonSign('The players are warming up')
-        )
-      }, 6000)
+        dispatch(setSeasonSign(`The next game starts in ${1}`));
+      }, 3000);
       setTimeout(() => {
-        dispatch(
-          setSeasonSign('The game is being played')
-        )
-      }, 9000)
-      
-      dispatch(
-        setSimulationButton(hockeySticksButton)
-      )
-      setTimeout(() => {
-        dispatch(
-          setScore(theResultScore())
-        )
-        dispatch(
-          setSeasonSign('GET LOUD! The Jr Sharks Won!')
-        )
-        theResultStats();
-      }, 12000)
-      setTimeout(function(){
-        dispatch(
-          setJumbotronDisplay(<InitialJumbotronState/>)
-        )
-        dispatch(
-          updateOpponentIndex(opponentIndex + 1)
-        )
-        dispatch(
-          updateCurrentOpponent(currentOpponents)
-        )
-        setTimeout(()=> {
-          dispatch(
-            setSeasonSign(`The next game starts in ${3}`)
-          )
-        }, 1000)
-        setTimeout(()=> {
-          dispatch(
-            setSeasonSign(`The next game starts in ${2}`)
-          )
-        }, 2000)
-        setTimeout(()=> {
-          dispatch(
-            setSeasonSign(`The next game starts in ${1}`)
-          )
-        }, 3000)
-        setTimeout(()=> {
-          dispatch(
-            setSeasonSign(`The next game starts in ${0}`)
-          )
-        }, 4000)
-      }, 15000)
-  }
+        dispatch(setSeasonSign(`The next game starts in ${0}`));
+      }, 4000);
+    }, 15000);
+  };
 
   return (
     <div className='season-page page-container'>
@@ -304,8 +254,8 @@ const Season = () => {
               </div>
             </div>
           </div>
-          
-          <ReactSVG src={simulationButton} onClick={handlePlay}/>
+
+          <ReactSVG src={simulationButton} onClick={handlePlay} />
 
           <div>
             <p className='season-standings-title'>Standings</p>
