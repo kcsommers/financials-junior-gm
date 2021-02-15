@@ -267,6 +267,11 @@ const ScoutPage = () => {
     const dropLevel = e.destination.droppableId.split('-')[0];
     const sourceLevel = e.source.droppableId.split('-')[0];
     const droppedPlayer = boardMap[sourceLevel][e.source.droppableId];
+    console.log('PLAYER DROPPED:::: ', dropLevel, droppedPlayer);
+
+    if (droppedPlayer.overallRank >= 15 && dropLevel === 'levelThree') {
+      return;
+    }
 
     // update the map where the player was dropped
     boardMap[dropLevel][e.destination.droppableId] = droppedPlayer;
