@@ -78,8 +78,10 @@ const App = () => {
                 dispatch(setStudent(updatedStudentRes.updatedStudent));
                 dispatch(
                   setInitialPlayersState(
-                    updatedStudentRes.updatedStudent.players,
-                    updatedStudentRes.updatedStudent
+                    initializedStudentRes.data.players,
+                    // updatedStudentRes.updatedStudent.players,
+                    initializedStudentRes.data
+                    // updatedStudentRes.updatedStudent
                   )
                 );
               })
