@@ -88,44 +88,58 @@ const Season = () => {
     }
   }
 
-  theResultStats()
-
-  // const simulateGameNow = () => {
-  //   theResultScore();
-  //   theResultStats();
-  //   // update opponent index with dispatch action
-  // }
-
   const handlePlay = () => {
-    dispatch(
-      setJumbotronDisplay(<PlayingGame/>)
-    );
-    dispatch(
-      setSeasonSign('Jr Sharks vs Blue Bears')
-    )
-    dispatch(
-      setSimulationButton(hockeySticksButton)
-    )
-    dispatch(
-      setScore(theResultScore())
-    )
-  }
-
-  const handleSimulation = () => {
-    handlePlay();
-    theResultStats();
-    dispatch(
-      updateOpponentIndex(opponentIndex + 1)
-    )
-    dispatch(
-      updateCurrentOpponent(currentOpponents)
-    )
-    console.log('the opponentindex: ', opponentIndex)
-    setTimeout(function(){
       dispatch(
-        setJumbotronDisplay(<InitialJumbotronState/>)
+        setJumbotronDisplay(<PlayingGame/>)
+      );
+      setTimeout(() => {
+        dispatch(
+          setSeasonSign('Coming up next')
+        )
+      }, 5000)
+      setTimeout(() => {
+        dispatch(
+          setSeasonSign('Jr Sharks vs Blue Bears')
+        )
+      }, 10000)
+      setTimeout(() => {
+        dispatch(
+          setSeasonSign('The players are warming up')
+        )
+      }, 15000)
+      setTimeout(() => {
+        dispatch(
+          setSeasonSign('The game is being played')
+        )
+      }, 20000)
+      
+      dispatch(
+        setSimulationButton(hockeySticksButton)
       )
-    }, 1000)
+      setTimeout(() => {
+        dispatch(
+          setScore(theResultScore())
+        )
+        dispatch(
+          setSeasonSign('GET LOUD! The Jr Sharks Won!')
+        )
+      }, 25000)
+      theResultStats();
+      dispatch(
+        updateOpponentIndex(opponentIndex + 1)
+      )
+      dispatch(
+        updateCurrentOpponent(currentOpponents)
+      )
+      setTimeout(function(){
+        let countdown = 3
+        dispatch(
+          setJumbotronDisplay(<InitialJumbotronState/>)
+        )
+        dispatch(
+          setSeasonSign(`The next game starts in ${countdown}`)
+        )
+      }, 28000)
   }
 
   return (
@@ -203,7 +217,7 @@ const Season = () => {
             </div>
           </div>
 
-          <ReactSVG src={simulationButton} onClick={handleSimulation}/>
+          <ReactSVG src={simulationButton} onClick={handlePlay}/>
 
           <div>
             <p className='season-standings-title'>Standings</p>
