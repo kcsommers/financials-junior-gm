@@ -4,12 +4,7 @@ import seasonStick from '@images/season-stick.svg';
 import jrSharksLogoWhiteBg from '@images/icons/jr-sharks-logo-white-bg.svg';
 import play from '@images/icons/play.svg';
 import hockeySticksButton from '@images/icons/hockey-sticks-button.svg';
-import {
-  OpposingTeamRankStick,
-  HeaderComponent,
-  LevelStick,
-} from '@components';
-import { SticklessOpposingTeamRank } from '../components/SticklessOpposingTeamRank';
+import { HeaderComponent, LevelStick } from '@components';
 import '@css/pages/season.css';
 import { SeasonTopRow } from '../components/season-page/SeasonTopRow';
 import { SeasonTopRowSign } from '../components/season-page/SeasonTopRowSign';
@@ -128,7 +123,19 @@ const Season = () => {
       <div className='season-dashboard'>
         <div className='season-dashboard-top-row'>
           <div style={{ paddingTop: '1rem' }}>
-            <LevelStick type='teamRank' />
+            <LevelStick
+              type='teamRank'
+              amount={50}
+              denom={100}
+              color='#e06d00'
+              indicatorDirection='right'
+              textJsx={
+                <span>
+                  Team <br />
+                  Rank
+                </span>
+              }
+            />
           </div>
           <div>
             <div className='teams-jumbotron'>
@@ -139,7 +146,20 @@ const Season = () => {
             <div className='SeasonTopRow-sign'>{seasonSign}</div>
           </div>
           <div style={{ paddingTop: '1rem' }}>
-            <LevelStick type='opponentTeamRank' />
+            <LevelStick
+              type='teamRank'
+              amount={50}
+              denom={100}
+              color='#002f6c'
+              indicatorDirection='left'
+              inverse={true}
+              textJsx={
+                <span>
+                  Team <br />
+                  Rank
+                </span>
+              }
+            />
           </div>
         </div>
 

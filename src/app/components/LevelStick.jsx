@@ -50,49 +50,7 @@ const styles = {
       textAlign: 'right',
     },
   },
-  // noStickOpponentTeamRank: {
-  //   indicator: {
-  //     position: 'absolute',
-  //     top: 0,
-  //     left: '-30px',
-  //   },
-  //   text: {
-  //     color: 'black',
-  //     display: 'inline-block',
-  //     fontSize: '1rem',
-  //     marginLeft: '0.25rem',
-  //     fontWeight: 'bold',
-  //     textAlign: 'right',
-  //     transform: 'translate(120px, 0)',
-  //   },
-  // },
 };
-
-//   opponentTeamRank: {
-//     image: budget,
-//     indicator: (
-//       <div style={styles[type].indicator}>
-//         <span style={styles[type].text}>
-//           Team <br />
-//           Rank
-//         </span>
-//         <Indicator amount={25} direction='left' />
-//       </div>
-//     ),
-//   },
-//   noStickOpponentTeamRank: {
-//     image: null,
-//     indicator: (
-//       <div style={styles[type].indicator}>
-//         <span style={styles[type].text}>
-//           Team <br />
-//           Rank
-//         </span>
-//         <Indicator amount={25} direction='left' />
-//       </div>
-//     ),
-//   },
-// });
 
 export const LevelStick = ({
   type,
