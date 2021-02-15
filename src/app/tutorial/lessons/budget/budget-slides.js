@@ -9,24 +9,19 @@ const slideConfigs = [
     accentText: 'Budget',
   },
   {
-    message: 'Teams get money from selling tickets to their fans!',
+    message: 'In hockey, every team has some money to spend on players!',
     sharkie: 'speak',
-    timer: Slide.SLIDE_DURATION,
-  },
-  {
-    message: 'This money is used to pay the players.',
-    sharkie: 'speak',
-    timer: Slide.SLIDE_DURATION,
+    timer: Slide.SLIDE_DURATION + 5000,
   },
   {
     message: 'You have to create a plan on how to spend your money.',
     sharkie: 'speak',
-    timer: Slide.SLIDE_DURATION,
+    timer: Slide.SLIDE_DURATION + 5000,
   },
   {
     message: 'This plan is called a Budget.',
     sharkie: 'speak',
-    timer: Slide.SLIDE_DURATION,
+    timer: Slide.SLIDE_DURATION + 4000,
     accentText: 'Budget',
   },
   {
