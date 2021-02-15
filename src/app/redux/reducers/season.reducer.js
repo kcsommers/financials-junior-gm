@@ -10,7 +10,8 @@ import {
   SET_JUMBOTRON_DISPLAY,
   SET_SEASON_SIGN,
   SET_SIMULATION_BUTTON,
-  SET_SIMULATE_GAME
+  SET_SIMULATE_GAME,
+  UPDATE_OPPONENT_INDEX
 } from '../actionTypes'
 import blueBears from '../../../assets/images/icons/blue-bears-logo.svg'
 import jrSharksLogoWhiteBg from '@images/icons/jr-sharks-logo-white-bg.svg';
@@ -22,16 +23,17 @@ import play from '@images/icons/play.svg';
 import jrSharksLogo from '@images/icons/jr-sharks-logo.svg';
 
 const initialState = {
+  score: [0,0],
   gamesPlayed: [],
   teams: [
     {
-      rank: 280,
-      image: jrSharksLogo,
-      name: 'jr Sharks',
+      rank: 270,
+      image: blueBears,
+      name: 'Blue Bears',
       stats: {wins: 0, losses: 0, points: 0},
       standings: '12th'
     },
-    {
+    { 
       rank: 280,
       image: redRabbits,
       name: 'Red Rabbits',
@@ -56,11 +58,9 @@ const initialState = {
   rank: 320,
   image: jrSharksLogoWhiteBg,
   name: 'Jr Sharks',
-  stats: {
-    wins: 0,
-    losses: 0,
-    points: 0
-  },
+  wins: 0,
+  losses: 0,
+  points: 0,
   standings: '13th',
   currentOpponent: {
     rank: 270,
@@ -70,29 +70,6 @@ const initialState = {
     standings: '12th'
   },
   currentOpponentIndex: 0,
-  teams: [
-    {
-      rank: 280,
-      image: redRabbits,
-      name: 'Red Rabbits',
-      stats: {wins: 0, losses: 0, points: 0},
-      standings: '12th'
-    },
-    {
-      rank: 300,
-      image: purplePanthers,
-      name: 'Purple Panthers',
-      stats: {wins: 0, losses: 0, points: 0},
-      standings: '10th'
-    },
-    {
-      rank: 325,
-      image: whiteWolves,
-      name: 'White Wolves',
-      stats: {wins: 0, losses: 0, points: 0},
-      standings: '6th'
-    }
-  ],
   jumbotronDisplay: <InitialJumbotronState/>,
   seasonSign: 'Your team is ready to play.',
   simulationButton: play,
@@ -122,8 +99,14 @@ export default function(state = initialState, action) {
         name: action.payload
       }
     case SET_STATS:
+      console.log('here is the actual stats: ', action.payload)
       return {
         ...state,
+        //stats : {
+          //wins: action.payload.wins,
+          //losses: action.payload.losses,
+          //points: action.payload.points
+        //}
         wins: action.payload.wins,
         losses: action.payload.losses,
         points: action.payload.points
@@ -133,12 +116,16 @@ export default function(state = initialState, action) {
         ...state,
         standings: action.payload
       }
+    case UPDATE_OPPONENT_INDEX:
+      return {
+        ...state,
+        currentOpponentIndex: action.payload
+      }
     case UPDATE_CURRENT_OPPONENT:
       return {
         ...state,
         currentOpponent: {
-          ...state.currentOpponent,
-          ...action.payload
+          ...state.teams[state.currentOpponentIndex]
         }
       }
     case SET_TEAMS:
