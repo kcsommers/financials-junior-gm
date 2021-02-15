@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
+import { setLoginState } from '@redux/actions';
 
 class StudentPortal extends Component {
   constructor(props) {
     super(props);
-    this.state = {
+
+    const initialState = {
       isLoggedIn:
         localStorage.getItem('isLoggedIn') == 'true'
           ? true
@@ -15,6 +18,15 @@ class StudentPortal extends Component {
         ? localStorage.getItem('userRole')
         : '',
     };
+
+    if (
+      this.props.loginState.isLoggedIn !== initialState.isLoggedIn ||
+      this.props.loginState.role !== initialState.role
+    ) {
+      this.props.setLoginState(initialState.isLoggedIn, initialState.role);
+    }
+
+    this.state = initialState;
   }
 
   render() {
@@ -34,4 +46,6 @@ class StudentPortal extends Component {
     );
   }
 }
-export default StudentPortal;
+const actionsToProps = (state) => ({ loginState: state.loginState });
+const dispatchToProps = { setLoginState };
+export default connect(actionsToProps, dispatchToProps)(StudentPortal);

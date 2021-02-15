@@ -1,25 +1,31 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { ReactSVG } from 'react-svg';
 import seasonStick from '@images/season-stick.svg';
 import jrSharksLogoWhiteBg from '@images/icons/jr-sharks-logo-white-bg.svg';
 import play from '@images/icons/play.svg';
 import hockeySticksButton from '@images/icons/hockey-sticks-button.svg';
-import {
-  TeamRankStick,
-  OpposingTeamRankStick,
-  HeaderComponent,
-  LevelStick
-} from '@components';
-import { SticklessOpposingTeamRank } from '../components/SticklessOpposingTeamRank';
+import { HeaderComponent, LevelStick } from '@components';
 import '@css/pages/season.css';
 import { SeasonTopRow } from '../components/season-page/SeasonTopRow';
 import { SeasonTopRowSign } from '../components/season-page/SeasonTopRowSign';
 import { InitialJumbotronState } from '../components/season-page/InitialJumbotronState';
 import { useDispatch, useSelector } from 'react-redux';
-import { setScore, setJumbotronDisplay, setSeasonSign, setSimulationButton, setSimulateGame, setStats, updateCurrentOpponent, updateOpponentIndex} from '@redux/actions';
+import {
+  setScore,
+  setJumbotronDisplay,
+  setSeasonSign,
+  setSimulationButton,
+  setSimulateGame,
+  setStats,
+  updateCurrentOpponent,
+  updateOpponentIndex
+} from '@redux/actions';
 import { PlayingGame } from '../components/season-page/PlayingGame';
 
 const Season = () => {
+  const opponentIndex = useSelector((state) => {
+    return state.season.currentOpponentIndex;
+  });
 
   const opponentIndex = useSelector(state => {
     return state.season.currentOpponentIndex
@@ -37,9 +43,9 @@ const Season = () => {
 
   const dispatch = useDispatch();
 
-  const stats = useSelector(state => {
-    return state.season.stats
-  })
+  const stats = useSelector((state) => {
+    return state.season.stats;
+  });
 
   const wins = useSelector(state => {
     return state.season.wins
@@ -54,28 +60,28 @@ const Season = () => {
   })
 
   const jumbotronDisplay = useSelector((state) => {
-    return state.season.jumbotronDisplay
+    return state.season.jumbotronDisplay;
   });
 
   const seasonSign = useSelector((state) => {
-    return state.season.seasonSign
+    return state.season.seasonSign;
   });
 
   const simulationButton = useSelector((state) => {
-    return state.season.simulationButton
+    return state.season.simulationButton;
   });
 
-  const simulateGame = useSelector(state => {
-    return state.season.simulateGame
-  })
+  const simulateGame = useSelector((state) => {
+    return state.season.simulateGame;
+  });
 
-  const rank = useSelector(state => {
-    return state.season.rank
-  })
+  const rank = useSelector((state) => {
+    return state.season.rank;
+  });
 
-  const currentOpponent = useSelector(state => {
-    return state.season.currentOpponent
-  })
+  const currentOpponent = useSelector((state) => {
+    return state.season.currentOpponent;
+  });
 
   const theResultScore = () => {
     let rankDiff = rank - currentOpponent.rank
@@ -92,7 +98,7 @@ const Season = () => {
       score[1] = rankDiff / 10
       return [0, rankDiff/10]
     }
-  }
+  };
 
   const theResultStats = () => {
     if(score[0] - score[1] > 1) {
@@ -204,25 +210,45 @@ const Season = () => {
 
       {/* season dashboard */}
       <div className='season-dashboard'>
-
         <div className='season-dashboard-top-row'>
           <div style={{ paddingTop: '1rem' }}>
-            <LevelStick type='teamRank' />
+            <LevelStick
+              type='teamRank'
+              amount={50}
+              denom={100}
+              color='#e06d00'
+              indicatorDirection='right'
+              textJsx={
+                <span>
+                  Team <br />
+                  Rank
+                </span>
+              }
+            />
           </div>
           <div>
             <div className='teams-jumbotron'>
               <div className='season-team-left-border'></div>
-              <div className='season-teams-playing-box'>
-                {jumbotronDisplay}
-              </div>
+              <div className='season-teams-playing-box'>{jumbotronDisplay}</div>
               <div className='season-team-right-border'></div>
             </div>
-            <div className='SeasonTopRow-sign'>
-              {seasonSign}
-            </div>
+            <div className='SeasonTopRow-sign'>{seasonSign}</div>
           </div>
           <div style={{ paddingTop: '1rem' }}>
-            <LevelStick type="opponentTeamRank"/>
+            <LevelStick
+              type='teamRank'
+              amount={50}
+              denom={100}
+              color='#002f6c'
+              indicatorDirection='left'
+              inverse={true}
+              textJsx={
+                <span>
+                  Team <br />
+                  Rank
+                </span>
+              }
+            />
           </div>
         </div>
 
@@ -278,7 +304,7 @@ const Season = () => {
                 <div className='standings-team-name-box'>
                   <p className='ptn-title'>Pos. Team Name</p>
                 </div>
-                
+
                 <div className='standings-teams-box'>
                   <p>1. Green Giraffes</p>
                   <p>2. Orange Owls</p>
@@ -287,7 +313,7 @@ const Season = () => {
                   <p>5. Pink Pandas</p>
                 </div>
               </div>
-              
+
               <div>
                 <div className='standings-team-points-box'>
                   <p className='p-title'>Points</p>
@@ -301,8 +327,6 @@ const Season = () => {
                   <p>6</p>
                 </div>
               </div>
-
-              
             </div>
           </div>
         </div>

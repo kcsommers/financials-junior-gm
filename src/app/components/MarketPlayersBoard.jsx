@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { PlayerPositions } from '@data/data';
-import { PlayerCard } from '@components';
-import { useSelector } from 'react-redux';
-import { getPlayerPositon } from '@utils';
+import { PlayerPositions } from '@data/players/players';
+import { PlayerCard, InsufficientFundsOverlay } from '@components';
+import { useSelector, useDispatch } from 'react-redux';
+import { toggleOverlay } from '@redux/actions';
 import '@css/components/MarketPlayersBoard.css';
 
 const getPlayerCardStyles = (arrLength, playerIndex) => {
@@ -53,15 +53,45 @@ const getViewConfig = (position, marketPlayers) => {
         title: 'Goalies you can sign',
         position: 'goalie',
       };
+    default: {
+      return {};
+    }
   }
 };
 
-export const MarketPlayersBoard = ({ initialPosition, onPlayerCardClick }) => {
+export const MarketPlayersBoard = ({
+  initialPosition,
+  onPlayerCardClick,
+  student,
+  releasingPlayer,
+}) => {
+  const dispatch = useDispatch();
   const marketPlayers = useSelector((state) => state.players.marketPlayers);
 
   const [activePosition, setActivePosition] = useState(initialPosition);
 
   const currentView = getViewConfig(activePosition, marketPlayers);
+
+  const checkBudget = (signingPlayer) => {
+    let budget =
+      student.totalBudget - student.savingsBudget - student.moneySpent;
+
+    if (releasingPlayer) {
+      budget += +releasingPlayer.playerCost;
+    }
+
+    if (budget - signingPlayer.playerCost < 0) {
+      dispatch(
+        toggleOverlay({
+          isOpen: true,
+          template: <InsufficientFundsOverlay />,
+        })
+      );
+      return;
+    }
+
+    onPlayerCardClick(signingPlayer);
+  };
 
   const forwardsActive =
     activePosition === PlayerPositions.FORWARD ||
@@ -138,10 +168,7 @@ export const MarketPlayersBoard = ({ initialPosition, onPlayerCardClick }) => {
               key={i}
               style={getPlayerCardStyles(currentView.players.length, i)}
             >
-              <PlayerCard
-                player={p}
-                onClick={onPlayerCardClick.bind(this, p)}
-              />
+              <PlayerCard player={p} onClick={checkBudget.bind(this, p)} />
             </div>
           ))}
         </div>

@@ -8,6 +8,8 @@ import {
   ScoutingCompleteOverlay,
   Overlay,
   PlayerDetailsOverlay,
+  LoadingSpinner,
+  BadScoutOverlay,
 } from '@components';
 import scoutStick from '@images/scout-stick.svg';
 import { useSelector, useDispatch } from 'react-redux';
@@ -23,9 +25,9 @@ import {
 } from '@redux/actions';
 import { isEqual } from 'lodash';
 import { getMoneyLevels } from '@utils';
-import { updatePlayerOnServer } from '@data/services/players-service';
+import { updatePlayerOnServer } from '@data/players/players-service';
 import { cloneDeep } from 'lodash';
-import { PlayerAssignments } from '@data/data';
+import { PlayerAssignments } from '@data/players/players';
 import '@css/pages/ScoutPage.css';
 
 const boardMap = {
@@ -267,6 +269,16 @@ const ScoutPage = () => {
     const sourceLevel = e.source.droppableId.split('-')[0];
     const droppedPlayer = boardMap[sourceLevel][e.source.droppableId];
 
+    if (droppedPlayer.overallRank >= 15 && dropLevel === 'levelThree') {
+      dispatch(
+        toggleOverlay({
+          isOpen: true,
+          template: <BadScoutOverlay />,
+        })
+      );
+      return;
+    }
+
     // update the map where the player was dropped
     boardMap[dropLevel][e.destination.droppableId] = droppedPlayer;
 
@@ -291,7 +303,7 @@ const ScoutPage = () => {
   };
 
   const handleScoutingComplete = () => {
-    const moneyLevels = getMoneyLevels(student.level);
+    const moneyLevels = getMoneyLevels(student.level || 1);
 
     const levelOneCloned = cloneDeep(scoutPlayers.levelOne);
     const levelTwoCloned = cloneDeep(scoutPlayers.levelTwo);
@@ -356,13 +368,14 @@ const ScoutPage = () => {
           getAvailablePlayersBoard(scoutPlayers.available)
         );
       }
+      console.log('STUDENT:::: ', student, getMoneyLevels(student.level));
       if (offered) {
         setOfferedPlayersBoard(
           getOfferedPlayersBoard(
             scoutPlayers.levelOne,
             scoutPlayers.levelTwo,
             scoutPlayers.levelThree,
-            getMoneyLevels(student.level)
+            getMoneyLevels(student.level || 1)
           )
         );
       }
@@ -405,7 +418,7 @@ const ScoutPage = () => {
         objectives={['1. Scout players to sign to your bench!']}
         level={student.level}
       />
-      <PageBoard hideCloseBtn={true}>
+      <PageBoard hideCloseBtn={true} includeBackButton={true}>
         <div className='scout-page-board-header'>
           <p className='color-primary scout-page-helper-text'>
             Give each new player a offered value by dragging them to their money
@@ -474,7 +487,20 @@ const ScoutPage = () => {
       )}
     </div>
   ) : (
-    <div>Loading...</div>
+    <div
+      style={{
+        position: 'absolute',
+        top: 0,
+        bottom: 0,
+        left: 0,
+        right: 0,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+    >
+      <LoadingSpinner />
+    </div>
   );
 };
 

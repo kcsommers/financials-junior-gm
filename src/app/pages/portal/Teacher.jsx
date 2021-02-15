@@ -10,6 +10,11 @@ class StudentPortal extends Component {
         }
     }
 
+    logout(){
+        console.log("logoutttttttttttttt")
+        this.props.history.push('/login/teacher');
+    }
+
 
     render() {
         if (!this.state.isLoggedIn || (this.state.role !== "teacher")) {
