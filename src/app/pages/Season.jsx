@@ -128,8 +128,6 @@ const Season = () => {
     }
   }
 
-  console.log('hello')
-
   const handlePlay = () => {
       setTimeout(() => {
         dispatch(
