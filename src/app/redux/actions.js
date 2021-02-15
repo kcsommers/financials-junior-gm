@@ -22,7 +22,8 @@ import {
   SET_JUMBOTRON_DISPLAY,
   SET_SEASON_SIGN,
   SET_SIMULATION_BUTTON,
-  SET_SIMULATE_GAME
+  SET_SIMULATE_GAME,
+  UPDATE_OPPONENT_INDEX
 } from './actionTypes';
 
 export const setAnimationState = (state) => ({
@@ -118,6 +119,11 @@ export const setStandings = (state) => ({
 export const updateCurrentOpponent = (currentOpponent) => ({
   type: UPDATE_CURRENT_OPPONENT,
   payload: currentOpponent
+})
+
+export const updateOpponentIndex = (currentOpponentIndex) => ({
+  type: UPDATE_OPPONENT_INDEX,
+  payload: currentOpponentIndex
 })
 
 export const setUpcomingGames = (state) => ({
