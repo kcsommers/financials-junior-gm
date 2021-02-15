@@ -16,7 +16,7 @@ import { SeasonTopRow } from '../components/season-page/SeasonTopRow';
 import { SeasonTopRowSign } from '../components/season-page/SeasonTopRowSign';
 import { InitialJumbotronState } from '../components/season-page/InitialJumbotronState';
 import { useDispatch, useSelector } from 'react-redux';
-import { setScore, setJumbotronDisplay, setSeasonSign, setSimulationButton, setSimulateGame, setStats, updateCurrentOpponent} from '@redux/actions';
+import { setScore, setJumbotronDisplay, setSeasonSign, setSimulationButton, setSimulateGame, setStats, updateCurrentOpponent, updateOpponentIndex} from '@redux/actions';
 import { PlayingGame } from '../components/season-page/PlayingGame';
 
 const Season = () => {
@@ -109,24 +109,23 @@ const Season = () => {
     dispatch(
       setScore(theResultScore())
     )
-    if(score[0] - score[1] > 1) {
-      dispatch(
-        setStats({
-          wins: stats.wins + 1,
-          points: stats.points + 2
-        })
-      )
-    }
   }
 
   const handleSimulation = () => {
     handlePlay();
-    theResultStats()
+    theResultStats();
+    dispatch(
+      updateOpponentIndex(opponentIndex + 1)
+    )
+    dispatch(
+      updateCurrentOpponent(currentOpponents)
+    )
+    console.log('the opponentindex: ', opponentIndex)
     setTimeout(function(){
       dispatch(
         setJumbotronDisplay(<InitialJumbotronState/>)
       )
-    }, 100)
+    }, 1000)
   }
 
   return (
