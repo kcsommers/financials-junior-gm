@@ -12,8 +12,9 @@ export const PlayerRankPie = ({
     return 360 * pct;
   };
 
-  const rankRotate = calculateRotation(rank);
-  const emptyRotate = calculateRotation(100 - rank);
+  const _rank = rank ? rank : 0;
+  const rankRotate = calculateRotation(_rank);
+  const emptyRotate = calculateRotation(100 - _rank);
 
   return (
     <div

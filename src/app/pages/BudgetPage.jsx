@@ -34,9 +34,7 @@ const BudgetPage = () => {
 
   const updateSavingsOnServer = (value) => {
     updateStudentById(student._id, { savingsBudget: value })
-      .then((res) => {
-        console.log('UPDATED SAVINGS:::: ', res);
-      })
+      .then(() => {})
       .catch((err) => console.error(err));
   };
 
