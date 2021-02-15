@@ -24,7 +24,6 @@ export { BudgetEquation } from './budget-page/BudgetEquation';
 export { PlayerCard } from './PlayerCard';
 export { Navigation } from './home-page/Navigation.jsx';
 export { ObjectivesBoard } from './ObjectivesBoard.jsx';
-export { OpposingTeamRankStick } from './OpposingTeamRankStick.jsx';
 export { PlayerDropContainer } from './scout-page/PlayerDropContainer';
 export { Overlay } from './overlays/Overlay';
 export { PlayerDragItem } from './scout-page/PlayerDragItem';
