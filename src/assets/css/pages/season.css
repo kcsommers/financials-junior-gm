@@ -23,12 +23,9 @@
 
 .season-teams-playing-box {
   background: #707070;
-  width: 400px;
+  width: 464px;
   text-align: center;
   height: 324.19px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .season-team-left-border {
@@ -57,12 +54,11 @@
 
 .next-opponent-title {
   color: white;
-  font-size: 24px;
+  font-size: 20px;
   font-weight: bold;
-  -webkit-text-stroke: .05px black;
 }
 
-.ready-to-play-sign {
+.SeasonTopRow-sign {
   background: #00788a;
   text-align: center;
   border-radius: 5px;
@@ -103,6 +99,7 @@
   display: flex;
   justify-content: space-between;
   padding: 0 1rem;
+  align-items: center;
 }
 
 .season-schedule-title,
