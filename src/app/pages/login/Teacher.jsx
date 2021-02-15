@@ -53,7 +53,6 @@ class TeacherLogin extends React.Component {
           api
             .getCurrentUser()
             .then((currentUserRes) => {
-              console.log('RESPONSE:::: ', currentUserRes);
               localStorage.setItem('isLoggedIn', true);
               localStorage.setItem('userRole', 'teacher');
               localStorage.setItem('teacherId', currentUserRes.data._id);
