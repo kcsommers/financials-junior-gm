@@ -39,7 +39,7 @@ export const TeamBudgetState = ({ title, isLarge }) => {
             denom={100}
             color='#e06d00'
             indicatorDirection='right'
-            isLarge={true}
+            isLarge={isLarge}
             textJsx={
               <span>
                 Team <br />
@@ -56,7 +56,7 @@ export const TeamBudgetState = ({ title, isLarge }) => {
             color='#002f6c'
             indicatorDirection='left'
             inverse={true}
-            isLarge={true}
+            isLarge={isLarge}
             textJsx={
               <span>
                 Spending <br />
