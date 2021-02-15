@@ -8,6 +8,7 @@ import budgetStick from '@images/budget-stick.svg';
 import { useSelector, useDispatch } from 'react-redux';
 import { budgetSlides, SharkieButton, Tutorial } from '@tutorial';
 import { setTutorialState, setSavings } from '@redux/actions';
+import { updateStudentById } from '../api-helper';
 import '@css/pages/BudgetPage.css';
 
 let debounceTimeout = 0;
@@ -30,8 +31,13 @@ const BudgetPage = () => {
     spending: useSelector((state) => state.tutorial.budget.spending),
   };
 
-  const updateSavingsOnServer = () => {
+  const updateSavingsOnServer = (value) => {
     console.log('SEND TO SERVER::::');
+    updateStudentById(student._id, { savingsBudget: value })
+      .then((res) => {
+        console.log('UPDATED SAVINGS:::: ', res);
+      })
+      .catch((err) => console.error(err));
   };
 
   const updateSavings = (value) => {
@@ -41,7 +47,7 @@ const BudgetPage = () => {
       window.clearTimeout(debounceTimeout);
     }
     debounceTimeout = window.setTimeout(() => {
-      updateSavingsOnServer();
+      updateSavingsOnServer(+value);
     }, 1000);
   };
 
