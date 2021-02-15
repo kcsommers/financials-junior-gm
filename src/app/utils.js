@@ -43,7 +43,7 @@ export const capitalize = (str) => {
 
 export const getDollarString = (num) => {
   if (!num || num === 'null') {
-    return '$0';
+    return '';
   }
   if (+num % 1 === 0) {
     return `$${num}`;
