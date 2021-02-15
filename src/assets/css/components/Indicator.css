@@ -64,6 +64,10 @@ p.amount-indicator-amount {
   letter-spacing: 0.1rem;
 }
 
+p.amount-indicator-amount-money {
+  font-size: 1.2rem;
+}
+
 p.indicator-label {
   font-size: 1.2rem;
   padding: 0.5rem 0;
