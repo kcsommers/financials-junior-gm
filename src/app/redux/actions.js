@@ -21,7 +21,8 @@ import {
   SET_UPCOMING_GAMES,
   SET_JUMBOTRON_DISPLAY,
   SET_SEASON_SIGN,
-  SET_SIMULATION_BUTTON
+  SET_SIMULATION_BUTTON,
+  SET_SIMULATE_GAME
 } from './actionTypes';
 
 export const setAnimationState = (state) => ({
@@ -86,7 +87,7 @@ export const tradePlayer = (releasedPlayer, signedPlayer) => ({
 
 export const setScore = (state) => ({
   type: SET_SCORE,
-  payload: {state}
+  payload: state
 })
 
 export const setRank = (state) => ({
@@ -137,4 +138,9 @@ export const setSeasonSign = (sign) => ({
 export const setSimulationButton = (simulation) => ({
   type: SET_SIMULATION_BUTTON,
   payload: simulation
+})
+
+export const setSimulateGame = (state) => ({
+  type: SET_SIMULATE_GAME,
+  payload: state
 })
