@@ -35,7 +35,6 @@ const App = () => {
   ) {
     getCurrentUser()
       .then((studentRes) => {
-        console.log('CURRENT USER:::: ', studentRes.data);
         const student = studentRes.data;
         if (!studentRes.success || !student) {
           console.error(
@@ -44,16 +43,15 @@ const App = () => {
           return;
         }
         // don't initialize players if theyre already there
-        // if (student.players && student.players.length) {
-        //   dispatch(setStudent(student));
-        //   dispatch(setInitialPlayersState(student.players, student));
-        //   return;
-        // }
+        if (student.players && student.players.length) {
+          dispatch(setStudent(student));
+          dispatch(setInitialPlayersState(student.players, student));
+          return;
+        }
 
         // initialize players on student
-        initPlayersByLevel(student.level || 1)
+        initPlayersByLevel(student.level)
           .then((initializedStudentRes) => {
-            console.log(':::: INITING PLAYERS :::::', initializedStudentRes);
             if (!initializedStudentRes.success || !initializedStudentRes.data) {
               console.error(new Error('Unexpected error initializing players'));
               return;
@@ -71,17 +69,11 @@ const App = () => {
                   );
                   return;
                 }
-                console.log(
-                  ':::: UPDATED STUDENT ::::',
-                  updatedStudentRes.updatedStudent
-                );
                 dispatch(setStudent(updatedStudentRes.updatedStudent));
                 dispatch(
                   setInitialPlayersState(
-                    initializedStudentRes.data.players,
-                    // updatedStudentRes.updatedStudent.players,
-                    initializedStudentRes.data
-                    // updatedStudentRes.updatedStudent
+                    updatedStudentRes.updatedStudent.players,
+                    updatedStudentRes.updatedStudent
                   )
                 );
               })
@@ -126,10 +118,17 @@ const App = () => {
           <Route exact path='/dashboard' component={Dashboard} />
           <Route exact path='/login/teacher' component={TeacherLogin} />
           <Route exact path='/login/student' component={StudentLogin} />
+          {/* <Route exact path='/teacher/home' component={TeacherDashboard} /> */}
           <Route
             exact
-            path='/teacher/home'
-            render={(props) => <TeacherPortal screen={<TeacherDashboard />} />}
+            path="/teacher/home"
+            render={(props) => (
+              <TeacherPortal
+                screen={
+                  <TeacherDashboard {...props}/>
+                }
+              />
+            )}
           />
           <Route component={PageNotFound} />
         </Switch>
