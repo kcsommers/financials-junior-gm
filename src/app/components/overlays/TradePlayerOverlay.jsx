@@ -93,7 +93,7 @@ export const TradePlayerOverlay = ({ releasingPlayer, student }) => {
             <TeamBudgetState />
           </div>
           <div style={{ flex: 1 }}>
-            <PlayerCard isLarge={true} player={releasingPlayer} />
+            <PlayerCard size='medium' player={releasingPlayer} />
           </div>
         </div>
         <div

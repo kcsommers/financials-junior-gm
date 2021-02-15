@@ -1,11 +1,11 @@
-.player-score-pie * {
+.player-rank-pie * {
   box-sizing: border-box;
 }
 
-.player-score-pie {
+.player-rank-pie {
   position: relative;
 }
-.player-score-slice {
+.player-rank-slice {
   clip-path: polygon(50% 0%, 50% 100%, 100% 100%, 100% 0%);
   position: absolute;
   border-radius: 50%;
@@ -13,7 +13,7 @@
   height: 100%;
 }
 
-.player-score-slice-fill {
+.player-rank-slice-fill {
   width: 100%;
   height: 100%;
   border-radius: 50%;
@@ -22,7 +22,7 @@
   z-index: 2;
 }
 
-.player-score-bg-fill {
+.player-rank-bg-fill {
   width: 100%;
   height: 100%;
   border-radius: 50%;
