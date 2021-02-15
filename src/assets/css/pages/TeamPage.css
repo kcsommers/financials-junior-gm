@@ -46,12 +46,22 @@ div.team-players-row {
   justify-content: space-around;
   position: relative;
   z-index: 1;
+  flex: 1;
+  padding-top: 0.25rem;
+}
+
+div.team-players-row-2 {
+  flex: 1.5;
+  align-items: flex-start;
+  padding-top: 1.25rem;
 }
 
 div.team-players-card {
-  height: 325px;
+  height: 350px;
   position: relative;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 div.team-players-card,

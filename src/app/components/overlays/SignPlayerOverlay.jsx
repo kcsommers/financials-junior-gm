@@ -5,10 +5,11 @@ import {
   PlayerChangeSuccessOverlay,
 } from '@components';
 import { useDispatch } from 'react-redux';
-import { toggleOverlay, signPlayer, updateStudent } from '@redux/actions';
+import { toggleOverlay, signPlayer, setStudent } from '@redux/actions';
 import { ConfirmSignOverlay } from './ConfirmSignOverlay';
 import { getPlayerPositon } from '@utils';
-import { updatePlayer as updatePlayerOnServer } from '../../api-helper';
+import { updateStudentById } from '../../api-helper';
+import { cloneDeep } from 'lodash';
 import '@css/components/team-page/SignPlayerOverlay.css';
 
 const getAvailableSlots = (props, team) => {
@@ -46,24 +47,36 @@ export const SignPlayerOverlay = ({ team, assignment, student }) => {
   };
 
   const signConfirmed = (signedPlayer) => {
-    const p1 = new Promise((r) => r(true));
-    // updatePlayerOnServer(signedPlayer._id)
-    p1.then((res) => {
-      console.log('RES:::: ', res);
-      dispatch(signPlayer(signedPlayer, assignment));
-      dispatch(updateStudent({ [assignment]: signedPlayer }));
-      dispatch(
-        toggleOverlay({
-          isOpen: true,
-          template: (
-            <PlayerChangeSuccessOverlay
-              player={signedPlayer}
-              message=' Player has been signed!'
-            />
-          ),
-        })
-      );
-    }).catch((err) => console.error(err));
+    signedPlayer.playerAssignment = assignment;
+
+    const playersCopy = cloneDeep(student.players);
+    playersCopy.splice(
+      playersCopy.findIndex((p) => p._id === signedPlayer._id),
+      1,
+      signedPlayer
+    );
+
+    updateStudentById(student._id, {
+      [assignment]: signedPlayer._id,
+      players: playersCopy,
+    })
+      .then((res) => {
+        console.log('RES:::: ', res);
+        dispatch(signPlayer(signedPlayer, assignment));
+        dispatch(setStudent(res.updatedStudent));
+        dispatch(
+          toggleOverlay({
+            isOpen: true,
+            template: (
+              <PlayerChangeSuccessOverlay
+                player={signedPlayer}
+                message=' Player has been signed!'
+              />
+            ),
+          })
+        );
+      })
+      .catch((err) => console.error(err));
   };
 
   const confirmSign = (player) => {

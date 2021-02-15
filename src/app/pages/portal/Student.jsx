@@ -23,10 +23,7 @@ class StudentPortal extends Component {
       this.props.loginState.isLoggedIn !== initialState.isLoggedIn ||
       this.props.loginState.role !== initialState.role
     ) {
-      this.props.setLoginState({
-        isLoggedIn: initialState.isLoggedIn,
-        role: initialState.role,
-      });
+      this.props.setLoginState(initialState.isLoggedIn, initialState.role);
     }
 
     this.state = initialState;

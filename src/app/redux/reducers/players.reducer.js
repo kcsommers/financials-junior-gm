@@ -33,7 +33,6 @@ const playersReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_INITIAL_PLAYERS_STATE: {
       const { players, student } = action.payload;
-      console.log('PLAYERS:::: ', players);
       const marketPlayers = {
         forward: [],
         defender: [],
@@ -48,17 +47,6 @@ const playersReducer = (state = initialState, action) => {
       const teamPlayers = {};
       players.filter((p) => p.playerLevel === student.level);
       players.forEach((p) => {
-        if (p.playerName === 'Matthew Nieto') {
-          p.playerAssignment = PlayerAssignments.F_ONE;
-        } else if (p.playerName === 'Sam Greenfeld') {
-          p.playerAssignment = PlayerAssignments.F_TWO;
-        } else if (p.playerName === 'Andrew Park') {
-          p.playerAssignment = PlayerAssignments.G_ONE;
-        } else if (p.playerName === 'Emily Burch') {
-          p.playerAssignment = PlayerAssignments.D_ONE;
-        } else if (p.playerName === 'Theo Johnson') {
-          p.playerAssignment = PlayerAssignments.D_TWO;
-        }
         if (p.playerAssignment === PlayerAssignments.MARKET) {
           if (p.playerPosition === PlayerPositions.FORWARD) {
             marketPlayers.forward.push(p);

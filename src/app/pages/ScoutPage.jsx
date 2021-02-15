@@ -40,6 +40,7 @@ const ScoutPage = () => {
   const history = useHistory();
   const tutorialActive = useSelector((state) => state.tutorial.isActive);
   const student = useSelector((state) => state.studentState.student);
+  console.log('STUDENT:::: ', student);
   const { scoutPlayers, scoutingState } = useSelector((state) => state.players);
   const availablePlayersAnimationState = useSelector(
     (state) => state.tutorial.scout.availablePlayersBoard
@@ -291,7 +292,7 @@ const ScoutPage = () => {
   };
 
   const handleScoutingComplete = () => {
-    const moneyLevels = getMoneyLevels(student.level);
+    const moneyLevels = getMoneyLevels(student.level || 1);
 
     const levelOneCloned = cloneDeep(scoutPlayers.levelOne);
     const levelTwoCloned = cloneDeep(scoutPlayers.levelTwo);
@@ -362,7 +363,7 @@ const ScoutPage = () => {
             scoutPlayers.levelOne,
             scoutPlayers.levelTwo,
             scoutPlayers.levelThree,
-            getMoneyLevels(student.level)
+            getMoneyLevels(student.level || 1)
           )
         );
       }
