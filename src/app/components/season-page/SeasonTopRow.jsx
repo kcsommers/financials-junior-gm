@@ -8,11 +8,11 @@ import {TeamWon} from './TeamWon'
 import {SeasonTopRowSign} from './SeasonTopRowSign';
 import { useSelector} from 'react-redux';
 
-export const SeasonTopRow = () => {
+export const SeasonTopRow = (jumbotronDisplay) => {
 
-  const jumbotronDisplay = useSelector((state) => {
-    return state.season.jumbotronDisplay
-  });
+  // const jumbotronDisplay = useSelector((state) => {
+  //   return state.season.jumbotronDisplay
+  // });
 
   return (
     <div className='season-dashboard-top-row'>

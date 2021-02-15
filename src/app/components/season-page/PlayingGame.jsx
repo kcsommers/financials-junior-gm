@@ -1,30 +1,37 @@
 import React from 'react'
 import { ReactSVG } from 'react-svg';
 import '../../../assets/css/components/season-page/playing-game.css'
-import jrSharksLogoWhiteBg from '@images/icons/jr-sharks-logo-white-bg.svg';
-import jrSharksLogoWhite from '@images/icons/jr-sharks-logo-white.svg';
-import blueBears from '@images/icons/blue-bears.svg';
-import { useDispatch, useSelector } from 'react-redux';
-import { setScore } from '@redux/actions';
+import jrSharksLogoBig from '@images/icons/jr-sharks-logo-big.svg';
+import blueBearsLogoBig from '@images/icons/blue-bears-logo-big.svg';
+import { useSelector } from 'react-redux';
 
 export const PlayingGame = () => {
 
-  const dispatch = useDispatch();
   const score = useSelector((state) => {
     return state.season.score
   });
+  const yourStanding = useSelector((state) => {
+    return state.season.standings
+  });
+  const opponentStanding = useSelector((state) => {
+    return state.season.nextOpponent.standings
+  });
+
+  console.log('yoyoyo: ', useSelector(state => {
+    return state.season.nextOpponent;
+  }))
 
   return (
     <div className="teams-playing-container">
       <div className="season-teams-vs-container">
-        <div>
-          <p className="season-teams-vs-your-place">3rd</p>
-          <ReactSVG src={jrSharksLogoWhite} />
+        <div className="team-container">
+          <p className="text-white your-standings">{yourStanding}</p>
+          <ReactSVG src={jrSharksLogoBig} />
         </div>
         <p className="season-teams-vs">vs</p>
-        <div>
-          <p className="season-teams-vs-opponent-place">4th</p>
-          <ReactSVG src={blueBears} />
+        <div className="team-container">
+          <p className="text-white opponent-standings">{opponentStanding}</p>
+          <ReactSVG src={blueBearsLogoBig} />
         </div>
       </div>
       

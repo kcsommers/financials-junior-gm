@@ -3,6 +3,7 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  padding: 1rem .5rem;
 }
 
 .season-teams-vs-your-place,
@@ -15,10 +16,38 @@
 
 .season-teams-vs-container {
   display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .team-scores-container {
   display: flex;
   justify-content: space-between;
   width: 300px
+}
+
+.text-white {
+  color: white
+}
+
+.your-standings,
+.opponent-standings {
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 36px;
+  font-weight: bold;
+  padding: .25rem .5rem;
+}
+
+.your-standings {
+  color: #006072;
+}
+
+.opponent-standings {
+  color: #3B42FF;
+}
+
+.team-container {
+  position: relative;
 }
