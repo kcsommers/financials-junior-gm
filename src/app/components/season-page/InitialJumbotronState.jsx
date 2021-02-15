@@ -13,22 +13,29 @@ export const InitialJumbotronState = () => {
     return state.season.image
   });
 
-  const stats = useSelector((state) => {
-    console.log('getting stats')
-    return state.season.stats
+  const wins = useSelector((state) => {
+    return state.season.wins
   });
 
-  console.log('component rendered: ', stats)
+  const losses = useSelector((state) => {
+    return state.season.losses
+  });
+
+  const points = useSelector((state) => {
+    return state.season.points
+  });
 
   const standings = useSelector((state) => {
     return state.season.standings
   });
-  const nextOpponent = useSelector((state) => {
-    return state.season.nextOpponent
+  const currentOpponent = useSelector((state) => {
+    return state.season.currentOpponent
   });
   const teams = useSelector((state) => {
     return state.season.teams
   });
+
+  console.log('the current opponent: ', currentOpponent)
 
   return (
     <div className="season-initial-container">
@@ -39,15 +46,15 @@ export const InitialJumbotronState = () => {
           <div className="your-stats-container">
             <div>
               <p className="your-stats-wins">Wins</p>
-              <div className="your-stats">{stats.wins}</div>
+              <div className="your-stats">{wins}</div>
             </div>
             <div>
               <p className="your-stats-losses">Losses</p>
-              <div className="your-stats">{stats.losses}</div>
+              <div className="your-stats">{losses}</div>
             </div>
             <div>
               <p className="your-stats-points">Points</p>
-              <div className="your-stats">{stats.points}</div>
+              <div className="your-stats">{points}</div>
             </div>
           </div>
         </div>
@@ -56,7 +63,7 @@ export const InitialJumbotronState = () => {
         <p className='next-opponent-title'>Next Opponent</p>
         <div className='next-opponent-container'>
           <div className="opponent-logo-container" style={{transform: 'scale(0.9)'}}>
-            <ReactSVG src={blueBearsLogo}/>
+            <ReactSVG src={currentOpponent.image}/>
           </div>
           <div className='sotr-details' style={{transform: 'scale(0.9)'}}>
             <LevelStick type='noStickOpponentTeamRank' />
