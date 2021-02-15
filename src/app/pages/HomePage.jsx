@@ -6,6 +6,7 @@ import {
   StickButton,
   Navigation,
   LevelStick,
+  LoadingSpinner,
 } from '@components';
 import {
   introSlides,
@@ -40,6 +41,8 @@ const tutorialSlides = [
 const HomePage = () => {
   const tutorialActive = useSelector((state) => state.tutorial.isActive);
 
+  const student = useSelector((state) => state.studentState.student);
+
   const dispatch = useDispatch();
 
   const onTutorialComplete = () => {
@@ -68,7 +71,7 @@ const HomePage = () => {
     />
   );
 
-  return (
+  return student ? (
     <div className='home-page-container'>
       <Navigation tutorialActive={tutorialActive} />
       <div className='home-cards-row'>
@@ -78,11 +81,35 @@ const HomePage = () => {
             animate={animationStates.teamRankCard}
             transition={{ default: { duration: 1 } }}
           >
-            <LevelStick type='teamRank' />
+            <LevelStick
+              type='teamRank'
+              amount={student.teamRank}
+              denom={100}
+              color='#e06d00'
+              indicatorDirection='right'
+              textJsx={
+                <span>
+                  Team <br />
+                  Rank
+                </span>
+              }
+            />
           </motion.div>
         ) : (
           <div className='level-stick-card'>
-            <LevelStick type='teamRank' />
+            <LevelStick
+              type='teamRank'
+              amount={student.teamRank}
+              denom={100}
+              color='#e06d00'
+              indicatorDirection='right'
+              textJsx={
+                <span>
+                  Team <br />
+                  Rank
+                </span>
+              }
+            />
           </div>
         )}
         {tutorialActive ? (
@@ -108,11 +135,41 @@ const HomePage = () => {
             animate={animationStates.budgetCard}
             transition={{ default: { duration: 1 } }}
           >
-            <LevelStick type='budget' />
+            <LevelStick
+              type='budget'
+              amount={
+                student.totalBudget - student.moneySpent - student.savingsBudget
+              }
+              denom={student.totalBudget}
+              color='#002f6c'
+              indicatorDirection='left'
+              inverse={true}
+              textJsx={
+                <span>
+                  Spending <br />
+                  Budget
+                </span>
+              }
+            />
           </motion.div>
         ) : (
           <div className='level-stick-card card'>
-            <LevelStick type='budget' />
+            <LevelStick
+              type='budget'
+              amount={
+                student.totalBudget - student.moneySpent - student.savingsBudget
+              }
+              denom={student.totalBudget}
+              color='#002f6c'
+              indicatorDirection='left'
+              inverse={true}
+              textJsx={
+                <span>
+                  Spending <br />
+                  Budget
+                </span>
+              }
+            />
           </div>
         )}
       </div>
@@ -171,6 +228,21 @@ const HomePage = () => {
       {tutorialActive && (
         <Tutorial slides={tutorialSlides} onComplete={onTutorialComplete} />
       )}
+    </div>
+  ) : (
+    <div
+      style={{
+        position: 'absolute',
+        top: 0,
+        bottom: 0,
+        left: 0,
+        right: 0,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+    >
+      <LoadingSpinner />
     </div>
   );
 };
