@@ -1,12 +1,10 @@
-import React, {useState} from 'react'
+import React from 'react'
 
-export const SeasonTopRowSign = () => {
-
-  const [signText, setSignText] = useState('Your team is ready to play.')
+export const SeasonTopRowSign = (seasonSign) => {
 
   return (
     <div className='SeasonTopRow-sign'>
-      {signText}
+      {seasonSign}
     </div>
   )
 }

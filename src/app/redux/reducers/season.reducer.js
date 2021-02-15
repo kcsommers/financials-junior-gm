@@ -7,14 +7,17 @@ import {
   SET_STANDINGS,
   SET_NEXT_OPPONENT,
   SET_UPCOMING_GAMES,
-  SET_JUMBOTRON_DISPLAY
+  SET_JUMBOTRON_DISPLAY,
+  SET_SEASON_SIGN,
+  SET_SIMULATION_BUTTON
 } from '../actionTypes'
 import blueBears from '../../../assets/images/icons/blue-bears-logo.svg'
 import jrSharksLogoWhiteBg from '@images/icons/jr-sharks-logo-white-bg.svg';
 import redRabbits from '@images/icons/red-rabbits.svg';
 import purplePanthers from '@images/icons/purple-panthers.svg';
 import whiteWolves from '@images/icons/white-wolves.svg';
-import {InitialJumbotronState} from '../../components/season-page/InitialJumbotronState'
+import {InitialJumbotronState} from '../../components/season-page/InitialJumbotronState';
+import play from '@images/icons/play.svg';
 
 const initialState = {
   score: [0,0],
@@ -26,13 +29,13 @@ const initialState = {
     losses: 0,
     points: 0
   },
-  standings: 13,
+  standings: '13th',
   nextOpponent: {
     rank: 270,
     image: blueBears,
     name: 'Blue Bears',
     stats: {wins: 0, losses: 0, points: 0},
-    standings: 12
+    standings: '12th'
   },
   upcomingGames: [
     {
@@ -40,24 +43,26 @@ const initialState = {
       image: redRabbits,
       name: 'Red Rabbits',
       stats: {wins: 0, losses: 0, points: 0},
-      standings: 12
+      standings: '12th'
     },
     {
       rank: 300,
       image: purplePanthers,
       name: 'Purple Panthers',
       stats: {wins: 0, losses: 0, points: 0},
-      standings: 10
+      standings: '10th'
     },
     {
       rank: 325,
       image: whiteWolves,
       name: 'White Wolves',
       stats: {wins: 0, losses: 0, points: 0},
-      standings: 6
+      standings: '6th'
     }
   ],
-  jumbotronDisplay: <InitialJumbotronState/>
+  jumbotronDisplay: <InitialJumbotronState/>,
+  seasonSign: 'Your team is ready to play.',
+  simulationButton: play
 }
 
 export default function(state = initialState, action) {
@@ -108,6 +113,16 @@ export default function(state = initialState, action) {
       return {
         ...state,
         jumbotronDisplay: action.payload
+      }
+    case SET_SEASON_SIGN:
+      return {
+        ...state,
+        seasonSign: action.payload
+      }
+    case SET_SIMULATION_BUTTON:
+      return {
+        ...state,
+        simulationButton: action.payload
       }
     default: 
       return state;
