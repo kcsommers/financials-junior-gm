@@ -407,7 +407,7 @@ const ScoutPage = () => {
         objectives={['1. Scout players to sign to your bench!']}
         level={student.level}
       />
-      <PageBoard hideCloseBtn={true}>
+      <PageBoard hideCloseBtn={true} includeBackButton={true}>
         <div className='scout-page-board-header'>
           <p className='color-primary scout-page-helper-text'>
             Give each new player a offered value by dragging them to their money

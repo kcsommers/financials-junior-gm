@@ -1,3 +1,4 @@
+export { BackButton } from './BackButton';
 export { PlayerRankPie } from './PlayerRankPie';
 export { LoadingSpinner } from './LoadingSpinner';
 export { PlayerRankGraph } from './PlayerRankGraph';

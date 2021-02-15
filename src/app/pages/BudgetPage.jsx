@@ -61,7 +61,7 @@ const BudgetPage = () => {
         inverse={true}
       />
 
-      <PageBoard hideCloseBtn={true}>
+      <PageBoard hideCloseBtn={true} includeBackButton={true}>
         <div className='budget-page-board-inner'>
           <span style={{ position: 'absolute', left: '1rem', top: '1rem' }}>
             <SharkieButton
