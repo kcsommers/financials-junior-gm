@@ -34,7 +34,7 @@ const slideConfigs = [
   },
   {
     message:
-      'If a manager really likes a player, they can offer them more money to sign them!',
+      'If a manager really likes a player, they can offer more money to sign them!',
     sharkie: 'speak',
     timer: Slide.SLIDE_DURATION,
   },

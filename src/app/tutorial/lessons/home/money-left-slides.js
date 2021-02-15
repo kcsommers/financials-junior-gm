@@ -22,15 +22,23 @@ const slideConfigs = [
   },
   {
     message:
-      'Your goal is to build a winning team without running out of money.',
+      'Your goal is to build a winning team',
     sharkie: 'playInverse',
     hasButtons: false,
     repeatIndex: 0,
     slideAnimate: {
       y: '50%',
     },
-    timer: Slide.SLIDE_DURATION,
+    timer: Slide.SLIDE_DURATION + 3000,
   },
+  {
+    message:
+    'While being ready for anything a hockey season can throw your way!',
+    sharkie: 'playInverse',
+    hasButtons: false,
+    timer: Slide.SLIDE_DURATION + 3000,
+  }
+  ,
   {
     message: 'Got it?',
     sharkie: 'playInverse',
