@@ -3,10 +3,15 @@ import { ReactSVG } from 'react-svg';
 import '../../../assets/css/components/season-page/playing-game.css'
 import jrSharksLogoBig from '@images/icons/jr-sharks-logo-big.svg';
 import blueBearsLogoBig from '@images/icons/blue-bears-logo-big.svg';
-import { useSelector } from 'react-redux';
+import { setScore} from '@redux/actions';
+import { useSelector, useDispatch} from 'react-redux';
 
-export const PlayingGame = (score) => {
-  console.log('yo hello hey: ', score)
+export const PlayingGame = () => {
+
+  const score = useSelector(state => {
+    return state.season.score
+  })
+
 
   const yourStanding = useSelector((state) => {
     return state.season.standings
@@ -39,13 +44,13 @@ export const PlayingGame = (score) => {
           
           <div>
             <div className="score-container">
-              <p className="score-value">{score.score[0]}</p>
+              <p className="score-value">{score[0]}</p>
             </div>
           </div>
           
           <div>
             <div className="score-container">
-              <p className="score-value">{score.score[1]}</p>
+              <p className="score-value">{score[1]}</p>
             </div>
           </div>
           
