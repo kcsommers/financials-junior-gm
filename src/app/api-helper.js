@@ -55,9 +55,6 @@ function getHostName() {
   }
 }
 
-let fileHeader = {
-  'Content-Type': 'multipart/form-data'
-}
 
 //Teacher Login
 export function teacherLogin(body) {
@@ -70,18 +67,26 @@ export function studentLogin(body) {
 }
 
 //Get Students
-export function getStudentList(){
-  return axios.get(`${getHostName()}/api/v1/student`);
+export function getStudentList(id){
+  return axios.get(`${getHostName()}/api/v1/student?user=${id}&sort=firstName,lastName`);
 }
 
 //Add a Student
 export function addStudent(body){
-  return axios.post(`${getHostName()}/api/v1/student`, body);
+  console.log("body", body)
+ return axios.post(`${getHostName()}/api/v1/student`, body);
 }
 
 //Add a Student in bulk
 export function addStudentInBulk(file){
-  return axios.post(`${getHostName()}/api/v1/student/bulk`, file, {headers: fileHeader});
+  const formData = new FormData();
+  formData.append('file',file)
+  const config = {
+      headers: {
+          'content-type': 'multipart/form-data'
+      }
+  }
+  return axios.post(`${getHostName()}/api/v1/student/bulk`, formData, config);
 }
 
 //Update a Student
@@ -91,5 +96,11 @@ export function updateStudent(id, body){
 
 //Delete a Student /api/v1/student
 export function deleteStudent(id){
-  return axios.put(`${getHostName()}/api/v1/student/?studentId=${id}`);
+  return axios.delete(`${getHostName()}/api/v1/student/${id}`);
+}
+
+
+//Logout
+export function logout(){
+  return axios.get(`${getHostName()}/api/v1/auth/logout`);
 }
