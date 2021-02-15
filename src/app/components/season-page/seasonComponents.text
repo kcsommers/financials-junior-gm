@@ -43,3 +43,5 @@ season reducer
 array of the season games,
 arary of standing in the seasons reducer,
 all data should come from redux to the top level seasons page
+
+test
