@@ -33,7 +33,7 @@ const initialState = {
       stats: {wins: 0, losses: 0, points: 0},
       standings: '12th'
     },
-    {
+    { 
       rank: 280,
       image: redRabbits,
       name: 'Red Rabbits',
@@ -99,8 +99,14 @@ export default function(state = initialState, action) {
         name: action.payload
       }
     case SET_STATS:
+      console.log('here is the actual stats: ', action.payload)
       return {
         ...state,
+        //stats : {
+          //wins: action.payload.wins,
+          //losses: action.payload.losses,
+          //points: action.payload.points
+        //}
         wins: action.payload.wins,
         losses: action.payload.losses,
         points: action.payload.points
@@ -114,6 +120,11 @@ export default function(state = initialState, action) {
       return {
         ...state,
         standings: action.payload
+      }
+    case UPDATE_OPPONENT_INDEX:
+      return {
+        ...state,
+        currentOpponentIndex: action.payload
       }
     case UPDATE_CURRENT_OPPONENT:
       return {

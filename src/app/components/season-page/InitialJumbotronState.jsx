@@ -28,8 +28,9 @@ export const InitialJumbotronState = () => {
     return state.season.standings;
   });
   const currentOpponent = useSelector((state) => {
-    return state.season.currentOpponent
+    return state.season.points
   });
+
   const teams = useSelector((state) => {
     return state.season.teams;
   });

@@ -42,9 +42,21 @@ const Season = () => {
   const currentOpponents = opponents[opponentIndex]
 
   const dispatch = useDispatch();
+  
+  //getting wins stats individually from state as nesting causes issues
+  const wins = useSelector((state) => {
+    //console.log('getting stats')
+    return state.season.wins
+  });
 
-  const stats = useSelector((state) => {
-    return state.season.stats;
+  const losses = useSelector((state) => {
+    //console.log('getting stats')
+    return state.season.losses
+  });
+
+  const points = useSelector((state) => {
+    //console.log('getting stats')
+    return state.season.points
   });
 
   const wins = useSelector(state => {
@@ -127,8 +139,6 @@ const Season = () => {
       )
     }
   }
-
-  console.log('hello')
 
   const handlePlay = () => {
       setTimeout(() => {
@@ -294,7 +304,7 @@ const Season = () => {
               </div>
             </div>
           </div>
-
+          
           <ReactSVG src={simulationButton} onClick={handlePlay}/>
 
           <div>
