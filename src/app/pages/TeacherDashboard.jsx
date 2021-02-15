@@ -1,6 +1,7 @@
 import React from 'react';
 import '@css/pages/TeacherDashboard.css';
 import * as api from '../api-helper';
+import { Link, Router, Redirect } from 'react-router-dom';
 import CRUDTable,
 {
     Fields,
@@ -32,12 +33,13 @@ const getSorter = (data) => {
 
 class TeacherDashboard extends React.Component {
     constructor(props) {
-        super(props)
+        super(props);
         this.state = {
             dataList: [],
             selectedFile: null,
-        }
-
+            showCSVForm: false
+        };
+        //this.logoutSession = this.logoutSession.bind(this);
     }
 
     componentDidMount() {
@@ -45,10 +47,18 @@ class TeacherDashboard extends React.Component {
     }
 
     getStudentList = () => {
-        api.getStudentList().then(res => {
+        let id = null;
+        if(localStorage.getItem('teacherId')){
+            id = localStorage.getItem('teacherId');
+        }
+        api.getStudentList(id).then(res => {
             console.log(res)
+            for(let i=0; i<res.data.length; i++){
+                res.data[i].name = res.data[i].firstName + " " + res.data[i].lastName;
+            }
+            
             this.state.dataList = res.data;
-            this.setState({ dataList: res.data });
+            this.setState({ dataList: this.state.dataList });
             console.log(this.state.dataList);
         }).catch(error => {
             console.log("catch---->>>>", error.response);
@@ -56,6 +66,7 @@ class TeacherDashboard extends React.Component {
     }
 
     addStudent = (task) => {
+        console.log("task", task)
         var body = {
             firstName: task.firstName,
             lastName: task.lastName
@@ -67,6 +78,9 @@ class TeacherDashboard extends React.Component {
             return task;
         }).catch(error => {
             console.log("catch---->>>>", error.response);
+            if(error && error.response && error.response.status == 400){
+                alert(error.response?.data?.message);
+            }
             return { firstName: '', lastName: '' }
         })
     }
@@ -92,6 +106,7 @@ class TeacherDashboard extends React.Component {
             api.deleteStudent(data?._id).then(res => {
                 console.log(res)
                 this.getStudentList();
+                alert(res.message)
                 return data;
             }).catch(error => {
                 console.log("catch---->>>>", error.response);
@@ -107,12 +122,18 @@ class TeacherDashboard extends React.Component {
         if (file) {
             api.addStudentInBulk(file).then(res => {
                 this.state.selectedFile = null;
-                console.log(res)
+                console.log("res upload csv",res)
                 this.getStudentList();
+                this.state.showCSVForm = false;
+                this.setState({showCSVForm: false});
             }).catch(error => {
                 this.state.selectedFile = null;
                 console.log("catch---->>>>", error.response);
-                alert(error?.response?.message);
+                if(error && error.response && error.response.status == 400){
+                    alert(error.response?.data?.message);
+                    this.state.showCSVForm = false;
+                    this.setState({showCSVForm: false});
+                }
             })
         } else {
 
@@ -126,9 +147,26 @@ class TeacherDashboard extends React.Component {
         this.state.selectedFile = file;
     };
 
+    uploadCSVFile = () =>{
+        this.state.showCSVForm = true;
+        this.setState({showCSVForm: this.state.showCSVForm});
+    }
+
+    logoutSession = () => {
+        api.logout().then(res => {
+           this.props.history.push("/login/teacher");
+          // alert(res.Message);
+        }).catch(error => {
+            this.state.selectedFile = null;
+            console.log("catch---->>>>", error.response);
+            this.props.history.push("/login/teacher");
+           // alert(error?.response?.message);
+        })
+    }
+
     renderStudentBulkAdd() {
         return (
-            <div class="crud-modal-wrapper" style={{ display: "none" }}>
+            <div className={`crud-modal-wrapper ${this.state.showCSVForm ? "show" : "hide"}`}>
                 <div class="crud-modal-wrapper__background"></div>
                 <div class="crud-modal-wrapper__modal">
                     <h3 class="crud-modal-wrapper__title">Add Student in Bulk</h3>
@@ -138,7 +176,8 @@ class TeacherDashboard extends React.Component {
                                 <label for="inputFile" class="crud-modal-form__label">Select file</label>
                                 <input name="inputFile" type="file" onChange={this.handleSelectFile} accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" />
                             </div>
-                            <button type="submit" onClick={this.addStudentInBulk} class="crud-button crud-button--positive">Add</button>
+                            {/* <button type="submit" onClick={this.addStudentInBulk} class="crud-button crud-button--positive">Add</button> */}
+                            <div class="crud-button crud-button--positive" style={{display: "inline-block"}} onClick={this.addStudentInBulk}>Upload</div>
                         </form>
                     </div>
                 </div>
@@ -149,19 +188,7 @@ class TeacherDashboard extends React.Component {
     renderTable() {
         let count = this.state.dataList.length;
         const service = {
-            fetchItems: (payload) => {
-                let result = Array.from(this.state.dataList);
-                result = result.sort(getSorter(payload.sort));
-                return Promise.resolve(result);
-            },
             create: (task) => {
-                // count += 1;
-                // this.state.dataList.push({
-                //     ...task,
-                //     _id: count,
-                // });
-                // console.log("After Add");
-                // console.log(this.state.dataList);
                 let newlyAdded = this.addStudent(task);
                 return Promise.resolve(newlyAdded);
             },
@@ -169,16 +196,10 @@ class TeacherDashboard extends React.Component {
                 const task = this.state.dataList.find(t => t._id === data._id);
                 task.firstName = data.firstName;
                 task.lastName = data.lastName;
-                // console.log("After Update");
-                // console.log(this.state.dataList);
                 let updated = this.updateStudent(data, task);
                 return Promise.resolve(updated);
             },
             delete: (data) => {
-                // const task = this.state.dataList.find(t => t._id === data._id);
-                // this.state.dataList = this.state.dataList.filter(t => t._id !== task._id);
-                // console.log("After Delete");
-                // console.log(task);
                 let deleted = this.deleteStudent(data);
                 return Promise.resolve(deleted);
             },
@@ -186,21 +207,37 @@ class TeacherDashboard extends React.Component {
 
         return (
             <div>
+                <button class="crud-button crud-button--positive" onClick={this.uploadCSVFile}>Upload CSV</button>
+                <button style={{marginLeft:'10px'}} class="crud-button crud-button--positive" onClick={this.logoutSession}>Logout</button>
                 <CRUDTable
                     caption="List of Students"
-                    fetchItems={payload => service.fetchItems(payload)}
+                    items = {this.state.dataList}
                 >
-                    <Fields>
+                <Fields>
+                    <Field
+                            name="name"
+                            label="Name"
+                            hideInCreateForm
+                            hideInUpdateForm
+                        /> 
                         <Field
                             name="firstName"
                             label="First Name"
                             placeholder="Please enter first name"
+                            hideFromTable
 
                         />
                         <Field
                             name="lastName"
                             label="Last Name"
                             placeholder="Please enter last name"
+                            hideFromTable
+                        />
+                        <Field
+                            name="userName"
+                            label="User Name"
+                            hideInCreateForm
+                            hideInUpdateForm
                         />
                         <Field
                             name="password"
@@ -210,6 +247,7 @@ class TeacherDashboard extends React.Component {
                             hideInUpdateForm
                         />
                     </Fields>
+                   
                     <CreateForm
                         title="Add Student"
                         trigger="Add Student"
@@ -228,7 +266,6 @@ class TeacherDashboard extends React.Component {
                             return errors;
                         }}
                     />
-
                     <UpdateForm
                         title="Update Student"
                         trigger="Update"
@@ -254,6 +291,8 @@ class TeacherDashboard extends React.Component {
                         submitText="Delete"
                     />
                 </CRUDTable>
+                {
+                    this.state.dataList.length == 0 ? <div style={{textAlign: 'center', margin:'20px'}}> No data found </div> : ''}
             </div>
         )
     }
@@ -262,11 +301,10 @@ class TeacherDashboard extends React.Component {
         return (
             <div className='teacher-dash-div'>
                 {this.renderStudentBulkAdd()}
-                {
-                    this.state.dataList.length > 0 ?
-                        this.renderTable()
-                        : ''
-                }
+                
+                {this.renderTable()}
+                {/* 
+                } */}
             </div>
         )
     }
