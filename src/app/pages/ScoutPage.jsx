@@ -9,6 +9,7 @@ import {
   Overlay,
   PlayerDetailsOverlay,
   LoadingSpinner,
+  BadScoutOverlay,
 } from '@components';
 import scoutStick from '@images/scout-stick.svg';
 import { useSelector, useDispatch } from 'react-redux';
@@ -268,6 +269,16 @@ const ScoutPage = () => {
     const sourceLevel = e.source.droppableId.split('-')[0];
     const droppedPlayer = boardMap[sourceLevel][e.source.droppableId];
 
+    if (droppedPlayer.overallRank >= 15 && dropLevel === 'levelThree') {
+      dispatch(
+        toggleOverlay({
+          isOpen: true,
+          template: <BadScoutOverlay />,
+        })
+      );
+      return;
+    }
+
     // update the map where the player was dropped
     boardMap[dropLevel][e.destination.droppableId] = droppedPlayer;
 
@@ -357,6 +368,7 @@ const ScoutPage = () => {
           getAvailablePlayersBoard(scoutPlayers.available)
         );
       }
+      console.log('STUDENT:::: ', student, getMoneyLevels(student.level));
       if (offered) {
         setOfferedPlayersBoard(
           getOfferedPlayersBoard(

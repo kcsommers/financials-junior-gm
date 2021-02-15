@@ -15,9 +15,8 @@ export const BackButton = ({ path }) => {
         }
       }}
       style={{
-        display: 'inline-block',
         cursor: 'pointer',
-        display: 'flex',
+        display: 'inline-flex',
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',

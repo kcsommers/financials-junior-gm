@@ -1,24 +1,12 @@
 import { OverlayBoard } from '@components';
-import { useHistory } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 import { toggleOverlay } from '@redux/actions';
+import { useDispatch } from 'react-redux';
 import '@css/components/overlay-btns.css';
 
-export const InsufficientFundsOverlay = () => {
-  const history = useHistory();
+export const BadScoutOverlay = () => {
   const dispatch = useDispatch();
 
-  const goToBudget = () => {
-    dispatch(
-      toggleOverlay({
-        isOpen: false,
-        template: null,
-      })
-    );
-    history.push('/budget');
-  };
-
-  const backToTeam = () => {
+  const closeOverlay = () => {
     dispatch(
       toggleOverlay({
         isOpen: false,
@@ -43,22 +31,16 @@ export const InsufficientFundsOverlay = () => {
             className='color-primary'
             style={{ marginBottom: '2rem', fontSize: '2.15rem' }}
           >
-            You don't have enough money in your budget for this player!
+            The contract you are offering this player is not high enough!
           </h3>
           <p className='color-primary' style={{ fontSize: '1.75rem' }}>
-            You can either adjust your savings or release a player to increase
-            your budget.
+            Try putting them in a higher level to offer them more money.
           </p>
         </div>
         <div className='overlay-buttons-wrap'>
-          <div className={`box-shadow overlay-btn`} onClick={backToTeam}>
+          <div className={`box-shadow overlay-btn`} onClick={closeOverlay}>
             <div className='overlay-btn-inner'>
-              <span className='outline-black'>Back to Team</span>
-            </div>
-          </div>
-          <div className={`box-shadow overlay-btn`} onClick={goToBudget}>
-            <div className='overlay-btn-inner'>
-              <span className='outline-black'>Go to Budget</span>
+              <span className='outline-black'>Try Again</span>
             </div>
           </div>
         </div>

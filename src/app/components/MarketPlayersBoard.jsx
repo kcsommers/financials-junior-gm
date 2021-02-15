@@ -63,6 +63,7 @@ export const MarketPlayersBoard = ({
   initialPosition,
   onPlayerCardClick,
   student,
+  releasingPlayer,
 }) => {
   const dispatch = useDispatch();
   const marketPlayers = useSelector((state) => state.players.marketPlayers);
@@ -71,10 +72,15 @@ export const MarketPlayersBoard = ({
 
   const currentView = getViewConfig(activePosition, marketPlayers);
 
-  const checkBudget = (player) => {
-    const budget =
+  const checkBudget = (signingPlayer) => {
+    let budget =
       student.totalBudget - student.savingsBudget - student.moneySpent;
-    if (budget - player.playerCost < 0) {
+
+    if (releasingPlayer) {
+      budget += +releasingPlayer.playerCost;
+    }
+
+    if (budget - signingPlayer.playerCost < 0) {
       dispatch(
         toggleOverlay({
           isOpen: true,
@@ -84,7 +90,7 @@ export const MarketPlayersBoard = ({
       return;
     }
 
-    onPlayerCardClick(player);
+    onPlayerCardClick(signingPlayer);
   };
 
   const forwardsActive =

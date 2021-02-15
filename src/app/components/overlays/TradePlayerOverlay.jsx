@@ -28,7 +28,7 @@ export const TradePlayerOverlay = ({ releasingPlayer, student }) => {
 
   const tradeConfirmed = (signingPlayer) => {
     const prevAssignment = releasingPlayer.playerAssignment;
-    releasingPlayer.player = PlayerAssignments.MARKET;
+    releasingPlayer.playerAssignment = PlayerAssignments.MARKET;
     signingPlayer.playerAssignment = prevAssignment;
 
     const playersCopy = cloneDeep(student.players).reduce((arr, p) => {
@@ -48,7 +48,7 @@ export const TradePlayerOverlay = ({ releasingPlayer, student }) => {
 
     updateStudentById(student._id, {
       [signingPlayer.playerAssignment]: signingPlayer._id,
-      [releasingPlayer.playerAssignment]: releasingPlayer._id,
+      [releasingPlayer.playerAssignment]: PlayerAssignments.MARKET,
       players: playersCopy,
     })
       .then((res) => {
@@ -121,6 +121,7 @@ export const TradePlayerOverlay = ({ releasingPlayer, student }) => {
             initialPosition={getPlayerPositon(releasingPlayer.playerAssignment)}
             onPlayerCardClick={confirmTrade}
             student={student}
+            releasingPlayer={releasingPlayer}
           />
         </div>
       </div>
