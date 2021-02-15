@@ -23,7 +23,8 @@ import {
   SET_JUMBOTRON_DISPLAY,
   SET_SEASON_SIGN,
   SET_SIMULATION_BUTTON,
-  SET_SIMULATE_GAME
+  SET_SIMULATE_GAME,
+  UPDATE_OPPONENT_INDEX
 } from './actionTypes';
 
 export const setAnimationState = (state) => ({
@@ -66,9 +67,9 @@ export const scoutingComplete = (levelOne, levelTwo, levelThree) => ({
   payload: { levelOne, levelTwo, levelThree },
 });
 
-export const setInitialPlayersState = (players, student) => ({
+export const setInitialPlayersState = (players) => ({
   type: SET_INITIAL_PLAYERS_STATE,
-  payload: { players, student },
+  payload: players,
 });
 
 export const signPlayer = (player, assignment) => ({
@@ -126,6 +127,11 @@ export const updateCurrentOpponent = (currentOpponent) => ({
   payload: currentOpponent
 })
 
+export const updateOpponentIndex = (currentOpponentIndex) => ({
+  type: UPDATE_OPPONENT_INDEX,
+  payload: currentOpponentIndex
+})
+
 export const setUpcomingGames = (state) => ({
   type: SET_TEAMS,
   payload: {state}
@@ -146,3 +152,7 @@ export const setSimulationButton = (simulation) => ({
   payload: simulation
 })
 
+export const setSimulateGame = (state) => ({
+  type: SET_SIMULATE_GAME,
+  payload: state
+})

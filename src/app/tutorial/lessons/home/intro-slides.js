@@ -21,8 +21,8 @@ const slideConfigs = [
     timer: Slide.SLIDE_DURATION,
   },
   {
-    message: "Wait, aren't you the new Junior Manager of the San Jose Sharks?",
-    accentText: 'Junior Manager',
+    message: "Wait, aren't you the new General Manager of the San Jose Sharks?",
+    accentText: 'General Manager',
     sharkie: 'speak',
     hasButtons: true,
     timer: 0,
@@ -37,7 +37,7 @@ const slideConfigs = [
     message: "My name is Sharkie, I'm here to teach about your new job!",
     sharkie: 'speak',
     hasButtons: false,
-    timer: Slide.SLIDE_DURATION,
+    timer: Slide.SLIDE_DURATION + 3000,
   },
   {
     message: 'Ready?',
@@ -46,56 +46,56 @@ const slideConfigs = [
     timer: 0,
   },
   {
-    message: 'Our junior team really needs your help to win the next season!',
+    message: 'A General Manager is in charge of getting the team ready to play in the season!',
+    accentText: 'General Manager',
     sharkie: 'speak',
     hasButtons: false,
-    timer: Slide.SLIDE_DURATION,
+    timer: Slide.SLIDE_DURATION + 5000,
   },
   {
     message:
-      'As you must know, everyone had to stay at home last year to be safe.',
+      "Your job is to sign new players to the team and manage the team's money. ",
     sharkie: 'speak',
     hasButtons: false,
-    timer: Slide.SLIDE_DURATION,
+    timer: Slide.SLIDE_DURATION + 5000,
   },
   {
     message:
-      'Our fans could not come to the stadium to see the junior team play.',
+      'It is good to spend money on your team to make it stronger for the season!',
     sharkie: 'speak',
     hasButtons: false,
-    timer: Slide.SLIDE_DURATION,
+    timer: Slide.SLIDE_DURATION + 5000,
   },
   {
     message:
-      "This meant that the team did not get money because we couldn't sell tickets.",
+      'But you also have to be careful to save some money in case you have a rainy day!',
     sharkie: 'speak',
     hasButtons: false,
-    timer: Slide.SLIDE_DURATION,
+    timer: Slide.SLIDE_DURATION + 5000,
   },
   {
-    message: 'Now the junior team is not ready for the next season.',
+    message: 'Got it?',
     sharkie: 'speak',
-    hasButtons: false,
-    timer: Slide.SLIDE_DURATION,
+    hasButtons: true,
+    timer: 0,
   },
   {
-    message: "But that's where you can help!",
+    message: 'We are very excited to have someone smart like you for the job!',
     sharkie: 'speak',
     hasButtons: false,
-    timer: Slide.SLIDE_DURATION,
+    timer: Slide.SLIDE_DURATION + 5000,
   },
   {
-    message:
-      'We need someone smart like you to get the team ready for the next season!',
+    message: "We hope that you can build a great team!",
     sharkie: 'speak',
     hasButtons: false,
-    timer: Slide.SLIDE_DURATION,
+    timer: Slide.SLIDE_DURATION + 4000,
   },
   {
     message: 'Let me show you around so that you can get started!',
     sharkie: 'speak',
     hasButtons: false,
-    timer: Slide.SLIDE_DURATION,
+    timer: Slide.SLIDE_DURATION + 4000,
   },
   {
     message: 'Ready?',
