@@ -55,6 +55,7 @@ export const getDollarString = (num) => {
 export const getMoneyLevels = (level) => {
   switch (level) {
     case 1:
+    case '1':
       return {
         0: {
           short: '$2',
@@ -73,6 +74,7 @@ export const getMoneyLevels = (level) => {
         },
       };
     case 2:
+    case '2':
       return {
         0: {
           short: '$2',
@@ -91,6 +93,7 @@ export const getMoneyLevels = (level) => {
         },
       };
     case 3:
+    case '3':
       return {
         0: {
           short: '$2',
@@ -109,7 +112,11 @@ export const getMoneyLevels = (level) => {
         },
       };
     default: {
-      return {};
+      return {
+        short: '?',
+        long: 'unknown',
+        num: 0,
+      };
     }
   }
 };

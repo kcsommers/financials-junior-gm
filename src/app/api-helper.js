@@ -123,14 +123,7 @@ export const initPlayersByLevel = (level) => {
 
 // update student
 export const updateStudentById = (id, data) => {
-  const fd = new FormData();
-  Object.keys(data).forEach((k) => {
-    fd.append(k, data[k]);
-  });
-
-  console.log('UPDATE DATA:::: ', data);
-
-  return axios.put(`${getHostName()}/api/v1/student/${id}`, fd);
+  return axios.put(`${getHostName()}/api/v1/student/${id}`, data);
 };
 
 // set initial team
@@ -142,7 +135,10 @@ export const setInitialTeam = (student) => {
       p.playerAssignment = PlayerAssignments.F_TWO;
     } else if (p.playerName === 'Andrew Park') {
       p.playerAssignment = PlayerAssignments.G_ONE;
-    } else if (p.playerName === 'Emily Burch') {
+    } else if (
+      p.playerName === 'Emily Burch' &&
+      p.playerAssignment !== PlayerAssignments.SCOUT
+    ) {
       p.playerAssignment = PlayerAssignments.D_ONE;
     } else if (p.playerName === 'Theo Johnson') {
       p.playerAssignment = PlayerAssignments.D_TWO;
