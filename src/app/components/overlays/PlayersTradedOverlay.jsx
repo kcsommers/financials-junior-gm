@@ -1,5 +1,7 @@
 import { OverlayBoard, PlayerCard, TeamBudgetState } from '@components';
 import { ReactSVG } from 'react-svg';
+import arrowRight from '@images/icons/arrow-right.svg';
+import arrowLeft from '@images/icons/arrow-left.svg';
 
 export const PlayersTradedOverlay = ({ signedPlayer, releasedPlayer }) => {
   return (
