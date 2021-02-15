@@ -1,9 +1,20 @@
-import React from 'react';
 import exitBtn from '@images/exit-btn.svg';
 import settingsBtn from '@images/settings-btn.svg';
+import { logout } from '../../api-helper';
+import { useHistory } from 'react-router-dom';
 import '@css/components/home-page/Navigation.css';
 
 export const Navigation = ({ tutorialActive }) => {
+  const history = useHistory();
+
+  const doLogout = () => {
+    logout()
+      .then((res) => {
+        history.push('/login/student');
+      })
+      .catch((err) => console.error(err));
+  };
+
   return (
     <div
       className='nav-container'
@@ -13,7 +24,7 @@ export const Navigation = ({ tutorialActive }) => {
       }}
     >
       <div className='exit-stick-box'>
-        <img src={exitBtn} alt='Exit' />
+        <img src={exitBtn} alt='Exit' onClick={doLogout} />
       </div>
 
       <div className='home-title-box'>
