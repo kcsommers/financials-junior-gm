@@ -1,7 +1,9 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { ReactSVG } from 'react-svg';
 import seasonStick from '@images/season-stick.svg';
 import jrSharksLogoWhiteBg from '@images/icons/jr-sharks-logo-white-bg.svg';
+import play from '@images/icons/play.svg';
+import hockeySticksButton from '@images/icons/hockey-sticks-button.svg';
 import {
   TeamRankStick,
   OpposingTeamRankStick,
@@ -11,8 +13,43 @@ import {
 import { SticklessOpposingTeamRank } from '../components/SticklessOpposingTeamRank';
 import '@css/pages/season.css';
 import { SeasonTopRow } from '../components/season-page/SeasonTopRow';
+import { SeasonTopRowSign } from '../components/season-page/SeasonTopRowSign';
+import { useDispatch, useSelector } from 'react-redux';
+import { setScore, setJumbotronDisplay, setSeasonSign, setSimulationButton } from '@redux/actions';
+import { PlayingGame } from '../components/season-page/PlayingGame';
 
 const Season = () => {
+
+  const dispatch = useDispatch();
+
+  const jumbotronDisplay = useSelector((state) => {
+    return state.season.jumbotronDisplay
+  });
+
+  const seasonSign = useSelector((state) => {
+    return state.season.seasonSign
+  });
+
+  const simulationButton = useSelector((state) => {
+    return state.season.simulationButton
+  });
+
+  const handlePlay = () => {
+    dispatch(
+      setJumbotronDisplay(<PlayingGame/>)
+    );
+    dispatch(
+      setSeasonSign('Jr Sharks vs Blue Bears')
+    )
+    dispatch(
+      setSimulationButton(hockeySticksButton)
+    )
+  }
+
+  const handleSimulation = () => {
+    handlePlay();
+  }
+
   return (
     <div className='season-page page-container'>
       <HeaderComponent
@@ -23,7 +60,28 @@ const Season = () => {
 
       {/* season dashboard */}
       <div className='season-dashboard'>
-        <SeasonTopRow/>
+
+        <div className='season-dashboard-top-row'>
+          <div style={{ paddingTop: '1rem' }}>
+            <LevelStick type='teamRank' />
+          </div>
+          <div>
+            <div className='teams-jumbotron'>
+              <div className='season-team-left-border'></div>
+              <div className='season-teams-playing-box'>
+                {jumbotronDisplay}
+              </div>
+              <div className='season-team-right-border'></div>
+            </div>
+            <div className='SeasonTopRow-sign'>
+              {seasonSign}
+            </div>
+          </div>
+          <div style={{ paddingTop: '1rem' }}>
+            <LevelStick type="opponentTeamRank"/>
+          </div>
+        </div>
+
         <div className='season-dashboard-bottom-row'>
           <div>
             <p className='season-schedule-title'>Schedule</p>
@@ -66,6 +124,8 @@ const Season = () => {
               </div>
             </div>
           </div>
+
+          <ReactSVG src={simulationButton} onClick={handleSimulation}/>
 
           <div>
             <p className='season-standings-title'>Standings</p>
