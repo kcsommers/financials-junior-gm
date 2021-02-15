@@ -5,20 +5,18 @@ import jrSharksLogoBig from '@images/icons/jr-sharks-logo-big.svg';
 import blueBearsLogoBig from '@images/icons/blue-bears-logo-big.svg';
 import { useSelector } from 'react-redux';
 
-export const PlayingGame = () => {
+export const PlayingGame = (score) => {
+  console.log('yo hello hey: ', score)
 
-  const score = useSelector((state) => {
-    return state.season.score
-  });
   const yourStanding = useSelector((state) => {
     return state.season.standings
   });
   const opponentStanding = useSelector((state) => {
-    return state.season.nextOpponent.standings
+    return state.season.currentOpponent.standings
   });
 
   console.log('yoyoyo: ', useSelector(state => {
-    return state.season.nextOpponent;
+    return state.season.currentOpponent;
   }))
 
   return (
@@ -41,13 +39,13 @@ export const PlayingGame = () => {
           
           <div>
             <div className="score-container">
-              <p className="score-value">{score[0]}</p>
+              <p className="score-value">{score.score[0]}</p>
             </div>
           </div>
           
           <div>
             <div className="score-container">
-              <p className="score-value">{score[1]}</p>
+              <p className="score-value">{score.score[1]}</p>
             </div>
           </div>
           
