@@ -78,7 +78,7 @@ export const LevelStick = ({
         style={
           isLarge
             ? {
-                transform: 'scale(1.4)',
+                transform: 'scale(1.3)',
               }
             : {}
         }
@@ -103,11 +103,19 @@ export const LevelStick = ({
         {indicatorDirection === 'right' || indicatorDirection === 'bottom' ? (
           <>
             <span style={styles[indicatorDirection].text}>{textJsx}</span>
-            <Indicator amount={amount} direction={indicatorDirection} />
+            <Indicator
+              amount={amount}
+              direction={indicatorDirection}
+              isMoney={type === 'budget'}
+            />
           </>
         ) : (
           <>
-            <Indicator amount={amount} direction={indicatorDirection} />
+            <Indicator
+              amount={amount}
+              direction={indicatorDirection}
+              isMoney={type === 'budget'}
+            />
             <span style={styles[indicatorDirection].text}>{textJsx}</span>
           </>
         )}
