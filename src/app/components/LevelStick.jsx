@@ -52,6 +52,12 @@ const styles = {
   },
 };
 
+const getIndicatorTransform = (num, denom) => {
+  const stickHeight = 210;
+  const y = stickHeight * (1 - num / denom);
+  return { transform: `translate(0, ${Math.min(y - 30, 100)}px)` };
+};
+
 export const LevelStick = ({
   type,
   isLarge,
@@ -105,7 +111,7 @@ export const LevelStick = ({
             <span style={styles[indicatorDirection].text}>{textJsx}</span>
             <Indicator
               amount={amount}
-              direction={indicatorDirection}
+              // direction={indicatorDirection}
               isMoney={type === 'budget'}
             />
           </>
@@ -113,14 +119,13 @@ export const LevelStick = ({
           <>
             <Indicator
               amount={amount}
-              direction={indicatorDirection}
+              // direction={indicatorDirection}
               isMoney={type === 'budget'}
             />
             <span style={styles[indicatorDirection].text}>{textJsx}</span>
           </>
         )}
       </div>
-      {/* {view.indicator} */}
     </div>
   );
 };
