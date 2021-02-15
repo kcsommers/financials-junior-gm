@@ -28,6 +28,8 @@ export const SET_LOGIN_STATE = 'SET_LOGIN_STATE';
 
 export const SET_INITIAL_PLAYERS_STATE = 'SET_INITIAL_PLAYER_STATE';
 
+export const SET_LOGIN_STATE = 'SET_LOGIN_STATE';
+
 export const SET_SCORE = 'SET_SCORE';
 
 export const SET_RANK = 'SET_RANK';

@@ -9,6 +9,7 @@ import {
   PlayerDetailsOverlay,
   SignPlayerOverlay,
   TeamBudgetState,
+  LoadingSpinner,
 } from '@components';
 import scoutStick from '@images/scout-stick.svg';
 import teamStick from '@images/team-stick.svg';
@@ -69,7 +70,7 @@ const TeamPage = () => {
         level={student.level}
       />
 
-      <PageBoard hideCloseBtn={true}>
+      <PageBoard hideCloseBtn={true} includeBackButton={true}>
         <div className='team-page-board-header'>
           <div className='team-page-board-header-inner'>
             <ReactSVG src={jrSharksLogo} />
@@ -97,7 +98,7 @@ const TeamPage = () => {
               <ReactSVG
                 style={{
                   position: 'absolute',
-                  top: '0',
+                  top: '25px',
                   left: '0',
                   right: '0',
                   bottom: '0',
@@ -213,7 +214,20 @@ const TeamPage = () => {
       )}
     </div>
   ) : (
-    <div>Loading...</div>
+    <div
+      style={{
+        position: 'absolute',
+        top: 0,
+        bottom: 0,
+        left: 0,
+        right: 0,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+    >
+      <LoadingSpinner />
+    </div>
   );
 };
 

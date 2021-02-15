@@ -1,8 +1,11 @@
 import React from 'react';
-import { LevelStick } from './public-api';
+import { LevelStick, LoadingSpinner } from '@components';
+import { useSelector } from 'react-redux';
 
 export const TeamBudgetState = ({ title, isLarge }) => {
-  return (
+  const student = useSelector((state) => state.studentState.student);
+
+  return student ? (
     <>
       {title && (
         <p className='rank-budget-title' style={{ width: '370px' }}>
@@ -30,10 +33,41 @@ export const TeamBudgetState = ({ title, isLarge }) => {
             alignItems: 'center',
           }}
         >
-          <LevelStick type='teamRank' isLarge={isLarge} />
-          <LevelStick type='budget' isLarge={isLarge} />
+          <LevelStick
+            type='teamRank'
+            amount={student.teamRank}
+            denom={100}
+            color='#e06d00'
+            indicatorDirection='right'
+            isLarge={isLarge}
+            textJsx={
+              <span>
+                Team <br />
+                Rank
+              </span>
+            }
+          />
+          <LevelStick
+            type='budget'
+            amount={
+              student.totalBudget - student.moneySpent - student.savingsBudget
+            }
+            denom={student.totalBudget}
+            color='#002f6c'
+            indicatorDirection='left'
+            inverse={true}
+            isLarge={isLarge}
+            textJsx={
+              <span>
+                Spending <br />
+                Budget
+              </span>
+            }
+          />
         </div>
       </div>
     </>
+  ) : (
+    <LoadingSpinner />
   );
 };

@@ -1,11 +1,12 @@
-import React from 'react';
-import { ReactSVG } from 'react-svg';
-import teamRank from '@images/icons/hockey-visual-1.svg';
-import budget from '@images/icons/hockey-visual-2.svg';
-import { Indicator } from '@components';
+import { Indicator, LevelStickSvg } from '@components';
 
 const styles = {
-  teamRank: {
+  right: {
+    indicator: {
+      position: 'absolute',
+      top: 0,
+      right: '40px',
+    },
     image: {
       position: 'relative',
       right: '-50px',
@@ -16,11 +17,6 @@ const styles = {
       right: '-40px',
       top: 0,
     },
-    indicator: {
-      position: 'absolute',
-      top: 0,
-      right: '40px',
-    },
     text: {
       color: '#ea7200',
       display: 'inline-block',
@@ -29,32 +25,12 @@ const styles = {
       fontWeight: 'bold',
     },
   },
-  budget: {
-    image: {
-      position: 'relative',
-      left: '-50px',
-      top: 0,
-    },
-    imageLg: {
-      position: 'relative',
-      left: '-40px',
-      top: 0,
-    },
+  left: {
     indicator: {
       position: 'absolute',
       top: 0,
       left: '40px',
     },
-    text: {
-      color: '#002f6c',
-      display: 'inline-block',
-      fontSize: '1rem',
-      marginLeft: '0.25rem',
-      fontWeight: 'bold',
-      textAlign: 'right',
-    },
-  },
-  opponentTeamRank: {
     image: {
       position: 'relative',
       left: '-50px',
@@ -65,11 +41,6 @@ const styles = {
       left: '-40px',
       top: 0,
     },
-    indicator: {
-      position: 'absolute',
-      top: 0,
-      left: '0px',
-    },
     text: {
       color: '#002f6c',
       display: 'inline-block',
@@ -77,79 +48,26 @@ const styles = {
       marginLeft: '0.25rem',
       fontWeight: 'bold',
       textAlign: 'right',
-      transform: 'translate(130px, 0)',
-    },
-  },
-  noStickOpponentTeamRank: {
-    indicator: {
-      position: 'absolute',
-      top: 0,
-      left: '-30px',
-    },
-    text: {
-      color: 'black',
-      display: 'inline-block',
-      fontSize: '1rem',
-      marginLeft: '0.25rem',
-      fontWeight: 'bold',
-      textAlign: 'right',
-      transform: 'translate(120px, 0)',
     },
   },
 };
 
-const levelTypes = (type) => ({
-  budget: {
-    image: budget,
-    indicator: (
-      <div style={styles[type].indicator}>
-        <Indicator amount={25} direction='left' />
-        <span style={styles[type].text}>
-          Spending <br />
-          Budget
-        </span>
-      </div>
-    ),
-  },
-  teamRank: {
-    image: teamRank,
-    indicator: (
-      <div style={styles[type].indicator}>
-        <span style={styles[type].text}>
-          Team <br />
-          Rank
-        </span>
-        <Indicator amount={25} direction='right' />
-      </div>
-    ),
-  },
-  opponentTeamRank: {
-    image: budget,
-    indicator: (
-      <div style={styles[type].indicator}>
-        <span style={styles[type].text}>
-          Team <br />
-          Rank
-        </span>
-        <Indicator amount={25} direction='left' />
-      </div>
-    ),
-  },
-  noStickOpponentTeamRank: {
-    image: null,
-    indicator: (
-      <div style={styles[type].indicator}>
-        <span style={styles[type].text}>
-          Team <br />
-          Rank
-        </span>
-        <Indicator amount={25} direction='left' />
-      </div>
-    ),
-  },
-});
+const getIndicatorTransform = (num, denom) => {
+  const stickHeight = 210;
+  const y = stickHeight * (1 - num / denom);
+  return { transform: `translate(0, ${Math.min(y - 30, 100)}px)` };
+};
 
-export const LevelStick = ({ type, isLarge }) => {
+export const LevelStick = ({
+  type,
+  isLarge,
+  amount,
+  denom = 100,
+  indicatorDirection,
+  color,
+  textJsx,
+  inverse,
+}) => {
   return (
     <div
       style={{
@@ -171,12 +89,43 @@ export const LevelStick = ({ type, isLarge }) => {
             : {}
         }
       >
-        <ReactSVG
-          style={isLarge ? styles[type].imageLg : styles[type].image}
-          src={levelTypes(type)[type].image}
-        />
+        <div
+          style={
+            isLarge
+              ? styles[indicatorDirection].imageLg
+              : styles[indicatorDirection].image
+          }
+        >
+          <LevelStickSvg
+            rank={amount}
+            num={amount}
+            denom={denom}
+            color={color}
+            inverse={inverse}
+          />
+        </div>
       </div>
-      {levelTypes(type)[type].indicator}
+      <div style={styles[indicatorDirection].indicator}>
+        {indicatorDirection === 'right' || indicatorDirection === 'bottom' ? (
+          <>
+            <span style={styles[indicatorDirection].text}>{textJsx}</span>
+            <Indicator
+              amount={amount}
+              // direction={indicatorDirection}
+              isMoney={type === 'budget'}
+            />
+          </>
+        ) : (
+          <>
+            <Indicator
+              amount={amount}
+              // direction={indicatorDirection}
+              isMoney={type === 'budget'}
+            />
+            <span style={styles[indicatorDirection].text}>{textJsx}</span>
+          </>
+        )}
+      </div>
     </div>
   );
 };

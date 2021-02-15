@@ -50,9 +50,15 @@ class TeacherLogin extends React.Component {
       .then((response) => {
         console.log(response);
         if (response.success) {
-          localStorage.setItem('isLoggedIn', true);
-          localStorage.setItem('userRole', 'teacher');
-          this.props.history.push('/teacher/home');
+          api
+            .getCurrentUser()
+            .then((currentUserRes) => {
+              localStorage.setItem('isLoggedIn', true);
+              localStorage.setItem('userRole', 'teacher');
+              localStorage.setItem('teacherId', currentUserRes.data._id);
+              this.props.history.push('/teacher/home');
+            })
+            .catch((err) => console.error(err));
         } else {
           this.setState({ error: response.Message });
         }

@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { ReactSVG } from 'react-svg';
 import * as api from '../../api-helper';
 import '@css/pages/login/Teacher.css';
@@ -6,6 +7,7 @@ import '@css/pages/login/Student.css';
 import financialsLogo from '@images/icons/dashboard/logo.svg';
 import LoginBtn from '@images/icons/dashboard/login_button.svg';
 import LoginBtnSelected from '@images/icons/dashboard/login_grey.svg';
+import { setLoginState } from '@redux/actions';
 
 class StudentLogin extends React.Component {
   constructor(props) {
@@ -52,6 +54,7 @@ class StudentLogin extends React.Component {
       .then((res) => {
         console.log(res);
         if (res.success) {
+          this.props.setLoginState(true, 'student');
           localStorage.setItem('isLoggedIn', true);
           localStorage.setItem('userRole', 'student');
           this.props.history.push('/home');
@@ -138,4 +141,4 @@ class StudentLogin extends React.Component {
   }
 }
 
-export default StudentLogin;
+export default connect(null, { setLoginState })(StudentLogin);
