@@ -8,6 +8,7 @@ import {
   ScoutingCompleteOverlay,
   Overlay,
   PlayerDetailsOverlay,
+  LoadingSpinner,
 } from '@components';
 import scoutStick from '@images/scout-stick.svg';
 import { useSelector, useDispatch } from 'react-redux';
@@ -475,7 +476,20 @@ const ScoutPage = () => {
       )}
     </div>
   ) : (
-    <div>Loading...</div>
+    <div
+      style={{
+        position: 'absolute',
+        top: 0,
+        bottom: 0,
+        left: 0,
+        right: 0,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+    >
+      <LoadingSpinner />
+    </div>
   );
 };
 
