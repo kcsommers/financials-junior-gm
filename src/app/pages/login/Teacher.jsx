@@ -45,32 +45,30 @@ class TeacherLogin extends React.Component {
       password: this.state.password,
     };
 
-    api
-      .teacherLogin(body)
-      .then((response) => {
-        console.log(response);
-        if (response.success) {
-          localStorage.setItem('isLoggedIn', true);
-          localStorage.setItem('userRole', 'teacher');
-          this.props.history.push('/teacher/home');
-        } else {
-          this.setState({ error: response.Message });
-        }
-        setTimeout(() => {
-          this.setState({
-            LoginBtn: LoginBtn,
-          });
-        }, 500);
+      api.teacherLogin(body).then(response => {
+          console.log(response)
+          if (response.success) {
+              localStorage.setItem("isLoggedIn", true);
+              localStorage.setItem("userRole", "teacher"); 
+              localStorage.setItem("teacherId", response._id);
+              this.props.history.push('/teacher/home');
+          } else {
+              this.setState({ error: response.Message });
+          }
+          setTimeout(() => {
+              this.setState({
+                  LoginBtn: LoginBtn
+              });
+          }, 500);
+      }).catch(error => {
+          setTimeout(() => {
+              this.setState({
+                  LoginBtn: LoginBtn
+              });
+          }, 500);
+          console.log("catch---->>>>", error.response);
+          this.setState({ error: error?.response?.data?.message });
       })
-      .catch((error) => {
-        setTimeout(() => {
-          this.setState({
-            LoginBtn: LoginBtn,
-          });
-        }, 500);
-        console.log('catch---->>>>', error.response);
-        this.setState({ error: error?.response?.data?.message });
-      });
   }
 
   onUserNameChange = (e) => {

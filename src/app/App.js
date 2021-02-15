@@ -118,10 +118,17 @@ const App = () => {
           <Route exact path='/dashboard' component={Dashboard} />
           <Route exact path='/login/teacher' component={TeacherLogin} />
           <Route exact path='/login/student' component={StudentLogin} />
+          {/* <Route exact path='/teacher/home' component={TeacherDashboard} /> */}
           <Route
             exact
-            path='/teacher/home'
-            render={(props) => <TeacherPortal screen={<TeacherDashboard />} />}
+            path="/teacher/home"
+            render={(props) => (
+              <TeacherPortal
+                screen={
+                  <TeacherDashboard {...props}/>
+                }
+              />
+            )}
           />
           <Route component={PageNotFound} />
         </Switch>
