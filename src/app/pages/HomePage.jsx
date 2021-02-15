@@ -144,6 +144,7 @@ const HomePage = () => {
               color='#002f6c'
               indicatorDirection='left'
               inverse={true}
+              levelDirection='topToBottom'
               textJsx={
                 <span>
                   Spending <br />
@@ -156,6 +157,7 @@ const HomePage = () => {
           <div className='level-stick-card card'>
             <LevelStick
               type='budget'
+              levelDirection='topToBottom'
               amount={
                 student.totalBudget - student.moneySpent - student.savingsBudget
               }

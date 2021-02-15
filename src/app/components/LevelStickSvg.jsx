@@ -1,7 +1,10 @@
+import { useMemo } from 'react';
+
 export const LevelStickSvg = ({ num, denom, color, inverse }) => {
   const stickHeight = 210;
-  const clipY = 210 * (num / denom);
-  console.log('INVRS:::: ', inverse);
+  const clipY = stickHeight * (num / denom);
+
+  const guid = useMemo(() => Math.floor(Math.random() * 1000000), []);
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
@@ -11,7 +14,7 @@ export const LevelStickSvg = ({ num, denom, color, inverse }) => {
       style={inverse ? { transform: 'scaleX(-1)' } : {}}
     >
       <defs>
-        <clipPath id='clipPath'>
+        <clipPath id={`clipPath-${guid}`}>
           <rect
             id='Rectangle_68'
             data-name='Rectangle 68'
@@ -25,7 +28,7 @@ export const LevelStickSvg = ({ num, denom, color, inverse }) => {
         </clipPath>
       </defs>
       <g
-        id='Hockey_Visual'
+        id={`Hockey_Visual-${guid}`}
         data-name='Hockey Visual'
         transform='translate(1.819 0.285) rotate(0.5)'
       >
@@ -59,7 +62,11 @@ export const LevelStickSvg = ({ num, denom, color, inverse }) => {
             />
           </g>
         </g>
-        <g id='Mask_Group_9' data-name='Mask Group 9' clipPath='url(#clipPath)'>
+        <g
+          id='Mask_Group_9'
+          data-name='Mask Group 9'
+          clipPath={`url(#clipPath-${guid})`}
+        >
           <g
             id='shape'
             transform='matrix(0.839, -0.545, 0.545, 0.839, 0, 84.41)'
