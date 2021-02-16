@@ -1,4 +1,5 @@
 export { BackButton } from './BackButton';
+export { TrophySvg } from './trophies-page/TrophySvg';
 export { BadScoutOverlay } from './overlays/BadScoutOverlay';
 export { LevelStickSvg } from './LevelStickSvg';
 export { PlayerRankPie } from './PlayerRankPie';

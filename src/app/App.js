@@ -9,6 +9,7 @@ import ScoutPage from './pages/ScoutPage';
 import { IceBackground } from '@components';
 import BudgetPage from './pages/BudgetPage';
 import Dashboard from './pages/Dashboard';
+import TrophiesPage from './pages/TrophiesPage';
 import TeacherLogin from './pages/login/Teacher.jsx';
 import StudentLogin from './pages/login/Student.jsx';
 import TeacherDashboard from './pages/TeacherDashboard';
@@ -114,6 +115,11 @@ const App = () => {
             exact
             path='/season'
             render={(props) => <StudentPortal screen={<Season />} />}
+          />
+          <Route
+            exact
+            path='/trophies'
+            render={(props) => <StudentPortal screen={<TrophiesPage />} />}
           />
           <Route exact path='/dashboard' component={Dashboard} />
           <Route exact path='/login/teacher' component={TeacherLogin} />
