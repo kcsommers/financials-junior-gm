@@ -19,18 +19,24 @@ export const Indicator = ({
       className={`amount-indicator-wrap${
         direction ? ` amount-indicator-${direction}` : ''
       }${highlight ? ' amount-indicator-highlight' : ''}`}
+      style={{
+        transform:
+          direction === 'right'
+            ? `rotate(${rotate}deg)`
+            : `rotate(-${rotate}deg)`,
+      }}
     >
       {direction && <div className='amount-indicator-pointer'></div>}
-      <div
-        className='amount-indicator'
-        style={{ transform: `rotate(${rotate}deg)` }}
-      >
+      <div className='amount-indicator'>
         <p
           className={`amount-indicator-amount color-primary${
             isMoney ? ' amount-indicator-amount-money' : ''
           }`}
           style={{
-            transform: `rotate(-${rotate}deg)`,
+            transform:
+              direction === 'right'
+                ? `rotate(-${rotate}deg)`
+                : `rotate(${rotate}deg)`,
             fontSize: getFontSize(amount),
           }}
         >
