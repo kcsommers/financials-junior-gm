@@ -11,7 +11,9 @@ import {
   SET_SEASON_SIGN,
   SET_SIMULATION_BUTTON,
   SET_SIMULATE_GAME,
-  UPDATE_OPPONENT_INDEX
+  UPDATE_OPPONENT_INDEX,
+  UPDATE_TEAMS,
+  UPDATE_SEASON_STATE
 } from '../actionTypes'
 import blueBears from '../../../assets/images/icons/blue-bears-logo.svg'
 import jrSharksLogoWhiteBg from '@images/icons/jr-sharks-logo-white-bg.svg';
@@ -21,10 +23,77 @@ import whiteWolves from '@images/icons/white-wolves.svg';
 import {InitialJumbotronState} from '../../components/season-page/InitialJumbotronState';
 import play from '@images/icons/play.svg';
 import jrSharksLogo from '@images/icons/jr-sharks-logo.svg';
+import { bindActionCreators } from '@reduxjs/toolkit';
+import {cloneDeep} from 'lodash';
+
+
+
 
 const initialState = {
   score: [0,0],
   gamesPlayed: [],
+  blocks: [
+    [
+      {
+        rank: 325,
+        image: whiteWolves,
+        name: 'Green Giraffes',
+        stats: {wins: 0, losses: 0, points: 0},
+        standings: '6th'
+      },
+      {
+        rank: 325,
+        image: whiteWolves,
+        name: 'Pink Pandas',
+        stats: {wins: 0, losses: 0, points: 0},
+        standings: '6th'
+      },
+      {
+        rank: 325,
+        image: whiteWolves,
+        name: 'Orange Owls',
+        stats: {wins: 0, losses: 0, points: 0},
+        standings: '6th'
+      },
+      {
+        rank: 325,
+        image: whiteWolves,
+        name: 'Silver Spiders',
+        stats: {wins: 0, losses: 0, points: 0},
+        standings: '6th'
+      },
+    ],
+    [
+      {
+        rank: 325,
+        image: whiteWolves,
+        name: 'Golden Geckos',
+        stats: {wins: 0, losses: 0, points: 0},
+        standings: '6th'
+      },
+      {
+        rank: 325,
+        image: whiteWolves,
+        name: 'Yellow Yaks',
+        stats: {wins: 0, losses: 0, points: 0},
+        standings: '6th'
+      },
+      {
+        rank: 325,
+        image: whiteWolves,
+        name: 'Black Beavers',
+        stats: {wins: 0, losses: 0, points: 0},
+        standings: '6th'
+      },
+      {
+        rank: 325,
+        image: whiteWolves,
+        name: 'Gray Grasshoppers',
+        stats: {wins: 0, losses: 0, points: 0},
+        standings: '6th'
+      }
+    ]
+  ],
   teams: [
     {
       rank: 270,
@@ -62,20 +131,20 @@ const initialState = {
   losses: 0,
   points: 0,
   standings: '13th',
-  currentOpponent: {
-    rank: 270,
-    image: blueBears,
-    name: 'Blue Bears',
-    stats: {wins: 0, losses: 0, points: 0},
-    standings: '12th'
-  },
+  //currentOpponent: {
+    //rank: 270,
+    //image: blueBears,
+    //name: 'Blue Bears',
+    //stats: {wins: 0, losses: 0, points: 0},
+    //standings: '12th'
+  //},
+  blockIndex: 0,
   currentOpponentIndex: 0,
-  jumbotronDisplay: <InitialJumbotronState/>,
-  seasonSign: 'Your team is ready to play.',
+  //jumbotronDisplay: <InitialJumbotronState seasonState={initialState}/>,
+  seasonSign: 'Click play to see your results',
   simulationButton: play,
   simulateGame: null
 }
-
 export default function(state = initialState, action) {
   switch(action.type) {
     case SET_SCORE:
@@ -129,14 +198,18 @@ export default function(state = initialState, action) {
     case UPDATE_CURRENT_OPPONENT:
       return {
         ...state,
-        currentOpponent: {
-          ...state.teams[state.currentOpponentIndex]
-        }
+        currentOpponent: action.payload
       }
+    
     case SET_TEAMS:
       return {
         ...state,
         teams: action.payload
+      }
+    case UPDATE_TEAMS:
+      return {
+        ...state,
+        teams: state.blocks[1]
       }
     case SET_JUMBOTRON_DISPLAY:
       return {
@@ -157,6 +230,12 @@ export default function(state = initialState, action) {
       return {
         ...state,
         simulationGame: action.payload
+      }
+      case UPDATE_SEASON_STATE:
+        const clonedState = cloneDeep(state)
+      return {
+        ...clonedState,
+        ...action.payload
       }
     default: 
       return state;

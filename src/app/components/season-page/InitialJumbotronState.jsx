@@ -5,42 +5,29 @@ import blueBearsLogo from '@images/icons/blue-bears-logo.svg';
 import '../../../assets/css/components/season-page/initial-jumbotron-state.css';
 import { useDispatch, useSelector } from 'react-redux';
 
-export const InitialJumbotronState = () => {
-  const dispatch = useDispatch();
+export const InitialJumbotronState = ({seasonState}) => {
 
-  const image = useSelector((state) => {
-    return state.season.image;
-  });
+  const currentOpponent = seasonState && seasonState.teams && seasonState.teams[seasonState.currentOpponentIndex]
 
   const wins = useSelector((state) => {
     return state.season.wins
-  });
+  })
 
   const losses = useSelector((state) => {
     return state.season.losses
-  });
+  })
 
   const points = useSelector((state) => {
     return state.season.points
-  });
-
-  const standings = useSelector((state) => {
-    return state.season.standings;
-  });
-  const currentOpponent = useSelector((state) => {
-    return state.season.points
-  });
-
-  const teams = useSelector((state) => {
-    return state.season.teams;
-  });
-
-  console.log('the current opponent: ', currentOpponent)
-
-  return (
+  })
+   console.log(wins, losses, points)
+  
+  // console.log('the current opponent: ', currentOpponent)
+  // console.log('the op index', seasonState.currentOpponentIndex)
+  return (seasonState && currentOpponent) ? ( 
     <div className='season-initial-container'>
       <div>
-        <ReactSVG src={image} />
+        <ReactSVG src={seasonState.image} />
         <div>
           <p className='your-stats-title'>Stats</p>
           <div className='your-stats-container'>
@@ -76,7 +63,7 @@ export const InitialJumbotronState = () => {
               
               <div className="upcoming-game"  style={{transform: 'scale(0.7)'}}>
                 <div className="opponent-logo-container">
-                  <ReactSVG src={teams[1].image}/>
+                  <ReactSVG src={seasonState.teams[1].image}/>
                 </div>
                 <div className='sotr-details'>
                   <Indicator amount={25} />
@@ -85,7 +72,7 @@ export const InitialJumbotronState = () => {
             
               <div className="upcoming-game" style={{transform: 'scale(0.7)'}}>
                 <div className="opponent-logo-container">
-                  <ReactSVG src={teams[2].image}/>
+                  <ReactSVG src={seasonState.teams[2].image}/>
                 </div>
                 <div className='sotr-details'>
                   <Indicator amount={25} />
@@ -94,7 +81,7 @@ export const InitialJumbotronState = () => {
               
               <div className="upcoming-game" style={{transform: 'scale(0.7)'}}>
                 <div className="opponent-logo-container">
-                  <ReactSVG src={teams[3].image}/>
+                  <ReactSVG src={seasonState.teams[3].image}/>
                 </div>
                 <div className='sotr-details'>
                   <Indicator amount={25} />
@@ -105,5 +92,5 @@ export const InitialJumbotronState = () => {
         </div>
       </div>
     </div>
-  );
+  ) : null;
 };
