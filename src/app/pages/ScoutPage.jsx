@@ -14,7 +14,12 @@ import {
 import scoutStick from '@images/scout-stick.svg';
 import { useSelector, useDispatch } from 'react-redux';
 import { motion } from 'framer-motion';
-import { scoutSlides, SharkieButton, Tutorial } from '@tutorial';
+import {
+  scoutSlides,
+  SharkieButton,
+  Tutorial,
+  getConfirmSlides,
+} from '@tutorial';
 import { useHistory } from 'react-router-dom';
 import { PageBoard } from './../components/PageBoard';
 import {
@@ -62,6 +67,7 @@ const ScoutPage = () => {
 
   const [availablePlayersBoard, setAvailablePlayersBoard] = useState([]);
   const [offeredPlayersBoard, setOfferedPlayersBoard] = useState([]);
+  const [tutorialSlides, setTutorialSlides] = useState([scoutSlides]);
 
   // Local methods
   const onTutorialComplete = () => {
@@ -368,7 +374,6 @@ const ScoutPage = () => {
           getAvailablePlayersBoard(scoutPlayers.available)
         );
       }
-      console.log('STUDENT:::: ', student, getMoneyLevels(student.level));
       if (offered) {
         setOfferedPlayersBoard(
           getOfferedPlayersBoard(
@@ -382,6 +387,15 @@ const ScoutPage = () => {
     },
     [student, getAvailablePlayersBoard, getOfferedPlayersBoard, scoutPlayers]
   );
+
+  const onCallSharkie = () => {
+    setTutorialSlides([getConfirmSlides('scout'), scoutSlides]);
+    dispatch(
+      setTutorialState({
+        isActive: true,
+      })
+    );
+  };
 
   const prevAvailableRef = useRef(null);
   const prevL1Ref = useRef(null);
@@ -427,7 +441,7 @@ const ScoutPage = () => {
           <span
             style={{ position: 'absolute', right: '0.5rem', top: '0.25rem' }}
           >
-            <SharkieButton tutorialSlides={[scoutSlides]} textPosition='left' />
+            <SharkieButton onCallSharkie={onCallSharkie} textPosition='left' />
           </span>
         </div>
 
@@ -483,7 +497,7 @@ const ScoutPage = () => {
       </PageBoard>
       <Overlay />
       {tutorialActive && (
-        <Tutorial slides={[scoutSlides]} onComplete={onTutorialComplete} />
+        <Tutorial slides={tutorialSlides} onComplete={onTutorialComplete} />
       )}
     </div>
   ) : (
