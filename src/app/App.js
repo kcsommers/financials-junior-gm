@@ -61,28 +61,35 @@ const App = () => {
               console.error(new Error('Unexpected error initializing players'));
               return;
             }
+            dispatch(setStudent(initializedStudentRes.data));
+            dispatch(
+              setInitialPlayersState(
+                initializedStudentRes.data.players,
+                initializedStudentRes.data
+              )
+            );
 
             // update the student with the hard coded initial team
-            setInitialTeam(initializedStudentRes.data)
-              .then((updatedStudentRes) => {
-                if (
-                  !updatedStudentRes.success ||
-                  !updatedStudentRes.updatedStudent
-                ) {
-                  console.error(
-                    new Error('Unexpected error initializing team')
-                  );
-                  return;
-                }
-                dispatch(setStudent(updatedStudentRes.updatedStudent));
-                dispatch(
-                  setInitialPlayersState(
-                    updatedStudentRes.updatedStudent.players,
-                    updatedStudentRes.updatedStudent
-                  )
-                );
-              })
-              .catch((err) => console.error(err));
+            // setInitialTeam(initializedStudentRes.data)
+            //   .then((updatedStudentRes) => {
+            //     if (
+            //       !updatedStudentRes.success ||
+            //       !updatedStudentRes.updatedStudent
+            //     ) {
+            //       console.error(
+            //         new Error('Unexpected error initializing team')
+            //       );
+            //       return;
+            //     }
+            //     dispatch(setStudent(updatedStudentRes.updatedStudent));
+            //     dispatch(
+            //       setInitialPlayersState(
+            //         updatedStudentRes.updatedStudent.players,
+            //         updatedStudentRes.updatedStudent
+            //       )
+            //     );
+            //   })
+            //   .catch((err) => console.error(err));
           })
           .catch((err) => console.error(err));
       })
