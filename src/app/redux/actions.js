@@ -25,6 +25,8 @@ import {
   SET_SIMULATION_BUTTON,
   SET_SIMULATE_GAME,
   UPDATE_OPPONENT_INDEX,
+  UPDATE_TEAMS,
+  UPDATE_SEASON_STATE
 } from './actionTypes';
 
 export const setAnimationState = (state) => ({
@@ -154,5 +156,15 @@ export const setSimulationButton = (simulation) => ({
 
 export const setSimulateGame = (state) => ({
   type: SET_SIMULATE_GAME,
-  payload: state,
-});
+  payload: state
+})
+
+export const updateTeams = (state) => ({
+  type: UPDATE_TEAMS,
+  payload: state
+})
+
+export const updateSeasonState = (updatedState) => ({
+  type:UPDATE_SEASON_STATE,
+  payload: updatedState
+})
