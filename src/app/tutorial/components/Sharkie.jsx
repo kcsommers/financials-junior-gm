@@ -70,7 +70,6 @@ export const SharkieComponent = ({ slide, inTransition }) => {
   const bubbleInverse = sharkieInverse || slide.sharkie === 'lean';
 
   if (slide.bubbleDelay) {
-    const bubbleDelay = slide.bubbleDelay;
     window.setTimeout(setShowBubble.bind(this, true), slide.bubbleDelay);
     slide.bubbleDelay = 0;
     setShowBubble(false);

@@ -243,4 +243,4 @@ const slideConfigs = [
   },
 ];
 
-export const playersSlides = slideConfigs.map((c) => new Slide(c));
+export const teamSlides = slideConfigs.map((c) => new Slide(c));

@@ -1,4 +1,5 @@
 export { introSlides } from './lessons/home/intro-slides';
+export { getConfirmSlides } from './lessons/confirm-slides';
 export { SharkieButton } from './components/SharkieButton';
 export { budgetSlides } from './lessons/budget/budget-slides';
 export { objectivesSlides } from './lessons/home/objectives-slides';
@@ -10,9 +11,6 @@ export {
   trophiesStickSlides,
   seasonStickSlides,
 } from './lessons/home/hockey-stick-slides';
-
-export { playersSlides } from './lessons/team/players-slides';
-
+export { teamSlides } from './lessons/team/players-slides';
 export { scoutSlides } from './lessons/scout/scout-slides';
-
 export { Tutorial } from './components/Tutorial';
