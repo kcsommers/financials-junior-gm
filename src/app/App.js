@@ -1,7 +1,11 @@
 import { useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import Intro from './pages/Intro';
+import {
+  BrowserRouter as Router,
+  Redirect,
+  Route,
+  Switch,
+} from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import TeamPage from './pages/TeamPage';
 import Season from './pages/Season';
@@ -90,10 +94,9 @@ const App = () => {
     <div className='app-container'>
       <Router>
         <Switch>
-          <Route exact path='/' component={Intro} />
           <Route
             exact
-            path='/home'
+            path={['/home']}
             render={(props) => <StudentPortal screen={<HomePage />} />}
           />
           <Route
@@ -132,6 +135,7 @@ const App = () => {
               <TeacherPortal screen={<TeacherDashboard {...props} />} />
             )}
           />
+          <Redirect from='/' to='/home' />
           <Route component={PageNotFound} />
         </Switch>
         <IceBackground />
