@@ -31,14 +31,15 @@ export const PlayerDetailsOverlay = ({
   const releaseConfirmed = () => {
     const prevAssignment = player.playerAssignment;
     player.playerAssignment = PlayerAssignments.MARKET;
-
+    //logic for player is released
     const playersCopy = cloneDeep(student.players);
+    //
     playersCopy.splice(
       playersCopy.findIndex((p) => p._id === player._id),
       1,
       player
     );
-
+    
     updateStudentById(student._id, {
       [prevAssignment]: null,
       players: playersCopy,

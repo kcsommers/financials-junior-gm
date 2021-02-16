@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react';
 import { ReactSVG } from 'react-svg';
 import '../../../assets/css/components/season-page/playing-game.css'
 import jrSharksLogoBig from '@images/icons/jr-sharks-logo-big.svg';
@@ -6,19 +6,16 @@ import blueBearsLogoBig from '@images/icons/blue-bears-logo-big.svg';
 import { setScore} from '@redux/actions';
 import { useSelector, useDispatch} from 'react-redux';
 
-export const PlayingGame = () => {
-
-  const score = useSelector(state => {
-    return state.season.score
-  })
 
 
-  const yourStanding = useSelector((state) => {
-    return state.season.standings
-  });
-  const opponentStanding = useSelector((state) => {
-    return state.season.currentOpponent.standings
-  });
+export const PlayingGame = ({seasonState, score}) => {
+
+  console.log(score)
+  const currentOpponent = seasonState && seasonState.teams && seasonState.teams[seasonState.currentOpponentIndex]
+
+  const yourStanding = seasonState.standings
+
+  const opponentStanding = currentOpponent.standings
 
   console.log('yoyoyo: ', useSelector(state => {
     return state.season.currentOpponent;
