@@ -50,7 +50,7 @@ const App = () => {
         }
 
         // initialize players on student
-        initPlayersByLevel(student.level)
+        initPlayersByLevel(student.level || 1)
           .then((initializedStudentRes) => {
             if (!initializedStudentRes.success || !initializedStudentRes.data) {
               console.error(new Error('Unexpected error initializing players'));
