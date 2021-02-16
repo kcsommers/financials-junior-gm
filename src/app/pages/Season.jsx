@@ -18,11 +18,17 @@ import {
   setSimulateGame,
   setStats,
   updateCurrentOpponent,
-  updateOpponentIndex
+  updateOpponentIndex,
+  setStudent
 } from '@redux/actions';
 import { PlayingGame } from '../components/season-page/PlayingGame';
+import {LoadingSpinner} from '@components'
 
 const Season = () => {
+
+  const student = useSelector((state) => state.studentState.student);
+
+
   const opponentIndex = useSelector((state) => {
     return state.season.currentOpponentIndex;
   });
@@ -31,29 +37,25 @@ const Season = () => {
     return state.season.teams
   })
 
-  const score = useSelector(state => {
-    return state.season.score
-  })
+  const score = useSelector((state) => {
+    return state.season.score;
+  });
 
-  const currentOpponents = opponents[opponentIndex]
+  const currentOpponents = opponents[opponentIndex];
 
   const dispatch = useDispatch();
 
-  const stats = useSelector((state) => {
-    return state.season.stats;
+  const wins = useSelector((state) => {
+    return state.season.wins;
   });
 
-  const wins = useSelector(state => {
-    return state.season.wins
-  })
+  const losses = useSelector((state) => {
+    return state.season.losses;
+  });
 
-  const losses = useSelector(state => {
-    return state.season.losses
-  })
-
-  const points = useSelector(state => {
-    return state.season.points
-  })
+  const points = useSelector((state) => {
+    return state.season.points;
+  });
 
   const jumbotronDisplay = useSelector((state) => {
     return state.season.jumbotronDisplay;
@@ -71,139 +73,103 @@ const Season = () => {
     return state.season.simulateGame;
   });
 
-  const rank = useSelector((state) => {
-    return state.season.rank;
-  });
-
   const currentOpponent = useSelector((state) => {
     return state.season.currentOpponent;
   });
 
   const theResultScore = () => {
-    let rankDiff = rank - currentOpponent.rank
-    if(rankDiff > 5) {
-      score[0] = rankDiff / 10
-      score[1] = 0
-      return [rankDiff / 10,  0]
+    if (!student) return
+    let rankDiff = student.rank - currentOpponent.rank;
+    if (rankDiff > 5) {
+      score[0] = rankDiff / 10;
+      score[1] = 0;
+      return [rankDiff / 10, 0];
     } else if (Math.abs(rankDiff) >= 0 && Math.abs(rankDiff) < 5) {
-      score[0] = 2
-      score[1] = 1
-      return [2, 1]
+      score[0] = 2;
+      score[1] = 1;
+      return [2, 1];
     } else {
-      score[0] = 0
-      score[1] = rankDiff / 10
-      return [0, rankDiff/10]
+      score[0] = 0;
+      score[1] = rankDiff / 10;
+      return [0, rankDiff / 10];
     }
   };
 
   const theResultStats = () => {
-    if(score[0] - score[1] > 1) {
+    if (score[0] - score[1] > 1) {
       dispatch(
         setStats({
           wins: wins + 1,
           points: points + 2,
-          losses: losses + 0
+          losses: losses + 0,
         })
-      )
+      );
     } else if (Math.abs(score[0] - score[1]) == 1) {
       dispatch(
         setStats({
           wins: wins + 1,
           points: points + 1,
-          losses: losses + 0
+          losses: losses + 0,
         })
-      )
+      );
     } else {
       dispatch(
         setStats({
           wins: wins + 0,
           points: points + 0,
-          losses: losses + 1
+          losses: losses + 1,
         })
-      )
+      );
     }
-  }
-
-  console.log('hello')
+  };
 
   const handlePlay = () => {
-      setTimeout(() => {
-        dispatch(
-          setSeasonSign('Coming up next')
-        )
-      }, 100)
-      setTimeout(() => {
-        dispatch(
-          setJumbotronDisplay(<PlayingGame/>)
-        );
-        dispatch(
-          setSeasonSign(`Jr Sharks vs ${currentOpponent.name}`)
-        )
-      }, 3000)
-      setTimeout(() => {
-        dispatch(
-          setSeasonSign('The players are warming up')
-        )
-      }, 6000)
-      setTimeout(() => {
-        dispatch(
-          setSeasonSign('The game is being played')
-        )
-      }, 9000)
-      
-      dispatch(
-        setSimulationButton(hockeySticksButton)
-      )
-      setTimeout(() => {
-        dispatch(
-          setScore(theResultScore())
-        )
-        dispatch(
-          setSeasonSign('GET LOUD! The Jr Sharks Won!')
-        )
-        theResultStats();
-      }, 12000)
-      setTimeout(function(){
-        dispatch(
-          setJumbotronDisplay(<InitialJumbotronState/>)
-        )
-        dispatch(
-          updateOpponentIndex(opponentIndex + 1)
-        )
-        dispatch(
-          updateCurrentOpponent(currentOpponents)
-        )
-        setTimeout(()=> {
-          dispatch(
-            setSeasonSign(`The next game starts in ${3}`)
-          )
-        }, 1000)
-        setTimeout(()=> {
-          dispatch(
-            setSeasonSign(`The next game starts in ${2}`)
-          )
-        }, 2000)
-        setTimeout(()=> {
-          dispatch(
-            setSeasonSign(`The next game starts in ${1}`)
-          )
-        }, 3000)
-        setTimeout(()=> {
-          dispatch(
-            setSeasonSign(`The next game starts in ${0}`)
-          )
-        }, 4000)
-      }, 15000)
-  }
+    setTimeout(() => {
+      dispatch(setSeasonSign('Coming up next'));
+    }, 100);
+    setTimeout(() => {
+      dispatch(setJumbotronDisplay(<PlayingGame />));
+      dispatch(setSeasonSign(`Jr Sharks vs ${currentOpponent.name}`));
+    }, 3000);
+    setTimeout(() => {
+      dispatch(setSeasonSign('The players are warming up'));
+    }, 6000);
+    setTimeout(() => {
+      dispatch(setSeasonSign('The game is being played'));
+    }, 9000);
 
-  return (
+    dispatch(setSimulationButton(hockeySticksButton));
+    setTimeout(() => {
+      dispatch(setScore(theResultScore()));
+      dispatch(setSeasonSign('GET LOUD! The Jr Sharks Won!'));
+      theResultStats();
+    }, 12000);
+    setTimeout(function () {
+      dispatch(setJumbotronDisplay(<InitialJumbotronState />));
+      dispatch(updateOpponentIndex(opponentIndex + 1));
+      dispatch(updateCurrentOpponent(currentOpponents));
+      setTimeout(() => {
+        dispatch(setSeasonSign(`The next game starts in ${3}`));
+      }, 1000);
+      setTimeout(() => {
+        dispatch(setSeasonSign(`The next game starts in ${2}`));
+      }, 2000);
+      setTimeout(() => {
+        dispatch(setSeasonSign(`The next game starts in ${1}`));
+      }, 3000);
+      setTimeout(() => {
+        dispatch(setSeasonSign(`The next game starts in ${0}`));
+      }, 4000);
+    }, 15000);
+  };
+
+  return student ? (
     <div className='season-page page-container'>
       <HeaderComponent
         stickBtn={seasonStick}
         largeStick={true}
         objectives={['1. Play the season']}
       />
-
       {/* season dashboard */}
       <div className='season-dashboard'>
         <div className='season-dashboard-top-row'>
@@ -247,7 +213,6 @@ const Season = () => {
             />
           </div>
         </div>
-
         <div className='season-dashboard-bottom-row'>
           <div>
             <p className='season-schedule-title'>Schedule</p>
@@ -288,11 +253,21 @@ const Season = () => {
                   <p>0</p>
                 </div>
               </div>
+              <div className='upcoming-games'>
+                <div className='season-schedule-spacing'>
+                  <p className='player-team-title'>Jr Sharks</p>
+                  <p className='season-schedule-spacing'>vs</p>
+                  <p>Purple Panthers</p>
+                </div>
+                <div className='season-schedule-spacing'>
+                  <p>0</p>
+                  <p className='season-schedule-spacing'>-</p>
+                  <p>0</p>
+                </div>
+              </div>
             </div>
           </div>
-
-          <ReactSVG src={simulationButton} onClick={handlePlay}/>
-
+          <ReactSVG src={simulationButton} onClick={handlePlay} className="simulation-button"/>
           <div>
             <p className='season-standings-title'>Standings</p>
             <div className='season-standings-box'>
@@ -300,7 +275,6 @@ const Season = () => {
                 <div className='standings-team-name-box'>
                   <p className='ptn-title'>Pos. Team Name</p>
                 </div>
-
                 <div className='standings-teams-box'>
                   <p>1. Green Giraffes</p>
                   <p>2. Orange Owls</p>
@@ -309,12 +283,10 @@ const Season = () => {
                   <p>5. Pink Pandas</p>
                 </div>
               </div>
-
               <div>
                 <div className='standings-team-points-box'>
                   <p className='p-title'>Points</p>
                 </div>
-
                 <div className='standings-teams-points-box'>
                   <p>12</p>
                   <p>11</p>
@@ -327,6 +299,21 @@ const Season = () => {
           </div>
         </div>
       </div>
+    </div>
+  ) : (
+    <div
+      style={{
+        position: 'absolute',
+        top: 0,
+        bottom: 0,
+        left: 0,
+        right: 0,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+    >
+      <LoadingSpinner />
     </div>
   );
 };

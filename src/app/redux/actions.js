@@ -67,9 +67,9 @@ export const scoutingComplete = (levelOne, levelTwo, levelThree) => ({
   payload: { levelOne, levelTwo, levelThree },
 });
 
-export const setInitialPlayersState = (players, student) => ({
+export const setInitialPlayersState = (players) => ({
   type: SET_INITIAL_PLAYERS_STATE,
-  payload: { players, student },
+  payload: players,
 });
 
 export const signPlayer = (player, assignment) => ({
@@ -152,3 +152,7 @@ export const setSimulationButton = (simulation) => ({
   payload: simulation
 })
 
+export const setSimulateGame = (state) => ({
+  type: SET_SIMULATE_GAME,
+  payload: state
+})

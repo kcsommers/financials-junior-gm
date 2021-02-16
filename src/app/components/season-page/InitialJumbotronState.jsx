@@ -30,6 +30,7 @@ export const InitialJumbotronState = () => {
   const currentOpponent = useSelector((state) => {
     return state.season.currentOpponent
   });
+
   const teams = useSelector((state) => {
     return state.season.teams;
   });

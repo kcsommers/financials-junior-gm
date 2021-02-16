@@ -11,7 +11,8 @@ import {
   SET_SEASON_SIGN,
   SET_SIMULATION_BUTTON,
   SET_SIMULATE_GAME,
-  UPDATE_OPPONENT_INDEX
+  UPDATE_OPPONENT_INDEX,
+  SET_STUDENT
 } from '../actionTypes'
 import blueBears from '../../../assets/images/icons/blue-bears-logo.svg'
 import jrSharksLogoWhiteBg from '@images/icons/jr-sharks-logo-white-bg.svg';
@@ -21,6 +22,8 @@ import whiteWolves from '@images/icons/white-wolves.svg';
 import {InitialJumbotronState} from '../../components/season-page/InitialJumbotronState';
 import play from '@images/icons/play.svg';
 import jrSharksLogo from '@images/icons/jr-sharks-logo.svg';
+import { useDispatch} from 'react-redux';
+import {setStudent} from '@redux/actions';
 
 const initialState = {
   score: [0,0],
@@ -33,7 +36,7 @@ const initialState = {
       stats: {wins: 0, losses: 0, points: 0},
       standings: '12th'
     },
-    {
+    { 
       rank: 280,
       image: redRabbits,
       name: 'Red Rabbits',
@@ -55,7 +58,6 @@ const initialState = {
       standings: '6th'
     }
   ],
-  rank: 320,
   image: jrSharksLogoWhiteBg,
   name: 'Jr Sharks',
   wins: 0,
@@ -114,6 +116,11 @@ export default function(state = initialState, action) {
       return {
         ...state,
         standings: action.payload
+      }
+    case UPDATE_OPPONENT_INDEX:
+      return {
+        ...state,
+        currentOpponentIndex: action.payload
       }
     case UPDATE_CURRENT_OPPONENT:
       return {
