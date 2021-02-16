@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState, useMemo, useRef } from 'react';
+import { useCallback, useEffect, useState, useRef } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import {
   PlayerDropContainer,
@@ -14,7 +14,12 @@ import {
 import scoutStick from '@images/scout-stick.svg';
 import { useSelector, useDispatch } from 'react-redux';
 import { motion } from 'framer-motion';
-import { scoutSlides, SharkieButton, Tutorial } from '@tutorial';
+import {
+  scoutSlides,
+  SharkieButton,
+  Tutorial,
+  getConfirmSlides,
+} from '@tutorial';
 import { useHistory } from 'react-router-dom';
 import { PageBoard } from './../components/PageBoard';
 import {
@@ -46,22 +51,26 @@ const ScoutPage = () => {
   const availablePlayersAnimationState = useSelector(
     (state) => state.tutorial.scout.availablePlayersBoard
   );
+  const offeredPlayersAnimationState = useSelector(
+    (state) => state.tutorial.scout.offeredPlayersBoard
+  );
   const finishedBtnAnimationState = useSelector(
     (state) => state.tutorial.scout.finishedBtn
   );
-  const moneyLevelAnimationStates = useMemo(() => ({}), []);
-  moneyLevelAnimationStates[0] = useSelector(
+
+  const moneyLevelOneState = useSelector(
     (state) => state.tutorial.scout.moneyLevel1
   );
-  moneyLevelAnimationStates[1] = useSelector(
+  const moneyLevelTwoState = useSelector(
     (state) => state.tutorial.scout.moneyLevel2
   );
-  moneyLevelAnimationStates[2] = useSelector(
+  const moneyLevelThreeState = useSelector(
     (state) => state.tutorial.scout.moneyLevel3
   );
 
   const [availablePlayersBoard, setAvailablePlayersBoard] = useState([]);
   const [offeredPlayersBoard, setOfferedPlayersBoard] = useState([]);
+  const [tutorialSlides, setTutorialSlides] = useState([scoutSlides]);
 
   // Local methods
   const onTutorialComplete = () => {
@@ -206,7 +215,13 @@ const ScoutPage = () => {
   );
 
   const getOfferedPlayersBoard = useCallback(
-    (_levelOne, _levelTwo, _levelThree, moneyLevels) => {
+    (
+      _levelOne,
+      _levelTwo,
+      _levelThree,
+      moneyLevels,
+      moneyLevelAnimationStates
+    ) => {
       if (!moneyLevels) {
         return;
       }
@@ -235,9 +250,10 @@ const ScoutPage = () => {
         levelThreePlayers,
       ];
       return offeredPlayers.map((row, i) => (
-        <div
+        <motion.div
           key={`offered-player-row-${i}`}
           className='offered-player-row-wrap'
+          animate={moneyLevelAnimationStates[i]}
         >
           <span className='money-level-short color-primary'>
             {moneyLevels[i].short}
@@ -245,18 +261,15 @@ const ScoutPage = () => {
           <p className={`money-level-text money-level-text-${i}`}>
             These players get a {moneyLevels[i].long} offered
           </p>
-          <motion.div
-            className='offered-player-row'
-            animate={moneyLevelAnimationStates[i]}
-          >
+          <div className='offered-player-row'>
             <div className={`offered-player-row-inner level-${i + 1}`}>
               {row.map((p) => p)}
             </div>
-          </motion.div>
-        </div>
+          </div>
+        </motion.div>
       ));
     },
-    [moneyLevelAnimationStates, scoutPlayers, getDroppableItem]
+    [scoutPlayers, getDroppableItem]
   );
 
   const onPlayerDropped = (e) => {
@@ -358,7 +371,7 @@ const ScoutPage = () => {
   };
 
   const setBoards = useCallback(
-    (available, offered) => {
+    (available, offered, moneyLevelAnimationStates) => {
       if (!scoutPlayers.available) {
         return;
       }
@@ -368,20 +381,29 @@ const ScoutPage = () => {
           getAvailablePlayersBoard(scoutPlayers.available)
         );
       }
-      console.log('STUDENT:::: ', student, getMoneyLevels(student.level));
       if (offered) {
         setOfferedPlayersBoard(
           getOfferedPlayersBoard(
             scoutPlayers.levelOne,
             scoutPlayers.levelTwo,
             scoutPlayers.levelThree,
-            getMoneyLevels(student.level || 1)
+            getMoneyLevels(student.level || 1),
+            moneyLevelAnimationStates
           )
         );
       }
     },
     [student, getAvailablePlayersBoard, getOfferedPlayersBoard, scoutPlayers]
   );
+
+  const onCallSharkie = () => {
+    setTutorialSlides([getConfirmSlides('scout'), scoutSlides]);
+    dispatch(
+      setTutorialState({
+        isActive: true,
+      })
+    );
+  };
 
   const prevAvailableRef = useRef(null);
   const prevL1Ref = useRef(null);
@@ -392,23 +414,36 @@ const ScoutPage = () => {
       return;
     }
 
-    const setAvailable = !isEqual(
-      scoutPlayers.available,
-      prevAvailableRef.current
-    );
+    const moneyLevelAnimationStates = [
+      moneyLevelOneState,
+      moneyLevelTwoState,
+      moneyLevelThreeState,
+    ];
 
-    const setOffered =
-      !isEqual(scoutPlayers.levelOne, prevL1Ref.current) ||
-      !isEqual(scoutPlayers.levelTwo, prevL2Ref.current) ||
-      !isEqual(scoutPlayers.levelThree, prevL3Ref.current);
+    const setAvailable = tutorialActive
+      ? true
+      : !isEqual(scoutPlayers.available, prevAvailableRef.current);
 
-    setBoards(setAvailable, setOffered);
+    const setOffered = tutorialActive
+      ? true
+      : !isEqual(scoutPlayers.levelOne, prevL1Ref.current) ||
+        !isEqual(scoutPlayers.levelTwo, prevL2Ref.current) ||
+        !isEqual(scoutPlayers.levelThree, prevL3Ref.current);
+
+    setBoards(setAvailable, setOffered, moneyLevelAnimationStates);
 
     prevAvailableRef.current = scoutPlayers.available;
     prevL1Ref.current = scoutPlayers.levelOne;
     prevL2Ref.current = scoutPlayers.levelTwo;
     prevL3Ref.current = scoutPlayers.levelThree;
-  }, [setBoards, scoutPlayers]);
+  }, [
+    setBoards,
+    scoutPlayers,
+    tutorialActive,
+    moneyLevelOneState,
+    moneyLevelTwoState,
+    moneyLevelThreeState,
+  ]);
 
   return scoutPlayers.available ? (
     <div className='page-container scout-page-container'>
@@ -427,7 +462,7 @@ const ScoutPage = () => {
           <span
             style={{ position: 'absolute', right: '0.5rem', top: '0.25rem' }}
           >
-            <SharkieButton tutorialSlides={[scoutSlides]} textPosition='left' />
+            <SharkieButton onCallSharkie={onCallSharkie} textPosition='left' />
           </span>
         </div>
 
@@ -448,9 +483,12 @@ const ScoutPage = () => {
             </div>
 
             <div className='scout-page-board-right'>
-              <div style={{ position: 'relative', top: '-13px' }}>
+              <motion.div
+                style={{ position: 'relative', top: '-13px' }}
+                animate={offeredPlayersAnimationState}
+              >
                 {offeredPlayersBoard}
-              </div>
+              </motion.div>
             </div>
           </div>
         </DragDropContext>
@@ -483,7 +521,7 @@ const ScoutPage = () => {
       </PageBoard>
       <Overlay />
       {tutorialActive && (
-        <Tutorial slides={[scoutSlides]} onComplete={onTutorialComplete} />
+        <Tutorial slides={tutorialSlides} onComplete={onTutorialComplete} />
       )}
     </div>
   ) : (

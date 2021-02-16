@@ -45,7 +45,6 @@ div.team-players-row {
   align-items: flex-end;
   justify-content: space-around;
   position: relative;
-  z-index: 1;
   flex: 1;
   padding-top: 0.25rem;
 }

@@ -18,6 +18,7 @@ export default class Slide {
     this.small = config.small;
     this.transparentBg = config.transparentBg;
     this.slideAnimate = config.slideAnimate;
+    this.canCancel = config.canCancel;
   }
 
   getJsx() {
