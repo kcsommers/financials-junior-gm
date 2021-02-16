@@ -368,7 +368,6 @@ const ScoutPage = () => {
           getAvailablePlayersBoard(scoutPlayers.available)
         );
       }
-      console.log('STUDENT:::: ', student, getMoneyLevels(student.level));
       if (offered) {
         setOfferedPlayersBoard(
           getOfferedPlayersBoard(
