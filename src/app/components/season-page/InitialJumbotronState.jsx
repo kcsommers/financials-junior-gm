@@ -9,8 +9,21 @@ export const InitialJumbotronState = ({seasonState}) => {
 
   const currentOpponent = seasonState && seasonState.teams && seasonState.teams[seasonState.currentOpponentIndex]
 
-  console.log('the current opponent: ', currentOpponent)
-  console.log('the op index', seasonState.currentOpponentIndex)
+  const wins = useSelector((state) => {
+    return state.season.wins
+  })
+
+  const losses = useSelector((state) => {
+    return state.season.losses
+  })
+
+  const points = useSelector((state) => {
+    return state.season.points
+  })
+   console.log(wins, losses, points)
+  
+  // console.log('the current opponent: ', currentOpponent)
+  // console.log('the op index', seasonState.currentOpponentIndex)
   return (seasonState && currentOpponent) ? ( 
     <div className='season-initial-container'>
       <div>
@@ -20,15 +33,15 @@ export const InitialJumbotronState = ({seasonState}) => {
           <div className='your-stats-container'>
             <div>
               <p className="your-stats-wins">Wins</p>
-              <div className="your-stats">{seasonState.wins}</div>
+              <div className="your-stats">{wins}</div>
             </div>
             <div>
               <p className="your-stats-losses">Losses</p>
-              <div className="your-stats">{seasonState.losses}</div>
+              <div className="your-stats">{losses}</div>
             </div>
             <div>
               <p className="your-stats-points">Points</p>
-              <div className="your-stats">{seasonState.points}</div>
+              <div className="your-stats">{points}</div>
             </div>
           </div>
         </div>

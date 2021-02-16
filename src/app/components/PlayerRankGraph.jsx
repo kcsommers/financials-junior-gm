@@ -1,5 +1,5 @@
 const getGradientPct = (rank, index) => {
-  const pct = (rank / 100) * 100;
+  const pct = (rank / 30) * 100;
   const indexPct = 20 * index;
   if (pct >= indexPct) {
     return 100;
@@ -7,7 +7,7 @@ const getGradientPct = (rank, index) => {
   if (pct <= 20 * (index - 1)) {
     return 0;
   }
-  return pct;
+  return Math.min(100, pct);
 };
 
 const styles = (rgb, rank, index, isSmall) => {

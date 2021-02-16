@@ -69,9 +69,9 @@ export const scoutingComplete = (levelOne, levelTwo, levelThree) => ({
   payload: { levelOne, levelTwo, levelThree },
 });
 
-export const setInitialPlayersState = (players) => ({
+export const setInitialPlayersState = (players, student) => ({
   type: SET_INITIAL_PLAYERS_STATE,
-  payload: players,
+  payload: { players, student },
 });
 
 export const signPlayer = (player, assignment) => ({
@@ -96,63 +96,63 @@ export const setLoginState = (isLoggedIn, role) => ({
 
 export const setScore = (state) => ({
   type: SET_SCORE,
-  payload: state
-})
+  payload: state,
+});
 
 export const setRank = (state) => ({
   type: SET_RANK,
-  payload: {state}
-})
+  payload: { state },
+});
 
 export const setImage = (state) => ({
   type: SET_IMAGE,
-  payload: {state}
-})
+  payload: { state },
+});
 
 export const setName = (state) => ({
   type: SET_NAME,
-  payload: {state}
-})
+  payload: { state },
+});
 
 export const setStats = (state) => ({
   type: SET_STATS,
-  payload: state
-})
+  payload: state,
+});
 
 export const setStandings = (state) => ({
   type: SET_STANDINGS,
-  payload: {state}
-})
+  payload: { state },
+});
 
 export const updateCurrentOpponent = (currentOpponent) => ({
   type: UPDATE_CURRENT_OPPONENT,
-  payload: currentOpponent
-})
+  payload: currentOpponent,
+});
 
 export const updateOpponentIndex = (currentOpponentIndex) => ({
   type: UPDATE_OPPONENT_INDEX,
-  payload: currentOpponentIndex
-})
+  payload: currentOpponentIndex,
+});
 
 export const setUpcomingGames = (state) => ({
   type: SET_TEAMS,
-  payload: {state}
-})
+  payload: { state },
+});
 
 export const setJumbotronDisplay = (display) => ({
   type: SET_JUMBOTRON_DISPLAY,
-  payload: display
-})
+  payload: display,
+});
 
 export const setSeasonSign = (sign) => ({
   type: SET_SEASON_SIGN,
-  payload: sign
-})
+  payload: sign,
+});
 
 export const setSimulationButton = (simulation) => ({
   type: SET_SIMULATION_BUTTON,
-  payload: simulation
-})
+  payload: simulation,
+});
 
 export const setSimulateGame = (state) => ({
   type: SET_SIMULATE_GAME,

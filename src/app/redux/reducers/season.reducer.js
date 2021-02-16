@@ -141,7 +141,7 @@ const initialState = {
   blockIndex: 0,
   currentOpponentIndex: 0,
   //jumbotronDisplay: <InitialJumbotronState seasonState={initialState}/>,
-  seasonSign: 'Your team is ready to play.',
+  seasonSign: 'Click play to see your results',
   simulationButton: play,
   simulateGame: null
 }

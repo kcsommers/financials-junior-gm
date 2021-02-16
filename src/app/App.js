@@ -1,7 +1,11 @@
 import { useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import Intro from './pages/Intro';
+import {
+  BrowserRouter as Router,
+  Redirect,
+  Route,
+  Switch,
+} from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import TeamPage from './pages/TeamPage';
 import Season from './pages/Season';
@@ -9,6 +13,7 @@ import ScoutPage from './pages/ScoutPage';
 import { IceBackground } from '@components';
 import BudgetPage from './pages/BudgetPage';
 import Dashboard from './pages/Dashboard';
+import TrophiesPage from './pages/TrophiesPage';
 import TeacherLogin from './pages/login/Teacher.jsx';
 import StudentLogin from './pages/login/Student.jsx';
 import TeacherDashboard from './pages/TeacherDashboard';
@@ -56,28 +61,35 @@ const App = () => {
               console.error(new Error('Unexpected error initializing players'));
               return;
             }
+            dispatch(setStudent(initializedStudentRes.data));
+            dispatch(
+              setInitialPlayersState(
+                initializedStudentRes.data.players,
+                initializedStudentRes.data
+              )
+            );
 
             // update the student with the hard coded initial team
-            setInitialTeam(initializedStudentRes.data)
-              .then((updatedStudentRes) => {
-                if (
-                  !updatedStudentRes.success ||
-                  !updatedStudentRes.updatedStudent
-                ) {
-                  console.error(
-                    new Error('Unexpected error initializing team')
-                  );
-                  return;
-                }
-                dispatch(setStudent(updatedStudentRes.updatedStudent));
-                dispatch(
-                  setInitialPlayersState(
-                    updatedStudentRes.updatedStudent.players,
-                    updatedStudentRes.updatedStudent
-                  )
-                );
-              })
-              .catch((err) => console.error(err));
+            // setInitialTeam(initializedStudentRes.data)
+            //   .then((updatedStudentRes) => {
+            //     if (
+            //       !updatedStudentRes.success ||
+            //       !updatedStudentRes.updatedStudent
+            //     ) {
+            //       console.error(
+            //         new Error('Unexpected error initializing team')
+            //       );
+            //       return;
+            //     }
+            //     dispatch(setStudent(updatedStudentRes.updatedStudent));
+            //     dispatch(
+            //       setInitialPlayersState(
+            //         updatedStudentRes.updatedStudent.players,
+            //         updatedStudentRes.updatedStudent
+            //       )
+            //     );
+            //   })
+            //   .catch((err) => console.error(err));
           })
           .catch((err) => console.error(err));
       })
@@ -89,10 +101,9 @@ const App = () => {
     <div className='app-container'>
       <Router>
         <Switch>
-          <Route exact path='/' component={Intro} />
           <Route
             exact
-            path='/home'
+            path={['/home']}
             render={(props) => <StudentPortal screen={<HomePage />} />}
           />
           <Route
@@ -115,21 +126,23 @@ const App = () => {
             path='/season'
             render={(props) => <StudentPortal screen={<Season />} />}
           />
+          <Route
+            exact
+            path='/trophies'
+            render={(props) => <StudentPortal screen={<TrophiesPage />} />}
+          />
           <Route exact path='/dashboard' component={Dashboard} />
           <Route exact path='/login/teacher' component={TeacherLogin} />
           <Route exact path='/login/student' component={StudentLogin} />
           {/* <Route exact path='/teacher/home' component={TeacherDashboard} /> */}
           <Route
             exact
-            path="/teacher/home"
+            path='/teacher/home'
             render={(props) => (
-              <TeacherPortal
-                screen={
-                  <TeacherDashboard {...props}/>
-                }
-              />
+              <TeacherPortal screen={<TeacherDashboard {...props} />} />
             )}
           />
+          <Redirect from='/' to='/home' />
           <Route component={PageNotFound} />
         </Switch>
         <IceBackground />
