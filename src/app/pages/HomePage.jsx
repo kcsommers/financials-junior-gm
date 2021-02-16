@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useSelector, useDispatch } from 'react-redux';
 import {
@@ -19,6 +19,7 @@ import {
   seasonStickSlides,
   SharkieButton,
   Tutorial,
+  getConfirmSlides,
 } from '@tutorial';
 import teamStick from '@images/team-stick.svg';
 import budgetStick from '@images/budget-stick.svg';
@@ -27,7 +28,7 @@ import trophiesStick from '@images/trophies-stick.svg';
 import { setTutorialState } from '@redux/actions';
 import '@css/pages/HomePage.css';
 
-const tutorialSlides = [
+const homeSlides = [
   introSlides,
   objectivesSlides,
   teamRankSlides,
@@ -45,9 +46,7 @@ const HomePage = () => {
 
   const dispatch = useDispatch();
 
-  const onTutorialComplete = () => {
-    dispatch(setTutorialState({ isActive: false }));
-  };
+  const [tutorialSlides, setTutorialSlides] = useState(homeSlides);
 
   const animationStates = {
     teamStick: useSelector((state) => state.tutorial.home.teamStick),
@@ -61,6 +60,10 @@ const HomePage = () => {
     ),
   };
 
+  const onTutorialComplete = () => {
+    dispatch(setTutorialState({ isActive: false }));
+  };
+
   const objectivesBoard = (
     <ObjectivesBoard
       objectives={[
@@ -70,6 +73,15 @@ const HomePage = () => {
       ]}
     />
   );
+
+  const onCallSharkie = () => {
+    setTutorialSlides([getConfirmSlides('home'), ...homeSlides.slice(1)]);
+    dispatch(
+      setTutorialState({
+        isActive: true,
+      })
+    );
+  };
 
   return student ? (
     <div className='home-page-container'>
@@ -124,10 +136,7 @@ const HomePage = () => {
           <div className='objectives-board-container'>{objectivesBoard}</div>
         )}
         <div className='sharkie-btn-container'>
-          <SharkieButton
-            textPosition='bottom'
-            tutorialSlides={tutorialSlides}
-          />
+          <SharkieButton textPosition='bottom' onCallSharkie={onCallSharkie} />
         </div>
         {tutorialActive ? (
           <motion.div

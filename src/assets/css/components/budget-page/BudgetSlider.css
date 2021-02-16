@@ -38,7 +38,6 @@ div.top-indicators-container,
 div.savings-indicator-wrap {
   position: absolute;
   top: 0;
-  z-index: 1;
   text-align: center;
   transition: opacity 0.3s ease;
 }

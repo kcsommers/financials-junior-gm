@@ -29,7 +29,7 @@ import {
 
 export const setAnimationState = (state) => ({
   type: SET_ANIMATION_STATE,
-  payload: { state },
+  payload: state,
 });
 
 export const setTutorialState = (state) => ({

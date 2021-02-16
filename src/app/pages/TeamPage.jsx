@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { ReactSVG } from 'react-svg';
 import jrSharksLogo from '@images/icons/jr-sharks-logo.svg';
 import {
@@ -15,11 +16,14 @@ import scoutStick from '@images/scout-stick.svg';
 import teamStick from '@images/team-stick.svg';
 import iceBgSmall from '@images/ice-bg-small.svg';
 import { useSelector, useDispatch } from 'react-redux';
-import { playersSlides, SharkieButton, Tutorial } from '@tutorial';
+import {
+  teamSlides,
+  SharkieButton,
+  Tutorial,
+  getConfirmSlides,
+} from '@tutorial';
 import { setTutorialState, toggleOverlay } from '@redux/actions';
 import '@css/pages/TeamPage.css';
-
-const teamSlides = [playersSlides];
 
 const TeamPage = () => {
   const dispatch = useDispatch();
@@ -34,8 +38,19 @@ const TeamPage = () => {
     ),
   };
 
+  const [tutorialSlides, setTutorialSlides] = useState([teamSlides]);
+
   const onTutorialComplete = () => {
     dispatch(setTutorialState({ isActive: false }));
+  };
+
+  const onCallSharkie = () => {
+    setTutorialSlides([getConfirmSlides('team'), teamSlides]);
+    dispatch(
+      setTutorialState({
+        isActive: true,
+      })
+    );
   };
 
   const openPlayerDetailsOverlay = (player) => {
@@ -74,7 +89,7 @@ const TeamPage = () => {
         <div className='team-page-board-header'>
           <div className='team-page-board-header-inner'>
             <ReactSVG src={jrSharksLogo} />
-            <SharkieButton textPosition='left' tutorialSlides={teamSlides} />
+            <SharkieButton textPosition='left' onCallSharkie={onCallSharkie} />
           </div>
           <h2 className='color-primary'>San Jose Jr Sharks</h2>
         </div>
@@ -210,7 +225,7 @@ const TeamPage = () => {
       </PageBoard>
       <Overlay />
       {tutorialActive && (
-        <Tutorial slides={teamSlides} onComplete={onTutorialComplete} />
+        <Tutorial slides={tutorialSlides} onComplete={onTutorialComplete} />
       )}
     </div>
   ) : (

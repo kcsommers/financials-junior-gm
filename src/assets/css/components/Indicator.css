@@ -5,7 +5,6 @@ div.amount-indicator-wrap {
 
 div.amount-indicator {
   position: relative;
-  z-index: 2;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   width: 75px;
   height: 75px;
@@ -29,7 +28,6 @@ div.amount-indicator-pointer {
   position: absolute;
   right: 0;
   top: 50%;
-  z-index: 1;
   right: 0;
 }
 
