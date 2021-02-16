@@ -53,6 +53,10 @@ const initialState = {
       scale: 1,
       opacity: 1,
     },
+    offeredPlayersBoard: {
+      scale: 1,
+      opacity: 1,
+    },
     moneyLevel1: {
       scale: 1,
       opacity: 1,
@@ -99,7 +103,8 @@ const tutorialsReducer = (state = initialState, action) => {
       };
     }
     case SET_ANIMATION_STATE: {
-      const payload = action.payload.state;
+      const payload = action.payload;
+
       const componentStates = {};
       if (payload.animationStates && payload.animationStates.length) {
         payload.animationStates.forEach((s) => {

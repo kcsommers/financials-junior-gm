@@ -62,8 +62,6 @@ export const Tutorial = ({ slides, onComplete }) => {
 
   const currentSlide = state.currentSlides[state.slideIndex];
 
-  console.log('CURRENT SLIDKE:::: ', currentSlide, slides);
-
   if (currentSlide.timer && !state.isComplete) {
     timer = window.setTimeout(() => {
       updateSlide(state.slideIndex + 1);
