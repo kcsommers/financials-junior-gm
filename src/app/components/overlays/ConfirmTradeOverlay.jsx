@@ -18,7 +18,8 @@ export const ConfirmTradeOverlay = ({
       <div className='confirm-trade-overlay'>
         <div style={{ display: 'flex', padding: '2rem 0rem 0 3rem' }}>
           <div style={{ flex: 1 }}>
-            <TeamBudgetState title='Changes to Rank and Budget' />
+            <TeamBudgetState />
+            {/* <TeamBudgetState title='Changes to Rank and Budget' /> */}
           </div>
           <div
             style={{
