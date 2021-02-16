@@ -11,6 +11,6 @@ export {
   trophiesStickSlides,
   seasonStickSlides,
 } from './lessons/home/hockey-stick-slides';
-export { teamSlides } from './lessons/team/players-slides';
+export { teamSlides } from './lessons/team/team-slides';
 export { scoutSlides } from './lessons/scout/scout-slides';
 export { Tutorial } from './components/Tutorial';
