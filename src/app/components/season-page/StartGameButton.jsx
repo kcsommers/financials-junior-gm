@@ -5,13 +5,11 @@ import { GamePhases } from '@data/season/season';
 import { useSelector } from 'react-redux';
 import { motion } from 'framer-motion';
 
-export const StartGameButton = ({
-  onClick,
-  gameBlockState,
-  seasonDisabled,
-}) => {
+export const StartGameButton = ({ onClick, gameBlockState, team }) => {
   const currentScenario = useSelector((state) => state.season.currentScenario);
   const { currentPhase } = gameBlockState;
+
+  const seasonDisabled = Object.keys(team || {}).some((p) => !team[p]);
 
   return (
     <div

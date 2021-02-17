@@ -28,8 +28,24 @@ const seasonReducer = (state = initialState, action) => {
   switch (action.type) {
     case GAME_BLOCK_ENDED: {
       const { results, scenario, student } = action.payload;
-
       const clonedState = cloneDeep(state);
+
+      results.forEach((r) => {
+        // tally up results for all teams
+        const opposingTeam = clonedState.allTeams.find(
+          (t) => t.name === r.opponent
+        );
+        clonedState.stats.points += r[0];
+        opposingTeam.stats.points += r[1];
+        if (r[0] > r[1]) {
+          clonedState.stats.wins += 1;
+          opposingTeam.stats.losses += 1;
+        } else {
+          clonedState.stats.losses += 1;
+          opposingTeam.stats.wins += 1;
+        }
+      });
+
       clonedState.previousGameBlocks.push(results);
       clonedState.currentBlockIndex = state.currentBlockIndex + 1;
       clonedState.currentScenario =
