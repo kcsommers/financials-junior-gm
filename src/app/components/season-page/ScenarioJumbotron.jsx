@@ -5,59 +5,8 @@ import blueBearsLogo from '@images/icons/blue-bears-logo.svg';
 import '../../../assets/css/components/season-page/initial-jumbotron-state.css';
 import { useDispatch, useSelector } from 'react-redux';
 
-export const InitialJumbotronState = ({seasonState}) => {
+export const ScenarioJumbotron = ({seasonState}, player) => {
   
-  const styles = {
-    right: {
-      indicator: {
-        position: 'absolute',
-        top: 0,
-        right: '40px',
-      },
-      image: {
-        position: 'relative',
-        right: '-50px',
-        top: 0,
-      },
-      imageLg: {
-        position: 'relative',
-        right: '-40px',
-        top: 0,
-      },
-      text: {
-        color: '#ea7200',
-        display: 'inline-block',
-        fontSize: '1rem',
-        marginRight: '0.25rem',
-        fontWeight: 'bold',
-      },
-    },
-    left: {
-      indicator: {
-        position: 'absolute',
-        top: 0,
-        left: '40px',
-      },
-      image: {
-        position: 'relative',
-        left: '-50px',
-        top: 0,
-      },
-      imageLg: {
-        position: 'relative',
-        left: '-40px',
-        top: 0,
-      },
-      text: {
-        color: '#002f6c',
-        display: 'inline-block',
-        fontSize: '1rem',
-        marginLeft: '0.25rem',
-        fontWeight: 'bold',
-        textAlign: 'right',
-      },
-    },
-  };
 
   const currentOpponent = seasonState && seasonState.teams && seasonState.teams[seasonState.currentOpponentIndex]
 

@@ -36,9 +36,9 @@ export const Navigation = ({ tutorialActive }) => {
         <h1 className='page-title'>HOME</h1>
       </div>
 
-      <div className='settings-link-box'>
+      { <div style={{opacity: 0}} className='settings-link-box'>
         <img src={settingsBtn} alt='Settings' />
-      </div>
+      </div>}
     </div>
   );
 };
