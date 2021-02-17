@@ -10,10 +10,11 @@ export const Jumbotron = ({
   student,
   seasonState,
   currentOpponentIndex,
-  seasonDisabled,
+  team,
 }) => {
-  const { currentOppenent, currentScore, currentPhase } = gameBlockState;
+  const { currentOpponent, currentScore, currentPhase } = gameBlockState;
 
+  const seasonDisabled = Object.keys(team || {}).some((p) => !team[p]);
   const nextOpponent = seasonState.allTeams[currentOpponentIndex + 1];
   const upcomingGames = seasonState.allTeams.slice(
     currentOpponentIndex + 2,
@@ -35,19 +36,19 @@ export const Jumbotron = ({
         <div className='jumbotron-stat-wrap'>
           Wins
           <div className='box-shadow jumbotron-stat-inner'>
-            {currentScore[0]}
+            {seasonState.stats.wins}
           </div>
         </div>
         <div className='jumbotron-stat-wrap'>
           Losses
           <div className='box-shadow jumbotron-stat-inner'>
-            {currentScore[0]}
+            {seasonState.stats.losses}
           </div>
         </div>
         <div className='jumbotron-stat-wrap'>
           Points
           <div className='box-shadow jumbotron-stat-inner'>
-            {currentScore[0]}
+            {seasonState.stats.points}
           </div>
         </div>
       </div>
@@ -126,7 +127,7 @@ export const Jumbotron = ({
           VS
         </span>
         <div className='game-on-top-right'>
-          <TeamCard logo={currentOppenent.logoLg} rank={currentOppenent.rank} />
+          <TeamCard logo={currentOpponent.logoLg} rank={currentOpponent.rank} />
         </div>
       </div>
       <div className='game-on-bottom'>{scoreView}</div>
@@ -186,7 +187,7 @@ export const Jumbotron = ({
   };
 
   const getFontSize = (str) => {
-    if (str && str.length > 20) {
+    if (str && str.length > 30) {
       return '1.75rem';
     }
 
@@ -202,6 +203,7 @@ export const Jumbotron = ({
       : gameBlockState.message;
   };
 
+  const message = getMessage();
   return (
     <>
       <div className='jumbotron-wrap'>
@@ -211,9 +213,9 @@ export const Jumbotron = ({
       </div>
       <h2
         className='jumbotron-message box-shadow'
-        style={{ fontSize: getFontSize(gameBlockState.message) }}
+        style={{ fontSize: getFontSize(message) }}
       >
-        {getMessage()}
+        {message}
       </h2>
     </>
   );

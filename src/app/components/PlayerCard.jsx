@@ -148,7 +148,7 @@ export const PlayerCard = ({
             className='player-card-img-wrap'
             style={{
               ...styles[size].image,
-              backgroundImage: `url(${playerImage})`,
+              backgroundImage: `url(${player.playerPicture || playerImage})`,
             }}
           ></div>
           <div className='player-ranks'>
@@ -230,7 +230,7 @@ export const PlayerCard = ({
             className='player-card-img-wrap'
             style={{
               ...styles[size].image,
-              backgroundImage: `url(${playerImage})`,
+              backgroundImage: `url(${player.playerPicture || playerImage})`,
             }}
           ></div>
           <div

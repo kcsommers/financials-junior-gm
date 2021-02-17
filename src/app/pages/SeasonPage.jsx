@@ -56,7 +56,7 @@ const SeasonPage = () => {
   }
 
   const gameBlockState = {
-    currentOppenent: state.currentBlock[state.currentOpponentIndex],
+    currentOpponent: state.currentBlock[state.currentOpponentIndex],
     currentPhase: gamePhases[state.currentPhaseIndex],
     currentScore: state.results[state.currentOpponentIndex]
       ? state.results[state.currentOpponentIndex].score
@@ -69,7 +69,7 @@ const SeasonPage = () => {
     gameBlockState.currentPhase &&
     gameBlockState.currentPhase.phase === GamePhases.UP_NEXT
   ) {
-    gameBlockState.currentPhase.messages[1] = `Jr Sharks vs ${gameBlockState.currentOppenent.name}`;
+    gameBlockState.currentPhase.messages[1] = `Jr Sharks vs ${gameBlockState.currentOpponent.name}`;
   }
 
   const seasonComplete = () => {
@@ -106,6 +106,7 @@ const SeasonPage = () => {
     const playersCopy = cloneDeep(student.players);
 
     scenarioPlayer.playerAssignment = currentScenario.playerAssignment;
+    currentScenario.player = scenarioPlayer;
 
     playersCopy.splice(
       playersCopy.findIndex((p) => p._id === scenarioPlayer._id),
@@ -113,21 +114,30 @@ const SeasonPage = () => {
       scenarioPlayer
     );
 
-    updateStudentById(student._id, {
-      [prevAssignment]: currentScenario.playerAssignment,
-      players: playersCopy,
-    })
-      .then((res) => {
-        dispatch(
-          allActions[seasonState.currentScenario.action](
-            scenarioPlayer,
-            prevAssignment
-          )
-        );
-        dispatch(setStudent(res.updatedStudent));
-        dispatch(gameBlockEnded(state.results, currentScenario, student));
-      })
-      .catch((err) => console.error(err));
+    p1.then((res) => {
+      dispatch(
+        allActions[currentScenario.action](scenarioPlayer, prevAssignment)
+      );
+      const updatedStudent = cloneDeep(student);
+      updatedStudent[prevAssignment] = null;
+      dispatch(setStudent(updatedStudent));
+      dispatch(gameBlockEnded(state.results, currentScenario, student));
+    }).catch((err) => console.error(err));
+    // updateStudentById(student._id, {
+    //   [prevAssignment]: currentScenario.playerAssignment,
+    //   players: playersCopy,
+    // })
+    //   .then((res) => {
+    //     dispatch(
+    //       allActions[seasonState.currentScenario.action](
+    //         scenarioPlayer,
+    //         prevAssignment
+    //       )
+    //     );
+    //     dispatch(setStudent(res.updatedStudent));
+    //     dispatch(gameBlockEnded(state.results, currentScenario, student));
+    //   })
+    //   .catch((err) => console.error(err));
   };
 
   const nextGame = () => {
@@ -161,7 +171,7 @@ const SeasonPage = () => {
 
     if (gameBlockState.currentPhase.phase === GamePhases.GAME_ON) {
       // time to get game results
-      const results = getGameResult(student, gameBlockState.currentOppenent);
+      const results = getGameResult(student, gameBlockState.currentOpponent);
       clonedState.currentMessageIndex = results.messageIndex;
       clonedState.results.push(results);
     }
@@ -236,13 +246,17 @@ const SeasonPage = () => {
                 student={student}
                 seasonState={seasonState}
                 currentOpponentIndex={state.currentOpponentIndex}
-                seasonDisabled={!team || Object.keys(team).length < 6}
+                team={team}
               />
             </div>
             <div className='opposing-team-rank-container'>
               <LevelStick
                 type='teamRank'
-                amount={student.teamRank}
+                amount={
+                  gameBlockState.currentOpponent
+                    ? gameBlockState.currentOpponent.teamRank
+                    : 0
+                }
                 denom={100}
                 color='#e06d00'
                 indicatorDirection='left'
@@ -263,7 +277,7 @@ const SeasonPage = () => {
                 <StartGameButton
                   onClick={startGameBlock}
                   gameBlockState={gameBlockState}
-                  seasonDisabled={!team || Object.keys(team).length < 6}
+                  team={team}
                 />
               </span>
             </div>

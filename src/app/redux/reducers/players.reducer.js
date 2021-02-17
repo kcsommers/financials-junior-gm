@@ -162,7 +162,7 @@ const playersReducer = (state = initialState, action) => {
     }
     case INJURE_PLAYER: {
       const clonedState = cloneDeep(state);
-      clonedState[action.payload.previousAssignment] = null;
+      clonedState.teamPlayers[action.payload.previousAssignment] = null;
       return clonedState;
     }
     default:
