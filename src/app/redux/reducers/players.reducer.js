@@ -26,6 +26,11 @@ const initialState = {
   scoutingState: {
     isComplete: false,
   },
+  stats: {
+    wins: 0,
+    losses: 0,
+    points: 0,
+  },
   initialized: false,
 };
 

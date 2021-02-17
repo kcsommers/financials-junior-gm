@@ -1,6 +1,6 @@
 import { TeamCard } from './TeamCard';
 import jrSharksLogo from '@images/icons/jr-sharks-logo-white-bg.svg';
-import { GamePhases, allTeams } from '@data/season/season';
+import { GamePhases } from '@data/season/season';
 import { Indicator } from '@components';
 import '@css/components/season-page/Jumbotron.css';
 
@@ -12,8 +12,8 @@ export const Jumbotron = ({
 }) => {
   const { currentOppenent, currentScore, currentPhase } = gameBlockState;
 
-  const nextOpponent = allTeams[currentOpponentIndex + 1];
-  const upcomingGames = allTeams.slice(
+  const nextOpponent = seasonState.allTeams[currentOpponentIndex + 1];
+  const upcomingGames = seasonState.allTeams.slice(
     currentOpponentIndex + 2,
     currentOpponentIndex + 4
   );

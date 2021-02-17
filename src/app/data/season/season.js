@@ -3,6 +3,42 @@ import purplePanthers from '@images/icons/purple-panthers.svg';
 import whiteWolves from '@images/icons/white-wolves.svg';
 import blueBearsLogoLg from '@images/icons/blue-bears-logo-big.svg';
 import blueBearsLogoSm from '../../../assets/images/icons/blue-bears-logo.svg';
+import { INJURE_PLAYER } from '@redux/actionTypes';
+import { PlayerAssignments } from '@data/players/players';
+
+const getSecondHighestPlayer = (team) => {
+  return Object.keys(teams)
+    .map((p) => team[p])
+    .sort((a, b) => +b.overallRank - +a.overallRank)[1];
+};
+
+const getStartingPlayer = (team) => {
+  const props = [
+    PlayerAssignments.F_ONE,
+    PlayerAssignments.F_TWO,
+    PlayerAssignments.F_THREE,
+    PlayerAssignments.G_ONE,
+    PlayerAssignments.D_ONE,
+    PlayerAssignments.D_TWO,
+  ];
+  const i = Math.floor(Math.random() * props.length);
+  return team[props][i];
+};
+
+export const scenarios = {
+  1: [
+    {
+      message: 'OH NO! One of your players was injured',
+      action: INJURE_PLAYER,
+      getPlayer: getSecondHighestPlayer,
+    },
+    {
+      message: 'OH NO! One of your players was injured',
+      action: INJURE_PLAYER,
+      getPlayer: getStartingPlayer,
+    },
+  ],
+};
 
 export const GamePhases = {
   READY: 'READY',

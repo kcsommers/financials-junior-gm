@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   HeaderComponent,
   PageBoard,
@@ -14,6 +14,7 @@ import seasonStick from '@images/season-stick.svg';
 import '@css/pages/SeasonPage.css';
 import { GamePhases, gamePhases } from '@data/season/season';
 import { cloneDeep } from 'lodash';
+import { gameBlockEnded } from '@redux/actions';
 
 let timer = 0;
 
@@ -24,23 +25,27 @@ const getGameResult = (student, opponent) => {
       score: [Math.ceil(rankDiff / 10), 0],
       messageIndex: 0,
       opponent: opponent.name,
+      win: true,
     };
   } else if (Math.abs(rankDiff) > 0 && Math.abs(rankDiff) <= 5) {
     return {
       score: [2, 1],
       messageIndex: 1,
       opponent: opponent.name,
+      win: true,
     };
   } else {
     return {
       score: [0, Math.ceil(Math.abs(rankDiff / 10))],
       messageIndex: 2,
       opponent: opponent.name,
+      win: false,
     };
   }
 };
 
 const SeasonPage = () => {
+  const dispatch = useDispatch();
   const student = useSelector((state) => state.studentState.student);
 
   const seasonState = useSelector((state) => state.season);
@@ -74,7 +79,14 @@ const SeasonPage = () => {
   }
 
   const endBlock = () => {
-    console.log('END BLOCK::::');
+    const p1 = new Promise((res) => res(true));
+    const newBlockIndex = seasonState.currentBlockIndex + 1;
+    const allGameBlocks = cloneDeep(seasonState.previousGameBlocks);
+    allGameBlocks.push(state.results);
+    console.log('END BLOCK::::', allGameBlocks);
+    p1.then(() => {
+      dispatch(gameBlockEnded(allGameBlocks, newBlockIndex));
+    }).catch((err) => console.error(err));
   };
 
   const nextGame = () => {
