@@ -179,6 +179,7 @@ const SeasonPage = () => {
                 gameBlockState={gameBlockState}
                 student={student}
                 seasonState={seasonState}
+                currentOpponentIndex={state.currentOpponentIndex}
               />
             </div>
             <div className='opposing-team-rank-container'>
