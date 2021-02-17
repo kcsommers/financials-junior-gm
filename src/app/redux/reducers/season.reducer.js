@@ -96,28 +96,28 @@ const initialState = {
   ],
   teams: [
     {
-      rank: 270,
+      rank: 35,
       image: blueBears,
       name: 'Blue Bears',
       stats: {wins: 0, losses: 0, points: 0},
       standings: '12th'
     },
     { 
-      rank: 280,
+      rank: 50,
       image: redRabbits,
       name: 'Red Rabbits',
       stats: {wins: 0, losses: 0, points: 0},
       standings: '12th'
     },
     {
-      rank: 300,
+      rank: 55,
       image: purplePanthers,
       name: 'Purple Panthers',
       stats: {wins: 0, losses: 0, points: 0},
       standings: '10th'
     },
     {
-      rank: 325,
+      rank: 80,
       image: whiteWolves,
       name: 'White Wolves',
       stats: {wins: 0, losses: 0, points: 0},
@@ -209,7 +209,7 @@ export default function(state = initialState, action) {
     case UPDATE_TEAMS:
       return {
         ...state,
-        teams: state.blocks[1]
+        teams: state.blocks[action.payload]
       }
     case SET_JUMBOTRON_DISPLAY:
       return {
