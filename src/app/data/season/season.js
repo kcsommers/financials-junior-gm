@@ -6,8 +6,34 @@ import blueBearsLogoSm from '../../../assets/images/icons/blue-bears-logo.svg';
 import { INJURE_PLAYER } from '@redux/actionTypes';
 import { PlayerAssignments } from '@data/players/players';
 
+export const getGameResult = (student, opponent) => {
+  const rankDiff = student.teamRank - opponent.teamRank;
+  if (rankDiff > 5) {
+    return {
+      score: [Math.ceil(rankDiff / 10), 0],
+      messageIndex: 0,
+      opponent: opponent.name,
+      win: true,
+    };
+  } else if (Math.abs(rankDiff) > 0 && Math.abs(rankDiff) <= 5) {
+    return {
+      score: [2, 1],
+      messageIndex: 1,
+      opponent: opponent.name,
+      win: true,
+    };
+  } else {
+    return {
+      score: [0, Math.ceil(Math.abs(rankDiff / 10))],
+      messageIndex: 2,
+      opponent: opponent.name,
+      win: false,
+    };
+  }
+};
+
 const getSecondHighestPlayer = (team) => {
-  return Object.keys(teams)
+  return Object.keys(team)
     .map((p) => team[p])
     .sort((a, b) => +b.overallRank - +a.overallRank)[1];
 };
@@ -29,13 +55,19 @@ export const scenarios = {
   1: [
     {
       message: 'OH NO! One of your players was injured',
+      objective: '1. Replace the injured player',
       action: INJURE_PLAYER,
       getPlayer: getSecondHighestPlayer,
+      playerAssignment: null,
+      player: null,
     },
     {
       message: 'OH NO! One of your players was injured',
+      objective: '1. Replace the injured player',
       action: INJURE_PLAYER,
       getPlayer: getStartingPlayer,
+      playerAssignment: null,
+      player: null,
     },
   ],
 };
@@ -74,7 +106,7 @@ export const gamePhases = [
     timer: 5000,
     messages: [
       'GET LOUD! The Jr Sharks Won!',
-      'The Jr Sharks won in overtime!',
+      'CLOSE GAME! The Jr Sharks won in overtime!',
       'OH NO! The Jr Sharks lost :(',
     ],
   },

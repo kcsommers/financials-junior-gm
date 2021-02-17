@@ -1,28 +1,44 @@
-import { allTeams } from '@data/season/season';
+import { allTeams, scenarios } from '@data/season/season';
 import { cloneDeep } from 'lodash';
-import { GAME_BLOCK_ENDED } from './../actionTypes';
+import {
+  GAME_BLOCK_ENDED,
+  SET_SCENARIO_COMPLETE,
+  SET_SEASON_COMPLETE,
+} from './../actionTypes';
 
 const initialState = {
   previousGameBlocks: [], // array of game blocks
   gameBlocks: [
-    allTeams.slice(0, 4),
+    allTeams.slice(0, 1),
     allTeams.slice(4, 8),
     allTeams.slice(8, 12),
   ],
-  gameBlockIndex: 0,
+  currentBlockIndex: 0,
   currentScenario: null,
   allTeams: cloneDeep(allTeams),
+  isComplete: false,
+  stats: {
+    wins: 0,
+    losses: 0,
+    points: 0,
+  },
 };
 
 const seasonReducer = (state = initialState, action) => {
   switch (action.type) {
     case GAME_BLOCK_ENDED: {
-      const { blockIndex, newBlockIndex, results, student } = action.payload;
+      const { results, scenario, student } = action.payload;
 
       const clonedState = cloneDeep(state);
-      clonedState.previousGameBlocks = action.payload.gameBlocks;
-      clonedState.gameBlockIndex = action.payload.gameBlockIndex;
-      clonedState.scenario = scenarios[student.level][blockIndex];
+      clonedState.previousGameBlocks.push(results);
+      clonedState.currentBlockIndex = state.currentBlockIndex + 1;
+      clonedState.currentScenario =
+        scenarios[student.level][state.currentBlockIndex];
+      return clonedState;
+    }
+    case SET_SCENARIO_COMPLETE: {
+      const clonedState = cloneDeep(state);
+      clonedState.currentScenario = null;
       return clonedState;
     }
     default:

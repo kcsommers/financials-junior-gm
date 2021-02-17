@@ -29,6 +29,8 @@ import {
   UPDATE_SEASON_STATE,
   GAME_BLOCK_ENDED,
   INJURE_PLAYER,
+  SET_SCENARIO_COMPLETE,
+  SET_SEASON_COMPLETE,
 } from './actionTypes';
 
 export const setAnimationState = (state) => ({
@@ -91,9 +93,9 @@ export const tradePlayer = (releasedPlayer, signedPlayer) => ({
   payload: { releasedPlayer, signedPlayer },
 });
 
-export const injurePlayer = (injuredPlayer) => ({
+export const injurePlayer = (injuredPlayer, previousAssignment) => ({
   type: INJURE_PLAYER,
-  payload: injuredPlayer,
+  payload: { injuredPlayer, previousAssignment },
 });
 
 export const setLoginState = (isLoggedIn, role) => ({
@@ -176,12 +178,17 @@ export const updateSeasonState = (updatedState) => ({
   payload: updatedState,
 });
 
-export const gameBlockEnded = (
-  blockIndex,
-  newBlockIndex,
-  results,
-  student
-) => ({
+export const gameBlockEnded = (results, scenario, student) => ({
   type: GAME_BLOCK_ENDED,
-  payload: { blockIndex, newBlockIndex, results, student },
+  payload: { results, scenario, student },
+});
+
+export const setScenarioComplete = () => ({
+  type: SET_SCENARIO_COMPLETE,
+  payload: null,
+});
+
+export const setSeasonComplete = () => ({
+  type: SET_SEASON_COMPLETE,
+  payload: null,
 });

@@ -2,24 +2,43 @@ import { ReactSVG } from 'react-svg';
 import play from '@images/icons/play.svg';
 import hockeySticksButton from '@images/icons/hockey-sticks-button.svg';
 import { GamePhases } from '@data/season/season';
+import { useSelector } from 'react-redux';
+import { motion } from 'framer-motion';
 
-export const StartGameButton = ({ onClick, gameBlockState }) => {
+export const StartGameButton = ({
+  onClick,
+  gameBlockState,
+  seasonDisabled,
+}) => {
+  const currentScenario = useSelector((state) => state.season.currentScenario);
   const { currentPhase } = gameBlockState;
 
   return (
     <div
       onClick={() => {
-        if (!gameBlockState.blockStarted) {
+        if (
+          !seasonDisabled &&
+          !currentScenario &&
+          currentPhase.phase === GamePhases.READY
+        ) {
           onClick();
         }
       }}
-      style={{ cursor: 'pointer' }}
+      style={{
+        cursor: !seasonDisabled ? 'pointer' : 'initial',
+        opacity: !seasonDisabled ? 1 : 0.75,
+      }}
     >
-      <ReactSVG
-        src={
-          currentPhase.phase === GamePhases.READY ? play : hockeySticksButton
-        }
-      />
+      {currentPhase.phase === GamePhases.READY && (
+        <motion.div>
+          <ReactSVG src={play} />
+        </motion.div>
+      )}
+      {currentPhase.phase !== GamePhases.READY && (
+        <motion.div>
+          <ReactSVG src={hockeySticksButton} />
+        </motion.div>
+      )}
     </div>
   );
 };

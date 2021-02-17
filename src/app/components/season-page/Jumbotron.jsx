@@ -1,14 +1,16 @@
 import { TeamCard } from './TeamCard';
 import jrSharksLogo from '@images/icons/jr-sharks-logo-white-bg.svg';
 import { GamePhases } from '@data/season/season';
-import { Indicator } from '@components';
+import { Indicator, PlayerCard } from '@components';
 import '@css/components/season-page/Jumbotron.css';
+import { motion } from 'framer-motion';
 
 export const Jumbotron = ({
   gameBlockState,
   student,
   seasonState,
   currentOpponentIndex,
+  seasonDisabled,
 }) => {
   const { currentOppenent, currentScore, currentPhase } = gameBlockState;
 
@@ -49,6 +51,13 @@ export const Jumbotron = ({
           </div>
         </div>
       </div>
+    </div>
+  );
+
+  const sharksTransitionView = (
+    <div className='transition-view-left'>
+      <TeamCard logo={jrSharksLogo} rank={student.teamRank} />
+      {statsView}
     </div>
   );
 
@@ -126,15 +135,39 @@ export const Jumbotron = ({
 
   const transitionView = (
     <div className='transition-view-container'>
-      <div className='transition-view-left'>
-        <TeamCard logo={jrSharksLogo} rank={student.teamRank} />
-        {statsView}
-      </div>
+      {sharksTransitionView}
       <div className='transition-view-right'>{comingUpView}</div>
     </div>
   );
 
+  const scenarioView = seasonState.currentScenario ? (
+    <div className='transition-view-container'>
+      {sharksTransitionView}
+      <div className='transition-view-right'>
+        <motion.div
+          initial={{ scale: 0.75 }}
+          animate={{ scale: 1, position: 'relative', top: '-1rem' }}
+          transition={{
+            scale: {
+              type: 'spring',
+              stiffness: 500,
+            },
+          }}
+        >
+          <PlayerCard
+            player={seasonState.currentScenario.player}
+            size='medium'
+          />
+        </motion.div>
+      </div>
+    </div>
+  ) : null;
+
   const getJumbotronView = () => {
+    if (seasonState.currentScenario) {
+      return scenarioView;
+    }
+
     switch (currentPhase.phase) {
       case GamePhases.READY:
       case GamePhases.TRANSITION: {
@@ -152,6 +185,23 @@ export const Jumbotron = ({
     }
   };
 
+  const getFontSize = (str) => {
+    if (str && str.length > 20) {
+      return '1.75rem';
+    }
+
+    return '2.25rem';
+  };
+
+  const getMessage = () => {
+    if (seasonDisabled && !seasonState.currentScenario) {
+      return 'Fill up your team to play the season!';
+    }
+    return seasonState.currentScenario
+      ? seasonState.currentScenario.message
+      : gameBlockState.message;
+  };
+
   return (
     <>
       <div className='jumbotron-wrap'>
@@ -159,7 +209,12 @@ export const Jumbotron = ({
         <div className='jumbotron-main-section'>{getJumbotronView()}</div>
         <div className='jumbotron-border jumbotron-border-right'></div>
       </div>
-      <h2 className='jumbotron-message box-shadow'>{gameBlockState.message}</h2>
+      <h2
+        className='jumbotron-message box-shadow'
+        style={{ fontSize: getFontSize(gameBlockState.message) }}
+      >
+        {getMessage()}
+      </h2>
     </>
   );
 };
