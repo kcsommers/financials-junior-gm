@@ -23,7 +23,7 @@ import {
   updateOpponentIndex,
 } from '@redux/actions';
 import { PlayingGame } from '../components/season-page/PlayingGame';
-import { setLoginState, updateSeasonState } from '../redux/actions';
+import { setLoginState, updateSeasonState, updateTeams } from '../redux/actions';
 
 const Season = () => {
 
@@ -31,9 +31,13 @@ const Season = () => {
     return state.season
   });
 
-  // const student = useSelector((state) => state.studentState.student);
+  const student = useSelector((state) => state.studentState.student);
 
-
+  const studentTeam = useSelector((state) => state.players.teamPlayers);
+  let teamLength = 0
+  if (studentTeam) {
+    teamLength = Object.keys(studentTeam).length
+  }
   const [gameOn, setGameOn] = useState(false)
   const [score, setScore] = useState([0,0])
   const [results, setResults] = useState([])
@@ -76,7 +80,7 @@ const Season = () => {
       setSeasonSign('Your results are here!')
     )
     if(rankDiff > 5) {
-      score[0] = rankDiff / 10
+      score[0] = Math.round(rankDiff/10)
       score[1] = 0
       // dispatch(
       //   setSeasonSign('GET LOUD! The Jr Sharks Won!')
@@ -88,8 +92,8 @@ const Season = () => {
       //     losses: seasonState.losses + 0
       //   })
       // )
-      return [rankDiff / 10,  0]
-    } else if (Math.abs(rankDiff) > 0 && Math.abs(rankDiff) <= 5) {
+      return [Math.round(rankDiff/10),  0]
+    } else if (Math.abs(rankDiff) >= 0 && Math.abs(rankDiff) <= 5) {
       score[0] = 2
       score[1] = 1
       // dispatch(
@@ -105,7 +109,7 @@ const Season = () => {
       return [2, 1]
     } else {
       score[0] = 0
-      score[1] = rankDiff / 10
+      score[1] = Math.floor(Math.abs(rankDiff/10))
       // dispatch(
       //   setSeasonSign('OH NO! The Jr Sharks lost:(')
       // )
@@ -116,17 +120,17 @@ const Season = () => {
       //     losses: seasonState.losses + 1
       //   })
       // )
-      return [0, rankDiff/10]
+      return [0,  Math.floor(Math.abs(rankDiff/10))]
     }
   };
 
   const getResults =  (teams) => {
     let r = []
     for (let i = 0; i < teams.length; i++) {
-      console.log(rank, teams[i].rank)
+      console.log(student.teamRank, teams[i].rank)
       let result = {
         team: teams[i].name,
-        score: theResultScore(rank, teams[i].rank)
+        score: theResultScore(student.teamRank, teams[i].rank)
       }
       r.push(result)
     }
@@ -146,7 +150,7 @@ const Season = () => {
         w += 1
         p += 1
         console.log('otwin', r[i].score[0], r[i].score[1], w, p )
-      } else if (r[i].score[1] - r[i].score[0] > 2 ) {
+      } else if (r[i].score[1] > r[i].score[0]) {
         l += 1
         console.log('loss', r[i].score[0], r[i].score[1] )
       }
@@ -260,7 +264,12 @@ const Season = () => {
     //     )
     //   }, 15000)
        setResults(getResults(teams))
-       setTimeout(() => {setDisplay(<InitialJumbotronState seasonState={seasonState}/>)}, 100)
+       dispatch(
+         updateTeams(1)
+       )
+
+      setTimeout(() => {setDisplay(<InitialJumbotronState seasonState={seasonState}/>)}, 100)
+
     }
   
   const startSequence = () => {
@@ -273,8 +282,8 @@ const Season = () => {
 
   console.log(currentOpponent)
   
-  // student ?  
-  return (
+  
+  return student ? (
     <div className='season-page page-container'>
       <HeaderComponent
         stickBtn={seasonStick}
@@ -287,7 +296,7 @@ const Season = () => {
           <div style={{ paddingTop: '1rem' }}>
             <LevelStick
               type='teamRank'
-              amount={50}
+              amount={student.teamRank}
               denom={100}
               color='#e06d00'
               indicatorDirection='right'
@@ -308,7 +317,7 @@ const Season = () => {
                 </div>
               <div className='season-team-right-border'></div>
             </div>
-            <div className='SeasonTopRow-sign'>{seasonSign}</div>
+            <div className='SeasonTopRow-sign'>{teamLength >= 6 ? seasonSign : 'Not enough players team to play!'}</div>
           </div>
           <div style={{ paddingTop: '1rem' }}>
             <LevelStick
@@ -383,7 +392,7 @@ const Season = () => {
             </div>
           </div>
           
-          <ReactSVG src={simulationButton} onClick={startSequence}/>
+          {teamLength >= 6 && <ReactSVG src={simulationButton} onClick={startSequence}/>}
 
           <div>
             <p className='season-standings-title'>Standings</p>
@@ -421,20 +430,20 @@ const Season = () => {
       </div>
     </div>
   ) 
-  // : (<div
-  //   style={{
-  //     position: 'absolute',
-  //     top: 0,
-  //     bottom: 0,
-  //     left: 0,
-  //     right: 0,
-  //     display: 'flex',
-  //     alignItems: 'center',
-  //     justifyContent: 'center',
-  //   }}
-  // >
-  //   <LoadingSpinner />
-  // </div>)
+  : (<div
+    style={{
+      position: 'absolute',
+      top: 0,
+      bottom: 0,
+      left: 0,
+      right: 0,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+    }}
+  >
+    <LoadingSpinner />
+  </div>)
   ;
 };
 

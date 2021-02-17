@@ -210,7 +210,7 @@ const HomePage = () => {
               animationState={animationStates.seasonStick}
             />
             <p className={`stick-btn-text${tutorialActive ? ' hidden' : ''}`}>
-              Play matches and win the championship!
+              Play games and win the championship!
             </p>
           </div>
           <div className='stick-btn-container'>
