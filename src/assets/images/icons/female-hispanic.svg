@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="49.811" height="49.811" viewBox="0 0 49.811 49.811">
+  <defs>
+    <clipPath id="clip-path">
+      <circle id="Ellipse_13" data-name="Ellipse 13" cx="24.906" cy="24.906" r="24.906" transform="translate(29.975 36.634)" fill="#fff" stroke="#707070" stroke-width="2"/>
+    </clipPath>
+    <clipPath id="clip-path-2">
+      <path id="Body" d="M0,49.41A16.4,16.4,0,0,1,15.39,33.038V29.284a11.348,11.348,0,0,1-6.418-9.058A2.431,2.431,0,0,1,6.885,17.82V14.985a2.431,2.431,0,0,1,2.025-2.4V11.34a11.34,11.34,0,1,1,22.679,0v1.249a2.431,2.431,0,0,1,2.025,2.4V17.82a2.431,2.431,0,0,1-2.087,2.406,11.347,11.347,0,0,1-6.418,9.058v3.754A16.4,16.4,0,0,1,40.5,49.41Z" fill="#e5c3ac"/>
+    </clipPath>
+    <clipPath id="clip-path-3">
+      <rect id="Mask" width="53.459" height="56.695" fill="none"/>
+    </clipPath>
+    <clipPath id="clip-path-4">
+      <path id="Short_Hair" data-name="Short Hair" d="M.251,18.98A6.635,6.635,0,0,1,0,16.954,13.422,13.422,0,0,1,1.261,11.83C2.78,8.657,4.551,6.513,7.544,5.758q.282-.071.576-.137a2.983,2.983,0,0,1-.98-2.149C7.14,1.554,9.182,0,11.7,0s4.562,1.554,4.562,3.471a2.98,2.98,0,0,1-.969,2.139,12.994,12.994,0,0,1,3.212,1.334c4,2.32,4.735,7.557,4.877,9.55a8.942,8.942,0,0,1-.228,2.634c-.117.506-.329.518-.423-.047-.246-1.486.125-3.17-.682-4.542C21.37,13.38,19.086,7.96,11.7,8.265S3.409,12,2.139,13.655a7.947,7.947,0,0,0-1.111,2.316,6.848,6.848,0,0,0-.327,1.7,8,8,0,0,0-.022.937,4.712,4.712,0,0,1,.1.768c-.027.186-.075.256-.131.256C.5,19.635.3,19.153.251,18.98Z" transform="translate(0)" fill="#28354b"/>
+    </clipPath>
+  </defs>
+  <g id="Image" transform="translate(-20.678 -34.189)">
+    <g id="Mask_Group_21" data-name="Mask Group 21" transform="translate(-9.297 -2.445)" clip-path="url(#clip-path)">
+      <g id="Group_77" data-name="Group 77" transform="translate(27.636 36.993)">
+        <g id="Avataaar_Default" data-name="Avataaar/Default" transform="translate(0 0)">
+          <g id="Body-2" data-name="Body" transform="translate(6.48 7.29)">
+            <path id="Body-3" data-name="Body" d="M0,49.41A16.4,16.4,0,0,1,15.39,33.038V29.284a11.348,11.348,0,0,1-6.418-9.058A2.431,2.431,0,0,1,6.885,17.82V14.985a2.431,2.431,0,0,1,2.025-2.4V11.34a11.34,11.34,0,1,1,22.679,0v1.249a2.431,2.431,0,0,1,2.025,2.4V17.82a2.431,2.431,0,0,1-2.087,2.406,11.347,11.347,0,0,1-6.418,9.058v3.754A16.4,16.4,0,0,1,40.5,49.41Z" transform="translate(0 0)" fill="#d0c6ac"/>
+            <g id="Body-4" data-name="Body" clip-path="url(#clip-path-2)">
+              <g id="_Skin" data-name="🎨 Skin" transform="translate(-6.48 0)">
+                <rect id="Color" width="53.459" height="49.41" fill="#f5aa78"/>
+              </g>
+              <path id="Neck_Shadow" data-name="Neck Shadow" d="M11.34,12.92A11.266,11.266,0,0,1,3.321,9.6,11.265,11.265,0,0,1,0,1.581V.176A11.4,11.4,0,0,0,11.34,11.3,11.358,11.358,0,0,0,22.679-.011V1.581A11.265,11.265,0,0,1,19.358,9.6,11.265,11.265,0,0,1,11.34,12.92Z" transform="translate(8.91 19.074)" fill="rgba(0,0,0,0.1)"/>
+            </g>
+          </g>
+          <g id="Face" transform="translate(15.39 16.605)">
+            <g id="_Mouth" data-name="👄 Mouth" transform="translate(0.405 10.53)">
+              <rect id="Mouth_Default_background" data-name="Mouth/Default background" width="21.87" height="8.91" fill="none"/>
+              <path id="Mouth" d="M0,0A2.835,2.835,0,0,0,2.835,2.835h0A2.835,2.835,0,0,0,5.67,0" transform="translate(8.1 3.037)" fill="rgba(0,0,0,0.7)"/>
+            </g>
+            <g id="_Nose" data-name="👃🏽 Nose" transform="translate(5.67 8.1)">
+              <rect id="Nose_Default_background" data-name="Nose/Default background" width="11.34" height="4.86" fill="none"/>
+              <path id="Nose" d="M0,0C0,.895,1.088,1.62,2.43,1.62h0C3.772,1.62,4.86.895,4.86,0" transform="translate(3.24 1.62)" fill="rgba(0,0,0,0.16)"/>
+            </g>
+            <g id="_Eyes" data-name="👁 Eyes" transform="translate(0 1.62)">
+              <rect id="Eyes_Default_background" data-name="Eyes/Default 😀 background" width="22.68" height="8.91" fill="none"/>
+              <circle id="Eye" cx="1.215" cy="1.215" r="1.215" transform="translate(4.86 3.24)" fill="rgba(0,0,0,0.6)"/>
+              <circle id="Eye-2" data-name="Eye" cx="1.215" cy="1.215" r="1.215" transform="translate(15.39 3.24)" fill="rgba(0,0,0,0.6)"/>
+            </g>
+            <g id="_Eyebrow" data-name="✏️ Eyebrow" transform="translate(2.43 1.231)">
+              <g id="I_Browse" data-name="I Browse">
+                <path id="Eyebrow" d="M.735,2.244C1.528,1.128,3.7.5,5.573.962A.4.4,0,1,0,5.767.176C3.592-.358,1.076.366.075,1.775a.4.4,0,0,0,.66.469Z" transform="translate(0 0)" fill="rgba(0,0,0,0.6)"/>
+                <path id="Eyebrow-2" data-name="Eyebrow" d="M-24.661,2.244C-25.454,1.128-27.627.5-29.5.962a.4.4,0,0,1-.49-.3.4.4,0,0,1,.3-.49C-27.518-.358-25,.366-24,1.775a.405.405,0,0,1-.1.565A.4.4,0,0,1-24.661,2.244Z" transform="translate(41.745 0)" fill="rgba(0,0,0,0.6)"/>
+              </g>
+            </g>
+          </g>
+          <g id="Top">
+            <rect id="Mask-2" data-name="Mask" width="53.459" height="56.695" fill="none"/>
+            <g id="Top-2" data-name="Top" clip-path="url(#clip-path-3)">
+              <g id="Top-3" data-name="Top" transform="translate(9.72 0.861)">
+                <g id="Group_22" data-name="Group 22" transform="translate(-68.735)">
+                  <path id="Short_Hair-2" data-name="Short Hair" d="M.251,18.98A6.635,6.635,0,0,1,0,16.954,13.422,13.422,0,0,1,1.261,11.83C2.78,8.657,4.551,6.513,7.544,5.758q.282-.071.576-.137a2.983,2.983,0,0,1-.98-2.149C7.14,1.554,9.182,0,11.7,0s4.562,1.554,4.562,3.471a2.98,2.98,0,0,1-.969,2.139,12.994,12.994,0,0,1,3.212,1.334c4,2.32,4.735,7.557,4.877,9.55a8.942,8.942,0,0,1-.228,2.634c-.117.506-.329.518-.423-.047-.246-1.486.125-3.17-.682-4.542C21.37,13.38,19.086,7.96,11.7,8.265S3.409,12,2.139,13.655a7.947,7.947,0,0,0-1.111,2.316,6.848,6.848,0,0,0-.327,1.7,8,8,0,0,0-.022.937,4.712,4.712,0,0,1,.1.768c-.027.186-.075.256-.131.256C.5,19.635.3,19.153.251,18.98Z" transform="translate(74)" fill="#28354b"/>
+                  <g id="Mask_Group_23" data-name="Mask Group 23" transform="translate(74)" clip-path="url(#clip-path-4)">
+                    <g id="_Hair_Color" data-name="↳ 💈Hair Color" transform="translate(-14.478)">
+                      <rect id="Color-2" data-name="Color" width="52.36" height="55.533" fill="#724133"/>
+                    </g>
+                  </g>
+                </g>
+              </g>
+            </g>
+          </g>
+        </g>
+        <path id="Path_33" data-name="Path 33" d="M161.508,71.155l-7.344-1.689a2.9,2.9,0,0,0-2.68.758h-5.323c-.53-.794,2.4.61-5.072.61s2.991,2.969-4.747-.61c0,.955-3.382-.773-3.912.022-.709-.7-1.725-.982-10.1.988a9.667,9.667,0,0,0-7.452,9.41v8.765a2.9,2.9,0,0,0,2.9,2.9h48.334a2.9,2.9,0,0,0,2.9-2.9v-8.83a9.667,9.667,0,0,0-7.507-9.423Z" transform="translate(-114.638 -32.082)" fill="#f5aa78"/>
+        <path id="Path_35" data-name="Path 35" d="M151.456,156.885c-1.435,1.416-2.8,2.623-4.017,3.63a8.662,8.662,0,0,1-11.02,0c-1.218-1-2.577-2.209-4.009-3.622a2.9,2.9,0,0,0-2.693-.755l-7.4,1.743a9.667,9.667,0,0,0-7.452,9.41v8.779a2.9,2.9,0,0,0,2.9,2.9H166.1a2.9,2.9,0,0,0,2.9-2.9v-8.83a9.667,9.667,0,0,0-7.507-9.423l-7.343-1.689A2.9,2.9,0,0,0,151.456,156.885Z" transform="translate(-114.623 -118.742)" fill="#006b77"/>
+        <path id="Path_36" data-name="Path 36" d="M162.728,208.365a5.568,5.568,0,0,1-2.68-.671l-3.365-1.86A5.58,5.58,0,0,0,154,205.16H129.857a5.568,5.568,0,0,0-2.68.674l-3.365,1.86a5.577,5.577,0,0,1-2.688.671H114.86v4.006a2.685,2.685,0,0,0,2.9,2.4H166.1a2.693,2.693,0,0,0,2.9-2.4v-4.006Z" transform="translate(-114.623 -154.557)" fill="#006b77"/>
+        <path id="Path_44" data-name="Path 44" d="M176.98,169.36l14.076-12.8-1.857-.43a2.9,2.9,0,0,0-2.68.758c-1.435,1.416-2.8,2.623-4.017,3.63a8.663,8.663,0,0,1-11.02,0c-1.218-1-2.577-2.209-4.009-3.622a2.9,2.9,0,0,0-2.693-.755l-1.86.441Z" transform="translate(-149.673 -118.749)" fill="#fff"/>
+        <path id="Path_45" data-name="Path 45" d="M200.245,178.625l4.935-4.485Z" transform="translate(-172.938 -133.297)" fill="#006472"/>
+      </g>
+    </g>
+    <g id="Ellipse_15" data-name="Ellipse 15" transform="translate(20.783 34.4)" fill="none" stroke="#707070" stroke-width="2">
+      <circle cx="24.8" cy="24.8" r="24.8" stroke="none"/>
+      <circle cx="24.8" cy="24.8" r="23.8" fill="none"/>
+    </g>
+  </g>
+</svg>
