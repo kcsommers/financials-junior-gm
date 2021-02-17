@@ -110,9 +110,15 @@ export const PlayerCard = ({
   onClick,
 }) => {
   const playerTemplateSmall = player ? (
-    <div
+    <motion.div
       className={`player-card-wrap${!!onClick ? ' player-card-clickable' : ''}`}
       style={styles[size].wrap}
+      animate={animationStates ? animationStates.playerCard : null}
+      transition={{
+        default: {
+          duration: 1,
+        },
+      }}
     >
       <div
         style={{
@@ -137,15 +143,7 @@ export const PlayerCard = ({
             )}
           </div>
         </div>
-        <motion.div
-          animate={animationStates ? animationStates.playerCard : null}
-          className='box-shadow player-card-body'
-          transition={{
-            default: {
-              duration: 1,
-            },
-          }}
-        >
+        <div className='box-shadow player-card-body'>
           <div
             className='player-card-img-wrap'
             style={{
@@ -170,9 +168,9 @@ export const PlayerCard = ({
               rank={+player.defensiveRank}
             />
           </div>
-        </motion.div>
+        </div>
       </div>
-    </div>
+    </motion.div>
   ) : null;
 
   const playerTemplateLarge = player ? (

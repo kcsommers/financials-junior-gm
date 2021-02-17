@@ -9,7 +9,7 @@ export const Navigation = ({ tutorialActive }) => {
 
   const doLogout = () => {
     logout()
-      .then((res) => {
+      .then(() => {
         history.push('/login/student');
       })
       .catch((err) => console.error(err));
@@ -24,7 +24,12 @@ export const Navigation = ({ tutorialActive }) => {
       }}
     >
       <div className='exit-stick-box'>
-        <img src={exitBtn} alt='Exit' onClick={doLogout} />
+        <img
+          src={exitBtn}
+          alt='Exit'
+          onClick={doLogout}
+          style={{ cursor: 'pointer' }}
+        />
       </div>
 
       <div className='home-title-box'>

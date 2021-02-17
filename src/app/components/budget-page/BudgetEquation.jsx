@@ -18,7 +18,7 @@ export const BudgetEquation = ({ budget, animationStates }) => {
         >
           <span className='equation-title'>Total Budget</span>
           <span className='equation-amount'>
-            {getDollarString(budget.total - budget.spent)}
+            {getDollarString(budget.total - budget.spent, true)}
           </span>
         </motion.div>
         <span className='equation-operator'>-</span>
@@ -29,7 +29,7 @@ export const BudgetEquation = ({ budget, animationStates }) => {
         >
           <span className='equation-title'>Savings</span>
           <span className='equation-amount'>
-            {getDollarString(budget.savings)}
+            {getDollarString(budget.savings, true)}
           </span>
         </motion.div>
         <span className='equation-operator equals'>=</span>
@@ -40,7 +40,10 @@ export const BudgetEquation = ({ budget, animationStates }) => {
         >
           <span className='equation-title'>Spending Budget</span>
           <span className='equation-amount'>
-            {getDollarString(budget.total - budget.spent - budget.savings)}
+            {getDollarString(
+              budget.total - budget.spent - budget.savings,
+              true
+            )}
           </span>
         </motion.div>
       </div>
