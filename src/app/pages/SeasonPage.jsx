@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import {
   HeaderComponent,
@@ -17,6 +17,29 @@ import { cloneDeep } from 'lodash';
 
 let timer = 0;
 
+const getGameResult = (student, opponent) => {
+  const rankDiff = student.teamRank - opponent.teamRank;
+  if (rankDiff > 5) {
+    return {
+      score: [Math.ceil(rankDiff / 10), 0],
+      messageIndex: 0,
+      opponent: opponent.name,
+    };
+  } else if (Math.abs(rankDiff) > 0 && Math.abs(rankDiff) <= 5) {
+    return {
+      score: [2, 1],
+      messageIndex: 1,
+      opponent: opponent.name,
+    };
+  } else {
+    return {
+      score: [0, Math.ceil(Math.abs(rankDiff / 10))],
+      messageIndex: 2,
+      opponent: opponent.name,
+    };
+  }
+};
+
 const SeasonPage = () => {
   const student = useSelector((state) => state.studentState.student);
 
@@ -27,6 +50,7 @@ const SeasonPage = () => {
     currentOpponentIndex: 0,
     currentPhaseIndex: 0,
     currentMessageIndex: 0,
+    results: [],
   });
 
   const currentPhase = gamePhases[state.currentPhaseIndex];
@@ -38,7 +62,9 @@ const SeasonPage = () => {
   const gameBlockState = {
     currentOppenent: state.currentBlock[state.currentOpponentIndex],
     currentPhase: gamePhases[state.currentPhaseIndex],
-    currentScore: [0, 0],
+    currentScore: state.results[state.currentOpponentIndex]
+      ? state.results[state.currentOpponentIndex].score
+      : [0, 0],
     message:
       gamePhases[state.currentPhaseIndex].messages[state.currentMessageIndex],
   };
@@ -46,13 +72,6 @@ const SeasonPage = () => {
   if (gameBlockState.currentPhase.phase === GamePhases.UP_NEXT) {
     gameBlockState.currentPhase.messages[1] = `Jr Sharks vs ${gameBlockState.currentOppenent.name}`;
   }
-
-  if (gameBlockState.currentPhase.phase === GamePhases.GAME_OVER) {
-    // GAME PLAY LOGIC HERE
-    gameBlockState.message = gameBlockState.currentPhase.messages[0];
-  }
-
-  console.log('GAME BLOCK STATE:::: ', gameBlockState);
 
   const endBlock = () => {
     console.log('END BLOCK::::');
@@ -86,6 +105,14 @@ const SeasonPage = () => {
     const clonedState = cloneDeep(state);
     clonedState.currentPhaseIndex = nextPhaseIndex;
     clonedState.currentMessageIndex = 0;
+
+    if (gameBlockState.currentPhase.phase === GamePhases.GAME_ON) {
+      // time to get game results
+      const results = getGameResult(student, gameBlockState.currentOppenent);
+      clonedState.currentMessageIndex = results.messageIndex;
+      clonedState.results.push(results);
+    }
+
     setState(clonedState);
   };
 
@@ -96,7 +123,6 @@ const SeasonPage = () => {
       return;
     }
     const nextMessageIndex = state.currentMessageIndex + 1;
-    console.log('NEXT MESSAGE:::: ', nextMessageIndex);
     const clonedState = cloneDeep(state);
     clonedState.currentMessageIndex = nextMessageIndex;
     setState(clonedState);

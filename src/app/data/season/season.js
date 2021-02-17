@@ -25,7 +25,7 @@ export const gamePhases = [
   },
   {
     phase: GamePhases.WARMING_UP,
-    messages: ['The players are warming up.'],
+    messages: ['The players are warming up'],
     timer: 5000,
   },
   {
@@ -36,7 +36,11 @@ export const gamePhases = [
   {
     phase: GamePhases.GAME_OVER,
     timer: 5000,
-    messages: ['GET LOUD! The Jr Sharks Won!'],
+    messages: [
+      'GET LOUD! The Jr Sharks Won!',
+      'The Jr Sharks won in overtime!',
+      'OH NO! The Jr Sharks lost :(',
+    ],
   },
   {
     phase: GamePhases.TRANSITION,
@@ -51,7 +55,7 @@ export const gamePhases = [
 
 export const allTeams = [
   {
-    rank: 325,
+    teamRank: 65,
     logoLg: blueBearsLogoLg,
     logoSm: whiteWolves,
     name: 'Green Giraffes',
@@ -59,7 +63,7 @@ export const allTeams = [
     standings: '6th',
   },
   {
-    rank: 325,
+    teamRank: 30,
     logoLg: blueBearsLogoLg,
     logoSm: whiteWolves,
     name: 'Pink Pandas',
@@ -67,7 +71,7 @@ export const allTeams = [
     standings: '6th',
   },
   {
-    rank: 325,
+    teamRank: 80,
     logoLg: blueBearsLogoLg,
     logoSm: whiteWolves,
     name: 'Orange Owls',
@@ -75,7 +79,7 @@ export const allTeams = [
     standings: '6th',
   },
   {
-    rank: 325,
+    teamRank: 54,
     logoLg: blueBearsLogoLg,
     logoSm: whiteWolves,
     name: 'Silver Spiders',
@@ -83,7 +87,7 @@ export const allTeams = [
     standings: '6th',
   },
   {
-    rank: 325,
+    teamRank: 42,
     logoLg: blueBearsLogoLg,
     logoSm: whiteWolves,
     name: 'Golden Geckos',
@@ -91,7 +95,7 @@ export const allTeams = [
     standings: '6th',
   },
   {
-    rank: 325,
+    teamRank: 70,
     logoLg: blueBearsLogoLg,
     logoSm: whiteWolves,
     name: 'Yellow Yaks',
@@ -99,7 +103,7 @@ export const allTeams = [
     standings: '6th',
   },
   {
-    rank: 325,
+    teamRank: 58,
     logoLg: blueBearsLogoLg,
     logoSm: whiteWolves,
     name: 'Black Beavers',
@@ -107,7 +111,7 @@ export const allTeams = [
     standings: '6th',
   },
   {
-    rank: 325,
+    teamRank: 65,
     logoLg: blueBearsLogoLg,
     logoSm: whiteWolves,
     name: 'Gray Grasshoppers',
@@ -115,7 +119,7 @@ export const allTeams = [
     standings: '6th',
   },
   {
-    rank: 270,
+    teamRank: 88,
     logoLg: blueBearsLogoLg,
     logoSm: whiteWolves,
     name: 'Blue Bears',
@@ -123,7 +127,7 @@ export const allTeams = [
     standings: '12th',
   },
   {
-    rank: 280,
+    teamRank: 40,
     logoLg: blueBearsLogoLg,
     logoSm: whiteWolves,
     name: 'Red Rabbits',
@@ -131,7 +135,7 @@ export const allTeams = [
     standings: '12th',
   },
   {
-    rank: 300,
+    teamRank: 35,
     logoLg: blueBearsLogoLg,
     logoSm: whiteWolves,
     name: 'Purple Panthers',
@@ -139,7 +143,7 @@ export const allTeams = [
     standings: '10th',
   },
   {
-    rank: 325,
+    teamRank: 25,
     logoLg: blueBearsLogoLg,
     logoSm: whiteWolves,
     name: 'White Wolves',
