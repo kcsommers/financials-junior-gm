@@ -19,11 +19,19 @@ export const InitialJumbotronState = ({seasonState}) => {
 
   const points = useSelector((state) => {
     return state.season.points
-  })
-   console.log(wins, losses, points)
-  
-  // console.log('the current opponent: ', currentOpponent)
-  // console.log('the op index', seasonState.currentOpponentIndex)
+  });
+
+  const standings = useSelector((state) => {
+    return state.season.standings;
+  });
+  const currentOpponent = useSelector((state) => {
+    return state.season.currentOpponent
+  });
+
+  const teams = useSelector((state) => {
+    return state.season.teams;
+  });
+
   return (seasonState && currentOpponent) ? ( 
     <div className='season-initial-container'>
       <div>

@@ -12,6 +12,7 @@ import {
   SET_SIMULATION_BUTTON,
   SET_SIMULATE_GAME,
   UPDATE_OPPONENT_INDEX,
+  SET_STUDENT
   UPDATE_TEAMS,
   UPDATE_SEASON_STATE
 } from '../actionTypes'
@@ -23,11 +24,10 @@ import whiteWolves from '@images/icons/white-wolves.svg';
 import {InitialJumbotronState} from '../../components/season-page/InitialJumbotronState';
 import play from '@images/icons/play.svg';
 import jrSharksLogo from '@images/icons/jr-sharks-logo.svg';
+import { useDispatch} from 'react-redux';
+import {setStudent} from '@redux/actions';
 import { bindActionCreators } from '@reduxjs/toolkit';
 import {cloneDeep} from 'lodash';
-
-
-
 
 const initialState = {
   score: [0,0],
@@ -124,7 +124,6 @@ const initialState = {
       standings: '6th'
     }
   ],
-  rank: 320,
   image: jrSharksLogoWhiteBg,
   name: 'Jr Sharks',
   wins: 0,
@@ -168,14 +167,8 @@ export default function(state = initialState, action) {
         name: action.payload
       }
     case SET_STATS:
-      console.log('here is the actual stats: ', action.payload)
       return {
         ...state,
-        //stats : {
-          //wins: action.payload.wins,
-          //losses: action.payload.losses,
-          //points: action.payload.points
-        //}
         wins: action.payload.wins,
         losses: action.payload.losses,
         points: action.payload.points
