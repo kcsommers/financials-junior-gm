@@ -21,6 +21,7 @@ import {
   setStats,
   updateCurrentOpponent,
   updateOpponentIndex,
+  setStudent
 } from '@redux/actions';
 import { PlayingGame } from '../components/season-page/PlayingGame';
 import { setLoginState, updateSeasonState } from '../redux/actions';
@@ -31,9 +32,6 @@ const Season = () => {
     return state.season
   });
 
-  // const student = useSelector((state) => state.studentState.student);
-
-
   const [gameOn, setGameOn] = useState(false)
   const [score, setScore] = useState([0,0])
   const [results, setResults] = useState([])
@@ -41,8 +39,6 @@ const Season = () => {
   const opponentIndex = seasonState.currentOpponentIndex
 
   const currentOpponent = seasonState.teams[seasonState.currentOpponentIndex]
-
-  //const score = seasonState.score
 
   const dispatch = useDispatch();
 
@@ -65,7 +61,6 @@ const Season = () => {
   const rank = seasonState.rank
 
   const teams = seasonState.teams
-
 
   const theResultScore = (rank, opponentRank) => {
     // let rankDiff = student.rank - opponentRank
@@ -270,11 +265,7 @@ const Season = () => {
   }
 
   
-
-  console.log(currentOpponent)
-  
-  // student ?  
-  return (
+  return student ? (
     <div className='season-page page-container'>
       <HeaderComponent
         stickBtn={seasonStick}
@@ -327,7 +318,6 @@ const Season = () => {
             />
           </div>
         </div>
-
         <div className='season-dashboard-bottom-row'>
           <div>
             <p className='season-schedule-title'>Results</p>
@@ -380,11 +370,21 @@ const Season = () => {
                   <p>{results.length > 0 ? results[3].score[1]: 0}</p>
                 </div>
               </div>
+              <div className='upcoming-games'>
+                <div className='season-schedule-spacing'>
+                  <p className='player-team-title'>Jr Sharks</p>
+                  <p className='season-schedule-spacing'>vs</p>
+                  <p>Purple Panthers</p>
+                </div>
+                <div className='season-schedule-spacing'>
+                  <p>0</p>
+                  <p className='season-schedule-spacing'>-</p>
+                  <p>0</p>
+                </div>
+              </div>
             </div>
           </div>
-          
-          <ReactSVG src={simulationButton} onClick={startSequence}/>
-
+          <ReactSVG src={simulationButton} onClick={handlePlay} className="simulation-button"/>
           <div>
             <p className='season-standings-title'>Standings</p>
             <div className='season-standings-box'>
@@ -392,7 +392,6 @@ const Season = () => {
                 <div className='standings-team-name-box'>
                   <p className='ptn-title'>Pos. Team Name</p>
                 </div>
-
                 <div className='standings-teams-box'>
                   <p>1. Green Giraffes</p>
                   <p>2. Orange Owls</p>
@@ -401,12 +400,10 @@ const Season = () => {
                   <p>5. Pink Pandas</p>
                 </div>
               </div>
-
               <div>
                 <div className='standings-team-points-box'>
                   <p className='p-title'>Points</p>
                 </div>
-
                 <div className='standings-teams-points-box'>
                   <p>12</p>
                   <p>11</p>
@@ -420,22 +417,22 @@ const Season = () => {
         </div>
       </div>
     </div>
-  ) 
-  // : (<div
-  //   style={{
-  //     position: 'absolute',
-  //     top: 0,
-  //     bottom: 0,
-  //     left: 0,
-  //     right: 0,
-  //     display: 'flex',
-  //     alignItems: 'center',
-  //     justifyContent: 'center',
-  //   }}
-  // >
-  //   <LoadingSpinner />
-  // </div>)
-  ;
+  ) : (
+    <div
+      style={{
+        position: 'absolute',
+        top: 0,
+        bottom: 0,
+        left: 0,
+        right: 0,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+    >
+      <LoadingSpinner />
+    </div>
+  );
 };
 
 export default Season;
