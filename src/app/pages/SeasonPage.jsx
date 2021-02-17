@@ -12,46 +12,37 @@ import {
 } from '@components';
 import seasonStick from '@images/season-stick.svg';
 import '@css/pages/SeasonPage.css';
-import { GamePhases, gamePhases } from '@data/season/season';
+import {
+  GamePhases,
+  gamePhases,
+  getGameResult,
+  scenarios,
+} from '@data/season/season';
 import { cloneDeep } from 'lodash';
-import { gameBlockEnded } from '@redux/actions';
+import { INJURE_PLAYER } from '@redux/actionTypes';
+import { updateStudentById } from './../api-helper';
+import {
+  gameBlockEnded,
+  setSeasonComplete,
+  injurePlayer,
+  setStudent,
+} from '@redux/actions';
+
+const allActions = {
+  [INJURE_PLAYER]: injurePlayer,
+};
 
 let timer = 0;
-
-const getGameResult = (student, opponent) => {
-  const rankDiff = student.teamRank - opponent.teamRank;
-  if (rankDiff > 5) {
-    return {
-      score: [Math.ceil(rankDiff / 10), 0],
-      messageIndex: 0,
-      opponent: opponent.name,
-      win: true,
-    };
-  } else if (Math.abs(rankDiff) > 0 && Math.abs(rankDiff) <= 5) {
-    return {
-      score: [2, 1],
-      messageIndex: 1,
-      opponent: opponent.name,
-      win: true,
-    };
-  } else {
-    return {
-      score: [0, Math.ceil(Math.abs(rankDiff / 10))],
-      messageIndex: 2,
-      opponent: opponent.name,
-      win: false,
-    };
-  }
-};
 
 const SeasonPage = () => {
   const dispatch = useDispatch();
   const student = useSelector((state) => state.studentState.student);
+  const team = useSelector((state) => state.players.teamPlayers);
 
   const seasonState = useSelector((state) => state.season);
 
   const [state, setState] = useState({
-    currentBlock: seasonState.gameBlocks[seasonState.gameBlockIndex],
+    currentBlock: seasonState.gameBlocks[seasonState.currentBlockIndex],
     currentOpponentIndex: 0,
     currentPhaseIndex: 0,
     currentMessageIndex: 0,
@@ -74,19 +65,69 @@ const SeasonPage = () => {
       gamePhases[state.currentPhaseIndex].messages[state.currentMessageIndex],
   };
 
-  if (gameBlockState.currentPhase.phase === GamePhases.UP_NEXT) {
+  if (
+    gameBlockState.currentPhase &&
+    gameBlockState.currentPhase.phase === GamePhases.UP_NEXT
+  ) {
     gameBlockState.currentPhase.messages[1] = `Jr Sharks vs ${gameBlockState.currentOppenent.name}`;
   }
 
+  const seasonComplete = () => {
+    const p1 = new Promise((res) => res(true));
+    console.log(':::: SEASON COMPLETE!! ::::');
+    p1.then(() => {
+      dispatch(setSeasonComplete());
+    }).catch((err) => console.error(err));
+  };
+
   const endBlock = () => {
     const p1 = new Promise((res) => res(true));
-    const newBlockIndex = seasonState.currentBlockIndex + 1;
-    const allGameBlocks = cloneDeep(seasonState.previousGameBlocks);
-    allGameBlocks.push(state.results);
-    console.log('END BLOCK::::', allGameBlocks);
-    p1.then(() => {
-      dispatch(gameBlockEnded(allGameBlocks, newBlockIndex));
-    }).catch((err) => console.error(err));
+    console.log(':::: END BLOCK ::::');
+
+    // if this is the last game block season is over
+    if (seasonState.currentBlockIndex === seasonState.gameBlocks.length - 1) {
+      seasonComplete();
+      return;
+    }
+
+    // get the next scenario
+    const currentScenario =
+      scenarios[student.level][seasonState.currentBlockIndex];
+    if (!currentScenario) {
+      // no scenario after this game block
+      p1.then(() => {
+        dispatch(gameBlockEnded(state.results, null, student));
+      }).catch((err) => console.error(err));
+      return;
+    }
+
+    const scenarioPlayer = currentScenario.getPlayer(team);
+    const prevAssignment = scenarioPlayer.playerAssignment;
+    const playersCopy = cloneDeep(student.players);
+
+    scenarioPlayer.playerAssignment = currentScenario.playerAssignment;
+
+    playersCopy.splice(
+      playersCopy.findIndex((p) => p._id === scenarioPlayer._id),
+      1,
+      scenarioPlayer
+    );
+
+    updateStudentById(student._id, {
+      [prevAssignment]: currentScenario.playerAssignment,
+      players: playersCopy,
+    })
+      .then((res) => {
+        dispatch(
+          allActions[seasonState.currentScenario.action](
+            scenarioPlayer,
+            prevAssignment
+          )
+        );
+        dispatch(setStudent(res.updatedStudent));
+        dispatch(gameBlockEnded(state.results, currentScenario, student));
+      })
+      .catch((err) => console.error(err));
   };
 
   const nextGame = () => {
@@ -147,10 +188,12 @@ const SeasonPage = () => {
     });
   };
 
-  if (currentPhase.messages.length > 1 && currentPhase.messageTimer) {
-    timer = window.setTimeout(nextMessage, currentPhase.messageTimer);
-  } else if (currentPhase.timer) {
-    timer = window.setTimeout(nextPhase, currentPhase.timer);
+  if (!seasonState.currentScenario && currentPhase) {
+    if (currentPhase.messages.length > 1 && currentPhase.messageTimer) {
+      timer = window.setTimeout(nextMessage, currentPhase.messageTimer);
+    } else if (currentPhase.timer) {
+      timer = window.setTimeout(nextPhase, currentPhase.timer);
+    }
   }
 
   return student ? (
@@ -167,6 +210,7 @@ const SeasonPage = () => {
             display: 'flex',
             flexDirection: 'column',
             height: '100%',
+            overflowX: 'hidden',
           }}
         >
           <div className='season-page-board-top'>
@@ -192,6 +236,7 @@ const SeasonPage = () => {
                 student={student}
                 seasonState={seasonState}
                 currentOpponentIndex={state.currentOpponentIndex}
+                seasonDisabled={!team || Object.keys(team).length < 6}
               />
             </div>
             <div className='opposing-team-rank-container'>
@@ -218,6 +263,7 @@ const SeasonPage = () => {
                 <StartGameButton
                   onClick={startGameBlock}
                   gameBlockState={gameBlockState}
+                  seasonDisabled={!team || Object.keys(team).length < 6}
                 />
               </span>
             </div>

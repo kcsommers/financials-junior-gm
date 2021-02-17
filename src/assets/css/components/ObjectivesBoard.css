@@ -7,6 +7,15 @@
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
   position: relative;
   min-width: 350px;
+  transition: all 0.3s ease;
+}
+
+.objectives-board-wrap.has-scenario {
+  border-color: #ffd782;
+}
+
+.objectives-board-wrap.has-scenario .ordered-list {
+  color: #ffd782;
 }
 
 .objective-level-box {
@@ -14,6 +23,10 @@
   justify-content: space-between;
   font-size: 1.75rem;
   font-weight: bold;
+}
+
+.ordered-list {
+  transition: all 0.3s ease;
 }
 
 .ordered-list > div {
