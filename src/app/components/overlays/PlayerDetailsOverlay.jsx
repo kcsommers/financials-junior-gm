@@ -39,7 +39,7 @@ export const PlayerDetailsOverlay = ({
       1,
       player
     );
-    
+
     updateStudentById(student._id, {
       [prevAssignment]: null,
       players: playersCopy,

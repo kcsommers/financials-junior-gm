@@ -79,9 +79,8 @@ const playersReducer = (state = initialState, action) => {
       const marketCache =
         clonedState.marketPlayers[signedPlayer.playerPosition];
 
-      signedPlayer.playerAssignment = assignment;
       marketCache.splice(
-        marketCache.findIndex((p) => p.playerName === signedPlayer.name),
+        marketCache.findIndex((p) => p._id === signedPlayer._id),
         1
       );
       clonedState.teamPlayers[assignment] = signedPlayer;
