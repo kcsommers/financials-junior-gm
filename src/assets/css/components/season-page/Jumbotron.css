@@ -1,0 +1,214 @@
+div.jumbotron-wrap {
+  display: flex;
+  height: 324.19px;
+  position: relative;
+  width: 464px;
+  z-index: 0;
+}
+
+div.jumbotron-border {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  background-color: #ababab;
+}
+
+div.jumbotron-border-left {
+  transform: skewX(10deg);
+  left: -35px;
+}
+
+div.jumbotron-border-right {
+  transform: skewX(-10deg);
+  right: -35px;
+}
+
+div.jumbotron-main-section {
+  background: #707070;
+  text-align: center;
+  height: 100%;
+  flex: 1;
+  z-index: 1;
+  display: flex;
+  padding: 1rem;
+  flex-direction: column;
+}
+
+div.game-on-top {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  flex: 1;
+}
+
+div.game-on-bottom {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 3rem;
+}
+
+h2.jumbotron-message {
+  width: 550px;
+  min-height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  font-size: 2.25rem;
+  background-color: #00788a;
+  color: #fff;
+}
+
+div.jumbotron-score-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  position: relative;
+  justify-content: space-between;
+}
+
+div.jumbotron-score-title {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  font-size: 1.75rem;
+  color: #fff;
+}
+
+div.jumbotron-score-wrap {
+  width: 125px;
+  height: 100px;
+  border-radius: 10px;
+  background-color: #fff;
+  font-size: 3rem;
+  color: #121210;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+div.transition-view-container {
+  display: flex;
+  flex: 1;
+}
+
+div.transition-view-left,
+div.transition-view-right {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+div.jumbotron-stats-container {
+  color: #fff;
+  width: 100%;
+  padding: 0.5rem;
+}
+
+div.jumbotron-stats-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+div.jumbotron-stat-wrap {
+  font-size: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+div.jumbotron-stat-inner {
+  width: 55px;
+  height: 55px;
+  border-radius: 10px;
+  background-color: #fff;
+  font-size: 2.5rem;
+  color: #121210;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+div.jumbotron-coming-up-container {
+  flex: 1;
+  padding-left: 0.5rem;
+}
+
+div.jumbotron-coming-up-container,
+div.jumbotron-next-opponent-container,
+div.jumbotron-upcoming-games-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+div.jumbotron-next-opponent-container {
+  height: 113px;
+}
+
+div.jumbotron-next-opponent-container > h3 {
+  color: #fff;
+  font-size: 1.35rem;
+}
+
+div.jumbotron-upcoming-games-container {
+  flex: 1;
+  margin-top: 0.25rem;
+}
+
+div.jumbotron-upcoming-games-container > h4 {
+  color: #fff;
+  font-size: 1.25rem;
+}
+
+div.jumbotron-next-opponent-card {
+  padding: 0.25rem 0.5rem;
+}
+
+div.jumbotron-next-opponent-card,
+div.jumbotron-upcoming-games-card {
+  flex: 1;
+  width: 100%;
+  border-radius: 10px;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+div.coming-up-opponent-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  flex: 1;
+}
+
+span.coming-up-opponent-name {
+  font-size: 1rem;
+  border: 1px solid #707070;
+  text-align: center;
+  width: 90px;
+  height: 70px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0 1rem;
+  border-radius: 10px;
+}
+
+div.upcoming-games-row {
+  transform: scale(0.85);
+}
