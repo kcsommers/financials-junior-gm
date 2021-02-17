@@ -6,15 +6,15 @@
 .season-dashboard {
   border: 5px solid #707070;
   border-radius: 15px;
-  background: #E5E5E5;
+  background: #e5e5e5;
   margin: 0 auto;
   height: 624px;
-  padding: 0 .5rem 1rem .5rem;
+  padding: 0 0.5rem 1rem 0.5rem;
 }
 
 .season-dashboard-top-row {
   display: flex;
-  margin-bottom: .5rem;
+  margin-bottom: 0.5rem;
 }
 
 .teams-jumbotron {
@@ -29,14 +29,14 @@
 }
 
 .season-team-left-border {
-  border-top: 324px solid #ABABAB;
+  border-top: 324px solid #ababab;
   border-left: 60px solid transparent;
   height: 100%;
   width: 80px;
 }
 
 .season-team-right-border {
-  border-top: 324px solid #ABABAB;
+  border-top: 324px solid #ababab;
   border-right: 60px solid transparent;
   height: 100%;
   width: 80px;
@@ -47,7 +47,7 @@
   color: white;
   font-size: 36px;
   font-weight: bold;
-  -webkit-text-stroke: .05px black;
+  -webkit-text-stroke: 0.05px black;
   margin: 0px;
   padding: 0px;
 }
@@ -62,11 +62,11 @@
   background: #00788a;
   text-align: center;
   border-radius: 5px;
-  padding: .5rem 0 .5rem 0;
+  padding: 0.5rem 0 0.5rem 0;
   color: white;
   font-size: 30px;
   font-weight: bold;
-  -webkit-text-stroke: .05px black;
+  -webkit-text-stroke: 0.05px black;
 }
 
 .next-opponent-details {
@@ -76,7 +76,7 @@
 
 .next-opponent-name {
   background: white;
-  color: #3B42FF;
+  color: #3b42ff;
   padding: 1rem;
   border-radius: 5px;
   font-size: 18px;
@@ -129,7 +129,7 @@
 .season-standings-box {
   border: 4px solid #707070;
   border-radius: 15px;
-  background: #E5E5E5;
+  background: #e5e5e5;
 }
 
 .upcoming-games > div {
@@ -147,7 +147,7 @@
 .standings-team-name-box {
   border-right: 1px solid #707070;
   border-bottom: 1px solid #707070;
-  padding-left: .5rem;
+  padding-left: 0.5rem;
 }
 
 .standings-team-points-box {
@@ -161,30 +161,30 @@
 }
 
 .p-title {
-  padding-left: .5rem;
-  padding-right: .5rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
 }
 
 .standings-teams-box {
   border-right: 1px solid #707070;
-  padding: .5rem;
+  padding: 0.5rem;
 }
 
 .standings-teams-points-box {
   text-align: center;
-  padding: .5rem;
+  padding: 0.5rem;
 }
 
 .your-team-standing {
   font-size: 18px;
-  color: #006B77;
+  color: #006b77;
   font-weight: bold;
 }
 
 .player-team-title {
-  color: #006B77;
+  color: #006b77;
   font-size: 16px;
-  font-weight: bold; 
+  font-weight: bold;
 }
 
 .season-schedule-spacing {
