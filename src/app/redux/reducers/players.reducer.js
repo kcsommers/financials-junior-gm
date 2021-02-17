@@ -33,7 +33,6 @@ const playersReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_INITIAL_PLAYERS_STATE: {
       const { players, student } = action.payload;
-      console.log('PLAYERS:::: ', players);
       const marketPlayers = {
         forward: [],
         defender: [],
@@ -80,9 +79,8 @@ const playersReducer = (state = initialState, action) => {
       const marketCache =
         clonedState.marketPlayers[signedPlayer.playerPosition];
 
-      signedPlayer.playerAssignment = assignment;
       marketCache.splice(
-        marketCache.findIndex((p) => p.playerName === signedPlayer.name),
+        marketCache.findIndex((p) => p._id === signedPlayer._id),
         1
       );
       clonedState.teamPlayers[assignment] = signedPlayer;
