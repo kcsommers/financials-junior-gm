@@ -1,0 +1,51 @@
+div.season-page-board-top {
+  flex: 1;
+  display: flex;
+  position: relative;
+  justify-content: space-between;
+  align-items: center;
+}
+
+div.season-page-board-bottom {
+  height: 40%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+}
+
+div.play-btn-container {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+div.jumbotron-container {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+div.student-team-rank-container,
+div.opposing-team-rank-container {
+  position: relative;
+}
+
+div.student-team-rank-container {
+  left: -55px;
+}
+
+div.opposing-team-rank-container {
+  right: -53px;
+}
