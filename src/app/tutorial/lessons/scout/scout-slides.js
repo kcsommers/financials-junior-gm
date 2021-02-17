@@ -132,6 +132,12 @@ const slideConfigs = [
               },
             },
             {
+              component: 'offeredPlayersBoard',
+              state: {
+                zIndex: 1,
+              },
+            },
+            {
               component: 'moneyLevel1',
               state: {
                 scale: 1.2,
@@ -446,6 +452,7 @@ const slideConfigs = [
           page: 'scout',
           animationStates: [
             'availablePlayersBoard',
+            'offeredPlayersBoard',
             'moneyLevel1',
             'moneyLevel2',
             'moneyLevel3',
@@ -453,6 +460,7 @@ const slideConfigs = [
             component: c,
             state: {
               opacity: 1,
+              zIndex: 0,
             },
           })),
         },

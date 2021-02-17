@@ -1,6 +1,6 @@
 import Slide from '../../Slide';
 import { SET_ANIMATION_STATE, TOGGLE_OVERLAY } from '@redux/actionTypes';
-import { PlayerCard } from '@components';
+import { PlayerDetailsOverlay } from '@components';
 
 const slideConfigs = [
   {
@@ -60,7 +60,23 @@ const slideConfigs = [
         type: TOGGLE_OVERLAY,
         payload: {
           isOpen: true,
-          template: <PlayerCard />,
+          template: (
+            <PlayerDetailsOverlay
+              player={{
+                playerName: 'Emily Burch',
+                playerPosition: 'defender',
+                offensiveRank: 2,
+                passRank: 3,
+                defensiveRank: 10,
+                overallRank: 15,
+                sharkPlayer: 'FALSE',
+                playerCost: '1.5',
+                playerAssignment: 'dOne',
+                imageName: '',
+                playerLevel: 1,
+              }}
+            />
+          ),
           canClose: false,
         },
       },
@@ -243,4 +259,4 @@ const slideConfigs = [
   },
 ];
 
-export const playersSlides = slideConfigs.map((c) => new Slide(c));
+export const teamSlides = slideConfigs.map((c) => new Slide(c));

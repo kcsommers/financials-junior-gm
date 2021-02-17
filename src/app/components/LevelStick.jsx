@@ -52,10 +52,34 @@ const styles = {
   },
 };
 
-const getIndicatorTransform = (num, denom) => {
+const getIndicatorTransforms = (num, denom) => {
   const stickHeight = 210;
-  const y = stickHeight * (1 - num / denom);
-  return { transform: `translate(0, ${Math.min(y - 30, 100)}px)` };
+  let rotate = 0;
+  let y = stickHeight * (1 - num / denom) - 30;
+
+  if (y > 100) {
+    rotate = y - 90;
+    y = 100;
+  }
+  return {
+    translate: { transform: `translate(0, ${y}px)` },
+    rotate,
+  };
+};
+
+const getIndicatorTransformsLarge = (num, denom) => {
+  const stickHeight = 340;
+  let rotate = 0;
+  let y = stickHeight * (1 - num / denom) - 30;
+
+  if (y > 180) {
+    rotate = Math.max(0, y - 200);
+    y = 180;
+  }
+  return {
+    translate: { transform: `translate(0, ${y}px)` },
+    rotate,
+  };
 };
 
 export const LevelStick = ({
@@ -68,6 +92,10 @@ export const LevelStick = ({
   textJsx,
   inverse,
 }) => {
+  const transforms = !isLarge
+    ? getIndicatorTransforms(amount, denom)
+    : getIndicatorTransformsLarge(amount, denom);
+
   return (
     <div
       style={{
@@ -76,7 +104,6 @@ export const LevelStick = ({
         justifyContent: 'center',
         width: isLarge ? '220px' : '190px',
         height: isLarge ? '355px' : '225px',
-        overflow: 'hidden',
         position: 'relative',
       }}
     >
@@ -107,23 +134,25 @@ export const LevelStick = ({
       </div>
       <div style={styles[indicatorDirection].indicator}>
         {indicatorDirection === 'right' || indicatorDirection === 'bottom' ? (
-          <>
+          <div style={transforms.translate}>
             <span style={styles[indicatorDirection].text}>{textJsx}</span>
             <Indicator
               amount={amount}
-              // direction={indicatorDirection}
+              direction={indicatorDirection}
               isMoney={type === 'budget'}
+              rotate={transforms.rotate}
             />
-          </>
+          </div>
         ) : (
-          <>
+          <div style={transforms.translate}>
             <Indicator
               amount={amount}
-              // direction={indicatorDirection}
+              direction={indicatorDirection}
               isMoney={type === 'budget'}
+              rotate={transforms.rotate}
             />
             <span style={styles[indicatorDirection].text}>{textJsx}</span>
-          </>
+          </div>
         )}
       </div>
     </div>

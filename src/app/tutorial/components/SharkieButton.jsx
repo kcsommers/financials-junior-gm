@@ -39,9 +39,7 @@ const textStyles = {
   },
 };
 
-export const SharkieButton = ({ textPosition }) => {
-  const dispatch = useDispatch();
-
+export const SharkieButton = ({ textPosition, onCallSharkie }) => {
   return (
     <button
       className='sharkie-btn'
@@ -56,13 +54,7 @@ export const SharkieButton = ({ textPosition }) => {
         width: '65px',
         height: '65px',
       }}
-      onClick={() => {
-        dispatch(
-          setTutorialState({
-            isActive: true,
-          })
-        );
-      }}
+      onClick={onCallSharkie}
     >
       <ReactSVG src={sharkieBtn} style={{ marginTop: '12px' }} />
       <span

@@ -31,8 +31,8 @@ const Season = () => {
     return state.season
   });
 
+  
   const student = useSelector((state) => state.studentState.student);
-
   const studentTeam = useSelector((state) => state.players.teamPlayers);
   let teamLength = 0
   if (studentTeam) {
@@ -264,9 +264,9 @@ const Season = () => {
     //     )
     //   }, 15000)
        setResults(getResults(teams))
-       dispatch(
-         updateTeams(1)
-       )
+      //  dispatch(
+      //    updateTeams(1)
+      //  )
 
       setTimeout(() => {setDisplay(<InitialJumbotronState seasonState={seasonState}/>)}, 100)
 
