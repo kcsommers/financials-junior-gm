@@ -74,6 +74,17 @@ export const Tutorial = ({ slides, onComplete }) => {
     });
   }
 
+  const tutorialComplete = () => {
+    setState({
+      ...state,
+      isComplete: true,
+    });
+    // allow a second to animate out
+    window.setTimeout(() => {
+      onComplete();
+    }, 1000);
+  };
+
   const setNextLesson = (nextSlides) => {
     setState({
       ...state,
@@ -110,14 +121,7 @@ export const Tutorial = ({ slides, onComplete }) => {
       const nextSlides = slides[currentSlidesIndex + 1];
       if (!nextSlides) {
         // if none, we're done
-        setState({
-          ...state,
-          isComplete: true,
-        });
-        // allow a second to animate out
-        window.setTimeout(() => {
-          onComplete();
-        }, 1000);
+        tutorialComplete();
         return;
       }
 
@@ -132,6 +136,17 @@ export const Tutorial = ({ slides, onComplete }) => {
       inPreTransition: true,
     });
     window.setTimeout(updateSlide.bind(this, newIndex), 500);
+  };
+
+  const onCancelClick = () => {
+    if (currentSlide.canCancel) {
+      tutorialComplete();
+      return;
+    }
+    const newIndex = !isNaN(currentSlide.repeatIndex)
+      ? currentSlide.repeatIndex
+      : state.slideIndex - 1;
+    onButtonClick(newIndex);
   };
 
   const buttons = currentSlide.hasButtons ? (
@@ -151,17 +166,11 @@ export const Tutorial = ({ slides, onComplete }) => {
           duration: 0.5,
         }}
       >
-        <button
-          className='slide-btn'
-          onClick={onButtonClick.bind(
-            this,
-            !isNaN(currentSlide.repeatIndex)
-              ? currentSlide.repeatIndex
-              : state.slideIndex - 1
-          )}
-        >
+        <button className='slide-btn' onClick={onCancelClick}>
           <img className='action-btn' src={refreshBtn} alt='Repeat' />
-          <span className='color-primary'>Repeat</span>
+          <span className='color-primary'>
+            {currentSlide.canCancel ? 'Cancel' : 'Repeat'}
+          </span>
         </button>
         <button
           className='slide-btn'

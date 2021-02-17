@@ -10,7 +10,8 @@ export const ConfirmSignOverlay = ({ cancel, confirm, player }) => {
     >
       <div style={{ display: 'flex', padding: '2rem 3rem 0 3rem' }}>
         <div style={{ flex: 1 }}>
-          <TeamBudgetState title='Changes to rank and budget' />
+          {/* <TeamBudgetState title='Changes to rank and budget' /> */}
+          <TeamBudgetState />
         </div>
         <div style={{ flex: 1 }}>
           <PlayerCard size='medium' player={player} />

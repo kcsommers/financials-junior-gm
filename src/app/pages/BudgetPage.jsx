@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   BudgetEquation,
   BudgetSlider,
@@ -7,7 +8,12 @@ import {
 } from '@components';
 import budgetStick from '@images/budget-stick.svg';
 import { useSelector, useDispatch } from 'react-redux';
-import { budgetSlides, SharkieButton, Tutorial } from '@tutorial';
+import {
+  budgetSlides,
+  SharkieButton,
+  Tutorial,
+  getConfirmSlides,
+} from '@tutorial';
 import { setTutorialState, setSavings } from '@redux/actions';
 import { updateStudentById } from '../api-helper';
 import '@css/pages/BudgetPage.css';
@@ -15,11 +21,12 @@ import '@css/pages/BudgetPage.css';
 let debounceTimeout = 0;
 
 const BudgetPage = () => {
+  const dispatch = useDispatch();
   const student = useSelector((state) => state.studentState.student);
 
   const tutorialActive = useSelector((state) => state.tutorial.isActive);
 
-  const dispatch = useDispatch();
+  const [tutorialSlides, setTutorialSlides] = useState([budgetSlides]);
 
   const onTutorialComplete = () => {
     dispatch(setTutorialState({ isActive: false }));
@@ -49,6 +56,15 @@ const BudgetPage = () => {
     }, 1000);
   };
 
+  const onCallSharkie = () => {
+    setTutorialSlides([getConfirmSlides('budget'), budgetSlides]);
+    dispatch(
+      setTutorialState({
+        isActive: true,
+      })
+    );
+  };
+
   return student ? (
     <div className='page-container'>
       <HeaderComponent
@@ -61,10 +77,7 @@ const BudgetPage = () => {
       <PageBoard hideCloseBtn={true} includeBackButton={true}>
         <div className='budget-page-board-inner'>
           <span style={{ position: 'absolute', left: '1rem', top: '1rem' }}>
-            <SharkieButton
-              tutorialSlides={[budgetSlides]}
-              textPosition='right'
-            />
+            <SharkieButton onCallSharkie={onCallSharkie} textPosition='right' />
           </span>
 
           <div className='budget-equation-container'>
@@ -93,7 +106,7 @@ const BudgetPage = () => {
         </div>
       </PageBoard>
       {tutorialActive && (
-        <Tutorial slides={[budgetSlides]} onComplete={onTutorialComplete} />
+        <Tutorial slides={tutorialSlides} onComplete={onTutorialComplete} />
       )}
     </div>
   ) : (
