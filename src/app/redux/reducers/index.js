@@ -20,6 +20,8 @@ export const rootReducer = (state, action) => {
   // clears the redux store on logout
   if (action.type === SET_LOGIN_STATE && !action.payload.isLoggedIn) {
     state = undefined;
+    localStorage.setItem('isLoggedIn', false);
+    localStorage.setItem('userRole', '');
   }
   return appReducer(state, action);
 };
