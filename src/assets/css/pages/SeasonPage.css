@@ -7,11 +7,11 @@ div.season-page-board-top {
 }
 
 div.season-page-board-bottom {
-  height: 40%;
   display: flex;
   align-items: center;
   justify-content: space-between;
   position: relative;
+  padding: 0 1rem 1rem 1rem;
 }
 
 div.play-btn-container {
@@ -48,4 +48,57 @@ div.student-team-rank-container {
 
 div.opposing-team-rank-container {
   right: -53px;
+}
+
+div.standings-board-wrap-inner,
+div.game-block-board-wrap-inner {
+  width: 320px;
+  height: 200px;
+  border-radius: 10px;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 1rem;
+  border: 5px solid #707070;
+}
+
+div.game-block-board-row {
+  position: relative;
+  display: flex;
+  flex: 1;
+  width: 100%;
+  color: #121210;
+  font-size: 1.1rem;
+}
+
+div.game-block-board-row > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+div.game-block-board-row > div > span:last-child {
+  font-weight: bold;
+}
+
+div.game-block-board-row > div:first-child {
+  padding-right: 1rem;
+  align-items: flex-end;
+  flex: 0.5;
+}
+
+div.game-block-board-row > div:last-child {
+  padding-left: 1rem;
+  flex: 1;
+}
+
+span.game-block-board-dash {
+  position: absolute;
+  left: 35%;
+  top: 73%;
+  transform: translateX(-50%);
+  width: 15px;
+  height: 3px;
+  background-color: #707070;
 }

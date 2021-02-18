@@ -52,7 +52,7 @@ div.game-on-bottom {
 
 h2.jumbotron-message {
   width: 550px;
-  min-height: 70px;
+  min-height: 55px;
   display: flex;
   align-items: center;
   justify-content: center;

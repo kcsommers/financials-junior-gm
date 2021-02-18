@@ -23,10 +23,11 @@ import { INJURE_PLAYER } from '@redux/actionTypes';
 import { updateStudentById } from './../api-helper';
 import {
   gameBlockEnded,
+  throwScenario,
   setSeasonComplete,
   injurePlayer,
   setStudent,
-  updateStats,
+  gameEnded,
 } from '@redux/actions';
 
 const allActions = {
@@ -47,7 +48,7 @@ const SeasonPage = () => {
     currentOpponentIndex: 0,
     currentPhaseIndex: 0,
     currentMessageIndex: 0,
-    results: [],
+    // results: [],
   });
 
   const currentPhase = gamePhases[state.currentPhaseIndex];
@@ -59,8 +60,8 @@ const SeasonPage = () => {
   const gameBlockState = {
     currentOpponent: state.currentBlock[state.currentOpponentIndex],
     currentPhase: gamePhases[state.currentPhaseIndex],
-    currentScore: state.results[state.currentOpponentIndex]
-      ? state.results[state.currentOpponentIndex].score
+    currentScore: seasonState.completedGames[state.currentOpponentIndex]
+      ? seasonState.completedGames[state.currentOpponentIndex].score
       : [0, 0],
     message:
       gamePhases[state.currentPhaseIndex].messages[state.currentMessageIndex],
@@ -96,9 +97,9 @@ const SeasonPage = () => {
       scenarios[student.level][seasonState.currentBlockIndex];
     if (!currentScenario) {
       // no scenario after this game block
-      p1.then(() => {
-        dispatch(gameBlockEnded(state.results, null, student));
-      }).catch((err) => console.error(err));
+      // p1.then(() => {
+      //   dispatch(gameBlockEnded(seasonState.completedGames, null));
+      // }).catch((err) => console.error(err));
       return;
     }
 
@@ -121,8 +122,10 @@ const SeasonPage = () => {
       );
       const updatedStudent = cloneDeep(student);
       updatedStudent[prevAssignment] = null;
+      updatedStudent.players = playersCopy;
       dispatch(setStudent(updatedStudent));
-      dispatch(gameBlockEnded(state.results, currentScenario, student));
+      dispatch(throwScenario(currentScenario));
+      // dispatch(gameBlockEnded(seasonState.completedGames, currentScenario));
     }).catch((err) => console.error(err));
     // updateStudentById(student._id, {
     //   [prevAssignment]: currentScenario.playerAssignment,
@@ -136,7 +139,7 @@ const SeasonPage = () => {
     //       )
     //     );
     //     dispatch(setStudent(res.updatedStudent));
-    //     dispatch(gameBlockEnded(state.results, currentScenario, student));
+    //     dispatch(gameBlockEnded(state.results, currentScenario));
     //   })
     //   .catch((err) => console.error(err));
   };
@@ -174,8 +177,8 @@ const SeasonPage = () => {
       // time to get game results
       const results = getGameResult(student, gameBlockState.currentOpponent);
       clonedState.currentMessageIndex = results.messageIndex;
-      clonedState.results.push(results);
-      dispatch(updateStats(results, gameBlockState.currentOpponent));
+      // clonedState.results.push(results);
+      dispatch(gameEnded(results, gameBlockState.currentOpponent));
     }
 
     setState(clonedState);

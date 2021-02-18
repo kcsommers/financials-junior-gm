@@ -1,16 +1,17 @@
-import { allTeams, scenarios } from '@data/season/season';
+import { allTeams } from '@data/season/season';
 import { cloneDeep } from 'lodash';
 import {
   GAME_BLOCK_ENDED,
-  SET_SCENARIO_COMPLETE,
   SET_SEASON_COMPLETE,
-  UPDATE_STATS,
+  GAME_ENDED,
+  THROW_SCENARIO,
 } from './../actionTypes';
 
 const initialState = {
-  previousGameBlocks: [], // array of game blocks
+  completedBlocks: [], // array of game blocks
+  completedGames: [],
   gameBlocks: [
-    allTeams.slice(0, 1),
+    allTeams.slice(0, 4),
     allTeams.slice(4, 8),
     allTeams.slice(8, 12),
   ],
@@ -27,16 +28,27 @@ const initialState = {
 
 const seasonReducer = (state = initialState, action) => {
   switch (action.type) {
-    case GAME_BLOCK_ENDED: {
-      const { results, scenario, student } = action.payload;
+    case THROW_SCENARIO: {
       const clonedState = cloneDeep(state);
-
-      clonedState.previousGameBlocks.push(results);
-      clonedState.currentBlockIndex = state.currentBlockIndex + 1;
+      const scenario = action.payload;
       clonedState.currentScenario = scenario;
       return clonedState;
     }
-    case UPDATE_STATS: {
+    case GAME_BLOCK_ENDED: {
+      const clonedState = cloneDeep(state);
+
+      clonedState.completedBlocks.push(state.completedGames);
+      clonedState.currentBlockIndex = state.currentBlockIndex + 1;
+      clonedState.currentScenario = null;
+      clonedState.completedGames = [];
+      console.log(
+        'GAME BLOCK ENDED:::: ',
+        clonedState.currentBlockIndex,
+        clonedState.completedGames
+      );
+      return clonedState;
+    }
+    case GAME_ENDED: {
       const { gameResult, opponent } = action.payload;
       const clonedState = cloneDeep(state);
       clonedState.stats.points += gameResult.score[0];
@@ -48,11 +60,7 @@ const seasonReducer = (state = initialState, action) => {
         clonedState.stats.losses += 1;
         opponent.stats.wins += 1;
       }
-      return clonedState;
-    }
-    case SET_SCENARIO_COMPLETE: {
-      const clonedState = cloneDeep(state);
-      clonedState.currentScenario = null;
+      clonedState.completedGames.push(gameResult);
       return clonedState;
     }
     default:
