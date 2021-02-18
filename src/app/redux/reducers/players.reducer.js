@@ -5,6 +5,7 @@ import {
   TRADE_PLAYER,
   SET_INITIAL_PLAYERS_STATE,
   UPDATE_SCOUT_PLAYER,
+  INJURE_PLAYER,
 } from '../actionTypes';
 import { cloneDeep } from 'lodash';
 import { PlayerAssignments, PlayerPositions } from '@data/players/players';
@@ -157,6 +158,11 @@ const playersReducer = (state = initialState, action) => {
       ];
       clonedState.scoutingState.isComplete = true;
 
+      return clonedState;
+    }
+    case INJURE_PLAYER: {
+      const clonedState = cloneDeep(state);
+      clonedState.teamPlayers[action.payload.previousAssignment] = null;
       return clonedState;
     }
     default:
