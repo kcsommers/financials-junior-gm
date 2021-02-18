@@ -3,12 +3,28 @@ import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { getStanding } from '@data/season/season';
 import { TrophySvg, OverlayBoard, Button } from '@components';
-import { toggleOverlay } from '@redux/actions';
+import { toggleOverlay, setSeasonComplete } from '@redux/actions';
 
 export const SeasonCompleteOverlay = ({ team, level, standings }) => {
   const history = useHistory();
   const dispatch = useDispatch();
   const standing = useMemo(() => getStanding(team, standings), []);
+
+  const completeSeason = () => {
+    dispatch(setSeasonComplete());
+  };
+
+  const seeTrophies = () => {
+    completeSeason();
+    dispatch(toggleOverlay({ isOpen: false, template: null }));
+    history.push('/trophies');
+  };
+
+  const startNextSeason = () => {
+    completeSeason();
+    dispatch(toggleOverlay({ isOpen: false, template: null }));
+    history.push('/home');
+  };
 
   return (
     <OverlayBoard>
@@ -45,14 +61,19 @@ export const SeasonCompleteOverlay = ({ team, level, standings }) => {
         <p className='color-primary' style={{ fontSize: '1.75rem' }}>
           Go to the trophy room to check out your awards!
         </p>
-        <div style={{ marginTop: '2rem' }}>
-          <Button
-            text='See Trophies'
-            onClick={() => {
-              dispatch(toggleOverlay({ isOpen: false, template: null }));
-              history.push('/trophies');
-            }}
-          />
+        <div
+          style={{
+            marginTop: '2rem',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-around',
+            width: '100%',
+          }}
+        >
+          <Button text='See Trophies' onClick={seeTrophies} />
+          {level < 3 && (
+            <Button text='Start Next Season' onClick={startNextSeason} />
+          )}
         </div>
       </div>
     </OverlayBoard>
