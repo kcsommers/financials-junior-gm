@@ -20,6 +20,7 @@ import TeacherDashboard from './pages/TeacherDashboard';
 import PageNotFound from './components/page-not-found';
 import TeacherPortal from './pages/portal/Teacher';
 import StudentPortal from './pages/portal/Student';
+import Signup from './pages/Signup'
 import { setStudent, setInitialPlayersState } from '@redux/actions';
 import {
   getCurrentUser,
@@ -135,6 +136,7 @@ const App = () => {
           <Route exact path='/dashboard' component={Dashboard} />
           <Route exact path='/login/teacher' component={TeacherLogin} />
           <Route exact path='/login/student' component={StudentLogin} />
+          <Route exact path='/signup' component={Signup}/>
           {/* <Route exact path='/teacher/home' component={TeacherDashboard} /> */}
           <Route
             exact

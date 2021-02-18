@@ -34,7 +34,8 @@ const slideConfigs = [
     timer: Slide.SLIDE_DURATION,
   },
   {
-    message: "My name is Sharkie, I'm here to teach about your new job!",
+    message: "My name is S.J Sharkie, I'm here to teach about your new job!",
+    accentText: 'S.J Sharkie',
     sharkie: 'speak',
     hasButtons: false,
     timer: Slide.SLIDE_DURATION + 3000,
