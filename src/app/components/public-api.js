@@ -1,4 +1,9 @@
 export { BackButton } from './BackButton';
+export { TeamCard } from './season-page/TeamCard';
+export { StartGameButton } from './season-page/StartGameButton';
+export { StandingsBoard } from './season-page/StandingsBoard';
+export { GameBlockBoard } from './season-page/GameBlockBoard';
+export { Jumbotron } from './season-page/Jumbotron';
 export { TrophySvg } from './trophies-page/TrophySvg';
 export { BadScoutOverlay } from './overlays/BadScoutOverlay';
 export { LevelStickSvg } from './LevelStickSvg';

@@ -85,6 +85,10 @@ p {
   height: auto;
 }
 
+.font-bold {
+  font-weight: bold;
+}
+
 .outline-black {
   text-shadow: 0 0 5px #000, 0 0 5px #000, 0 0 5px #000, 0 0 5px #000;
 }

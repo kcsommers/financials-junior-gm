@@ -26,7 +26,12 @@ import {
   SET_SIMULATE_GAME,
   UPDATE_OPPONENT_INDEX,
   UPDATE_TEAMS,
-  UPDATE_SEASON_STATE
+  UPDATE_SEASON_STATE,
+  GAME_BLOCK_ENDED,
+  INJURE_PLAYER,
+  THROW_SCENARIO,
+  SET_SEASON_COMPLETE,
+  GAME_ENDED,
 } from './actionTypes';
 
 export const setAnimationState = (state) => ({
@@ -87,6 +92,11 @@ export const releasePlayer = (player, prevAssignment) => ({
 export const tradePlayer = (releasedPlayer, signedPlayer) => ({
   type: TRADE_PLAYER,
   payload: { releasedPlayer, signedPlayer },
+});
+
+export const injurePlayer = (injuredPlayer, previousAssignment) => ({
+  type: INJURE_PLAYER,
+  payload: { injuredPlayer, previousAssignment },
 });
 
 export const setLoginState = (isLoggedIn, role) => ({
@@ -156,15 +166,35 @@ export const setSimulationButton = (simulation) => ({
 
 export const setSimulateGame = (state) => ({
   type: SET_SIMULATE_GAME,
-  payload: state
-})
+  payload: state,
+});
 
 export const updateTeams = (state) => ({
   type: UPDATE_TEAMS,
-  payload: state
-})
+  payload: state,
+});
 
 export const updateSeasonState = (updatedState) => ({
-  type:UPDATE_SEASON_STATE,
-  payload: updatedState
-})
+  type: UPDATE_SEASON_STATE,
+  payload: updatedState,
+});
+
+export const gameBlockEnded = () => ({
+  type: GAME_BLOCK_ENDED,
+  payload: null,
+});
+
+export const setSeasonComplete = () => ({
+  type: SET_SEASON_COMPLETE,
+  payload: null,
+});
+
+export const gameEnded = (gameResult, opponent) => ({
+  type: GAME_ENDED,
+  payload: { gameResult, opponent },
+});
+
+export const throwScenario = (scenario) => ({
+  type: THROW_SCENARIO,
+  payload: scenario,
+});

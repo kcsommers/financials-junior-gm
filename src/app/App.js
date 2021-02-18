@@ -8,12 +8,12 @@ import {
 } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import TeamPage from './pages/TeamPage';
-import Season from './pages/Season';
 import ScoutPage from './pages/ScoutPage';
 import { IceBackground } from '@components';
 import BudgetPage from './pages/BudgetPage';
 import Dashboard from './pages/Dashboard';
 import TrophiesPage from './pages/TrophiesPage';
+import SeasonPage from './pages/SeasonPage';
 import TeacherLogin from './pages/login/Teacher.jsx';
 import StudentLogin from './pages/login/Student.jsx';
 import TeacherDashboard from './pages/TeacherDashboard';
@@ -41,6 +41,9 @@ const App = () => {
     getCurrentUser()
       .then((studentRes) => {
         const student = studentRes.data;
+
+        console.log('CURRENT USER:::: ', studentRes.data._id, studentRes);
+
         if (!studentRes.success || !student) {
           console.error(
             new Error('Unexpected error fetching the current user')
@@ -124,7 +127,7 @@ const App = () => {
           <Route
             exact
             path='/season'
-            render={(props) => <StudentPortal screen={<Season />} />}
+            render={(props) => <StudentPortal screen={<SeasonPage />} />}
           />
           <Route
             exact

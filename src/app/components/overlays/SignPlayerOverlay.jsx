@@ -4,8 +4,13 @@ import {
   MarketPlayersBoard,
   PlayerChangeSuccessOverlay,
 } from '@components';
-import { useDispatch } from 'react-redux';
-import { toggleOverlay, signPlayer, setStudent } from '@redux/actions';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  toggleOverlay,
+  signPlayer,
+  setStudent,
+  gameBlockEnded,
+} from '@redux/actions';
 import { ConfirmSignOverlay } from './ConfirmSignOverlay';
 import { getPlayerPositon } from '@utils';
 import { updateStudentById } from '../../api-helper';
@@ -21,13 +26,19 @@ const getAvailableSlots = (props, team) => {
   }, 0);
 };
 
+const offense = ['fOne', 'fTwo', 'fThree'];
+const defense = ['dOne', 'dTwo'];
+const goalie = ['gOne'];
+
 export const SignPlayerOverlay = ({ team, assignment, student }) => {
   const dispatch = useDispatch();
 
+  const currentScenario = useSelector((state) => state.season.currentScenario);
+
   const availableSlots = {
-    forwards: getAvailableSlots(['fOne', 'fTwo', 'fThree'], team),
-    defender: getAvailableSlots(['dOne', 'dTwo'], team),
-    goalie: getAvailableSlots(['gOne'], team),
+    forwards: getAvailableSlots(offense, team),
+    defender: getAvailableSlots(defense, team),
+    goalie: getAvailableSlots(goalie, team),
     bench: getAvailableSlots(['benchOne', 'benchTwo', 'benchThree'], team),
   };
 
@@ -74,6 +85,20 @@ export const SignPlayerOverlay = ({ team, assignment, student }) => {
             ),
           })
         );
+        // if theres an active season scenario, check that the team is full
+        // and end the current game block if so
+        if (currentScenario) {
+          const clonedTeam = cloneDeep(team);
+          clonedTeam[assignment] = signedPlayer;
+          if (
+            getAvailableSlots(
+              [...offense, ...defense, ...goalie],
+              clonedTeam
+            ) === 0
+          ) {
+            dispatch(gameBlockEnded());
+          }
+        }
       })
       .catch((err) => console.error(err));
   };
