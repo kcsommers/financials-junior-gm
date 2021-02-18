@@ -1,6 +1,9 @@
 import sharkiePlay from '@images/sharkie-play.svg';
+import sharkiePlayInverse from '@images/sharkie-play-inverse.svg';
 import sharkieSpeak from '@images/sharkie-speak.svg';
+import sharkieSpeakInverse from '@images/sharkie-speak-inverse.svg';
 import sharkiePresent from '@images/sharkie-present.svg';
+import sharkiePresentInverse from '@images/sharkie-present-inverse.svg';
 import sharkieLean from '@images/sharkie-lean.svg';
 import speechBubble from '@images/speech-bubble.svg';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -9,11 +12,11 @@ import '@css/tutorial/Sharkie.css';
 
 const sharkieImgs = {
   play: sharkiePlay,
-  playInverse: sharkiePlay,
+  playInverse: sharkiePlayInverse,
   speak: sharkieSpeak,
-  speakInverse: sharkieSpeak,
+  speakInverse: sharkieSpeakInverse,
   present: sharkiePresent,
-  presentInverse: sharkiePresent,
+  presentInverse: sharkiePresentInverse,
   lean: sharkieLean,
 };
 
@@ -85,7 +88,7 @@ export const SharkieComponent = ({ slide, inTransition }) => {
         <motion.div
           key={slide.sharkie}
           className={`sharkie-img-wrap${
-            sharkieInverse ? ' sharkie-inverse' : ''
+            sharkieInverse ? '' : ''
           }`}
           variants={
             slide.sharkieVariants || defaultSharkieVariants[slide.sharkie]

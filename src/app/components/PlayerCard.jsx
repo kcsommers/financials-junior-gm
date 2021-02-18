@@ -109,6 +109,7 @@ export const PlayerCard = ({
   size = 'small',
   onClick,
 }) => {
+  console.log(player)
   const playerTemplateSmall = player ? (
     <motion.div
       className={`player-card-wrap${!!onClick ? ' player-card-clickable' : ''}`}
@@ -143,7 +144,7 @@ export const PlayerCard = ({
             )}
           </div>
         </div>
-        <div className='box-shadow player-card-body'>
+        <div className={player.sharkPlayer == "TRUE" ? 'box-shadow player-card-body player-card-color-shark' : 'box-shadow player-card-body player-card-color-reg' }>
           <div
             className='player-card-img-wrap'
             style={{
@@ -151,6 +152,15 @@ export const PlayerCard = ({
               backgroundImage: `url(${player.playerPicture || playerImage})`,
             }}
           ></div>
+          {player.playerPosition == 'goalie' ? 
+            <div className='player-ranks'>
+            <PlayerRankPie
+              label='Saves'
+              sliceColor='#002f6c'
+              rank={+player.overallRank}
+            />
+          </div>
+          : 
           <div className='player-ranks'>
             <PlayerRankPie
               label='Off'
@@ -167,7 +177,7 @@ export const PlayerCard = ({
               sliceColor='#002f6c'
               rank={+player.defensiveRank}
             />
-          </div>
+          </div>}
         </div>
       </div>
     </motion.div>
@@ -206,14 +216,14 @@ export const PlayerCard = ({
             {player.playerCost && (
               <span>{getDollarString(player.playerCost)}</span>
             )}
-            <span style={styles[size].logo}>
+            {player.sharkPlayer == "TRUE" && <span style={styles[size].logo}>
               <ReactSVG src={sharksLogo} />
-            </span>
+            </span>}
           </div>
         </div>
         <motion.div
           animate={animationStates ? animationStates.playerCard : null}
-          className='box-shadow player-card-body'
+          className={player.sharkPlayer == "TRUE" ? 'box-shadow player-card-body player-card-color-shark' : 'box-shadow player-card-body player-card-color-reg' }
           transition={{
             default: {
               duration: 1,
@@ -233,6 +243,19 @@ export const PlayerCard = ({
               backgroundImage: `url(${player.playerPicture || playerImage})`,
             }}
           ></div>
+          {player.playerPosition == 'goalie' ? 
+          <div
+          className='player-rank-graphs-container'
+          style={styles[size].graphsWrap}
+        >
+          <PlayerRankGraph
+            label='Saves'
+            rgb={[0, 47, 108]}
+            rank={+player.overallRank}
+            isSmall={size === 'medium'}
+          />
+        </div>
+          : 
           <div
             className='player-rank-graphs-container'
             style={styles[size].graphsWrap}
@@ -255,7 +278,7 @@ export const PlayerCard = ({
               rgb={[0, 47, 108]}
               isSmall={size === 'medium'}
             />
-          </div>
+          </div>}
         </motion.div>
       </div>
     </div>
