@@ -5,25 +5,15 @@ import { getStanding } from '@data/season/season';
 import { TrophySvg, OverlayBoard, Button } from '@components';
 import { toggleOverlay, setSeasonComplete } from '@redux/actions';
 
-export const SeasonCompleteOverlay = ({ team, level, standings }) => {
+export const SeasonCompleteOverlay = ({ team, level, standings, student }) => {
   const history = useHistory();
   const dispatch = useDispatch();
   const standing = useMemo(() => getStanding(team, standings), []);
 
-  const completeSeason = () => {
-    dispatch(setSeasonComplete());
-  };
-
-  const seeTrophies = () => {
-    completeSeason();
+  const completeSeason = (path) => {
+    dispatch(setSeasonComplete(student));
     dispatch(toggleOverlay({ isOpen: false, template: null }));
-    history.push('/trophies');
-  };
-
-  const startNextSeason = () => {
-    completeSeason();
-    dispatch(toggleOverlay({ isOpen: false, template: null }));
-    history.push('/home');
+    history.push(path);
   };
 
   return (
@@ -70,9 +60,15 @@ export const SeasonCompleteOverlay = ({ team, level, standings }) => {
             width: '100%',
           }}
         >
-          <Button text='See Trophies' onClick={seeTrophies} />
+          <Button
+            text='See Trophies'
+            onClick={completeSeason.bind(this, '/trophies')}
+          />
           {level < 3 && (
-            <Button text='Start Next Season' onClick={startNextSeason} />
+            <Button
+              text='Start Next Season'
+              onClick={completeSeason.bind(this, '/home')}
+            />
           )}
         </div>
       </div>
