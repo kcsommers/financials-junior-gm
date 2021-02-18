@@ -1,8 +1,7 @@
-import { OverlayBoard } from '@components';
+import { OverlayBoard, Button } from '@components';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { toggleOverlay } from '@redux/actions';
-import '@css/components/overlay-btns.css';
 
 export const InsufficientFundsOverlay = () => {
   const history = useHistory();
@@ -50,17 +49,17 @@ export const InsufficientFundsOverlay = () => {
             your budget.
           </p>
         </div>
-        <div className='overlay-buttons-wrap'>
-          <div className={`box-shadow overlay-btn`} onClick={backToTeam}>
-            <div className='overlay-btn-inner'>
-              <span className='outline-black'>Back to Team</span>
-            </div>
-          </div>
-          <div className={`box-shadow overlay-btn`} onClick={goToBudget}>
-            <div className='overlay-btn-inner'>
-              <span className='outline-black'>Go to Budget</span>
-            </div>
-          </div>
+        <div
+          style={{
+            marginTop: '3rem',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-around',
+            width: '100%',
+          }}
+        >
+          <Button text='Back to Team' onClick={backToTeam} />
+          <Button text='Go to Budget' onClick={goToBudget} />
         </div>
       </div>
     </OverlayBoard>
