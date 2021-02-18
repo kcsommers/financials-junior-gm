@@ -13,4 +13,5 @@ export {
 } from './lessons/home/hockey-stick-slides';
 export { teamSlides } from './lessons/team/team-slides';
 export { scoutSlides } from './lessons/scout/scout-slides';
+export { seasonSlides } from './lessons/season/season-slides';
 export { Tutorial } from './components/Tutorial';

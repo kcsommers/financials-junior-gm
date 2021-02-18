@@ -109,7 +109,6 @@ export const PlayerCard = ({
   size = 'small',
   onClick,
 }) => {
-  console.log(player)
   const playerTemplateSmall = player ? (
     <motion.div
       className={`player-card-wrap${!!onClick ? ' player-card-clickable' : ''}`}
