@@ -1,5 +1,5 @@
 import { ReactSVG } from 'react-svg';
-export const TeamCard = ({ logo, rank, color }) => {
+export const TeamCard = ({ logo, standing, color }) => {
   return (
     <div
       style={{
@@ -22,7 +22,7 @@ export const TeamCard = ({ logo, rank, color }) => {
           color: color,
         }}
       >
-        {rank}
+        {standing}
       </span>
     </div>
   );
