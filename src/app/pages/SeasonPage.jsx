@@ -29,6 +29,13 @@ import {
   gameEnded,
 } from '@redux/actions';
 
+import {
+  seasonSlides,
+  SharkieButton,
+  Tutorial,
+  getConfirmSlides,
+} from '@tutorial';
+import { setTutorialState, toggleOverlay } from '@redux/actions';
 const allActions = {
   [INJURE_PLAYER]: injurePlayer,
 };
@@ -39,6 +46,7 @@ const SeasonPage = () => {
   const dispatch = useDispatch();
   const student = useSelector((state) => state.studentState.student);
   const team = useSelector((state) => state.players.teamPlayers);
+  const tutorialActive = useSelector((state) => state.tutorial.isActive);
 
   const seasonState = useSelector((state) => state.season);
 
@@ -49,8 +57,21 @@ const SeasonPage = () => {
     currentMessageIndex: 0,
     // results: [],
   });
-
+  const [tutorialSlides, setTutorialSlides] = useState([seasonSlides]);
   const currentPhase = gamePhases[state.currentPhaseIndex];
+  
+  const onTutorialComplete = () => {
+    dispatch(setTutorialState({ isActive: false }));
+  };
+
+  const onCallSharkie = () => {
+    setTutorialSlides([getConfirmSlides('season'), seasonSlides]);
+    dispatch(
+      setTutorialState({
+        isActive: true,
+      })
+    );
+  };
 
   if (timer) {
     window.clearTimeout(timer);
@@ -198,6 +219,9 @@ const SeasonPage = () => {
       />
 
       <PageBoard hideCloseBtn={true} includeBackButton={true}>
+      <div style={{position: 'absolute', right: '20px', transform: 'scale(0.85)'}}>
+        <SharkieButton textPosition='left' onCallSharkie={onCallSharkie} />
+      </div>
         <div
           style={{
             display: 'flex',
@@ -273,6 +297,9 @@ const SeasonPage = () => {
           </div>
         </div>
       </PageBoard>
+      {tutorialActive && (
+        <Tutorial slides={tutorialSlides} onComplete={onTutorialComplete} />
+      )}
     </div>
   ) : (
     <div

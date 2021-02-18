@@ -92,6 +92,9 @@ const initialState = {
       opacity: 1,
     },
   },
+  season: {
+  
+  },
 };
 
 const tutorialsReducer = (state = initialState, action) => {
