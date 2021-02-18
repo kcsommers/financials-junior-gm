@@ -4,6 +4,7 @@ import {
   GAME_BLOCK_ENDED,
   SET_SCENARIO_COMPLETE,
   SET_SEASON_COMPLETE,
+  UPDATE_STATS,
 } from './../actionTypes';
 
 const initialState = {
@@ -30,26 +31,23 @@ const seasonReducer = (state = initialState, action) => {
       const { results, scenario, student } = action.payload;
       const clonedState = cloneDeep(state);
 
-      results.forEach((r) => {
-        // tally up results for all teams
-        const opposingTeam = clonedState.allTeams.find(
-          (t) => t.name === r.opponent
-        );
-        clonedState.stats.points += r[0];
-        opposingTeam.stats.points += r[1];
-        if (r[0] > r[1]) {
-          clonedState.stats.wins += 1;
-          opposingTeam.stats.losses += 1;
-        } else {
-          clonedState.stats.losses += 1;
-          opposingTeam.stats.wins += 1;
-        }
-      });
-
       clonedState.previousGameBlocks.push(results);
       clonedState.currentBlockIndex = state.currentBlockIndex + 1;
-      clonedState.currentScenario =
-        scenarios[student.level][state.currentBlockIndex];
+      clonedState.currentScenario = scenario;
+      return clonedState;
+    }
+    case UPDATE_STATS: {
+      const { gameResult, opponent } = action.payload;
+      const clonedState = cloneDeep(state);
+      clonedState.stats.points += gameResult.score[0];
+      opponent.stats.points += gameResult.score[1];
+      if (gameResult.score[0] > gameResult.score[1]) {
+        clonedState.stats.wins += 1;
+        opponent.stats.losses += 1;
+      } else {
+        clonedState.stats.losses += 1;
+        opponent.stats.wins += 1;
+      }
       return clonedState;
     }
     case SET_SCENARIO_COMPLETE: {
