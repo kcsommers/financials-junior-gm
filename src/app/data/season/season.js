@@ -58,7 +58,7 @@ export const scenarios = {
       objective: '1. Replace the injured player',
       action: INJURE_PLAYER,
       getPlayer: getSecondHighestPlayer,
-      playerAssignment: null,
+      playerAssignment: PlayerAssignments.MARKET,
       player: null,
     },
     {
@@ -66,7 +66,7 @@ export const scenarios = {
       objective: '1. Replace the injured player',
       action: INJURE_PLAYER,
       getPlayer: getStartingPlayer,
-      playerAssignment: null,
+      playerAssignment: PlayerAssignments.MARKET,
       player: null,
     },
   ],
@@ -106,7 +106,7 @@ export const gamePhases = [
     timer: 5000,
     messages: [
       'GET LOUD! The Jr Sharks Won!',
-      'CLOSE ONE! The Jr Sharks won in overtime!',
+      'CLOSE! The Jr Sharks won in overtime!',
       'OH NO! The Jr Sharks lost :(',
     ],
   },

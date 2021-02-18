@@ -102,3 +102,41 @@ span.game-block-board-dash {
   height: 3px;
   background-color: #707070;
 }
+
+div.standings-board-wrap-inner {
+  padding: 0;
+  justify-content: flex-start;
+  display: flex;
+  flex-direction: column;
+}
+
+div.standings-board-row {
+  display: flex;
+  align-items: center;
+  color: #121210;
+  font-size: 1.1rem;
+  width: 100%;
+  flex: 1;
+  padding-left: 0.5rem;
+}
+
+div.standings-board-top-row {
+  font-size: 0.8rem;
+  border-bottom: 1px solid #121210;
+  max-height: 20px;
+  justify-content: center;
+}
+
+div.standings-board-row > span:first-child {
+  flex: 1;
+}
+
+div.standings-board-row > span:last-child {
+  min-width: 75px;
+  max-width: 75px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-left: 1px solid #121210;
+  align-self: stretch;
+}

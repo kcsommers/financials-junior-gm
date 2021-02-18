@@ -28,6 +28,22 @@ export const Jumbotron = ({
     nextIndex + 3
   );
 
+  const getStanding = (team) => {
+    const standing = (
+      seasonState.standings.findIndex((t) => t.name === team.name) + 1
+    ).toString();
+    if (standing.endsWith('1') && standing !== '11') {
+      return `${standing}st`;
+    }
+    if (standing.endsWith('2') && standing !== '12') {
+      return `${standing}nd`;
+    }
+    if (standing.endsWith('3') && standing !== '13') {
+      return `${standing}rd`;
+    }
+    return `${standing}th`;
+  };
+
   const scoreView = (
     <div className='jumbotron-score-container'>
       <div className='jumbotron-score-title'>Score</div>
@@ -64,7 +80,10 @@ export const Jumbotron = ({
 
   const sharksTransitionView = (
     <div className='transition-view-left'>
-      <TeamCard logo={jrSharksLogo} rank={student.teamRank} />
+      <TeamCard
+        logo={jrSharksLogo}
+        standing={getStanding(seasonState.seasonTeam)}
+      />
       {statsView}
     </div>
   );
@@ -124,7 +143,10 @@ export const Jumbotron = ({
     <>
       <div className='game-on-top'>
         <div className='game-on-top-left'>
-          <TeamCard logo={jrSharksLogo} rank={student.teamRank} />
+          <TeamCard
+            logo={jrSharksLogo}
+            standing={getStanding(seasonState.seasonTeam)}
+          />
         </div>
         <span
           style={{
@@ -142,7 +164,10 @@ export const Jumbotron = ({
           VS
         </span>
         <div className='game-on-top-right'>
-          <TeamCard logo={currentOpponent.logoLg} rank={currentOpponent.rank} />
+          <TeamCard
+            logo={currentOpponent.logoLg}
+            standing={getStanding(currentOpponent)}
+          />
         </div>
       </div>
       <div className='game-on-bottom'>{scoreView}</div>

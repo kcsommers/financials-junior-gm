@@ -54,7 +54,7 @@ const seasonReducer = (state = initialState, action) => {
       const { gameResult, opponent } = action.payload;
       const clonedState = cloneDeep(state);
       clonedState.seasonTeam.stats.points += gameResult.score[0];
-      opponent.seasonTeam.stats.points += gameResult.score[1];
+      opponent.stats.points += gameResult.score[1];
       if (gameResult.score[0] > gameResult.score[1]) {
         clonedState.seasonTeam.stats.wins += 1;
         opponent.stats.losses += 1;
@@ -67,7 +67,7 @@ const seasonReducer = (state = initialState, action) => {
       clonedState.allTeams.forEach((team) => {
         team.teamRank = getRandomTeamRank();
         if (team.name !== opponent.name) {
-          team.stats.points = getRandomStat(3);
+          team.stats.points = getRandomStat(5);
           const wins = getRandomStat(2);
           const losses = wins === 0 ? 1 : 0;
           team.stats.wins += wins;
@@ -76,7 +76,7 @@ const seasonReducer = (state = initialState, action) => {
       });
 
       clonedState.standings = getStandings([
-        clonedState.allTeams,
+        ...clonedState.allTeams,
         clonedState.seasonTeam,
       ]);
 

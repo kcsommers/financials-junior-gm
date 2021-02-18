@@ -116,32 +116,32 @@ const SeasonPage = () => {
       scenarioPlayer
     );
 
-    p1.then((res) => {
-      dispatch(
-        allActions[currentScenario.action](scenarioPlayer, prevAssignment)
-      );
-      const updatedStudent = cloneDeep(student);
-      updatedStudent[prevAssignment] = null;
-      updatedStudent.players = playersCopy;
-      dispatch(setStudent(updatedStudent));
-      dispatch(throwScenario(currentScenario));
-      // dispatch(gameBlockEnded(seasonState.completedGames, currentScenario));
-    }).catch((err) => console.error(err));
-    // updateStudentById(student._id, {
-    //   [prevAssignment]: currentScenario.playerAssignment,
-    //   players: playersCopy,
-    // })
-    //   .then((res) => {
-    //     dispatch(
-    //       allActions[seasonState.currentScenario.action](
-    //         scenarioPlayer,
-    //         prevAssignment
-    //       )
-    //     );
-    //     dispatch(setStudent(res.updatedStudent));
-    //     dispatch(gameBlockEnded(state.results, currentScenario));
-    //   })
-    //   .catch((err) => console.error(err));
+    // p1.then((res) => {
+    //   dispatch(
+    //     allActions[currentScenario.action](scenarioPlayer, prevAssignment)
+    //   );
+    //   const updatedStudent = cloneDeep(student);
+    //   updatedStudent[prevAssignment] = null;
+    //   updatedStudent.players = playersCopy;
+    //   dispatch(setStudent(updatedStudent));
+    //   dispatch(throwScenario(currentScenario));
+    //   // dispatch(gameBlockEnded(seasonState.completedGames, currentScenario));
+    // }).catch((err) => console.error(err));
+    updateStudentById(student._id, {
+      [prevAssignment]: currentScenario.playerAssignment,
+      players: playersCopy,
+    })
+      .then((res) => {
+        dispatch(
+          allActions[seasonState.currentScenario.action](
+            scenarioPlayer,
+            prevAssignment
+          )
+        );
+        dispatch(setStudent(res.updatedStudent));
+        dispatch(throwScenario(currentScenario));
+      })
+      .catch((err) => console.error(err));
   };
 
   const nextGame = () => {
