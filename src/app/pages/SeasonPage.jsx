@@ -21,12 +21,16 @@ import {
 } from '@data/season/season';
 import { cloneDeep } from 'lodash';
 import { INJURE_PLAYER } from '@redux/actionTypes';
-import { updateStudentById } from './../api-helper';
+import { initPlayersByLevel, updateStudentById } from './../api-helper';
 import {
   throwScenario,
   injurePlayer,
   setStudent,
+  gameBlockEnded,
   gameEnded,
+  setTutorialState,
+  toggleOverlay,
+  setInitialPlayersState,
 } from '@redux/actions';
 import {
   seasonSlides,
@@ -34,7 +38,6 @@ import {
   Tutorial,
   getConfirmSlides,
 } from '@tutorial';
-import { setTutorialState, toggleOverlay } from '@redux/actions';
 import '@css/pages/SeasonPage.css';
 
 const allActions = {
@@ -96,28 +99,56 @@ const SeasonPage = () => {
   }
 
   const seasonComplete = () => {
-    const p1 = new Promise((res) => res(true));
-    p1.then(() => {
-      dispatch(
-        toggleOverlay({
-          isOpen: true,
-          template: (
-            <SeasonCompleteOverlay
-              standings={seasonState.standings}
-              level={student.level || 1}
-              team={seasonState.seasonTeam}
-              student={student}
-            />
-          ),
-          canClose: false,
-        })
-      );
-    }).catch((err) => console.error(err));
+    // @TODO for when we move to level 2
+    // const seasonIndex = (student.level || 1) - 1;
+    // const clonedStudent = cloneDeep(student);
+    // const savedBlocks = clonedStudent.seasons[seasonIndex] || [];
+
+    // savedBlocks.push(seasonState.completedBlocks);
+    // clonedStudent.seasons[seasonIndex] = savedBlocks;
+
+    // updateStudentById(student._id, {
+    //   season: currentScenario.playerAssignment,
+    // })
+    //   .then((res) => {})
+    //   .catch((err) => console.error(err));
+
+    initPlayersByLevel(1)
+      .then((initializedStudentRes) => {
+        if (!initializedStudentRes.success || !initializedStudentRes.data) {
+          console.error(new Error('Unexpected error initializing players'));
+          return;
+        }
+        // @TODO THUNK
+        dispatch(setStudent(initializedStudentRes.data));
+        dispatch(
+          setInitialPlayersState(
+            initializedStudentRes.data.players,
+            initializedStudentRes.data
+          )
+        );
+        dispatch(
+          toggleOverlay({
+            isOpen: true,
+            template: (
+              <SeasonCompleteOverlay
+                standings={seasonState.standings}
+                level={student.level || 1}
+                team={seasonState.seasonTeam}
+                student={student}
+              />
+            ),
+            canClose: false,
+          })
+        );
+      })
+      .catch((err) => console.error(err));
   };
 
   const endBlock = () => {
     // if this is the last game block season is over
     if (seasonState.currentBlockIndex === seasonState.gameBlocks.length - 1) {
+      dispatch(gameBlockEnded());
       seasonComplete();
       return;
     }
