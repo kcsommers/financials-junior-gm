@@ -121,6 +121,18 @@ export const gamePhases = [
   },
 ];
 
+export const getRandomTeamRank = () => {
+  return Math.max(Math.floor(Math.random() * 90), 20);
+};
+
+export const getRandomStat = (mult) => {
+  return Math.floor(Math.random() * mult);
+};
+
+export const getStandings = (teams) => {
+  return teams.sort((a, b) => b.stats.points - a.stats.points);
+};
+
 export const allTeams = [
   {
     teamRank: 65,
