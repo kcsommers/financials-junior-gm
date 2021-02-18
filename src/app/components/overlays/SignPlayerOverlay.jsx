@@ -67,38 +67,6 @@ export const SignPlayerOverlay = ({ team, assignment, student }) => {
       signedPlayer
     );
 
-    // const p1 = new Promise((res) => res(true));
-    // p1.then((res) => {
-    //   const updatedStudent = cloneDeep(student);
-    //   updatedStudent[assignment] = null;
-    //   updatedStudent.players = playersCopy;
-    //   dispatch(signPlayer(signedPlayer, assignment));
-    //   dispatch(setStudent(res.updatedStudent));
-    //   dispatch(
-    //     toggleOverlay({
-    //       isOpen: true,
-    //       template: (
-    //         <PlayerChangeSuccessOverlay
-    //           player={signedPlayer}
-    //           message=' Player has been signed!'
-    //         />
-    //       ),
-    //     })
-    //   );
-    //   // if theres an active season scenario, check that the team is full
-    //   // and end the current game block if so
-    //   if (currentScenario) {
-    //     const clonedTeam = cloneDeep(team);
-    //     clonedTeam[assignment] = signedPlayer;
-    //     if (
-    //       getAvailableSlots([...offense, ...defense, ...goalie], clonedTeam) ===
-    //       0
-    //     ) {
-    //       dispatch(gameBlockEnded());
-    //     }
-    //   }
-    // }).catch((err) => console.error(err));
-
     updateStudentById(student._id, {
       [assignment]: signedPlayer._id,
       players: playersCopy,

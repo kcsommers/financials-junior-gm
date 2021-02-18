@@ -22,7 +22,6 @@ import { cloneDeep } from 'lodash';
 import { INJURE_PLAYER } from '@redux/actionTypes';
 import { updateStudentById } from './../api-helper';
 import {
-  gameBlockEnded,
   throwScenario,
   setSeasonComplete,
   injurePlayer,
@@ -83,9 +82,6 @@ const SeasonPage = () => {
   };
 
   const endBlock = () => {
-    const p1 = new Promise((res) => res(true));
-    console.log(':::: END BLOCK ::::');
-
     // if this is the last game block season is over
     if (seasonState.currentBlockIndex === seasonState.gameBlocks.length - 1) {
       seasonComplete();
@@ -96,10 +92,6 @@ const SeasonPage = () => {
     const currentScenario =
       scenarios[student.level][seasonState.currentBlockIndex];
     if (!currentScenario) {
-      // no scenario after this game block
-      // p1.then(() => {
-      //   dispatch(gameBlockEnded(seasonState.completedGames, null));
-      // }).catch((err) => console.error(err));
       return;
     }
 
@@ -116,27 +108,13 @@ const SeasonPage = () => {
       scenarioPlayer
     );
 
-    // p1.then((res) => {
-    //   dispatch(
-    //     allActions[currentScenario.action](scenarioPlayer, prevAssignment)
-    //   );
-    //   const updatedStudent = cloneDeep(student);
-    //   updatedStudent[prevAssignment] = null;
-    //   updatedStudent.players = playersCopy;
-    //   dispatch(setStudent(updatedStudent));
-    //   dispatch(throwScenario(currentScenario));
-    //   // dispatch(gameBlockEnded(seasonState.completedGames, currentScenario));
-    // }).catch((err) => console.error(err));
     updateStudentById(student._id, {
       [prevAssignment]: currentScenario.playerAssignment,
       players: playersCopy,
     })
       .then((res) => {
         dispatch(
-          allActions[seasonState.currentScenario.action](
-            scenarioPlayer,
-            prevAssignment
-          )
+          allActions[currentScenario.action](scenarioPlayer, prevAssignment)
         );
         dispatch(setStudent(res.updatedStudent));
         dispatch(throwScenario(currentScenario));

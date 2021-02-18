@@ -1,8 +1,5 @@
-import redRabbits from '@images/icons/red-rabbits.svg';
-import purplePanthers from '@images/icons/purple-panthers.svg';
 import whiteWolves from '@images/icons/white-wolves.svg';
 import blueBearsLogoLg from '@images/icons/blue-bears-logo-big.svg';
-import blueBearsLogoSm from '../../../assets/images/icons/blue-bears-logo.svg';
 import { INJURE_PLAYER } from '@redux/actionTypes';
 import { PlayerAssignments } from '@data/players/players';
 
