@@ -42,8 +42,6 @@ const App = () => {
       .then((studentRes) => {
         const student = studentRes.data;
 
-        console.log('CURRENT USER:::: ', studentRes.data._id, studentRes);
-
         if (!studentRes.success || !student) {
           console.error(
             new Error('Unexpected error fetching the current user')

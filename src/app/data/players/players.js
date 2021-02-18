@@ -31,3 +31,22 @@ export const PlayerPositions = {
 
   BENCH: 'bench',
 };
+
+export const TeamAssignments = {
+  offense: ['fOne', 'fTwo', 'fThree'],
+  defense: ['dOne', 'dTwo'],
+  goalie: ['gOne'],
+  bench: ['benchOne', 'benchTwo', 'benchThree'],
+};
+
+export const getAvailableSlots = (props, team) => {
+  if (!team) {
+    return props.length;
+  }
+  return props.reduce((total, p) => {
+    if (!team[p]) {
+      total++;
+    }
+    return total;
+  }, 0);
+};
