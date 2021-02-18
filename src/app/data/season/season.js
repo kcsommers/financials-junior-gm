@@ -210,6 +210,7 @@ export const allTeams = [
     name: 'Red Rabbits',
     stats: { wins: 0, losses: 0, points: 0 },
     standings: '12th',
+    color: '#ff3b3b',
   },
   {
     teamRank: 35,
@@ -218,6 +219,7 @@ export const allTeams = [
     name: 'Purple Panthers',
     stats: { wins: 0, losses: 0, points: 0 },
     standings: '10th',
+    color: '#f83bff',
   },
   {
     teamRank: 25,
@@ -226,5 +228,6 @@ export const allTeams = [
     name: 'White Wolves',
     stats: { wins: 0, losses: 0, points: 0 },
     standings: '6th',
+    color: '#3bfff9',
   },
 ];
