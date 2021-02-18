@@ -1,9 +1,9 @@
-import { allTeams } from '@data/season/season';
 import { cloneDeep } from 'lodash';
 import {
   getStandings,
   getRandomTeamRank,
   getRandomStat,
+  getAllTeams,
 } from '@data/season/season';
 import {
   GAME_BLOCK_ENDED,
@@ -12,10 +12,18 @@ import {
   THROW_SCENARIO,
 } from './../actionTypes';
 
-const initialTeam = {
-  name: 'Jr Sharks',
-  stats: { wins: 0, losses: 0, points: 0 },
-};
+const initialTeams = [
+  {
+    name: 'Jr Sharks',
+    stats: { wins: 0, losses: 0, points: 0 },
+  },
+  {
+    name: 'Barricudas',
+    stats: { wins: 0, losses: 0, points: 0 },
+  },
+];
+
+const allTeams = getAllTeams();
 
 const initialState = {
   completedBlocks: [], // array of game blocks
@@ -27,10 +35,10 @@ const initialState = {
   ],
   currentBlockIndex: 0,
   currentScenario: null,
-  allTeams: cloneDeep(allTeams),
+  allTeams: allTeams,
   isComplete: false,
-  seasonTeam: initialTeam,
-  standings: getStandings([...allTeams, initialTeam]),
+  seasonTeam: initialTeams[0],
+  standings: getStandings([...allTeams, initialTeams[0]]),
 };
 
 const seasonReducer = (state = initialState, action) => {
@@ -82,6 +90,8 @@ const seasonReducer = (state = initialState, action) => {
 
       clonedState.completedGames.push(gameResult);
       return clonedState;
+    }
+    case SET_SEASON_COMPLETE: {
     }
     default:
       return state;
