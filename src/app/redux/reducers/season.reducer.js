@@ -1,11 +1,21 @@
 import { allTeams } from '@data/season/season';
 import { cloneDeep } from 'lodash';
 import {
+  getStandings,
+  getRandomTeamRank,
+  getRandomStat,
+} from '@data/season/season';
+import {
   GAME_BLOCK_ENDED,
   SET_SEASON_COMPLETE,
   GAME_ENDED,
   THROW_SCENARIO,
 } from './../actionTypes';
+
+const initialTeam = {
+  name: 'Jr Sharks',
+  stats: { wins: 0, losses: 0, points: 0 },
+};
 
 const initialState = {
   completedBlocks: [], // array of game blocks
@@ -19,11 +29,8 @@ const initialState = {
   currentScenario: null,
   allTeams: cloneDeep(allTeams),
   isComplete: false,
-  stats: {
-    wins: 0,
-    losses: 0,
-    points: 0,
-  },
+  seasonTeam: initialTeam,
+  standings: getStandings([...allTeams, initialTeam]),
 };
 
 const seasonReducer = (state = initialState, action) => {
@@ -41,25 +48,38 @@ const seasonReducer = (state = initialState, action) => {
       clonedState.currentBlockIndex = state.currentBlockIndex + 1;
       clonedState.currentScenario = null;
       clonedState.completedGames = [];
-      console.log(
-        'GAME BLOCK ENDED:::: ',
-        clonedState.currentBlockIndex,
-        clonedState.completedGames
-      );
       return clonedState;
     }
     case GAME_ENDED: {
       const { gameResult, opponent } = action.payload;
       const clonedState = cloneDeep(state);
-      clonedState.stats.points += gameResult.score[0];
-      opponent.stats.points += gameResult.score[1];
+      clonedState.seasonTeam.stats.points += gameResult.score[0];
+      opponent.seasonTeam.stats.points += gameResult.score[1];
       if (gameResult.score[0] > gameResult.score[1]) {
-        clonedState.stats.wins += 1;
+        clonedState.seasonTeam.stats.wins += 1;
         opponent.stats.losses += 1;
       } else {
-        clonedState.stats.losses += 1;
+        clonedState.seasonTeam.stats.losses += 1;
         opponent.stats.wins += 1;
       }
+
+      // loop all teams and assign random scores/team ranks
+      clonedState.allTeams.forEach((team) => {
+        team.teamRank = getRandomTeamRank();
+        if (team.name !== opponent.name) {
+          team.stats.points = getRandomStat(3);
+          const wins = getRandomStat(2);
+          const losses = wins === 0 ? 1 : 0;
+          team.stats.wins += wins;
+          team.stats.losses += losses;
+        }
+      });
+
+      clonedState.standings = getStandings([
+        clonedState.allTeams,
+        clonedState.seasonTeam,
+      ]);
+
       clonedState.completedGames.push(gameResult);
       return clonedState;
     }

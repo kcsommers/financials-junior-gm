@@ -43,19 +43,19 @@ export const Jumbotron = ({
         <div className='jumbotron-stat-wrap'>
           Wins
           <div className='box-shadow jumbotron-stat-inner'>
-            {seasonState.stats.wins}
+            {seasonState.seasonTeam.stats.wins}
           </div>
         </div>
         <div className='jumbotron-stat-wrap'>
           Losses
           <div className='box-shadow jumbotron-stat-inner'>
-            {seasonState.stats.losses}
+            {seasonState.seasonTeam.stats.losses}
           </div>
         </div>
         <div className='jumbotron-stat-wrap'>
           Points
           <div className='box-shadow jumbotron-stat-inner'>
-            {seasonState.stats.points}
+            {seasonState.seasonTeam.stats.points}
           </div>
         </div>
       </div>
