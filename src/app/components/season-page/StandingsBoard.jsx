@@ -3,8 +3,6 @@ import { useSelector } from 'react-redux';
 export const StandingsBoard = () => {
   const { standings, seasonTeam } = useSelector((state) => state.season);
 
-  console.log('STANDINGS:::: ', standings);
-
   const rows = standings.slice(0, 5).map((team, i) => (
     <div key={i} className='standings-board-row'>
       <span
