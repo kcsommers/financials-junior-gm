@@ -24,7 +24,6 @@ import { INJURE_PLAYER } from '@redux/actionTypes';
 import { updateStudentById } from './../api-helper';
 import {
   throwScenario,
-  setSeasonComplete,
   injurePlayer,
   setStudent,
   gameEnded,
@@ -98,9 +97,14 @@ const SeasonPage = () => {
 
   const seasonComplete = () => {
     const p1 = new Promise((res) => res(true));
-    console.log(':::: SEASON COMPLETE!! ::::');
     p1.then(() => {
-      dispatch(setSeasonComplete());
+      dispatch(
+        toggleOverlay({
+          isOpen: true,
+          template: <SeasonCompleteOverlay />,
+          canClose: false,
+        })
+      );
     }).catch((err) => console.error(err));
   };
 
@@ -214,24 +218,6 @@ const SeasonPage = () => {
 
   return student ? (
     <div className='page-container'>
-      <button
-        onClick={() => {
-          dispatch(
-            toggleOverlay({
-              isOpen: true,
-              template: (
-                <SeasonCompleteOverlay
-                  team={seasonState.seasonTeam}
-                  standings={seasonState.standings}
-                  level={student.level}
-                />
-              ),
-            })
-          );
-        }}
-      >
-        MOVERLAY
-      </button>
       <HeaderComponent
         stickBtn={seasonStick}
         objectives={['1. Play the season']}
