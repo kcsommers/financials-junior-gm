@@ -1,6 +1,6 @@
 import { TeamCard } from './TeamCard';
 import jrSharksLogo from '@images/icons/jr-sharks-logo-white-bg.svg';
-import { GamePhases } from '@data/season/season';
+import { GamePhases, getStanding } from '@data/season/season';
 import { TeamAssignments, getAvailableSlots } from '@data/players/players';
 import { Indicator, PlayerCard } from '@components';
 import { motion } from 'framer-motion';
@@ -37,22 +37,6 @@ export const Jumbotron = ({
     nextIndex + 1,
     nextIndex + 3
   );
-
-  const getStanding = (team) => {
-    const standing = (
-      seasonState.standings.findIndex((t) => t.name === team.name) + 1
-    ).toString();
-    if (standing.endsWith('1') && standing !== '11') {
-      return `${standing}st`;
-    }
-    if (standing.endsWith('2') && standing !== '12') {
-      return `${standing}nd`;
-    }
-    if (standing.endsWith('3') && standing !== '13') {
-      return `${standing}rd`;
-    }
-    return `${standing}th`;
-  };
 
   const scoreView = (
     <div className='jumbotron-score-container'>
@@ -92,7 +76,7 @@ export const Jumbotron = ({
     <div className='transition-view-left'>
       <TeamCard
         logo={jrSharksLogo}
-        standing={getStanding(seasonState.seasonTeam)}
+        standing={getStanding(seasonState.seasonTeam, seasonState.standings)}
       />
       {statsView}
     </div>
@@ -155,7 +139,7 @@ export const Jumbotron = ({
         <div className='game-on-top-left'>
           <TeamCard
             logo={jrSharksLogo}
-            standing={getStanding(seasonState.seasonTeam)}
+            standing={getStanding(seasonState.seasonTeam, seasonState.standings)}
           />
         </div>
         <span
@@ -176,7 +160,7 @@ export const Jumbotron = ({
         <div className='game-on-top-right'>
           <TeamCard
             logo={currentOpponent.logoLg}
-            standing={getStanding(currentOpponent)}
+            standing={getStanding(currentOpponent, seasonState.standings)}
           />
         </div>
       </div>

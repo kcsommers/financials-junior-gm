@@ -2,6 +2,7 @@ import whiteWolves from '@images/icons/white-wolves.svg';
 import blueBearsLogoLg from '@images/icons/blue-bears-logo-big.svg';
 import { INJURE_PLAYER } from '@redux/actionTypes';
 import { PlayerAssignments } from '@data/players/players';
+import { cloneDeep } from 'lodash';
 
 export const getGameResult = (student, opponent) => {
   const rankDiff = student.teamRank - opponent.teamRank;
@@ -128,6 +129,30 @@ export const getRandomStat = (mult) => {
 
 export const getStandings = (teams) => {
   return teams.sort((a, b) => b.stats.points - a.stats.points);
+};
+
+export const getStanding = (team, standings) => {
+  const standing = (
+    standings.findIndex((t) => t.name === team.name) + 1
+  ).toString();
+  if (standing.endsWith('1') && standing !== '11') {
+    return `${standing}st`;
+  }
+  if (standing.endsWith('2') && standing !== '12') {
+    return `${standing}nd`;
+  }
+  if (standing.endsWith('3') && standing !== '13') {
+    return `${standing}rd`;
+  }
+  return `${standing}th`;
+};
+
+export const getAllTeams = (level) => {
+  const clonedTeams = cloneDeep(allTeams);
+  return clonedTeams.map((t) => {
+    t.teamRank = getRandomTeamRank();
+    return t;
+  });
 };
 
 export const allTeams = [

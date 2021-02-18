@@ -1,4 +1,6 @@
 export { BackButton } from './BackButton';
+export { Button } from './Button';
+export { SeasonCompleteOverlay } from './overlays/SeasonCompleteOverlay';
 export { TeamCard } from './season-page/TeamCard';
 export { StartGameButton } from './season-page/StartGameButton';
 export { StandingsBoard } from './season-page/StandingsBoard';

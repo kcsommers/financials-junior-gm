@@ -9,9 +9,10 @@ import {
   GameBlockBoard,
   StandingsBoard,
   StartGameButton,
+  Overlay,
+  SeasonCompleteOverlay,
 } from '@components';
 import seasonStick from '@images/season-stick.svg';
-import '@css/pages/SeasonPage.css';
 import {
   GamePhases,
   gamePhases,
@@ -28,7 +29,6 @@ import {
   setStudent,
   gameEnded,
 } from '@redux/actions';
-
 import {
   seasonSlides,
   SharkieButton,
@@ -36,6 +36,8 @@ import {
   getConfirmSlides,
 } from '@tutorial';
 import { setTutorialState, toggleOverlay } from '@redux/actions';
+import '@css/pages/SeasonPage.css';
+
 const allActions = {
   [INJURE_PLAYER]: injurePlayer,
 };
@@ -59,7 +61,7 @@ const SeasonPage = () => {
   });
   const [tutorialSlides, setTutorialSlides] = useState([seasonSlides]);
   const currentPhase = gamePhases[state.currentPhaseIndex];
-  
+
   const onTutorialComplete = () => {
     dispatch(setTutorialState({ isActive: false }));
   };
@@ -212,6 +214,24 @@ const SeasonPage = () => {
 
   return student ? (
     <div className='page-container'>
+      <button
+        onClick={() => {
+          dispatch(
+            toggleOverlay({
+              isOpen: true,
+              template: (
+                <SeasonCompleteOverlay
+                  team={seasonState.seasonTeam}
+                  standings={seasonState.standings}
+                  level={student.level}
+                />
+              ),
+            })
+          );
+        }}
+      >
+        MOVERLAY
+      </button>
       <HeaderComponent
         stickBtn={seasonStick}
         objectives={['1. Play the season']}
@@ -219,9 +239,15 @@ const SeasonPage = () => {
       />
 
       <PageBoard hideCloseBtn={true} includeBackButton={true}>
-      <div style={{position: 'absolute', right: '20px', transform: 'scale(0.85)'}}>
-        <SharkieButton textPosition='left' onCallSharkie={onCallSharkie} />
-      </div>
+        <div
+          style={{
+            position: 'absolute',
+            right: '20px',
+            transform: 'scale(0.85)',
+          }}
+        >
+          <SharkieButton textPosition='left' onCallSharkie={onCallSharkie} />
+        </div>
         <div
           style={{
             display: 'flex',
@@ -297,6 +323,7 @@ const SeasonPage = () => {
           </div>
         </div>
       </PageBoard>
+      <Overlay />
       {tutorialActive && (
         <Tutorial slides={tutorialSlides} onComplete={onTutorialComplete} />
       )}
