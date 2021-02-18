@@ -90,7 +90,7 @@ const SeasonPage = () => {
 
     // get the next scenario
     const currentScenario =
-      scenarios[student.level][seasonState.currentBlockIndex];
+      scenarios[student.level || 1][seasonState.currentBlockIndex];
     if (!currentScenario) {
       return;
     }
