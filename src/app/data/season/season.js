@@ -48,7 +48,7 @@ const getStartingPlayer = (team) => {
     PlayerAssignments.D_TWO,
   ];
   const i = Math.floor(Math.random() * props.length);
-  return team[props][i];
+  return team[props[i]];
 };
 
 export const scenarios = {
@@ -106,7 +106,7 @@ export const gamePhases = [
     timer: 5000,
     messages: [
       'GET LOUD! The Jr Sharks Won!',
-      'CLOSE GAME! The Jr Sharks won in overtime!',
+      'CLOSE ONE! The Jr Sharks won in overtime!',
       'OH NO! The Jr Sharks lost :(',
     ],
   },

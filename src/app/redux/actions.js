@@ -29,9 +29,9 @@ import {
   UPDATE_SEASON_STATE,
   GAME_BLOCK_ENDED,
   INJURE_PLAYER,
-  SET_SCENARIO_COMPLETE,
+  THROW_SCENARIO,
   SET_SEASON_COMPLETE,
-  UPDATE_STATS,
+  GAME_ENDED,
 } from './actionTypes';
 
 export const setAnimationState = (state) => ({
@@ -179,13 +179,8 @@ export const updateSeasonState = (updatedState) => ({
   payload: updatedState,
 });
 
-export const gameBlockEnded = (results, scenario, student) => ({
+export const gameBlockEnded = () => ({
   type: GAME_BLOCK_ENDED,
-  payload: { results, scenario, student },
-});
-
-export const setScenarioComplete = () => ({
-  type: SET_SCENARIO_COMPLETE,
   payload: null,
 });
 
@@ -194,7 +189,12 @@ export const setSeasonComplete = () => ({
   payload: null,
 });
 
-export const updateStats = (gameResult, opponent) => ({
-  type: UPDATE_STATS,
+export const gameEnded = (gameResult, opponent) => ({
+  type: GAME_ENDED,
   payload: { gameResult, opponent },
+});
+
+export const throwScenario = (scenario) => ({
+  type: THROW_SCENARIO,
+  payload: scenario,
 });

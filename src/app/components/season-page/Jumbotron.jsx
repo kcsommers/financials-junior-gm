@@ -15,10 +15,17 @@ export const Jumbotron = ({
   const { currentOpponent, currentScore, currentPhase } = gameBlockState;
 
   const seasonDisabled = Object.keys(team || {}).some((p) => !team[p]);
-  const nextOpponent = seasonState.allTeams[currentOpponentIndex + 1];
+  // if its the first game, the next opponent is the current opponent
+  const nextIndex =
+    (currentOpponentIndex === 0
+      ? currentOpponentIndex
+      : currentOpponentIndex + 1) +
+    seasonState.currentBlockIndex * 4;
+
+  const nextOpponent = seasonState.allTeams[nextIndex];
   const upcomingGames = seasonState.allTeams.slice(
-    currentOpponentIndex + 2,
-    currentOpponentIndex + 4
+    nextIndex + 1,
+    nextIndex + 3
   );
 
   const scoreView = (
@@ -68,18 +75,22 @@ export const Jumbotron = ({
         <h3>Next Opponent</h3>
         <div className='jumbotron-next-opponent-card'>
           <div className='coming-up-opponent-row'>
-            <div className='coming-up-opponent-name-wrap'>
-              <span className='coming-up-opponent-name'>
-                {nextOpponent.name}
-              </span>
-            </div>
-            <div className='opponent-indicator-wrap'>
-              <Indicator
-                amount={nextOpponent.teamRank}
-                direction='left'
-                color={nextOpponent.color}
-              />
-            </div>
+            {nextOpponent && (
+              <>
+                <div className='coming-up-opponent-name-wrap'>
+                  <span className='coming-up-opponent-name'>
+                    {nextOpponent.name}
+                  </span>
+                </div>
+                <div className='opponent-indicator-wrap'>
+                  <Indicator
+                    amount={nextOpponent.teamRank}
+                    direction='left'
+                    color={nextOpponent.color}
+                  />
+                </div>
+              </>
+            )}
           </div>
         </div>
       </div>
@@ -88,16 +99,20 @@ export const Jumbotron = ({
         <div className='jumbotron-upcoming-games-card'>
           {upcomingGames.map((team, i) => (
             <div key={i} className='upcoming-games-row coming-up-opponent-row'>
-              <div className='coming-up-opponent-name-wrap'>
-                <span className='coming-up-opponent-name'>{team.name}</span>
-              </div>
-              <div className='opponent-indicator-wrap'>
-                <Indicator
-                  amount={team.teamRank}
-                  direction='left'
-                  color={team.color}
-                />
-              </div>
+              {team && (
+                <>
+                  <div className='coming-up-opponent-name-wrap'>
+                    <span className='coming-up-opponent-name'>{team.name}</span>
+                  </div>
+                  <div className='opponent-indicator-wrap'>
+                    <Indicator
+                      amount={team.teamRank}
+                      direction='left'
+                      color={team.color}
+                    />
+                  </div>
+                </>
+              )}
             </div>
           ))}
         </div>
