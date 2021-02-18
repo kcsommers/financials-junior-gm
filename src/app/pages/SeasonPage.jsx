@@ -26,6 +26,7 @@ import {
   setSeasonComplete,
   injurePlayer,
   setStudent,
+  updateStats,
 } from '@redux/actions';
 
 const allActions = {
@@ -174,6 +175,7 @@ const SeasonPage = () => {
       const results = getGameResult(student, gameBlockState.currentOpponent);
       clonedState.currentMessageIndex = results.messageIndex;
       clonedState.results.push(results);
+      dispatch(updateStats(results, gameBlockState.currentOpponent));
     }
 
     setState(clonedState);

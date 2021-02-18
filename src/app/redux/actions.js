@@ -31,6 +31,7 @@ import {
   INJURE_PLAYER,
   SET_SCENARIO_COMPLETE,
   SET_SEASON_COMPLETE,
+  UPDATE_STATS,
 } from './actionTypes';
 
 export const setAnimationState = (state) => ({
@@ -191,4 +192,9 @@ export const setScenarioComplete = () => ({
 export const setSeasonComplete = () => ({
   type: SET_SEASON_COMPLETE,
   payload: null,
+});
+
+export const updateStats = (gameResult, opponent) => ({
+  type: UPDATE_STATS,
+  payload: { gameResult, opponent },
 });
