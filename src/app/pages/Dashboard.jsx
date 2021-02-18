@@ -37,7 +37,7 @@ class Dashboard extends React.Component {
         // this.setState({
         //     RegisterBtn : RegisterBtnSelected
         // });
-        alert("Coming Soon");
+        this.props.history.push('/signup');
     }
 
     render() {

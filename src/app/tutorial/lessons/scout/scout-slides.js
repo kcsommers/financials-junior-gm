@@ -16,37 +16,37 @@ const slideConfigs = [
   },
   {
     message:
-      'Scouting is when a manager studies new players to see how well they play!',
+      'Scouting is when a general manager studies new players to see how well they play!',
     sharkie: 'speak',
     accentText: 'Scouting',
     timer: Slide.SLIDE_DURATION,
   },
   {
     message:
-      'Then the manager can decide which players they want to sign to their team!',
+      'Then the general manager can decide which players they want to sign to their team!',
     sharkie: 'speak',
     timer: Slide.SLIDE_DURATION,
   },
   {
-    message: 'To sign them the manager has to offer them money.',
-    sharkie: 'speak',
-    timer: Slide.SLIDE_DURATION,
-  },
-  {
-    message:
-      'If a manager really likes a player, they can offer more money to sign them!',
+    message: 'To sign them the general manager has to offer them money.',
     sharkie: 'speak',
     timer: Slide.SLIDE_DURATION,
   },
   {
     message:
-      'But if a manager does not offer them enough money, then the player can say no.',
+      'If a general manager really likes a player, they can offer more money to sign them!',
     sharkie: 'speak',
     timer: Slide.SLIDE_DURATION,
   },
   {
     message:
-      'So when Scouting, a manager has to be careful in deciding which players they like...',
+      'But if a general manager does not offer them enough money, then the player can say no.',
+    sharkie: 'speak',
+    timer: Slide.SLIDE_DURATION,
+  },
+  {
+    message:
+      'So when Scouting, a general manager has to be careful in deciding which players they like...',
     sharkie: 'speak',
     accentText: 'Scouting',
     timer: Slide.SLIDE_DURATION,
