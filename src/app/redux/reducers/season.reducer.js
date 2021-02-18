@@ -75,7 +75,7 @@ const seasonReducer = (state = initialState, action) => {
       clonedState.allTeams.forEach((team) => {
         team.teamRank = getRandomTeamRank();
         if (team.name !== opponent.name) {
-          team.stats.points = getRandomStat(8);
+          team.stats.points = getRandomStat(5);
           const wins = getRandomStat(2);
           const losses = wins === 0 ? 1 : 0;
           team.stats.wins += wins;
