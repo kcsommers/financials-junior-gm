@@ -184,9 +184,9 @@ export const gameBlockEnded = () => ({
   payload: null,
 });
 
-export const setSeasonComplete = () => ({
+export const setSeasonComplete = (student) => ({
   type: SET_SEASON_COMPLETE,
-  payload: null,
+  payload: student,
 });
 
 export const gameEnded = (gameResult, opponent) => ({

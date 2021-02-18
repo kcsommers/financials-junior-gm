@@ -120,7 +120,7 @@ export const gamePhases = [
 ];
 
 export const getRandomTeamRank = () => {
-  return Math.max(Math.floor(Math.random() * 90), 20);
+  return Math.max(Math.floor(Math.random() * 90), 50);
 };
 
 export const getRandomStat = (mult) => {

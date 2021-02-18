@@ -101,7 +101,14 @@ const SeasonPage = () => {
       dispatch(
         toggleOverlay({
           isOpen: true,
-          template: <SeasonCompleteOverlay />,
+          template: (
+            <SeasonCompleteOverlay
+              standings={seasonState.standings}
+              level={student.level || 1}
+              team={seasonState.seasonTeam}
+              student={student}
+            />
+          ),
           canClose: false,
         })
       );
@@ -230,6 +237,7 @@ const SeasonPage = () => {
             position: 'absolute',
             right: '20px',
             transform: 'scale(0.85)',
+            zIndex: tutorialActive ? 0 : 1,
           }}
         >
           <SharkieButton textPosition='left' onCallSharkie={onCallSharkie} />
