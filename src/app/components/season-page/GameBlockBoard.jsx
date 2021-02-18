@@ -6,12 +6,14 @@ export const GameBlockBoard = () => {
   const currentBlock = seasonState.gameBlocks[seasonState.currentBlockIndex];
   const completedGames = seasonState.completedGames;
 
-  const games = [
-    ...completedGames,
-    ...currentBlock
-      .slice(completedGames.length)
-      .map((team) => ({ opponent: team.name, score: [0, 0] })),
-  ];
+  const games = currentBlock
+    ? [
+        ...completedGames,
+        ...currentBlock
+          .slice(completedGames.length)
+          .map((team) => ({ opponent: team.name, score: [0, 0] })),
+      ]
+    : [];
 
   const rows = games.map((g, i) => (
     <div key={`game-row-${i}`} className='game-block-board-row'>

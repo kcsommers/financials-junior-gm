@@ -8,23 +8,29 @@ export const getGameResult = (student, opponent) => {
   const rankDiff = student.teamRank - opponent.teamRank;
   if (rankDiff > 5) {
     return {
-      score: [Math.ceil(rankDiff / 10), 0],
+      score: [Math.min(Math.ceil(rankDiff / 10), 5), 0],
       messageIndex: 0,
       opponent: opponent.name,
+      points: 2,
       win: true,
     };
-  } else if (Math.abs(rankDiff) > 0 && Math.abs(rankDiff) <= 5) {
+  } else if (
+    (Math.abs(rankDiff) > 0 && Math.abs(rankDiff) <= 5) ||
+    rankDiff === 0
+  ) {
     return {
       score: [2, 1],
       messageIndex: 1,
       opponent: opponent.name,
+      points: 1,
       win: true,
     };
   } else {
     return {
-      score: [0, Math.ceil(Math.abs(rankDiff / 10))],
+      score: [0, Math.min(Math.ceil(Math.abs(rankDiff / 10)), 5)],
       messageIndex: 2,
       opponent: opponent.name,
+      points: 0,
       win: false,
     };
   }
