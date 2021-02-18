@@ -8,7 +8,6 @@ import {
 } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import TeamPage from './pages/TeamPage';
-import Season from './pages/Season';
 import ScoutPage from './pages/ScoutPage';
 import { IceBackground } from '@components';
 import BudgetPage from './pages/BudgetPage';
@@ -129,11 +128,6 @@ const App = () => {
             exact
             path='/season'
             render={(props) => <StudentPortal screen={<SeasonPage />} />}
-          />
-          <Route
-            exact
-            path='/season-old'
-            render={(props) => <StudentPortal screen={<Season />} />}
           />
           <Route
             exact
