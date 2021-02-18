@@ -3,13 +3,22 @@ import play from '@images/icons/play.svg';
 import hockeySticksButton from '@images/icons/hockey-sticks-button.svg';
 import { GamePhases } from '@data/season/season';
 import { useSelector } from 'react-redux';
+import { TeamAssignments, getAvailableSlots } from '@data/players/players';
 import { motion } from 'framer-motion';
 
 export const StartGameButton = ({ onClick, gameBlockState, team }) => {
   const currentScenario = useSelector((state) => state.season.currentScenario);
   const { currentPhase } = gameBlockState;
 
-  const seasonDisabled = Object.keys(team || {}).some((p) => !team[p]);
+  const seasonDisabled =
+    getAvailableSlots(
+      [
+        ...TeamAssignments.offense,
+        ...TeamAssignments.defense,
+        ...TeamAssignments.goalie,
+      ],
+      team
+    ) > 0;
 
   return (
     <div

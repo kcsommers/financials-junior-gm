@@ -1,9 +1,10 @@
 import { TeamCard } from './TeamCard';
 import jrSharksLogo from '@images/icons/jr-sharks-logo-white-bg.svg';
 import { GamePhases } from '@data/season/season';
+import { TeamAssignments, getAvailableSlots } from '@data/players/players';
 import { Indicator, PlayerCard } from '@components';
-import '@css/components/season-page/Jumbotron.css';
 import { motion } from 'framer-motion';
+import '@css/components/season-page/Jumbotron.css';
 
 export const Jumbotron = ({
   gameBlockState,
@@ -14,7 +15,16 @@ export const Jumbotron = ({
 }) => {
   const { currentOpponent, currentScore, currentPhase } = gameBlockState;
 
-  const seasonDisabled = Object.keys(team || {}).some((p) => !team[p]);
+  const seasonDisabled =
+    getAvailableSlots(
+      [
+        ...TeamAssignments.offense,
+        ...TeamAssignments.defense,
+        ...TeamAssignments.goalie,
+      ],
+      team
+    ) > 0;
+
   // if its the first game, the next opponent is the current opponent
   const nextIndex =
     (currentOpponentIndex === 0

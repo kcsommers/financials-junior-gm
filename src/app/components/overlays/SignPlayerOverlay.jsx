@@ -15,20 +15,8 @@ import { ConfirmSignOverlay } from './ConfirmSignOverlay';
 import { getPlayerPositon } from '@utils';
 import { updateStudentById } from '../../api-helper';
 import { cloneDeep } from 'lodash';
+import { TeamAssignments, getAvailableSlots } from '@data/players/players';
 import '@css/components/team-page/SignPlayerOverlay.css';
-
-const getAvailableSlots = (props, team) => {
-  return props.reduce((total, p) => {
-    if (!team[p]) {
-      total++;
-    }
-    return total;
-  }, 0);
-};
-
-const offense = ['fOne', 'fTwo', 'fThree'];
-const defense = ['dOne', 'dTwo'];
-const goalie = ['gOne'];
 
 export const SignPlayerOverlay = ({ team, assignment, student }) => {
   const dispatch = useDispatch();
@@ -36,10 +24,10 @@ export const SignPlayerOverlay = ({ team, assignment, student }) => {
   const currentScenario = useSelector((state) => state.season.currentScenario);
 
   const availableSlots = {
-    forwards: getAvailableSlots(offense, team),
-    defender: getAvailableSlots(defense, team),
-    goalie: getAvailableSlots(goalie, team),
-    bench: getAvailableSlots(['benchOne', 'benchTwo', 'benchThree'], team),
+    forwards: getAvailableSlots(TeamAssignments.offense, team),
+    defender: getAvailableSlots(TeamAssignments.defense, team),
+    goalie: getAvailableSlots(TeamAssignments.goalie, team),
+    bench: getAvailableSlots(TeamAssignments.bench, team),
   };
 
   const signCancelled = () => {
@@ -92,7 +80,11 @@ export const SignPlayerOverlay = ({ team, assignment, student }) => {
           clonedTeam[assignment] = signedPlayer;
           if (
             getAvailableSlots(
-              [...offense, ...defense, ...goalie],
+              [
+                ...TeamAssignments.offense,
+                ...TeamAssignments.defense,
+                ...TeamAssignments.goalie,
+              ],
               clonedTeam
             ) === 0
           ) {
