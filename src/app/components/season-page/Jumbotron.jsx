@@ -4,6 +4,7 @@ import { GamePhases } from '@data/season/season';
 import { Indicator, PlayerCard } from '@components';
 import '@css/components/season-page/Jumbotron.css';
 import { motion } from 'framer-motion';
+import { ReactSVG } from 'react-svg';
 
 export const Jumbotron = ({
   gameBlockState,
@@ -98,7 +99,7 @@ export const Jumbotron = ({
               <>
                 <div className='coming-up-opponent-name-wrap'>
                   <span className='coming-up-opponent-name'>
-                    {nextOpponent.name}
+                  <ReactSVG src={nextOpponent.logoSm} />
                   </span>
                 </div>
                 <div className='opponent-indicator-wrap'>

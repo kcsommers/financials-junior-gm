@@ -1,5 +1,8 @@
-import whiteWolves from '@images/icons/white-wolves.svg';
-import blueBearsLogoLg from '@images/icons/blue-bears-logo-big.svg';
+import whiteWolves from '@images/icons/team-logos/white-wolves.svg';
+import purplePanthers from '@images/icons/team-logos/purple-panthers.svg'
+import redRabbits from '@images/icons/team-logos/red-rabbits.svg'
+import bluebears from '@images/icons/team-logos/blue-bears.svg'
+import blueBearsLogoLg from '@images/icons/team-logos/blue-bears-logo-big.svg';
 import { INJURE_PLAYER } from '@redux/actionTypes';
 import { PlayerAssignments } from '@data/players/players';
 
@@ -132,6 +135,38 @@ export const getStandings = (teams) => {
 
 export const allTeams = [
   {
+    teamRank: 35,
+    logoLg: blueBearsLogoLg,
+    logoSm: whiteWolves,
+    name: 'Blue Bears',
+    stats: { wins: 0, losses: 0, points: 0 },
+    standings: '12th',
+  },
+  {
+    teamRank: 50,
+    logoLg: blueBearsLogoLg,
+    logoSm: whiteWolves,
+    name: 'Red Rabbits',
+    stats: { wins: 0, losses: 0, points: 0 },
+    standings: '12th',
+  },
+  {
+    teamRank: 55,
+    logoLg: blueBearsLogoLg,
+    logoSm: whiteWolves,
+    name: 'Purple Panthers',
+    stats: { wins: 0, losses: 0, points: 0 },
+    standings: '10th',
+  },
+  {
+    teamRank: 80,
+    logoLg: blueBearsLogoLg,
+    logoSm: whiteWolves,
+    name: 'White Wolves',
+    stats: { wins: 0, losses: 0, points: 0 },
+    standings: '6th',
+  },
+  {
     teamRank: 65,
     logoLg: blueBearsLogoLg,
     logoSm: whiteWolves,
@@ -140,7 +175,7 @@ export const allTeams = [
     standings: '6th',
   },
   {
-    teamRank: 30,
+    teamRank: 75,
     logoLg: blueBearsLogoLg,
     logoSm: whiteWolves,
     name: 'Pink Pandas',
@@ -148,7 +183,7 @@ export const allTeams = [
     standings: '6th',
   },
   {
-    teamRank: 80,
+    teamRank: 65,
     logoLg: blueBearsLogoLg,
     logoSm: whiteWolves,
     name: 'Orange Owls',
@@ -156,7 +191,7 @@ export const allTeams = [
     standings: '6th',
   },
   {
-    teamRank: 54,
+    teamRank: 70,
     logoLg: blueBearsLogoLg,
     logoSm: whiteWolves,
     name: 'Silver Spiders',
@@ -164,7 +199,7 @@ export const allTeams = [
     standings: '6th',
   },
   {
-    teamRank: 42,
+    teamRank: 55,
     logoLg: blueBearsLogoLg,
     logoSm: whiteWolves,
     name: 'Golden Geckos',
@@ -180,7 +215,7 @@ export const allTeams = [
     standings: '6th',
   },
   {
-    teamRank: 58,
+    teamRank: 75,
     logoLg: blueBearsLogoLg,
     logoSm: whiteWolves,
     name: 'Black Beavers',
@@ -188,43 +223,12 @@ export const allTeams = [
     standings: '6th',
   },
   {
-    teamRank: 65,
+    teamRank: 70,
     logoLg: blueBearsLogoLg,
     logoSm: whiteWolves,
     name: 'Gray Grasshoppers',
     stats: { wins: 0, losses: 0, points: 0 },
     standings: '6th',
   },
-  {
-    teamRank: 88,
-    logoLg: blueBearsLogoLg,
-    logoSm: whiteWolves,
-    name: 'Blue Bears',
-    stats: { wins: 0, losses: 0, points: 0 },
-    standings: '12th',
-  },
-  {
-    teamRank: 40,
-    logoLg: blueBearsLogoLg,
-    logoSm: whiteWolves,
-    name: 'Red Rabbits',
-    stats: { wins: 0, losses: 0, points: 0 },
-    standings: '12th',
-  },
-  {
-    teamRank: 35,
-    logoLg: blueBearsLogoLg,
-    logoSm: whiteWolves,
-    name: 'Purple Panthers',
-    stats: { wins: 0, losses: 0, points: 0 },
-    standings: '10th',
-  },
-  {
-    teamRank: 25,
-    logoLg: blueBearsLogoLg,
-    logoSm: whiteWolves,
-    name: 'White Wolves',
-    stats: { wins: 0, losses: 0, points: 0 },
-    standings: '6th',
-  },
+  
 ];

@@ -1,6 +1,5 @@
 import Slide from '../../Slide';
 import { SET_ANIMATION_STATE, TOGGLE_OVERLAY } from '@redux/actionTypes';
-import { PlayerDetailsOverlay } from '@components';
 
 const slideConfigs = [
   {
