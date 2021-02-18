@@ -108,6 +108,12 @@ const seasonReducer = (state = initialState, action) => {
       clonedState.awards.push(awards);
       clonedState.currentBlockIndex = 0;
       clonedState.currentScenario = null;
+      clonedState.allTeams = getAllTeams();
+      clonedState.seasonTeam = initialTeams[0];
+      clonedState.standings = getStandings([
+        ...clonedState.allTeams,
+        initialTeams[0],
+      ]);
       return clonedState;
     }
     default:
