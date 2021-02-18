@@ -13,7 +13,7 @@ const textStyles = {
     position: 'absolute',
     left: 0,
     right: 0,
-    texAlign: 'center',
+    textAlign: 'center',
   },
   left: {
     top: '50%',

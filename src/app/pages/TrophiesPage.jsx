@@ -120,7 +120,9 @@ const TrophiesPage = () => {
             >
               <ReactSVG src={jrSharksLogo} />
             </div>
-            <h2 className='color-primary'>San Jose Jr Sharks</h2>
+            {/* {<h2 className='color-primary'>San Jose Jr Sharks</h2>} */}
+            <br></br>
+            <h6 className='color-primary'>Tap a trophy to learn more about it!</h6>
           </div>
 
           <div
