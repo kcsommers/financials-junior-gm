@@ -6,6 +6,7 @@ const styles = {
       position: 'absolute',
       top: 0,
       right: '40px',
+      transition: 'transform 0.5s ease',
     },
     image: {
       position: 'relative',
@@ -23,6 +24,7 @@ const styles = {
       fontSize: '1rem',
       marginRight: '0.25rem',
       fontWeight: 'bold',
+      transition: 'color 0.5s ease',
     },
   },
   left: {
@@ -30,6 +32,7 @@ const styles = {
       position: 'absolute',
       top: 0,
       left: '40px',
+      transition: 'all 0.5s ease',
     },
     image: {
       position: 'relative',
@@ -48,6 +51,7 @@ const styles = {
       marginLeft: '0.25rem',
       fontWeight: 'bold',
       textAlign: 'right',
+      transition: 'color 0.5s ease',
     },
   },
 };
@@ -68,13 +72,13 @@ const getIndicatorTransforms = (num, denom) => {
 };
 
 const getIndicatorTransformsLarge = (num, denom) => {
-  const stickHeight = 340;
+  const stickHeight = 294;
   let rotate = 0;
   let y = stickHeight * (1 - num / denom) - 30;
 
-  if (y > 180) {
-    rotate = Math.max(0, y - 200);
-    y = 180;
+  if (y > 160) {
+    rotate = y - 150;
+    y = 160;
   }
   return {
     translate: { transform: `translate(0, ${y}px)` },
@@ -103,7 +107,7 @@ export const LevelStick = ({
         alignItems: 'center',
         justifyContent: 'center',
         width: isLarge ? '220px' : '190px',
-        height: isLarge ? '355px' : '225px',
+        height: isLarge ? '315px' : '225px',
         position: 'relative',
       }}
     >
@@ -133,10 +137,10 @@ export const LevelStick = ({
         </div>
       </div>
       <div
-        style={Object.assign(
-          {},
-          { ...styles[indicatorDirection].indicator, ...transforms.translate }
-        )}
+        style={Object.assign({
+          ...styles[indicatorDirection].indicator,
+          ...transforms.translate,
+        })}
       >
         {indicatorDirection === 'right' || indicatorDirection === 'bottom' ? (
           <>
@@ -146,6 +150,7 @@ export const LevelStick = ({
               direction={indicatorDirection}
               isMoney={type === 'budget'}
               rotate={transforms.rotate}
+              color={color}
             />
           </>
         ) : (
@@ -155,6 +160,7 @@ export const LevelStick = ({
               direction={indicatorDirection}
               isMoney={type === 'budget'}
               rotate={transforms.rotate}
+              color={color}
             />
             <span style={styles[indicatorDirection].text}>{textJsx}</span>
           </>
