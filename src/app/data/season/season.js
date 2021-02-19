@@ -11,23 +11,29 @@ export const getGameResult = (student, opponent) => {
   const rankDiff = student.teamRank - opponent.teamRank;
   if (rankDiff > 5) {
     return {
-      score: [Math.ceil(rankDiff / 10), 0],
+      score: [Math.min(Math.ceil(rankDiff / 10), 5), 0],
       messageIndex: 0,
       opponent: opponent.name,
+      points: 2,
       win: true,
     };
-  } else if (Math.abs(rankDiff) > 0 && Math.abs(rankDiff) <= 5) {
+  } else if (
+    (Math.abs(rankDiff) > 0 && Math.abs(rankDiff) <= 5) ||
+    rankDiff === 0
+  ) {
     return {
       score: [2, 1],
       messageIndex: 1,
       opponent: opponent.name,
+      points: 1,
       win: true,
     };
   } else {
     return {
-      score: [0, Math.ceil(Math.abs(rankDiff / 10))],
+      score: [0, Math.min(Math.ceil(Math.abs(rankDiff / 10)), 5)],
       messageIndex: 2,
       opponent: opponent.name,
+      points: 0,
       win: false,
     };
   }
@@ -150,22 +156,27 @@ export const getStanding = (team, standings) => {
   return `${standing}th`;
 };
 
-export const getAllTeams = (level) => {
-  const clonedTeams = cloneDeep(allTeams);
+export const getAllOpponents = (level) => {
+  const clonedTeams = cloneDeep(allOpponents);
   return clonedTeams.map((t) => {
     t.teamRank = getRandomTeamRank();
     return t;
   });
 };
 
-export const allTeams = [
+export const allOpponents = [
   {
     teamRank: 35,
     logoLg: blueBearsLogoLg,
     logoSm: whiteWolves,
     name: 'Blue Bears',
     stats: { wins: 0, losses: 0, points: 0 },
+<<<<<<< HEAD
     standings: '12th',
+=======
+    standings: '6th',
+    color: '#3bfff9',
+>>>>>>> eab39d99cf9c79fe81738d02d0d3e715ab1c55c6
   },
   {
     teamRank: 50,
@@ -173,7 +184,12 @@ export const allTeams = [
     logoSm: whiteWolves,
     name: 'Red Rabbits',
     stats: { wins: 0, losses: 0, points: 0 },
+<<<<<<< HEAD
     standings: '12th',
+=======
+    standings: '6th',
+    color: '#f83bff',
+>>>>>>> eab39d99cf9c79fe81738d02d0d3e715ab1c55c6
   },
   {
     teamRank: 55,
@@ -181,7 +197,12 @@ export const allTeams = [
     logoSm: whiteWolves,
     name: 'Purple Panthers',
     stats: { wins: 0, losses: 0, points: 0 },
+<<<<<<< HEAD
     standings: '10th',
+=======
+    standings: '6th',
+    color: '#ffb75a',
+>>>>>>> eab39d99cf9c79fe81738d02d0d3e715ab1c55c6
   },
   {
     teamRank: 80,
@@ -190,6 +211,7 @@ export const allTeams = [
     name: 'White Wolves',
     stats: { wins: 0, losses: 0, points: 0 },
     standings: '6th',
+    color: '#3bfff9',
   },
   {
     teamRank: 65,
@@ -198,6 +220,7 @@ export const allTeams = [
     name: 'Green Giraffes',
     stats: { wins: 0, losses: 0, points: 0 },
     standings: '6th',
+    color: '#f83bff',
   },
   {
     teamRank: 75,
@@ -206,6 +229,7 @@ export const allTeams = [
     name: 'Pink Pandas',
     stats: { wins: 0, losses: 0, points: 0 },
     standings: '6th',
+    color: '#ffb75a',
   },
   {
     teamRank: 65,

@@ -10,7 +10,6 @@ import { useSelector } from 'react-redux';
 
 export const Jumbotron = ({
   gameBlockState,
-  student,
   seasonState,
   currentOpponentIndex,
   team,
@@ -39,8 +38,8 @@ export const Jumbotron = ({
       : currentOpponentIndex + 1) +
     seasonState.currentBlockIndex * 4;
 
-  const nextOpponent = seasonState.allTeams[nextIndex];
-  const upcomingGames = seasonState.allTeams.slice(
+  const nextOpponent = seasonState.allOpponents[nextIndex];
+  const upcomingGames = seasonState.allOpponents.slice(
     nextIndex + 1,
     nextIndex + 3
   );
@@ -98,8 +97,16 @@ export const Jumbotron = ({
             {nextOpponent && (
               <>
                 <div className='coming-up-opponent-name-wrap'>
+<<<<<<< HEAD
                   <span className='coming-up-opponent-name'>
                   <ReactSVG src={nextOpponent.logoSm} />
+=======
+                  <span
+                    className='coming-up-opponent-name'
+                    style={{ color: nextOpponent.color }}
+                  >
+                    {nextOpponent.name}
+>>>>>>> eab39d99cf9c79fe81738d02d0d3e715ab1c55c6
                   </span>
                 </div>
                 <div className='opponent-indicator-wrap'>
@@ -122,7 +129,12 @@ export const Jumbotron = ({
               {team && (
                 <>
                   <div className='coming-up-opponent-name-wrap'>
-                    <span className='coming-up-opponent-name'>{team.name}</span>
+                    <span
+                      className='coming-up-opponent-name'
+                      style={{ color: team.color }}
+                    >
+                      {team.name}
+                    </span>
                   </div>
                   <div className='opponent-indicator-wrap'>
                     <Indicator
@@ -144,10 +156,15 @@ export const Jumbotron = ({
     <>
       <div className='game-on-top'>
         <div className='game-on-top-left'>
-          <TeamCard
-            logo={jrSharksLogo}
-            standing={getStanding(seasonState.seasonTeam, seasonState.standings)}
-          />
+          <div>
+            <TeamCard
+              logo={jrSharksLogo}
+              standing={getStanding(
+                seasonState.seasonTeam,
+                seasonState.standings
+              )}
+            />
+          </div>
         </div>
         <span
           style={{
@@ -165,10 +182,21 @@ export const Jumbotron = ({
           VS
         </span>
         <div className='game-on-top-right'>
-          <TeamCard
-            logo={currentOpponent.logoLg}
-            standing={getStanding(currentOpponent, seasonState.standings)}
-          />
+          <motion.div
+            initial={{ transform: 'scale(0.5)' }}
+            animate={{ transform: 'scale(1)' }}
+            transition={{
+              default: {
+                type: 'tween',
+                duration: 1,
+              },
+            }}
+          >
+            <TeamCard
+              logo={currentOpponent.logoLg}
+              standing={getStanding(currentOpponent, seasonState.standings)}
+            />
+          </motion.div>
         </div>
       </div>
       <div className='game-on-bottom'>{scoreView}</div>
