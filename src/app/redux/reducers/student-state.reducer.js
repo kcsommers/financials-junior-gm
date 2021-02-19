@@ -31,8 +31,12 @@ const studentStateReducer = (state = initialState, action) => {
         ...clonedState.student,
         ...action.payload,
       };
-      clonedState.student.moneySpent = getMoneySpent(clonedState.student);
-      clonedState.student.teamRank = getTeamRank(clonedState.student);
+
+      console.log('CLONED STATE STDUEMT:::: ', clonedState.student.players);
+      clonedState.student.moneySpent = getMoneySpent(
+        clonedState.student.players
+      );
+      clonedState.student.teamRank = getTeamRank(clonedState.student.players);
       return clonedState;
     }
     case SET_SAVINGS: {

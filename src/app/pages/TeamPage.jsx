@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import { ReactSVG } from 'react-svg';
 import jrSharksLogo from '@images/icons/jr-sharks-logo.svg';
 import {
@@ -22,7 +22,9 @@ import {
   Tutorial,
   getConfirmSlides,
 } from '@tutorial';
-import { setTutorialState, toggleOverlay } from '@redux/actions';
+import { setTutorialState, toggleOverlay, updateStudent } from '@redux/actions';
+import { updateStudentById } from './../api-helper';
+import { cloneDeep } from 'lodash';
 import '@css/pages/TeamPage.css';
 
 const TeamPage = () => {
@@ -44,13 +46,20 @@ const TeamPage = () => {
     dispatch(setTutorialState({ isActive: false }));
   };
 
+  const startTutorial = useCallback(
+    (slides) => {
+      setTutorialSlides(slides);
+      dispatch(
+        setTutorialState({
+          isActive: true,
+        })
+      );
+    },
+    [dispatch]
+  );
+
   const onCallSharkie = () => {
-    setTutorialSlides([getConfirmSlides('team'), teamSlides]);
-    dispatch(
-      setTutorialState({
-        isActive: true,
-      })
-    );
+    startTutorial([getConfirmSlides('team'), teamSlides]);
   };
 
   const openPlayerDetailsOverlay = (player) => {
@@ -76,6 +85,28 @@ const TeamPage = () => {
       })
     );
   };
+
+  const hasSeenTutorial = useRef(
+    !!(student && student.tutorials && student.tutorials.team)
+  );
+  useEffect(() => {
+    if (student && !hasSeenTutorial.current) {
+      hasSeenTutorial.current = true;
+      const clonedTutorials = cloneDeep(student.tutorials || {});
+      clonedTutorials.team = true;
+      updateStudentById(student._id, { tutorials: clonedTutorials })
+        .then((res) => {
+          dispatch(updateStudent({ tutorials: clonedTutorials }));
+          startTutorial([teamSlides]);
+        })
+        .catch((err) => console.error(err));
+    }
+  }, [student, dispatch, startTutorial]);
+  hasSeenTutorial.current = !!(
+    student &&
+    student.tutorials &&
+    student.tutorials.team
+  );
 
   return team ? (
     <div className='page-container'>

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { useSelector, useDispatch } from 'react-redux';
 import {
@@ -25,7 +25,9 @@ import teamStick from '@images/team-stick.svg';
 import budgetStick from '@images/budget-stick.svg';
 import seasonStick from '@images/season-stick.svg';
 import trophiesStick from '@images/trophies-stick.svg';
-import { setTutorialState } from '@redux/actions';
+import { setTutorialState, updateStudent } from '@redux/actions';
+import { updateStudentById } from './../api-helper';
+import { cloneDeep } from 'lodash';
 import '@css/pages/HomePage.css';
 
 const homeSlides = [
@@ -64,6 +66,22 @@ const HomePage = () => {
     dispatch(setTutorialState({ isActive: false }));
   };
 
+  const startTutorial = useCallback(
+    (slides) => {
+      setTutorialSlides(slides);
+      dispatch(
+        setTutorialState({
+          isActive: true,
+        })
+      );
+    },
+    [dispatch]
+  );
+
+  const onCallSharkie = () => {
+    startTutorial([getConfirmSlides('home'), ...homeSlides.slice(1)]);
+  };
+
   const objectivesBoard = (
     <ObjectivesBoard
       level={student ? student.level : 1}
@@ -75,14 +93,27 @@ const HomePage = () => {
     />
   );
 
-  const onCallSharkie = () => {
-    setTutorialSlides([getConfirmSlides('home'), ...homeSlides.slice(1)]);
-    dispatch(
-      setTutorialState({
-        isActive: true,
-      })
-    );
-  };
+  const hasSeenTutorial = useRef(
+    !!(student && student.tutorials && student.tutorials.home)
+  );
+  useEffect(() => {
+    if (student && !hasSeenTutorial.current) {
+      hasSeenTutorial.current = true;
+      const clonedTutorials = cloneDeep(student.tutorials || {});
+      clonedTutorials.home = true;
+      updateStudentById(student._id, { tutorials: clonedTutorials })
+        .then((res) => {
+          dispatch(updateStudent({ tutorials: clonedTutorials }));
+          startTutorial(homeSlides);
+        })
+        .catch((err) => console.error(err));
+    }
+  }, [student, dispatch, startTutorial]);
+  hasSeenTutorial.current = !!(
+    student &&
+    student.tutorials &&
+    student.tutorials.home
+  );
 
   return student ? (
     <div className='home-page-container'>

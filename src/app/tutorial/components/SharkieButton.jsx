@@ -1,5 +1,3 @@
-import { setTutorialState } from '@redux/actions';
-import { useDispatch } from 'react-redux';
 import sharkieBtn from '@images/sharkie-btn.svg';
 import { ReactSVG } from 'react-svg';
 

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import {
   BudgetEquation,
   BudgetSlider,
@@ -14,8 +14,9 @@ import {
   Tutorial,
   getConfirmSlides,
 } from '@tutorial';
-import { setTutorialState, setSavings } from '@redux/actions';
+import { setTutorialState, setSavings, updateStudent } from '@redux/actions';
 import { updateStudentById } from '../api-helper';
+import { cloneDeep } from 'lodash';
 import '@css/pages/BudgetPage.css';
 
 let debounceTimeout = 0;
@@ -31,6 +32,18 @@ const BudgetPage = () => {
   const onTutorialComplete = () => {
     dispatch(setTutorialState({ isActive: false }));
   };
+
+  const startTutorial = useCallback(
+    (slides) => {
+      setTutorialSlides(slides);
+      dispatch(
+        setTutorialState({
+          isActive: true,
+        })
+      );
+    },
+    [dispatch]
+  );
 
   const budgetEquationStates = {
     board: useSelector((state) => state.tutorial.budget.equationBoard),
@@ -58,12 +71,29 @@ const BudgetPage = () => {
 
   const onCallSharkie = () => {
     setTutorialSlides([getConfirmSlides('budget'), budgetSlides]);
-    dispatch(
-      setTutorialState({
-        isActive: true,
-      })
-    );
   };
+
+  const hasSeenTutorial = useRef(
+    !!(student && student.tutorials && student.tutorials.home)
+  );
+  useEffect(() => {
+    if (student && !hasSeenTutorial.current) {
+      hasSeenTutorial.current = true;
+      const clonedTutorials = cloneDeep(student.tutorials || {});
+      clonedTutorials.budget = true;
+      updateStudentById(student._id, { tutorials: clonedTutorials })
+        .then((res) => {
+          dispatch(updateStudent({ tutorials: clonedTutorials }));
+          startTutorial([budgetSlides]);
+        })
+        .catch((err) => console.error(err));
+    }
+  }, [student, dispatch, startTutorial]);
+  hasSeenTutorial.current = !!(
+    student &&
+    student.tutorials &&
+    student.tutorials.budget
+  );
 
   return student ? (
     <div className='page-container'>
