@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useState, useEffect, useRef } from 'react';
+import { useSelector, useDispatch, batch } from 'react-redux';
 import {
   HeaderComponent,
   PageBoard,
@@ -31,6 +31,7 @@ import {
   setTutorialState,
   toggleOverlay,
   setInitialPlayersState,
+  setCurrentOpponentIndex,
 } from '@redux/actions';
 import {
   seasonSlides,
@@ -56,10 +57,9 @@ const SeasonPage = () => {
 
   const [state, setState] = useState({
     currentBlock: seasonState.gameBlocks[seasonState.currentBlockIndex],
-    currentOpponentIndex: 0,
+    currentOpponentIndex: seasonState.currentOpponentIndex,
     currentPhaseIndex: 0,
     currentMessageIndex: 0,
-    // results: [],
   });
   const [tutorialSlides, setTutorialSlides] = useState([seasonSlides]);
   const currentPhase = gamePhases[state.currentPhaseIndex];
@@ -76,6 +76,21 @@ const SeasonPage = () => {
       })
     );
   };
+
+  const opponenetIndexRef = useRef(state.currentOpponentIndex);
+  useEffect(() => {
+    return () => {
+      if (opponenetIndexRef.current === state.currentOpponentIndex) {
+        // if we're here and the opponent index hasnt changed, it means
+        // the component is unmounting. Store the index in redux
+        if (timer) {
+          window.clearTimeout(timer);
+        }
+        dispatch(setCurrentOpponentIndex(state.currentOpponentIndex));
+      }
+    };
+  }, [dispatch, state.currentOpponentIndex]);
+  opponenetIndexRef.current = state.currentOpponentIndex;
 
   if (timer) {
     window.clearTimeout(timer);
@@ -119,28 +134,30 @@ const SeasonPage = () => {
           console.error(new Error('Unexpected error initializing players'));
           return;
         }
-        // @TODO THUNK
-        dispatch(setStudent(initializedStudentRes.data));
-        dispatch(
-          setInitialPlayersState(
-            initializedStudentRes.data.players,
-            initializedStudentRes.data
-          )
-        );
-        dispatch(
-          toggleOverlay({
-            isOpen: true,
-            template: (
-              <SeasonCompleteOverlay
-                standings={seasonState.standings}
-                level={student.level || 1}
-                team={seasonState.seasonTeam}
-                student={student}
-              />
-            ),
-            canClose: false,
-          })
-        );
+
+        batch(() => {
+          dispatch(setStudent(initializedStudentRes.data));
+          dispatch(
+            setInitialPlayersState(
+              initializedStudentRes.data.players,
+              initializedStudentRes.data
+            )
+          );
+          dispatch(
+            toggleOverlay({
+              isOpen: true,
+              template: (
+                <SeasonCompleteOverlay
+                  standings={seasonState.standings}
+                  level={student.level || 1}
+                  team={seasonState.seasonTeam}
+                  student={student}
+                />
+              ),
+              canClose: false,
+            })
+          );
+        });
       })
       .catch((err) => console.error(err));
   };

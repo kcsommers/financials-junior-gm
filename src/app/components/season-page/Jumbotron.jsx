@@ -31,8 +31,8 @@ export const Jumbotron = ({
       : currentOpponentIndex + 1) +
     seasonState.currentBlockIndex * 4;
 
-  const nextOpponent = seasonState.allTeams[nextIndex];
-  const upcomingGames = seasonState.allTeams.slice(
+  const nextOpponent = seasonState.allOpponents[nextIndex];
+  const upcomingGames = seasonState.allOpponents.slice(
     nextIndex + 1,
     nextIndex + 3
   );
