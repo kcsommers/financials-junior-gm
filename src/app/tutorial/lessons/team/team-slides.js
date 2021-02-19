@@ -6,8 +6,8 @@ const slideConfigs = [
   {
     message: 'Welcome to your team!',
     sharkie: 'speakInverse',
-    hasButtons: false,
-    timer: Slide.SLIDE_DURATION,
+    hasButtons: true,
+    timer: 0,
     slideAnimate: {
       y: '63%',
       x: '-63%',
@@ -35,8 +35,8 @@ const slideConfigs = [
   {
     message: 'These are the players in your squad.',
     sharkie: 'speakInverse',
-    hasButtons: false,
-    timer: Slide.SLIDE_DURATION,
+    hasButtons: true,
+    timer: 0,
     small: true,
     slideAnimate: {
       y: '63%',
@@ -47,8 +47,8 @@ const slideConfigs = [
   {
     message: 'Tapping a player will reveal more about them.',
     sharkie: 'speakInverse',
-    hasButtons: false,
-    timer: Slide.SLIDE_DURATION,
+    hasButtons: true,
+    timer: 0,
     small: true,
     slideAnimate: {
       y: '63%',
@@ -101,8 +101,8 @@ const slideConfigs = [
     message:
       'Each player has a rank, which is how good they are in their position.',
     sharkie: 'speakInverse',
-    hasButtons: false,
-    timer: Slide.SLIDE_DURATION,
+    hasButtons: true,
+    timer: 0,
     small: true,
     slideAnimate: {
       y: '91%',
@@ -114,8 +114,8 @@ const slideConfigs = [
   {
     message: 'The rank depends on three things...',
     sharkie: 'speakInverse',
-    hasButtons: false,
-    timer: Slide.SLIDE_DURATION,
+    hasButtons: true,
+    timer: 0,
     small: true,
     slideAnimate: {
       y: '91%',
@@ -128,8 +128,8 @@ const slideConfigs = [
     message:
       'Their offense score, which is how good they are at scoring goals.',
     sharkie: 'speakInverse',
-    hasButtons: false,
-    timer: Slide.SLIDE_DURATION,
+    hasButtons: true,
+    timer: 0,
     small: true,
     slideAnimate: {
       y: '91%',
@@ -142,8 +142,8 @@ const slideConfigs = [
     message:
       'Their passing score, which is how good they are at helping others score.',
     sharkie: 'speakInverse',
-    hasButtons: false,
-    timer: Slide.SLIDE_DURATION,
+    hasButtons: true,
+    timer: 0,
     small: true,
     slideAnimate: {
       y: '91%',
@@ -156,8 +156,8 @@ const slideConfigs = [
     message:
       'And their defense score, or how good they are at blocking goals from the other team.',
     sharkie: 'speakInverse',
-    hasButtons: false,
-    timer: Slide.SLIDE_DURATION,
+    hasButtons: true,
+    timer: 0,
     small: true,
     slideAnimate: {
       y: '91%',
@@ -169,8 +169,8 @@ const slideConfigs = [
   {
     message: 'Each player also has a contract value.',
     sharkie: 'speakInverse',
-    hasButtons: false,
-    timer: Slide.SLIDE_DURATION,
+    hasButtons: true,
+    timer: 0,
     small: true,
     slideAnimate: {
       y: '91%',
@@ -183,8 +183,8 @@ const slideConfigs = [
     message:
       'The contract value is the money they are paid to play for your team.',
     sharkie: 'speakInverse',
-    hasButtons: false,
-    timer: Slide.SLIDE_DURATION,
+    hasButtons: true,
+    timer: 0,
     small: true,
     slideAnimate: {
       y: '91%',
@@ -197,8 +197,8 @@ const slideConfigs = [
     message:
       'Players with a higher rank will usually have a higher contract value!',
     sharkie: 'speakInverse',
-    hasButtons: false,
-    timer: Slide.SLIDE_DURATION,
+    hasButtons: true,
+    timer: 0,
     small: true,
     slideAnimate: {
       y: '91%',
@@ -210,8 +210,8 @@ const slideConfigs = [
   {
     message: 'You can decide to release a player from the team',
     sharkie: 'speakInverse',
-    hasButtons: false,
-    timer: Slide.SLIDE_DURATION,
+    hasButtons: true,
+    timer: 0,
     small: true,
     slideAnimate: {
       y: '91%',
@@ -223,8 +223,8 @@ const slideConfigs = [
   {
     message: 'This will add the money of their contract back to your budget!',
     sharkie: 'speakInverse',
-    hasButtons: false,
-    timer: Slide.SLIDE_DURATION,
+    hasButtons: true,
+    timer: 0,
     small: true,
     slideAnimate: {
       y: '91%',
@@ -237,8 +237,8 @@ const slideConfigs = [
     message:
       'You can also trade players for others with the same contract value!',
     sharkie: 'speak',
-    hasButtons: false,
-    timer: Slide.SLIDE_DURATION,
+    hasButtons: true,
+    timer: 0,
     small: true,
     slideAnimate: {
       y: '91%',

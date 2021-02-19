@@ -1,5 +1,27 @@
-import whiteWolves from '@images/icons/white-wolves.svg';
-import blueBearsLogoLg from '@images/icons/blue-bears-logo-big.svg';
+import bluebearsLg from '@images/icons/team-logos/bluebearsLg.svg';
+import bluebearsSm from '@images/icons/team-logos/bluebearsSm.svg';
+import redrabbitsLg from '@images/icons/team-logos/redrabbitsLg.svg';
+import redrabbitsSm from '@images/icons/team-logos/redrabbitsSm.svg';
+import pinkpanthersLg from '@images/icons/team-logos/pinkpanthersLg.svg';
+import pinkpanthersSm from '@images/icons/team-logos/pinkpanthersSm.svg';
+import yellowyaksLg from '@images/icons/team-logos/yellowyaksLg.svg';
+import yellowyaksSm from '@images/icons/team-logos/yellowyaksSm.svg';
+import greengiraffesLg from '@images/icons/team-logos/greengiraffesLg.svg';
+import greengiraffesSm from '@images/icons/team-logos/greengiraffesSm.svg';
+import goldengeckosLg from '@images/icons/team-logos/goldengeckosLg.svg';
+import goldengeckosSm from '@images/icons/team-logos/goldengeckosSm.svg';
+import graygrasshoppersLg from '@images/icons/team-logos/graygrasshoppersLg.svg';
+import graygrasshoppersSm from '@images/icons/team-logos/graygrasshoppersSm.svg';
+import orangeowlsLg from '@images/icons/team-logos/orangeowlsLg.svg';
+import orangeowlsSm from '@images/icons/team-logos/orangeowlsSm.svg';
+import silverspidersLg from '@images/icons/team-logos/silverspidersLg.svg';
+import silverspidersSm from '@images/icons/team-logos/silverspidersSm.svg';
+import whitewolvesLg from '@images/icons/team-logos/whitewolvesLg.svg';
+import whitewolvesSm from '@images/icons/team-logos/whitewolvesSm.svg';
+import pinkpandasLg from '@images/icons/team-logos/pinkpandasLg.svg';
+import pinkpandasSm from '@images/icons/team-logos/pinkpandasSm.svg';
+import blackbeaversLg from '@images/icons/team-logos/blackbeaversLg.svg';
+import blackbeaversSm from '@images/icons/team-logos/blackbeaversSm.svg';
 import { INJURE_PLAYER } from '@redux/actionTypes';
 import { PlayerAssignments } from '@data/players/players';
 import { cloneDeep } from 'lodash';
@@ -163,108 +185,112 @@ export const getAllOpponents = (level) => {
 
 export const allOpponents = [
   {
-    teamRank: 65,
-    logoLg: blueBearsLogoLg,
-    logoSm: whiteWolves,
-    name: 'Green Giraffes',
+    teamRank: 35,
+    logoLg: bluebearsLg,
+    logoSm: bluebearsSm,
+    name: 'Blue Bears',
     stats: { wins: 0, losses: 0, points: 0 },
     standings: '6th',
-    color: '#3bfff9',
+    color: '#0F3999',
   },
   {
-    teamRank: 30,
-    logoLg: blueBearsLogoLg,
-    logoSm: whiteWolves,
-    name: 'Pink Pandas',
+    teamRank: 50,
+    logoLg: redrabbitsLg,
+    logoSm: redrabbitsSm,
+    name: 'Red Rabbits',
     stats: { wins: 0, losses: 0, points: 0 },
     standings: '6th',
-    color: '#f83bff',
+    color: '#DC384C',
+  },
+  {
+    teamRank: 55,
+    logoLg: pinkpanthersLg,
+    logoSm: pinkpanthersSm,
+    name: 'Purple Panthers',
+    stats: { wins: 0, losses: 0, points: 0 },
+    standings: '6th',
+    color: '#20124E',
   },
   {
     teamRank: 80,
-    logoLg: blueBearsLogoLg,
-    logoSm: whiteWolves,
-    name: 'Orange Owls',
-    stats: { wins: 0, losses: 0, points: 0 },
-    standings: '6th',
-    color: '#ffb75a',
-  },
-  {
-    teamRank: 54,
-    logoLg: blueBearsLogoLg,
-    logoSm: whiteWolves,
-    name: 'Silver Spiders',
-    stats: { wins: 0, losses: 0, points: 0 },
-    standings: '6th',
-    color: '#3bfff9',
-  },
-  {
-    teamRank: 42,
-    logoLg: blueBearsLogoLg,
-    logoSm: whiteWolves,
-    name: 'Golden Geckos',
-    stats: { wins: 0, losses: 0, points: 0 },
-    standings: '6th',
-    color: '#f83bff',
-  },
-  {
-    teamRank: 70,
-    logoLg: blueBearsLogoLg,
-    logoSm: whiteWolves,
-    name: 'Yellow Yaks',
-    stats: { wins: 0, losses: 0, points: 0 },
-    standings: '6th',
-    color: '#ffb75a',
-  },
-  {
-    teamRank: 58,
-    logoLg: blueBearsLogoLg,
-    logoSm: whiteWolves,
-    name: 'Black Beavers',
-    stats: { wins: 0, losses: 0, points: 0 },
-    standings: '6th',
-  },
-  {
-    teamRank: 65,
-    logoLg: blueBearsLogoLg,
-    logoSm: whiteWolves,
-    name: 'Gray Grasshoppers',
-    stats: { wins: 0, losses: 0, points: 0 },
-    standings: '6th',
-  },
-  {
-    teamRank: 88,
-    logoLg: blueBearsLogoLg,
-    logoSm: whiteWolves,
-    name: 'Blue Bears',
-    stats: { wins: 0, losses: 0, points: 0 },
-    standings: '12th',
-  },
-  {
-    teamRank: 40,
-    logoLg: blueBearsLogoLg,
-    logoSm: whiteWolves,
-    name: 'Red Rabbits',
-    stats: { wins: 0, losses: 0, points: 0 },
-    standings: '12th',
-    color: '#ff3b3b',
-  },
-  {
-    teamRank: 35,
-    logoLg: blueBearsLogoLg,
-    logoSm: whiteWolves,
-    name: 'Purple Panthers',
-    stats: { wins: 0, losses: 0, points: 0 },
-    standings: '10th',
-    color: '#f83bff',
-  },
-  {
-    teamRank: 25,
-    logoLg: blueBearsLogoLg,
-    logoSm: whiteWolves,
+    logoLg: whitewolvesLg,
+    logoSm: whitewolvesSm,
     name: 'White Wolves',
     stats: { wins: 0, losses: 0, points: 0 },
     standings: '6th',
-    color: '#3bfff9',
+    color: '#00FFDA',
   },
+  {
+    teamRank: 65,
+    logoLg: greengiraffesLg,
+    logoSm: greengiraffesSm,
+    name: 'Green Giraffes',
+    stats: { wins: 0, losses: 0, points: 0 },
+    standings: '6th',
+    color: '#00EA3D',
+  },
+  {
+    teamRank: 75,
+    logoLg: pinkpandasLg,
+    logoSm: pinkpandasSm,
+    name: 'Pink Pandas',
+    stats: { wins: 0, losses: 0, points: 0 },
+    standings: '6th',
+    color: '#E1B7EA',
+  },
+  {
+    teamRank: 65,
+    logoLg: orangeowlsLg,
+    logoSm: orangeowlsSm,
+    name: 'Orange Owls',
+    stats: { wins: 0, losses: 0, points: 0 },
+    standings: '6th',
+    color: 'FFBC4F',
+  },
+  {
+    teamRank: 70,
+    logoLg: silverspidersLg,
+    logoSm: silverspidersSm,
+    name: 'Silver Spiders',
+    stats: { wins: 0, losses: 0, points: 0 },
+    standings: '6th',
+    color: '#CBCBCB',
+  },
+  {
+    teamRank: 55,
+    logoLg: goldengeckosLg,
+    logoSm: goldengeckosSm,
+    name: 'Golden Geckos',
+    stats: { wins: 0, losses: 0, points: 0 },
+    standings: '6th',
+    color: '#F9E535',
+  },
+  {
+    teamRank: 70,
+    logoLg: yellowyaksLg,
+    logoSm: yellowyaksSm,
+    name: 'Yellow Yaks',
+    stats: { wins: 0, losses: 0, points: 0 },
+    standings: '12th',
+    color: '#F8EE90',
+  },
+  {
+    teamRank: 75,
+    logoLg: blackbeaversLg,
+    logoSm: blackbeaversSm,
+    name: 'Black Beavers',
+    stats: { wins: 0, losses: 0, points: 0 },
+    standings: '10th',
+    color: '#3F3F3F',
+  },
+  {
+    teamRank: 70,
+    logoLg: graygrasshoppersLg,
+    logoSm: graygrasshoppersSm,
+    name: 'Gray Grasshoppers',
+    stats: { wins: 0, losses: 0, points: 0 },
+    standings: '6th',
+    color: '#CECECE',
+  },
+  
 ];
