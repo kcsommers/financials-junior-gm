@@ -46,7 +46,7 @@ button {
   font-size: 2.95rem;
 }
 
-*.hidden {
+*.transparent {
   position: relative;
   opacity: 0;
 }

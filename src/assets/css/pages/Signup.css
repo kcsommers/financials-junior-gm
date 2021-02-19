@@ -1,160 +1,158 @@
-#app-wrapper{
-    height: 100vh;
+#app-wrapper {
+  height: 100vh;
+  width: 100vw;
+  background-color: #ffffff;
+}
+
+div.form-container {
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: scroll;
+}
+
+#backdiv {
+  position: absolute;
+  top: 5vw;
+  left: 5vw;
+  z-index: 4;
+}
+
+#inst {
+  animation: fadeIn 2s ease;
+}
+
+#app-wrapper > img {
+  margin: auto;
+  animation: fadeIn 1s ease;
+  display: block;
+  height: 45vh;
+}
+.formdiv {
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 5vh;
+  width: 65%;
+  height: 133%;
+  background-color: #e5e5e5;
+  opacity: 1;
+  overflow: scroll;
+  animation: fadeIn 2s ease;
+  z-index: 3;
+}
+
+.formdiv .error {
+  margin: auto;
+  color: #dc2d2d;
+}
+
+form {
+  padding-top: 4%;
+  display: flex;
+  flex-direction: column;
+  color: black;
+}
+
+.formdiv h4 {
+  margin-top: 0%;
+  font-size: 1.5rem;
+  color: #070707;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 1.2%;
+  font-weight: bold;
+}
+
+input {
+  width: 47%;
+  height: 48px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 2.4%;
+  border-radius: 10px;
+  font-size: 1.5rem;
+}
+
+select {
+  height: 48px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 2.4%;
+  border-radius: 10px;
+  font-size: 1.5rem;
+}
+
+.hidden {
+  display: none;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #c8c8c8;
+  border-radius: 20px;
+  border: 6px solid transparent;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@media not all and (min-resolution: 0.001dpcm) {
+  @media {
+    form {
+      height: 100%;
+    }
+    /* your code for Safari Desktop & Mobile */
+    #formnest,
+    #selectdiv {
+      margin-bottom: 8.4%;
+    }
+    #formsubmit,
+    select {
+      -webkit-appearance: none;
+    }
+    /* end */
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  h2,
+  h4 {
+    text-align: center;
+  }
+
+  .formdiv {
     width: 100vw;
-    background-color: #ffffff;
   }
- 
-   div.form-container {
-    background-color: #ffffff;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    overflow: scroll
-  }
-  
-  #backdiv {
-      position:absolute;
-      top:5vw;
-      left: 5vw;
-      z-index: 4;
-  }
-  
-  #inst {
-    animation: fadeIn 2s ease;
-  }
-  
+
   #app-wrapper > img {
     margin: auto;
     animation: fadeIn 1s ease;
     display: block;
-    height: 45vh;
+    width: 99vw;
+    height: 45.62vw;
   }
-  .formdiv {
-    border-radius: 10px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 5vh ;
-    width: 65%;
-    height: 133%;
-    background-color: #e5e5e5;
-    opacity: 1;
-    overflow: scroll;
-    animation: fadeIn 2s ease;
-    z-index: 3;
+
+  #formsubmit {
+    margin-top: 5vh;
+    width: 40vw;
   }
-  
-  .formdiv .error {
-    margin: auto;
-    color: #DC2D2D
-  }
-  
-  form {
-    padding-top: 4% ;
-    display: flex;
-    flex-direction: column;
-    color: black;
-  
-  }
-  
-  .formdiv h4 {
-    margin-top: 0%;
-    font-size: 1.5rem;
-    color: #070707;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 1.2%;
-    font-weight: bold;
-  }
-  
-  input { 
-    width: 47%;
-    height: 48px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 2.4%;
-    border-radius: 10px;
-    font-size: 1.5rem;
-  }
-  
-  select {
-    height: 48px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 2.4%;
-    border-radius: 10px;
-    font-size: 1.5rem;
-  }
-  
-  
-  .hidden {
-    display: none;
-  }
-  
-  ::-webkit-scrollbar {
-    width: 8px;
-  }
-  
-  ::-webkit-scrollbar-track {
-    background-color: transparent;
-  }
-  
-  ::-webkit-scrollbar-thumb {
-    background-color: #c8c8c8;
-    border-radius: 20px;
-    border: 6px solid transparent;
-  }
-  
-  
-  
-  @keyframes fadeIn {
-    0% {
-      opacity: 0;
-    }
-    100% {
-      opacity: 1;
-    }
-  }
-  
-  @media not all and (min-resolution:.001dpcm) { 
-    @media {
-      form {
-        height: 100%;
-      }
-      /* your code for Safari Desktop & Mobile */
-      #formnest, #selectdiv{
-        margin-bottom: 8.4%;;
-      }
-      #formsubmit, select {
-        -webkit-appearance: none;
-      }
-      /* end */
-    }
-  }
-  
-  @media only screen and (max-width: 600px) {
-    h2, h4 {
-      text-align: center;
-    }
-    
-  
-    .formdiv {
-      width: 100vw;
-    }
-  
-    #app-wrapper > img {
-      margin: auto;
-      animation: fadeIn 1s ease;
-      display: block;
-      width: 99vw;
-      height: 45.62vw;
-    }
-  
-    #formsubmit {
-      margin-top: 5vh;
-      width: 40vw;
-    }
-  }
+}

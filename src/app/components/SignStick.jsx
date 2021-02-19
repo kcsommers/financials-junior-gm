@@ -27,7 +27,7 @@ export const SignStick = ({ tutorialActive, includeSubtext, link }) => {
 
   return tutorialActive ? (
     <motion.div
-      className='hidden stick-btn-wrap'
+      className='transparent stick-btn-wrap'
       animate={animationState}
       transition={{ default: { duration: 1 } }}
     >

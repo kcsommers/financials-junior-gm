@@ -90,7 +90,7 @@ const HomePage = () => {
       <div className='home-cards-row'>
         {tutorialActive ? (
           <motion.div
-            className='level-stick-card hidden'
+            className='level-stick-card transparent'
             animate={animationStates.teamRankCard}
             transition={{ default: { duration: 1 } }}
           >
@@ -141,7 +141,7 @@ const HomePage = () => {
         </div>
         {tutorialActive ? (
           <motion.div
-            className='level-stick-card hidden'
+            className='level-stick-card transparent'
             animate={animationStates.budgetCard}
             transition={{ default: { duration: 1 } }}
           >
@@ -194,7 +194,11 @@ const HomePage = () => {
               image={teamStick}
               animationState={animationStates.teamStick}
             />
-            <p className={`stick-btn-text${tutorialActive ? ' hidden' : ''}`}>
+            <p
+              className={`stick-btn-text${
+                tutorialActive ? ' transparent' : ''
+              }`}
+            >
               Build your team by signing players!
             </p>
           </div>
@@ -206,7 +210,11 @@ const HomePage = () => {
               image={budgetStick}
               animationState={animationStates.budgetStick}
             />
-            <p className={`stick-btn-text${tutorialActive ? ' hidden' : ''}`}>
+            <p
+              className={`stick-btn-text${
+                tutorialActive ? ' transparent' : ''
+              }`}
+            >
               Manage your team's money.
             </p>
           </div>
@@ -219,7 +227,11 @@ const HomePage = () => {
               image={seasonStick}
               animationState={animationStates.seasonStick}
             />
-            <p className={`stick-btn-text${tutorialActive ? ' hidden' : ''}`}>
+            <p
+              className={`stick-btn-text${
+                tutorialActive ? ' transparent' : ''
+              }`}
+            >
               Play games and win the championship!
             </p>
           </div>
@@ -231,7 +243,11 @@ const HomePage = () => {
               image={trophiesStick}
               animationState={animationStates.trophiesStick}
             />
-            <p className={`stick-btn-text${tutorialActive ? ' hidden' : ''}`}>
+            <p
+              className={`stick-btn-text${
+                tutorialActive ? ' transparent' : ''
+              }`}
+            >
               See your badges and trophies!
             </p>
           </div>
