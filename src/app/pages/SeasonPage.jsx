@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { useSelector, useDispatch, batch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import {
@@ -32,6 +32,7 @@ import {
   setTutorialState,
   toggleOverlay,
   setCurrentOpponentIndex,
+  updateStudent,
   setSeasonComplete,
 } from '@redux/actions';
 import {
@@ -76,13 +77,20 @@ const SeasonPage = () => {
     dispatch(setTutorialState({ isActive: false }));
   };
 
+  const startTutorial = useCallback(
+    (slides) => {
+      setTutorialSlides(slides);
+      dispatch(
+        setTutorialState({
+          isActive: true,
+        })
+      );
+    },
+    [dispatch]
+  );
+
   const onCallSharkie = () => {
-    setTutorialSlides([getConfirmSlides('season'), seasonSlides]);
-    dispatch(
-      setTutorialState({
-        isActive: true,
-      })
-    );
+    startTutorial([getConfirmSlides('season'), seasonSlides]);
   };
 
   const opponenetIndexRef = useRef(state.currentOpponentIndex);
@@ -269,6 +277,28 @@ const SeasonPage = () => {
       timer = window.setTimeout(nextPhase, currentPhase.timer);
     }
   }
+
+  const hasSeenTutorial = useRef(
+    !!(student && student.tutorials && student.tutorials.season)
+  );
+  useEffect(() => {
+    if (student && !hasSeenTutorial.current) {
+      hasSeenTutorial.current = true;
+      const clonedTutorials = cloneDeep(student.tutorials || {});
+      clonedTutorials.season = true;
+      updateStudentById(student._id, { tutorials: clonedTutorials })
+        .then((res) => {
+          dispatch(updateStudent({ tutorials: clonedTutorials }));
+          startTutorial([seasonSlides]);
+        })
+        .catch((err) => console.error(err));
+    }
+  }, [student, dispatch, startTutorial]);
+  hasSeenTutorial.current = !!(
+    student &&
+    student.tutorials &&
+    student.tutorials.season
+  );
 
   return student ? (
     <div className='page-container'>

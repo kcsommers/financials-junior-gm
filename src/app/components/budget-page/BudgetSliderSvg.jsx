@@ -17,6 +17,7 @@ export const BudgetSliderSvg = ({ budget }) => {
             height='236'
             transform={`translate(${792 * (1 - savingsPct) + 128} 264)`}
             fill='none'
+            style={{ transition: 'all 0.1s ease' }}
           />
         </clipPath>
         <clipPath id='spentClipPath'>
@@ -27,6 +28,7 @@ export const BudgetSliderSvg = ({ budget }) => {
             height='236'
             transform={`translate(${792 * spentPct + 128} 264)`}
             fill='none'
+            style={{ transition: 'all 0.1s ease' }}
           />
         </clipPath>
       </defs>
