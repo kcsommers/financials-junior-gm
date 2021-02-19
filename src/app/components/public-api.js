@@ -1,4 +1,6 @@
+export { AwardDetailsOverlay } from './overlays/AwardDetailsOverlay';
 export { BackButton } from './BackButton';
+export { StartGameButtonSvg } from './season-page/StartGameButtonSvg';
 export { Button } from './Button';
 export { SeasonCompleteOverlay } from './overlays/SeasonCompleteOverlay';
 export { TeamCard } from './season-page/TeamCard';

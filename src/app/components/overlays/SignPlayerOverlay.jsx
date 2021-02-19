@@ -21,7 +21,9 @@ import '@css/components/team-page/SignPlayerOverlay.css';
 export const SignPlayerOverlay = ({ team, assignment, student }) => {
   const dispatch = useDispatch();
 
-  const currentScenario = useSelector((state) => state.season.currentScenario);
+  const { currentScenario, completedGames } = useSelector(
+    (state) => state.season
+  );
 
   const availableSlots = {
     forwards: getAvailableSlots(TeamAssignments.offense, team),
@@ -88,7 +90,21 @@ export const SignPlayerOverlay = ({ team, assignment, student }) => {
               clonedTeam
             ) === 0
           ) {
-            dispatch(gameBlockEnded());
+            const studentSeasons = cloneDeep(student.seasons);
+            if (studentSeasons[(student.level || 1) - 1]) {
+              studentSeasons[(student.level || 1) - 1].push(completedGames);
+            } else {
+              studentSeasons[(student.level || 1) - 1] = [completedGames];
+            }
+
+            updateStudentById(student._id, {
+              seasons: studentSeasons,
+            })
+              .then((res) => {
+                console.log('SIGNED PLAYER UPDATED STUDENT:::: ', res);
+                dispatch(gameBlockEnded());
+              })
+              .catch((err) => console.error(err));
           }
         }
       })

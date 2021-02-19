@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector, batch } from 'react-redux';
 import {
   BrowserRouter as Router,
   Redirect,
@@ -20,8 +20,12 @@ import TeacherDashboard from './pages/TeacherDashboard';
 import PageNotFound from './components/page-not-found';
 import TeacherPortal from './pages/portal/Teacher';
 import StudentPortal from './pages/portal/Student';
-import Signup from './pages/Signup'
-import { setStudent, setInitialPlayersState } from '@redux/actions';
+import Signup from './pages/Signup';
+import {
+  setStudent,
+  setInitialPlayersState,
+  initializeSeason,
+} from '@redux/actions';
 import {
   getCurrentUser,
   initPlayersByLevel,
@@ -49,10 +53,15 @@ const App = () => {
           );
           return;
         }
+
+        console.log('STUDETN:::: ', student);
         // don't initialize players if theyre already there
         if (student.players && student.players.length) {
-          dispatch(setStudent(student));
-          dispatch(setInitialPlayersState(student.players, student));
+          batch(() => {
+            dispatch(setStudent(student));
+            dispatch(setInitialPlayersState(student.players, student));
+            dispatch(initializeSeason(student.seasons, student.awards));
+          });
           return;
         }
 
@@ -63,13 +72,21 @@ const App = () => {
               console.error(new Error('Unexpected error initializing players'));
               return;
             }
-            dispatch(setStudent(initializedStudentRes.data));
-            dispatch(
-              setInitialPlayersState(
-                initializedStudentRes.data.players,
-                initializedStudentRes.data
-              )
-            );
+            batch(() => {
+              dispatch(setStudent(initializedStudentRes.data));
+              dispatch(
+                setInitialPlayersState(
+                  initializedStudentRes.data.players,
+                  initializedStudentRes.data
+                )
+              );
+              dispatch(
+                initializeSeason(
+                  initializedStudentRes.data.seasons,
+                  initializedStudentRes.data.awards
+                )
+              );
+            });
 
             // update the student with the hard coded initial team
             // setInitialTeam(initializedStudentRes.data)
@@ -136,7 +153,7 @@ const App = () => {
           <Route exact path='/dashboard' component={Dashboard} />
           <Route exact path='/login/teacher' component={TeacherLogin} />
           <Route exact path='/login/student' component={StudentLogin} />
-          <Route exact path='/signup' component={Signup}/>
+          <Route exact path='/signup' component={Signup} />
           {/* <Route exact path='/teacher/home' component={TeacherDashboard} /> */}
           <Route
             exact

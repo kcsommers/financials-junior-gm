@@ -21,7 +21,9 @@ export const TradePlayerOverlay = ({ releasingPlayer, student }) => {
     dispatch(
       toggleOverlay({
         isOpen: true,
-        template: <PlayerDetailsOverlay />,
+        template: (
+          <PlayerDetailsOverlay player={releasingPlayer} student={student} />
+        ),
       })
     );
   };

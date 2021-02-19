@@ -11,6 +11,7 @@ import {
   GAME_ENDED,
   THROW_SCENARIO,
   SET_CURRENT_OPPONENT_INDEX,
+  INITIALIZE_SEASON,
 } from './../actionTypes';
 
 const initialTeams = [
@@ -46,6 +47,19 @@ const initialState = {
 
 const seasonReducer = (state = initialState, action) => {
   switch (action.type) {
+    case INITIALIZE_SEASON: {
+      const { seasons, awards } = action.payload;
+      if (!seasons || !seasons.length) {
+        return state;
+      }
+
+      const clonedState = cloneDeep(state);
+      clonedState.awards = awards || [];
+      clonedState.completedBlocks = seasons[seasons.length - 1];
+      clonedState.currentBlockIndex = seasons.length;
+
+      return clonedState;
+    }
     case THROW_SCENARIO: {
       const clonedState = cloneDeep(state);
       const scenario = action.payload;
@@ -103,17 +117,18 @@ const seasonReducer = (state = initialState, action) => {
     case SET_SEASON_COMPLETE: {
       const clonedState = cloneDeep(state);
       const student = action.payload;
-      const awards = [];
       const studentTeamIndex = state.standings.findIndex(
         (t) => t.name === state.seasonTeam.name
       );
-      awards.push(studentTeamIndex < 3); // top 3
-      awards.push(studentTeamIndex === 0); // first place
-      awards.push(student.savingsBudget > 0); // has savings
+      const awards = {
+        savingsCup: student.savingsBudget > 0,
+        thirdCup: studentTeamIndex < 3,
+        firstCup: studentTeamIndex === 0,
+      };
 
       clonedState.completedBlocks.push(state.completedGames);
       clonedState.completedGames = [];
-      clonedState.awards.push(awards);
+      clonedState.awards[(student.level || 1) - 1] = awards;
       clonedState.currentBlockIndex = 0;
       clonedState.currentScenario = null;
       clonedState.currentOpponentIndex = 0;
