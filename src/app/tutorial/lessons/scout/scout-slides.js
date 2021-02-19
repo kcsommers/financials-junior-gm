@@ -6,55 +6,64 @@ const slideConfigs = [
     message: 'Okay for your final objective, you will Scout new players!',
     sharkie: 'play',
     accentText: 'Scout',
-    timer: Slide.SLIDE_DURATION,
+    timer: 0,
+    hasButtons: true,
   },
   {
     message: 'But what does Scouting mean?',
     sharkie: 'speak',
     accentText: 'Scouting',
-    timer: Slide.SLIDE_DURATION,
+    timer: 0,
+    hasButtons: true,
   },
   {
     message:
       'Scouting is when a general manager studies new players to see how well they play!',
     sharkie: 'speak',
     accentText: 'Scouting',
-    timer: Slide.SLIDE_DURATION,
+    timer: 0,
+    hasButtons: true,
   },
   {
     message:
       'Then the general manager can decide which players they want to sign to their team!',
     sharkie: 'speak',
-    timer: Slide.SLIDE_DURATION,
+    timer: 0,
+    hasButtons: true,
   },
   {
     message: 'To sign them the general manager has to offer them money.',
     sharkie: 'speak',
-    timer: Slide.SLIDE_DURATION,
+    hasButtons: true,
+    timer: 0,
   },
   {
     message:
       'If a general manager really likes a player, they can offer more money to sign them!',
     sharkie: 'speak',
-    timer: Slide.SLIDE_DURATION,
+    timer: 0,
+    hasButtons: true,
   },
   {
     message:
       'But if a general manager does not offer them enough money, then the player can say no.',
     sharkie: 'speak',
-    timer: Slide.SLIDE_DURATION,
+    timer: 0,
+    hasButtons: true,
   },
   {
     message:
       'So when Scouting, a general manager has to be careful in deciding which players they like...',
     sharkie: 'speak',
     accentText: 'Scouting',
-    timer: Slide.SLIDE_DURATION,
+    timer: 0,
+    hasButtons: true,
   },
   {
     message: 'And how much money to give them to join their team!',
     sharkie: 'speak',
-    timer: Slide.SLIDE_DURATION,
+    timer: 0,
+    hasButtons: true,
   },
   {
     message: 'Do you understand what Scouting is?',
@@ -67,7 +76,8 @@ const slideConfigs = [
   {
     message: 'Cool! Let me show you how its done!',
     sharkie: 'speak',
-    timer: Slide.SLIDE_DURATION,
+    timer: 0,
+    hasButtons: true,
     exitActions: [
       {
         type: SET_ANIMATION_STATE,
@@ -91,7 +101,8 @@ const slideConfigs = [
     message: 'These are all the new players!',
     sharkie: 'speak',
     small: true,
-    timer: Slide.SLIDE_DURATION,
+    timer: 0,
+    hasButtons: true,
     slideAnimate: {
       y: '50%',
       x: '58%',
@@ -101,7 +112,8 @@ const slideConfigs = [
     message: "They don't have a contract value yet!",
     sharkie: 'speak',
     small: true,
-    timer: Slide.SLIDE_DURATION,
+    hasButtons: true,
+    timer: 0,
     slideAnimate: {
       y: '50%',
       x: '58%',
@@ -112,7 +124,8 @@ const slideConfigs = [
       'You have to decide how much money you want to offer them in their contract.',
     sharkie: 'speak',
     small: true,
-    timer: Slide.SLIDE_DURATION,
+    hasButtons: true,
+    timer: 0,
     slideAnimate: {
       y: '50%',
       x: '58%',
@@ -169,7 +182,8 @@ const slideConfigs = [
     message: 'There are 3 levels.',
     sharkie: 'speakInverse',
     small: true,
-    timer: Slide.SLIDE_DURATION,
+    hasButtons: true,
+    timer: 0,
     slideAnimate: {
       y: '50%',
       x: '-58%',
@@ -209,7 +223,8 @@ const slideConfigs = [
     message: 'Each level has a different dollar value!',
     sharkie: 'speakInverse',
     small: true,
-    timer: Slide.SLIDE_DURATION,
+    hasButtons: true,
+    timer: 0,
     slideAnimate: {
       y: '50%',
       x: '-58%',
@@ -249,8 +264,9 @@ const slideConfigs = [
     message:
       'Players will be offered the dollar value in the level they are placed in.',
     sharkie: 'speakInverse',
+    hasButtons: true,
     small: true,
-    timer: Slide.SLIDE_DURATION,
+    timer: 0,
     slideAnimate: {
       y: '50%',
       x: '-58%',
@@ -280,8 +296,9 @@ const slideConfigs = [
     message:
       'You can look at their rank to see how good they are for your team!',
     sharkie: 'speakInverse',
+    hasButtons: true,
     small: true,
-    timer: Slide.SLIDE_DURATION,
+    timer: 0,
     slideAnimate: {
       y: '50%',
       x: '-58%',
@@ -328,7 +345,8 @@ const slideConfigs = [
     message: 'And drag them into the level you choose.',
     sharkie: 'speakInverse',
     small: true,
-    timer: Slide.SLIDE_DURATION,
+    timer: 0,
+    hasButtons: true,
     slideAnimate: {
       y: '50%',
       x: '-58%',
@@ -378,8 +396,9 @@ const slideConfigs = [
     message:
       'Once you are finished you can pick the players you want to sign on the sign page.',
     sharkie: 'speakInverse',
+    hasButtons: true,
     small: true,
-    timer: Slide.SLIDE_DURATION,
+    timer: 0,
     slideAnimate: {
       y: '50%',
       x: '-58%',
@@ -405,8 +424,9 @@ const slideConfigs = [
   {
     message: 'Click here when you are finished!',
     sharkie: 'speakInverse',
+    hasButtons: true,
     small: true,
-    timer: Slide.SLIDE_DURATION,
+    timer: 0,
     slideAnimate: {
       y: '75%',
       x: '50%',
@@ -431,7 +451,8 @@ const slideConfigs = [
   {
     message: 'Since there are only a few spots in a level...',
     sharkie: 'presentInverse',
-    timer: Slide.SLIDE_DURATION,
+    hasButtons: true,
+    timer: 0,
     slideAnimate: {
       y: '0%',
       x: '0%',
@@ -440,7 +461,8 @@ const slideConfigs = [
   {
     message: 'Choose your players wisely!',
     sharkie: 'presentInverse',
-    timer: Slide.SLIDE_DURATION,
+    hasButtons: true,
+    timer: 0,
     slideAnimate: {
       y: '0%',
       x: '0%',

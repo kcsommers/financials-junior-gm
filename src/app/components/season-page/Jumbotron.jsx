@@ -4,7 +4,9 @@ import { GamePhases, getStanding } from '@data/season/season';
 import { TeamAssignments, getAvailableSlots } from '@data/players/players';
 import { Indicator, PlayerCard } from '@components';
 import { motion } from 'framer-motion';
+import { ReactSVG } from 'react-svg';
 import '@css/components/season-page/Jumbotron.css';
+import { useSelector } from 'react-redux';
 
 export const Jumbotron = ({
   gameBlockState,
@@ -13,7 +15,12 @@ export const Jumbotron = ({
   team,
 }) => {
   const { currentOpponent, currentScore, currentPhase } = gameBlockState;
-
+  const tutorialActive = useSelector((state) => state.tutorial.isActive);
+  const animationStates = {
+    stats: useSelector((state) => state.tutorial.season.stats),
+    upcomingGames : useSelector((state) => state.tutorial.season.upcomingGames),
+    jumboText: useSelector((state) => state.tutorial.season.jumbotext)
+  }
   const seasonDisabled =
     getAvailableSlots(
       [
@@ -46,7 +53,7 @@ export const Jumbotron = ({
   );
 
   const statsView = (
-    <div className='jumbotron-stats-container'>
+    <motion.div animate={animationStates.stats} className='jumbotron-stats-container'>
       <div className='jumbotron-stats-title'>Stats</div>
       <div className='jumbotron-stats-inner'>
         <div className='jumbotron-stat-wrap'>
@@ -68,7 +75,7 @@ export const Jumbotron = ({
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 
   const sharksTransitionView = (
@@ -82,7 +89,7 @@ export const Jumbotron = ({
   );
 
   const comingUpView = (
-    <div className='jumbotron-coming-up-container'>
+    <motion.div animate={animationStates.upcomingGames} className='jumbotron-coming-up-container'>
       <div className='jumbotron-next-opponent-container'>
         <h3>Next Opponent</h3>
         <div className='jumbotron-next-opponent-card'>
@@ -94,7 +101,7 @@ export const Jumbotron = ({
                     className='coming-up-opponent-name'
                     style={{ color: nextOpponent.color }}
                   >
-                    {nextOpponent.name}
+                    <ReactSVG src={nextOpponent.logoSm}></ReactSVG>
                   </span>
                 </div>
                 <div className='opponent-indicator-wrap'>
@@ -121,7 +128,7 @@ export const Jumbotron = ({
                       className='coming-up-opponent-name'
                       style={{ color: team.color }}
                     >
-                      {team.name}
+                    <ReactSVG src={team.logoSm}></ReactSVG>
                     </span>
                   </div>
                   <div className='opponent-indicator-wrap'>
@@ -137,7 +144,7 @@ export const Jumbotron = ({
           ))}
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 
   const gameOnView = (
@@ -169,7 +176,7 @@ export const Jumbotron = ({
         >
           VS
         </span>
-        <div className='game-on-top-right'>
+        <div className='game-on-top-right' style={{backgroundColor: '#ffffff', borderRadius: '10px', marginTop: '-2px' }}>
           <motion.div
             initial={{ transform: 'scale(0.5)' }}
             animate={{ transform: 'scale(1)' }}
@@ -268,12 +275,21 @@ export const Jumbotron = ({
         <div className='jumbotron-main-section'>{getJumbotronView()}</div>
         <div className='jumbotron-border jumbotron-border-right'></div>
       </div>
-      <h2
-        className='jumbotron-message box-shadow'
-        style={{ fontSize: getFontSize(message) }}
-      >
-        {message}
-      </h2>
+      {tutorialActive ? 
+        <motion.div animate={animationStates.jumboText}>
+          <h2
+          className='jumbotron-message box-shadow'
+          style={{ fontSize: getFontSize(message) }}
+          >
+            {message}
+          </h2>
+       </motion.div> : 
+       <h2
+       className='jumbotron-message box-shadow'
+       style={{ fontSize: getFontSize(message) }}
+     >
+       {message}
+     </h2>} 
     </>
   );
 };
