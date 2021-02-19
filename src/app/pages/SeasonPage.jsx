@@ -301,7 +301,6 @@ const SeasonPage = () => {
             <div className='jumbotron-container'>
               <Jumbotron
                 gameBlockState={gameBlockState}
-                student={student}
                 seasonState={seasonState}
                 currentOpponentIndex={state.currentOpponentIndex}
                 team={team}
@@ -316,7 +315,7 @@ const SeasonPage = () => {
                     : 0
                 }
                 denom={100}
-                color='#e06d00'
+                color={gameBlockState.currentOpponent.color}
                 indicatorDirection='left'
                 isLarge={true}
                 inverse={true}

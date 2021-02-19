@@ -8,7 +8,6 @@ import '@css/components/season-page/Jumbotron.css';
 
 export const Jumbotron = ({
   gameBlockState,
-  student,
   seasonState,
   currentOpponentIndex,
   team,
@@ -91,7 +90,10 @@ export const Jumbotron = ({
             {nextOpponent && (
               <>
                 <div className='coming-up-opponent-name-wrap'>
-                  <span className='coming-up-opponent-name'>
+                  <span
+                    className='coming-up-opponent-name'
+                    style={{ color: nextOpponent.color }}
+                  >
                     {nextOpponent.name}
                   </span>
                 </div>
@@ -115,7 +117,12 @@ export const Jumbotron = ({
               {team && (
                 <>
                   <div className='coming-up-opponent-name-wrap'>
-                    <span className='coming-up-opponent-name'>{team.name}</span>
+                    <span
+                      className='coming-up-opponent-name'
+                      style={{ color: team.color }}
+                    >
+                      {team.name}
+                    </span>
                   </div>
                   <div className='opponent-indicator-wrap'>
                     <Indicator
@@ -137,10 +144,15 @@ export const Jumbotron = ({
     <>
       <div className='game-on-top'>
         <div className='game-on-top-left'>
-          <TeamCard
-            logo={jrSharksLogo}
-            standing={getStanding(seasonState.seasonTeam, seasonState.standings)}
-          />
+          <div>
+            <TeamCard
+              logo={jrSharksLogo}
+              standing={getStanding(
+                seasonState.seasonTeam,
+                seasonState.standings
+              )}
+            />
+          </div>
         </div>
         <span
           style={{
@@ -158,10 +170,21 @@ export const Jumbotron = ({
           VS
         </span>
         <div className='game-on-top-right'>
-          <TeamCard
-            logo={currentOpponent.logoLg}
-            standing={getStanding(currentOpponent, seasonState.standings)}
-          />
+          <motion.div
+            initial={{ transform: 'scale(0.5)' }}
+            animate={{ transform: 'scale(1)' }}
+            transition={{
+              default: {
+                type: 'tween',
+                duration: 1,
+              },
+            }}
+          >
+            <TeamCard
+              logo={currentOpponent.logoLg}
+              standing={getStanding(currentOpponent, seasonState.standings)}
+            />
+          </motion.div>
         </div>
       </div>
       <div className='game-on-bottom'>{scoreView}</div>

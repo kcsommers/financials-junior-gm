@@ -169,6 +169,7 @@ export const allTeams = [
     name: 'Green Giraffes',
     stats: { wins: 0, losses: 0, points: 0 },
     standings: '6th',
+    color: '#3bfff9',
   },
   {
     teamRank: 30,
@@ -177,6 +178,7 @@ export const allTeams = [
     name: 'Pink Pandas',
     stats: { wins: 0, losses: 0, points: 0 },
     standings: '6th',
+    color: '#f83bff',
   },
   {
     teamRank: 80,
@@ -185,6 +187,7 @@ export const allTeams = [
     name: 'Orange Owls',
     stats: { wins: 0, losses: 0, points: 0 },
     standings: '6th',
+    color: '#ffb75a',
   },
   {
     teamRank: 54,
@@ -193,6 +196,7 @@ export const allTeams = [
     name: 'Silver Spiders',
     stats: { wins: 0, losses: 0, points: 0 },
     standings: '6th',
+    color: '#3bfff9',
   },
   {
     teamRank: 42,
@@ -201,6 +205,7 @@ export const allTeams = [
     name: 'Golden Geckos',
     stats: { wins: 0, losses: 0, points: 0 },
     standings: '6th',
+    color: '#f83bff',
   },
   {
     teamRank: 70,
@@ -209,6 +214,7 @@ export const allTeams = [
     name: 'Yellow Yaks',
     stats: { wins: 0, losses: 0, points: 0 },
     standings: '6th',
+    color: '#ffb75a',
   },
   {
     teamRank: 58,
