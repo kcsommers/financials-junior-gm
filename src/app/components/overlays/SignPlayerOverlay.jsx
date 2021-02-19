@@ -96,12 +96,12 @@ export const SignPlayerOverlay = ({ team, assignment, student }) => {
             } else {
               studentSeasons[(student.level || 1) - 1] = [completedGames];
             }
+            // dispatch(gameBlockEnded());
 
             updateStudentById(student._id, {
               seasons: studentSeasons,
             })
               .then((res) => {
-                console.log('SIGNED PLAYER UPDATED STUDENT:::: ', res);
                 dispatch(gameBlockEnded());
               })
               .catch((err) => console.error(err));

@@ -109,9 +109,9 @@ export const gamePhases = [
     phase: GamePhases.GAME_OVER,
     timer: 5000,
     messages: [
-      'GET LOUD! The Jr Sharks Won!',
-      'CLOSE! The Jr Sharks won in overtime!',
-      'OH NO! The Jr Sharks lost :(',
+      'GET LOUD! The Jr. Sharks Won!',
+      'CLOSE! The Jr. Sharks won in overtime!',
+      'OH NO! The Jr. Sharks lost :(',
     ],
   },
   {

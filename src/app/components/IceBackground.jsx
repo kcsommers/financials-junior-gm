@@ -5,7 +5,6 @@ import { useLocation } from 'react-router-dom';
 
 export const IceBackground = () => {
   const location = useLocation().pathname;
-  console.log(location)
   return (
     <div
       className='ice-background'
@@ -25,13 +24,15 @@ export const IceBackground = () => {
         zIndex: 0,
       }}
     >
-      {location !== '/dashboard' && <ReactSVG
-        src={financialsLogo}
-        style={{
-          position: 'relative',
-          top: location === '/home' ? '200px' : '125px',
-        }}
-      />}
+      {location !== '/dashboard' && (
+        <ReactSVG
+          src={financialsLogo}
+          style={{
+            position: 'relative',
+            top: location === '/home' ? '200px' : '125px',
+          }}
+        />
+      )}
     </div>
   );
 };

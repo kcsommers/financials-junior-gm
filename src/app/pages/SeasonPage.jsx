@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch, batch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import {
   HeaderComponent,
   PageBoard,
@@ -21,7 +22,7 @@ import {
 } from '@data/season/season';
 import { cloneDeep } from 'lodash';
 import { INJURE_PLAYER } from '@redux/actionTypes';
-import { initPlayersByLevel, updateStudentById } from './../api-helper';
+import { updateStudentById } from './../api-helper';
 import {
   throwScenario,
   injurePlayer,
@@ -30,8 +31,8 @@ import {
   gameEnded,
   setTutorialState,
   toggleOverlay,
-  setInitialPlayersState,
   setCurrentOpponentIndex,
+  setSeasonComplete,
 } from '@redux/actions';
 import {
   seasonSlides,
@@ -48,6 +49,7 @@ const allActions = {
 let timer = 0;
 
 const SeasonPage = () => {
+  const history = useHistory();
   const dispatch = useDispatch();
   const student = useSelector((state) => state.studentState.student);
   const team = useSelector((state) => state.players.teamPlayers);
@@ -110,57 +112,29 @@ const SeasonPage = () => {
     gameBlockState.currentPhase &&
     gameBlockState.currentPhase.phase === GamePhases.UP_NEXT
   ) {
-    gameBlockState.currentPhase.messages[1] = `Jr Sharks vs ${gameBlockState.currentOpponent.name}`;
+    gameBlockState.currentPhase.messages[1] = `Jr Sharks. vs ${gameBlockState.currentOpponent.name}`;
   }
 
   const seasonComplete = () => {
-    // @TODO for when we move to level 2
-    // const seasonIndex = (student.level || 1) - 1;
-    // const clonedStudent = cloneDeep(student);
-    // const savedBlocks = clonedStudent.seasons[seasonIndex] || [];
+    batch(() => {
+      dispatch(setSeasonComplete(student));
+      dispatch(
+        toggleOverlay({
+          isOpen: true,
+          template: (
+            <SeasonCompleteOverlay
+              standings={seasonState.standings}
+              level={student.level || 1}
+              team={seasonState.seasonTeam}
+              student={student}
+            />
+          ),
+          canClose: false,
+        })
+      );
+    });
 
-    // savedBlocks.push(seasonState.completedBlocks);
-    // clonedStudent.seasons[seasonIndex] = savedBlocks;
-
-    // updateStudentById(student._id, {
-    //   season: currentScenario.playerAssignment,
-    // })
-    //   .then((res) => {})
-    //   .catch((err) => console.error(err));
-
-    // @TODO:::: not this here
-    initPlayersByLevel(1)
-      .then((initializedStudentRes) => {
-        if (!initializedStudentRes.success || !initializedStudentRes.data) {
-          console.error(new Error('Unexpected error initializing players'));
-          return;
-        }
-
-        batch(() => {
-          dispatch(setStudent(initializedStudentRes.data));
-          dispatch(
-            setInitialPlayersState(
-              initializedStudentRes.data.players,
-              initializedStudentRes.data
-            )
-          );
-          dispatch(
-            toggleOverlay({
-              isOpen: true,
-              template: (
-                <SeasonCompleteOverlay
-                  standings={seasonState.standings}
-                  level={student.level || 1}
-                  team={seasonState.seasonTeam}
-                  student={student}
-                />
-              ),
-              canClose: false,
-            })
-          );
-        });
-      })
-      .catch((err) => console.error(err));
+    history.push('/trophies');
   };
 
   const endBlock = () => {

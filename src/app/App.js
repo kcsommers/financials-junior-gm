@@ -54,13 +54,12 @@ const App = () => {
           return;
         }
 
-        console.log('STUDETN:::: ', student);
         // don't initialize players if theyre already there
         if (student.players && student.players.length) {
           batch(() => {
             dispatch(setStudent(student));
             dispatch(setInitialPlayersState(student.players, student));
-            dispatch(initializeSeason(student.seasons, student.awards));
+            dispatch(initializeSeason(student));
           });
           return;
         }
@@ -80,12 +79,7 @@ const App = () => {
                   initializedStudentRes.data
                 )
               );
-              dispatch(
-                initializeSeason(
-                  initializedStudentRes.data.seasons,
-                  initializedStudentRes.data.awards
-                )
-              );
+              dispatch(initializeSeason(initializedStudentRes.data));
             });
 
             // update the student with the hard coded initial team
