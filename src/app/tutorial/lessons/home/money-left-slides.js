@@ -5,38 +5,38 @@ const slideConfigs = [
   {
     message: 'Signing new players to improve your team rank will cost money.',
     sharkie: 'speakInverse',
-    hasButtons: false,
+    hasButtons: true,
     slideAnimate: {
       y: '50%',
     },
-    timer: Slide.SLIDE_DURATION,
+    timer: 0,
   },
   {
     message: 'This is the money that you have left to spend on your team.',
     sharkie: 'speakInverse',
-    hasButtons: false,
+    hasButtons: true,
     slideAnimate: {
       y: '50%',
     },
-    timer: Slide.SLIDE_DURATION,
+    timer: 0,
   },
   {
     message:
       'Your goal is to build a winning team',
     sharkie: 'playInverse',
-    hasButtons: false,
+    hasButtons: true,
     repeatIndex: 0,
     slideAnimate: {
       y: '50%',
     },
-    timer: Slide.SLIDE_DURATION + 3000,
+    timer: 0,
   },
   {
     message:
     'While being ready for anything a hockey season can throw your way!',
     sharkie: 'playInverse',
-    hasButtons: false,
-    timer: Slide.SLIDE_DURATION + 3000,
+    hasButtons: true,
+    timer: 0,
   }
   ,
   {

@@ -9,9 +9,10 @@ import {
   GameBlockBoard,
   StandingsBoard,
   StartGameButton,
+  Overlay,
+  SeasonCompleteOverlay,
 } from '@components';
 import seasonStick from '@images/season-stick.svg';
-import '@css/pages/SeasonPage.css';
 import {
   GamePhases,
   gamePhases,
@@ -23,12 +24,10 @@ import { INJURE_PLAYER } from '@redux/actionTypes';
 import { updateStudentById } from './../api-helper';
 import {
   throwScenario,
-  setSeasonComplete,
   injurePlayer,
   setStudent,
   gameEnded,
 } from '@redux/actions';
-
 import {
   seasonSlides,
   SharkieButton,
@@ -36,6 +35,9 @@ import {
   getConfirmSlides,
 } from '@tutorial';
 import { setTutorialState, toggleOverlay } from '@redux/actions';
+import '@css/pages/SeasonPage.css';
+import { motion } from 'framer-motion';
+
 const allActions = {
   [INJURE_PLAYER]: injurePlayer,
 };
@@ -58,8 +60,13 @@ const SeasonPage = () => {
     // results: [],
   });
   const [tutorialSlides, setTutorialSlides] = useState([seasonSlides]);
+  const animationStates = {
+    standings: useSelector((state) => state.tutorial.season.standings),
+    playButton: useSelector((state) => state.tutorial.season.playButton),
+    studentRank: useSelector((state) => state.tutorial.season.studentRank)
+  }
   const currentPhase = gamePhases[state.currentPhaseIndex];
-  
+
   const onTutorialComplete = () => {
     dispatch(setTutorialState({ isActive: false }));
   };
@@ -96,9 +103,21 @@ const SeasonPage = () => {
 
   const seasonComplete = () => {
     const p1 = new Promise((res) => res(true));
-    console.log(':::: SEASON COMPLETE!! ::::');
     p1.then(() => {
-      dispatch(setSeasonComplete());
+      dispatch(
+        toggleOverlay({
+          isOpen: true,
+          template: (
+            <SeasonCompleteOverlay
+              standings={seasonState.standings}
+              level={student.level || 1}
+              team={seasonState.seasonTeam}
+              student={student}
+            />
+          ),
+          canClose: false,
+        })
+      );
     }).catch((err) => console.error(err));
   };
 
@@ -111,7 +130,7 @@ const SeasonPage = () => {
 
     // get the next scenario
     const currentScenario =
-      scenarios[student.level][seasonState.currentBlockIndex];
+      scenarios[student.level || 1][seasonState.currentBlockIndex];
     if (!currentScenario) {
       return;
     }
@@ -219,9 +238,16 @@ const SeasonPage = () => {
       />
 
       <PageBoard hideCloseBtn={true} includeBackButton={true}>
-      <div style={{position: 'absolute', right: '20px', transform: 'scale(0.85)'}}>
-        <SharkieButton textPosition='left' onCallSharkie={onCallSharkie} />
-      </div>
+        <div
+          style={{
+            position: 'absolute',
+            right: '20px',
+            transform: 'scale(0.85)',
+            zIndex: tutorialActive ? 0 : 1,
+          }}
+        >
+          <SharkieButton textPosition='left' onCallSharkie={onCallSharkie} />
+        </div>
         <div
           style={{
             display: 'flex',
@@ -280,23 +306,24 @@ const SeasonPage = () => {
           </div>
           <div className='season-page-board-bottom'>
             <div className='play-btn-container'>
-              <span className='play-btn-wrap'>
+              <motion.span animate={animationStates.playButton} className='play-btn-wrap'>
                 <StartGameButton
                   onClick={startGameBlock}
                   gameBlockState={gameBlockState}
                   team={team}
                 />
-              </span>
+              </motion.span>
             </div>
             <div className='game-block-board-container'>
               <GameBlockBoard />
             </div>
-            <div className='standings-board-container'>
+            <motion.div animate={animationStates.standings} className='standings-board-container'>
               <StandingsBoard />
-            </div>
+            </motion.div>
           </div>
         </div>
       </PageBoard>
+      <Overlay />
       {tutorialActive && (
         <Tutorial slides={tutorialSlides} onComplete={onTutorialComplete} />
       )}

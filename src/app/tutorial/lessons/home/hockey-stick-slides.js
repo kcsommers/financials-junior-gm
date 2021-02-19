@@ -10,7 +10,8 @@ const teamStickSlideConfigs = [
       y: '20%',
       x: '56%',
     },
-    timer: Slide.SLIDE_DURATION,
+    timer: 0,
+    hasButtons: true,
     small: true,
     exitActions: [
       {
@@ -62,7 +63,8 @@ const budgetStickSlideConfigs = [
       y: '20%',
       x: '-56%',
     },
-    timer: Slide.SLIDE_DURATION + 2000,
+    timer: 0,
+    hasButtons: true,
     bubbleDelay: 2000,
     small: true,
   },
@@ -74,8 +76,9 @@ const budgetStickSlideConfigs = [
       y: '20%',
       x: '-56%',
     },
-    timer: Slide.SLIDE_DURATION,
+    timer: 0,
     bubbleDelay: 2000,
+    hasButtons: true,
     small: true,
     exitActions: [
       {
@@ -122,24 +125,24 @@ const trophiesStickSlideConfigs = [
   {
     message: 'You can earn badges and trophies for managing your team!',
     sharkie: 'speakInverse',
-    hasButtons: false,
+    hasButtons: true,
     slideAnimate: {
       y: '50%',
       x: '-56%',
     },
-    timer: Slide.SLIDE_DURATION + 2000,
+    timer: 0,
     bubbleDelay: 2000,
     small: true,
   },
   {
     message: 'Go to the trophy room to learn more about them!',
     sharkie: 'presentInverse',
-    hasButtons: false,
+    hasButtons: true,
     slideAnimate: {
       y: '50%',
       x: '-56%',
     },
-    timer: Slide.SLIDE_DURATION,
+    timer: 0,
     small: true,
     exitActions: [
       {
@@ -187,12 +190,12 @@ const seasonStickSlideConfigs = [
     message:
       'You have to complete your objectives to get your team ready for the season.',
     sharkie: 'speak',
-    hasButtons: false,
+    hasButtons: true,
     slideAnimate: {
       y: '50%',
       x: '56%',
     },
-    timer: Slide.SLIDE_DURATION + 2000,
+    timer: 0,
     bubbleDelay: 2000,
     small: true,
   },
@@ -200,12 +203,12 @@ const seasonStickSlideConfigs = [
     message:
       'When your team is ready, go here to see how well it does against other teams.',
     sharkie: 'speak',
-    hasButtons: false,
+    hasButtons: true,
     slideAnimate: {
       y: '50%',
       x: '56%',
     },
-    timer: Slide.SLIDE_DURATION,
+    timer: 0,
     small: true,
     exitActions: [
       {
@@ -234,12 +237,12 @@ const seasonStickSlideConfigs = [
   {
     message: "Okay I'm starting to get really hungry...",
     sharkie: 'speak',
-    hasButtons: false,
+    hasButtons: true,
     slideAnimate: {
       y: '12%',
       x: '0%',
     },
-    timer: Slide.SLIDE_DURATION,
+    timer: 0,
   },
   {
     message: 'Do you know where to go to manage your team?',
@@ -255,12 +258,12 @@ const seasonStickSlideConfigs = [
   {
     message: 'Cool! I am going to go find some fish to eat',
     sharkie: 'speak',
-    hasButtons: false,
+    hasButtons: true,
     slideAnimate: {
       y: '12%',
       x: '0%',
     },
-    timer: Slide.SLIDE_DURATION,
+    timer: 0,
     exitActions: [
       {
         type: SET_ANIMATION_STATE,
@@ -285,22 +288,21 @@ const seasonStickSlideConfigs = [
   {
     message: 'Follow the objectives to get your team ready!',
     sharkie: 'speak',
-    hasButtons: false,
+    hasButtons: true,
     slideAnimate: {
       y: '12%',
       x: '0%',
     },
-    timer: Slide.SLIDE_DURATION,
+    timer: 0,
   },
   {
     message: "I'll be around to help!",
     sharkie: 'speak',
-    hasButtons: false,
     slideAnimate: {
       y: '12%',
       x: '0%',
     },
-    timer: Slide.SLIDE_DURATION,
+    timer: 4000,
     exitActions: [
       {
         type: SET_ANIMATION_STATE,

@@ -21,45 +21,55 @@ const styles = {
 
 const TrophiesPage = () => {
   const student = useSelector((state) => state.studentState.student);
+  const awards = useSelector((state) => state.season.awards);
 
-  const levelOne = [0, 1, 2, 3].map((t, i) => (
-    <div
-      style={{
-        flex: 1,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}
-    >
-      <TrophySvg key={`1-${i}`} isEarned={false} />
-    </div>
-  ));
-  const levelTwo = [0, 1, 2, 3].map((t, i) => (
-    <div
-      style={{
-        flex: 1,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}
-    >
-      <TrophySvg key={`2-${i}`} isEarned={false} />
-    </div>
-  ));
-  const levelThree = [0, 1, 2, 3].map((t, i) => (
-    <div
-      style={{
-        flex: 1,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}
-    >
-      <TrophySvg key={`3-${i}`} isEarned={false} />
-    </div>
-  ));
+  const levelOne = awards
+    ? [0, 1, 2].map((t, i) => (
+        <div
+          key={`1-${i}`}
+          style={{
+            flex: 1,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <TrophySvg isEarned={awards[0] && awards[0][i]} />
+        </div>
+      ))
+    : null;
+  const levelTwo = awards
+    ? [0, 1, 2].map((t, i) => (
+        <div
+          key={`2-${i}`}
+          style={{
+            flex: 1,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <TrophySvg isEarned={awards[1] && awards[1][i]} />
+        </div>
+      ))
+    : null;
+  const levelThree = awards
+    ? [0, 1, 2].map((t, i) => (
+        <div
+          key={`3-${i}`}
+          style={{
+            flex: 1,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <TrophySvg isEarned={awards[2] && awards[2][i]} />
+        </div>
+      ))
+    : null;
 
-  const levels = [levelOne, levelTwo, levelThree].map((level, i) => {
+  const levels = [levelThree, levelTwo, levelOne].map((level, i) => {
     return (
       <div
         key={`level-${i}`}
@@ -122,7 +132,9 @@ const TrophiesPage = () => {
             </div>
             {/* {<h2 className='color-primary'>San Jose Jr Sharks</h2>} */}
             <br></br>
-            <h6 className='color-primary'>Tap a trophy to learn more about it!</h6>
+            <h6 className='color-primary'>
+              Tap a trophy to learn more about it!
+            </h6>
           </div>
 
           <div

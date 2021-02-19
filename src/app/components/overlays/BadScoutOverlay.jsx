@@ -1,7 +1,6 @@
-import { OverlayBoard } from '@components';
+import { OverlayBoard, Button } from '@components';
 import { toggleOverlay } from '@redux/actions';
 import { useDispatch } from 'react-redux';
-import '@css/components/overlay-btns.css';
 
 export const BadScoutOverlay = () => {
   const dispatch = useDispatch();
@@ -37,12 +36,16 @@ export const BadScoutOverlay = () => {
             Try putting them in a higher level to offer them more money.
           </p>
         </div>
-        <div className='overlay-buttons-wrap'>
-          <div className={`box-shadow overlay-btn`} onClick={closeOverlay}>
-            <div className='overlay-btn-inner'>
-              <span className='outline-black'>Try Again</span>
-            </div>
-          </div>
+        <div
+          style={{
+            marginTop: '3rem',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-around',
+            width: '100%',
+          }}
+        >
+          <Button text='Try Again' onClick={closeOverlay} />
         </div>
       </div>
     </OverlayBoard>

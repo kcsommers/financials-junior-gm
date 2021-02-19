@@ -7,10 +7,10 @@ import {
   ConfirmReleaseOverlay,
   TradePlayerOverlay,
   PlayerChangeSuccessOverlay,
+  Button,
 } from '@components';
 import { PlayerAssignments } from '@data/players/players';
 import { cloneDeep } from 'lodash';
-import '@css/components/overlay-btns.css';
 
 export const PlayerDetailsOverlay = ({
   player,
@@ -106,17 +106,17 @@ export const PlayerDetailsOverlay = ({
           <PlayerCard player={player} size='large' />
         </div>
         {includeActions && (
-          <div className='overlay-buttons-wrap' style={{ marginTop: '3rem' }}>
-            <div className={`box-shadow overlay-btn`} onClick={confirmTrade}>
-              <div className='overlay-btn-inner'>
-                <span className='outline-black'>Trade</span>
-              </div>
-            </div>
-            <div className={`box-shadow overlay-btn`} onClick={confirmRelease}>
-              <div className='overlay-btn-inner'>
-                <span className='outline-black'>Release</span>
-              </div>
-            </div>
+          <div
+            style={{
+              marginTop: '3rem',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-around',
+              width: '100%',
+            }}
+          >
+            <Button text='Trade' onClick={confirmTrade} />
+            <Button text='Release' onClick={confirmRelease} />
           </div>
         )}
       </div>

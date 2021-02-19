@@ -1,4 +1,4 @@
-div.overlay-btn {
+div.btn {
   cursor: pointer;
   display: inline-flex;
   position: relative;
@@ -6,22 +6,21 @@ div.overlay-btn {
   color: #fff;
   align-items: center;
   justify-content: center;
-  background-color: #ea7200;
   height: 78px;
   width: 274px;
   border-radius: 15px;
   z-index: 1;
 }
 
-div.overlay-btn-inner {
+div.btn-inner {
   height: 22px;
   display: flex;
   align-items: center;
   color: #fff;
 }
 
-div.overlay-btn:before,
-div.overlay-btn:after {
+div.btn:before,
+div.btn:after {
   content: '';
   width: 100%;
   height: 100%;
@@ -32,17 +31,17 @@ div.overlay-btn:after {
   border-radius: 15px;
 }
 
-div.overlay-btn:after {
+div.btn:after {
   transform-origin: left top;
   transform: skewX(-10deg);
 }
 
-div.overlay-btn:before {
+div.btn:before {
   transform-origin: right top;
   transform: skewX(10deg);
 }
 
-div.overlay-buttons-wrap {
+div.buttons-wrap {
   display: flex;
   align-items: center;
   justify-content: space-around;
