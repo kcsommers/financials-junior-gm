@@ -153,15 +153,15 @@ export const getStanding = (team, standings) => {
   return `${standing}th`;
 };
 
-export const getAllTeams = (level) => {
-  const clonedTeams = cloneDeep(allTeams);
+export const getAllOpponents = (level) => {
+  const clonedTeams = cloneDeep(allOpponents);
   return clonedTeams.map((t) => {
     t.teamRank = getRandomTeamRank();
     return t;
   });
 };
 
-export const allTeams = [
+export const allOpponents = [
   {
     teamRank: 65,
     logoLg: blueBearsLogoLg,

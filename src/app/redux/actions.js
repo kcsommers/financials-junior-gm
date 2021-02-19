@@ -32,6 +32,7 @@ import {
   THROW_SCENARIO,
   SET_SEASON_COMPLETE,
   GAME_ENDED,
+  SET_CURRENT_OPPONENT_INDEX,
 } from './actionTypes';
 
 export const setAnimationState = (state) => ({
@@ -197,4 +198,9 @@ export const gameEnded = (gameResult, opponent) => ({
 export const throwScenario = (scenario) => ({
   type: THROW_SCENARIO,
   payload: scenario,
+});
+
+export const setCurrentOpponentIndex = (index) => ({
+  type: SET_CURRENT_OPPONENT_INDEX,
+  payload: index,
 });
