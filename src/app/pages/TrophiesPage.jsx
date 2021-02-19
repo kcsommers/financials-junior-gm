@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector, batch } from 'react-redux';
 import { ReactSVG } from 'react-svg';
 import jrSharksLogo from '@images/icons/jr-sharks-logo.svg';
 import {
@@ -11,7 +11,15 @@ import {
 } from '@components';
 import trophiesStick from '@images/trophies-stick.svg';
 import { awardsByLevel } from '@data/season/awards';
-import { toggleOverlay } from '@redux/actions';
+import {
+  toggleOverlay,
+  setStudent,
+  setSeasonComplete,
+  setInitialPlayersState,
+} from '@redux/actions';
+import { updateStudentById, initPlayersByLevel } from './../api-helper';
+import { cloneDeep } from 'lodash';
+import { useHistory } from 'react-router-dom';
 
 const styles = {
   levelLabel: {
@@ -21,12 +29,69 @@ const styles = {
     alignItems: 'center',
     fontWeight: 'bold',
   },
+  button: {
+    backgroundColor: '#f3901d',
+    width: '200px',
+    height: '40px',
+    borderRadius: '5px',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    color: '#fff',
+    cursor: 'pointer',
+  },
+  actionContainer: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    width: '50%',
+    margin: '0 auto',
+    alignItems: 'center',
+    marginBottom: '0.25rem',
+  },
 };
 
 const TrophiesPage = () => {
+  const history = useHistory();
   const dispatch = useDispatch();
   const student = useSelector((state) => state.studentState.student);
-  const awards = useSelector((state) => state.season.awards);
+  const { awards, inTransition } = useSelector((state) => state.season);
+
+  const repeatSeason = () => {
+    const clonedSeasons = cloneDeep(student.seasons);
+    clonedSeasons[(student.level || 1) - 1] = [];
+    updateStudentById(student._id, { seasons: clonedSeasons, awards })
+      .then((res) => {
+        if (!res.success || !res.updatedStudent) {
+          console.error(new Error('Unexpected error updating student season'));
+          return;
+        }
+        dispatch(setSeasonComplete(res.updatedStudent));
+
+        initPlayersByLevel(student.level)
+          .then((initializedStudentRes) => {
+            const initializedStudent = initializedStudentRes.data;
+            if (!initializedStudentRes.success || !initializedStudent) {
+              console.error(new Error('Unexpected error initializing players'));
+              return;
+            }
+
+            batch(() => {
+              dispatch(setSeasonComplete(student));
+              dispatch(setStudent(initializedStudent));
+              dispatch(
+                setInitialPlayersState(
+                  initializedStudent.players,
+                  initializedStudent
+                )
+              );
+            });
+
+            history.push('/home');
+          })
+          .catch((err) => console.error(err));
+      })
+      .catch((err) => console.error(err));
+  };
 
   const rows = {
     1: [],
@@ -77,6 +142,10 @@ const TrophiesPage = () => {
           alignItems: 'center',
           flex: 1,
           borderBottom: '15px solid #4E3629',
+          backgroundColor:
+            student && student.level >= 3 - i
+              ? '#fff'
+              : 'rgba(255, 255, 255, 0.25)',
         }}
       >
         <div
@@ -115,7 +184,15 @@ const TrophiesPage = () => {
         >
           <div
             className='trophies-page-board-header'
-            style={{ position: 'relative', textAlign: 'center' }}
+            style={{
+              position: 'relative',
+              textAlign: 'center',
+              height: '80px',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
           >
             <div
               className='trophies-page-board-header-inner'
@@ -128,9 +205,27 @@ const TrophiesPage = () => {
             >
               <ReactSVG src={jrSharksLogo} />
             </div>
-            {/* {<h2 className='color-primary'>San Jose Jr Sharks</h2>} */}
-            <br></br>
-            <h6 className='color-primary'>
+            {inTransition && (
+              <div
+                style={styles.actionContainer}
+                className='next-level-actions-container'
+              >
+                <span
+                  className='box-shadow'
+                  style={styles.button}
+                  onClick={repeatSeason}
+                >
+                  Repeat Season
+                </span>
+                <span className='box-shadow disabled' style={styles.button}>
+                  Start Next Season
+                </span>
+              </div>
+            )}
+            <h6
+              style={inTransition ? { position: 'relative', top: '1rem' } : {}}
+              className='color-primary'
+            >
               Tap a trophy to learn more about it!
             </h6>
           </div>
@@ -141,14 +236,13 @@ const TrophiesPage = () => {
               display: 'flex',
               flex: 1,
               flexDirection: 'column',
-              padding: '2rem 0',
+              paddingBottom: '2rem',
             }}
           >
             <div
               className='trophy-case'
               style={{
                 flex: 1,
-                backgroundColor: '#fff',
                 margin: '1rem auto',
                 width: '80%',
                 borderRadius: '10px',

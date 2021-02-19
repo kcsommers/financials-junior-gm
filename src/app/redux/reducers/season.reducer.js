@@ -43,20 +43,64 @@ const initialState = {
   seasonTeam: initialTeams[0],
   standings: getStandings([...allOpponents, initialTeams[0]]),
   awards: [],
+  inTransition: true,
 };
 
 const seasonReducer = (state = initialState, action) => {
   switch (action.type) {
     case INITIALIZE_SEASON: {
-      const { seasons, awards } = action.payload;
+      const { seasons, awards, level = 1 } = action.payload;
       if (!seasons || !seasons.length) {
         return state;
       }
 
       const clonedState = cloneDeep(state);
       clonedState.awards = awards || [];
-      clonedState.completedBlocks = seasons[seasons.length - 1];
-      clonedState.currentBlockIndex = seasons.length;
+      clonedState.completedBlocks = seasons;
+
+      const currentSeason = seasons[level - 1];
+      if (!currentSeason) {
+        return clonedState;
+      }
+      clonedState.currentBlockIndex = seasons[level - 1].length;
+      if (clonedState.currentBlockIndex === 0) {
+        return clonedState;
+      }
+      let wins = 0;
+      let losses = 0;
+      let points = 0;
+      currentSeason.forEach((block) => {
+        block.forEach((game) => {
+          if (game.win) {
+            wins += 1;
+            if (game.score[0] === 2 && game.score[1] === 1) {
+              points += 1;
+            } else {
+              points += 2;
+            }
+          } else {
+            losses += 1;
+          }
+
+          // loop all teams and assign random scores/team ranks
+          clonedState.allOpponents.forEach((team) => {
+            team.teamRank = getRandomTeamRank();
+            if (team.name !== game.opponent.name) {
+              team.stats.points += getRandomStat(3);
+              const wins = getRandomStat(2);
+              const losses = wins === 0 ? 1 : 0;
+              team.stats.wins += wins;
+              team.stats.losses += losses;
+            }
+          });
+        });
+      });
+
+      clonedState.seasonTeam.stats = { wins, losses, points };
+      clonedState.standings = getStandings([
+        ...clonedState.allOpponents,
+        clonedState.seasonTeam,
+      ]);
 
       return clonedState;
     }
@@ -71,6 +115,7 @@ const seasonReducer = (state = initialState, action) => {
 
       clonedState.completedBlocks.push(state.completedGames);
       clonedState.currentBlockIndex = state.currentBlockIndex + 1;
+      clonedState.currentOpponentIndex = 0;
       clonedState.currentScenario = null;
       clonedState.completedGames = [];
       return clonedState;
@@ -134,6 +179,7 @@ const seasonReducer = (state = initialState, action) => {
       clonedState.currentOpponentIndex = 0;
       clonedState.allOpponents = getAllOpponents();
       clonedState.seasonTeam = initialTeams[0];
+      clonedState.inTransition = true;
       clonedState.standings = getStandings([
         ...clonedState.allOpponents,
         initialTeams[0],

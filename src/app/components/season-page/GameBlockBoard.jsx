@@ -15,29 +15,31 @@ export const GameBlockBoard = () => {
       ]
     : [];
 
-  const rows = games.map((g, i) => (
-    <div key={`game-row-${i}`} className='game-block-board-row'>
-      <div
-        className={`game-block-board-left ${
-          g.score[0] > g.score[1] ? ` color-primary font-bold` : ''
-        }`}
-      >
-        <span>Jr. Sharks</span>
-        <span>{g.score[0]}</span>
-      </div>
+  const rows = games.map((g, i) =>
+    i < 4 ? (
+      <div key={`game-row-${i}`} className='game-block-board-row'>
+        <div
+          className={`game-block-board-left ${
+            g.score[0] > g.score[1] ? ` color-primary font-bold` : ''
+          }`}
+        >
+          <span>Jr. Sharks</span>
+          <span>{g.score[0]}</span>
+        </div>
 
-      <span className='game-block-board-dash'></span>
+        <span className='game-block-board-dash'></span>
 
-      <div
-        className={`game-block-board-right ${
-          g.score[0] < g.score[1] ? ` color-primary font-bold` : ''
-        }`}
-      >
-        <span>{g.opponent}</span>
-        <span>{g.score[1]}</span>
+        <div
+          className={`game-block-board-right ${
+            g.score[0] < g.score[1] ? ` color-primary font-bold` : ''
+          }`}
+        >
+          <span>{g.opponent}</span>
+          <span>{g.score[1]}</span>
+        </div>
       </div>
-    </div>
-  ));
+    ) : null
+  );
 
   return (
     <div className='game-block-board-wrap'>

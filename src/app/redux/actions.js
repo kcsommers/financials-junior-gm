@@ -206,7 +206,7 @@ export const setCurrentOpponentIndex = (index) => ({
   payload: index,
 });
 
-export const initializeSeason = (seasons, awards) => ({
+export const initializeSeason = (student) => ({
   type: INITIALIZE_SEASON,
-  payload: { seasons, awards },
+  payload: student,
 });
