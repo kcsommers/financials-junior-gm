@@ -68,8 +68,8 @@ const SeasonPage = () => {
   const animationStates = {
     standings: useSelector((state) => state.tutorial.season.standings),
     playButton: useSelector((state) => state.tutorial.season.playButton),
-    studentRank: useSelector((state) => state.tutorial.season.studentRank)
-  }
+    studentRank: useSelector((state) => state.tutorial.season.studentRank),
+  };
   const currentPhase = gamePhases[state.currentPhaseIndex];
 
   const onTutorialComplete = () => {
@@ -118,7 +118,7 @@ const SeasonPage = () => {
     gameBlockState.currentPhase &&
     gameBlockState.currentPhase.phase === GamePhases.UP_NEXT
   ) {
-    gameBlockState.currentPhase.messages[1] = `Jr Sharks. vs ${gameBlockState.currentOpponent.name}`;
+    gameBlockState.currentPhase.messages[1] = `Jr. Sharks vs ${gameBlockState.currentOpponent.name}`;
   }
 
   const seasonComplete = () => {
@@ -346,7 +346,10 @@ const SeasonPage = () => {
           </div>
           <div className='season-page-board-bottom'>
             <div className='play-btn-container'>
-              <motion.span animate={animationStates.playButton} className='play-btn-wrap'>
+              <motion.span
+                animate={animationStates.playButton}
+                className='play-btn-wrap'
+              >
                 <StartGameButton
                   onClick={startGameBlock}
                   gameBlockState={gameBlockState}
@@ -357,7 +360,10 @@ const SeasonPage = () => {
             <div className='game-block-board-container'>
               <GameBlockBoard />
             </div>
-            <motion.div animate={animationStates.standings} className='standings-board-container'>
+            <motion.div
+              animate={animationStates.standings}
+              className='standings-board-container'
+            >
               <StandingsBoard />
             </motion.div>
           </div>
