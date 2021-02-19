@@ -3,13 +3,14 @@ import {
   getStandings,
   getRandomTeamRank,
   getRandomStat,
-  getAllTeams,
+  getAllOpponents,
 } from '@data/season/season';
 import {
   GAME_BLOCK_ENDED,
   SET_SEASON_COMPLETE,
   GAME_ENDED,
   THROW_SCENARIO,
+  SET_CURRENT_OPPONENT_INDEX,
 } from './../actionTypes';
 
 const initialTeams = [
@@ -23,21 +24,23 @@ const initialTeams = [
   },
 ];
 
-const allTeams = getAllTeams();
+const allOpponents = getAllOpponents();
+const gameBlocks = [
+  allOpponents.slice(0, 4),
+  allOpponents.slice(4, 8),
+  allOpponents.slice(8, 12),
+];
 
 const initialState = {
   completedBlocks: [], // array of game blocks
   completedGames: [],
-  gameBlocks: [
-    allTeams.slice(0, 4),
-    allTeams.slice(4, 8),
-    allTeams.slice(8, 12),
-  ],
+  gameBlocks: gameBlocks,
   currentBlockIndex: 0,
+  currentOpponentIndex: 0,
   currentScenario: null,
-  allTeams: allTeams,
+  allOpponents: allOpponents,
   seasonTeam: initialTeams[0],
-  standings: getStandings([...allTeams, initialTeams[0]]),
+  standings: getStandings([...allOpponents, initialTeams[0]]),
   awards: [],
 };
 
@@ -61,9 +64,10 @@ const seasonReducer = (state = initialState, action) => {
     case GAME_ENDED: {
       const { gameResult, opponent } = action.payload;
       const clonedState = cloneDeep(state);
-      clonedState.seasonTeam.stats.points += gameResult.score[0];
-      opponent.stats.points += gameResult.score[1];
-      if (gameResult.score[0] > gameResult.score[1]) {
+
+      clonedState.seasonTeam.stats.points += gameResult.points;
+
+      if (gameResult.win) {
         clonedState.seasonTeam.stats.wins += 1;
         opponent.stats.losses += 1;
       } else {
@@ -72,10 +76,10 @@ const seasonReducer = (state = initialState, action) => {
       }
 
       // loop all teams and assign random scores/team ranks
-      clonedState.allTeams.forEach((team) => {
+      clonedState.allOpponents.forEach((team) => {
         team.teamRank = getRandomTeamRank();
         if (team.name !== opponent.name) {
-          team.stats.points += getRandomStat(5);
+          team.stats.points += getRandomStat(3);
           const wins = getRandomStat(2);
           const losses = wins === 0 ? 1 : 0;
           team.stats.wins += wins;
@@ -84,11 +88,16 @@ const seasonReducer = (state = initialState, action) => {
       });
 
       clonedState.standings = getStandings([
-        ...clonedState.allTeams,
+        ...clonedState.allOpponents,
         clonedState.seasonTeam,
       ]);
 
       clonedState.completedGames.push(gameResult);
+      return clonedState;
+    }
+    case SET_CURRENT_OPPONENT_INDEX: {
+      const clonedState = cloneDeep(state);
+      clonedState.currentOpponentIndex = action.payload;
       return clonedState;
     }
     case SET_SEASON_COMPLETE: {
@@ -98,15 +107,22 @@ const seasonReducer = (state = initialState, action) => {
       const studentTeamIndex = state.standings.findIndex(
         (t) => t.name === state.seasonTeam.name
       );
-      awards.push(student.savingsBudget > 0); // has savings
       awards.push(studentTeamIndex < 3); // top 3
       awards.push(studentTeamIndex === 0); // first place
+      awards.push(student.savingsBudget > 0); // has savings
 
       clonedState.completedBlocks.push(state.completedGames);
       clonedState.completedGames = [];
       clonedState.awards.push(awards);
       clonedState.currentBlockIndex = 0;
       clonedState.currentScenario = null;
+      clonedState.currentOpponentIndex = 0;
+      clonedState.allOpponents = getAllOpponents();
+      clonedState.seasonTeam = initialTeams[0];
+      clonedState.standings = getStandings([
+        ...clonedState.allOpponents,
+        initialTeams[0],
+      ]);
       return clonedState;
     }
     default:

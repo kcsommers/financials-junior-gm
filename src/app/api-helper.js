@@ -88,7 +88,6 @@ export function getStudentList(id) {
 
 //Add a Student
 export function addStudent(body) {
-  console.log('body', body);
   return axios.post(`${getHostName()}/api/v1/student`, body);
 }
 

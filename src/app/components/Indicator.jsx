@@ -13,6 +13,7 @@ export const Indicator = ({
   highlight,
   isMoney,
   rotate,
+  color = '#00788a',
 }) => {
   return (
     <div
@@ -38,6 +39,8 @@ export const Indicator = ({
                 ? `rotate(-${rotate}deg)`
                 : `rotate(${rotate}deg)`,
             fontSize: getFontSize(amount),
+            color: color,
+            transition: 'all 0.3s ease',
           }}
         >
           {isMoney ? getDollarString(amount, true) : amount}

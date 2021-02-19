@@ -16,12 +16,15 @@ export const getMoneySpent = (players) => {
   if (!players) {
     return 0;
   }
-  return players.reduce((total, p) => {
-    if (playerProps.includes(p.playerAssignment)) {
-      total += +p.playerCost;
-    }
-    return total;
-  }, 0);
+  return Math.max(
+    players.reduce((total, p) => {
+      if (playerProps.includes(p.playerAssignment)) {
+        total += +p.playerCost;
+      }
+      return total;
+    }, 0),
+    0
+  );
 };
 
 export const getTeamRank = (players) => {
@@ -29,12 +32,15 @@ export const getTeamRank = (players) => {
     return 0;
   }
 
-  return players.reduce((total, p) => {
-    if (playerProps.includes(p.playerAssignment)) {
-      total += +p.overallRank;
-    }
-    return total;
-  }, 0);
+  return Math.min(
+    players.reduce((total, p) => {
+      if (playerProps.includes(p.playerAssignment)) {
+        total += +p.overallRank;
+      }
+      return total;
+    }, 0),
+    100
+  );
 };
 
 export const capitalize = (str) => {
