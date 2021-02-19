@@ -298,12 +298,11 @@ const seasonStickSlideConfigs = [
   {
     message: "I'll be around to help!",
     sharkie: 'speak',
-    hasButtons: false,
+    hasButtons: true,
     slideAnimate: {
       y: '12%',
       x: '0%',
     },
-    timer: 0,
     exitActions: [
       {
         type: SET_ANIMATION_STATE,

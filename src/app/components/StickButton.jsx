@@ -14,7 +14,7 @@ export const StickButton = ({
 }) => {
   return tutorialActive ? (
     <motion.div
-      className={`hidden stick-btn-wrap${small ? ' stick-btn-small' : ''}`}
+      className={`transparent stick-btn-wrap${small ? ' stick-btn-small' : ''}`}
       animate={animationState}
       style={styles}
     >
