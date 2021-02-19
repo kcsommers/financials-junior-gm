@@ -91,7 +91,7 @@ const TeamPage = () => {
             <ReactSVG src={jrSharksLogo} />
             <SharkieButton textPosition='left' onCallSharkie={onCallSharkie} />
           </div>
-          <h2 className='color-primary'>San Jose Jr Sharks</h2>
+          <h2 className='color-primary'>San Jose Jr. Sharks</h2>
         </div>
 
         <div className='team-page-board-inner'>

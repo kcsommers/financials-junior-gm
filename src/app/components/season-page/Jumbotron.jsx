@@ -1,10 +1,12 @@
 import { TeamCard } from './TeamCard';
 import jrSharksLogo from '@images/icons/jr-sharks-logo-white-bg.svg';
-import { GamePhases } from '@data/season/season';
+import { GamePhases, getStanding } from '@data/season/season';
+import { TeamAssignments, getAvailableSlots } from '@data/players/players';
 import { Indicator, PlayerCard } from '@components';
-import '@css/components/season-page/Jumbotron.css';
 import { motion } from 'framer-motion';
 import { ReactSVG } from 'react-svg';
+import '@css/components/season-page/Jumbotron.css';
+import { useSelector } from 'react-redux';
 
 export const Jumbotron = ({
   gameBlockState,
@@ -14,8 +16,22 @@ export const Jumbotron = ({
   team,
 }) => {
   const { currentOpponent, currentScore, currentPhase } = gameBlockState;
+  const tutorialActive = useSelector((state) => state.tutorial.isActive);
+  const animationStates = {
+    stats: useSelector((state) => state.tutorial.season.stats),
+    upcomingGames : useSelector((state) => state.tutorial.season.upcomingGames),
+    jumboText: useSelector((state) => state.tutorial.season.jumbotext)
+  }
+  const seasonDisabled =
+    getAvailableSlots(
+      [
+        ...TeamAssignments.offense,
+        ...TeamAssignments.defense,
+        ...TeamAssignments.goalie,
+      ],
+      team
+    ) > 0;
 
-  const seasonDisabled = Object.keys(team || {}).some((p) => !team[p]);
   // if its the first game, the next opponent is the current opponent
   const nextIndex =
     (currentOpponentIndex === 0
@@ -29,22 +45,6 @@ export const Jumbotron = ({
     nextIndex + 3
   );
 
-  const getStanding = (team) => {
-    const standing = (
-      seasonState.standings.findIndex((t) => t.name === team.name) + 1
-    ).toString();
-    if (standing.endsWith('1') && standing !== '11') {
-      return `${standing}st`;
-    }
-    if (standing.endsWith('2') && standing !== '12') {
-      return `${standing}nd`;
-    }
-    if (standing.endsWith('3') && standing !== '13') {
-      return `${standing}rd`;
-    }
-    return `${standing}th`;
-  };
-
   const scoreView = (
     <div className='jumbotron-score-container'>
       <div className='jumbotron-score-title'>Score</div>
@@ -54,7 +54,7 @@ export const Jumbotron = ({
   );
 
   const statsView = (
-    <div className='jumbotron-stats-container'>
+    <motion.div animate={animationStates.stats} className='jumbotron-stats-container'>
       <div className='jumbotron-stats-title'>Stats</div>
       <div className='jumbotron-stats-inner'>
         <div className='jumbotron-stat-wrap'>
@@ -76,21 +76,21 @@ export const Jumbotron = ({
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 
   const sharksTransitionView = (
     <div className='transition-view-left'>
       <TeamCard
         logo={jrSharksLogo}
-        standing={getStanding(seasonState.seasonTeam)}
+        standing={getStanding(seasonState.seasonTeam, seasonState.standings)}
       />
       {statsView}
     </div>
   );
 
   const comingUpView = (
-    <div className='jumbotron-coming-up-container'>
+    <motion.div animate={animationStates.upcomingGames} className='jumbotron-coming-up-container'>
       <div className='jumbotron-next-opponent-container'>
         <h3>Next Opponent</h3>
         <div className='jumbotron-next-opponent-card'>
@@ -137,7 +137,7 @@ export const Jumbotron = ({
           ))}
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 
   const gameOnView = (
@@ -146,7 +146,7 @@ export const Jumbotron = ({
         <div className='game-on-top-left'>
           <TeamCard
             logo={jrSharksLogo}
-            standing={getStanding(seasonState.seasonTeam)}
+            standing={getStanding(seasonState.seasonTeam, seasonState.standings)}
           />
         </div>
         <span
@@ -167,7 +167,7 @@ export const Jumbotron = ({
         <div className='game-on-top-right'>
           <TeamCard
             logo={currentOpponent.logoLg}
-            standing={getStanding(currentOpponent)}
+            standing={getStanding(currentOpponent, seasonState.standings)}
           />
         </div>
       </div>
@@ -252,12 +252,21 @@ export const Jumbotron = ({
         <div className='jumbotron-main-section'>{getJumbotronView()}</div>
         <div className='jumbotron-border jumbotron-border-right'></div>
       </div>
-      <h2
-        className='jumbotron-message box-shadow'
-        style={{ fontSize: getFontSize(message) }}
-      >
-        {message}
-      </h2>
+      {tutorialActive ? 
+        <motion.div animate={animationStates.jumboText}>
+          <h2
+          className='jumbotron-message box-shadow'
+          style={{ fontSize: getFontSize(message) }}
+          >
+            {message}
+          </h2>
+       </motion.div> : 
+       <h2
+       className='jumbotron-message box-shadow'
+       style={{ fontSize: getFontSize(message) }}
+     >
+       {message}
+     </h2>} 
     </>
   );
 };

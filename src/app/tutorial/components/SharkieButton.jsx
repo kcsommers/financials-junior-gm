@@ -61,7 +61,7 @@ export const SharkieButton = ({ textPosition, onCallSharkie }) => {
         className='color-primary'
         style={textStyles[textPosition] || textStyles['bottom']}
       >
-        CALL SHARKIE!
+        CALL S.J. SHARKIE!
       </span>
     </button>
   );

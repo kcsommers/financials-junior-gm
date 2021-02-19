@@ -132,9 +132,14 @@ export const LevelStick = ({
           />
         </div>
       </div>
-      <div style={styles[indicatorDirection].indicator}>
+      <div
+        style={Object.assign(
+          {},
+          { ...styles[indicatorDirection].indicator, ...transforms.translate }
+        )}
+      >
         {indicatorDirection === 'right' || indicatorDirection === 'bottom' ? (
-          <div style={transforms.translate}>
+          <>
             <span style={styles[indicatorDirection].text}>{textJsx}</span>
             <Indicator
               amount={amount}
@@ -142,9 +147,9 @@ export const LevelStick = ({
               isMoney={type === 'budget'}
               rotate={transforms.rotate}
             />
-          </div>
+          </>
         ) : (
-          <div style={transforms.translate}>
+          <>
             <Indicator
               amount={amount}
               direction={indicatorDirection}
@@ -152,7 +157,7 @@ export const LevelStick = ({
               rotate={transforms.rotate}
             />
             <span style={styles[indicatorDirection].text}>{textJsx}</span>
-          </div>
+          </>
         )}
       </div>
     </div>

@@ -5,6 +5,7 @@ import bluebears from '@images/icons/team-logos/blue-bears.svg'
 import blueBearsLogoLg from '@images/icons/team-logos/blue-bears-logo-big.svg';
 import { INJURE_PLAYER } from '@redux/actionTypes';
 import { PlayerAssignments } from '@data/players/players';
+import { cloneDeep } from 'lodash';
 
 export const getGameResult = (student, opponent) => {
   const rankDiff = student.teamRank - opponent.teamRank;
@@ -105,9 +106,9 @@ export const gamePhases = [
     phase: GamePhases.GAME_OVER,
     timer: 5000,
     messages: [
-      'GET LOUD! The Jr Sharks Won!',
-      'CLOSE! The Jr Sharks won in overtime!',
-      'OH NO! The Jr Sharks lost :(',
+      'GET LOUD! The Jr. Sharks Won!',
+      'CLOSE! The Jr. Sharks won in overtime!',
+      'OH NO! The Jr. Sharks lost :(',
     ],
   },
   {
@@ -122,7 +123,7 @@ export const gamePhases = [
 ];
 
 export const getRandomTeamRank = () => {
-  return Math.max(Math.floor(Math.random() * 90), 20);
+  return Math.max(Math.floor(Math.random() * 90), 50);
 };
 
 export const getRandomStat = (mult) => {
@@ -131,6 +132,30 @@ export const getRandomStat = (mult) => {
 
 export const getStandings = (teams) => {
   return teams.sort((a, b) => b.stats.points - a.stats.points);
+};
+
+export const getStanding = (team, standings) => {
+  const standing = (
+    standings.findIndex((t) => t.name === team.name) + 1
+  ).toString();
+  if (standing.endsWith('1') && standing !== '11') {
+    return `${standing}st`;
+  }
+  if (standing.endsWith('2') && standing !== '12') {
+    return `${standing}nd`;
+  }
+  if (standing.endsWith('3') && standing !== '13') {
+    return `${standing}rd`;
+  }
+  return `${standing}th`;
+};
+
+export const getAllTeams = (level) => {
+  const clonedTeams = cloneDeep(allTeams);
+  return clonedTeams.map((t) => {
+    t.teamRank = getRandomTeamRank();
+    return t;
+  });
 };
 
 export const allTeams = [
@@ -212,7 +237,8 @@ export const allTeams = [
     logoSm: whiteWolves,
     name: 'Yellow Yaks',
     stats: { wins: 0, losses: 0, points: 0 },
-    standings: '6th',
+    standings: '12th',
+    color: '#ff3b3b',
   },
   {
     teamRank: 75,
@@ -220,7 +246,8 @@ export const allTeams = [
     logoSm: whiteWolves,
     name: 'Black Beavers',
     stats: { wins: 0, losses: 0, points: 0 },
-    standings: '6th',
+    standings: '10th',
+    color: '#f83bff',
   },
   {
     teamRank: 70,
@@ -229,6 +256,7 @@ export const allTeams = [
     name: 'Gray Grasshoppers',
     stats: { wins: 0, losses: 0, points: 0 },
     standings: '6th',
+    color: '#3bfff9',
   },
   
 ];

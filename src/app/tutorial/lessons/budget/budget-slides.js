@@ -5,23 +5,27 @@ const slideConfigs = [
   {
     message: 'Hello again! Welcome to your Budget!',
     sharkie: 'speak',
-    timer: Slide.SLIDE_DURATION,
+    timer: 0,
+    hasButtons: true,
     accentText: 'Budget',
   },
   {
     message: 'In hockey, every team has some money to spend on players!',
     sharkie: 'speak',
-    timer: Slide.SLIDE_DURATION + 5000,
+    hasButtons: true,
+    timer: 0,
   },
   {
     message: 'You have to create a plan on how to spend your money.',
     sharkie: 'speak',
-    timer: Slide.SLIDE_DURATION + 5000,
+    hasButtons: true,
+    timer: 0,
   },
   {
     message: 'This plan is called a Budget.',
     sharkie: 'speak',
-    timer: Slide.SLIDE_DURATION + 4000,
+    timer: 0,
+    hasButtons: true,
     accentText: 'Budget',
   },
   {
@@ -58,7 +62,8 @@ const slideConfigs = [
     message: 'This is your Total Budget.',
     sharkie: 'speak',
     accentText: 'Total Budget',
-    timer: Slide.SLIDE_DURATION,
+    timer: 0,
+    hasButtons: true,
     slideAnimate: {
       y: '50%',
     },
@@ -66,12 +71,14 @@ const slideConfigs = [
   {
     message: 'This is the total amount of money you have to create a budget.',
     sharkie: 'speak',
-    timer: Slide.SLIDE_DURATION,
+    hasButtons: true,
+    timer: 0,
   },
   {
     message: 'It is divided into two parts',
     sharkie: 'speak',
-    timer: Slide.SLIDE_DURATION,
+    timer: 0,
+    hasButtons: true,
     exitActions: [
       {
         type: SET_ANIMATION_STATE,
@@ -101,7 +108,8 @@ const slideConfigs = [
     message: 'Your Spending Budget',
     sharkie: 'speak',
     accentText: 'Spending Budget',
-    timer: Slide.SLIDE_DURATION,
+    timer: 0,
+    hasButtons: true,
     exitActions: [
       {
         type: SET_ANIMATION_STATE,
@@ -130,7 +138,8 @@ const slideConfigs = [
   {
     message: 'And your Savings',
     sharkie: 'speak',
-    timer: Slide.SLIDE_DURATION,
+    timer: 0,
+    hasButtons: true,
     accentText: 'Savings',
     exitActions: [
       {
@@ -160,7 +169,8 @@ const slideConfigs = [
   {
     message: 'Spending budget is what you use to sign players.',
     sharkie: 'speak',
-    timer: Slide.SLIDE_DURATION,
+    timer: 0,
+    hasButtons: true,
     accentText: 'Spending budget',
     exitActions: [
       {
@@ -190,55 +200,65 @@ const slideConfigs = [
   {
     message: 'Savings is the money you put away for emergencies.',
     sharkie: 'speak',
-    timer: Slide.SLIDE_DURATION,
+    timer: 0,
+    hasButtons: true,
     accentText: 'Savings',
   },
   {
     message: 'So why do we need Savings?',
     sharkie: 'speak',
-    timer: Slide.SLIDE_DURATION,
+    timer: 0,
+    hasButtons: true,
     accentText: 'Savings',
   },
   {
     message: 'Imagine if you spent all your money on signing players.',
     sharkie: 'speak',
-    timer: Slide.SLIDE_DURATION,
+    hasButtons: true,
+    timer: 0,
   },
   {
     message: 'If a player got hurt...',
     sharkie: 'speak',
-    timer: Slide.SLIDE_DURATION,
+    hasButtons: true,
+    timer: 0,
   },
   {
     message: 'You would not have any money left to find a replacement.',
     sharkie: 'speak',
-    timer: Slide.SLIDE_DURATION,
+    hasButtons: true,
+    timer: 0,
   },
   {
     message: 'But if you saved some money...',
     sharkie: 'speak',
-    timer: Slide.SLIDE_DURATION,
+    hasButtons: true,
+    timer: 0,
   },
   {
     message: 'You could use your savings to find a replacement player.',
     sharkie: 'speak',
-    timer: Slide.SLIDE_DURATION,
+    hasButtons: true,
+    timer: 0,
   },
   {
     message:
       'So its a good idea that for every 10 dollars of your total budget',
     sharkie: 'speak',
-    timer: Slide.SLIDE_DURATION,
+    hasButtons: true,
+    timer: 0,
   },
   {
     message: 'Try to save a dollar or two.',
     sharkie: 'speak',
-    timer: Slide.SLIDE_DURATION,
+    hasButtons: true,
+    timer: 0,
   },
   {
     message: "If you don't use any of your savings",
     sharkie: 'speak',
-    timer: Slide.SLIDE_DURATION,
+    hasButtons: true,
+    timer: 0,
     exitActions: [
       {
         type: SET_ANIMATION_STATE,
@@ -267,7 +287,8 @@ const slideConfigs = [
   {
     message: 'Then you could add it to your total budget for the next season!',
     sharkie: 'speak',
-    timer: Slide.SLIDE_DURATION,
+    hasButtons: true,
+    timer: 0,
     exitActions: [
       {
         type: SET_ANIMATION_STATE,
@@ -295,7 +316,7 @@ const slideConfigs = [
   {
     message: 'Cool!',
     sharkie: 'speak',
-    timer: Slide.SLIDE_DURATION,
+    timer: 3000,
     exitActions: [
       {
         type: SET_ANIMATION_STATE,
