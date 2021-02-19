@@ -3,6 +3,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useDispatch } from 'react-redux';
 import { SharkieComponent } from './Sharkie';
 import refreshBtn from '@images/refresh-btn.svg';
+import backBtn from '@images/back-btn.svg';
+import backBtnRvrsd from '@images/back-btn-reversed.svg';
 import checkBtn from '@images/check-btn.svg';
 import { setAnimationState, toggleOverlay } from '@redux/actions';
 import { SET_ANIMATION_STATE, TOGGLE_OVERLAY } from '@redux/actionTypes';
@@ -167,17 +169,19 @@ export const Tutorial = ({ slides, onComplete }) => {
         }}
       >
         <button className='slide-btn' onClick={onCancelClick}>
-          <img className='action-btn' src={refreshBtn} alt='Repeat' />
-          <span className='color-primary'>
-            {currentSlide.canCancel ? 'Cancel' : 'Repeat'}
+          <img className='action-btn' src={backBtn} alt='Back' />
+          <span style={{color: '#121210'}}>
+            {currentSlide.canCancel ? 'Cancel' : 'Back'}
           </span>
         </button>
         <button
           className='slide-btn'
           onClick={onButtonClick.bind(this, state.slideIndex + 1)}
         >
-          <img className='action-btn' src={checkBtn} alt='Yes!' />
-          <span className='color-primary'>Yes!</span>
+          <img className='action-btn' src={backBtnRvrsd} alt='Next!' />
+          <span style={{color: '#121210'}}>
+          {currentSlide.canCancel ? 'Yes' : 'Next'}
+          </span>
         </button>
       </motion.div>
     </AnimatePresence>

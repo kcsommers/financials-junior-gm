@@ -259,7 +259,7 @@ const ScoutPage = () => {
             {moneyLevels[i].short}
           </span>
           <p className={`money-level-text money-level-text-${i}`}>
-            These players get a {moneyLevels[i].long} offered
+            These players get a {moneyLevels[i].long} contract offered
           </p>
           <div className='offered-player-row'>
             <div className={`offered-player-row-inner level-${i + 1}`}>
@@ -456,7 +456,7 @@ const ScoutPage = () => {
       <PageBoard hideCloseBtn={true} includeBackButton={true}>
         <div className='scout-page-board-header'>
           <p className='color-primary scout-page-helper-text'>
-            Give each new player a offered value by dragging them to their money
+            Give each new player an offered value by dragging them to their money
             level!
           </p>
           <span

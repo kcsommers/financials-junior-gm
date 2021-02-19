@@ -5,8 +5,8 @@ const slideConfigs = [
   {
     message: 'This is the objectives board!',
     sharkie: 'play',
-    hasButtons: false,
-    timer: Slide.SLIDE_DURATION + 1000,
+    hasButtons: true,
+    timer: 0,
     slideAnimate: {
       y: '60%',
     },
@@ -16,8 +16,8 @@ const slideConfigs = [
     message:
       'Each objective will tell you what you need to do to take care of your team',
     sharkie: 'play',
-    hasButtons: false,
-    timer: Slide.SLIDE_DURATION,
+    hasButtons: true,
+    timer: 0,
     slideAnimate: {
       y: '60%',
     },
