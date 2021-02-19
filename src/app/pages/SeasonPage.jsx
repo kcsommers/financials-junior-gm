@@ -289,7 +289,7 @@ const SeasonPage = () => {
         <div
           style={{
             position: 'absolute',
-            right: '20px',
+            right: '-5px',
             transform: 'scale(0.85)',
             zIndex: tutorialActive ? 0 : 1,
           }}

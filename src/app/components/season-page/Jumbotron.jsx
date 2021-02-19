@@ -97,16 +97,11 @@ export const Jumbotron = ({
             {nextOpponent && (
               <>
                 <div className='coming-up-opponent-name-wrap'>
-<<<<<<< HEAD
-                  <span className='coming-up-opponent-name'>
-                  <ReactSVG src={nextOpponent.logoSm} />
-=======
                   <span
                     className='coming-up-opponent-name'
                     style={{ color: nextOpponent.color }}
                   >
-                    {nextOpponent.name}
->>>>>>> eab39d99cf9c79fe81738d02d0d3e715ab1c55c6
+                    <ReactSVG src={nextOpponent.logoSm}></ReactSVG>
                   </span>
                 </div>
                 <div className='opponent-indicator-wrap'>
@@ -133,7 +128,7 @@ export const Jumbotron = ({
                       className='coming-up-opponent-name'
                       style={{ color: team.color }}
                     >
-                      {team.name}
+                    <ReactSVG src={team.logoSm}></ReactSVG>
                     </span>
                   </div>
                   <div className='opponent-indicator-wrap'>
@@ -181,7 +176,7 @@ export const Jumbotron = ({
         >
           VS
         </span>
-        <div className='game-on-top-right'>
+        <div className='game-on-top-right' style={{backgroundColor: '#ffffff', borderRadius: '10px', marginTop: '-2px' }}>
           <motion.div
             initial={{ transform: 'scale(0.5)' }}
             animate={{ transform: 'scale(1)' }}
