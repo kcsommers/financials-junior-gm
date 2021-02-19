@@ -40,6 +40,7 @@ import {
   getConfirmSlides,
 } from '@tutorial';
 import '@css/pages/SeasonPage.css';
+import { motion } from 'framer-motion';
 
 const allActions = {
   [INJURE_PLAYER]: injurePlayer,
@@ -62,6 +63,11 @@ const SeasonPage = () => {
     currentMessageIndex: 0,
   });
   const [tutorialSlides, setTutorialSlides] = useState([seasonSlides]);
+  const animationStates = {
+    standings: useSelector((state) => state.tutorial.season.standings),
+    playButton: useSelector((state) => state.tutorial.season.playButton),
+    studentRank: useSelector((state) => state.tutorial.season.studentRank)
+  }
   const currentPhase = gamePhases[state.currentPhaseIndex];
 
   const onTutorialComplete = () => {
@@ -283,7 +289,7 @@ const SeasonPage = () => {
         <div
           style={{
             position: 'absolute',
-            right: '20px',
+            right: '-5px',
             transform: 'scale(0.85)',
             zIndex: tutorialActive ? 0 : 1,
           }}
@@ -347,20 +353,20 @@ const SeasonPage = () => {
           </div>
           <div className='season-page-board-bottom'>
             <div className='play-btn-container'>
-              <span className='play-btn-wrap'>
+              <motion.span animate={animationStates.playButton} className='play-btn-wrap'>
                 <StartGameButton
                   onClick={startGameBlock}
                   gameBlockState={gameBlockState}
                   team={team}
                 />
-              </span>
+              </motion.span>
             </div>
             <div className='game-block-board-container'>
               <GameBlockBoard />
             </div>
-            <div className='standings-board-container'>
+            <motion.div animate={animationStates.standings} className='standings-board-container'>
               <StandingsBoard />
-            </div>
+            </motion.div>
           </div>
         </div>
       </PageBoard>

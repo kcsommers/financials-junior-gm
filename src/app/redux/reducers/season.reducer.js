@@ -15,7 +15,7 @@ import {
 
 const initialTeams = [
   {
-    name: 'Jr Sharks',
+    name: 'Jr. Sharks',
     stats: { wins: 0, losses: 0, points: 0 },
   },
   {

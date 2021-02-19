@@ -6,8 +6,8 @@ const slideConfigs = [
     message:
       'Your team rank tells you how well your team will play against other teams.',
     sharkie: 'speak',
-    hasButtons: false,
-    timer: Slide.SLIDE_DURATION,
+    hasButtons: true,
+    timer: 0,
     slideAnimate: {
       y: '50%',
     },
@@ -16,21 +16,21 @@ const slideConfigs = [
     message:
       'The higher your rank is, the better chance you will have to win the season!',
     sharkie: 'speak',
-    hasButtons: false,
+    hasButtons: true,
     slideAnimate: {
       y: '50%',
     },
-    timer: Slide.SLIDE_DURATION,
+    timer: 0,
   },
   {
     message: 'You can sign new players to improve your team rank!',
     sharkie: 'speak',
-    hasButtons: false,
+    hasButtons: true,
     repeatIndex: 0,
     slideAnimate: {
       y: '50%',
     },
-    timer: Slide.SLIDE_DURATION,
+    timer: 0,
     exitActions: [
       {
         type: SET_ANIMATION_STATE,
