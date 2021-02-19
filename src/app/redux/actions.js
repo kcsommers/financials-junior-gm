@@ -33,6 +33,7 @@ import {
   SET_SEASON_COMPLETE,
   GAME_ENDED,
   SET_CURRENT_OPPONENT_INDEX,
+  INITIALIZE_SEASON,
 } from './actionTypes';
 
 export const setAnimationState = (state) => ({
@@ -203,4 +204,9 @@ export const throwScenario = (scenario) => ({
 export const setCurrentOpponentIndex = (index) => ({
   type: SET_CURRENT_OPPONENT_INDEX,
   payload: index,
+});
+
+export const initializeSeason = (seasons, awards) => ({
+  type: INITIALIZE_SEASON,
+  payload: { seasons, awards },
 });

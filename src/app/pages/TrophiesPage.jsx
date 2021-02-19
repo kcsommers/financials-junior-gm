@@ -1,3 +1,4 @@
+import { useDispatch, useSelector } from 'react-redux';
 import { ReactSVG } from 'react-svg';
 import jrSharksLogo from '@images/icons/jr-sharks-logo.svg';
 import {
@@ -5,9 +6,12 @@ import {
   HeaderComponent,
   LoadingSpinner,
   TrophySvg,
+  AwardDetailsOverlay,
+  Overlay,
 } from '@components';
-import { useSelector } from 'react-redux';
 import trophiesStick from '@images/trophies-stick.svg';
+import { awardsByLevel } from '@data/season/awards';
+import { toggleOverlay } from '@redux/actions';
 
 const styles = {
   levelLabel: {
@@ -20,56 +24,50 @@ const styles = {
 };
 
 const TrophiesPage = () => {
+  const dispatch = useDispatch();
   const student = useSelector((state) => state.studentState.student);
   const awards = useSelector((state) => state.season.awards);
 
-  const levelOne = awards
-    ? [0, 1, 2].map((t, i) => (
-        <div
-          key={`1-${i}`}
-          style={{
-            flex: 1,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          <TrophySvg isEarned={awards[0] && awards[0][i]} />
-        </div>
-      ))
-    : null;
-  const levelTwo = awards
-    ? [0, 1, 2].map((t, i) => (
-        <div
-          key={`2-${i}`}
-          style={{
-            flex: 1,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          <TrophySvg isEarned={awards[1] && awards[1][i]} />
-        </div>
-      ))
-    : null;
-  const levelThree = awards
-    ? [0, 1, 2].map((t, i) => (
-        <div
-          key={`3-${i}`}
-          style={{
-            flex: 1,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          <TrophySvg isEarned={awards[2] && awards[2][i]} />
-        </div>
-      ))
-    : null;
+  const rows = {
+    1: [],
+    2: [],
+    3: [],
+  };
 
-  const levels = [levelThree, levelTwo, levelOne].map((level, i) => {
+  const openDetailsOverlay = (selectedCup) => {
+    dispatch(
+      toggleOverlay({
+        isOpen: true,
+        template: <AwardDetailsOverlay award={selectedCup} />,
+      })
+    );
+  };
+
+  [1, 2, 3].forEach((level) => {
+    const levelAwards = awardsByLevel[level];
+    const cupKeys = Object.keys(levelAwards);
+    const studentAwards = awards[level - 1];
+
+    cupKeys.forEach((c) => {
+      rows[level].push(
+        <div
+          key={`${level}_${levelAwards[c].name}`}
+          style={{
+            flex: 1,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            cursor: 'pointer',
+          }}
+          onClick={openDetailsOverlay.bind(this, levelAwards[c])}
+        >
+          <TrophySvg isEarned={studentAwards && studentAwards[c]} />
+        </div>
+      );
+    });
+  });
+
+  const levels = [rows[3], rows[2], rows[1]].map((level, i) => {
     return (
       <div
         key={`level-${i}`}
@@ -182,6 +180,7 @@ const TrophiesPage = () => {
           </div>
         </div>
       </PageBoard>
+      <Overlay />
     </div>
   ) : (
     <div

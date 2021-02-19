@@ -128,6 +128,7 @@ const SeasonPage = () => {
     //   .then((res) => {})
     //   .catch((err) => console.error(err));
 
+    // @TODO:::: not this here
     initPlayersByLevel(1)
       .then((initializedStudentRes) => {
         if (!initializedStudentRes.success || !initializedStudentRes.data) {
@@ -165,8 +166,24 @@ const SeasonPage = () => {
   const endBlock = () => {
     // if this is the last game block season is over
     if (seasonState.currentBlockIndex === seasonState.gameBlocks.length - 1) {
-      dispatch(gameBlockEnded());
-      seasonComplete();
+      const studentSeasons = cloneDeep(student.seasons);
+      if (studentSeasons[(student.level || 1) - 1]) {
+        studentSeasons[(student.level || 1) - 1].push(
+          seasonState.completedGames
+        );
+      } else {
+        studentSeasons[(student.level || 1) - 1] = [seasonState.completedGames];
+      }
+
+      updateStudentById(student._id, {
+        seasons: studentSeasons,
+      })
+        .then((res) => {
+          dispatch(gameBlockEnded());
+          seasonComplete();
+        })
+        .catch((err) => console.error(err));
+
       return;
     }
 
@@ -195,11 +212,13 @@ const SeasonPage = () => {
       players: playersCopy,
     })
       .then((res) => {
-        dispatch(
-          allActions[currentScenario.action](scenarioPlayer, prevAssignment)
-        );
-        dispatch(setStudent(res.updatedStudent));
-        dispatch(throwScenario(currentScenario));
+        batch(() => {
+          dispatch(
+            allActions[currentScenario.action](scenarioPlayer, prevAssignment)
+          );
+          dispatch(setStudent(res.updatedStudent));
+          dispatch(throwScenario(currentScenario));
+        });
       })
       .catch((err) => console.error(err));
   };

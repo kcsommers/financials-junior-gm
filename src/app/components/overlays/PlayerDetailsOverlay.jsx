@@ -22,7 +22,7 @@ export const PlayerDetailsOverlay = ({
   const releaseCancelled = () => {
     dispatch(
       toggleOverlay({
-        isOpen: true,
+        isOpen: false,
         template: null,
       })
     );

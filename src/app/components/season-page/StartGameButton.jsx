@@ -1,10 +1,7 @@
-import { ReactSVG } from 'react-svg';
-import play from '@images/icons/play.svg';
-import hockeySticksButton from '@images/icons/hockey-sticks-button.svg';
 import { GamePhases } from '@data/season/season';
 import { useSelector } from 'react-redux';
 import { TeamAssignments, getAvailableSlots } from '@data/players/players';
-import { motion } from 'framer-motion';
+import { StartGameButtonSvg } from './StartGameButtonSvg';
 
 export const StartGameButton = ({ onClick, gameBlockState, team }) => {
   const currentScenario = useSelector((state) => state.season.currentScenario);
@@ -36,16 +33,7 @@ export const StartGameButton = ({ onClick, gameBlockState, team }) => {
         opacity: !seasonDisabled ? 1 : 0.75,
       }}
     >
-      {currentPhase.phase === GamePhases.READY && (
-        <motion.div>
-          <ReactSVG src={play} />
-        </motion.div>
-      )}
-      {currentPhase.phase !== GamePhases.READY && (
-        <motion.div>
-          <ReactSVG src={hockeySticksButton} />
-        </motion.div>
-      )}
+      <StartGameButtonSvg phase={currentPhase.phase} />
     </div>
   );
 };
