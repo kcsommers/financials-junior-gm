@@ -1,8 +1,9 @@
 import { SET_LOGIN_STATE } from '../actionTypes';
+import { getIsLoggedIn, getUserRole } from '@data/auth/auth';
 
 const initialState = {
-  isLoggedIn: false,
-  role: '',
+  isLoggedIn: getIsLoggedIn(),
+  userRole: getUserRole(),
 };
 
 const loginStateReducer = (state = initialState, action) => {
@@ -10,7 +11,7 @@ const loginStateReducer = (state = initialState, action) => {
     case SET_LOGIN_STATE: {
       return {
         isLoggedIn: action.payload.isLoggedIn,
-        role: action.payload.role || '',
+        userRole: action.payload.userRole || '',
       };
     }
     default:

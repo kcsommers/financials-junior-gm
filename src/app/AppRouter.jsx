@@ -29,7 +29,7 @@ const protectedRoutes = [
   '/teacher/home',
 ];
 
-export const AppRouter = ({ isLoggedIn, userRole, onLogin }) => {
+export const AppRouter = ({ isLoggedIn, userRole }) => {
   return isLoggedIn ? (
     <Router>
       <Switch>
@@ -109,17 +109,13 @@ export const AppRouter = ({ isLoggedIn, userRole, onLogin }) => {
         <Route
           exact
           path='/login/teacher'
-          render={(props) => <TeacherLogin {...props} onLogin={onLogin} />}
+          render={(props) => <TeacherLogin {...props} />}
         />
         <Route
           exact
           path='/login/student'
           render={(props) => (
-            <StudentLogin
-              {...props}
-              onLogin={onLogin}
-              isLoggedIn={isLoggedIn}
-            />
+            <StudentLogin {...props} isLoggedIn={isLoggedIn} />
           )}
         />
         <Route exact path='/signup' component={Signup} />
@@ -135,12 +131,14 @@ export const AppRouter = ({ isLoggedIn, userRole, onLogin }) => {
         <Route
           exact
           path='/login/teacher'
-          render={(props) => <TeacherLogin {...props} onLogin={onLogin} />}
+          render={(props) => <TeacherLogin {...props} />}
         />
         <Route
           exact
           path='/login/student'
-          render={(props) => <StudentLogin {...props} onLogin={onLogin} />}
+          render={(props) => (
+            <StudentLogin {...props} isLoggedIn={isLoggedIn} />
+          )}
         />
         <Route exact path='/signup' component={Signup} />
         <Route exact path='/dashboard' component={Dashboard} />

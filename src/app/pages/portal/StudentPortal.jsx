@@ -37,7 +37,6 @@ export const StudentPortal = ({ screen, isLoggedIn, userRole }) => {
     if (student) {
       return;
     }
-    console.log('[studentProtal] GETTING CURRENT:::: ');
     getCurrentUser()
       .then((res) => {
         if (!res || !res.data) {

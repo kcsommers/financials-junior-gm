@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { ReactSVG } from 'react-svg';
 import {
   studentLogin,
@@ -15,8 +16,10 @@ import {
   STUDENT_ID_STORAGE_KEY,
 } from '@data/auth/auth';
 import '@css/pages/Login.css';
+import { setLoginState } from '@redux/actions';
 
-export const StudentLogin = ({ history, onLogin, isLoggedIn }) => {
+export const StudentLogin = ({ history, isLoggedIn }) => {
+  const dispatch = useDispatch();
   const [isLoggingIn, setIsLoggingIn] = useState(false);
   const [loginError, setLoginError] = useState('');
 
@@ -26,7 +29,7 @@ export const StudentLogin = ({ history, onLogin, isLoggedIn }) => {
     localStorage.setItem(USER_ROLE_STORAGE_KEY, UserRoles.STUDENT);
     localStorage.setItem(STUDENT_ID_STORAGE_KEY, student._id);
 
-    onLogin(student);
+    dispatch(setLoginState(true, UserRoles.STUDENT));
     history.push('/home');
   };
 
@@ -37,12 +40,14 @@ export const StudentLogin = ({ history, onLogin, isLoggedIn }) => {
     console.error(msg, error);
     localStorage.setItem(LOGIN_STORAGE_KEY, false);
     localStorage.setItem(USER_ROLE_STORAGE_KEY, '');
+
+    setLoginState(false, '');
     if (isLoggedIn) {
       logout();
     }
   };
 
-  const _onLogin = (userName, password) => {
+  const onLogin = (userName, password) => {
     setIsLoggingIn(true);
 
     const doLogin = () => {
@@ -99,7 +104,7 @@ export const StudentLogin = ({ history, onLogin, isLoggedIn }) => {
       </div>
 
       <LoginForm
-        onLogin={_onLogin}
+        onLogin={onLogin}
         isLoggingIn={isLoggingIn}
         loginError={loginError}
         history={history}
