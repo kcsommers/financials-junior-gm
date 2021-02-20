@@ -10,7 +10,6 @@ import {
   PlayerDetailsOverlay,
   SignPlayerOverlay,
   TeamBudgetState,
-  LoadingSpinner,
 } from '@components';
 import scoutStick from '@images/scout-stick.svg';
 import teamStick from '@images/team-stick.svg';
@@ -27,7 +26,7 @@ import { updateStudentById } from './../api-helper';
 import { cloneDeep } from 'lodash';
 import '@css/pages/TeamPage.css';
 
-const TeamPage = () => {
+export const TeamPage = () => {
   const dispatch = useDispatch();
   const tutorialActive = useSelector((state) => state.tutorial.isActive);
   const student = useSelector((state) => state.studentState.student);
@@ -108,7 +107,7 @@ const TeamPage = () => {
     student.tutorials.team
   );
 
-  return team ? (
+  return (
     <div className='page-container'>
       <HeaderComponent
         stickBtn={teamStick}
@@ -259,22 +258,5 @@ const TeamPage = () => {
         <Tutorial slides={tutorialSlides} onComplete={onTutorialComplete} />
       )}
     </div>
-  ) : (
-    <div
-      style={{
-        position: 'absolute',
-        top: 0,
-        bottom: 0,
-        left: 0,
-        right: 0,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}
-    >
-      <LoadingSpinner />
-    </div>
   );
 };
-
-export default TeamPage;
