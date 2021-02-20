@@ -11,7 +11,7 @@ import {
   SIGN_PLAYER,
   UPDATE_STUDENT,
   TRADE_PLAYER,
-  SET_LOGIN_STATE,
+  DESTROY_SESSION,
   SET_SCORE,
   SET_RANK,
   SET_IMAGE,
@@ -34,6 +34,8 @@ import {
   GAME_ENDED,
   SET_CURRENT_OPPONENT_INDEX,
   INITIALIZE_SEASON,
+  SET_LOGIN_STATE,
+  SET_TEACHER,
 } from './actionTypes';
 
 export const setAnimationState = (state) => ({
@@ -101,9 +103,9 @@ export const injurePlayer = (injuredPlayer, previousAssignment) => ({
   payload: { injuredPlayer, previousAssignment },
 });
 
-export const setLoginState = (isLoggedIn, role) => ({
-  type: SET_LOGIN_STATE,
-  payload: { isLoggedIn, role },
+export const destroySession = () => ({
+  type: DESTROY_SESSION,
+  payload: null,
 });
 
 export const setScore = (state) => ({
@@ -209,4 +211,14 @@ export const setCurrentOpponentIndex = (index) => ({
 export const initializeSeason = (student) => ({
   type: INITIALIZE_SEASON,
   payload: student,
+});
+
+export const setLoginState = (isLoggedIn, userRole) => ({
+  type: SET_LOGIN_STATE,
+  payload: { isLoggedIn, userRole },
+});
+
+export const setTeacher = (teacher) => ({
+  type: SET_TEACHER,
+  payload: teacher,
 });

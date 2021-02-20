@@ -1,5 +1,11 @@
 import '@css/components/LoadingSpinner.css';
 
-export const LoadingSpinner = () => {
-  return <div className='loading-spinner'></div>;
+export const LoadingSpinner = ({ size }) => {
+  return (
+    <div
+      className={`loading-spinner${
+        size === 'small' ? ' loading-spinner-small' : ''
+      }`}
+    ></div>
+  );
 };
