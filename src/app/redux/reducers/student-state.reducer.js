@@ -30,7 +30,6 @@ const studentStateReducer = (state = initialState, action) => {
         ...clonedState.student,
         ...action.payload,
       };
-      1;
       clonedState.student.moneySpent = getMoneySpent(
         clonedState.student.players
       );

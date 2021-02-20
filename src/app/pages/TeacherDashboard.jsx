@@ -258,7 +258,7 @@ class TeacherDashboard extends React.Component {
     };
 
     return (
-      <div>
+      <div style={{ maxHeight: '768px', overflow: 'auto' }}>
         <button
           className='crud-button crud-button--positive'
           onClick={this.uploadCSVFile}
