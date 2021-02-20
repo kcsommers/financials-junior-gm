@@ -451,6 +451,7 @@ export const ScoutPage = () => {
         largeStick={true}
         objectives={['1. Scout players to sign to your bench!']}
         level={student.level}
+        tutorialActive={tutorialActive}
       />
       <PageBoard hideCloseBtn={true} includeBackButton={true}>
         <div className='scout-page-board-header'>

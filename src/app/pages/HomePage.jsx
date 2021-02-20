@@ -223,6 +223,7 @@ export const HomePage = () => {
               link='/team'
               image={teamStick}
               animationState={animationStates.teamStick}
+              hideDuringTutorial={true}
             />
             <p
               className={`stick-btn-text${
@@ -239,6 +240,7 @@ export const HomePage = () => {
               inverse={true}
               image={budgetStick}
               animationState={animationStates.budgetStick}
+              hideDuringTutorial={true}
             />
             <p
               className={`stick-btn-text${
@@ -256,6 +258,7 @@ export const HomePage = () => {
               link='/season'
               image={seasonStick}
               animationState={animationStates.seasonStick}
+              hideDuringTutorial={true}
             />
             <p
               className={`stick-btn-text${
@@ -272,6 +275,7 @@ export const HomePage = () => {
               link='/trophies'
               image={trophiesStick}
               animationState={animationStates.trophiesStick}
+              hideDuringTutorial={true}
             />
             <p
               className={`stick-btn-text${

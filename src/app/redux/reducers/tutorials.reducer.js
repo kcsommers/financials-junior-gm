@@ -100,7 +100,7 @@ const initialState = {
       borderRadius: '10px',
       color: '#ffffff',
       scale: 1,
-      zIndex: 0
+      zIndex: 0,
     },
     standings: {
       borderColor: 'rgba(0,0,0,0)',
@@ -109,7 +109,7 @@ const initialState = {
       borderRadius: '10px',
       color: '#ffffff',
       scale: 1,
-      zIndex: 0
+      zIndex: 0,
     },
     upcomingGames: {
       borderColor: 'rgba(0,0,0,0)',
@@ -118,7 +118,7 @@ const initialState = {
       borderRadius: '10px',
       color: '#ffffff',
       scale: 1,
-      zIndex: 0
+      zIndex: 0,
     },
     jumbotext: {
       borderColor: 'rgba(0,0,0,0)',
@@ -127,20 +127,20 @@ const initialState = {
       borderRadius: '10px',
       color: '#ffffff',
       scale: 1,
-      zIndex: 0
+      zIndex: 0,
     },
     playButton: {
-        borderColor: 'rgba(0,0,0,0)',
-        borderWidth: '0px',
-        borderStyle: 'solid',
-        borderRadius: '10px',
-        color: '#ffffff',
-        scale: 1,
-        zIndex: 0
-      },
+      borderColor: 'rgba(0,0,0,0)',
+      borderWidth: '0px',
+      borderStyle: 'solid',
+      borderRadius: '10px',
+      color: '#ffffff',
+      scale: 1,
+      zIndex: 0,
+    },
     studentRank: {
       scale: 1,
-    }
+    },
   },
 };
 
