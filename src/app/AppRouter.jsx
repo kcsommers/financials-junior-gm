@@ -8,7 +8,7 @@ import HomePage from './pages/HomePage';
 import TeamPage from './pages/TeamPage';
 import ScoutPage from './pages/ScoutPage';
 import BudgetPage from './pages/BudgetPage';
-import Dashboard from './pages/Dashboard';
+import { Dashboard } from './pages/Dashboard';
 import TrophiesPage from './pages/TrophiesPage';
 import SeasonPage from './pages/SeasonPage';
 import { TeacherLogin } from './pages/login/TeacherLogin.jsx';
@@ -18,8 +18,6 @@ import PageNotFound from './components/page-not-found';
 import TeacherPortal from './pages/portal/Teacher';
 import Signup from './pages/Signup';
 import { IceBackground } from '@components';
-import { UserRoles } from '@data/auth/auth';
-
 const protectedRoutes = [
   '/home',
   '/team',
