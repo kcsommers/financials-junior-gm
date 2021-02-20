@@ -5,7 +5,7 @@ import {
   getCurrentUser,
   initPlayersByLevel,
 } from '../../api-helper';
-import financialsLogo from '@images/icons/dashboard/logo.svg';
+import financialsLogo from '@images/financials-logo-big.svg';
 import { LoginForm } from '@components';
 import {
   LOGIN_STORAGE_KEY,

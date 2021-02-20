@@ -11,7 +11,7 @@ import {
   SIGN_PLAYER,
   UPDATE_STUDENT,
   TRADE_PLAYER,
-  SET_LOGIN_STATE,
+  DESTROY_SESSION,
   SET_SCORE,
   SET_RANK,
   SET_IMAGE,
@@ -101,9 +101,9 @@ export const injurePlayer = (injuredPlayer, previousAssignment) => ({
   payload: { injuredPlayer, previousAssignment },
 });
 
-export const setLoginState = (isLoggedIn, role) => ({
-  type: SET_LOGIN_STATE,
-  payload: { isLoggedIn, role },
+export const destroySession = () => ({
+  type: DESTROY_SESSION,
+  payload: null,
 });
 
 export const setScore = (state) => ({

@@ -2,7 +2,7 @@ import exitBtn from '@images/exit-btn.svg';
 import settingsBtn from '@images/settings-btn.svg';
 import { logout } from '../../api-helper';
 import { useHistory } from 'react-router-dom';
-import { setLoginState } from '@redux/actions';
+import { destroySession } from '@redux/actions';
 import { useDispatch } from 'react-redux';
 import '@css/components/home-page/Navigation.css';
 import { LOGIN_STORAGE_KEY, USER_ROLE_STORAGE_KEY } from '@data/auth/auth';
@@ -14,7 +14,7 @@ export const Navigation = ({ tutorialActive }) => {
   const doLogout = () => {
     logout()
       .then(() => {
-        dispatch(setLoginState(false, ''));
+        dispatch(destroySession());
         history.push('/login/student');
         localStorage.setItem(LOGIN_STORAGE_KEY, false);
         localStorage.setItem(USER_ROLE_STORAGE_KEY, '');
