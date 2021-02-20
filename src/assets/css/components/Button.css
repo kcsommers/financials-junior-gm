@@ -16,6 +16,7 @@ div.btn-inner {
   height: 22px;
   display: flex;
   align-items: center;
+  justify-content: center;
   color: #fff;
 }
 
