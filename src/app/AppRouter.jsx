@@ -18,6 +18,7 @@ import PageNotFound from './components/page-not-found';
 import TeacherPortal from './pages/portal/Teacher';
 import Signup from './pages/Signup';
 import { IceBackground } from '@components';
+import { StudentPortal } from './pages/portal/StudentPortal';
 const protectedRoutes = [
   '/home',
   '/team',
@@ -28,35 +29,75 @@ const protectedRoutes = [
   '/teacher/home',
 ];
 
-export const AppRouter = ({ isLoggedIn, shouldRedirect, onLogin }) => {
-  return isLoggedIn && !shouldRedirect ? (
+export const AppRouter = ({ isLoggedIn, userRole, onLogin }) => {
+  return isLoggedIn ? (
     <Router>
       <Switch>
         <Route
           exact
-          path={['/home']}
-          render={(props) => <HomePage {...props} />}
+          path='/home'
+          render={(props) => (
+            <StudentPortal
+              isLoggedIn={isLoggedIn}
+              userRole={userRole}
+              screen={<HomePage {...props} />}
+            />
+          )}
         />
-        <Route exact path='/team' render={(props) => <TeamPage {...props} />} />
+        <Route
+          exact
+          path='/team'
+          render={(props) => (
+            <StudentPortal
+              isLoggedIn={isLoggedIn}
+              userRole={userRole}
+              screen={<TeamPage {...props} />}
+            />
+          )}
+        />
         <Route
           exact
           path='/scout'
-          render={(props) => <ScoutPage {...props} />}
+          render={(props) => (
+            <StudentPortal
+              isLoggedIn={isLoggedIn}
+              userRole={userRole}
+              screen={<ScoutPage {...props} />}
+            />
+          )}
         />
         <Route
           exact
           path='/budget'
-          render={(props) => <BudgetPage {...props} />}
+          render={(props) => (
+            <StudentPortal
+              isLoggedIn={isLoggedIn}
+              userRole={userRole}
+              screen={<BudgetPage {...props} />}
+            />
+          )}
         />
         <Route
           exact
           path='/season'
-          render={(props) => <SeasonPage {...props} />}
+          render={(props) => (
+            <StudentPortal
+              isLoggedIn={isLoggedIn}
+              userRole={userRole}
+              screen={<SeasonPage {...props} />}
+            />
+          )}
         />
         <Route
           exact
           path='/trophies'
-          render={(props) => <TrophiesPage {...props} />}
+          render={(props) => (
+            <StudentPortal
+              isLoggedIn={isLoggedIn}
+              userRole={userRole}
+              screen={<TrophiesPage {...props} />}
+            />
+          )}
         />
         <Route
           exact
@@ -73,7 +114,13 @@ export const AppRouter = ({ isLoggedIn, shouldRedirect, onLogin }) => {
         <Route
           exact
           path='/login/student'
-          render={(props) => <StudentLogin {...props} onLogin={onLogin} />}
+          render={(props) => (
+            <StudentLogin
+              {...props}
+              onLogin={onLogin}
+              isLoggedIn={isLoggedIn}
+            />
+          )}
         />
         <Route exact path='/signup' component={Signup} />
         <Route exact path='/dashboard' component={Dashboard} />

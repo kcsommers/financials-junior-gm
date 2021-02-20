@@ -4,6 +4,7 @@ import {
   studentLogin,
   getCurrentUser,
   initPlayersByLevel,
+  logout,
 } from '../../api-helper';
 import financialsLogo from '@images/financials-logo-big.svg';
 import { LoginForm } from '@components';
@@ -15,11 +16,11 @@ import {
 } from '@data/auth/auth';
 import '@css/pages/Login.css';
 
-export const StudentLogin = ({ history, onLogin }) => {
+export const StudentLogin = ({ history, onLogin, isLoggedIn }) => {
   const [isLoggingIn, setIsLoggingIn] = useState(false);
   const [loginError, setLoginError] = useState('');
 
-  const loginSuccess = (student) => {
+  const onLoginSuccess = (student) => {
     setIsLoggingIn(false);
     localStorage.setItem(LOGIN_STORAGE_KEY, true);
     localStorage.setItem(USER_ROLE_STORAGE_KEY, UserRoles.STUDENT);
@@ -29,53 +30,66 @@ export const StudentLogin = ({ history, onLogin }) => {
     history.push('/home');
   };
 
-  const doLogin = (userName, password) => {
+  const onLoginError = (error) => {
+    const msg = 'Unexpected login error. Please try again';
+    setIsLoggingIn(false);
+    setLoginError(msg);
+    console.error(msg, error);
+    localStorage.setItem(LOGIN_STORAGE_KEY, false);
+    localStorage.setItem(USER_ROLE_STORAGE_KEY, '');
+    if (isLoggedIn) {
+      logout();
+    }
+  };
+
+  const _onLogin = (userName, password) => {
     setIsLoggingIn(true);
 
-    studentLogin({ userName, password })
-      .then((res) => {
-        if (!res || !res.success) {
-          throw res;
-        }
+    const doLogin = () => {
+      studentLogin({ userName, password })
+        .then((res) => {
+          if (!res || !res.success) {
+            throw res;
+          }
 
-        getCurrentUser()
-          .then((studentRes) => {
-            const student = studentRes.data;
-            if (!studentRes.success || !student) {
-              throw studentRes;
-            }
+          getCurrentUser()
+            .then((studentRes) => {
+              const student = studentRes.data;
+              if (!studentRes.success || !student) {
+                throw studentRes;
+              }
 
-            // check for initialized players
-            if (student.players && student.players.length) {
-              loginSuccess(student);
-              return;
-            }
+              // check for initialized players
+              if (student.players && student.players.length) {
+                onLoginSuccess(student);
+                return;
+              }
 
-            // initialize players on student
-            initPlayersByLevel(student.level || 1)
-              .then((initializedStudentRes) => {
-                if (
-                  !initializedStudentRes.success ||
-                  !initializedStudentRes.data
-                ) {
-                  throw initializedStudentRes;
-                }
+              // initialize players on student
+              initPlayersByLevel(student.level || 1)
+                .then((initializedStudentRes) => {
+                  if (
+                    !initializedStudentRes.success ||
+                    !initializedStudentRes.data
+                  ) {
+                    throw initializedStudentRes;
+                  }
 
-                loginSuccess(student);
-              })
-              .catch((err) => {
-                console.error('Unexpected error initializing players', err);
-              });
-          })
-          .catch((error) => {
-            console.error('Unexpected error fetching current user: ', error);
-          });
-      })
-      .catch((error) => {
-        setIsLoggingIn(false);
-        setLoginError('Unexpected login error. Please try again.');
-        console.error(error);
-      });
+                  onLoginSuccess(student);
+                })
+                .catch(onLoginError);
+            })
+            .catch(onLoginError);
+        })
+        .catch(onLoginError);
+    };
+
+    // if someone is currently logged in, log them out to expire their cookie
+    if (isLoggedIn) {
+      logout().then(doLogin).catch(onLoginError);
+    } else {
+      doLogin();
+    }
   };
 
   return (
@@ -85,7 +99,7 @@ export const StudentLogin = ({ history, onLogin }) => {
       </div>
 
       <LoginForm
-        onLogin={doLogin}
+        onLogin={_onLogin}
         isLoggingIn={isLoggingIn}
         loginError={loginError}
         history={history}

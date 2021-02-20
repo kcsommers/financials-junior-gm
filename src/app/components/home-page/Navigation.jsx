@@ -14,10 +14,10 @@ export const Navigation = ({ tutorialActive }) => {
   const doLogout = () => {
     logout()
       .then(() => {
-        dispatch(destroySession());
         history.push('/login/student');
         localStorage.setItem(LOGIN_STORAGE_KEY, false);
         localStorage.setItem(USER_ROLE_STORAGE_KEY, '');
+        dispatch(destroySession());
       })
       .catch((err) => console.error(err));
   };

@@ -1,70 +1,81 @@
-import React, { Component, useState } from 'react';
-import { connect } from 'react-redux';
-import { Redirect } from 'react-router';
-import { setLoginState } from '@redux/actions';
-import { UserRoles, getIsLoggedIn, getUserRole } from '@data/auth/auth';
+import { useState, useCallback, useEffect } from 'react';
+import { useSelector, useDispatch, batch } from 'react-redux';
+import {
+  setStudent,
+  initializeSeason,
+  setInitialPlayersState,
+} from '@redux/actions';
+import { UserRoles } from '@data/auth/auth';
+import { Redirect } from 'react-router-dom';
+import { getCurrentUser } from './../../api-helper';
+import { LoadingSpinner } from '@components';
 
-export const StudentPortal = (props) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(getIsLoggedIn());
-  const [userRole, setUserRole] = useState(getUserRole());
+export const StudentPortal = ({ screen, isLoggedIn, userRole }) => {
+  const dispatch = useDispatch();
 
-  // if (
-  //   this.props.loginState.isLoggedIn !== initialState.isLoggedIn ||
-  //   this.props.loginState.role !== initialState.role
-  // ) {
-  //   this.props.setLoginState(initialState.isLoggedIn, initialState.role);
-  // }
+  const student = useSelector((state) => state.studentState.student);
 
-  return isLoggedIn && userRole === UserRoles.STUDENT ? (
-    <div style={{ height: '100%', overflow: 'hidden' }}>{props.screen}</div>
+  const [shouldRedirect, setShouldRedirect] = useState(false);
+
+  const initializeStudent = useCallback(
+    (student) => {
+      batch(() => {
+        dispatch(setStudent(student));
+        dispatch(setInitialPlayersState(student.players, student));
+        dispatch(initializeSeason(student));
+      });
+    },
+    [dispatch]
+  );
+
+  useEffect(() => {
+    if (!isLoggedIn || userRole !== UserRoles.STUDENT) {
+      setShouldRedirect(true);
+      return;
+    }
+
+    if (student) {
+      return;
+    }
+    console.log('[studentProtal] GETTING CURRENT:::: ');
+    getCurrentUser()
+      .then((res) => {
+        if (!res || !res.data) {
+          throw res;
+        }
+
+        if (res.data.role === UserRoles.STUDENT) {
+          initializeStudent(res.data);
+        } else {
+          setShouldRedirect(true);
+        }
+      })
+      .catch((err) => {
+        console.error('Unexpected error fetching current user', err);
+        setShouldRedirect(true);
+      });
+  }, [isLoggedIn, initializeStudent, student, userRole]);
+
+  if (shouldRedirect) {
+    return <Redirect to='dashboard' />;
+  }
+
+  return student ? (
+    screen
   ) : (
-    <Redirect to={{ pathname: '/dashboard' }} />
+    <div
+      style={{
+        position: 'absolute',
+        top: 0,
+        bottom: 0,
+        left: 0,
+        right: 0,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+    >
+      <LoadingSpinner />
+    </div>
   );
 };
-
-// class StudentPortal extends Component {
-//   constructor(props) {
-//     super(props);
-
-//     const initialState = {
-//       isLoggedIn:
-//         localStorage.getItem('isLoggedIn') == 'true'
-//           ? true
-//           : localStorage.getItem('isLoggedIn') == true
-//           ? true
-//           : false,
-//       role: localStorage.getItem('userRole')
-//         ? localStorage.getItem('userRole')
-//         : '',
-//     };
-
-//     if (
-//       this.props.loginState.isLoggedIn !== initialState.isLoggedIn ||
-//       this.props.loginState.role !== initialState.role
-//     ) {
-//       this.props.setLoginState(initialState.isLoggedIn, initialState.role);
-//     }
-
-//     this.state = initialState;
-//   }
-
-//   render() {
-//     if (!this.state.isLoggedIn || this.state.role !== 'student') {
-//       return (
-//         <Redirect
-//           to={{
-//             pathname: '/dashboard',
-//           }}
-//         />
-//       );
-//     }
-//     return (
-//       <div style={{ height: '100%', overflow: 'hidden' }}>
-//         {this.props.screen}
-//       </div>
-//     );
-//   }
-// }
-// const actionsToProps = (state) => ({ loginState: state.loginState });
-// const dispatchToProps = { setLoginState };
-// export default connect(actionsToProps, dispatchToProps)(StudentPortal);
