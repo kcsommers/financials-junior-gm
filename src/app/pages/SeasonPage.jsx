@@ -4,7 +4,6 @@ import { useHistory } from 'react-router-dom';
 import {
   HeaderComponent,
   PageBoard,
-  LoadingSpinner,
   Jumbotron,
   LevelStick,
   GameBlockBoard,
@@ -41,8 +40,8 @@ import {
   Tutorial,
   getConfirmSlides,
 } from '@tutorial';
-import '@css/pages/SeasonPage.css';
 import { motion } from 'framer-motion';
+import '@css/pages/SeasonPage.css';
 
 const allActions = {
   [INJURE_PLAYER]: injurePlayer,
@@ -50,7 +49,7 @@ const allActions = {
 
 let timer = 0;
 
-const SeasonPage = () => {
+export const SeasonPage = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const student = useSelector((state) => state.studentState.student);
@@ -300,7 +299,7 @@ const SeasonPage = () => {
     student.tutorials.season
   );
 
-  return student ? (
+  return (
     <div className='page-container'>
       <HeaderComponent
         stickBtn={seasonStick}
@@ -404,22 +403,5 @@ const SeasonPage = () => {
         <Tutorial slides={tutorialSlides} onComplete={onTutorialComplete} />
       )}
     </div>
-  ) : (
-    <div
-      style={{
-        position: 'absolute',
-        top: 0,
-        bottom: 0,
-        left: 0,
-        right: 0,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}
-    >
-      <LoadingSpinner />
-    </div>
   );
 };
-
-export default SeasonPage;

@@ -4,7 +4,6 @@ import jrSharksLogo from '@images/icons/jr-sharks-logo.svg';
 import {
   PageBoard,
   HeaderComponent,
-  LoadingSpinner,
   TrophySvg,
   AwardDetailsOverlay,
   Overlay,
@@ -50,7 +49,7 @@ const styles = {
   },
 };
 
-const TrophiesPage = () => {
+export const TrophiesPage = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const student = useSelector((state) => state.studentState.student);
@@ -165,7 +164,7 @@ const TrophiesPage = () => {
     );
   });
 
-  return student ? (
+  return (
     <div className='page-container'>
       <HeaderComponent
         stickBtn={trophiesStick}
@@ -276,22 +275,5 @@ const TrophiesPage = () => {
       </PageBoard>
       <Overlay />
     </div>
-  ) : (
-    <div
-      style={{
-        position: 'absolute',
-        top: 0,
-        bottom: 0,
-        left: 0,
-        right: 0,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}
-    >
-      <LoadingSpinner />
-    </div>
   );
 };
-
-export default TrophiesPage;

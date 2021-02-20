@@ -8,7 +8,6 @@ import {
   ScoutingCompleteOverlay,
   Overlay,
   PlayerDetailsOverlay,
-  LoadingSpinner,
   BadScoutOverlay,
 } from '@components';
 import scoutStick from '@images/scout-stick.svg';
@@ -42,7 +41,7 @@ const boardMap = {
   levelThree: {},
 };
 
-const ScoutPage = () => {
+export const ScoutPage = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const tutorialActive = useSelector((state) => state.tutorial.isActive);
@@ -445,7 +444,7 @@ const ScoutPage = () => {
     moneyLevelThreeState,
   ]);
 
-  return scoutPlayers.available ? (
+  return (
     <div className='page-container scout-page-container'>
       <HeaderComponent
         stickBtn={scoutStick}
@@ -456,8 +455,8 @@ const ScoutPage = () => {
       <PageBoard hideCloseBtn={true} includeBackButton={true}>
         <div className='scout-page-board-header'>
           <p className='color-primary scout-page-helper-text'>
-            Give each new player an offered value by dragging them to their money
-            level!
+            Give each new player an offered value by dragging them to their
+            money level!
           </p>
           <span
             style={{ position: 'absolute', right: '0.5rem', top: '0.25rem' }}
@@ -524,22 +523,5 @@ const ScoutPage = () => {
         <Tutorial slides={tutorialSlides} onComplete={onTutorialComplete} />
       )}
     </div>
-  ) : (
-    <div
-      style={{
-        position: 'absolute',
-        top: 0,
-        bottom: 0,
-        left: 0,
-        right: 0,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}
-    >
-      <LoadingSpinner />
-    </div>
   );
 };
-
-export default ScoutPage;

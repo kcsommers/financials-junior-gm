@@ -6,7 +6,6 @@ import {
   StickButton,
   Navigation,
   LevelStick,
-  LoadingSpinner,
 } from '@components';
 import {
   introSlides,
@@ -41,7 +40,7 @@ const homeSlides = [
   seasonStickSlides,
 ];
 
-const HomePage = () => {
+export const HomePage = () => {
   const tutorialActive = useSelector((state) => state.tutorial.isActive);
 
   const student = useSelector((state) => state.studentState.student);
@@ -290,5 +289,3 @@ const HomePage = () => {
     </div>
   );
 };
-
-export default HomePage;
