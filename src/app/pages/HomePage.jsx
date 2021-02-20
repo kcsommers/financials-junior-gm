@@ -115,7 +115,7 @@ const HomePage = () => {
     student.tutorials.home
   );
 
-  return student ? (
+  return (
     <div className='home-page-container'>
       <Navigation tutorialActive={tutorialActive} />
       <div className='home-cards-row'>
@@ -287,21 +287,6 @@ const HomePage = () => {
       {tutorialActive && (
         <Tutorial slides={tutorialSlides} onComplete={onTutorialComplete} />
       )}
-    </div>
-  ) : (
-    <div
-      style={{
-        position: 'absolute',
-        top: 0,
-        bottom: 0,
-        left: 0,
-        right: 0,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}
-    >
-      <LoadingSpinner />
     </div>
   );
 };

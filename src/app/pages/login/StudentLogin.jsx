@@ -1,0 +1,115 @@
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { ReactSVG } from 'react-svg';
+import {
+  studentLogin,
+  getCurrentUser,
+  initPlayersByLevel,
+  logout,
+} from '../../api-helper';
+import financialsLogo from '@images/financials-logo-big.svg';
+import { LoginForm } from '@components';
+import {
+  LOGIN_STORAGE_KEY,
+  UserRoles,
+  USER_ROLE_STORAGE_KEY,
+  STUDENT_ID_STORAGE_KEY,
+} from '@data/auth/auth';
+import '@css/pages/Login.css';
+import { setLoginState } from '@redux/actions';
+
+export const StudentLogin = ({ history, isLoggedIn }) => {
+  const dispatch = useDispatch();
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
+  const [loginError, setLoginError] = useState('');
+
+  const onLoginSuccess = (student) => {
+    setIsLoggingIn(false);
+    localStorage.setItem(LOGIN_STORAGE_KEY, true);
+    localStorage.setItem(USER_ROLE_STORAGE_KEY, UserRoles.STUDENT);
+    localStorage.setItem(STUDENT_ID_STORAGE_KEY, student._id);
+
+    dispatch(setLoginState(true, UserRoles.STUDENT));
+    history.push('/home');
+  };
+
+  const onLoginError = (error) => {
+    const msg = 'Unexpected login error. Please try again';
+    setIsLoggingIn(false);
+    setLoginError(msg);
+    console.error(msg, error);
+    localStorage.setItem(LOGIN_STORAGE_KEY, false);
+    localStorage.setItem(USER_ROLE_STORAGE_KEY, '');
+    localStorage.setItem(STUDENT_ID_STORAGE_KEY, '');
+
+    dispatch(setLoginState(false, ''));
+    if (isLoggedIn) {
+      logout();
+    }
+  };
+
+  const onLogin = (userName, password) => {
+    setIsLoggingIn(true);
+
+    const doLogin = () => {
+      studentLogin({ userName, password })
+        .then((res) => {
+          if (!res || !res.success) {
+            throw res;
+          }
+
+          getCurrentUser()
+            .then((studentRes) => {
+              const student = studentRes.data;
+              if (!studentRes.success || !student) {
+                throw studentRes;
+              }
+
+              // check for initialized players
+              if (student.players && student.players.length) {
+                onLoginSuccess(student);
+                return;
+              }
+
+              // initialize players on student
+              initPlayersByLevel(student.level || 1)
+                .then((initializedStudentRes) => {
+                  if (
+                    !initializedStudentRes.success ||
+                    !initializedStudentRes.data
+                  ) {
+                    throw initializedStudentRes;
+                  }
+
+                  onLoginSuccess(student);
+                })
+                .catch(onLoginError);
+            })
+            .catch(onLoginError);
+        })
+        .catch(onLoginError);
+    };
+
+    // if someone is currently logged in, log them out to expire their cookie
+    if (isLoggedIn) {
+      logout().then(doLogin).catch(onLoginError);
+    } else {
+      doLogin();
+    }
+  };
+
+  return (
+    <div className='login-page-container'>
+      <div>
+        <ReactSVG src={financialsLogo} />
+      </div>
+
+      <LoginForm
+        onLogin={onLogin}
+        isLoggingIn={isLoggingIn}
+        loginError={loginError}
+        history={history}
+      />
+    </div>
+  );
+};
