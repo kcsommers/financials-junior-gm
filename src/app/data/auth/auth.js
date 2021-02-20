@@ -10,6 +10,11 @@ export const UserRoles = {
 };
 
 export const getIsLoggedIn = () => {
+  console.log(
+    '[getIsLoggedIn]:::: ',
+    localStorage.getItem(LOGIN_STORAGE_KEY) === 'true' ||
+      localStorage.getItem(LOGIN_STORAGE_KEY) === true
+  );
   return !!(
     localStorage.getItem(LOGIN_STORAGE_KEY) === 'true' ||
     localStorage.getItem(LOGIN_STORAGE_KEY) === true

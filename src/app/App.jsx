@@ -1,33 +1,14 @@
-import { useState } from 'react';
-import { useDispatch, batch } from 'react-redux';
 import { AppRouter } from './AppRouter';
-import {
-  setStudent,
-  setInitialPlayersState,
-  initializeSeason,
-} from '@redux/actions';
-import { getCurrentUser } from './api-helper';
-import { getIsLoggedIn, UserRoles, getUserRole } from '@data/auth/auth';
+import { useSelector } from 'react-redux';
 import '@css/App.css';
 
 const App = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(getIsLoggedIn());
-  const [userRole, setUserRole] = useState(getUserRole());
+  const { isLoggedIn, userRole } = useSelector((state) => state.loginState);
 
-  const onLogin = (user) => {
-    if (user) {
-      setIsLoggedIn(true);
-      setUserRole(user.role);
-    }
-  };
-
+  console.log('IS LOGGED IN:::: ', isLoggedIn, userRole);
   return (
     <div className='app-container'>
-      <AppRouter
-        isLoggedIn={isLoggedIn}
-        onLogin={onLogin}
-        userRole={userRole}
-      />
+      <AppRouter isLoggedIn={isLoggedIn} userRole={userRole} />
     </div>
   );
 };
