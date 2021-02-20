@@ -4,7 +4,6 @@ import { cloneDeep } from 'lodash';
 
 const initialState = {
   student: null,
-  pagesVisited: null,
 };
 
 const studentStateReducer = (state = initialState, action) => {
@@ -31,8 +30,7 @@ const studentStateReducer = (state = initialState, action) => {
         ...clonedState.student,
         ...action.payload,
       };
-
-      console.log('CLONED STATE STDUEMT:::: ', clonedState.student.players);
+      1;
       clonedState.student.moneySpent = getMoneySpent(
         clonedState.student.players
       );

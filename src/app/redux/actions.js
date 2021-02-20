@@ -35,6 +35,7 @@ import {
   SET_CURRENT_OPPONENT_INDEX,
   INITIALIZE_SEASON,
   SET_LOGIN_STATE,
+  SET_TEACHER,
 } from './actionTypes';
 
 export const setAnimationState = (state) => ({
@@ -215,4 +216,9 @@ export const initializeSeason = (student) => ({
 export const setLoginState = (isLoggedIn, userRole) => ({
   type: SET_LOGIN_STATE,
   payload: { isLoggedIn, userRole },
+});
+
+export const setTeacher = (teacher) => ({
+  type: SET_TEACHER,
+  payload: teacher,
 });
