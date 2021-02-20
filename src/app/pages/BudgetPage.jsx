@@ -4,7 +4,6 @@ import {
   BudgetSlider,
   HeaderComponent,
   PageBoard,
-  LoadingSpinner,
 } from '@components';
 import budgetStick from '@images/budget-stick.svg';
 import { useSelector, useDispatch } from 'react-redux';
@@ -21,7 +20,7 @@ import '@css/pages/BudgetPage.css';
 
 let debounceTimeout = 0;
 
-const BudgetPage = () => {
+export const BudgetPage = () => {
   const dispatch = useDispatch();
   const student = useSelector((state) => state.studentState.student);
 
@@ -95,7 +94,7 @@ const BudgetPage = () => {
     student.tutorials.budget
   );
 
-  return student ? (
+  return (
     <div className='page-container'>
       <HeaderComponent
         stickBtn={budgetStick}
@@ -139,22 +138,5 @@ const BudgetPage = () => {
         <Tutorial slides={tutorialSlides} onComplete={onTutorialComplete} />
       )}
     </div>
-  ) : (
-    <div
-      style={{
-        position: 'absolute',
-        top: 0,
-        bottom: 0,
-        left: 0,
-        right: 0,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}
-    >
-      <LoadingSpinner />
-    </div>
   );
 };
-
-export default BudgetPage;
