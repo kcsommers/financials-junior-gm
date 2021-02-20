@@ -1,6 +1,7 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { ReactSVG } from 'react-svg';
-import { teacherLogin, getCurrentUser } from '../../api-helper';
+import { teacherLogin, getCurrentUser, logout } from '../../api-helper';
 import financialsLogo from '@images/financials-logo-big.svg';
 import { LoginForm } from '@components';
 import {
@@ -9,49 +10,68 @@ import {
   USER_ROLE_STORAGE_KEY,
   TEACHER_ID_STORAGE_KEY,
 } from '@data/auth/auth';
+import { setLoginState } from '@redux/actions';
 import '@css/pages/Login.css';
 
-export const TeacherLogin = ({ history, onLogin }) => {
+export const TeacherLogin = ({ history, isLoggedIn }) => {
+  const dispatch = useDispatch();
   const [isLoggingIn, setIsLoggingIn] = useState(false);
   const [loginError, setLoginError] = useState('');
 
-  const doLogin = (email, password) => {
+  const onLoginSuccess = (teacher) => {
+    setIsLoggingIn(false);
+    localStorage.setItem(LOGIN_STORAGE_KEY, true);
+    localStorage.setItem(USER_ROLE_STORAGE_KEY, UserRoles.TEACHER);
+    localStorage.setItem(TEACHER_ID_STORAGE_KEY, teacher._id);
+
+    dispatch(setLoginState(true, UserRoles.TEACHER));
+    history.push('/teacher/home');
+  };
+
+  const onLoginError = (error) => {
+    const msg = 'Unexpected login error. Please try again';
+    setIsLoggingIn(false);
+    setLoginError(msg);
+    console.error(msg, error);
+    localStorage.setItem(LOGIN_STORAGE_KEY, false);
+    localStorage.setItem(USER_ROLE_STORAGE_KEY, '');
+    localStorage.setItem(TEACHER_ID_STORAGE_KEY, '');
+
+    dispatch(setLoginState(false, ''));
+    if (isLoggedIn) {
+      logout();
+    }
+  };
+
+  const onLogin = (email, password) => {
     setIsLoggingIn(true);
 
-    teacherLogin({ email, password })
-      .then((res) => {
-        if (!res || !res.success) {
-          throw res;
-        }
+    const doLogin = () => {
+      teacherLogin({ email, password })
+        .then((res) => {
+          if (!res || !res.success) {
+            throw res;
+          }
 
-        getCurrentUser()
-          .then((currentUserRes) => {
-            if (!currentUserRes || !currentUserRes.success) {
-              throw currentUserRes;
-            }
+          getCurrentUser()
+            .then((currentUserRes) => {
+              if (!currentUserRes || !currentUserRes.success) {
+                throw currentUserRes;
+              }
 
-            setIsLoggingIn(false);
-            onLogin(currentUserRes.data);
+              onLoginSuccess(currentUserRes.data);
+            })
+            .catch(onLoginError);
+        })
+        .catch(onLoginError);
+    };
 
-            history.push('/teacher/home');
-            localStorage.setItem(LOGIN_STORAGE_KEY, true);
-            localStorage.setItem(USER_ROLE_STORAGE_KEY, UserRoles.TEACHER);
-            localStorage.setItem(
-              TEACHER_ID_STORAGE_KEY,
-              currentUserRes.data._id
-            );
-          })
-          .catch((err) => {
-            setIsLoggingIn(false);
-            setLoginError('Unexpected login error. Please try again.');
-            console.error(err);
-          });
-      })
-      .catch((err) => {
-        setIsLoggingIn(false);
-        setLoginError('Unexpected login error. Please try again.');
-        console.error(err);
-      });
+    // if someone is currently logged in, log them out to expire their cookie
+    if (isLoggedIn) {
+      logout().then(doLogin).catch(onLoginError);
+    } else {
+      doLogin();
+    }
   };
 
   return (
@@ -61,7 +81,7 @@ export const TeacherLogin = ({ history, onLogin }) => {
       </div>
 
       <LoginForm
-        onLogin={doLogin}
+        onLogin={onLogin}
         isLoggingIn={isLoggingIn}
         loginError={loginError}
         history={history}

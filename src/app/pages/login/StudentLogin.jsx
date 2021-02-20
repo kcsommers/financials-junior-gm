@@ -40,8 +40,9 @@ export const StudentLogin = ({ history, isLoggedIn }) => {
     console.error(msg, error);
     localStorage.setItem(LOGIN_STORAGE_KEY, false);
     localStorage.setItem(USER_ROLE_STORAGE_KEY, '');
+    localStorage.setItem(STUDENT_ID_STORAGE_KEY, '');
 
-    setLoginState(false, '');
+    dispatch(setLoginState(false, ''));
     if (isLoggedIn) {
       logout();
     }
