@@ -31,6 +31,7 @@ export const TeamPage = () => {
   const tutorialActive = useSelector((state) => state.tutorial.isActive);
   const student = useSelector((state) => state.studentState.student);
   const team = useSelector((state) => state.players.teamPlayers);
+  const seasonState = useSelector((state) => state.season);
   const scoutingState = useSelector((state) => state.players.scoutingState);
   const playerCardAnimationStates = {
     playerCard: useSelector((state) => state.tutorial.team.playerCard),
@@ -65,7 +66,13 @@ export const TeamPage = () => {
     dispatch(
       toggleOverlay({
         isOpen: true,
-        template: <PlayerDetailsOverlay player={player} student={student} />,
+        template: (
+          <PlayerDetailsOverlay
+            player={player}
+            student={student}
+            seasonState={seasonState}
+          />
+        ),
       })
     );
   };

@@ -1,6 +1,14 @@
 import { LoadingSpinner } from '@components';
 import '@css/components/Button.css';
 
+const getFontSize = (str) => {
+  if (str && str.length > 20) {
+    return '1.5rem';
+  }
+
+  return '2rem';
+};
+
 export const Button = ({
   text,
   background = '#ea7200',
@@ -12,7 +20,11 @@ export const Button = ({
   return (
     <div
       className={`box-shadow btn${isDisabled ? ' disabled' : ''}`}
-      style={{ backgroundColor: background, color: color }}
+      style={{
+        backgroundColor: background,
+        color: color,
+        fontSize: getFontSize(text),
+      }}
       onClick={onClick}
     >
       <div className='btn-inner'>

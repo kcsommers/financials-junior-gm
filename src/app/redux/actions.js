@@ -83,9 +83,9 @@ export const setInitialPlayersState = (players, student) => ({
   payload: { players, student },
 });
 
-export const signPlayer = (player, assignment, student) => ({
+export const signPlayer = (player, prevAssignment, student) => ({
   type: SIGN_PLAYER,
-  payload: { player, assignment, student },
+  payload: { player, prevAssignment, student },
 });
 
 export const releasePlayer = (player, prevAssignment, student) => ({
