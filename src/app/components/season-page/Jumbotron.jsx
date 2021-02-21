@@ -1,7 +1,8 @@
 import { TeamCard } from './TeamCard';
 import jrSharksLogo from '@images/icons/jr-sharks-logo-white-bg.svg';
 import { GamePhases, getStanding } from '@data/season/season';
-import { TeamAssignments, getAvailableSlots } from '@data/players/players';
+import { TeamAssignments } from '@data/players/players';
+import { getAvailableSlots } from '@data/players/players-utils';
 import { Indicator, PlayerCard } from '@components';
 import { motion } from 'framer-motion';
 import { ReactSVG } from 'react-svg';

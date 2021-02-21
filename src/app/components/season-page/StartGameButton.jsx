@@ -1,6 +1,7 @@
 import { GamePhases } from '@data/season/season';
 import { useSelector } from 'react-redux';
-import { TeamAssignments, getAvailableSlots } from '@data/players/players';
+import { TeamAssignments } from '@data/players/players';
+import { getAvailableSlots } from '@data/players/players-utils';
 import { StartGameButtonSvg } from './StartGameButtonSvg';
 
 export const StartGameButton = ({ onClick, gameBlockState, team }) => {

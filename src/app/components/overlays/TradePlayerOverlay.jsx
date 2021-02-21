@@ -8,11 +8,8 @@ import { useDispatch } from 'react-redux';
 import { toggleOverlay, tradePlayer, setStudent } from '@redux/actions';
 import { ConfirmTradeOverlay } from './ConfirmTradeOverlay';
 import { PlayerDetailsOverlay } from './PlayerDetailsOverlay';
-import {
-  PlayerAssignments,
-  getPlayerPositon,
-  PlayerPositions,
-} from '@data/players/players';
+import { PlayerAssignments, PlayerPositions } from '@data/players/players';
+import { getPlayerPositon } from '@data/players/players-utils';
 import { cloneDeep } from 'lodash';
 import { updateStudentById } from '../../api-helper';
 import { PlayersTradedOverlay } from './PlayersTradedOverlay';
@@ -39,9 +36,6 @@ export const TradePlayerOverlay = ({ releasingPlayer, student }) => {
         ? PlayerAssignments.OFFERED_SCOUT
         : PlayerAssignments.MARKET;
     signingPlayer.playerAssignment = prevAssignment;
-
-    console.log('RELEASING:::: ', releasingPlayer);
-    console.log('SIGNIGN:::: ', signingPlayer);
 
     const playersCopy = cloneDeep(student.players).reduce((arr, p) => {
       if (p._id === releasingPlayer._id) {

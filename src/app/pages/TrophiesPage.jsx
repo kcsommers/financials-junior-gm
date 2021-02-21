@@ -55,8 +55,6 @@ export const TrophiesPage = () => {
   const tutorialActive = useSelector((state) => state.tutorial.isActive);
   const { inTransition, awards } = useSelector((state) => state.season);
 
-  console.log('AWARDS:::: ', awards);
-
   const repeatSeason = () => {
     const clonedSeasons = cloneDeep(student.seasons);
     clonedSeasons[(student.level || 1) - 1] = [];

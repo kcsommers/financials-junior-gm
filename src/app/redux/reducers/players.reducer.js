@@ -8,12 +8,8 @@ import {
   INJURE_PLAYER,
 } from '../actionTypes';
 import { cloneDeep } from 'lodash';
-import {
-  PlayerAssignments,
-  PlayerPositions,
-  isTeamPlayer,
-  getPlayerPositon,
-} from '@data/players/players';
+import { PlayerAssignments, PlayerPositions } from '@data/players/players';
+import { isTeamPlayer, getPlayerPositon } from '@data/players/players-utils';
 import { getMoneyLevels } from '@utils';
 
 const initialState = {
@@ -120,24 +116,15 @@ const playersReducer = (state = initialState, action) => {
     case SIGN_PLAYER: {
       const clonedState = cloneDeep(state);
       const signedPlayer = action.payload.player;
-      const assignment = action.payload.assignment;
+      const prevAssignment = action.payload.prevAssignment;
       const student = action.payload.student;
       const moneyLevels = getMoneyLevels(student.level);
-      const position = getPlayerPositon(assignment);
+      const position = getPlayerPositon(signedPlayer.playerAssignment);
 
-      const playerCache =
-        position === PlayerPositions.BENCH
-          ? clonedState.scoutingState.offeredScoutPlayers
-          : clonedState.marketPlayers;
-
-      playerCache[signedPlayer.playerPosition].splice(
-        playerCache[signedPlayer.playerPosition].findIndex(
-          (p) => p._id === signedPlayer._id
-        ),
-        1
-      );
+      let playerCache = clonedState.marketPlayers;
 
       if (position === PlayerPositions.BENCH) {
+        playerCache = clonedState.scoutingState.offeredScoutPlayers;
         let levelCache;
         if (+signedPlayer.playerCost === moneyLevels[0].num) {
           levelCache = clonedState.scoutingState.scoutPlayers.levelOne;
@@ -153,7 +140,24 @@ const playersReducer = (state = initialState, action) => {
         );
       }
 
-      clonedState.teamPlayers[assignment] = signedPlayer;
+      playerCache[signedPlayer.playerPosition].splice(
+        playerCache[signedPlayer.playerPosition].findIndex(
+          (p) => p._id === signedPlayer._id
+        ),
+        1
+      );
+
+      clonedState.teamPlayers[signedPlayer.playerAssignment] = signedPlayer;
+
+      console.log(
+        'PREV ASSIGNMENT:::: ',
+        prevAssignment,
+        getPlayerPositon(prevAssignment)
+      );
+
+      if (getPlayerPositon(prevAssignment) === PlayerPositions.BENCH) {
+        clonedState.teamPlayers[prevAssignment] = null;
+      }
 
       return clonedState;
     }
@@ -191,9 +195,6 @@ const playersReducer = (state = initialState, action) => {
       const student = action.payload.student;
       const moneyLevels = getMoneyLevels(student.level);
       const clonedState = cloneDeep(state);
-
-      console.log('RELEASed::: ', releasedPlayer);
-      console.log('SIGNIed:::: ', signedPlayer);
 
       const playerCache =
         releasedPlayer.playerAssignment === PlayerAssignments.OFFERED_SCOUT
