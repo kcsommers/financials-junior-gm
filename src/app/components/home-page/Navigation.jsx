@@ -32,7 +32,7 @@ export const Navigation = ({ tutorialActive }) => {
       className='nav-container'
       style={{
         position: 'relative',
-        zIndex: tutorialActive ? 0 : 1,
+        // zIndex: tutorialActive ? 0 : 1,
       }}
     >
       <div className='exit-stick-box'>
