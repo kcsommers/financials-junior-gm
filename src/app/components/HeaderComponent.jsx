@@ -19,6 +19,7 @@ export const HeaderComponent = ({
   largeStick,
   level,
   tutorialActive,
+  inTransition,
 }) => {
   const stick = (
     <StickButton
@@ -28,6 +29,7 @@ export const HeaderComponent = ({
       inverse={inverse}
       large={largeStick}
       tutorialActive={tutorialActive}
+      inTransition={inTransition}
     />
   );
 

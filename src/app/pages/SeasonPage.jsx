@@ -26,7 +26,6 @@ import {
   throwScenario,
   injurePlayer,
   setStudent,
-  gameBlockEnded,
   gameEnded,
   setTutorialState,
   toggleOverlay,
@@ -112,7 +111,10 @@ export const SeasonPage = () => {
   }
 
   const gameBlockState = {
-    currentOpponent: state.currentBlock[state.currentOpponentIndex],
+    currentOpponent:
+      state && state.currentBlock
+        ? state.currentBlock[state.currentOpponentIndex]
+        : null,
     currentPhase: gamePhases[state.currentPhaseIndex],
     currentScore: seasonState.completedGames[state.currentOpponentIndex]
       ? seasonState.completedGames[state.currentOpponentIndex].score
@@ -122,55 +124,65 @@ export const SeasonPage = () => {
   };
 
   if (
+    gameBlockState.currentOpponent &&
     gameBlockState.currentPhase &&
     gameBlockState.currentPhase.phase === GamePhases.UP_NEXT
   ) {
     gameBlockState.currentPhase.messages[1] = `Jr. Sharks vs ${gameBlockState.currentOpponent.name}`;
   }
 
-  const seasonComplete = () => {
-    batch(() => {
-      dispatch(setSeasonComplete(student));
-      dispatch(
-        toggleOverlay({
-          isOpen: true,
-          template: (
-            <SeasonCompleteOverlay
-              standings={seasonState.standings}
-              level={student.level || 1}
-              team={seasonState.seasonTeam}
-              student={student}
-            />
-          ),
-          canClose: false,
-        })
-      );
-    });
+  const endSeason = () => {
+    console.log('[endSeason]:::: ', seasonState);
+    const studentTeamIndex = seasonState.standings.findIndex(
+      (t) => t.name === seasonState.seasonTeam.name
+    );
+    const awards = {
+      savingsCup: student.savingsBudget > 0,
+      thirdCup: studentTeamIndex < 3,
+      firstCup: studentTeamIndex === 0,
+    };
 
-    history.push('/trophies');
+    const clonedSeasons = cloneDeep(seasonState.seasons);
+    if (clonedSeasons[(student.level || 1) - 1]) {
+      clonedSeasons[(student.level || 1) - 1].push(seasonState.completedGames);
+    } else {
+      clonedSeasons[(student.level || 1) - 1] = [seasonState.completedGames];
+    }
+    console.log('[endSeason] studentSeasons:::: ', clonedSeasons, awards);
+
+    updateStudentById(student._id, {
+      seasons: clonedSeasons,
+      awards,
+    })
+      .then((res) => {
+        console.log('[endSeason] uopdated student:::: ', res);
+        batch(() => {
+          dispatch(setSeasonComplete(student));
+          dispatch(
+            toggleOverlay({
+              isOpen: true,
+              template: (
+                <SeasonCompleteOverlay
+                  standings={seasonState.standings}
+                  level={student.level || 1}
+                  team={seasonState.seasonTeam}
+                  student={student}
+                />
+              ),
+              canClose: false,
+            })
+          );
+        });
+
+        history.push('/trophies');
+      })
+      .catch((err) => console.error(err));
   };
 
   const endBlock = () => {
     // if this is the last game block season is over
     if (seasonState.currentBlockIndex === seasonState.gameBlocks.length - 1) {
-      const studentSeasons = cloneDeep(student.seasons);
-      if (studentSeasons[(student.level || 1) - 1]) {
-        studentSeasons[(student.level || 1) - 1].push(
-          seasonState.completedGames
-        );
-      } else {
-        studentSeasons[(student.level || 1) - 1] = [seasonState.completedGames];
-      }
-
-      updateStudentById(student._id, {
-        seasons: studentSeasons,
-      })
-        .then((res) => {
-          dispatch(gameBlockEnded());
-          seasonComplete();
-        })
-        .catch((err) => console.error(err));
-
+      endSeason();
       return;
     }
 
@@ -361,7 +373,11 @@ export const SeasonPage = () => {
                     : 0
                 }
                 denom={100}
-                color={gameBlockState.currentOpponent.color}
+                color={
+                  gameBlockState.currentOpponent
+                    ? gameBlockState.currentOpponent.color
+                    : '#fff'
+                }
                 indicatorDirection='left'
                 isLarge={true}
                 inverse={true}
