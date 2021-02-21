@@ -4,6 +4,8 @@ import {
   BudgetSlider,
   HeaderComponent,
   PageBoard,
+  NextSeasonOverlay,
+  Overlay,
 } from '@components';
 import budgetStick from '@images/budget-stick.svg';
 import { useSelector, useDispatch } from 'react-redux';
@@ -13,7 +15,12 @@ import {
   Tutorial,
   getConfirmSlides,
 } from '@tutorial';
-import { setTutorialState, setSavings, updateStudent } from '@redux/actions';
+import {
+  setTutorialState,
+  setSavings,
+  updateStudent,
+  toggleOverlay,
+} from '@redux/actions';
 import { updateStudentById } from '../api-helper';
 import { cloneDeep } from 'lodash';
 import '@css/pages/BudgetPage.css';
@@ -23,6 +30,7 @@ let debounceTimeout = 0;
 export const BudgetPage = () => {
   const dispatch = useDispatch();
   const student = useSelector((state) => state.studentState.student);
+  const { inTransition, awards } = useSelector((state) => state.season);
 
   const tutorialActive = useSelector((state) => state.tutorial.isActive);
 
@@ -94,6 +102,16 @@ export const BudgetPage = () => {
     student.tutorials.budget
   );
 
+  if (inTransition) {
+    dispatch(
+      toggleOverlay({
+        isOpen: true,
+        template: <NextSeasonOverlay student={student} awards={awards} />,
+        canClose: false,
+      })
+    );
+  }
+
   return (
     <div className='page-container'>
       <HeaderComponent
@@ -135,6 +153,7 @@ export const BudgetPage = () => {
           </div>
         </div>
       </PageBoard>
+      <Overlay />
       {tutorialActive && (
         <Tutorial slides={tutorialSlides} onComplete={onTutorialComplete} />
       )}

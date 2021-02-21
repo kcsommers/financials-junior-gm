@@ -1,43 +1,26 @@
 import { useDispatch, batch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import {
-  toggleOverlay,
   setStudent,
-  setSeasonComplete,
+  initializeSeason,
   setInitialPlayersState,
 } from '@redux/actions';
-import { initPlayersByLevel, updateStudentById } from '../../api-helper';
-import { PlayerCard, OverlayBoard, Button } from '@components';
-import { cloneDeep } from 'lodash';
+import { OverlayBoard, Button } from '@components';
+import { resetSeason } from '@data/season/season';
 
 export const NextSeasonOverlay = ({ student, awards }) => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const initPlayers = (student) => {
-    initPlayersByLevel(student.level)
-      .then((initializedStudentRes) => {
-        const initializedStudent = initializedStudentRes.data;
-        if (!initializedStudentRes.success || !initializedStudent) {
-          console.error(new Error('Unexpected error initializing players'));
-          return;
-        }
-
+  const repeatSeason = () => {
+    resetSeason(student.level + 1, student)
+      .then((updatedStudent) => {
         batch(() => {
-          dispatch(setSeasonComplete(student));
-          dispatch(setStudent(initializedStudent));
+          dispatch(setStudent(updatedStudent));
           dispatch(
-            setInitialPlayersState(
-              initializedStudent.players,
-              initializedStudent
-            )
+            setInitialPlayersState(updatedStudent.players, updatedStudent)
           );
-          dispatch(
-            toggleOverlay({
-              isOpen: false,
-              template: null,
-            })
-          );
+          dispatch(initializeSeason(updatedStudent));
         });
 
         history.push('/home');
@@ -45,23 +28,21 @@ export const NextSeasonOverlay = ({ student, awards }) => {
       .catch((err) => console.error(err));
   };
 
-  const repeatSeason = () => {
-    const clonedSeasons = cloneDeep(student.seasons);
-    clonedSeasons[(student.level || 1) - 1] = [];
-    updateStudentById(student._id, { seasons: clonedSeasons, awards })
-      .then((res) => {
-        if (!res.success || !res.updatedStudent) {
-          console.error(new Error('Unexpected error updating student season'));
-          return;
-        }
-        dispatch(setSeasonComplete(res.updatedStudent));
+  const nextSeason = () => {
+    resetSeason(student.level + 1, student)
+      .then((updatedStudent) => {
+        batch(() => {
+          dispatch(setStudent(updatedStudent));
+          dispatch(
+            setInitialPlayersState(updatedStudent.players, updatedStudent)
+          );
+          dispatch(initializeSeason(updatedStudent));
+        });
 
-        initPlayers();
+        history.push('/home');
       })
       .catch((err) => console.error(err));
   };
-
-  const nextSeason = () => {};
 
   return (
     <OverlayBoard>
@@ -76,9 +57,23 @@ export const NextSeasonOverlay = ({ student, awards }) => {
           textAlign: 'center',
         }}
       >
+        <p
+          style={{
+            textAlign: 'center',
+            fontSize: '2.25rem',
+            fontWeight: 'bold',
+            color: '#006d75',
+            position: 'relative',
+            transform: 'translateY(50%)',
+            padding: '0 3.5rem',
+            lineHeight: '3.5rem',
+          }}
+        >
+          Your season is complete! What would you like to do next?
+        </p>
         <div
           style={{
-            marginTop: '3rem',
+            marginTop: '7rem',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-around',
@@ -86,7 +81,11 @@ export const NextSeasonOverlay = ({ student, awards }) => {
           }}
         >
           <Button text='Repeat Season' onClick={repeatSeason} />
-          <Button text='Start Next Season disabled' onClick={nextSeason} />
+          <Button
+            text='Start Next Season'
+            isDisabled={true}
+            onClick={nextSeason}
+          />
         </div>
       </div>
     </OverlayBoard>

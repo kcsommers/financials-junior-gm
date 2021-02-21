@@ -7,6 +7,7 @@ import {
   Navigation,
   LevelStick,
   NextSeasonOverlay,
+  Overlay,
 } from '@components';
 import {
   introSlides,
@@ -46,7 +47,9 @@ export const HomePage = () => {
 
   const student = useSelector((state) => state.studentState.student);
 
-  const { inTransition, awards } = useSelector((state) => state.season);
+  const { inTransition, awards, inSession } = useSelector(
+    (state) => state.season
+  );
 
   const dispatch = useDispatch();
 
@@ -117,7 +120,7 @@ export const HomePage = () => {
     student.tutorials.home
   );
 
-  if (inTransition) {
+  if (inTransition && !inSession) {
     dispatch(
       toggleOverlay({
         isOpen: true,
@@ -300,6 +303,7 @@ export const HomePage = () => {
           </div>
         </div>
       </div>
+      <Overlay />
       {tutorialActive && (
         <Tutorial slides={tutorialSlides} onComplete={onTutorialComplete} />
       )}

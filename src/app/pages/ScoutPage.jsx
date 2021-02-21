@@ -9,6 +9,7 @@ import {
   Overlay,
   PlayerDetailsOverlay,
   BadScoutOverlay,
+  NextSeasonOverlay,
 } from '@components';
 import scoutStick from '@images/scout-stick.svg';
 import { useSelector, useDispatch, batch } from 'react-redux';
@@ -31,8 +32,8 @@ import { isEqual } from 'lodash';
 import { getMoneyLevels } from '@utils';
 import { cloneDeep } from 'lodash';
 import { PlayerAssignments } from '@data/players/players';
-import '@css/pages/ScoutPage.css';
 import { updateStudentById } from './../api-helper';
+import '@css/pages/ScoutPage.css';
 
 const boardMap = {
   available: {},
@@ -46,6 +47,7 @@ export const ScoutPage = () => {
   const history = useHistory();
   const tutorialActive = useSelector((state) => state.tutorial.isActive);
   const student = useSelector((state) => state.studentState.student);
+  const { inTransition, awards } = useSelector((state) => state.season);
   const { scoutingState } = useSelector((state) => state.players);
   const { scoutPlayers } = scoutingState;
   const availablePlayersAnimationState = useSelector(
@@ -460,6 +462,18 @@ export const ScoutPage = () => {
     moneyLevelTwoState,
     moneyLevelThreeState,
   ]);
+
+  if (inTransition) {
+    setTimeout(() => {
+      dispatch(
+        toggleOverlay({
+          isOpen: true,
+          template: <NextSeasonOverlay student={student} awards={awards} />,
+          canClose: false,
+        })
+      );
+    });
+  }
 
   return (
     <div className='page-container scout-page-container'>
