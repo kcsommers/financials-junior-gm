@@ -213,7 +213,12 @@ export const TeamPage = () => {
                       : openSignPlayerOverlay.bind(this, 'dOne')
                   }
                 />
-                <div style={{ position: 'relative', top: '30px' }}>
+                <div
+                  style={{
+                    position: 'relative',
+                    top: team.gOne ? '15px' : '30px',
+                  }}
+                >
                   <PlayerCard
                     animationStates={playerCardAnimationStates}
                     player={team.gOne}
