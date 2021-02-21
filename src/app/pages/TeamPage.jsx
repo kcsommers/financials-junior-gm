@@ -10,6 +10,7 @@ import {
   PlayerDetailsOverlay,
   SignPlayerOverlay,
   TeamBudgetState,
+  NextSeasonOverlay,
 } from '@components';
 import scoutStick from '@images/scout-stick.svg';
 import teamStick from '@images/team-stick.svg';
@@ -113,6 +114,18 @@ export const TeamPage = () => {
     student.tutorials &&
     student.tutorials.team
   );
+
+  if (seasonState.inTransition) {
+    dispatch(
+      toggleOverlay({
+        isOpen: true,
+        template: (
+          <NextSeasonOverlay student={student} awards={seasonState.awards} />
+        ),
+        canClose: false,
+      })
+    );
+  }
 
   return (
     <div className='page-container'>

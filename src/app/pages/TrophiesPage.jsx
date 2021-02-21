@@ -110,8 +110,6 @@ export const TrophiesPage = () => {
     const cupKeys = Object.keys(levelAwards);
     const studentAwards = awards[level - 1] && awards[level - 1][0];
 
-    console.log('WTUDENT AQRSLLLL ', studentAwards);
-
     cupKeys.forEach((c) => {
       rows[level].push(
         <div

@@ -25,6 +25,35 @@ import blackbeaversSm from '@images/icons/team-logos/blackbeaversSm.svg';
 import { INJURE_PLAYER } from '@redux/actionTypes';
 import { PlayerAssignments } from '@data/players/players';
 import { cloneDeep } from 'lodash';
+import { initPlayersByLevel, updateStudentById } from './../../api-helper';
+
+export const resetSeason = (level, student) => {
+  return new Promise((resolve, reject) => {
+    const clonedSeasons = cloneDeep(student.seasons);
+    clonedSeasons[(level || 1) - 1] = [];
+
+    updateStudentById(student._id, { seasons: clonedSeasons, level })
+      .then((res) => {
+        if (!res.success || !res.updatedStudent) {
+          console.error(new Error('Unexpected error updating student season'));
+          return;
+        }
+
+        initPlayersByLevel(level)
+          .then((initializedStudentRes) => {
+            const initializedStudent = initializedStudentRes.data;
+            if (!initializedStudentRes.success || !initializedStudent) {
+              console.error(new Error('Unexpected error initializing players'));
+              return;
+            }
+
+            resolve(initializedStudent);
+          })
+          .catch((err) => reject(err));
+      })
+      .catch((err) => reject(err));
+  });
+};
 
 export const getGameResult = (student, opponent) => {
   const rankDiff = student.teamRank - opponent.teamRank;

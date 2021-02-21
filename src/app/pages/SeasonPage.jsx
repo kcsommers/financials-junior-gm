@@ -11,6 +11,7 @@ import {
   StartGameButton,
   Overlay,
   SeasonCompleteOverlay,
+  NextSeasonOverlay,
 } from '@components';
 import seasonStick from '@images/season-stick.svg';
 import {
@@ -142,7 +143,7 @@ export const SeasonPage = () => {
       firstCup: studentTeamIndex === 0,
     };
 
-    const clonedSeasons = cloneDeep(seasonState.seasons);
+    const clonedSeasons = cloneDeep(student.seasons);
     if (clonedSeasons[(student.level || 1) - 1]) {
       clonedSeasons[(student.level || 1) - 1].push(seasonState.completedGames);
     } else {
@@ -310,6 +311,18 @@ export const SeasonPage = () => {
     student.tutorials &&
     student.tutorials.season
   );
+
+  if (seasonState.inTransition && !seasonState.inSession) {
+    dispatch(
+      toggleOverlay({
+        isOpen: true,
+        template: (
+          <NextSeasonOverlay student={student} awards={seasonState.awards} />
+        ),
+        canClose: false,
+      })
+    );
+  }
 
   return (
     <div className='page-container'>

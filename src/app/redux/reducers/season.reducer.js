@@ -44,6 +44,7 @@ const initialState = {
   standings: getStandings([...allOpponents, initialTeams[0]]),
   awards: [],
   inTransition: false,
+  inSession: false,
 };
 
 const seasonReducer = (state = initialState, action) => {
@@ -57,8 +58,9 @@ const seasonReducer = (state = initialState, action) => {
       const clonedState = cloneDeep(state);
       clonedState.awards = awards || [];
       clonedState.completedBlocks = seasons;
-      clonedState.inTransition = seasons[level - 1].length === 3;
-      console.log('INITIALIZE SEAAON:::: ', clonedState);
+      clonedState.inTransition =
+        seasons[level - 1].length === 3 && +level === seasons.length;
+      console.log('INITIALIZE SEAAON:::: ', clonedState, action.payload);
 
       const currentSeason = seasons[level - 1];
       if (!currentSeason) {
@@ -155,8 +157,6 @@ const seasonReducer = (state = initialState, action) => {
         clonedState.seasonTeam,
       ]);
 
-      console.log('[reducer GameENDED]::::: ', clonedState);
-
       clonedState.completedGames.push(gameResult);
       return clonedState;
     }
@@ -176,6 +176,7 @@ const seasonReducer = (state = initialState, action) => {
       clonedState.completedGames = [];
       clonedState.awards[(student.level || 1) - 1] = student.awards;
       clonedState.inTransition = true;
+      clonedState.inSession = true;
 
       console.log('SEASON COMPLETE::::: ', clonedState);
       return clonedState;
