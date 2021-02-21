@@ -160,6 +160,10 @@ export const getStandings = (teams) => {
 };
 
 export const getStanding = (team, standings) => {
+  if (!team) {
+    return '';
+  }
+
   const standing = (
     standings.findIndex((t) => t.name === team.name) + 1
   ).toString();

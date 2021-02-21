@@ -7,10 +7,11 @@ export const Button = ({
   color = '#fff',
   onClick,
   isLoading,
+  isDisabled = false,
 }) => {
   return (
     <div
-      className={`box-shadow btn`}
+      className={`box-shadow btn${isDisabled ? ' disabled' : ''}`}
       style={{ backgroundColor: background, color: color }}
       onClick={onClick}
     >

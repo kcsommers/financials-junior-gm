@@ -6,6 +6,7 @@ import {
   StickButton,
   Navigation,
   LevelStick,
+  NextSeasonOverlay,
 } from '@components';
 import {
   introSlides,
@@ -24,7 +25,7 @@ import teamStick from '@images/team-stick.svg';
 import budgetStick from '@images/budget-stick.svg';
 import seasonStick from '@images/season-stick.svg';
 import trophiesStick from '@images/trophies-stick.svg';
-import { setTutorialState, updateStudent } from '@redux/actions';
+import { setTutorialState, updateStudent, toggleOverlay } from '@redux/actions';
 import { updateStudentById } from './../api-helper';
 import { cloneDeep } from 'lodash';
 import '@css/pages/HomePage.css';
@@ -44,6 +45,8 @@ export const HomePage = () => {
   const tutorialActive = useSelector((state) => state.tutorial.isActive);
 
   const student = useSelector((state) => state.studentState.student);
+
+  const { inTransition, awards } = useSelector((state) => state.season);
 
   const dispatch = useDispatch();
 
@@ -113,6 +116,16 @@ export const HomePage = () => {
     student.tutorials &&
     student.tutorials.home
   );
+
+  if (inTransition) {
+    dispatch(
+      toggleOverlay({
+        isOpen: true,
+        template: <NextSeasonOverlay student={student} awards={awards} />,
+        canClose: false,
+      })
+    );
+  }
 
   return (
     <div className='home-page-container'>

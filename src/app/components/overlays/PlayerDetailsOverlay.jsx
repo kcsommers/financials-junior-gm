@@ -8,6 +8,7 @@ import {
   TradePlayerOverlay,
   PlayerChangeSuccessOverlay,
   Button,
+  ConfirmOverlay,
 } from '@components';
 import {
   PlayerAssignments,
@@ -23,7 +24,10 @@ export const PlayerDetailsOverlay = ({
 }) => {
   const dispatch = useDispatch();
 
-  const releaseCancelled = () => {
+  const isBenchPlayer =
+    getPlayerPositon(player.playerAssignment) === PlayerPositions.BENCH;
+
+  const onCancel = () => {
     dispatch(
       toggleOverlay({
         isOpen: false,
@@ -89,9 +93,36 @@ export const PlayerDetailsOverlay = ({
         template: (
           <ConfirmReleaseOverlay
             confirm={releaseConfirmed}
-            cancel={releaseCancelled}
+            cancel={onCancel}
             player={player}
           />
+        ),
+      })
+    );
+  };
+
+  const moveToStartingLineupConfirmed = () => {
+    console.log('CONFIRM MOVE TO STARING:::: ');
+  };
+
+  const confirmMoveToStartingLineup = () => {
+    dispatch(
+      toggleOverlay({
+        isOpen: true,
+        template: (
+          <ConfirmOverlay
+            message='Are you sure you want to move this player to the starting lineup?'
+            cancel={onCancel}
+            confirm={moveToStartingLineupConfirmed}
+          >
+            <div className='confirm-release-overlay'>
+              <div style={{ display: 'flex', padding: '2rem 3rem 0 3rem' }}>
+                <div style={{ flex: 1 }}>
+                  <PlayerCard size='medium' player={player} />
+                </div>
+              </div>
+            </div>
+          </ConfirmOverlay>
         ),
       })
     );
@@ -123,7 +154,15 @@ export const PlayerDetailsOverlay = ({
               width: '100%',
             }}
           >
-            <Button text='Trade' onClick={confirmTrade} />
+            {isBenchPlayer ? (
+              <Button
+                text='Move to Starting Lineup'
+                onClick={confirmMoveToStartingLineup}
+              />
+            ) : (
+              <Button text='Trade' onClick={confirmTrade} />
+            )}
+
             <Button text='Release' onClick={confirmRelease} />
           </div>
         )}
