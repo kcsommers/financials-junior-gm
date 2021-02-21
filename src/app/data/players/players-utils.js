@@ -8,7 +8,8 @@ export const handleSignPlayer = (
   signedPlayer,
   assignment,
   student,
-  seasonState
+  seasonState,
+  newRolloverBudget
 ) => {
   return new Promise((resolve, reject) => {
     signedPlayer.playerAssignment = assignment;
@@ -23,6 +24,11 @@ export const handleSignPlayer = (
       [assignment]: signedPlayer._id,
       players: clonedStudent.players,
     };
+
+    if (newRolloverBudget !== undefined) {
+      console.log('SET NEW ROLLOVER BUDGET::::');
+      // studentUpdates.rollOverBudget = newRolloverBudget;
+    }
 
     // if theres an active season scenario, check that the team is full
     // and end the current game block if so
