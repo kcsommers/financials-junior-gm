@@ -13,7 +13,6 @@ import { awardsByLevel } from '@data/season/awards';
 import {
   toggleOverlay,
   setStudent,
-  setSeasonComplete,
   setInitialPlayersState,
 } from '@redux/actions';
 import { updateStudentById, initPlayersByLevel } from './../api-helper';
@@ -54,18 +53,19 @@ export const TrophiesPage = () => {
   const dispatch = useDispatch();
   const student = useSelector((state) => state.studentState.student);
   const tutorialActive = useSelector((state) => state.tutorial.isActive);
-  const { awards, inTransition } = useSelector((state) => state.season);
+  const { inTransition, awards } = useSelector((state) => state.season);
+
+  console.log('AWARDS:::: ', awards);
 
   const repeatSeason = () => {
     const clonedSeasons = cloneDeep(student.seasons);
     clonedSeasons[(student.level || 1) - 1] = [];
-    updateStudentById(student._id, { seasons: clonedSeasons, awards })
+    updateStudentById(student._id, { seasons: clonedSeasons })
       .then((res) => {
         if (!res.success || !res.updatedStudent) {
           console.error(new Error('Unexpected error updating student season'));
           return;
         }
-        dispatch(setSeasonComplete(res.updatedStudent));
 
         initPlayersByLevel(student.level)
           .then((initializedStudentRes) => {
@@ -76,7 +76,6 @@ export const TrophiesPage = () => {
             }
 
             batch(() => {
-              dispatch(setSeasonComplete(student));
               dispatch(setStudent(initializedStudent));
               dispatch(
                 setInitialPlayersState(
@@ -111,7 +110,9 @@ export const TrophiesPage = () => {
   [1, 2, 3].forEach((level) => {
     const levelAwards = awardsByLevel[level];
     const cupKeys = Object.keys(levelAwards);
-    const studentAwards = awards[level - 1];
+    const studentAwards = awards[level - 1] && awards[level - 1][0];
+
+    console.log('WTUDENT AQRSLLLL ', studentAwards);
 
     cupKeys.forEach((c) => {
       rows[level].push(
@@ -173,9 +174,10 @@ export const TrophiesPage = () => {
         level={student.level}
         inverse={true}
         tutorialActive={tutorialActive}
+        inTransition={inTransition}
       />
 
-      <PageBoard hideCloseBtn={true} includeBackButton={true}>
+      <PageBoard hideCloseBtn={true} includeBackButton={!inTransition}>
         <div
           style={{
             display: 'flex',

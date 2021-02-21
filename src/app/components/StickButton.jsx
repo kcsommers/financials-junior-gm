@@ -12,6 +12,7 @@ export const StickButton = ({
   small,
   styles,
   hideDuringTutorial,
+  inTransition,
 }) => {
   return tutorialActive ? (
     <motion.div
@@ -39,7 +40,12 @@ export const StickButton = ({
         className={`stick-btn-img${inverse ? ' stick-btn-img-inverse' : ''}`}
         src={image}
       />
-      <Link className='text-link stick-btn-link' to={link}></Link>
+      <Link
+        className={`text-link stick-btn-link${
+          inTransition ? ' stick-btn-link-disabled' : ''
+        }`}
+        to={link}
+      ></Link>
     </div>
   );
 };
