@@ -24,6 +24,7 @@ import {
 import { updateStudentById } from '../api-helper';
 import { cloneDeep } from 'lodash';
 import '@css/pages/BudgetPage.css';
+import { getDollarString } from '@utils';
 
 let debounceTimeout = 0;
 
@@ -124,10 +125,37 @@ export const BudgetPage = () => {
 
       <PageBoard hideCloseBtn={true} includeBackButton={true}>
         <div className='budget-page-board-inner'>
-          <span style={{ position: 'absolute', left: '1rem', top: '1rem' }}>
-            <SharkieButton onCallSharkie={onCallSharkie} textPosition='right' />
-          </span>
-
+          <div
+            style={{
+              position: 'absolute',
+              left: '0',
+              width: '100%',
+              top: '0',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              padding: '1rem',
+            }}
+          >
+            {student.rollOverBudget ||
+              (true && (
+                <p
+                  className='box-shadow'
+                  style={{
+                    textAlign: 'center',
+                    backgroundColor: '#f3901d',
+                    color: '#fff',
+                    padding: '0.5rem',
+                    borderRadius: '5px',
+                  }}
+                >
+                  Rollover Budget
+                  <br />
+                  {getDollarString(3)}
+                </p>
+              ))}
+            <SharkieButton onCallSharkie={onCallSharkie} textPosition='left' />
+          </div>
           <div className='budget-equation-container'>
             <BudgetEquation
               budget={{

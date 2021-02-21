@@ -2,7 +2,7 @@ import { LoadingSpinner } from '@components';
 import '@css/components/Button.css';
 
 const getFontSize = (str) => {
-  if (str && str.length > 20) {
+  if (str && str.length > 18) {
     return '1.5rem';
   }
 

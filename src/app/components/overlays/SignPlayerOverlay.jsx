@@ -47,33 +47,42 @@ export const SignPlayerOverlay = ({ team, assignment, student }) => {
     );
   };
 
-  const signConfirmed = (signedPlayer) => {
+  const signConfirmed = (signedPlayer, newRolloverBudget) => {
     const prevAssignment = signedPlayer.playerAssignment;
-    handleSignPlayer(signedPlayer, assignment, student, seasonState).then(
-      ({ updatedStudent, updatedPlayer }) => {
-        batch(() => {
-          dispatch(signPlayer(updatedPlayer, prevAssignment, updatedStudent));
-          dispatch(setStudent(updatedStudent));
-          dispatch(
-            toggleOverlay({
-              isOpen: true,
-              template: (
-                <PlayerChangeSuccessOverlay
-                  player={updatedPlayer}
-                  message={`${updatedPlayer.playerName} has been signed!`}
-                />
-              ),
-            })
-          );
-          if (seasonState.currentScenario) {
-            dispatch(gameBlockEnded());
-          }
-        });
-      }
-    );
+    handleSignPlayer(
+      signedPlayer,
+      assignment,
+      student,
+      seasonState,
+      newRolloverBudget
+    ).then(({ updatedStudent, updatedPlayer }) => {
+      batch(() => {
+        dispatch(signPlayer(updatedPlayer, prevAssignment, updatedStudent));
+        dispatch(setStudent(updatedStudent));
+        dispatch(
+          toggleOverlay({
+            isOpen: true,
+            template: (
+              <PlayerChangeSuccessOverlay
+                player={updatedPlayer}
+                message={`${updatedPlayer.playerName} has been signed!`}
+              />
+            ),
+          })
+        );
+        if (seasonState.currentScenario) {
+          dispatch(gameBlockEnded());
+        }
+      });
+    });
   };
 
-  const confirmSign = (player) => {
+  const confirmSign = (player, skipConfirm, newRolloverBudget) => {
+    if (skipConfirm) {
+      signConfirmed(player, newRolloverBudget);
+      return;
+    }
+
     dispatch(
       toggleOverlay({
         isOpen: true,
