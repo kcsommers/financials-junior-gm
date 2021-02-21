@@ -151,6 +151,7 @@ export const AppRouter = ({ isLoggedIn, userRole }) => {
         {protectedRoutes.includes(window.location.pathname) && (
           <Redirect to='/dashboard' />
         )}
+        <Redirect from='/' to='/dashboard' />
         <Route component={PageNotFound} />
       </Switch>
       <IceBackground />
