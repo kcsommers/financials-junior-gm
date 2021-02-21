@@ -4,12 +4,12 @@ import { logout } from '../../api-helper';
 import { useHistory } from 'react-router-dom';
 import { destroySession } from '@redux/actions';
 import { useDispatch } from 'react-redux';
-import '@css/components/home-page/Navigation.css';
 import {
   LOGIN_STORAGE_KEY,
   USER_ROLE_STORAGE_KEY,
   STUDENT_ID_STORAGE_KEY,
 } from '@data/auth/auth';
+import '@css/components/home-page/Navigation.css';
 
 export const Navigation = ({ tutorialActive }) => {
   const dispatch = useDispatch();
@@ -32,7 +32,7 @@ export const Navigation = ({ tutorialActive }) => {
       className='nav-container'
       style={{
         position: 'relative',
-        zIndex: tutorialActive ? 0 : 1,
+        // zIndex: tutorialActive ? 0 : 1,
       }}
     >
       <div className='exit-stick-box'>

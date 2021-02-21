@@ -9,7 +9,11 @@ import {
   PlayerChangeSuccessOverlay,
   Button,
 } from '@components';
-import { PlayerAssignments } from '@data/players/players';
+import {
+  PlayerAssignments,
+  PlayerPositions,
+  getPlayerPositon,
+} from '@data/players/players';
 import { cloneDeep } from 'lodash';
 
 export const PlayerDetailsOverlay = ({
@@ -30,10 +34,14 @@ export const PlayerDetailsOverlay = ({
 
   const releaseConfirmed = () => {
     const prevAssignment = player.playerAssignment;
-    player.playerAssignment = PlayerAssignments.MARKET;
-    //logic for player is released
+    const prevPosition = getPlayerPositon(prevAssignment);
+    player.playerAssignment =
+      prevPosition === PlayerPositions.BENCH
+        ? PlayerAssignments.OFFERED_SCOUT
+        : PlayerAssignments.MARKET;
+
     const playersCopy = cloneDeep(student.players);
-    //
+
     playersCopy.splice(
       playersCopy.findIndex((p) => p._id === player._id),
       1,
@@ -45,7 +53,7 @@ export const PlayerDetailsOverlay = ({
       players: playersCopy,
     })
       .then((res) => {
-        dispatch(releasePlayer(player, prevAssignment));
+        dispatch(releasePlayer(player, prevAssignment, student));
         dispatch(setStudent(res.updatedStudent));
         dispatch(
           toggleOverlay({

@@ -11,7 +11,7 @@ import {
   BadScoutOverlay,
 } from '@components';
 import scoutStick from '@images/scout-stick.svg';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch, batch } from 'react-redux';
 import { motion } from 'framer-motion';
 import {
   scoutSlides,
@@ -29,10 +29,10 @@ import {
 } from '@redux/actions';
 import { isEqual } from 'lodash';
 import { getMoneyLevels } from '@utils';
-import { updatePlayerOnServer } from '@data/players/players-service';
 import { cloneDeep } from 'lodash';
 import { PlayerAssignments } from '@data/players/players';
 import '@css/pages/ScoutPage.css';
+import { updateStudentById } from './../api-helper';
 
 const boardMap = {
   available: {},
@@ -46,7 +46,8 @@ export const ScoutPage = () => {
   const history = useHistory();
   const tutorialActive = useSelector((state) => state.tutorial.isActive);
   const student = useSelector((state) => state.studentState.student);
-  const { scoutPlayers, scoutingState } = useSelector((state) => state.players);
+  const { scoutingState } = useSelector((state) => state.players);
+  const { scoutPlayers } = scoutingState;
   const availablePlayersAnimationState = useSelector(
     (state) => state.tutorial.scout.availablePlayersBoard
   );
@@ -320,32 +321,48 @@ export const ScoutPage = () => {
     const levelOneCloned = cloneDeep(scoutPlayers.levelOne);
     const levelTwoCloned = cloneDeep(scoutPlayers.levelTwo);
     const levelThreeCloned = cloneDeep(scoutPlayers.levelThree);
+    const offeredScoutPlayers = [];
 
     levelOneCloned.forEach((p) => {
       p.playerCost = moneyLevels[0].num;
-      p.playerAssignment = PlayerAssignments.MARKET;
+      p.playerAssignment = PlayerAssignments.OFFERED_SCOUT;
+      offeredScoutPlayers.push(p);
     });
     levelTwoCloned.forEach((p) => {
       p.playerCost = moneyLevels[1].num;
-      p.playerAssignment = PlayerAssignments.MARKET;
+      p.playerAssignment = PlayerAssignments.OFFERED_SCOUT;
+      offeredScoutPlayers.push(p);
     });
     levelThreeCloned.forEach((p) => {
       p.playerCost = moneyLevels[2].num;
-      p.playerAssignment = PlayerAssignments.MARKET;
+      p.playerAssignment = PlayerAssignments.OFFERED_SCOUT;
+      offeredScoutPlayers.push(p);
     });
 
-    updatePlayerOnServer(null)
+    const playersUpdated = student.players.map((p) => {
+      const offeredScoutIndex = offeredScoutPlayers.findIndex(
+        (player) => player._id === p._id
+      );
+      if (offeredScoutIndex > -1) {
+        return offeredScoutPlayers[offeredScoutIndex];
+      }
+      return p;
+    });
+
+    updateStudentById(student._id, { players: playersUpdated })
       .then((res) => {
-        dispatch(
-          toggleOverlay({
-            isOpen: true,
-            template: <ScoutingCompleteOverlay />,
-            canClose: false,
-          })
-        );
-        dispatch(
-          scoutingComplete(levelOneCloned, levelTwoCloned, levelThreeCloned)
-        );
+        batch(() => {
+          dispatch(
+            toggleOverlay({
+              isOpen: true,
+              template: <ScoutingCompleteOverlay />,
+              canClose: false,
+            })
+          );
+          dispatch(
+            scoutingComplete(levelOneCloned, levelTwoCloned, levelThreeCloned)
+          );
+        });
         window.setTimeout(() => {
           history.push('/team');
           dispatch(
@@ -451,6 +468,7 @@ export const ScoutPage = () => {
         largeStick={true}
         objectives={['1. Scout players to sign to your bench!']}
         level={student.level}
+        tutorialActive={tutorialActive}
       />
       <PageBoard hideCloseBtn={true} includeBackButton={true}>
         <div className='scout-page-board-header'>

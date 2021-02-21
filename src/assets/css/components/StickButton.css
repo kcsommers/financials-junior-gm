@@ -12,6 +12,10 @@ a.stick-btn-link {
   z-index: 1;
 }
 
+a.stick-btn-link-disabled {
+  pointer-events: none;
+}
+
 .stick-btn-img {
   position: absolute;
   bottom: -34%;

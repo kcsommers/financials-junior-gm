@@ -84,7 +84,7 @@ export const scenarios = {
       objective: '1. Replace the injured player',
       action: INJURE_PLAYER,
       getPlayer: getSecondHighestPlayer,
-      playerAssignment: PlayerAssignments.MARKET,
+      playerAssignment: PlayerAssignments.INJURED,
       player: null,
     },
     {
@@ -92,7 +92,7 @@ export const scenarios = {
       objective: '1. Replace the injured player',
       action: INJURE_PLAYER,
       getPlayer: getStartingPlayer,
-      playerAssignment: PlayerAssignments.MARKET,
+      playerAssignment: PlayerAssignments.INJURED,
       player: null,
     },
   ],
@@ -292,5 +292,4 @@ export const allOpponents = [
     standings: '6th',
     color: '#CECECE',
   },
-  
 ];

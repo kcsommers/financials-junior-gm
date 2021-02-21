@@ -101,6 +101,7 @@ export const BudgetPage = () => {
         objectives={['1. Learn about your budget.']}
         level={student.level}
         inverse={true}
+        tutorialActive={tutorialActive}
       />
 
       <PageBoard hideCloseBtn={true} includeBackButton={true}>

@@ -61,6 +61,7 @@ div.hockey-sticks-row {
 
 div.hockey-sticks-row-2 {
   margin-top: 2.5rem;
+  z-index: 1;
 }
 
 div.stick-btn-container:first-child {
