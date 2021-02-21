@@ -305,6 +305,7 @@ export const SeasonPage = () => {
         stickBtn={seasonStick}
         objectives={['1. Play the season']}
         level={student.level}
+        tutorialActive={tutorialActive}
       />
 
       <PageBoard hideCloseBtn={true} includeBackButton={true}>

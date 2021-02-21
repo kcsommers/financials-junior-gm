@@ -53,6 +53,7 @@ export const TrophiesPage = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const student = useSelector((state) => state.studentState.student);
+  const tutorialActive = useSelector((state) => state.tutorial.isActive);
   const { awards, inTransition } = useSelector((state) => state.season);
 
   const repeatSeason = () => {
@@ -171,6 +172,7 @@ export const TrophiesPage = () => {
         objectives={['1. See your awards!']}
         level={student.level}
         inverse={true}
+        tutorialActive={tutorialActive}
       />
 
       <PageBoard hideCloseBtn={true} includeBackButton={true}>

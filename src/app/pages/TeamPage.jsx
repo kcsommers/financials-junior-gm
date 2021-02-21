@@ -113,6 +113,7 @@ export const TeamPage = () => {
         stickBtn={teamStick}
         objectives={['1. Learn about your budget.']}
         level={student.level}
+        tutorialActive={tutorialActive}
       />
 
       <PageBoard hideCloseBtn={true} includeBackButton={true}>
