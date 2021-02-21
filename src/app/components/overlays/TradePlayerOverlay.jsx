@@ -4,12 +4,15 @@ import {
   PlayerCard,
   MarketPlayersBoard,
 } from '@components';
-import { getPlayerPositon } from '@utils';
 import { useDispatch } from 'react-redux';
 import { toggleOverlay, tradePlayer, setStudent } from '@redux/actions';
 import { ConfirmTradeOverlay } from './ConfirmTradeOverlay';
 import { PlayerDetailsOverlay } from './PlayerDetailsOverlay';
-import { PlayerAssignments } from '@data/players/players';
+import {
+  PlayerAssignments,
+  getPlayerPositon,
+  PlayerPositions,
+} from '@data/players/players';
 import { cloneDeep } from 'lodash';
 import { updateStudentById } from '../../api-helper';
 import { PlayersTradedOverlay } from './PlayersTradedOverlay';
@@ -30,8 +33,15 @@ export const TradePlayerOverlay = ({ releasingPlayer, student }) => {
 
   const tradeConfirmed = (signingPlayer) => {
     const prevAssignment = releasingPlayer.playerAssignment;
-    releasingPlayer.playerAssignment = PlayerAssignments.MARKET;
+    const prevPosition = getPlayerPositon(prevAssignment);
+    releasingPlayer.playerAssignment =
+      prevPosition === PlayerPositions.BENCH
+        ? PlayerAssignments.OFFERED_SCOUT
+        : PlayerAssignments.MARKET;
     signingPlayer.playerAssignment = prevAssignment;
+
+    console.log('RELEASING:::: ', releasingPlayer);
+    console.log('SIGNIGN:::: ', signingPlayer);
 
     const playersCopy = cloneDeep(student.players).reduce((arr, p) => {
       if (p._id === releasingPlayer._id) {
@@ -50,11 +60,14 @@ export const TradePlayerOverlay = ({ releasingPlayer, student }) => {
 
     updateStudentById(student._id, {
       [signingPlayer.playerAssignment]: signingPlayer._id,
-      [releasingPlayer.playerAssignment]: PlayerAssignments.MARKET,
+      [releasingPlayer.playerAssignment]:
+        prevPosition === PlayerPositions.BENCH
+          ? PlayerAssignments.OFFERED_SCOUT
+          : PlayerAssignments.MARKET,
       players: playersCopy,
     })
       .then((res) => {
-        dispatch(tradePlayer(releasingPlayer, signingPlayer));
+        dispatch(tradePlayer(releasingPlayer, signingPlayer, student));
         dispatch(setStudent(res.updatedStudent));
         dispatch(
           toggleOverlay({

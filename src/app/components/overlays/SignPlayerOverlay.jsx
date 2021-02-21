@@ -12,10 +12,13 @@ import {
   gameBlockEnded,
 } from '@redux/actions';
 import { ConfirmSignOverlay } from './ConfirmSignOverlay';
-import { getPlayerPositon } from '@utils';
 import { updateStudentById } from '../../api-helper';
 import { cloneDeep } from 'lodash';
-import { TeamAssignments, getAvailableSlots } from '@data/players/players';
+import {
+  TeamAssignments,
+  getAvailableSlots,
+  getPlayerPositon,
+} from '@data/players/players';
 import '@css/components/team-page/SignPlayerOverlay.css';
 
 export const SignPlayerOverlay = ({ team, assignment, student }) => {
@@ -62,7 +65,7 @@ export const SignPlayerOverlay = ({ team, assignment, student }) => {
       players: playersCopy,
     })
       .then((res) => {
-        dispatch(signPlayer(signedPlayer, assignment));
+        dispatch(signPlayer(signedPlayer, assignment, student));
         dispatch(setStudent(res.updatedStudent));
         dispatch(
           toggleOverlay({

@@ -56,7 +56,7 @@ div.team-players-row-2 {
 }
 
 div.team-players-card {
-  height: 350px;
+  height: 335px;
   position: relative;
   overflow: hidden;
   display: flex;
@@ -73,15 +73,16 @@ div.bench-players-card {
 
 div.bench-players-card {
   margin-top: 1rem;
-  min-height: 150.098px;
+  height: 170px;
 }
 
 div.bench-players-card > div.team-players-row {
-  padding: 0.5rem 0;
+  padding: 0 0 0.5rem 0;
 }
 
 p.on-the-bench-text {
   text-align: center;
   font-weight: bold;
+  font-size: 1.1rem;
   margin-top: 0.25rem;
 }

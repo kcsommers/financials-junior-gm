@@ -8,8 +8,13 @@ import {
   INJURE_PLAYER,
 } from '../actionTypes';
 import { cloneDeep } from 'lodash';
-import { PlayerAssignments, PlayerPositions } from '@data/players/players';
-import { isTeamPlayer } from '@utils';
+import {
+  PlayerAssignments,
+  PlayerPositions,
+  isTeamPlayer,
+  getPlayerPositon,
+} from '@data/players/players';
+import { getMoneyLevels } from '@utils';
 
 const initialState = {
   marketPlayers: {
@@ -17,15 +22,21 @@ const initialState = {
     defender: [],
     goalie: [],
   },
-  scoutPlayers: {
-    levelOne: null,
-    levelTwo: null,
-    levelThree: null,
-    available: null,
-  },
+  injuredPlayers: [],
   teamPlayers: null,
   scoutingState: {
     isComplete: false,
+    scoutPlayers: {
+      levelOne: null,
+      levelTwo: null,
+      levelThree: null,
+      available: null,
+    },
+    offeredScoutPlayers: {
+      forward: [],
+      defender: [],
+      goalie: [],
+    },
   },
   initialized: false,
 };
@@ -34,6 +45,7 @@ const playersReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_INITIAL_PLAYERS_STATE: {
       const { players, student } = action.payload;
+      const moneyLevels = getMoneyLevels(student.level);
       const marketPlayers = {
         forward: [],
         defender: [],
@@ -45,8 +57,17 @@ const playersReducer = (state = initialState, action) => {
         levelThree: [],
         available: [],
       };
+      const offeredScoutPlayers = {
+        forward: [],
+        defender: [],
+        goalie: [],
+      };
+      const injuredPlayers = [];
       const teamPlayers = {};
+      // make sure the players are for this level
       players.filter((p) => p.playerLevel === student.level);
+
+      // loop players and place them in the appropriate cache
       players.forEach((p) => {
         if (p.playerAssignment === PlayerAssignments.MARKET) {
           if (p.playerPosition === PlayerPositions.FORWARD) {
@@ -58,56 +79,160 @@ const playersReducer = (state = initialState, action) => {
           }
         } else if (p.playerAssignment === PlayerAssignments.SCOUT) {
           scoutPlayers.available.push(p);
+        } else if (p.playerAssignment === PlayerAssignments.OFFERED_SCOUT) {
+          if (+p.playerCost === moneyLevels[0].num) {
+            scoutPlayers.levelOne.push(p);
+          } else if (+p.playerCost === moneyLevels[1].num) {
+            scoutPlayers.levelTwo.push(p);
+          } else if (+p.playerCost === moneyLevels[2].num) {
+            scoutPlayers.levelThree.push(p);
+          }
+
+          if (p.playerPosition === PlayerPositions.FORWARD) {
+            offeredScoutPlayers.forward.push(p);
+          } else if (p.playerPosition === PlayerPositions.DEFENDER) {
+            offeredScoutPlayers.defender.push(p);
+          } else if (p.playerPosition === PlayerPositions.GOALIE) {
+            offeredScoutPlayers.goalie.push(p);
+          }
+        } else if (p.playerAssignment === PlayerAssignments.INJURED) {
+          injuredPlayers.push(p);
         } else if (isTeamPlayer(p)) {
           teamPlayers[p.playerAssignment] = p;
         }
       });
 
+      const scoutingComplete = Object.keys(offeredScoutPlayers).some(
+        (k) => offeredScoutPlayers[k].length
+      );
+
       return {
         initialized: true,
         marketPlayers,
         teamPlayers,
-        scoutPlayers,
         scoutingState: {
-          isComplete: false,
+          isComplete: scoutingComplete,
+          scoutPlayers,
+          offeredScoutPlayers,
         },
       };
     }
     case SIGN_PLAYER: {
+      const clonedState = cloneDeep(state);
       const signedPlayer = action.payload.player;
       const assignment = action.payload.assignment;
-      const clonedState = cloneDeep(state);
-      const marketCache =
-        clonedState.marketPlayers[signedPlayer.playerPosition];
+      const student = action.payload.student;
+      const moneyLevels = getMoneyLevels(student.level);
+      const position = getPlayerPositon(assignment);
 
-      marketCache.splice(
-        marketCache.findIndex((p) => p._id === signedPlayer._id),
+      const playerCache =
+        position === PlayerPositions.BENCH
+          ? clonedState.scoutingState.offeredScoutPlayers
+          : clonedState.marketPlayers;
+
+      playerCache[signedPlayer.playerPosition].splice(
+        playerCache[signedPlayer.playerPosition].findIndex(
+          (p) => p._id === signedPlayer._id
+        ),
         1
       );
+
+      if (position === PlayerPositions.BENCH) {
+        let levelCache;
+        if (+signedPlayer.playerCost === moneyLevels[0].num) {
+          levelCache = clonedState.scoutingState.scoutPlayers.levelOne;
+        } else if (+signedPlayer.playerCost === moneyLevels[1].num) {
+          levelCache = clonedState.scoutingState.scoutPlayers.levelTwo;
+        } else if (+signedPlayer.playerCost === moneyLevels[2].num) {
+          levelCache = clonedState.scoutingState.scoutPlayers.levelThree;
+        }
+
+        levelCache.splice(
+          levelCache.findIndex((p) => p._id === signedPlayer._id),
+          1
+        );
+      }
+
       clonedState.teamPlayers[assignment] = signedPlayer;
 
       return clonedState;
     }
     case RELEASE_PLAYER: {
+      const clonedState = cloneDeep(state);
       const releasedPlayer = action.payload.player;
       const prevAssignment = action.payload.prevAssignment;
-      const clonedState = cloneDeep(state);
-      const marketCache =
-        clonedState.marketPlayers[releasedPlayer.playerPosition];
+      const student = action.payload.student;
+      const moneyLevels = getMoneyLevels(student.level);
+
+      const playerCache =
+        releasedPlayer.playerAssignment === PlayerAssignments.OFFERED_SCOUT
+          ? clonedState.scoutingState.offeredScoutPlayers
+          : clonedState.marketPlayers;
+
+      if (releasedPlayer.playerAssignment === PlayerAssignments.OFFERED_SCOUT) {
+        if (+releasedPlayer.playerCost === moneyLevels[0].num) {
+          clonedState.scoutingState.scoutPlayers.levelOne.push(releasedPlayer);
+        } else if (+releasedPlayer.playerCost === moneyLevels[1].num) {
+          clonedState.scoutingState.scoutPlayers.levelTwo.push(releasedPlayer);
+        } else if (+releasedPlayer.playerCost === moneyLevels[2].num) {
+          clonedState.scoutingState.scoutPlayers.levelThree.push(
+            releasedPlayer
+          );
+        }
+      }
 
       clonedState.teamPlayers[prevAssignment] = null;
-      marketCache.push(releasedPlayer);
+      playerCache[releasedPlayer.playerPosition].push(releasedPlayer);
       return clonedState;
     }
     case TRADE_PLAYER: {
       const releasedPlayer = action.payload.releasedPlayer;
       const signedPlayer = action.payload.signedPlayer;
+      const student = action.payload.student;
+      const moneyLevels = getMoneyLevels(student.level);
       const clonedState = cloneDeep(state);
-      const marketCache =
-        clonedState.marketPlayers[releasedPlayer.playerPosition];
 
+      console.log('RELEASed::: ', releasedPlayer);
+      console.log('SIGNIed:::: ', signedPlayer);
+
+      const playerCache =
+        releasedPlayer.playerAssignment === PlayerAssignments.OFFERED_SCOUT
+          ? clonedState.scoutingState.offeredScoutPlayers
+          : clonedState.marketPlayers;
+
+      playerCache[releasedPlayer.playerPosition].push(releasedPlayer);
+
+      if (releasedPlayer.playerAssignment === PlayerAssignments.OFFERED_SCOUT) {
+        if (+releasedPlayer.playerCost === moneyLevels[0].num) {
+          clonedState.scoutingState.scoutPlayers.levelOne.push(releasedPlayer);
+        } else if (+releasedPlayer.playerCost === moneyLevels[1].num) {
+          clonedState.scoutingState.scoutPlayers.levelTwo.push(releasedPlayer);
+        } else if (+releasedPlayer.playerCost === moneyLevels[2].num) {
+          clonedState.scoutingState.scoutPlayers.levelThree.push(
+            releasedPlayer
+          );
+        }
+      }
+
+      if (
+        getPlayerPositon(signedPlayer.playerAssignment) ===
+        PlayerPositions.BENCH
+      ) {
+        let levelCache;
+        if (+signedPlayer.playerCost === moneyLevels[0].num) {
+          levelCache = clonedState.scoutingState.scoutPlayers.levelOne;
+        } else if (+signedPlayer.playerCost === moneyLevels[1].num) {
+          levelCache = clonedState.scoutingState.scoutPlayers.levelTwo;
+        } else if (+signedPlayer.playerCost === moneyLevels[2].num) {
+          levelCache = clonedState.scoutingState.scoutPlayers.levelThree;
+        }
+
+        levelCache.splice(
+          levelCache.findIndex((p) => p._id === signedPlayer._id),
+          1
+        );
+      }
       clonedState.teamPlayers[signedPlayer.playerAssignment] = signedPlayer;
-      marketCache.push(releasedPlayer);
 
       return clonedState;
     }
@@ -115,47 +240,38 @@ const playersReducer = (state = initialState, action) => {
       const clonedState = cloneDeep(state);
       const updatedLevels = Object.keys(action.payload);
 
-      clonedState.scoutPlayers[updatedLevels[0]] =
+      clonedState.scoutingState.scoutPlayers[updatedLevels[0]] =
         action.payload[updatedLevels[0]];
-      clonedState.scoutPlayers[updatedLevels[1]] =
+      clonedState.scoutingState.scoutPlayers[updatedLevels[1]] =
         action.payload[updatedLevels[1]];
 
       return clonedState;
     }
     case SCOUTING_COMPLETE: {
       const { levelOne, levelTwo, levelThree } = action.payload;
-      const forward = [];
-      const defender = [];
-      const goalie = [];
+      const forwards = [];
+      const defenders = [];
+      const goalies = [];
       const clonedState = cloneDeep(state);
       const placeByPosition = (player) => {
         if (player.playerPosition === PlayerPositions.GOALIE) {
-          goalie.push(player);
+          goalies.push(player);
         } else if (player.playerPosition === PlayerPositions.FORWARD) {
-          forward.push(player);
+          forwards.push(player);
         } else if (player.playerPosition === PlayerPositions.DEFENDER) {
-          defender.push(player);
+          defenders.push(player);
         }
       };
       levelOne.forEach(placeByPosition);
       levelTwo.forEach(placeByPosition);
       levelThree.forEach(placeByPosition);
 
-      clonedState.scoutPlayers.levelOne = levelOne;
-      clonedState.scoutPlayers.levelTwo = levelTwo;
-      clonedState.scoutPlayers.levelThree = levelThree;
-      clonedState.marketPlayers.forward = [
-        ...forward,
-        ...clonedState.marketPlayers.forward,
-      ];
-      clonedState.marketPlayers.defender = [
-        ...defender,
-        ...clonedState.marketPlayers.defender,
-      ];
-      clonedState.marketPlayers.goalie = [
-        ...goalie,
-        ...clonedState.marketPlayers.goalie,
-      ];
+      clonedState.scoutingState.scoutPlayers.levelOne = levelOne;
+      clonedState.scoutingState.scoutPlayers.levelTwo = levelTwo;
+      clonedState.scoutingState.scoutPlayers.levelThree = levelThree;
+      clonedState.scoutingState.offeredScoutPlayers.forward = forwards;
+      clonedState.scoutingState.offeredScoutPlayers.defender = defenders;
+      clonedState.scoutingState.offeredScoutPlayers.goalie = goalies;
       clonedState.scoutingState.isComplete = true;
 
       return clonedState;
