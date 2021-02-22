@@ -230,7 +230,7 @@ export const handleTradePlayers = (
     signedPlayer.playerAssignment = prevAssignment;
 
     const playersCopy = cloneDeep(student.players).reduce((arr, p) => {
-      if (p._id === releasingPlayer._id) {
+      if (p._id === releasedPlayer._id) {
         arr.push(releasedPlayer);
         return arr;
       }
@@ -262,7 +262,7 @@ export const handleTradePlayers = (
         resolve({
           updatedStudent: res.updatedStudent,
           updatedSignedPlayer: signedPlayer,
-          updatedReleasedPlayer: signedPlayer,
+          updatedReleasedPlayer: releasedPlayer,
         })
       )
       .catch((err) => reject(err));
