@@ -1,17 +1,17 @@
 import { playerProps } from './data/players/players';
 
-export const getMoneySpent = (players) => {
+export const getMoneySpent = (players, totalBudget) => {
   if (!players) {
     return 0;
   }
-  return Math.max(
+  return Math.min(
     players.reduce((total, p) => {
       if (playerProps.includes(p.playerAssignment)) {
         total += +p.playerCost;
       }
       return total;
     }, 0),
-    0
+    totalBudget
   );
 };
 
