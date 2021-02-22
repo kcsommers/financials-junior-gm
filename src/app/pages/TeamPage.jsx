@@ -10,7 +10,7 @@ import {
   PlayerDetailsOverlay,
   SignPlayerOverlay,
   TeamBudgetState,
-  LoadingSpinner,
+  NextSeasonOverlay,
 } from '@components';
 import scoutStick from '@images/scout-stick.svg';
 import teamStick from '@images/team-stick.svg';
@@ -27,11 +27,12 @@ import { updateStudentById } from './../api-helper';
 import { cloneDeep } from 'lodash';
 import '@css/pages/TeamPage.css';
 
-const TeamPage = () => {
+export const TeamPage = () => {
   const dispatch = useDispatch();
   const tutorialActive = useSelector((state) => state.tutorial.isActive);
   const student = useSelector((state) => state.studentState.student);
   const team = useSelector((state) => state.players.teamPlayers);
+  const seasonState = useSelector((state) => state.season);
   const scoutingState = useSelector((state) => state.players.scoutingState);
   const playerCardAnimationStates = {
     playerCard: useSelector((state) => state.tutorial.team.playerCard),
@@ -66,7 +67,13 @@ const TeamPage = () => {
     dispatch(
       toggleOverlay({
         isOpen: true,
-        template: <PlayerDetailsOverlay player={player} student={student} />,
+        template: (
+          <PlayerDetailsOverlay
+            player={player}
+            student={student}
+            seasonState={seasonState}
+          />
+        ),
       })
     );
   };
@@ -108,12 +115,25 @@ const TeamPage = () => {
     student.tutorials.team
   );
 
-  return team ? (
+  if (seasonState.inTransition) {
+    dispatch(
+      toggleOverlay({
+        isOpen: true,
+        template: (
+          <NextSeasonOverlay student={student} awards={seasonState.awards} />
+        ),
+        canClose: false,
+      })
+    );
+  }
+
+  return (
     <div className='page-container'>
       <HeaderComponent
         stickBtn={teamStick}
         objectives={['1. Learn about your budget.']}
         level={student.level}
+        tutorialActive={tutorialActive}
       />
 
       <PageBoard hideCloseBtn={true} includeBackButton={true}>
@@ -193,7 +213,12 @@ const TeamPage = () => {
                       : openSignPlayerOverlay.bind(this, 'dOne')
                   }
                 />
-                <div style={{ position: 'relative', top: '30px' }}>
+                <div
+                  style={{
+                    position: 'relative',
+                    top: team.gOne ? '15px' : '30px',
+                  }}
+                >
                   <PlayerCard
                     animationStates={playerCardAnimationStates}
                     player={team.gOne}
@@ -259,22 +284,5 @@ const TeamPage = () => {
         <Tutorial slides={tutorialSlides} onComplete={onTutorialComplete} />
       )}
     </div>
-  ) : (
-    <div
-      style={{
-        position: 'absolute',
-        top: 0,
-        bottom: 0,
-        left: 0,
-        right: 0,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}
-    >
-      <LoadingSpinner />
-    </div>
   );
 };
-
-export default TeamPage;

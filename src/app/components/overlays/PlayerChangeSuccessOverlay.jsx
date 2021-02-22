@@ -17,7 +17,10 @@ export const PlayerChangeSuccessOverlay = ({ player, message }) => {
           padding: '4rem 0',
         }}
       >
-        <h2 className='color-primary' style={{ marginBottom: '2rem' }}>
+        <h2
+          className='color-primary'
+          style={{ marginBottom: '2rem', fontSize: '3rem' }}
+        >
           {message}
         </h2>
         <div

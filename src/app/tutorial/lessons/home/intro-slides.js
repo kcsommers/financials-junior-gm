@@ -1,5 +1,5 @@
 import Slide from '../../Slide';
-import { SET_ANIMATION_STATE } from '@redux/actionTypes';
+import { SET_ANIMATION_STATE } from '@redux/actions';
 
 const slideConfigs = [
   {
@@ -48,7 +48,8 @@ const slideConfigs = [
     timer: 0,
   },
   {
-    message: 'A General Manager is in charge of getting the team ready to play in the season!',
+    message:
+      'A General Manager is in charge of getting the team ready to play in the season!',
     accentText: 'General Manager',
     sharkie: 'speak',
     hasButtons: true,
@@ -88,7 +89,7 @@ const slideConfigs = [
     timer: 0,
   },
   {
-    message: "We hope that you can build a great team!",
+    message: 'We hope that you can build a great team!',
     sharkie: 'speak',
     hasButtons: true,
     timer: 0,

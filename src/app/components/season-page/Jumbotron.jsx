@@ -1,7 +1,8 @@
 import { TeamCard } from './TeamCard';
 import jrSharksLogo from '@images/icons/jr-sharks-logo-white-bg.svg';
 import { GamePhases, getStanding } from '@data/season/season';
-import { TeamAssignments, getAvailableSlots } from '@data/players/players';
+import { TeamAssignments } from '@data/players/players';
+import { getAvailableSlots } from '@data/players/players-utils';
 import { Indicator, PlayerCard } from '@components';
 import { motion } from 'framer-motion';
 import { ReactSVG } from 'react-svg';
@@ -18,9 +19,9 @@ export const Jumbotron = ({
   const tutorialActive = useSelector((state) => state.tutorial.isActive);
   const animationStates = {
     stats: useSelector((state) => state.tutorial.season.stats),
-    upcomingGames : useSelector((state) => state.tutorial.season.upcomingGames),
-    jumboText: useSelector((state) => state.tutorial.season.jumbotext)
-  }
+    upcomingGames: useSelector((state) => state.tutorial.season.upcomingGames),
+    jumboText: useSelector((state) => state.tutorial.season.jumbotext),
+  };
   const seasonDisabled =
     getAvailableSlots(
       [
@@ -53,7 +54,10 @@ export const Jumbotron = ({
   );
 
   const statsView = (
-    <motion.div animate={animationStates.stats} className='jumbotron-stats-container'>
+    <motion.div
+      animate={animationStates.stats}
+      className='jumbotron-stats-container'
+    >
       <div className='jumbotron-stats-title'>Stats</div>
       <div className='jumbotron-stats-inner'>
         <div className='jumbotron-stat-wrap'>
@@ -89,7 +93,10 @@ export const Jumbotron = ({
   );
 
   const comingUpView = (
-    <motion.div animate={animationStates.upcomingGames} className='jumbotron-coming-up-container'>
+    <motion.div
+      animate={animationStates.upcomingGames}
+      className='jumbotron-coming-up-container'
+    >
       <div className='jumbotron-next-opponent-container'>
         <h3>Next Opponent</h3>
         <div className='jumbotron-next-opponent-card'>
@@ -128,7 +135,7 @@ export const Jumbotron = ({
                       className='coming-up-opponent-name'
                       style={{ color: team.color }}
                     >
-                    <ReactSVG src={team.logoSm}></ReactSVG>
+                      <ReactSVG src={team.logoSm}></ReactSVG>
                     </span>
                   </div>
                   <div className='opponent-indicator-wrap'>
@@ -176,7 +183,14 @@ export const Jumbotron = ({
         >
           VS
         </span>
-        <div className='game-on-top-right' style={{backgroundColor: '#ffffff', borderRadius: '10px', marginTop: '-2px' }}>
+        <div
+          className='game-on-top-right'
+          style={{
+            backgroundColor: '#ffffff',
+            borderRadius: '10px',
+            marginTop: '-2px',
+          }}
+        >
           <motion.div
             initial={{ transform: 'scale(0.5)' }}
             animate={{ transform: 'scale(1)' }}
@@ -188,7 +202,7 @@ export const Jumbotron = ({
             }}
           >
             <TeamCard
-              logo={currentOpponent.logoLg}
+              logo={currentOpponent && currentOpponent.logoLg}
               standing={getStanding(currentOpponent, seasonState.standings)}
             />
           </motion.div>
@@ -275,21 +289,23 @@ export const Jumbotron = ({
         <div className='jumbotron-main-section'>{getJumbotronView()}</div>
         <div className='jumbotron-border jumbotron-border-right'></div>
       </div>
-      {tutorialActive ? 
+      {tutorialActive ? (
         <motion.div animate={animationStates.jumboText}>
           <h2
-          className='jumbotron-message box-shadow'
-          style={{ fontSize: getFontSize(message) }}
+            className='jumbotron-message box-shadow'
+            style={{ fontSize: getFontSize(message) }}
           >
             {message}
           </h2>
-       </motion.div> : 
-       <h2
-       className='jumbotron-message box-shadow'
-       style={{ fontSize: getFontSize(message) }}
-     >
-       {message}
-     </h2>} 
+        </motion.div>
+      ) : (
+        <h2
+          className='jumbotron-message box-shadow'
+          style={{ fontSize: getFontSize(message) }}
+        >
+          {message}
+        </h2>
+      )}
     </>
   );
 };

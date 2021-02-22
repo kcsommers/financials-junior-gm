@@ -4,7 +4,7 @@ import {
   MarketPlayersBoard,
   PlayerChangeSuccessOverlay,
 } from '@components';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector, batch } from 'react-redux';
 import {
   toggleOverlay,
   signPlayer,
@@ -12,10 +12,12 @@ import {
   gameBlockEnded,
 } from '@redux/actions';
 import { ConfirmSignOverlay } from './ConfirmSignOverlay';
-import { getPlayerPositon } from '@utils';
-import { updateStudentById } from '../../api-helper';
-import { cloneDeep } from 'lodash';
-import { TeamAssignments, getAvailableSlots } from '@data/players/players';
+import { TeamAssignments } from '@data/players/players';
+import {
+  getAvailableSlots,
+  getPlayerPositon,
+  handleSignPlayer,
+} from '@data/players/players-utils';
 import '@css/components/team-page/SignPlayerOverlay.css';
 
 export const SignPlayerOverlay = ({ assignment }) => {
@@ -26,6 +28,8 @@ export const SignPlayerOverlay = ({ assignment }) => {
   const { currentScenario, completedGames } = useSelector(
     (state) => state.season
   );
+
+  const seasonState = useSelector((state) => state.season);
 
   const availableSlots = {
     forwards: getAvailableSlots(TeamAssignments.offense, team),
@@ -49,71 +53,42 @@ export const SignPlayerOverlay = ({ assignment }) => {
     );
   };
 
-  const signConfirmed = (signedPlayer) => {
-    signedPlayer.playerAssignment = assignment;
-
-    const playersCopy = cloneDeep(student.players);
-    playersCopy.splice(
-      playersCopy.findIndex((p) => p._id === signedPlayer._id),
-      1,
-      signedPlayer
-    );
-
-    updateStudentById(student._id, {
-      [assignment]: signedPlayer._id,
-      players: playersCopy,
-    })
-      .then((res) => {
-        dispatch(signPlayer(signedPlayer, assignment));
-        dispatch(setStudent(res.updatedStudent));
+  const signConfirmed = (signedPlayer, newRolloverBudget) => {
+    const prevAssignment = signedPlayer.playerAssignment;
+    handleSignPlayer(
+      signedPlayer,
+      assignment,
+      student,
+      seasonState,
+      newRolloverBudget
+    ).then(({ updatedStudent, updatedPlayer }) => {
+      batch(() => {
+        dispatch(signPlayer(updatedPlayer, prevAssignment, updatedStudent));
+        dispatch(setStudent(updatedStudent));
         dispatch(
           toggleOverlay({
             isOpen: true,
             template: (
               <PlayerChangeSuccessOverlay
-                player={signedPlayer}
-                message=' Player has been signed!'
+                player={updatedPlayer}
+                message={`${updatedPlayer.playerName} has been signed!`}
               />
             ),
           })
         );
-        // if theres an active season scenario, check that the team is full
-        // and end the current game block if so
-        if (currentScenario) {
-          const clonedTeam = cloneDeep(team);
-          clonedTeam[assignment] = signedPlayer;
-          if (
-            getAvailableSlots(
-              [
-                ...TeamAssignments.offense,
-                ...TeamAssignments.defense,
-                ...TeamAssignments.goalie,
-              ],
-              clonedTeam
-            ) === 0
-          ) {
-            const studentSeasons = cloneDeep(student.seasons);
-            if (studentSeasons[(student.level || 1) - 1]) {
-              studentSeasons[(student.level || 1) - 1].push(completedGames);
-            } else {
-              studentSeasons[(student.level || 1) - 1] = [completedGames];
-            }
-            // dispatch(gameBlockEnded());
-
-            updateStudentById(student._id, {
-              seasons: studentSeasons,
-            })
-              .then((res) => {
-                dispatch(gameBlockEnded());
-              })
-              .catch((err) => console.error(err));
-          }
+        if (seasonState.currentScenario) {
+          dispatch(gameBlockEnded());
         }
-      })
-      .catch((err) => console.error(err));
+      });
+    });
   };
 
-  const confirmSign = (player) => {
+  const confirmSign = (player, skipConfirm, newRolloverBudget) => {
+    if (skipConfirm) {
+      signConfirmed(player, newRolloverBudget);
+      return;
+    }
+
     dispatch(
       toggleOverlay({
         isOpen: true,

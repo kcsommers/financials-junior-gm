@@ -1,5 +1,6 @@
 import Slide from '../../Slide';
-import { SET_ANIMATION_STATE, TOGGLE_OVERLAY } from '@redux/actionTypes';
+import { SET_ANIMATION_STATE} from '../../../redux/tutorials/tutorials.actions';
+import { TOGGLE_OVERLAY} from '../../../redux/overlay/overlay.actions';
 import { SignPlayerOverlay, PlayerDetailsOverlay } from '@components';
 import { ConfirmSignOverlay} from '../../../components/overlays/ConfirmSignOverlay';
 import { useDispatch, useSelector } from 'react-redux';

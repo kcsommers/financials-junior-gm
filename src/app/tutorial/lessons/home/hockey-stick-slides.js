@@ -1,5 +1,5 @@
 import Slide from '../../Slide';
-import { SET_ANIMATION_STATE } from '@redux/actionTypes';
+import { SET_ANIMATION_STATE } from '@redux/actions';
 
 const teamStickSlideConfigs = [
   {

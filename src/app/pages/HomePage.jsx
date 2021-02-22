@@ -6,7 +6,8 @@ import {
   StickButton,
   Navigation,
   LevelStick,
-  LoadingSpinner,
+  NextSeasonOverlay,
+  Overlay,
 } from '@components';
 import {
   introSlides,
@@ -25,7 +26,7 @@ import teamStick from '@images/team-stick.svg';
 import budgetStick from '@images/budget-stick.svg';
 import seasonStick from '@images/season-stick.svg';
 import trophiesStick from '@images/trophies-stick.svg';
-import { setTutorialState, updateStudent } from '@redux/actions';
+import { setTutorialState, updateStudent, toggleOverlay } from '@redux/actions';
 import { updateStudentById } from './../api-helper';
 import { cloneDeep } from 'lodash';
 import '@css/pages/HomePage.css';
@@ -41,10 +42,14 @@ const homeSlides = [
   seasonStickSlides,
 ];
 
-const HomePage = () => {
+export const HomePage = () => {
   const tutorialActive = useSelector((state) => state.tutorial.isActive);
 
   const student = useSelector((state) => state.studentState.student);
+
+  const { inTransition, awards, inSession } = useSelector(
+    (state) => state.season
+  );
 
   const dispatch = useDispatch();
 
@@ -115,7 +120,17 @@ const HomePage = () => {
     student.tutorials.home
   );
 
-  return student ? (
+  if (inTransition && !inSession) {
+    dispatch(
+      toggleOverlay({
+        isOpen: true,
+        template: <NextSeasonOverlay student={student} awards={awards} />,
+        canClose: false,
+      })
+    );
+  }
+
+  return (
     <div className='home-page-container'>
       <Navigation tutorialActive={tutorialActive} />
       <div className='home-cards-row'>
@@ -224,6 +239,7 @@ const HomePage = () => {
               link='/team'
               image={teamStick}
               animationState={animationStates.teamStick}
+              hideDuringTutorial={true}
             />
             <p
               className={`stick-btn-text${
@@ -240,6 +256,7 @@ const HomePage = () => {
               inverse={true}
               image={budgetStick}
               animationState={animationStates.budgetStick}
+              hideDuringTutorial={true}
             />
             <p
               className={`stick-btn-text${
@@ -257,6 +274,7 @@ const HomePage = () => {
               link='/season'
               image={seasonStick}
               animationState={animationStates.seasonStick}
+              hideDuringTutorial={true}
             />
             <p
               className={`stick-btn-text${
@@ -273,6 +291,7 @@ const HomePage = () => {
               link='/trophies'
               image={trophiesStick}
               animationState={animationStates.trophiesStick}
+              hideDuringTutorial={true}
             />
             <p
               className={`stick-btn-text${
@@ -284,26 +303,10 @@ const HomePage = () => {
           </div>
         </div>
       </div>
+      <Overlay />
       {tutorialActive && (
         <Tutorial slides={tutorialSlides} onComplete={onTutorialComplete} />
       )}
     </div>
-  ) : (
-    <div
-      style={{
-        position: 'absolute',
-        top: 0,
-        bottom: 0,
-        left: 0,
-        right: 0,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}
-    >
-      <LoadingSpinner />
-    </div>
   );
 };
-
-export default HomePage;
