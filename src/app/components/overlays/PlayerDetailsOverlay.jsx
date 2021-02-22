@@ -7,7 +7,6 @@ import {
   gameBlockEnded,
   removeObjective,
 } from '@redux/actions';
-import { updateStudentById } from '../../api-helper';
 import {
   PlayerCard,
   OverlayBoard,
@@ -17,14 +16,14 @@ import {
   Button,
   ConfirmOverlay,
 } from '@components';
-import { PlayerAssignments, PlayerPositions } from '@data/players/players';
+import { PlayerPositions } from '@data/players/players';
 import {
   getPlayerPositon,
   getAssignmentsByPosition,
   handleSignPlayer,
   getOpenAssignment,
+  handleReleasePlayer,
 } from '@data/players/players-utils';
-import { cloneDeep } from 'lodash';
 
 export const PlayerDetailsOverlay = ({
   player,
@@ -48,35 +47,17 @@ export const PlayerDetailsOverlay = ({
   };
 
   const releaseConfirmed = () => {
-    const prevAssignment = player.playerAssignment;
-    const prevPosition = getPlayerPositon(prevAssignment);
-    player.playerAssignment =
-      prevPosition === PlayerPositions.BENCH
-        ? PlayerAssignments.OFFERED_SCOUT
-        : PlayerAssignments.MARKET;
-
-    const playersCopy = cloneDeep(student.players);
-
-    playersCopy.splice(
-      playersCopy.findIndex((p) => p._id === player._id),
-      1,
-      player
-    );
-
-    updateStudentById(student._id, {
-      [prevAssignment]: null,
-      players: playersCopy,
-    })
-      .then((res) => {
-        dispatch(releasePlayer(player, prevAssignment, student));
-        dispatch(setStudent(res.updatedStudent));
+    handleReleasePlayer(player, student)
+      .then(({ updatedStudent, updatedPlayer, prevAssignment }) => {
+        dispatch(releasePlayer(updatedPlayer, prevAssignment, student));
+        dispatch(setStudent(updatedStudent));
         dispatch(
           toggleOverlay({
             isOpen: true,
             template: (
               <PlayerChangeSuccessOverlay
-                message={`${player.playerName} has been released!`}
-                player={player}
+                message={`${updatedPlayer.playerName} has been released!`}
+                player={updatedPlayer}
               />
             ),
             canClose: true,

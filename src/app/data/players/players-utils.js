@@ -2,80 +2,6 @@ import { PlayerAssignments, PlayerPositions, TeamAssignments } from './players';
 import { cloneDeep } from 'lodash';
 import { updateStudentById } from './../../api-helper';
 
-export const releasePlayer = (player, cache) => {};
-
-export const handleSignPlayer = (
-  signedPlayer,
-  assignment,
-  student,
-  seasonState,
-  newRolloverBudget
-) => {
-  return new Promise((resolve, reject) => {
-    signedPlayer.playerAssignment = assignment;
-    const clonedStudent = cloneDeep(student);
-    clonedStudent.players.splice(
-      clonedStudent.players.findIndex((p) => p._id === signedPlayer._id),
-      1,
-      signedPlayer
-    );
-
-    const studentUpdates = {
-      [assignment]: signedPlayer._id,
-      players: clonedStudent.players,
-    };
-
-    if (newRolloverBudget !== undefined) {
-      // studentUpdates.rollOverBudget = newRolloverBudget;
-    }
-
-    // if theres an active season scenario, check that the team is full
-    // and end the current game block if so
-    if (seasonState && seasonState.currentScenario) {
-      clonedStudent[assignment] = signedPlayer._id;
-      if (
-        getAvailableSlots(
-          [
-            ...TeamAssignments.offense,
-            ...TeamAssignments.defense,
-            ...TeamAssignments.goalie,
-          ],
-          clonedStudent
-        ) === 0
-      ) {
-        const studentSeasons = clonedStudent.seasons;
-        if (studentSeasons[(student.level || 1) - 1]) {
-          studentSeasons[(student.level || 1) - 1].push(
-            seasonState.completedGames
-          );
-        } else {
-          studentSeasons[(student.level || 1) - 1] = [
-            seasonState.completedGames,
-          ];
-        }
-
-        studentUpdates.seasons = studentSeasons;
-      }
-    }
-
-    updateStudentById(student._id, studentUpdates)
-      .then((res) =>
-        resolve({
-          updatedStudent: res.updatedStudent,
-          updatedPlayer: signedPlayer,
-        })
-      )
-      .catch((err) => reject(err));
-  });
-};
-
-export const tradePlayers = (
-  signedPlayer,
-  releasedPlayer,
-  signedCache,
-  releasedCache
-) => {};
-
 export const getOpenAssignment = (position, student) => {
   switch (position) {
     case PlayerPositions.FORWARD: {
@@ -186,4 +112,159 @@ export const getPlayerPositon = (assignment) => {
       return null;
     }
   }
+};
+
+export const handleReleasePlayer = (releasedPlayer, student) => {
+  return new Promise((resolve, reject) => {
+    const prevAssignment = releasedPlayer.playerAssignment;
+    const prevPosition = getPlayerPositon(prevAssignment);
+    releasedPlayer.playerAssignment =
+      prevPosition === PlayerPositions.BENCH
+        ? PlayerAssignments.OFFERED_SCOUT
+        : PlayerAssignments.MARKET;
+
+    const playersCopy = cloneDeep(student.players);
+
+    playersCopy.splice(
+      playersCopy.findIndex((p) => p._id === releasedPlayer._id),
+      1,
+      releasedPlayer
+    );
+
+    updateStudentById(student._id, {
+      [prevAssignment]: null,
+      players: playersCopy,
+    })
+      .then((res) =>
+        resolve({
+          updatedStudent: res.updatedStudent,
+          updatedPlayer: releasedPlayer,
+          prevAssignment,
+        })
+      )
+      .catch((err) => reject(err));
+  });
+};
+
+export const handleSignPlayer = (
+  signedPlayer,
+  assignment,
+  student,
+  seasonState,
+  newRolloverBudget
+) => {
+  return new Promise((resolve, reject) => {
+    signedPlayer.playerAssignment = assignment;
+    const clonedStudent = cloneDeep(student);
+    clonedStudent.players.splice(
+      clonedStudent.players.findIndex((p) => p._id === signedPlayer._id),
+      1,
+      signedPlayer
+    );
+
+    const studentUpdates = {
+      [assignment]: signedPlayer._id,
+      players: clonedStudent.players,
+    };
+
+    if (newRolloverBudget !== undefined) {
+      studentUpdates.rollOverBudget = newRolloverBudget;
+    }
+
+    // if theres an active season scenario, check that the team is full
+    // and end the current game block if so
+    if (seasonState && seasonState.currentScenario) {
+      clonedStudent[assignment] = signedPlayer._id;
+      if (
+        getAvailableSlots(
+          [
+            ...TeamAssignments.offense,
+            ...TeamAssignments.defense,
+            ...TeamAssignments.goalie,
+          ],
+          clonedStudent
+        ) === 0
+      ) {
+        const studentSeasons = clonedStudent.seasons;
+        if (studentSeasons[(student.level || 1) - 1]) {
+          studentSeasons[(student.level || 1) - 1].push(
+            seasonState.completedGames
+          );
+        } else {
+          studentSeasons[(student.level || 1) - 1] = [
+            seasonState.completedGames,
+          ];
+        }
+
+        studentUpdates.seasons = studentSeasons;
+      }
+    }
+
+    console.log('STUDNT UPDQTL:L::: ', studentUpdates);
+
+    updateStudentById(student._id, studentUpdates)
+      .then((res) =>
+        resolve({
+          updatedStudent: res.updatedStudent,
+          updatedPlayer: signedPlayer,
+        })
+      )
+      .catch((err) => reject(err));
+  });
+};
+
+export const handleTradePlayers = (
+  signedPlayer,
+  releasedPlayer,
+  student,
+  newRolloverBudget
+) => {
+  return new Promise((resolve, reject) => {
+    const prevAssignment = releasedPlayer.playerAssignment;
+    const prevPosition = getPlayerPositon(prevAssignment);
+
+    releasedPlayer.playerAssignment =
+      prevPosition === PlayerPositions.BENCH
+        ? PlayerAssignments.OFFERED_SCOUT
+        : PlayerAssignments.MARKET;
+    signedPlayer.playerAssignment = prevAssignment;
+
+    const playersCopy = cloneDeep(student.players).reduce((arr, p) => {
+      if (p._id === releasedPlayer._id) {
+        arr.push(releasedPlayer);
+        return arr;
+      }
+
+      if (p._id === signedPlayer._id) {
+        arr.push(signedPlayer);
+        return arr;
+      }
+
+      arr.push(p);
+      return arr;
+    }, []);
+
+    const studentUpdates = {
+      [signedPlayer.playerAssignment]: signedPlayer._id,
+      [releasedPlayer.playerAssignment]:
+        prevPosition === PlayerPositions.BENCH
+          ? PlayerAssignments.OFFERED_SCOUT
+          : PlayerAssignments.MARKET,
+      players: playersCopy,
+    };
+
+    if (newRolloverBudget !== undefined) {
+      studentUpdates.rollOverBudget = newRolloverBudget;
+    }
+
+    updateStudentById(student._id, studentUpdates)
+      .then((res) =>
+        resolve({
+          updatedStudent: res.updatedStudent,
+          updatedSignedPlayer: signedPlayer,
+          updatedReleasedPlayer: releasedPlayer,
+        })
+      )
+      .catch((err) => reject(err));
+  });
 };
