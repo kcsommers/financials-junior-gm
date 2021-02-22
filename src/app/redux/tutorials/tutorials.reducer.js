@@ -1,4 +1,4 @@
-import { SET_ANIMATION_STATE, SET_TUTORIAL_STATE } from '../actionTypes';
+import { SET_ANIMATION_STATE, SET_TUTORIAL_STATE } from './tutorials.actions';
 
 const initialState = {
   isActive: false,

@@ -1,4 +1,4 @@
-import { TOGGLE_OVERLAY } from '../actionTypes';
+import { TOGGLE_OVERLAY } from './overlay.actions';
 
 const initialState = {
   isOpen: false,

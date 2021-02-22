@@ -1,4 +1,4 @@
-import { SET_LOGIN_STATE } from '../actionTypes';
+import { SET_LOGIN_STATE } from './login-state.actions';
 import { getIsLoggedIn, getUserRole } from '@data/auth/auth';
 
 const initialState = {

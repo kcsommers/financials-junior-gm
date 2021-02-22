@@ -1,5 +1,5 @@
 import Slide from '../../Slide';
-import { SET_ANIMATION_STATE } from '@redux/actionTypes';
+import { SET_ANIMATION_STATE } from '@redux/actions';
 
 const slideConfigs = [
   {
@@ -21,8 +21,7 @@ const slideConfigs = [
     timer: 0,
   },
   {
-    message:
-      'Your goal is to build a winning team',
+    message: 'Your goal is to build a winning team',
     sharkie: 'playInverse',
     hasButtons: true,
     repeatIndex: 0,
@@ -33,12 +32,11 @@ const slideConfigs = [
   },
   {
     message:
-    'While being ready for anything a hockey season can throw your way!',
+      'While being ready for anything a hockey season can throw your way!',
     sharkie: 'playInverse',
     hasButtons: true,
     timer: 0,
-  }
-  ,
+  },
   {
     message: 'Got it?',
     sharkie: 'playInverse',

@@ -22,7 +22,7 @@ import pinkpandasLg from '@images/icons/team-logos/pinkpandasLg.svg';
 import pinkpandasSm from '@images/icons/team-logos/pinkpandasSm.svg';
 import blackbeaversLg from '@images/icons/team-logos/blackbeaversLg.svg';
 import blackbeaversSm from '@images/icons/team-logos/blackbeaversSm.svg';
-import { INJURE_PLAYER } from '@redux/actionTypes';
+import { INJURE_PLAYER } from '@redux/actions';
 import { PlayerAssignments } from '@data/players/players';
 import { cloneDeep } from 'lodash';
 import { initPlayersByLevel, updateStudentById } from './../../api-helper';
