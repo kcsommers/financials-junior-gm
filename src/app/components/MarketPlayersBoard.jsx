@@ -77,6 +77,7 @@ export const MarketPlayersBoard = ({
   const currentView = getViewConfig(activePosition, marketPlayers);
 
   const checkBudget = (signingPlayer) => {
+    console.log(signingPlayer)
     let budget =
       student.totalBudget - student.savingsBudget - student.moneySpent;
 
