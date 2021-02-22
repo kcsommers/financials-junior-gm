@@ -1,6 +1,12 @@
-import { toggleOverlay, setStudent, releasePlayer } from '@redux/actions';
+import { useDispatch, useSelector, batch } from 'react-redux';
+import {
+  toggleOverlay,
+  setStudent,
+  releasePlayer,
+  signPlayer,
+  gameBlockEnded,
+} from '@redux/actions';
 import { updateStudentById } from '../../api-helper';
-import { useDispatch, useSelector } from 'react-redux';
 import {
   PlayerCard,
   OverlayBoard,
@@ -8,17 +14,29 @@ import {
   TradePlayerOverlay,
   PlayerChangeSuccessOverlay,
   Button,
+  ConfirmOverlay,
 } from '@components';
-import { PlayerAssignments } from '@data/players/players';
+import { PlayerAssignments, PlayerPositions } from '@data/players/players';
+import {
+  getPlayerPositon,
+  getAssignmentsByPosition,
+  handleSignPlayer,
+  getOpenAssignment,
+} from '@data/players/players-utils';
 import { cloneDeep } from 'lodash';
 
 export const PlayerDetailsOverlay = ({
   player,
+  student,
+  seasonState,
   includeActions = true,
 }) => {
   const dispatch = useDispatch();
-  const student = useSelector((state) => state.studentState.student)
-  const releaseCancelled = () => {
+
+  const isBenchPlayer =
+    getPlayerPositon(player.playerAssignment) === PlayerPositions.BENCH;
+
+  const onCancel = () => {
     dispatch(
       toggleOverlay({
         isOpen: false,
@@ -29,10 +47,14 @@ export const PlayerDetailsOverlay = ({
 
   const releaseConfirmed = () => {
     const prevAssignment = player.playerAssignment;
-    player.playerAssignment = PlayerAssignments.MARKET;
-    //logic for player is released
+    const prevPosition = getPlayerPositon(prevAssignment);
+    player.playerAssignment =
+      prevPosition === PlayerPositions.BENCH
+        ? PlayerAssignments.OFFERED_SCOUT
+        : PlayerAssignments.MARKET;
+
     const playersCopy = cloneDeep(student.players);
-    //
+
     playersCopy.splice(
       playersCopy.findIndex((p) => p._id === player._id),
       1,
@@ -44,14 +66,14 @@ export const PlayerDetailsOverlay = ({
       players: playersCopy,
     })
       .then((res) => {
-        dispatch(releasePlayer(player, prevAssignment));
+        dispatch(releasePlayer(player, prevAssignment, student));
         dispatch(setStudent(res.updatedStudent));
         dispatch(
           toggleOverlay({
             isOpen: true,
             template: (
               <PlayerChangeSuccessOverlay
-                message='Player has been released!'
+                message={`${player.playerName} has been released!`}
                 player={player}
               />
             ),
@@ -80,12 +102,66 @@ export const PlayerDetailsOverlay = ({
         template: (
           <ConfirmReleaseOverlay
             confirm={releaseConfirmed}
-            cancel={releaseCancelled}
+            cancel={onCancel}
             player={player}
           />
         ),
       })
     );
+  };
+
+  const moveToStartingLineupConfirmed = () => {
+    const newAssignment = getOpenAssignment(player.playerPosition, student);
+    const prevAssignment = player.playerAssignment;
+
+    handleSignPlayer(player, newAssignment, student, seasonState).then(
+      ({ updatedStudent, updatedPlayer }) => {
+        batch(() => {
+          dispatch(signPlayer(updatedPlayer, prevAssignment, updatedStudent));
+          dispatch(setStudent(updatedStudent));
+          dispatch(
+            toggleOverlay({
+              isOpen: true,
+              template: (
+                <PlayerChangeSuccessOverlay
+                  player={updatedPlayer}
+                  message={`${updatedPlayer.playerName} is now a starter!`}
+                />
+              ),
+            })
+          );
+          if (seasonState.currentScenario) {
+            dispatch(gameBlockEnded());
+          }
+        });
+      }
+    );
+  };
+
+  const confirmMoveToStartingLineup = () => {
+    dispatch(
+      toggleOverlay({
+        isOpen: true,
+        template: (
+          <ConfirmOverlay
+            message='Are you sure you want to add this player to the starting lineup?'
+            cancel={onCancel}
+            confirm={moveToStartingLineupConfirmed}
+          >
+            <div style={{ display: 'flex', padding: '2rem 3rem 0 3rem' }}>
+              <div style={{ flex: 1 }}>
+                <PlayerCard size='medium' player={player} />
+              </div>
+            </div>
+          </ConfirmOverlay>
+        ),
+      })
+    );
+  };
+
+  const positionOpen = (position) => {
+    const positionAssignments = getAssignmentsByPosition(position);
+    return positionAssignments.some((a) => !student[a]);
   };
 
   return (
@@ -114,7 +190,16 @@ export const PlayerDetailsOverlay = ({
               width: '100%',
             }}
           >
-            <Button text='Trade' onClick={confirmTrade} />
+            {isBenchPlayer ? (
+              <Button
+                text='Add to Starting Lineup'
+                onClick={confirmMoveToStartingLineup}
+                isDisabled={!positionOpen(player.playerPosition)}
+              />
+            ) : (
+              <Button text='Trade' onClick={confirmTrade} />
+            )}
+
             <Button text='Release' onClick={confirmRelease} />
           </div>
         )}

@@ -18,6 +18,8 @@ export const HeaderComponent = ({
   objectives,
   largeStick,
   level,
+  tutorialActive,
+  inTransition,
 }) => {
   const stick = (
     <StickButton
@@ -26,6 +28,8 @@ export const HeaderComponent = ({
       image={stickBtn}
       inverse={inverse}
       large={largeStick}
+      tutorialActive={tutorialActive}
+      inTransition={inTransition}
     />
   );
 

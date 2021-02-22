@@ -1,7 +1,23 @@
+export const playerProps = [
+  'fOne',
+  'fTwo',
+  'fThree',
+  'dOne',
+  'dTwo',
+  'gOne',
+  'benchOne',
+  'benchTwo',
+  'benchThree',
+];
+
 export const PlayerAssignments = {
   MARKET: 'marketPlayer',
 
   SCOUT: 'scoutPlayer',
+
+  OFFERED_SCOUT: 'offeredScoutPlayer',
+
+  INJURED: null,
 
   F_ONE: 'fOne',
 
@@ -37,16 +53,4 @@ export const TeamAssignments = {
   defense: ['dOne', 'dTwo'],
   goalie: ['gOne'],
   bench: ['benchOne', 'benchTwo', 'benchThree'],
-};
-
-export const getAvailableSlots = (props, team) => {
-  if (!team) {
-    return props.length;
-  }
-  return props.reduce((total, p) => {
-    if (!team[p]) {
-      total++;
-    }
-    return total;
-  }, 0);
 };

@@ -4,7 +4,8 @@ import {
   BudgetSlider,
   HeaderComponent,
   PageBoard,
-  LoadingSpinner,
+  NextSeasonOverlay,
+  Overlay,
 } from '@components';
 import budgetStick from '@images/budget-stick.svg';
 import { useSelector, useDispatch } from 'react-redux';
@@ -14,16 +15,23 @@ import {
   Tutorial,
   getConfirmSlides,
 } from '@tutorial';
-import { setTutorialState, setSavings, updateStudent } from '@redux/actions';
+import {
+  setTutorialState,
+  setSavings,
+  updateStudent,
+  toggleOverlay,
+} from '@redux/actions';
 import { updateStudentById } from '../api-helper';
 import { cloneDeep } from 'lodash';
 import '@css/pages/BudgetPage.css';
+import { getDollarString } from '@utils';
 
 let debounceTimeout = 0;
 
-const BudgetPage = () => {
+export const BudgetPage = () => {
   const dispatch = useDispatch();
   const student = useSelector((state) => state.studentState.student);
+  const { inTransition, awards } = useSelector((state) => state.season);
 
   const tutorialActive = useSelector((state) => state.tutorial.isActive);
 
@@ -95,21 +103,59 @@ const BudgetPage = () => {
     student.tutorials.budget
   );
 
-  return student ? (
+  if (inTransition) {
+    dispatch(
+      toggleOverlay({
+        isOpen: true,
+        template: <NextSeasonOverlay student={student} awards={awards} />,
+        canClose: false,
+      })
+    );
+  }
+
+  return (
     <div className='page-container'>
       <HeaderComponent
         stickBtn={budgetStick}
         objectives={['1. Learn about your budget.']}
         level={student.level}
         inverse={true}
+        tutorialActive={tutorialActive}
       />
 
       <PageBoard hideCloseBtn={true} includeBackButton={true}>
         <div className='budget-page-board-inner'>
-          <span style={{ position: 'absolute', left: '1rem', top: '1rem' }}>
-            <SharkieButton onCallSharkie={onCallSharkie} textPosition='right' />
-          </span>
-
+          <div
+            style={{
+              position: 'absolute',
+              left: '0',
+              width: '100%',
+              top: '0',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              padding: '1rem',
+            }}
+          >
+            {student.rollOverBudget ||
+              (true && (
+                <p
+                  className='box-shadow'
+                  style={{
+                    textAlign: 'center',
+                    backgroundColor: '#f3901d',
+                    color: '#fff',
+                    padding: '0.5rem',
+                    borderRadius: '5px',
+                  }}
+                >
+                  Rollover Budget
+                  <br />
+                  {getDollarString(3)}
+                </p>
+              ))}
+            <SharkieButton onCallSharkie={onCallSharkie} textPosition='left' />
+          </div>
           <div className='budget-equation-container'>
             <BudgetEquation
               budget={{
@@ -135,26 +181,10 @@ const BudgetPage = () => {
           </div>
         </div>
       </PageBoard>
+      <Overlay />
       {tutorialActive && (
         <Tutorial slides={tutorialSlides} onComplete={onTutorialComplete} />
       )}
     </div>
-  ) : (
-    <div
-      style={{
-        position: 'absolute',
-        top: 0,
-        bottom: 0,
-        left: 0,
-        right: 0,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}
-    >
-      <LoadingSpinner />
-    </div>
   );
 };
-
-export default BudgetPage;

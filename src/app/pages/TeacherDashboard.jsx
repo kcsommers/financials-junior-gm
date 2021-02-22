@@ -1,7 +1,14 @@
+import {
+  LOGIN_STORAGE_KEY,
+  USER_ROLE_STORAGE_KEY,
+  TEACHER_ID_STORAGE_KEY,
+} from '@data/auth/auth';
+import { destroySession } from '@redux/actions';
+import { connect } from 'react-redux';
+
 import React from 'react';
 import '@css/pages/TeacherDashboard.css';
 import * as api from '../api-helper';
-import { Link, Router, Redirect } from 'react-router-dom';
 import CRUDTable, {
   Fields,
   Field,
@@ -51,8 +58,8 @@ class TeacherDashboard extends React.Component {
 
   getStudentList = () => {
     let id = null;
-    if (localStorage.getItem('teacherId')) {
-      id = localStorage.getItem('teacherId');
+    if (localStorage.getItem(TEACHER_ID_STORAGE_KEY)) {
+      id = localStorage.getItem(TEACHER_ID_STORAGE_KEY);
     }
     api
       .getStudentList(id)
@@ -170,16 +177,26 @@ class TeacherDashboard extends React.Component {
   logoutSession = () => {
     api
       .logout()
-      .then((res) => {
-        this.props.history.push('/login/teacher');
-        // alert(res.Message);
+      .then(() => {
+        localStorage.setItem(LOGIN_STORAGE_KEY, false);
+        localStorage.setItem(USER_ROLE_STORAGE_KEY, '');
+        localStorage.setItem(TEACHER_ID_STORAGE_KEY, '');
+        this.props.destroySession();
+        this.props.history.push('/dashboard');
       })
-      .catch((error) => {
-        this.state.selectedFile = null;
-        console.log('catch---->>>>', error.response);
-        this.props.history.push('/login/teacher');
-        // alert(error?.response?.message);
-      });
+      .catch((err) => console.error(err));
+    // api
+    //   .logout()
+    //   .then((res) => {
+    //     this.props.history.push('/login/teacher');
+    //     // alert(res.Message);
+    //   })
+    //   .catch((error) => {
+    //     this.state.selectedFile = null;
+    //     console.log('catch---->>>>', error.response);
+    //     this.props.history.push('/login/teacher');
+    //     // alert(error?.response?.message);
+    //   });
   };
 
   renderStudentBulkAdd() {
@@ -241,7 +258,7 @@ class TeacherDashboard extends React.Component {
     };
 
     return (
-      <div>
+      <div style={{ maxHeight: '768px', overflow: 'auto' }}>
         <button
           className='crud-button crud-button--positive'
           onClick={this.uploadCSVFile}
@@ -352,4 +369,7 @@ class TeacherDashboard extends React.Component {
     );
   }
 }
-export default TeacherDashboard;
+
+const stateToProps = (state) => ({ teacher: state.teacherState.teacher });
+const dispatchToProps = { destroySession };
+export default connect(stateToProps, dispatchToProps)(TeacherDashboard);

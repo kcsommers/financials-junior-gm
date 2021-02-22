@@ -1,4 +1,6 @@
 export { AwardDetailsOverlay } from './overlays/AwardDetailsOverlay';
+export { NextSeasonOverlay } from './overlays/NextSeasonOverlay';
+export { LoginForm } from './LoginForm';
 export { BackButton } from './BackButton';
 export { StartGameButtonSvg } from './season-page/StartGameButtonSvg';
 export { Button } from './Button';
@@ -38,8 +40,6 @@ export { ObjectivesBoard } from './ObjectivesBoard.jsx';
 export { PlayerDropContainer } from './scout-page/PlayerDropContainer';
 export { Overlay } from './overlays/Overlay';
 export { PlayerDragItem } from './scout-page/PlayerDragItem';
-export { SpendingBudgetStickBig } from './SpendingBudgetStickBig';
-export { TeamRankStickBig } from './TeamRankStickBig';
 export { HeaderComponent } from './HeaderComponent';
 export { TeamBudgetState } from './TeamBudgetState';
 export { MarketPlayersBoard } from './MarketPlayersBoard';

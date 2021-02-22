@@ -11,10 +11,14 @@ export const StickButton = ({
   inverse,
   small,
   styles,
+  hideDuringTutorial,
+  inTransition,
 }) => {
   return tutorialActive ? (
     <motion.div
-      className={`transparent stick-btn-wrap${small ? ' stick-btn-small' : ''}`}
+      className={`stick-btn-wrap${small ? ' stick-btn-small' : ''}${
+        hideDuringTutorial ? ' transparent' : ''
+      }`}
       animate={animationState}
       style={styles}
     >
@@ -22,7 +26,10 @@ export const StickButton = ({
         className={`stick-btn-img${inverse ? ' stick-btn-img-inverse' : ''}`}
         src={image}
       />
-      <Link className='text-link stick-btn-link' to={link}></Link>
+      <Link
+        className='text-link stick-btn-link stick-btn-link-disabled'
+        to={link}
+      ></Link>
     </motion.div>
   ) : (
     <div
@@ -33,7 +40,12 @@ export const StickButton = ({
         className={`stick-btn-img${inverse ? ' stick-btn-img-inverse' : ''}`}
         src={image}
       />
-      <Link className='text-link stick-btn-link' to={link}></Link>
+      <Link
+        className={`text-link stick-btn-link${
+          inTransition ? ' stick-btn-link-disabled' : ''
+        }`}
+        to={link}
+      ></Link>
     </div>
   );
 };

@@ -4,7 +4,6 @@ import jrSharksLogo from '@images/icons/jr-sharks-logo.svg';
 import {
   PageBoard,
   HeaderComponent,
-  LoadingSpinner,
   TrophySvg,
   AwardDetailsOverlay,
   Overlay,
@@ -14,7 +13,6 @@ import { awardsByLevel } from '@data/season/awards';
 import {
   toggleOverlay,
   setStudent,
-  setSeasonComplete,
   setInitialPlayersState,
 } from '@redux/actions';
 import { updateStudentById, initPlayersByLevel } from './../api-helper';
@@ -50,22 +48,22 @@ const styles = {
   },
 };
 
-const TrophiesPage = () => {
+export const TrophiesPage = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const student = useSelector((state) => state.studentState.student);
-  const { awards, inTransition } = useSelector((state) => state.season);
+  const tutorialActive = useSelector((state) => state.tutorial.isActive);
+  const { inTransition, awards } = useSelector((state) => state.season);
 
   const repeatSeason = () => {
     const clonedSeasons = cloneDeep(student.seasons);
     clonedSeasons[(student.level || 1) - 1] = [];
-    updateStudentById(student._id, { seasons: clonedSeasons, awards })
+    updateStudentById(student._id, { seasons: clonedSeasons })
       .then((res) => {
         if (!res.success || !res.updatedStudent) {
           console.error(new Error('Unexpected error updating student season'));
           return;
         }
-        dispatch(setSeasonComplete(res.updatedStudent));
 
         initPlayersByLevel(student.level)
           .then((initializedStudentRes) => {
@@ -76,7 +74,6 @@ const TrophiesPage = () => {
             }
 
             batch(() => {
-              dispatch(setSeasonComplete(student));
               dispatch(setStudent(initializedStudent));
               dispatch(
                 setInitialPlayersState(
@@ -111,7 +108,7 @@ const TrophiesPage = () => {
   [1, 2, 3].forEach((level) => {
     const levelAwards = awardsByLevel[level];
     const cupKeys = Object.keys(levelAwards);
-    const studentAwards = awards[level - 1];
+    const studentAwards = awards[level - 1] && awards[level - 1][0];
 
     cupKeys.forEach((c) => {
       rows[level].push(
@@ -165,16 +162,18 @@ const TrophiesPage = () => {
     );
   });
 
-  return student ? (
+  return (
     <div className='page-container'>
       <HeaderComponent
         stickBtn={trophiesStick}
         objectives={['1. See your awards!']}
         level={student.level}
         inverse={true}
+        tutorialActive={tutorialActive}
+        inTransition={inTransition}
       />
 
-      <PageBoard hideCloseBtn={true} includeBackButton={true}>
+      <PageBoard hideCloseBtn={true} includeBackButton={!inTransition}>
         <div
           style={{
             display: 'flex',
@@ -276,22 +275,5 @@ const TrophiesPage = () => {
       </PageBoard>
       <Overlay />
     </div>
-  ) : (
-    <div
-      style={{
-        position: 'absolute',
-        top: 0,
-        bottom: 0,
-        left: 0,
-        right: 0,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}
-    >
-      <LoadingSpinner />
-    </div>
   );
 };
-
-export default TrophiesPage;
