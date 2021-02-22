@@ -90,11 +90,8 @@ export const HomePage = () => {
   const objectivesBoard = (
     <ObjectivesBoard
       level={student ? student.level : 1}
-      objectives={[
-        '1. Learn about your budget.',
-        '2. Fill your team by signing a player.',
-        '3. Scout three more players to add to your team.',
-      ]}
+      visibleObjectives={3}
+      filterComplete={false}
     />
   );
 

@@ -480,7 +480,6 @@ export const ScoutPage = () => {
       <HeaderComponent
         stickBtn={scoutStick}
         largeStick={true}
-        objectives={['1. Scout players to sign to your bench!']}
         level={student.level}
         tutorialActive={tutorialActive}
       />

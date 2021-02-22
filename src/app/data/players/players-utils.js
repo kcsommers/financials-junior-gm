@@ -26,7 +26,6 @@ export const handleSignPlayer = (
     };
 
     if (newRolloverBudget !== undefined) {
-      console.log('SET NEW ROLLOVER BUDGET::::');
       // studentUpdates.rollOverBudget = newRolloverBudget;
     }
 

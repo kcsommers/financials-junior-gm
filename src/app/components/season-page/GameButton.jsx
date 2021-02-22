@@ -2,9 +2,9 @@ import { GamePhases } from '@data/season/season';
 import { useSelector } from 'react-redux';
 import { TeamAssignments } from '@data/players/players';
 import { getAvailableSlots } from '@data/players/players-utils';
-import { StartGameButtonSvg } from './StartGameButtonSvg';
+import { GameButtonSvg } from './GameButtonSvg';
 
-export const StartGameButton = ({ onClick, gameBlockState, team }) => {
+export const GameButton = ({ onClick, gameBlockState, team }) => {
   const currentScenario = useSelector((state) => state.season.currentScenario);
   const { currentPhase } = gameBlockState;
 
@@ -34,7 +34,7 @@ export const StartGameButton = ({ onClick, gameBlockState, team }) => {
         opacity: !seasonDisabled ? 1 : 0.75,
       }}
     >
-      <StartGameButtonSvg phase={currentPhase.phase} />
+      <GameButtonSvg phase={currentPhase.phase} />
     </div>
   );
 };

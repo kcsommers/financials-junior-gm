@@ -110,7 +110,7 @@ export const scenarios = {
   1: [
     {
       message: 'OH NO! One of your players was injured',
-      objective: '1. Replace the injured player',
+      objective: 'Replace the injured player',
       action: INJURE_PLAYER,
       getPlayer: getSecondHighestPlayer,
       playerAssignment: PlayerAssignments.INJURED,
@@ -118,7 +118,7 @@ export const scenarios = {
     },
     {
       message: 'OH NO! One of your players was injured',
-      objective: '1. Replace the injured player',
+      objective: 'Replace the injured player',
       action: INJURE_PLAYER,
       getPlayer: getStartingPlayer,
       playerAssignment: PlayerAssignments.INJURED,

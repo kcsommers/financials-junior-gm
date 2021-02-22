@@ -148,13 +148,6 @@ const playersReducer = (state = initialState, action) => {
       );
 
       clonedState.teamPlayers[signedPlayer.playerAssignment] = signedPlayer;
-
-      console.log(
-        'PREV ASSIGNMENT:::: ',
-        prevAssignment,
-        getPlayerPositon(prevAssignment)
-      );
-
       if (getPlayerPositon(prevAssignment) === PlayerPositions.BENCH) {
         clonedState.teamPlayers[prevAssignment] = null;
       }
