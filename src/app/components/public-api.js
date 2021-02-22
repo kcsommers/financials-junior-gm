@@ -40,8 +40,6 @@ export { ObjectivesBoard } from './ObjectivesBoard.jsx';
 export { PlayerDropContainer } from './scout-page/PlayerDropContainer';
 export { Overlay } from './overlays/Overlay';
 export { PlayerDragItem } from './scout-page/PlayerDragItem';
-export { SpendingBudgetStickBig } from './SpendingBudgetStickBig';
-export { TeamRankStickBig } from './TeamRankStickBig';
 export { HeaderComponent } from './HeaderComponent';
 export { TeamBudgetState } from './TeamBudgetState';
 export { MarketPlayersBoard } from './MarketPlayersBoard';
