@@ -15,7 +15,6 @@ const styles = {
 export const HeaderComponent = ({
   stickBtn,
   inverse,
-  objectives,
   largeStick,
   level,
   tutorialActive,
@@ -36,9 +35,10 @@ export const HeaderComponent = ({
   const board = (
     <ObjectivesBoard
       key='ob'
-      objectives={objectives}
+      visibleObjectives={1}
       level={level}
       smallText={true}
+      filterComplete={true}
     />
   );
 

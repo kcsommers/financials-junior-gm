@@ -10,12 +10,8 @@
   transition: all 0.3s ease;
 }
 
-.objectives-board-wrap.has-scenario {
+.objectives-board-wrap.is-urgent {
   border-color: #ffd782;
-}
-
-.objectives-board-wrap.has-scenario .ordered-list {
-  color: #ffd782;
 }
 
 .objective-level-box {
@@ -26,11 +22,21 @@
 }
 
 .ordered-list {
+  list-style-type: decimal;
   transition: all 0.3s ease;
+  list-style-position: inside;
 }
 
-.ordered-list > div {
+.ordered-list > li {
   margin: 0.5rem 0;
+}
+
+.ordered-list > li.objective-complete {
+  text-decoration: line-through;
+}
+
+.ordered-list > li.is-urgent {
+  color: #ffd782;
 }
 
 .objective-text-small {

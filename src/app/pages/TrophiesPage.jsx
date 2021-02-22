@@ -166,7 +166,6 @@ export const TrophiesPage = () => {
     <div className='page-container'>
       <HeaderComponent
         stickBtn={trophiesStick}
-        objectives={['1. See your awards!']}
         level={student.level}
         inverse={true}
         tutorialActive={tutorialActive}

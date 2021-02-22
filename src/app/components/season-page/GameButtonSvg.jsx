@@ -1,6 +1,6 @@
 import { GamePhases } from '@data/season/season';
 
-export const StartGameButtonSvg = ({ phase }) => {
+export const GameButtonSvg = ({ phase }) => {
   const pausedView = (
     <svg
       id='Play'
