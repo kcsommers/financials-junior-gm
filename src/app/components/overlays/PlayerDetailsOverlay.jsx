@@ -1,4 +1,4 @@
-import { useDispatch, batch } from 'react-redux';
+import { useDispatch, useSelector, batch } from 'react-redux';
 import {
   toggleOverlay,
   setStudent,
