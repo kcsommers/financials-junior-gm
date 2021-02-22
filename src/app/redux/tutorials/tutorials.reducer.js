@@ -47,6 +47,9 @@ const initialState = {
       borderStyle: 'solid',
       scale: 1,
     },
+    scoutStick: {
+      scale: 1
+    }
   },
   scout: {
     availablePlayersBoard: {

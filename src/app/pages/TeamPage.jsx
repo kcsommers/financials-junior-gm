@@ -39,6 +39,7 @@ export const TeamPage = () => {
     playerCardEmpty: useSelector(
       (state) => state.tutorial.team.playerCardEmpty
     ),
+    scoutStick: useSelector((state) => state.tutorial.team.scoutStick)
   };
 
   const [tutorialSlides, setTutorialSlides] = useState([teamSlides]);
@@ -155,7 +156,7 @@ export const TeamPage = () => {
                 bottom: '3rem',
               }}
             >
-              <StickButton small={true} image={scoutStick} link='/scout' />
+              <StickButton small={true} image={scoutStick} animationState={playerCardAnimationStates.scoutStick} link='/scout' />
             </div>
           </div>
 
