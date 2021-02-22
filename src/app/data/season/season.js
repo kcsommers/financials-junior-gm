@@ -115,6 +115,8 @@ export const scenarios = {
       getPlayer: getSecondHighestPlayer,
       playerAssignment: PlayerAssignments.INJURED,
       player: null,
+      gameButtonLabel: 'Go to Team page!',
+      gameButtonAction: (team, history) => history.push('/team'),
     },
     {
       message: 'OH NO! One of your players was injured',
@@ -123,6 +125,8 @@ export const scenarios = {
       getPlayer: getStartingPlayer,
       playerAssignment: PlayerAssignments.INJURED,
       player: null,
+      gameButtonLabel: 'Go to Team page!',
+      gameButtonAction: (team, history) => history.push('/team'),
     },
   ],
 };

@@ -14,10 +14,10 @@ import {
   toggleOverlay,
   setStudent,
   setInitialPlayersState,
+  initializeSeason,
 } from '@redux/actions';
-import { updateStudentById, initPlayersByLevel } from './../api-helper';
-import { cloneDeep } from 'lodash';
 import { useHistory } from 'react-router-dom';
+import { resetSeason } from '@data/season/season';
 
 const styles = {
   levelLabel: {
@@ -56,36 +56,34 @@ export const TrophiesPage = () => {
   const { inTransition, awards } = useSelector((state) => state.season);
 
   const repeatSeason = () => {
-    const clonedSeasons = cloneDeep(student.seasons);
-    clonedSeasons[(student.level || 1) - 1] = [];
-    updateStudentById(student._id, { seasons: clonedSeasons })
-      .then((res) => {
-        if (!res.success || !res.updatedStudent) {
-          console.error(new Error('Unexpected error updating student season'));
-          return;
-        }
+    resetSeason(student.level, student)
+      .then((updatedStudent) => {
+        console.log('[repeatSeason] UPDATED STUDENT:::: ', updatedStudent);
+        batch(() => {
+          dispatch(setStudent(updatedStudent));
+          dispatch(
+            setInitialPlayersState(updatedStudent.players, updatedStudent)
+          );
+          dispatch(initializeSeason(updatedStudent));
+        });
 
-        initPlayersByLevel(student.level)
-          .then((initializedStudentRes) => {
-            const initializedStudent = initializedStudentRes.data;
-            if (!initializedStudentRes.success || !initializedStudent) {
-              console.error(new Error('Unexpected error initializing players'));
-              return;
-            }
+        history.push('/home');
+      })
+      .catch((err) => console.error(err));
+  };
 
-            batch(() => {
-              dispatch(setStudent(initializedStudent));
-              dispatch(
-                setInitialPlayersState(
-                  initializedStudent.players,
-                  initializedStudent
-                )
-              );
-            });
+  const nextSeason = () => {
+    resetSeason(student.level + 1, student)
+      .then((updatedStudent) => {
+        batch(() => {
+          dispatch(setStudent(updatedStudent));
+          dispatch(
+            setInitialPlayersState(updatedStudent.players, updatedStudent)
+          );
+          dispatch(initializeSeason(updatedStudent));
+        });
 
-            history.push('/home');
-          })
-          .catch((err) => console.error(err));
+        history.push('/home');
       })
       .catch((err) => console.error(err));
   };

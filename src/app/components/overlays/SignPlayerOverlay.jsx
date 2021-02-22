@@ -23,12 +23,8 @@ import '@css/components/team-page/SignPlayerOverlay.css';
 
 export const SignPlayerOverlay = ({ assignment }) => {
   const dispatch = useDispatch();
-  console.log(assignment)
-  const student = useSelector((state) => state.studentState.student)
-  const team = useSelector((state) => state.players.teamPlayers)
-  const { currentScenario, completedGames } = useSelector(
-    (state) => state.season
-  );
+  const student = useSelector((state) => state.studentState.student);
+  const team = useSelector((state) => state.players.teamPlayers);
 
   const seasonState = useSelector((state) => state.season);
   const { currentObjectives } = useSelector((state) => state.objectives);

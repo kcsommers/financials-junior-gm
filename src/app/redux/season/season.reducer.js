@@ -60,6 +60,11 @@ const seasonReducer = (state = initialState, action) => {
       clonedState.completedBlocks = seasons;
       clonedState.inTransition =
         seasons[level - 1].length === 3 && +level === seasons.length;
+      console.log(
+        '[reducer] IN TRANSITION:::: ',
+        clonedState.inTransition,
+        action.payload
+      );
 
       const currentSeason = seasons[level - 1];
       if (!currentSeason) {

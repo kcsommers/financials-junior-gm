@@ -21,6 +21,7 @@ export const Dashboard = () => {
       <div style={{ width: '100%' }}>
         <ReactSVG src={financialsLogo} />
       </div>
+
       <div
         className='dash-btn-list'
         style={{

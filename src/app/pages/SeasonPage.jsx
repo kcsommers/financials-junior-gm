@@ -412,10 +412,17 @@ export const SeasonPage = () => {
                 animate={animationStates.playButton}
                 className='play-btn-wrap'
               >
+                {seasonState.currentScenario &&
+                  seasonState.currentScenario.gameButtonLabel && (
+                    <span className='color-primary'>
+                      {seasonState.currentScenario.gameButtonLabel}
+                    </span>
+                  )}
                 <GameButton
                   onClick={startGameBlock}
                   gameBlockState={gameBlockState}
                   team={team}
+                  currentScenario={seasonState.currentScenario}
                 />
               </motion.span>
             </div>
