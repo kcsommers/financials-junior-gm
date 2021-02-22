@@ -313,9 +313,7 @@ export const ScoutPage = () => {
     );
   };
 
-  const handleScoutingInvalid = () => {
-    console.log('INVALID SCOUTING');
-  };
+  const handleScoutingInvalid = () => {};
 
   const handleScoutingComplete = () => {
     const moneyLevels = getMoneyLevels(student.level || 1);
