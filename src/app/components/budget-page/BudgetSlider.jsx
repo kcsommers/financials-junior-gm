@@ -1,5 +1,6 @@
 import { Indicator } from '@components';
 import { BudgetSliderSvg } from './BudgetSliderSvg';
+import { getDollarString } from '@utils';
 import '@css/components/budget-page/BudgetSlider.css';
 
 export const BudgetSlider = ({ budget, setValue }) => {
@@ -36,14 +37,14 @@ export const BudgetSlider = ({ budget, setValue }) => {
           {budget.spent > 0 && (
             <div className='spent-indicator-wrap'>
               <p className='color-primary'>
-                {`$${budget.spent}`} <br /> Spent
+                {getDollarString(budget.spent)} <br /> Spent
               </p>
             </div>
           )}
           <div className='spending-indicator-wrap'>
             <p className='color-primary'>
-              {`$${budget.total - budget.spent - budget.savings}`} <br />{' '}
-              Spending Budget
+              {getDollarString(budget.total - budget.spent - budget.savings)}{' '}
+              <br /> Spending Budget
             </p>
           </div>
         </div>
