@@ -119,7 +119,7 @@ export const SignPlayerOverlay = ({ assignment }) => {
           <div style={{ flex: 1 }}>
             <TeamBudgetState />
           </div>
-          <div style={{ flex: 1 }}>
+          {/* {<div style={{ flex: 1 }}>
             <h3
               className='color-primary'
               style={{
@@ -146,7 +146,7 @@ export const SignPlayerOverlay = ({ assignment }) => {
                 <span className='color-accent'>{availableSlots.bench}</span>
               </div>
             </div>
-          </div>
+          </div>} */}
         </div>
 
         <div className='market-players-board-container'>
