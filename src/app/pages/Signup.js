@@ -58,16 +58,17 @@ const Signup = () => {
     }
   };
   return (
-    <div className='form-container'>
-      <h2 id='inst' style={{ marginTop: '10vh', fontSize: '1.8rem' }}>
+    <div className='signup-form-container box-shadow'>
+      <h2 id='inst' style={{ fontSize: '1.8rem' }}>
         This page is for teacher registration only!
       </h2>
       <div id='backdiv'>
         <BackButton path='/dashboard' />
       </div>
       <div className='formdiv'>
-        <br></br>
-        <h4>Scroll and complete the form to register as a teacher!</h4>
+        <h4 className='color-primary form-title'>
+          Complete the form to register as a teacher!
+        </h4>
         <form onSubmit={handleSubmit(onSubmit)}>
           <h4>Your Name</h4>
           {errors.name && errors.name.type === 'required' && (

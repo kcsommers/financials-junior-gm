@@ -8,7 +8,7 @@ import {
   LevelStick,
   GameBlockBoard,
   StandingsBoard,
-  StartGameButton,
+  GameButton,
   Overlay,
   SeasonCompleteOverlay,
   NextSeasonOverlay,
@@ -33,6 +33,7 @@ import {
   setCurrentOpponentIndex,
   updateStudent,
   setSeasonComplete,
+  addObjective,
 } from '@redux/actions';
 import {
   seasonSlides,
@@ -42,6 +43,7 @@ import {
 } from '@tutorial';
 import { motion } from 'framer-motion';
 import '@css/pages/SeasonPage.css';
+import { Objective } from '@data/objectives/objectives';
 
 const allActions = {
   [INJURE_PLAYER]: injurePlayer,
@@ -133,7 +135,6 @@ export const SeasonPage = () => {
   }
 
   const endSeason = () => {
-    console.log('[endSeason]:::: ', seasonState);
     const studentTeamIndex = seasonState.standings.findIndex(
       (t) => t.name === seasonState.seasonTeam.name
     );
@@ -149,14 +150,12 @@ export const SeasonPage = () => {
     } else {
       clonedSeasons[(student.level || 1) - 1] = [seasonState.completedGames];
     }
-    console.log('[endSeason] studentSeasons:::: ', clonedSeasons, awards);
 
     updateStudentById(student._id, {
       seasons: clonedSeasons,
       awards,
     })
       .then((res) => {
-        console.log('[endSeason] uopdated student:::: ', res);
         batch(() => {
           dispatch(setSeasonComplete(student));
           dispatch(
@@ -218,6 +217,9 @@ export const SeasonPage = () => {
           );
           dispatch(setStudent(res.updatedStudent));
           dispatch(throwScenario(currentScenario));
+          dispatch(
+            addObjective(new Objective(currentScenario.objective, true))
+          );
         });
       })
       .catch((err) => console.error(err));
@@ -328,7 +330,6 @@ export const SeasonPage = () => {
     <div className='page-container'>
       <HeaderComponent
         stickBtn={seasonStick}
-        objectives={['1. Play the season']}
         level={student.level}
         tutorialActive={tutorialActive}
       />
@@ -337,7 +338,9 @@ export const SeasonPage = () => {
         <div
           style={{
             position: 'absolute',
-            right: '-5px',
+            right: '0',
+            top: 0,
+            padding: '0.5rem',
             transform: 'scale(0.85)',
             zIndex: tutorialActive ? 0 : 1,
           }}
@@ -409,10 +412,17 @@ export const SeasonPage = () => {
                 animate={animationStates.playButton}
                 className='play-btn-wrap'
               >
-                <StartGameButton
+                {seasonState.currentScenario &&
+                  seasonState.currentScenario.gameButtonLabel && (
+                    <span className='color-primary'>
+                      {seasonState.currentScenario.gameButtonLabel}
+                    </span>
+                  )}
+                <GameButton
                   onClick={startGameBlock}
                   gameBlockState={gameBlockState}
                   team={team}
+                  currentScenario={seasonState.currentScenario}
                 />
               </motion.span>
             </div>

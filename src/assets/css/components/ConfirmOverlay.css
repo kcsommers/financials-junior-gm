@@ -2,11 +2,10 @@
   text-align: center;
   font-size: 2.25rem;
   font-weight: bold;
-  margin-bottom: 1rem;
+  margin-bottom: 2.5rem;
   color: #006d75;
   position: relative;
   transform: translateY(50%);
-  -webkit-text-stroke: 0.05px black;
 }
 
 .confirm-options {

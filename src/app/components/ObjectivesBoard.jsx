@@ -2,32 +2,46 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import '@css/components/ObjectivesBoard.css';
 
-export const ObjectivesBoard = ({ objectives, smallText, level }) => {
-  const currentScenario = useSelector((state) => state.season.currentScenario);
+export const ObjectivesBoard = ({
+  smallText,
+  level,
+  visibleObjectives,
+  filterComplete,
+}) => {
+  const { currentObjectives } = useSelector((state) => state.objectives);
 
-  const _objectives = currentScenario
-    ? [currentScenario.objective]
-    : objectives;
-
-  const objectivesView = _objectives
-    ? _objectives.map((o) => (
-        <div className={`${smallText ? 'objective-text-small' : ''}`} key={o}>
-          {o}
-        </div>
-      ))
-    : null;
+  const objectivesView = [];
+  let i = 0;
+  while (
+    objectivesView.length < visibleObjectives &&
+    i < currentObjectives.length
+  ) {
+    if (!filterComplete || !currentObjectives[i].isComplete) {
+      objectivesView.push(
+        <li
+          className={`${smallText ? 'objective-text-small' : ''}${
+            currentObjectives[i].isComplete ? ' objective-complete' : ''
+          }${currentObjectives[i].isUrgent ? ' is-urgent' : ''}`}
+          key={currentObjectives[i].id}
+        >
+          {currentObjectives[i].objective}
+        </li>
+      );
+    }
+    i++;
+  }
 
   return (
     <div
       className={`objectives-board-wrap${
-        currentScenario ? ' has-scenario' : ''
+        currentObjectives[0].isUrgent ? ' is-urgent' : ''
       }`}
     >
       <div className='objective-level-box'>
         <div>Objectives</div>
         <div>Level {level}</div>
       </div>
-      <div className='ordered-list'>{objectivesView}</div>
+      <ol className='ordered-list'>{objectivesView}</ol>
     </div>
   );
 };

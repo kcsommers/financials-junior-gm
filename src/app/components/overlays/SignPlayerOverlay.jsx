@@ -10,6 +10,7 @@ import {
   signPlayer,
   setStudent,
   gameBlockEnded,
+  removeObjective,
 } from '@redux/actions';
 import { ConfirmSignOverlay } from './ConfirmSignOverlay';
 import { TeamAssignments } from '@data/players/players';
@@ -22,14 +23,11 @@ import '@css/components/team-page/SignPlayerOverlay.css';
 
 export const SignPlayerOverlay = ({ assignment }) => {
   const dispatch = useDispatch();
-  console.log(assignment)
-  const student = useSelector((state) => state.studentState.student)
-  const team = useSelector((state) => state.players.teamPlayers)
-  const { currentScenario, completedGames } = useSelector(
-    (state) => state.season
-  );
+  const student = useSelector((state) => state.studentState.student);
+  const team = useSelector((state) => state.players.teamPlayers);
 
   const seasonState = useSelector((state) => state.season);
+  const { currentObjectives } = useSelector((state) => state.objectives);
 
   const availableSlots = {
     forwards: getAvailableSlots(TeamAssignments.offense, team),
@@ -78,6 +76,7 @@ export const SignPlayerOverlay = ({ assignment }) => {
         );
         if (seasonState.currentScenario) {
           dispatch(gameBlockEnded());
+          dispatch(removeObjective(currentObjectives[0]));
         }
       });
     });

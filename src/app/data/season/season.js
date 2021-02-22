@@ -110,19 +110,23 @@ export const scenarios = {
   1: [
     {
       message: 'OH NO! One of your players was injured',
-      objective: '1. Replace the injured player',
+      objective: 'Replace the injured player',
       action: INJURE_PLAYER,
       getPlayer: getSecondHighestPlayer,
       playerAssignment: PlayerAssignments.INJURED,
       player: null,
+      gameButtonLabel: 'Go to Team page!',
+      gameButtonAction: (team, history) => history.push('/team'),
     },
     {
       message: 'OH NO! One of your players was injured',
-      objective: '1. Replace the injured player',
+      objective: 'Replace the injured player',
       action: INJURE_PLAYER,
       getPlayer: getStartingPlayer,
       playerAssignment: PlayerAssignments.INJURED,
       player: null,
+      gameButtonLabel: 'Go to Team page!',
+      gameButtonAction: (team, history) => history.push('/team'),
     },
   ],
 };

@@ -117,7 +117,6 @@ export const BudgetPage = () => {
     <div className='page-container'>
       <HeaderComponent
         stickBtn={budgetStick}
-        objectives={['1. Learn about your budget.']}
         level={student.level}
         inverse={true}
         tutorialActive={tutorialActive}
