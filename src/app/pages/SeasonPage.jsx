@@ -154,6 +154,8 @@ export const SeasonPage = () => {
     updateStudentById(student._id, {
       seasons: clonedSeasons,
       awards,
+      rollOverBudget: student.rollOverBudget + student.savingsBudget,
+      savingsBudget: 0,
     })
       .then((res) => {
         batch(() => {

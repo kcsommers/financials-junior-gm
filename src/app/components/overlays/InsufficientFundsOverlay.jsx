@@ -6,6 +6,7 @@ import { toggleOverlay } from '@redux/actions';
 export const InsufficientFundsOverlay = ({
   student,
   signingPlayer,
+  releasingPlayer,
   budget,
   onUseRollover,
 }) => {
@@ -32,18 +33,25 @@ export const InsufficientFundsOverlay = ({
   };
 
   const useRolloverBudget = () => {
+    let totalBudget = budget - signingPlayer.playerCost;
+    if (releasingPlayer) {
+      totalBudget += releasingPlayer.playerCost;
+    }
+
     const newRolloverBudget = Math.max(
-      student.rollOverBudget - (budget - signingPlayer.playerCost),
+      student.rollOverBudget - Math.abs(totalBudget),
       0
     );
     onUseRollover(signingPlayer, true, newRolloverBudget);
   };
 
   const showRolloverBudget = () => {
-    return (
-      student.rollOverBudget &&
-      student.rollOverBudget + budget - signingPlayer.playerCost >= 0
-    );
+    let totalBudget = budget - signingPlayer.playerCost;
+    if (releasingPlayer) {
+      totalBudget += releasingPlayer.playerCost;
+    }
+
+    return student.rollOverBudget && student.rollOverBudget + totalBudget >= 0;
   };
 
   return (
@@ -68,7 +76,7 @@ export const InsufficientFundsOverlay = ({
             You'll have to find a way to increase your budget.
           </p>
         </div>
-        {(showRolloverBudget() || true) && (
+        {showRolloverBudget() && (
           <div
             style={{
               marginTop: '0rem',

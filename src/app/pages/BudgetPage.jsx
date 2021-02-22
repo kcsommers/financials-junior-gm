@@ -132,27 +132,27 @@ export const BudgetPage = () => {
               top: '0',
               display: 'flex',
               alignItems: 'center',
-              justifyContent: 'space-between',
+              justifyContent:
+                student.rollOverBudget > 0 ? 'space-between' : 'flex-end',
               padding: '1rem',
             }}
           >
-            {student.rollOverBudget ||
-              (true && (
-                <p
-                  className='box-shadow'
-                  style={{
-                    textAlign: 'center',
-                    backgroundColor: '#f3901d',
-                    color: '#fff',
-                    padding: '0.5rem',
-                    borderRadius: '5px',
-                  }}
-                >
-                  Rollover Budget
-                  <br />
-                  {getDollarString(3)}
-                </p>
-              ))}
+            {student.rollOverBudget > 0 && (
+              <p
+                className='box-shadow'
+                style={{
+                  textAlign: 'center',
+                  backgroundColor: '#f3901d',
+                  color: '#fff',
+                  padding: '0.5rem',
+                  borderRadius: '5px',
+                }}
+              >
+                Rollover Budget
+                <br />
+                {getDollarString(student.rollOverBudget)}
+              </p>
+            )}
             <SharkieButton onCallSharkie={onCallSharkie} textPosition='left' />
           </div>
           <div className='budget-equation-container'>
