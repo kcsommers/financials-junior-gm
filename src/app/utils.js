@@ -1,16 +1,4 @@
-import { PlayerAssignments, PlayerPositions } from './data/players/players';
-
-export const playerProps = [
-  'fOne',
-  'fTwo',
-  'fThree',
-  'dOne',
-  'dTwo',
-  'gOne',
-  'benchOne',
-  'benchTwo',
-  'benchThree',
-];
+import { playerProps } from './data/players/players';
 
 export const getMoneySpent = (players) => {
   if (!players) {
@@ -64,57 +52,57 @@ export const getMoneyLevels = (level) => {
     case '1':
       return {
         0: {
+          short: '$3',
+          long: 'three dollar',
+          num: 3,
+        },
+        1: {
           short: '$2',
           long: 'two dollar',
           num: 2,
         },
-        1: {
-          short: '$1',
+        2: {
+          short: '$1 ',
           long: 'one dollar',
           num: 1,
-        },
-        2: {
-          short: '50\u00a2',
-          long: 'fifty cent',
-          num: 0.5,
         },
       };
     case 2:
     case '2':
       return {
         0: {
-          short: '$2',
-          long: 'two dollar',
-          num: 2,
+          short: '$3k',
+          long: 'three hundred dollar',
+          num: 300,
         },
         1: {
-          short: '$1',
-          long: 'one dollar',
-          num: 1,
+          short: '$200',
+          long: 'two hundred dollar',
+          num: 200,
         },
         2: {
-          short: '50\u00a2',
-          long: 'fifty cent',
-          num: 0.5,
+          short: '$100',
+          long: 'one hundred dollar',
+          num: 100,
         },
       };
     case 3:
     case '3':
       return {
         0: {
-          short: '$2',
-          long: 'two dollar',
-          num: 2,
+          short: '$30',
+          long: 'thirty dollar',
+          num: 30,
         },
         1: {
-          short: '$1',
-          long: 'one dollar',
-          num: 1,
+          short: '$20',
+          long: 'twenty dollar',
+          num: 20,
         },
         2: {
-          short: '50\u00a2',
-          long: 'fifty cent',
-          num: 0.5,
+          short: '$10',
+          long: 'ten dollar',
+          num: 0,
         },
       };
     default: {
@@ -123,48 +111,6 @@ export const getMoneyLevels = (level) => {
         long: 'unknown',
         num: 0,
       };
-    }
-  }
-};
-
-export const isTeamPlayer = (player) => {
-  if (!player) {
-    return false;
-  }
-  return [
-    PlayerAssignments.F_ONE,
-    PlayerAssignments.F_TWO,
-    PlayerAssignments.F_THREE,
-    PlayerAssignments.D_ONE,
-    PlayerAssignments.D_TWO,
-    PlayerAssignments.G_ONE,
-    PlayerAssignments.BENCH_ONE,
-    PlayerAssignments.BENCH_TWO,
-    PlayerAssignments.BENCH_THREE,
-  ].includes(player.playerAssignment);
-};
-
-export const getPlayerPositon = (assignment) => {
-  switch (assignment) {
-    case PlayerAssignments.F_ONE:
-    case PlayerAssignments.F_TWO:
-    case PlayerAssignments.F_THREE: {
-      return PlayerPositions.FORWARD;
-    }
-    case PlayerAssignments.D_ONE:
-    case PlayerAssignments.D_TWO: {
-      return PlayerPositions.DEFENDER;
-    }
-    case PlayerAssignments.G_ONE: {
-      return PlayerPositions.GOALIE;
-    }
-    case PlayerAssignments.BENCH_ONE:
-    case PlayerAssignments.BENCH_TWO:
-    case PlayerAssignments.BENCH_THREE: {
-      return PlayerPositions.BENCH;
-    }
-    default: {
-      return null;
     }
   }
 };

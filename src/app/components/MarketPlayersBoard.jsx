@@ -66,7 +66,11 @@ export const MarketPlayersBoard = ({
   releasingPlayer,
 }) => {
   const dispatch = useDispatch();
-  const marketPlayers = useSelector((state) => state.players.marketPlayers);
+  const marketPlayers = useSelector((state) =>
+    initialPosition === PlayerPositions.BENCH
+      ? state.players.scoutingState.offeredScoutPlayers
+      : state.players.marketPlayers
+  );
 
   const [activePosition, setActivePosition] = useState(initialPosition);
 
@@ -84,7 +88,14 @@ export const MarketPlayersBoard = ({
       dispatch(
         toggleOverlay({
           isOpen: true,
-          template: <InsufficientFundsOverlay />,
+          template: (
+            <InsufficientFundsOverlay
+              budget={budget}
+              student={student}
+              signingPlayer={signingPlayer}
+              onUseRollover={onPlayerCardClick}
+            />
+          ),
         })
       );
       return;

@@ -1,5 +1,5 @@
 import Slide from '../../Slide';
-import { SET_ANIMATION_STATE } from '@redux/actionTypes';
+import { SET_ANIMATION_STATE } from '@redux/actions';
 
 const teamStickSlideConfigs = [
   {
@@ -56,7 +56,7 @@ const teamStickSlideConfigs = [
 
 const budgetStickSlideConfigs = [
   {
-    message: "Your team's money is also called a budget.",
+    message: "The plan to manage your team's money is called a budget",
     sharkie: 'speakInverse',
     hasButtons: false,
     slideAnimate: {
@@ -123,7 +123,7 @@ const budgetStickSlideConfigs = [
 
 const trophiesStickSlideConfigs = [
   {
-    message: 'You can earn badges and trophies for managing your team!',
+    message: 'You can earn trophies for managing your team!',
     sharkie: 'speakInverse',
     hasButtons: true,
     slideAnimate: {
@@ -188,7 +188,7 @@ const trophiesStickSlideConfigs = [
 const seasonStickSlideConfigs = [
   {
     message:
-      'You have to complete your objectives to get your team ready for the season.',
+      'You have to complete your objectives to get your team ready for the season',
     sharkie: 'speak',
     hasButtons: true,
     slideAnimate: {
@@ -201,7 +201,7 @@ const seasonStickSlideConfigs = [
   },
   {
     message:
-      'When your team is ready, go here to see how well it does against other teams.',
+      'When your team is ready, go here to play the season',
     sharkie: 'speak',
     hasButtons: true,
     slideAnimate: {
@@ -296,7 +296,7 @@ const seasonStickSlideConfigs = [
     timer: 0,
   },
   {
-    message: "I'll be around to help!",
+    message: "I'll be around to help you!",
     sharkie: 'speak',
     hasButtons: true,
     slideAnimate: {

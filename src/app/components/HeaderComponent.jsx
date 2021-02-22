@@ -15,9 +15,10 @@ const styles = {
 export const HeaderComponent = ({
   stickBtn,
   inverse,
-  objectives,
   largeStick,
   level,
+  tutorialActive,
+  inTransition,
 }) => {
   const stick = (
     <StickButton
@@ -26,15 +27,18 @@ export const HeaderComponent = ({
       image={stickBtn}
       inverse={inverse}
       large={largeStick}
+      tutorialActive={tutorialActive}
+      inTransition={inTransition}
     />
   );
 
   const board = (
     <ObjectivesBoard
       key='ob'
-      objectives={objectives}
+      visibleObjectives={1}
       level={level}
       smallText={true}
+      filterComplete={true}
     />
   );
 

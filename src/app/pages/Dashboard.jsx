@@ -1,62 +1,65 @@
-import React from 'react';
+import { useHistory } from 'react-router-dom';
 import { ReactSVG } from 'react-svg';
-import '@css/pages/Dashboard.css';
-import financialsLogo from '@images/icons/dashboard/logo.svg';
-import TeacherBtn from '@images/icons/dashboard/login_teachers.svg';
-import StudentBtn from '@images/icons/dashboard/login_students.svg';
-import RegisterBtn from '@images/icons/dashboard/login_registration.svg';
-import TeacherBtnSelected from '@images/icons/forward-tab-selected.svg';
-import StudentBtnSelected from '@images/icons/forward-tab-selected.svg';
-import RegisterBtnSelected from '@images/icons/forward-tab-selected.svg';
+import financialsLogo from '@images/financials-logo-big.svg';
+import { Button } from '@components';
 
-class Dashboard extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            TeacherBtn: TeacherBtn,
-            StudentBtn: StudentBtn,
-            RegisterBtn: RegisterBtn,
-        };
-    }
+export const Dashboard = () => {
+  const history = useHistory();
+  return (
+    <div
+      className='dashboard-container'
+      style={{
+        textAlign: 'center',
+        position: 'relative',
+        zIndex: 100,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        height: '100%',
+      }}
+    >
+      <div style={{ width: '100%' }}>
+        <ReactSVG src={financialsLogo} />
+      </div>
 
-    handleTeacherClick = () => {
-        // this.setState({
-        //     TeacherBtn : TeacherBtnSelected
-        // });
-        this.props.history.push('/login/teacher');
-    }
-
-    handleStudentClick = () => {
-        // this.setState({
-        //     StudentBtn : StudentBtnSelected
-        // });
-        this.props.history.push('/login/student');
-    }
-
-    handleRegisterClick = () => {
-        // this.setState({
-        //     RegisterBtn : RegisterBtnSelected
-        // });
-        this.props.history.push('/signup');
-    }
-
-    render() {
-        return (
-            <div className="dash-div">
-                <div><ReactSVG src={financialsLogo} /></div>
-                <div className="dash-btn-list">
-                    <div className="dash-btn">
-                        <ReactSVG onClick={this.handleStudentClick} src={this.state.StudentBtn} />
-                    </div>
-                    <div className="dash-btn">
-                        <ReactSVG onClick={this.handleTeacherClick} src={this.state.TeacherBtn} />
-                    </div>
-                    <div className="dash-btn">
-                        <ReactSVG onClick={this.handleRegisterClick} src={this.state.RegisterBtn} />
-                    </div>
-                </div>
-            </div>
-        );
-    }
-}
-export default Dashboard;
+      <div
+        className='dash-btn-list'
+        style={{
+          flex: 1,
+          width: '100%',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <div>
+          <Button
+            text='Student'
+            onClick={() => {
+              history.push('/login/student');
+            }}
+          />
+        </div>
+        <div style={{ margin: '2rem 0' }}>
+          <Button
+            text='Teachers'
+            background='#002f6c'
+            onClick={() => {
+              history.push('/login/teacher');
+            }}
+          />
+        </div>
+        <div>
+          <Button
+            text='Registration'
+            background='#070707'
+            onClick={() => {
+              history.push('/signup');
+            }}
+          />
+        </div>
+      </div>
+    </div>
+  );
+};
