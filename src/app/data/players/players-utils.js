@@ -200,8 +200,6 @@ export const handleSignPlayer = (
       }
     }
 
-    console.log('STUDNT UPDQTL:L::: ', studentUpdates);
-
     updateStudentById(student._id, studentUpdates)
       .then((res) =>
         resolve({
