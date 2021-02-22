@@ -1,5 +1,5 @@
 import Slide from '../../Slide';
-import { SET_ANIMATION_STATE } from '@redux/actions';
+import { SET_ANIMATION_STATE} from '../../../redux/tutorials/tutorials.actions';
 
 const slideConfigs = [
   {
@@ -105,7 +105,7 @@ const slideConfigs = [
     ],
   },
   {
-    message: 'Your Spending Budget',
+    message: 'Your Spending Budget...',
     sharkie: 'speak',
     accentText: 'Spending Budget',
     timer: 0,
@@ -167,7 +167,7 @@ const slideConfigs = [
     ],
   },
   {
-    message: 'Spending budget is what you use to sign players.',
+    message: 'Your spending budget is what you use to sign players.',
     sharkie: 'speak',
     timer: 0,
     hasButtons: true,
@@ -198,14 +198,14 @@ const slideConfigs = [
     ],
   },
   {
-    message: 'Savings is the money you put away for emergencies.',
+    message: 'Your savings is the money you put away for emergencies.',
     sharkie: 'speak',
     timer: 0,
     hasButtons: true,
     accentText: 'Savings',
   },
   {
-    message: 'So why do we need Savings?',
+    message: 'So why do you need Savings?',
     sharkie: 'speak',
     timer: 0,
     hasButtons: true,
@@ -243,7 +243,7 @@ const slideConfigs = [
   },
   {
     message:
-      'So its a good idea that for every 10 dollars of your total budget',
+      'It is a good idea that for every 10 dollars of your total budget',
     sharkie: 'speak',
     hasButtons: true,
     timer: 0,
@@ -285,7 +285,7 @@ const slideConfigs = [
     ],
   },
   {
-    message: 'Then you could add it to your total budget for the next season!',
+    message: 'You can add it to your savings for the next season!',
     sharkie: 'speak',
     hasButtons: true,
     timer: 0,

@@ -65,7 +65,7 @@ const slideConfigs = [
   },
   // three forwards, 2 defenders and one goalie
   {
-    message: 'Three forwards, 2 defenders and one goalie.',
+    message: '3 forwards, 2 defenders and a goalie',
     sharkie: 'speakInverse',
     hasButtons: true,
     timer: 0,
@@ -82,10 +82,11 @@ const slideConfigs = [
           page: 'team',
           animationStates: [
             {
-              component: 'playerCard',
+              component: 'playerCardEmpty',
               state: {
-                borderColor: 'rgba(0,0,0,0)',
-                scale: 1,
+                borderColor: '#ffd782',
+                borderWidth: '4px',
+                scale: 1.1,
               },
             },
           ],
@@ -102,12 +103,28 @@ const slideConfigs = [
     timer: 0,
     small: true,
     slideAnimate: {
-      y: '91%',
+      y: '63%',
       x: '-63%',
       zIndex: 1000,
     },
     transparentBg: true,
     exitActions: [
+      {
+        type: SET_ANIMATION_STATE,
+        payload: {
+          page: 'team',
+          animationStates: [
+            {
+              component: 'playerCardEmpty',
+              state: {
+                borderColor: '#f3901d',
+                borderWidth: '3px',
+                scale: 1,
+              },
+            },
+          ],
+        },
+      },
       {
         type: TOGGLE_OVERLAY,
         payload: {
@@ -124,26 +141,42 @@ const slideConfigs = [
 //get rid of spaces on your team.
   {
     message: 'These are the players you can sign to this slot!',
-    sharkie: 'speakInverse',
+    sharkie: 'speak',
     hasButtons: true,
     timer: 0,
     small: true,
     slideAnimate: {
-      y: '21%',
-      x: '-63%',
+      y: '-40%',
+      x: '63%',
       zIndex: 1000,
     },
     transparentBg: true,
+    exitActions: [
+      {
+        type: SET_ANIMATION_STATE,
+        payload: {
+          page: 'team',
+          animationStates: [
+            {
+              component: 'playerCard',
+              state: {
+                scale: 1.1,
+              },
+            },
+          ],
+        },
+      },
+    ],
   },
   {
     message: 'Tap a player to learn more about them!',
-    sharkie: 'speakInverse',
+    sharkie: 'speak',
     hasButtons: true,
     timer: 0,
     small: true,
     slideAnimate: {
-      y: '21%',
-      x: '-63%',
+      y: '-40%',
+      x: '63%',
       zIndex: 1000,
     },
     transparentBg: true,
@@ -182,7 +215,7 @@ const slideConfigs = [
     timer: 0,
     small: true,
     slideAnimate: {
-      y: '91%',
+      y: '21%',
       x: '-63%',
       zIndex: 1000,
     },
@@ -196,7 +229,7 @@ const slideConfigs = [
     timer: 0,
     small: true,
     slideAnimate: {
-      y: '91%',
+      y: '21%',
       x: '-63%',
       zIndex: 1000,
     },
@@ -210,7 +243,7 @@ const slideConfigs = [
     timer: 0,
     small: true,
     slideAnimate: {
-      y: '91%',
+      y: '21%',
       x: '-63%',
       zIndex: 1000,
     },
@@ -218,13 +251,13 @@ const slideConfigs = [
   },
   {
     message:
-      'And their defense score, or how good they are at blocking goals from the other team.',
+      'And their defense score, or how good they are at blocking shots from the other team.',
     sharkie: 'speakInverse',
     hasButtons: true,
     timer: 0,
     small: true,
     slideAnimate: {
-      y: '91%',
+      y: '21%',
       x: '-63%',
       zIndex: 1000,
     },
@@ -237,7 +270,7 @@ const slideConfigs = [
     timer: 0,
     small: true,
     slideAnimate: {
-      y: '91%',
+      y: '21%',
       x: '-63%',
       zIndex: 1000,
     },
@@ -251,7 +284,7 @@ const slideConfigs = [
     timer: 0,
     small: true,
     slideAnimate: {
-      y: '91%',
+      y: '21%',
       x: '-63%',
       zIndex: 1000,
     },
@@ -265,7 +298,7 @@ const slideConfigs = [
     timer: 0,
     small: true,
     slideAnimate: {
-      y: '91%',
+      y: '21%',
       x: '-63%',
       zIndex: 1000,
     },
@@ -279,7 +312,7 @@ const slideConfigs = [
     timer: 0,
     small: true,
     slideAnimate: {
-      y: '91%',
+      y: '21%',
       x: '-63%',
       zIndex: 1000,
     },
@@ -293,7 +326,7 @@ const slideConfigs = [
     timer: 0,
     small: true,
     slideAnimate: {
-      y: '91%',
+      y: '21%',
       x: '-63%',
       zIndex: 1000,
     },
@@ -307,7 +340,7 @@ const slideConfigs = [
     timer: 0,
     small: true,
     slideAnimate: {
-      y: '91%',
+      y: '21%',
       x: '-63%',
       zIndex: 1000,
     },
@@ -316,12 +349,12 @@ const slideConfigs = [
   {
     message:
       'You can see these changes above!',
-    sharkie: 'speakInverse',
+    sharkie: 'presentInverse',
     hasButtons: true,
     timer: 0,
     small: true,
     slideAnimate: {
-      y: '91%',
+      y: '61%',
       x: '-63%',
       zIndex: 1000,
     },
@@ -349,7 +382,7 @@ const slideConfigs = [
     timer: 0,
     small: true,
     slideAnimate: {
-      y: '91%',
+      y: '21%',
       x: '-63%',
       zIndex: 1000,
     },
@@ -389,7 +422,7 @@ const slideConfigs = [
     timer: 0,
     small: true,
     slideAnimate: {
-      y: '91%',
+      y: '81%',
       x: '-63%',
       zIndex: 1000,
     },
@@ -403,7 +436,7 @@ const slideConfigs = [
     timer: 0,
     small: true,
     slideAnimate: {
-      y: '91%',
+      y: '81%',
       x: '50%',
       zIndex: 1000,
     },
@@ -427,7 +460,7 @@ const slideConfigs = [
     timer: 0,
     small: true,
     slideAnimate: {
-      y: '91%',
+      y: '21%',
       x: '-63%',
       zIndex: 1000,
     },
@@ -441,7 +474,7 @@ const slideConfigs = [
     timer: 0,
     small: true,
     slideAnimate: {
-      y: '91%',
+      y: '21%',
       x: '-63%',
       zIndex: 1000,
     },
@@ -455,7 +488,7 @@ const slideConfigs = [
     timer: 0,
     small: true,
     slideAnimate: {
-      y: '91%',
+      y: '21%',
       x: '-63%',
       zIndex: 1000,
     },
@@ -463,7 +496,37 @@ const slideConfigs = [
   },
   {
     message:
-      "Tap the scout button to learn more about Scouting!",
+      "Try filling out your team by signing players!",
+    sharkie: 'speak',
+    hasButtons: true,
+    timer: 0,
+    small: true,
+    slideAnimate: {
+      y: '21%',
+      x: '63%',
+      zIndex: 1000,
+    },
+    transparentBg: true,
+    exitActions:[
+      {
+        type: SET_ANIMATION_STATE,
+        payload: {
+          page: 'team',
+          animationStates: [
+            {
+              component: 'scoutStick',
+              state: {
+                scale: 1.1,
+              },
+            },
+          ],
+        },
+      }
+    ]
+  },
+  {
+    message:
+      "Then tap the scout button to learn about scouting!",
     sharkie: 'speak',
     hasButtons: true,
     timer: 0,
@@ -474,6 +537,22 @@ const slideConfigs = [
       zIndex: 1000,
     },
     transparentBg: true,
+    exitActions:[
+      {
+        type: SET_ANIMATION_STATE,
+        payload: {
+          page: 'team',
+          animationStates: [
+            {
+              component: 'scoutStick',
+              state: {
+                scale: 1,
+              },
+            },
+          ],
+        },
+      }
+    ]
   },
   //your team also has a bench where you can add upto three extra players
   //you can add players of any position to the bench
