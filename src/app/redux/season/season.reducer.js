@@ -12,7 +12,7 @@ import {
   THROW_SCENARIO,
   SET_CURRENT_OPPONENT_INDEX,
   INITIALIZE_SEASON,
-} from './../actionTypes';
+} from './season.actions';
 
 const initialTeams = [
   {

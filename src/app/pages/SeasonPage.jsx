@@ -21,7 +21,7 @@ import {
   scenarios,
 } from '@data/season/season';
 import { cloneDeep } from 'lodash';
-import { INJURE_PLAYER } from '@redux/actionTypes';
+import { INJURE_PLAYER } from '@redux/actions';
 import { updateStudentById } from './../api-helper';
 import {
   throwScenario,

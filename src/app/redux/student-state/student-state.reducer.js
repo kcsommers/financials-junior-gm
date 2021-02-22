@@ -1,4 +1,8 @@
-import { SET_STUDENT, SET_SAVINGS, UPDATE_STUDENT } from '../actionTypes';
+import {
+  SET_STUDENT,
+  SET_SAVINGS,
+  UPDATE_STUDENT,
+} from './student-state.actions';
 import { getMoneySpent, getTeamRank } from '@utils';
 import { cloneDeep } from 'lodash';
 

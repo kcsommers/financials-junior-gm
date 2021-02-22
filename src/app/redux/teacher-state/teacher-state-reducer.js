@@ -1,4 +1,4 @@
-import { SET_TEACHER } from '../actionTypes';
+import { SET_TEACHER } from './teacher-state.actions';
 import { cloneDeep } from 'lodash';
 
 const initialState = {

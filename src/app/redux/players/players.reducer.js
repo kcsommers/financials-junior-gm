@@ -6,7 +6,7 @@ import {
   SET_INITIAL_PLAYERS_STATE,
   UPDATE_SCOUT_PLAYER,
   INJURE_PLAYER,
-} from '../actionTypes';
+} from './players.actions';
 import { cloneDeep } from 'lodash';
 import { PlayerAssignments, PlayerPositions } from '@data/players/players';
 import { isTeamPlayer, getPlayerPositon } from '@data/players/players-utils';
