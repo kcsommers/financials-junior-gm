@@ -1,6 +1,6 @@
-import { useDispatch } from 'react-redux';
 import { toggleOverlay, setStudent, releasePlayer } from '@redux/actions';
 import { updateStudentById } from '../../api-helper';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   PlayerCard,
   OverlayBoard,
@@ -14,11 +14,10 @@ import { cloneDeep } from 'lodash';
 
 export const PlayerDetailsOverlay = ({
   player,
-  student,
   includeActions = true,
 }) => {
   const dispatch = useDispatch();
-
+  const student = useSelector((state) => state.studentState.student)
   const releaseCancelled = () => {
     dispatch(
       toggleOverlay({

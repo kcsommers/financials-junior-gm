@@ -18,9 +18,11 @@ import { cloneDeep } from 'lodash';
 import { TeamAssignments, getAvailableSlots } from '@data/players/players';
 import '@css/components/team-page/SignPlayerOverlay.css';
 
-export const SignPlayerOverlay = ({ team, assignment, student }) => {
+export const SignPlayerOverlay = ({ assignment }) => {
   const dispatch = useDispatch();
-
+  console.log(assignment)
+  const student = useSelector((state) => state.studentState.student)
+  const team = useSelector((state) => state.players.teamPlayers)
   const { currentScenario, completedGames } = useSelector(
     (state) => state.season
   );
