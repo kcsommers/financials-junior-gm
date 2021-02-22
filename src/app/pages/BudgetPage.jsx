@@ -53,6 +53,10 @@ export const BudgetPage = () => {
     [dispatch]
   );
 
+  const onCallSharkie = () => {
+    startTutorial([getConfirmSlides('budget'), budgetSlides]);
+  };
+
   const budgetEquationStates = {
     board: useSelector((state) => state.tutorial.budget.equationBoard),
     total: useSelector((state) => state.tutorial.budget.total),
@@ -75,10 +79,6 @@ export const BudgetPage = () => {
     debounceTimeout = window.setTimeout(() => {
       updateSavingsOnServer(+value);
     }, 1000);
-  };
-
-  const onCallSharkie = () => {
-    setTutorialSlides([getConfirmSlides('budget'), budgetSlides]);
   };
 
   const hasSeenTutorial = useRef(
