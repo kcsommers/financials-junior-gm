@@ -12,10 +12,15 @@ div.btn {
   z-index: 1;
 }
 
+div.btn.disabled {
+  opacity: 0.5;
+}
+
 div.btn-inner {
   height: 22px;
   display: flex;
   align-items: center;
+  justify-content: center;
   color: #fff;
 }
 

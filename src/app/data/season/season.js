@@ -22,9 +22,38 @@ import pinkpandasLg from '@images/icons/team-logos/pinkpandasLg.svg';
 import pinkpandasSm from '@images/icons/team-logos/pinkpandasSm.svg';
 import blackbeaversLg from '@images/icons/team-logos/blackbeaversLg.svg';
 import blackbeaversSm from '@images/icons/team-logos/blackbeaversSm.svg';
-import { INJURE_PLAYER } from '@redux/actionTypes';
+import { INJURE_PLAYER } from '@redux/actions';
 import { PlayerAssignments } from '@data/players/players';
 import { cloneDeep } from 'lodash';
+import { initPlayersByLevel, updateStudentById } from './../../api-helper';
+
+export const resetSeason = (level, student) => {
+  return new Promise((resolve, reject) => {
+    const clonedSeasons = cloneDeep(student.seasons);
+    clonedSeasons[(level || 1) - 1] = [];
+
+    updateStudentById(student._id, { seasons: clonedSeasons, level })
+      .then((res) => {
+        if (!res.success || !res.updatedStudent) {
+          console.error(new Error('Unexpected error updating student season'));
+          return;
+        }
+
+        initPlayersByLevel(level)
+          .then((initializedStudentRes) => {
+            const initializedStudent = initializedStudentRes.data;
+            if (!initializedStudentRes.success || !initializedStudent) {
+              console.error(new Error('Unexpected error initializing players'));
+              return;
+            }
+
+            resolve(initializedStudent);
+          })
+          .catch((err) => reject(err));
+      })
+      .catch((err) => reject(err));
+  });
+};
 
 export const getGameResult = (student, opponent) => {
   const rankDiff = student.teamRank - opponent.teamRank;
@@ -81,19 +110,23 @@ export const scenarios = {
   1: [
     {
       message: 'OH NO! One of your players was injured',
-      objective: '1. Replace the injured player',
+      objective: 'Replace the injured player',
       action: INJURE_PLAYER,
       getPlayer: getSecondHighestPlayer,
-      playerAssignment: PlayerAssignments.MARKET,
+      playerAssignment: PlayerAssignments.INJURED,
       player: null,
+      gameButtonLabel: 'Go to Team page!',
+      gameButtonAction: (team, history) => history.push('/team'),
     },
     {
       message: 'OH NO! One of your players was injured',
-      objective: '1. Replace the injured player',
+      objective: 'Replace the injured player',
       action: INJURE_PLAYER,
       getPlayer: getStartingPlayer,
-      playerAssignment: PlayerAssignments.MARKET,
+      playerAssignment: PlayerAssignments.INJURED,
       player: null,
+      gameButtonLabel: 'Go to Team page!',
+      gameButtonAction: (team, history) => history.push('/team'),
     },
   ],
 };
@@ -160,6 +193,10 @@ export const getStandings = (teams) => {
 };
 
 export const getStanding = (team, standings) => {
+  if (!team) {
+    return '';
+  }
+
   const standing = (
     standings.findIndex((t) => t.name === team.name) + 1
   ).toString();
@@ -292,5 +329,4 @@ export const allOpponents = [
     standings: '6th',
     color: '#CECECE',
   },
-  
 ];

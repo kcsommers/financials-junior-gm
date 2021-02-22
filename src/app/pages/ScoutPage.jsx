@@ -8,11 +8,11 @@ import {
   ScoutingCompleteOverlay,
   Overlay,
   PlayerDetailsOverlay,
-  LoadingSpinner,
   BadScoutOverlay,
+  NextSeasonOverlay,
 } from '@components';
 import scoutStick from '@images/scout-stick.svg';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch, batch } from 'react-redux';
 import { motion } from 'framer-motion';
 import {
   scoutSlides,
@@ -30,9 +30,9 @@ import {
 } from '@redux/actions';
 import { isEqual } from 'lodash';
 import { getMoneyLevels } from '@utils';
-import { updatePlayerOnServer } from '@data/players/players-service';
 import { cloneDeep } from 'lodash';
 import { PlayerAssignments } from '@data/players/players';
+import { updateStudentById } from './../api-helper';
 import '@css/pages/ScoutPage.css';
 
 const boardMap = {
@@ -42,12 +42,14 @@ const boardMap = {
   levelThree: {},
 };
 
-const ScoutPage = () => {
+export const ScoutPage = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const tutorialActive = useSelector((state) => state.tutorial.isActive);
   const student = useSelector((state) => state.studentState.student);
-  const { scoutPlayers, scoutingState } = useSelector((state) => state.players);
+  const { inTransition, awards } = useSelector((state) => state.season);
+  const { scoutingState } = useSelector((state) => state.players);
+  const { scoutPlayers } = scoutingState;
   const availablePlayersAnimationState = useSelector(
     (state) => state.tutorial.scout.availablePlayersBoard
   );
@@ -230,15 +232,15 @@ const ScoutPage = () => {
       const levelTwoPlayers = [];
       const levelThreePlayers = [];
 
-      for (let i = 0; i < Math.max(2, scoutPlayers.levelOne.length); i++) {
+      for (let i = 0; i < Math.max(1, scoutPlayers.levelOne.length); i++) {
         levelOnePlayers.push(getDroppableItem(_levelOne[i], `levelOne-${i}`));
       }
 
-      for (let i = 0; i < Math.max(3, scoutPlayers.levelTwo.length); i++) {
+      for (let i = 0; i < Math.max(2, scoutPlayers.levelTwo.length); i++) {
         levelTwoPlayers.push(getDroppableItem(_levelTwo[i], `levelTwo-${i}`));
       }
 
-      for (let i = 0; i < Math.max(4, scoutPlayers.levelThree.length); i++) {
+      for (let i = 0; i < Math.max(3, scoutPlayers.levelThree.length); i++) {
         levelThreePlayers.push(
           getDroppableItem(_levelThree[i], `levelThree-${i}`, true)
         );
@@ -321,32 +323,48 @@ const ScoutPage = () => {
     const levelOneCloned = cloneDeep(scoutPlayers.levelOne);
     const levelTwoCloned = cloneDeep(scoutPlayers.levelTwo);
     const levelThreeCloned = cloneDeep(scoutPlayers.levelThree);
+    const offeredScoutPlayers = [];
 
     levelOneCloned.forEach((p) => {
       p.playerCost = moneyLevels[0].num;
-      p.playerAssignment = PlayerAssignments.MARKET;
+      p.playerAssignment = PlayerAssignments.OFFERED_SCOUT;
+      offeredScoutPlayers.push(p);
     });
     levelTwoCloned.forEach((p) => {
       p.playerCost = moneyLevels[1].num;
-      p.playerAssignment = PlayerAssignments.MARKET;
+      p.playerAssignment = PlayerAssignments.OFFERED_SCOUT;
+      offeredScoutPlayers.push(p);
     });
     levelThreeCloned.forEach((p) => {
       p.playerCost = moneyLevels[2].num;
-      p.playerAssignment = PlayerAssignments.MARKET;
+      p.playerAssignment = PlayerAssignments.OFFERED_SCOUT;
+      offeredScoutPlayers.push(p);
     });
 
-    updatePlayerOnServer(null)
+    const playersUpdated = student.players.map((p) => {
+      const offeredScoutIndex = offeredScoutPlayers.findIndex(
+        (player) => player._id === p._id
+      );
+      if (offeredScoutIndex > -1) {
+        return offeredScoutPlayers[offeredScoutIndex];
+      }
+      return p;
+    });
+
+    updateStudentById(student._id, { players: playersUpdated })
       .then((res) => {
-        dispatch(
-          toggleOverlay({
-            isOpen: true,
-            template: <ScoutingCompleteOverlay />,
-            canClose: false,
-          })
-        );
-        dispatch(
-          scoutingComplete(levelOneCloned, levelTwoCloned, levelThreeCloned)
-        );
+        batch(() => {
+          dispatch(
+            toggleOverlay({
+              isOpen: true,
+              template: <ScoutingCompleteOverlay />,
+              canClose: false,
+            })
+          );
+          dispatch(
+            scoutingComplete(levelOneCloned, levelTwoCloned, levelThreeCloned)
+          );
+        });
         window.setTimeout(() => {
           history.push('/team');
           dispatch(
@@ -363,11 +381,25 @@ const ScoutPage = () => {
 
   const validateScouting = () => {
     // check that the available board is empty
-    if (!Object.keys(boardMap.available).some((k) => !!boardMap.available[k])) {
+    if (scoutingIsValid()) {
       handleScoutingComplete();
     } else {
       handleScoutingInvalid();
     }
+  };
+
+  const scoutingIsValid = () => {
+    return (
+      scoutingState &&
+      !scoutingState.isComplete &&
+      scoutPlayers.available &&
+      scoutPlayers.available.reduce((total, p) => {
+        if (p) {
+          total++;
+        }
+        return total;
+      }, 0) < 4
+    );
   };
 
   const setBoards = useCallback(
@@ -445,19 +477,31 @@ const ScoutPage = () => {
     moneyLevelThreeState,
   ]);
 
-  return scoutPlayers.available ? (
+  if (inTransition) {
+    setTimeout(() => {
+      dispatch(
+        toggleOverlay({
+          isOpen: true,
+          template: <NextSeasonOverlay student={student} awards={awards} />,
+          canClose: false,
+        })
+      );
+    });
+  }
+
+  return (
     <div className='page-container scout-page-container'>
       <HeaderComponent
         stickBtn={scoutStick}
         largeStick={true}
-        objectives={['1. Scout players to sign to your bench!']}
         level={student.level}
+        tutorialActive={tutorialActive}
       />
       <PageBoard hideCloseBtn={true} includeBackButton={true}>
         <div className='scout-page-board-header'>
           <p className='color-primary scout-page-helper-text'>
-            Give each new player an offered value by dragging them to their money
-            level!
+            Give each new player an offered value by dragging them to their
+            money level!
           </p>
           <span
             style={{ position: 'absolute', right: '0.5rem', top: '0.25rem' }}
@@ -501,7 +545,7 @@ const ScoutPage = () => {
             animate={finishedBtnAnimationState}
           >
             <div
-              className={scoutingState.isComplete ? 'disabled' : ''}
+              className={!scoutingIsValid() ? 'disabled' : ''}
               onClick={() => {
                 if (!scoutingState.isComplete) {
                   validateScouting();
@@ -524,22 +568,5 @@ const ScoutPage = () => {
         <Tutorial slides={tutorialSlides} onComplete={onTutorialComplete} />
       )}
     </div>
-  ) : (
-    <div
-      style={{
-        position: 'absolute',
-        top: 0,
-        bottom: 0,
-        left: 0,
-        right: 0,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}
-    >
-      <LoadingSpinner />
-    </div>
   );
 };
-
-export default ScoutPage;

@@ -3,7 +3,12 @@ import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { toggleOverlay } from '@redux/actions';
 
-export const InsufficientFundsOverlay = () => {
+export const InsufficientFundsOverlay = ({
+  student,
+  signingPlayer,
+  budget,
+  onUseRollover,
+}) => {
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -26,6 +31,21 @@ export const InsufficientFundsOverlay = () => {
     );
   };
 
+  const useRolloverBudget = () => {
+    const newRolloverBudget = Math.max(
+      student.rollOverBudget - (budget - signingPlayer.playerCost),
+      0
+    );
+    onUseRollover(signingPlayer, true, newRolloverBudget);
+  };
+
+  const showRolloverBudget = () => {
+    return (
+      student.rollOverBudget &&
+      student.rollOverBudget + budget - signingPlayer.playerCost >= 0
+    );
+  };
+
   return (
     <OverlayBoard>
       <div
@@ -45,10 +65,26 @@ export const InsufficientFundsOverlay = () => {
             You don't have enough money in your budget for this player!
           </h3>
           <p className='color-primary' style={{ fontSize: '1.75rem' }}>
-            You can either adjust your savings or release a player to increase
-            your budget.
+            You'll have to find a way to increase your budget.
           </p>
         </div>
+        {(showRolloverBudget() || true) && (
+          <div
+            style={{
+              marginTop: '0rem',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-around',
+              width: '100%',
+            }}
+          >
+            <Button
+              text='Use Rollover Budget'
+              onClick={useRolloverBudget}
+              background='#002f6c'
+            />
+          </div>
+        )}
         <div
           style={{
             marginTop: '3rem',

@@ -4,20 +4,19 @@
   background-color: #ffffff;
 }
 
-div.form-container {
-  background-color: #ffffff;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  overflow: scroll;
+div.signup-form-container {
+  text-align: center;
+  padding: 3rem;
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  overflow: auto;
 }
 
 #backdiv {
   position: absolute;
-  top: 5vw;
-  left: 5vw;
-  z-index: 4;
+  top: 1rem;
+  left: 1rem;
 }
 
 #inst {
@@ -38,13 +37,12 @@ div.form-container {
   margin-left: auto;
   margin-right: auto;
   margin-top: 5vh;
-  width: 65%;
-  height: 133%;
+  width: 75%;
   background-color: #e5e5e5;
   opacity: 1;
-  overflow: scroll;
   animation: fadeIn 2s ease;
   z-index: 3;
+  padding: 2rem 0;
 }
 
 .formdiv .error {
@@ -60,21 +58,23 @@ form {
 }
 
 .formdiv h4 {
-  margin-top: 0%;
   font-size: 1.5rem;
-  color: #070707;
   margin-left: auto;
   margin-right: auto;
-  margin-bottom: 1.2%;
   font-weight: bold;
+  margin-bottom: 1rem;
 }
 
-input {
-  width: 47%;
+h4.form-title {
+  margin-bottom: 2rem;
+}
+
+div.signup-form-container input {
+  width: 75%;
   height: 48px;
   margin-left: auto;
   margin-right: auto;
-  margin-bottom: 2.4%;
+  margin-bottom: 2rem;
   border-radius: 10px;
   font-size: 1.5rem;
 }

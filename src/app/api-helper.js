@@ -62,9 +62,9 @@ if (!myInterceptor) {
 axios.defaults.withCredentials = true;
 function getHostName() {
   if (HOST_SERVER_NAME == 'PROD') {
-    return 'https://sfe-api.herokuapp.com'; //'http://ec2-18-236-146-143.us-west-2.compute.amazonaws.com'; //AWS PROD
+    return 'https://www.finjuniorgmapi.com'; //'http://ec2-18-236-146-143.us-west-2.compute.amazonaws.com'; //AWS PROD
   } else {
-    return 'https://sfe-api.herokuapp.com'; //'http://ec2-18-236-146-143.us-west-2.compute.amazonaws.com'; //AWS TEST
+    return 'https://www.finjuniorgmapi.com'; //'http://ec2-18-236-146-143.us-west-2.compute.amazonaws.com'; //AWS TEST
   }
 }
 

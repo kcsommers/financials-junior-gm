@@ -6,8 +6,12 @@ import refreshBtn from '@images/refresh-btn.svg';
 import backBtn from '@images/back-btn.svg';
 import backBtnRvrsd from '@images/back-btn-reversed.svg';
 import checkBtn from '@images/check-btn.svg';
-import { setAnimationState, toggleOverlay } from '@redux/actions';
-import { SET_ANIMATION_STATE, TOGGLE_OVERLAY } from '@redux/actionTypes';
+import {
+  setAnimationState,
+  toggleOverlay,
+  SET_ANIMATION_STATE,
+  TOGGLE_OVERLAY,
+} from '@redux/actions';
 import '@css/tutorial/tutorials.css';
 
 const allActions = {
@@ -170,7 +174,7 @@ export const Tutorial = ({ slides, onComplete }) => {
       >
         <button className='slide-btn' onClick={onCancelClick}>
           <img className='action-btn' src={backBtn} alt='Back' />
-          <span style={{color: '#121210'}}>
+          <span style={{ color: '#121210' }}>
             {currentSlide.canCancel ? 'Cancel' : 'Back'}
           </span>
         </button>
@@ -179,8 +183,8 @@ export const Tutorial = ({ slides, onComplete }) => {
           onClick={onButtonClick.bind(this, state.slideIndex + 1)}
         >
           <img className='action-btn' src={backBtnRvrsd} alt='Next!' />
-          <span style={{color: '#121210'}}>
-          {currentSlide.canCancel ? 'Yes' : 'Next'}
+          <span style={{ color: '#121210' }}>
+            {currentSlide.canCancel ? 'Yes' : 'Next'}
           </span>
         </button>
       </motion.div>

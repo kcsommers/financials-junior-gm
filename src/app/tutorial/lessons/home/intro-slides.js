@@ -1,13 +1,13 @@
 import Slide from '../../Slide';
-import { SET_ANIMATION_STATE } from '@redux/actionTypes';
+import { SET_ANIMATION_STATE } from '@redux/actions';
 
 const slideConfigs = [
   {
     message: 'Hello there!',
     sharkie: 'play',
     bubbleDelay: 1000,
-    timer: 0,
-    hasButtons: true,
+    timer: 3000,
+    hasButtons: false,
   },
   {
     message: 'Are you here to deliver my fish?',
@@ -22,20 +22,20 @@ const slideConfigs = [
     timer: 0,
   },
   {
-    message: "Wait, aren't you the new General Manager of the San Jose Sharks?",
+    message: "Wait, aren't you the new General Manager of the San Jr. Jose Sharks?",
     accentText: 'General Manager',
     sharkie: 'speak',
     hasButtons: true,
     timer: 0,
   },
   {
-    message: 'Welcome to our stadium!',
+    message: 'Welcome to our stadium, the SAP Center!',
     sharkie: 'speak',
     hasButtons: true,
     timer: 0,
   },
   {
-    message: "My name is S.J Sharkie, I'm here to teach about your new job!",
+    message: "My name is S.J. Sharkie, I'm here to teach about your new job!",
     accentText: 'S.J Sharkie',
     sharkie: 'speak',
     hasButtons: true,
@@ -48,7 +48,8 @@ const slideConfigs = [
     timer: 0,
   },
   {
-    message: 'A General Manager is in charge of getting the team ready to play in the season!',
+    message:
+      'A General Manager is in charge of getting the team prepared for the season!',
     accentText: 'General Manager',
     sharkie: 'speak',
     hasButtons: true,
@@ -56,14 +57,14 @@ const slideConfigs = [
   },
   {
     message:
-      "Your job is to sign new players to the team and manage the team's money. ",
+      "Your job is to sign new players and manage the team's money",
     sharkie: 'speak',
     hasButtons: true,
     timer: 0,
   },
   {
     message:
-      'It is good to spend money on your team to make it stronger for the season!',
+      'You need to spend money on your team to make it the best it can be for the season!',
     sharkie: 'speak',
     hasButtons: true,
     timer: 0,
@@ -88,7 +89,7 @@ const slideConfigs = [
     timer: 0,
   },
   {
-    message: "We hope that you can build a great team!",
+    message: 'We hope that you can build a great team!',
     sharkie: 'speak',
     hasButtons: true,
     timer: 0,
