@@ -232,15 +232,15 @@ export const ScoutPage = () => {
       const levelTwoPlayers = [];
       const levelThreePlayers = [];
 
-      for (let i = 0; i < Math.max(2, scoutPlayers.levelOne.length); i++) {
+      for (let i = 0; i < Math.max(1, scoutPlayers.levelOne.length); i++) {
         levelOnePlayers.push(getDroppableItem(_levelOne[i], `levelOne-${i}`));
       }
 
-      for (let i = 0; i < Math.max(3, scoutPlayers.levelTwo.length); i++) {
+      for (let i = 0; i < Math.max(2, scoutPlayers.levelTwo.length); i++) {
         levelTwoPlayers.push(getDroppableItem(_levelTwo[i], `levelTwo-${i}`));
       }
 
-      for (let i = 0; i < Math.max(4, scoutPlayers.levelThree.length); i++) {
+      for (let i = 0; i < Math.max(3, scoutPlayers.levelThree.length); i++) {
         levelThreePlayers.push(
           getDroppableItem(_levelThree[i], `levelThree-${i}`, true)
         );
@@ -381,11 +381,25 @@ export const ScoutPage = () => {
 
   const validateScouting = () => {
     // check that the available board is empty
-    if (!Object.keys(boardMap.available).some((k) => !!boardMap.available[k])) {
+    if (scoutingIsValid()) {
       handleScoutingComplete();
     } else {
       handleScoutingInvalid();
     }
+  };
+
+  const scoutingIsValid = () => {
+    return (
+      scoutingState &&
+      !scoutingState.isComplete &&
+      scoutPlayers.available &&
+      scoutPlayers.available.reduce((total, p) => {
+        if (p) {
+          total++;
+        }
+        return total;
+      }, 0) < 4
+    );
   };
 
   const setBoards = useCallback(
@@ -531,7 +545,7 @@ export const ScoutPage = () => {
             animate={finishedBtnAnimationState}
           >
             <div
-              className={scoutingState.isComplete ? 'disabled' : ''}
+              className={!scoutingIsValid() ? 'disabled' : ''}
               onClick={() => {
                 if (!scoutingState.isComplete) {
                   validateScouting();

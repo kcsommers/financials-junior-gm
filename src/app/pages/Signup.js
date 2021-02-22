@@ -58,7 +58,7 @@ const Signup = () => {
     }
   };
   return (
-    <div className='form-container box-shadow'>
+    <div className='signup-form-container box-shadow'>
       <h2 id='inst' style={{ fontSize: '1.8rem' }}>
         This page is for teacher registration only!
       </h2>

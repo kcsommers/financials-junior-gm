@@ -1,13 +1,20 @@
 import { GamePhases } from '@data/season/season';
 
-export const GameButtonSvg = ({ phase }) => {
+export const GameButtonSvg = ({ phase, currentScenario }) => {
+  const getFill = () => {
+    if (currentScenario) {
+      return '#ffd782';
+    }
+    return '#070707';
+  };
+
   const pausedView = (
     <svg
       id='Play'
       xmlns='http://www.w3.org/2000/svg'
       width='120'
-      height='152'
-      viewBox='0 0 120 152'
+      height='120'
+      viewBox='0 0 120 120'
     >
       <defs>
         <radialGradient
@@ -90,9 +97,10 @@ export const GameButtonSvg = ({ phase }) => {
             id='Ellipse_24'
             data-name='Ellipse 24'
             transform='translate(451 321)'
-            fill='#070707'
-            stroke='#707070'
+            fill={getFill()}
+            stroke={getFill()}
             strokeWidth='1'
+            style={{ transition: 'fill 0.5s ease' }}
           >
             <circle cx='60' cy='60' r='60' stroke='none' />
             <circle cx='60' cy='60' r='59.5' fill='none' />
@@ -198,5 +206,7 @@ export const GameButtonSvg = ({ phase }) => {
     </svg>
   );
 
-  return phase === GamePhases.READY ? pausedView : activeView;
+  return phase === GamePhases.READY && !currentScenario
+    ? pausedView
+    : activeView;
 };

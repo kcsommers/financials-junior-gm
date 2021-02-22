@@ -4,7 +4,7 @@
   background-color: #ffffff;
 }
 
-div.form-container {
+div.signup-form-container {
   text-align: center;
   padding: 3rem;
   position: relative;
@@ -69,7 +69,7 @@ h4.form-title {
   margin-bottom: 2rem;
 }
 
-input {
+div.signup-form-container input {
   width: 75%;
   height: 48px;
   margin-left: auto;
