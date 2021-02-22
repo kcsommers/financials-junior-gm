@@ -9,7 +9,10 @@ import { toggleOverlay, tradePlayer, setStudent } from '@redux/actions';
 import { ConfirmTradeOverlay } from './ConfirmTradeOverlay';
 import { PlayerDetailsOverlay } from './PlayerDetailsOverlay';
 import { PlayerAssignments, PlayerPositions } from '@data/players/players';
-import { getPlayerPositon } from '@data/players/players-utils';
+import {
+  getPlayerPositon,
+  handleTradePlayers,
+} from '@data/players/players-utils';
 import { cloneDeep } from 'lodash';
 import { updateStudentById } from '../../api-helper';
 import { PlayersTradedOverlay } from './PlayersTradedOverlay';
@@ -28,58 +31,46 @@ export const TradePlayerOverlay = ({ releasingPlayer, student }) => {
     );
   };
 
-  const tradeConfirmed = (signingPlayer) => {
-    const prevAssignment = releasingPlayer.playerAssignment;
-    const prevPosition = getPlayerPositon(prevAssignment);
-    releasingPlayer.playerAssignment =
-      prevPosition === PlayerPositions.BENCH
-        ? PlayerAssignments.OFFERED_SCOUT
-        : PlayerAssignments.MARKET;
-    signingPlayer.playerAssignment = prevAssignment;
-
-    const playersCopy = cloneDeep(student.players).reduce((arr, p) => {
-      if (p._id === releasingPlayer._id) {
-        arr.push(releasingPlayer);
-        return arr;
-      }
-
-      if (p._id === signingPlayer._id) {
-        arr.push(signingPlayer);
-        return arr;
-      }
-
-      arr.push(p);
-      return arr;
-    }, []);
-
-    updateStudentById(student._id, {
-      [signingPlayer.playerAssignment]: signingPlayer._id,
-      [releasingPlayer.playerAssignment]:
-        prevPosition === PlayerPositions.BENCH
-          ? PlayerAssignments.OFFERED_SCOUT
-          : PlayerAssignments.MARKET,
-      players: playersCopy,
-    })
-      .then((res) => {
-        dispatch(tradePlayer(releasingPlayer, signingPlayer, student));
-        dispatch(setStudent(res.updatedStudent));
-        dispatch(
-          toggleOverlay({
-            isOpen: true,
-            template: (
-              <PlayersTradedOverlay
-                releasedPlayer={releasingPlayer}
-                signedPlayer={signingPlayer}
-              />
-            ),
-            canClose: true,
-          })
-        );
-      })
+  const tradeConfirmed = (signingPlayer, newRolloverBudget) => {
+    handleTradePlayers(
+      signingPlayer,
+      releasingPlayer,
+      student,
+      newRolloverBudget
+    )
+      .then(
+        ({ updatedSignedPlayer, updatedReleasedPlayer, updatedStudent }) => {
+          dispatch(
+            tradePlayer(
+              updatedReleasedPlayer,
+              updatedSignedPlayer,
+              updatedStudent
+            )
+          );
+          dispatch(setStudent(updatedStudent));
+          dispatch(
+            toggleOverlay({
+              isOpen: true,
+              template: (
+                <PlayersTradedOverlay
+                  releasedPlayer={updatedReleasedPlayer}
+                  signedPlayer={updatedSignedPlayer}
+                />
+              ),
+              canClose: true,
+            })
+          );
+        }
+      )
       .catch((err) => console.error(err));
   };
 
-  const confirmTrade = (signingPlayer) => {
+  const confirmTrade = (signingPlayer, skipConfirm, newRolloverBudget) => {
+    if (skipConfirm) {
+      tradeConfirmed(signingPlayer, newRolloverBudget);
+      return;
+    }
+
     dispatch(
       toggleOverlay({
         isOpen: true,
@@ -88,7 +79,7 @@ export const TradePlayerOverlay = ({ releasingPlayer, student }) => {
             releasingPlayer={releasingPlayer}
             signingPlayer={signingPlayer}
             cancel={tradeCancelled}
-            confirm={tradeConfirmed.bind(this, signingPlayer)}
+            confirm={tradeConfirmed.bind(this, signingPlayer, undefined)}
           />
         ),
       })
