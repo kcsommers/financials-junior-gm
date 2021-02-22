@@ -1,10 +1,11 @@
-import { useDispatch, useSelector, batch } from 'react-redux';
+import { useDispatch, batch, useSelector } from 'react-redux';
 import {
   toggleOverlay,
   setStudent,
   releasePlayer,
   signPlayer,
   gameBlockEnded,
+  removeObjective,
 } from '@redux/actions';
 import { updateStudentById } from '../../api-helper';
 import {
@@ -32,6 +33,7 @@ export const PlayerDetailsOverlay = ({
   includeActions = true,
 }) => {
   const dispatch = useDispatch();
+  const { currentObjectives } = useSelector((state) => state.objectives);
 
   const isBenchPlayer =
     getPlayerPositon(player.playerAssignment) === PlayerPositions.BENCH;
@@ -132,6 +134,7 @@ export const PlayerDetailsOverlay = ({
           );
           if (seasonState.currentScenario) {
             dispatch(gameBlockEnded());
+            dispatch(removeObjective(currentObjectives[0]));
           }
         });
       }

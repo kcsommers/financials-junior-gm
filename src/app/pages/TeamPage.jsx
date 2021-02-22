@@ -131,7 +131,6 @@ export const TeamPage = () => {
     <div className='page-container'>
       <HeaderComponent
         stickBtn={teamStick}
-        objectives={['1. Learn about your budget.']}
         level={student.level}
         tutorialActive={tutorialActive}
       />

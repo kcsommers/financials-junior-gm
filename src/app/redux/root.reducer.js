@@ -6,6 +6,7 @@ import players from './players/players.reducer';
 import loginState from './login-state/login-state.reducer';
 import teacherState from './teacher-state/teacher-state-reducer';
 import season from './season/season.reducer';
+import objectives from './objectives/objectives.reducer';
 import { DESTROY_SESSION } from './actions';
 
 const appReducer = combineReducers({
@@ -16,6 +17,7 @@ const appReducer = combineReducers({
   season,
   loginState,
   teacherState,
+  objectives,
 });
 
 export const rootReducer = (state, action) => {

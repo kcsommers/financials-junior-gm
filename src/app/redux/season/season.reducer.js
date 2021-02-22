@@ -60,7 +60,11 @@ const seasonReducer = (state = initialState, action) => {
       clonedState.completedBlocks = seasons;
       clonedState.inTransition =
         seasons[level - 1].length === 3 && +level === seasons.length;
-      console.log('INITIALIZE SEAAON:::: ', clonedState, action.payload);
+      console.log(
+        '[reducer] IN TRANSITION:::: ',
+        clonedState.inTransition,
+        action.payload
+      );
 
       const currentSeason = seasons[level - 1];
       if (!currentSeason) {
@@ -100,7 +104,6 @@ const seasonReducer = (state = initialState, action) => {
         });
       });
 
-      console.log('SEASONG::: ', clonedState);
       clonedState.seasonTeam.stats = { wins, losses, points };
       clonedState.standings = getStandings([
         ...clonedState.allOpponents,
@@ -123,7 +126,6 @@ const seasonReducer = (state = initialState, action) => {
       clonedState.currentOpponentIndex = 0;
       clonedState.currentScenario = null;
       clonedState.completedGames = [];
-      console.log('[reducer blockENDED]::::: ', clonedState);
       return clonedState;
     }
     case GAME_ENDED: {
@@ -178,7 +180,6 @@ const seasonReducer = (state = initialState, action) => {
       clonedState.inTransition = true;
       clonedState.inSession = true;
 
-      console.log('SEASON COMPLETE::::: ', clonedState);
       return clonedState;
     }
     default:

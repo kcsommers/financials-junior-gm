@@ -8,13 +8,14 @@ import {
 import { OverlayBoard, Button } from '@components';
 import { resetSeason } from '@data/season/season';
 
-export const NextSeasonOverlay = ({ student, awards }) => {
+export const NextSeasonOverlay = ({ student }) => {
   const dispatch = useDispatch();
   const history = useHistory();
 
   const repeatSeason = () => {
-    resetSeason(student.level + 1, student)
+    resetSeason(student.level, student)
       .then((updatedStudent) => {
+        console.log('[repeatSeason] UPDATED STUDENT:::: ', updatedStudent);
         batch(() => {
           dispatch(setStudent(updatedStudent));
           dispatch(
