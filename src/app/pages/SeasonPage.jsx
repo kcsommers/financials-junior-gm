@@ -194,7 +194,6 @@ export const SeasonPage = () => {
     if (!currentScenario) {
       return;
     }
-
     const scenarioPlayer = currentScenario.getPlayer(team);
     const prevAssignment = scenarioPlayer.playerAssignment;
     const playersCopy = cloneDeep(student.players);

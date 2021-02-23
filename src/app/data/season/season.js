@@ -23,7 +23,7 @@ import pinkpandasSm from '@images/icons/team-logos/pinkpandasSm.svg';
 import blackbeaversLg from '@images/icons/team-logos/blackbeaversLg.svg';
 import blackbeaversSm from '@images/icons/team-logos/blackbeaversSm.svg';
 import { INJURE_PLAYER } from '@redux/actions';
-import { PlayerAssignments } from '@data/players/players';
+import { PlayerAssignments, TeamAssignments } from '@data/players/players';
 import { cloneDeep } from 'lodash';
 import { initPlayersByLevel, updateStudentById } from './../../api-helper';
 
@@ -89,6 +89,7 @@ export const getGameResult = (student, opponent) => {
 
 const getSecondHighestPlayer = (team) => {
   return Object.keys(team)
+    .filter((p) => !TeamAssignments.bench.includes(p))
     .map((p) => team[p])
     .sort((a, b) => +b.overallRank - +a.overallRank)[1];
 };
