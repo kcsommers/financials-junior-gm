@@ -22,14 +22,7 @@ const slideConfigs = [
     timer: 0,
   },
   {
-    message: 'This plan is called a Budget.',
-    sharkie: 'speak',
-    timer: 0,
-    hasButtons: true,
-    accentText: 'Budget',
-  },
-  {
-    message: 'So now do you know what a Budget is?',
+    message: 'This plan is called a Budget',
     sharkie: 'speak',
     accentText: 'Budget',
     hasButtons: true,
@@ -171,7 +164,6 @@ const slideConfigs = [
     sharkie: 'speak',
     timer: 0,
     hasButtons: true,
-    accentText: 'Spending budget',
     exitActions: [
       {
         type: SET_ANIMATION_STATE,
@@ -202,7 +194,6 @@ const slideConfigs = [
     sharkie: 'speak',
     timer: 0,
     hasButtons: true,
-    accentText: 'Savings',
   },
   {
     message: 'So why do you need Savings?',
