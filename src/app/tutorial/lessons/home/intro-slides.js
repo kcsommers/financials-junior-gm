@@ -22,7 +22,8 @@ const slideConfigs = [
     timer: 0,
   },
   {
-    message: "Wait, aren't you the new General Manager of the San Jose Jr Sharks?",
+    message:
+      "Wait, aren't you the new General Manager of the San Jose Jr. Sharks?",
     accentText: 'General Manager',
     sharkie: 'speak',
     hasButtons: true,
@@ -56,8 +57,7 @@ const slideConfigs = [
     timer: 0,
   },
   {
-    message:
-      "Your job is to sign new players and manage the team's money",
+    message: "Your job is to sign new players and manage the team's money",
     sharkie: 'speak',
     hasButtons: true,
     timer: 0,
