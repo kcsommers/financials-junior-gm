@@ -1,4 +1,4 @@
-import { useDispatch, batch, useSelector } from 'react-redux';
+import { useDispatch, batch } from 'react-redux';
 import {
   toggleOverlay,
   setStudent,
@@ -6,8 +6,8 @@ import {
   signPlayer,
   gameBlockEnded,
   removeObjective,
+  setObjectiveComplete,
 } from '@redux/actions';
-import { updateStudentById } from '../../api-helper';
 import {
   PlayerCard,
   OverlayBoard,
@@ -17,14 +17,16 @@ import {
   Button,
   ConfirmOverlay,
 } from '@components';
-import { PlayerAssignments, PlayerPositions } from '@data/players/players';
+import { PlayerPositions, TeamAssignments } from '@data/players/players';
 import {
   getPlayerPositon,
   getAssignmentsByPosition,
   handleSignPlayer,
   getOpenAssignment,
+  handleReleasePlayer,
+  getAvailableSlots,
 } from '@data/players/players-utils';
-import { cloneDeep } from 'lodash';
+import { Objectives } from '@data/objectives/objectives';
 
 export const PlayerDetailsOverlay = ({
   player,
@@ -33,7 +35,6 @@ export const PlayerDetailsOverlay = ({
   includeActions = true,
 }) => {
   const dispatch = useDispatch();
-  const { currentObjectives } = useSelector((state) => state.objectives);
 
   const isBenchPlayer =
     getPlayerPositon(player.playerAssignment) === PlayerPositions.BENCH;
@@ -48,40 +49,36 @@ export const PlayerDetailsOverlay = ({
   };
 
   const releaseConfirmed = () => {
-    const prevAssignment = player.playerAssignment;
-    const prevPosition = getPlayerPositon(prevAssignment);
-    player.playerAssignment =
-      prevPosition === PlayerPositions.BENCH
-        ? PlayerAssignments.OFFERED_SCOUT
-        : PlayerAssignments.MARKET;
-
-    const playersCopy = cloneDeep(student.players);
-
-    playersCopy.splice(
-      playersCopy.findIndex((p) => p._id === player._id),
-      1,
-      player
-    );
-
-    updateStudentById(student._id, {
-      [prevAssignment]: null,
-      players: playersCopy,
-    })
-      .then((res) => {
-        dispatch(releasePlayer(player, prevAssignment, student));
-        dispatch(setStudent(res.updatedStudent));
-        dispatch(
-          toggleOverlay({
-            isOpen: true,
-            template: (
-              <PlayerChangeSuccessOverlay
-                message={`${player.playerName} has been released!`}
-                player={player}
-              />
-            ),
-            canClose: true,
-          })
-        );
+    handleReleasePlayer(player, student)
+      .then(({ updatedStudent, updatedPlayer, prevAssignment }) => {
+        batch(() => {
+          dispatch(releasePlayer(updatedPlayer, prevAssignment, student));
+          dispatch(setStudent(updatedStudent));
+          dispatch(
+            toggleOverlay({
+              isOpen: true,
+              template: (
+                <PlayerChangeSuccessOverlay
+                  message={`${updatedPlayer.playerName} has been released!`}
+                  player={updatedPlayer}
+                />
+              ),
+              canClose: true,
+            })
+          );
+          const objectiveComplete =
+            getAvailableSlots(
+              [
+                ...TeamAssignments.offense,
+                ...TeamAssignments.defense,
+                ...TeamAssignments.goalie,
+              ],
+              updatedStudent
+            ) === 0;
+          dispatch(
+            setObjectiveComplete(Objectives.FILL_TEAM, objectiveComplete)
+          );
+        });
       })
       .catch((err) => console.error(err));
   };
@@ -132,9 +129,23 @@ export const PlayerDetailsOverlay = ({
               ),
             })
           );
-          if (seasonState.currentScenario) {
+          const objectiveComplete =
+            getAvailableSlots(
+              [
+                ...TeamAssignments.offense,
+                ...TeamAssignments.defense,
+                ...TeamAssignments.goalie,
+              ],
+              updatedStudent
+            ) === 0;
+
+          if (seasonState.currentScenario && objectiveComplete) {
             dispatch(gameBlockEnded());
-            dispatch(removeObjective(currentObjectives[0]));
+            dispatch(removeObjective(Objectives.SEASON_SCENARIO));
+          } else {
+            dispatch(
+              setObjectiveComplete(Objectives.FILL_TEAM, objectiveComplete)
+            );
           }
         });
       }

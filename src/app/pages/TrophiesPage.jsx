@@ -58,7 +58,6 @@ export const TrophiesPage = () => {
   const repeatSeason = () => {
     resetSeason(student.level, student)
       .then((updatedStudent) => {
-        console.log('[repeatSeason] UPDATED STUDENT:::: ', updatedStudent);
         batch(() => {
           dispatch(setStudent(updatedStudent));
           dispatch(

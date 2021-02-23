@@ -2,7 +2,6 @@ import { PlayerCard, ConfirmOverlay, TeamBudgetState } from '@components';
 import '@css/components/team-page/SignPlayerOverlay.css';
 
 export const ConfirmSignOverlay = ({ cancel, confirm, player }) => {
-  console.log(player)
   return (
     <ConfirmOverlay
       message='Are you sure you want to sign this player?'
@@ -12,7 +11,7 @@ export const ConfirmSignOverlay = ({ cancel, confirm, player }) => {
       <div style={{ display: 'flex', padding: '2rem 3rem 0 3rem' }}>
         <div style={{ flex: 1 }}>
           {/* <TeamBudgetState title='Changes to rank and budget' /> */}
-          <TeamBudgetState changes={[player.playerCost, player.overallRank]}/>
+          <TeamBudgetState changes={[player.playerCost, player.overallRank]} />
         </div>
         <div style={{ flex: 1 }}>
           <PlayerCard size='medium' player={player} />

@@ -23,7 +23,7 @@ import pinkpandasSm from '@images/icons/team-logos/pinkpandasSm.svg';
 import blackbeaversLg from '@images/icons/team-logos/blackbeaversLg.svg';
 import blackbeaversSm from '@images/icons/team-logos/blackbeaversSm.svg';
 import { INJURE_PLAYER } from '@redux/actions';
-import { PlayerAssignments } from '@data/players/players';
+import { PlayerAssignments, TeamAssignments } from '@data/players/players';
 import { cloneDeep } from 'lodash';
 import { initPlayersByLevel, updateStudentById } from './../../api-helper';
 
@@ -55,8 +55,8 @@ export const resetSeason = (level, student) => {
   });
 };
 
-export const getGameResult = (student, opponent) => {
-  const rankDiff = student.teamRank - opponent.teamRank;
+export const getGameResult = (studentTeamRank, opponent) => {
+  const rankDiff = studentTeamRank - opponent.teamRank;
   if (rankDiff > 5) {
     return {
       score: [Math.min(Math.ceil(rankDiff / 10), 5), 0],
@@ -89,6 +89,7 @@ export const getGameResult = (student, opponent) => {
 
 const getSecondHighestPlayer = (team) => {
   return Object.keys(team)
+    .filter((p) => !TeamAssignments.bench.includes(p))
     .map((p) => team[p])
     .sort((a, b) => +b.overallRank - +a.overallRank)[1];
 };
@@ -115,7 +116,7 @@ export const scenarios = {
       getPlayer: getSecondHighestPlayer,
       playerAssignment: PlayerAssignments.INJURED,
       player: null,
-      gameButtonLabel: 'Go to Team page!',
+      gameButtonLabel: 'Click the puck to sign a new player!',
       gameButtonAction: (team, history) => history.push('/team'),
     },
     {
@@ -125,7 +126,7 @@ export const scenarios = {
       getPlayer: getStartingPlayer,
       playerAssignment: PlayerAssignments.INJURED,
       player: null,
-      gameButtonLabel: 'Go to Team page!',
+      gameButtonLabel: 'Click the puck to sign a new player!',
       gameButtonAction: (team, history) => history.push('/team'),
     },
   ],

@@ -8,7 +8,7 @@ import {
   Overlay,
 } from '@components';
 import budgetStick from '@images/budget-stick.svg';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch, batch } from 'react-redux';
 import {
   budgetSlides,
   SharkieButton,
@@ -20,17 +20,20 @@ import {
   setSavings,
   updateStudent,
   toggleOverlay,
+  setObjectiveComplete,
 } from '@redux/actions';
 import { updateStudentById } from '../api-helper';
 import { cloneDeep } from 'lodash';
-import '@css/pages/BudgetPage.css';
+import { Objectives } from '@data/objectives/objectives';
 import { getDollarString } from '@utils';
+import '@css/pages/BudgetPage.css';
 
 let debounceTimeout = 0;
 
 export const BudgetPage = () => {
   const dispatch = useDispatch();
   const student = useSelector((state) => state.studentState.student);
+  const { moneySpent } = useSelector((state) => state.players);
   const { inTransition, awards } = useSelector((state) => state.season);
 
   const tutorialActive = useSelector((state) => state.tutorial.isActive);
@@ -38,7 +41,10 @@ export const BudgetPage = () => {
   const [tutorialSlides, setTutorialSlides] = useState([budgetSlides]);
 
   const onTutorialComplete = () => {
-    dispatch(setTutorialState({ isActive: false }));
+    batch(() => {
+      dispatch(setTutorialState({ isActive: false }));
+      dispatch(setObjectiveComplete(Objectives.LEARN_BUDGET, true));
+    });
   };
 
   const startTutorial = useCallback(
@@ -52,6 +58,10 @@ export const BudgetPage = () => {
     },
     [dispatch]
   );
+
+  const onCallSharkie = () => {
+    startTutorial([getConfirmSlides('budget'), budgetSlides]);
+  };
 
   const budgetEquationStates = {
     board: useSelector((state) => state.tutorial.budget.equationBoard),
@@ -75,10 +85,6 @@ export const BudgetPage = () => {
     debounceTimeout = window.setTimeout(() => {
       updateSavingsOnServer(+value);
     }, 1000);
-  };
-
-  const onCallSharkie = () => {
-    setTutorialSlides([getConfirmSlides('budget'), budgetSlides]);
   };
 
   const hasSeenTutorial = useRef(
@@ -132,27 +138,27 @@ export const BudgetPage = () => {
               top: '0',
               display: 'flex',
               alignItems: 'center',
-              justifyContent: 'space-between',
+              justifyContent:
+                student.rollOverBudget > 0 ? 'space-between' : 'flex-end',
               padding: '1rem',
             }}
           >
-            {student.rollOverBudget ||
-              (true && (
-                <p
-                  className='box-shadow'
-                  style={{
-                    textAlign: 'center',
-                    backgroundColor: '#f3901d',
-                    color: '#fff',
-                    padding: '0.5rem',
-                    borderRadius: '5px',
-                  }}
-                >
-                  Rollover Budget
-                  <br />
-                  {getDollarString(3)}
-                </p>
-              ))}
+            {student.rollOverBudget > 0 && (
+              <p
+                className='box-shadow'
+                style={{
+                  textAlign: 'center',
+                  backgroundColor: '#f3901d',
+                  color: '#fff',
+                  padding: '0.5rem',
+                  borderRadius: '5px',
+                }}
+              >
+                Rollover Budget
+                <br />
+                {getDollarString(student.rollOverBudget)}
+              </p>
+            )}
             <SharkieButton onCallSharkie={onCallSharkie} textPosition='left' />
           </div>
           <div className='budget-equation-container'>
@@ -160,7 +166,7 @@ export const BudgetPage = () => {
               budget={{
                 total: student.totalBudget,
                 savings: student.savingsBudget,
-                spent: student.moneySpent,
+                spent: moneySpent,
               }}
               animationStates={budgetEquationStates}
             />
@@ -173,9 +179,10 @@ export const BudgetPage = () => {
               budget={{
                 total: student.totalBudget,
                 savings: student.savingsBudget,
-                spent: student.moneySpent,
+                spent: moneySpent,
               }}
               setValue={updateSavings}
+              student={student}
             />
           </div>
         </div>

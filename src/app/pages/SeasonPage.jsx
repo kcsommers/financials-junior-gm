@@ -43,7 +43,7 @@ import {
 } from '@tutorial';
 import { motion } from 'framer-motion';
 import '@css/pages/SeasonPage.css';
-import { Objective } from '@data/objectives/objectives';
+import { Objective, Objectives } from '@data/objectives/objectives';
 
 const allActions = {
   [INJURE_PLAYER]: injurePlayer,
@@ -55,7 +55,7 @@ export const SeasonPage = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const student = useSelector((state) => state.studentState.student);
-  const team = useSelector((state) => state.players.teamPlayers);
+  const { teamPlayers, teamRank } = useSelector((state) => state.players);
   const tutorialActive = useSelector((state) => state.tutorial.isActive);
 
   const seasonState = useSelector((state) => state.season);
@@ -154,6 +154,8 @@ export const SeasonPage = () => {
     updateStudentById(student._id, {
       seasons: clonedSeasons,
       awards,
+      rollOverBudget: student.rollOverBudget + student.savingsBudget,
+      savingsBudget: 0,
     })
       .then((res) => {
         batch(() => {
@@ -192,8 +194,7 @@ export const SeasonPage = () => {
     if (!currentScenario) {
       return;
     }
-
-    const scenarioPlayer = currentScenario.getPlayer(team);
+    const scenarioPlayer = currentScenario.getPlayer(teamPlayers);
     const prevAssignment = scenarioPlayer.playerAssignment;
     const playersCopy = cloneDeep(student.players);
 
@@ -213,12 +214,22 @@ export const SeasonPage = () => {
       .then((res) => {
         batch(() => {
           dispatch(
-            allActions[currentScenario.action](scenarioPlayer, prevAssignment)
+            allActions[currentScenario.action](
+              scenarioPlayer,
+              prevAssignment,
+              student
+            )
           );
           dispatch(setStudent(res.updatedStudent));
           dispatch(throwScenario(currentScenario));
           dispatch(
-            addObjective(new Objective(currentScenario.objective, true))
+            addObjective(
+              new Objective(
+                currentScenario.objective,
+                Objectives.SEASON_SCENARIO,
+                true
+              )
+            )
           );
         });
       })
@@ -256,7 +267,7 @@ export const SeasonPage = () => {
 
     if (gameBlockState.currentPhase.phase === GamePhases.GAME_ON) {
       // time to get game results
-      const results = getGameResult(student, gameBlockState.currentOpponent);
+      const results = getGameResult(teamRank, gameBlockState.currentOpponent);
       clonedState.currentMessageIndex = results.messageIndex;
       // clonedState.results.push(results);
       dispatch(gameEnded(results, gameBlockState.currentOpponent));
@@ -359,7 +370,7 @@ export const SeasonPage = () => {
             <div className='student-team-rank-container'>
               <LevelStick
                 type='teamRank'
-                amount={student.teamRank}
+                amount={teamRank}
                 denom={100}
                 color='#e06d00'
                 indicatorDirection='right'
@@ -377,7 +388,7 @@ export const SeasonPage = () => {
                 gameBlockState={gameBlockState}
                 seasonState={seasonState}
                 currentOpponentIndex={state.currentOpponentIndex}
-                team={team}
+                team={teamPlayers}
               />
             </div>
             <div className='opposing-team-rank-container'>
@@ -421,7 +432,7 @@ export const SeasonPage = () => {
                 <GameButton
                   onClick={startGameBlock}
                   gameBlockState={gameBlockState}
-                  team={team}
+                  team={teamPlayers}
                   currentScenario={seasonState.currentScenario}
                 />
               </motion.span>
