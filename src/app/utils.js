@@ -1,36 +1,3 @@
-import { playerProps } from './data/players/players';
-
-export const getMoneySpent = (players, totalBudget) => {
-  if (!players) {
-    return 0;
-  }
-  return Math.min(
-    players.reduce((total, p) => {
-      if (playerProps.includes(p.playerAssignment)) {
-        total += +p.playerCost;
-      }
-      return total;
-    }, 0),
-    totalBudget
-  );
-};
-
-export const getTeamRank = (players) => {
-  if (!players) {
-    return 0;
-  }
-
-  return Math.min(
-    players.reduce((total, p) => {
-      if (playerProps.includes(p.playerAssignment)) {
-        total += +p.overallRank;
-      }
-      return total;
-    }, 0),
-    100
-  );
-};
-
 export const capitalize = (str) => {
   return str.charAt(0).toUpperCase() + str.slice(1);
 };

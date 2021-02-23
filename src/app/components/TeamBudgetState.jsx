@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 
 export const TeamBudgetState = ({ title, isLarge, changes }) => {
   const student = useSelector((state) => state.studentState.student);
+  const { moneySpent, teamRank } = useSelector((state) => state.players);
 
   return student ? (
     <>
@@ -35,7 +36,7 @@ export const TeamBudgetState = ({ title, isLarge, changes }) => {
         >
           <LevelStick
             type='teamRank'
-            amount={student.teamRank}
+            amount={teamRank}
             denom={100}
             color='#e06d00'
             indicatorDirection='right'
@@ -49,9 +50,7 @@ export const TeamBudgetState = ({ title, isLarge, changes }) => {
           />
           <LevelStick
             type='budget'
-            amount={
-              student.totalBudget - student.moneySpent - student.savingsBudget
-            }
+            amount={student.totalBudget - moneySpent - student.savingsBudget}
             denom={student.totalBudget}
             color='#002f6c'
             indicatorDirection='left'
@@ -65,12 +64,32 @@ export const TeamBudgetState = ({ title, isLarge, changes }) => {
             }
           />
         </div>
-        {changes && <span style={{position: 'relative', top: '36%', left: '-20%', fontSize: '2rem', color: '#00788d'}}>
-          +{changes[1]}
-        </span>}
-        {changes && <span style={{position: 'relative', top: '36%', right: '-5%', fontSize: '2rem', color: 'red'}}>
-          -${changes[0]}
-        </span>}
+        {changes && (
+          <span
+            style={{
+              position: 'relative',
+              top: '36%',
+              left: '-20%',
+              fontSize: '2rem',
+              color: '#00788d',
+            }}
+          >
+            +{changes[1]}
+          </span>
+        )}
+        {changes && (
+          <span
+            style={{
+              position: 'relative',
+              top: '36%',
+              right: '-5%',
+              fontSize: '2rem',
+              color: 'red',
+            }}
+          >
+            -${changes[0]}
+          </span>
+        )}
       </div>
     </>
   ) : (

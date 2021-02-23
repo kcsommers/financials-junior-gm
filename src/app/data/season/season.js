@@ -55,8 +55,8 @@ export const resetSeason = (level, student) => {
   });
 };
 
-export const getGameResult = (student, opponent) => {
-  const rankDiff = student.teamRank - opponent.teamRank;
+export const getGameResult = (studentTeamRank, opponent) => {
+  const rankDiff = studentTeamRank - opponent.teamRank;
   if (rankDiff > 5) {
     return {
       score: [Math.min(Math.ceil(rankDiff / 10), 5), 0],

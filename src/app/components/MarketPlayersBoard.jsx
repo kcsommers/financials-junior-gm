@@ -71,14 +71,14 @@ export const MarketPlayersBoard = ({
       ? state.players.scoutingState.offeredScoutPlayers
       : state.players.marketPlayers
   );
+  const { moneySpent } = useSelector((state) => state.players);
 
   const [activePosition, setActivePosition] = useState(initialPosition);
 
   const currentView = getViewConfig(activePosition, marketPlayers);
 
   const checkBudget = (signingPlayer) => {
-    let budget =
-      student.totalBudget - student.savingsBudget - student.moneySpent;
+    let budget = student.totalBudget - student.savingsBudget - moneySpent;
 
     if (releasingPlayer) {
       budget += +releasingPlayer.playerCost;
