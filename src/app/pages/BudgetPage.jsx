@@ -8,7 +8,7 @@ import {
   Overlay,
 } from '@components';
 import budgetStick from '@images/budget-stick.svg';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch, batch } from 'react-redux';
 import {
   budgetSlides,
   SharkieButton,

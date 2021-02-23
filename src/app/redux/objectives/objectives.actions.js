@@ -16,9 +16,9 @@ export const setObjectiveComplete = (objectiveType, isComplete) => ({
   payload: { objectiveType, isComplete },
 });
 
-export const removeObjective = (objective) => ({
+export const removeObjective = (objectiveType) => ({
   type: REMOVE_OBJECTIVE,
-  payload: objective,
+  payload: objectiveType,
 });
 
 export const initializeObjectives = (student) => ({

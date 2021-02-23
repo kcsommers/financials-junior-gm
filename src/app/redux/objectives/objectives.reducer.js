@@ -63,10 +63,11 @@ const objectivesReducer = (state = initialState, action) => {
     }
 
     case REMOVE_OBJECTIVE: {
+      const objectiveType = action.payload;
       const clonedState = cloneDeep(state);
       clonedState.currentObjectives.splice(
         clonedState.currentObjectives.findIndex(
-          (o) => o.id === action.payload.id
+          (o) => o.type === objectiveType
         ),
         1
       );
