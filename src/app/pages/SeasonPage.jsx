@@ -43,7 +43,7 @@ import {
 } from '@tutorial';
 import { motion } from 'framer-motion';
 import '@css/pages/SeasonPage.css';
-import { Objective } from '@data/objectives/objectives';
+import { Objective, Objectives } from '@data/objectives/objectives';
 
 const allActions = {
   [INJURE_PLAYER]: injurePlayer,

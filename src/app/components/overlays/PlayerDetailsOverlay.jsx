@@ -1,4 +1,4 @@
-import { useDispatch, batch, useSelector } from 'react-redux';
+import { useDispatch, batch } from 'react-redux';
 import {
   toggleOverlay,
   setStudent,
@@ -35,7 +35,6 @@ export const PlayerDetailsOverlay = ({
   includeActions = true,
 }) => {
   const dispatch = useDispatch();
-  const { currentObjectives } = useSelector((state) => state.objectives);
 
   const isBenchPlayer =
     getPlayerPositon(player.playerAssignment) === PlayerPositions.BENCH;
@@ -130,9 +129,23 @@ export const PlayerDetailsOverlay = ({
               ),
             })
           );
-          if (seasonState.currentScenario) {
+          const objectiveComplete =
+            getAvailableSlots(
+              [
+                ...TeamAssignments.offense,
+                ...TeamAssignments.defense,
+                ...TeamAssignments.goalie,
+              ],
+              updatedStudent
+            ) === 0;
+
+          if (seasonState.currentScenario && objectiveComplete) {
             dispatch(gameBlockEnded());
-            dispatch(removeObjective(currentObjectives[0]));
+            dispatch(removeObjective(Objectives.SEASON_SCENARIO));
+          } else {
+            dispatch(
+              setObjectiveComplete(Objectives.FILL_TEAM, objectiveComplete)
+            );
           }
         });
       }
