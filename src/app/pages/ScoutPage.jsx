@@ -26,6 +26,7 @@ import {
   setTutorialState,
   updateScoutPlayer,
   toggleOverlay,
+  updateStudent,
   scoutingComplete,
 } from '@redux/actions';
 import { isEqual } from 'lodash';
@@ -74,10 +75,21 @@ export const ScoutPage = () => {
   const [offeredPlayersBoard, setOfferedPlayersBoard] = useState([]);
   const [tutorialSlides, setTutorialSlides] = useState([scoutSlides]);
 
-  // Local methods
   const onTutorialComplete = () => {
     dispatch(setTutorialState({ isActive: false }));
   };
+
+  const startTutorial = useCallback(
+    (slides) => {
+      setTutorialSlides(slides);
+      dispatch(
+        setTutorialState({
+          isActive: true,
+        })
+      );
+    },
+    [dispatch]
+  );
 
   const showPlayerDetails = useCallback(
     (player) => {
@@ -474,6 +486,28 @@ export const ScoutPage = () => {
     moneyLevelTwoState,
     moneyLevelThreeState,
   ]);
+
+  const hasSeenTutorial = useRef(
+    !!(student && student.tutorials && student.tutorials.scout)
+  );
+  useEffect(() => {
+    if (student && !hasSeenTutorial.current) {
+      hasSeenTutorial.current = true;
+      const clonedTutorials = cloneDeep(student.tutorials || {});
+      clonedTutorials.scout = true;
+      updateStudentById(student._id, { tutorials: clonedTutorials })
+        .then((res) => {
+          dispatch(updateStudent({ tutorials: clonedTutorials }));
+          startTutorial([scoutSlides]);
+        })
+        .catch((err) => console.error(err));
+    }
+  }, [student, dispatch, startTutorial]);
+  hasSeenTutorial.current = !!(
+    student &&
+    student.tutorials &&
+    student.tutorials.scout
+  );
 
   if (inTransition) {
     setTimeout(() => {

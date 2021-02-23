@@ -11,6 +11,7 @@ import {
   setStudent,
   gameBlockEnded,
   removeObjective,
+  setObjectiveComplete,
 } from '@redux/actions';
 import { ConfirmSignOverlay } from './ConfirmSignOverlay';
 import { TeamAssignments } from '@data/players/players';
@@ -19,6 +20,7 @@ import {
   getPlayerPositon,
   handleSignPlayer,
 } from '@data/players/players-utils';
+import { Objectives } from '@data/objectives/objectives';
 import '@css/components/team-page/SignPlayerOverlay.css';
 
 export const SignPlayerOverlay = ({ assignment }) => {
@@ -27,7 +29,6 @@ export const SignPlayerOverlay = ({ assignment }) => {
   const team = useSelector((state) => state.players.teamPlayers);
 
   const seasonState = useSelector((state) => state.season);
-  const { currentObjectives } = useSelector((state) => state.objectives);
 
   const availableSlots = {
     forwards: getAvailableSlots(TeamAssignments.offense, team),
@@ -74,9 +75,24 @@ export const SignPlayerOverlay = ({ assignment }) => {
             ),
           })
         );
-        if (seasonState.currentScenario) {
+
+        const objectiveComplete =
+          getAvailableSlots(
+            [
+              ...TeamAssignments.offense,
+              ...TeamAssignments.defense,
+              ...TeamAssignments.goalie,
+            ],
+            updatedStudent
+          ) === 0;
+
+        if (seasonState.currentScenario && objectiveComplete) {
           dispatch(gameBlockEnded());
-          dispatch(removeObjective(currentObjectives[0]));
+          dispatch(removeObjective(Objectives.SEASON_SCENARIO));
+        } else {
+          dispatch(
+            setObjectiveComplete(Objectives.FILL_TEAM, objectiveComplete)
+          );
         }
       });
     });
@@ -118,34 +134,40 @@ export const SignPlayerOverlay = ({ assignment }) => {
           <div style={{ flex: 1 }}>
             <TeamBudgetState />
           </div>
-          {/* {<div style={{ flex: 1 }}>
-            <h3
-              className='color-primary'
-              style={{
-                fontSize: '1.5rem',
-              }}
-            >
-              Spaces On Your Team
-            </h3>
-            <div className='team-slots-board'>
-              <div className='team-slots-board-row'>
-                <span className='color-primary'>Forwards:</span>
-                <span className='color-accent'>{availableSlots.forwards}</span>
-              </div>
-              <div className='team-slots-board-row'>
-                <span className='color-primary'>Defenders:</span>
-                <span className='color-accent'>{availableSlots.defender}</span>
-              </div>
-              <div className='team-slots-board-row'>
-                <span className='color-primary'>Goalie:</span>
-                <span className='color-accent'>{availableSlots.goalie}</span>
-              </div>
-              <div className='team-slots-board-row'>
-                <span className='color-primary'>Bench:</span>
-                <span className='color-accent'>{availableSlots.bench}</span>
+          {
+            <div style={{ flex: 1 }}>
+              <h3
+                className='color-primary'
+                style={{
+                  fontSize: '1.5rem',
+                }}
+              >
+                Spaces On Your Team
+              </h3>
+              <div className='team-slots-board'>
+                <div className='team-slots-board-row'>
+                  <span className='color-primary'>Forwards:</span>
+                  <span className='color-accent'>
+                    {availableSlots.forwards}
+                  </span>
+                </div>
+                <div className='team-slots-board-row'>
+                  <span className='color-primary'>Defenders:</span>
+                  <span className='color-accent'>
+                    {availableSlots.defender}
+                  </span>
+                </div>
+                <div className='team-slots-board-row'>
+                  <span className='color-primary'>Goalie:</span>
+                  <span className='color-accent'>{availableSlots.goalie}</span>
+                </div>
+                <div className='team-slots-board-row'>
+                  <span className='color-primary'>Bench:</span>
+                  <span className='color-accent'>{availableSlots.bench}</span>
+                </div>
               </div>
             </div>
-          </div>} */}
+          }
         </div>
 
         <div className='market-players-board-container'>

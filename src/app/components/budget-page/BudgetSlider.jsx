@@ -3,7 +3,7 @@ import { BudgetSliderSvg } from './BudgetSliderSvg';
 import { getDollarString } from '@utils';
 import '@css/components/budget-page/BudgetSlider.css';
 
-export const BudgetSlider = ({ budget, setValue }) => {
+export const BudgetSlider = ({ budget, setValue, student }) => {
   const getSavingsIndicatorPosition = () => {
     const pct = (budget.savings / (budget.total - budget.spent)) * 100;
     return {
@@ -53,7 +53,7 @@ export const BudgetSlider = ({ budget, setValue }) => {
           className='slider-wrap'
           style={{
             width: `calc(${sliderWidth} + ${
-              71.46 / (budget.total / budget.spent)
+              71.46 / (budget.total / budget.spent) + 20
             }px)`,
           }}
         >

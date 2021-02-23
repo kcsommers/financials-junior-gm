@@ -15,14 +15,13 @@ div.season-page-board-bottom {
 }
 
 .play-btn-wrap {
-  /* background-color: red; */
   position: relative;
 }
 
 .play-btn-wrap > span {
   position: absolute;
-  width: 100%;
-  left: 0;
+  left: -10px;
+  right: -10px;
   top: 0;
   transform: translateY(calc(-100% - 0.5rem));
   text-align: center;
