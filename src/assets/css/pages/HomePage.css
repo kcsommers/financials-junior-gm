@@ -33,7 +33,7 @@ div.level-stick-card {
   border-radius: 10px;
   position: relative;
   width: 210px;
-  height: 270px;
+  height: 285px;
 }
 
 .sharkie-btn-container {
@@ -50,7 +50,7 @@ div.level-stick-card {
 
 div.hockey-sticks-container {
   position: relative;
-  margin-top: 3rem;
+  margin-top: 2.75rem;
 }
 
 div.hockey-sticks-row {
