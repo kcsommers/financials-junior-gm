@@ -64,6 +64,7 @@ export const getAvailableSlots = (props, team) => {
   if (!team) {
     return props.length;
   }
+
   return props.reduce((total, p) => {
     if (!team[p]) {
       total++;

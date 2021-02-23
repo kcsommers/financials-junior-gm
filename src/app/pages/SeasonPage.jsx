@@ -220,7 +220,13 @@ export const SeasonPage = () => {
           dispatch(setStudent(res.updatedStudent));
           dispatch(throwScenario(currentScenario));
           dispatch(
-            addObjective(new Objective(currentScenario.objective, true))
+            addObjective(
+              new Objective(
+                currentScenario.objective,
+                Objectives.SEASON_SCENARIO,
+                true
+              )
+            )
           );
         });
       })

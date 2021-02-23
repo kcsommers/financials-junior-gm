@@ -4,6 +4,7 @@ import {
   setStudent,
   initializeSeason,
   setInitialPlayersState,
+  initializeObjectives,
 } from '@redux/actions';
 import { UserRoles } from '@data/auth/auth';
 import { Redirect } from 'react-router-dom';
@@ -23,6 +24,7 @@ export const StudentPortal = ({ screen, isLoggedIn, userRole }) => {
         dispatch(setStudent(student));
         dispatch(setInitialPlayersState(student.players, student));
         dispatch(initializeSeason(student));
+        dispatch(initializeObjectives(student));
       });
     },
     [dispatch]

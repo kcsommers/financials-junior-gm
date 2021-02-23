@@ -20,11 +20,13 @@ import {
   setSavings,
   updateStudent,
   toggleOverlay,
+  setObjectiveComplete,
 } from '@redux/actions';
 import { updateStudentById } from '../api-helper';
 import { cloneDeep } from 'lodash';
-import '@css/pages/BudgetPage.css';
+import { Objectives } from '@data/objectives/objectives';
 import { getDollarString } from '@utils';
+import '@css/pages/BudgetPage.css';
 
 let debounceTimeout = 0;
 
@@ -38,7 +40,10 @@ export const BudgetPage = () => {
   const [tutorialSlides, setTutorialSlides] = useState([budgetSlides]);
 
   const onTutorialComplete = () => {
-    dispatch(setTutorialState({ isActive: false }));
+    batch(() => {
+      dispatch(setTutorialState({ isActive: false }));
+      dispatch(setObjectiveComplete(Objectives.LEARN_BUDGET, true));
+    });
   };
 
   const startTutorial = useCallback(
@@ -176,6 +181,7 @@ export const BudgetPage = () => {
                 spent: student.moneySpent,
               }}
               setValue={updateSavings}
+              student={student}
             />
           </div>
         </div>

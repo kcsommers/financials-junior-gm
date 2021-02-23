@@ -115,7 +115,7 @@ export const scenarios = {
       getPlayer: getSecondHighestPlayer,
       playerAssignment: PlayerAssignments.INJURED,
       player: null,
-      gameButtonLabel: 'Go to Team page!',
+      gameButtonLabel: 'Click the puck to sign a new player!',
       gameButtonAction: (team, history) => history.push('/team'),
     },
     {
@@ -125,7 +125,7 @@ export const scenarios = {
       getPlayer: getStartingPlayer,
       playerAssignment: PlayerAssignments.INJURED,
       player: null,
-      gameButtonLabel: 'Go to Team page!',
+      gameButtonLabel: 'Click the puck to sign a new player!',
       gameButtonAction: (team, history) => history.push('/team'),
     },
   ],

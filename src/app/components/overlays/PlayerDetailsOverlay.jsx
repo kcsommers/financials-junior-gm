@@ -6,6 +6,7 @@ import {
   signPlayer,
   gameBlockEnded,
   removeObjective,
+  setObjectiveComplete,
 } from '@redux/actions';
 import {
   PlayerCard,
@@ -16,14 +17,16 @@ import {
   Button,
   ConfirmOverlay,
 } from '@components';
-import { PlayerPositions } from '@data/players/players';
+import { PlayerPositions, TeamAssignments } from '@data/players/players';
 import {
   getPlayerPositon,
   getAssignmentsByPosition,
   handleSignPlayer,
   getOpenAssignment,
   handleReleasePlayer,
+  getAvailableSlots,
 } from '@data/players/players-utils';
+import { Objectives } from '@data/objectives/objectives';
 
 export const PlayerDetailsOverlay = ({
   player,
@@ -49,20 +52,34 @@ export const PlayerDetailsOverlay = ({
   const releaseConfirmed = () => {
     handleReleasePlayer(player, student)
       .then(({ updatedStudent, updatedPlayer, prevAssignment }) => {
-        dispatch(releasePlayer(updatedPlayer, prevAssignment, student));
-        dispatch(setStudent(updatedStudent));
-        dispatch(
-          toggleOverlay({
-            isOpen: true,
-            template: (
-              <PlayerChangeSuccessOverlay
-                message={`${updatedPlayer.playerName} has been released!`}
-                player={updatedPlayer}
-              />
-            ),
-            canClose: true,
-          })
-        );
+        batch(() => {
+          dispatch(releasePlayer(updatedPlayer, prevAssignment, student));
+          dispatch(setStudent(updatedStudent));
+          dispatch(
+            toggleOverlay({
+              isOpen: true,
+              template: (
+                <PlayerChangeSuccessOverlay
+                  message={`${updatedPlayer.playerName} has been released!`}
+                  player={updatedPlayer}
+                />
+              ),
+              canClose: true,
+            })
+          );
+          const objectiveComplete =
+            getAvailableSlots(
+              [
+                ...TeamAssignments.offense,
+                ...TeamAssignments.defense,
+                ...TeamAssignments.goalie,
+              ],
+              updatedStudent
+            ) === 0;
+          dispatch(
+            setObjectiveComplete(Objectives.FILL_TEAM, objectiveComplete)
+          );
+        });
       })
       .catch((err) => console.error(err));
   };
