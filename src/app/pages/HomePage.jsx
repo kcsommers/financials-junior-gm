@@ -47,6 +47,8 @@ export const HomePage = () => {
 
   const student = useSelector((state) => state.studentState.student);
 
+  const { moneySpent, teamRank } = useSelector((state) => state.players);
+
   const { inTransition, awards, inSession } = useSelector(
     (state) => state.season
   );
@@ -139,7 +141,7 @@ export const HomePage = () => {
           >
             <LevelStick
               type='teamRank'
-              amount={student.teamRank}
+              amount={teamRank}
               denom={100}
               color='#e06d00'
               indicatorDirection='right'
@@ -155,7 +157,7 @@ export const HomePage = () => {
           <div className='level-stick-card'>
             <LevelStick
               type='teamRank'
-              amount={student.teamRank}
+              amount={teamRank}
               denom={100}
               color='#e06d00'
               indicatorDirection='right'
@@ -190,9 +192,7 @@ export const HomePage = () => {
           >
             <LevelStick
               type='budget'
-              amount={
-                student.totalBudget - student.moneySpent - student.savingsBudget
-              }
+              amount={student.totalBudget - moneySpent - student.savingsBudget}
               denom={student.totalBudget}
               color='#002f6c'
               indicatorDirection='left'
@@ -211,9 +211,7 @@ export const HomePage = () => {
             <LevelStick
               type='budget'
               levelDirection='topToBottom'
-              amount={
-                student.totalBudget - student.moneySpent - student.savingsBudget
-              }
+              amount={student.totalBudget - moneySpent - student.savingsBudget}
               denom={student.totalBudget}
               color='#002f6c'
               indicatorDirection='left'

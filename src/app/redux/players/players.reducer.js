@@ -9,7 +9,13 @@ import {
 } from './players.actions';
 import { cloneDeep } from 'lodash';
 import { PlayerAssignments, PlayerPositions } from '@data/players/players';
-import { isTeamPlayer, getPlayerPositon } from '@data/players/players-utils';
+import {
+  isTeamPlayer,
+  getPlayerPositon,
+  getTeamRank,
+  getMoneySpent,
+  isStarter,
+} from '@data/players/players-utils';
 import { getMoneyLevels } from '@utils';
 
 const initialState = {
@@ -35,6 +41,8 @@ const initialState = {
     },
   },
   initialized: false,
+  teamRank: 0,
+  moneySpent: 0,
 };
 
 const playersReducer = (state = initialState, action) => {
@@ -102,6 +110,11 @@ const playersReducer = (state = initialState, action) => {
         (k) => offeredScoutPlayers[k].length
       );
 
+      const team = [
+        ...Object.keys(teamPlayers).map((a) => teamPlayers[a]),
+        ...injuredPlayers,
+      ];
+
       return {
         initialized: true,
         marketPlayers,
@@ -111,6 +124,9 @@ const playersReducer = (state = initialState, action) => {
           scoutPlayers,
           offeredScoutPlayers,
         },
+        moneySpent: getMoneySpent(team, student.totalBudget),
+        teamRank: getTeamRank(team.filter((p) => isStarter(p))),
+        injuredPlayers,
       };
     }
     case SIGN_PLAYER: {
@@ -152,6 +168,15 @@ const playersReducer = (state = initialState, action) => {
         clonedState.teamPlayers[prevAssignment] = null;
       }
 
+      const team = [
+        ...Object.keys(clonedState.teamPlayers).map(
+          (a) => clonedState.teamPlayers[a]
+        ),
+        ...clonedState.injuredPlayers,
+      ];
+      clonedState.moneySpent = getMoneySpent(team, student.totalBudget);
+      clonedState.teamRank = getTeamRank(team.filter((p) => isStarter(p)));
+
       return clonedState;
     }
     case RELEASE_PLAYER: {
@@ -180,6 +205,15 @@ const playersReducer = (state = initialState, action) => {
 
       clonedState.teamPlayers[prevAssignment] = null;
       playerCache[releasedPlayer.playerPosition].push(releasedPlayer);
+
+      const team = [
+        ...Object.keys(clonedState.teamPlayers).map(
+          (a) => clonedState.teamPlayers[a]
+        ),
+        ...clonedState.injuredPlayers,
+      ];
+      clonedState.moneySpent = getMoneySpent(team, student.totalBudget);
+      clonedState.teamRank = getTeamRank(team.filter((p) => isStarter(p)));
       return clonedState;
     }
     case TRADE_PLAYER: {
@@ -228,6 +262,15 @@ const playersReducer = (state = initialState, action) => {
       }
       clonedState.teamPlayers[signedPlayer.playerAssignment] = signedPlayer;
 
+      const team = [
+        ...Object.keys(clonedState.teamPlayers).map(
+          (a) => clonedState.teamPlayers[a]
+        ),
+        ...clonedState.injuredPlayers,
+      ];
+      clonedState.moneySpent = getMoneySpent(team, student.totalBudget);
+      clonedState.teamRank = getTeamRank(team.filter((p) => isStarter(p)));
+
       return clonedState;
     }
     case UPDATE_SCOUT_PLAYER: {
@@ -271,8 +314,19 @@ const playersReducer = (state = initialState, action) => {
       return clonedState;
     }
     case INJURE_PLAYER: {
+      const { previousAssignment, injuredPlayer, student } = action.payload;
       const clonedState = cloneDeep(state);
-      clonedState.teamPlayers[action.payload.previousAssignment] = null;
+      clonedState.teamPlayers[previousAssignment] = null;
+      clonedState.injuredPlayers.push(injuredPlayer);
+
+      const team = [
+        ...Object.keys(clonedState.teamPlayers).map(
+          (a) => clonedState.teamPlayers[a]
+        ),
+        ...clonedState.injuredPlayers,
+      ];
+      clonedState.moneySpent = getMoneySpent(team, student.totalBudget);
+      clonedState.teamRank = getTeamRank(team.filter((p) => isStarter(p)));
       return clonedState;
     }
     default:

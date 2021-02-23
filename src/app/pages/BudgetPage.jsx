@@ -33,6 +33,7 @@ let debounceTimeout = 0;
 export const BudgetPage = () => {
   const dispatch = useDispatch();
   const student = useSelector((state) => state.studentState.student);
+  const { moneySpent } = useSelector((state) => state.players);
   const { inTransition, awards } = useSelector((state) => state.season);
 
   const tutorialActive = useSelector((state) => state.tutorial.isActive);
@@ -165,7 +166,7 @@ export const BudgetPage = () => {
               budget={{
                 total: student.totalBudget,
                 savings: student.savingsBudget,
-                spent: student.moneySpent,
+                spent: moneySpent,
               }}
               animationStates={budgetEquationStates}
             />
@@ -178,7 +179,7 @@ export const BudgetPage = () => {
               budget={{
                 total: student.totalBudget,
                 savings: student.savingsBudget,
-                spent: student.moneySpent,
+                spent: moneySpent,
               }}
               setValue={updateSavings}
               student={student}

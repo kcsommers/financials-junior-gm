@@ -37,9 +37,9 @@ export const tradePlayer = (releasedPlayer, signedPlayer, student) => ({
   payload: { releasedPlayer, signedPlayer, student },
 });
 
-export const injurePlayer = (injuredPlayer, previousAssignment) => ({
+export const injurePlayer = (injuredPlayer, previousAssignment, student) => ({
   type: INJURE_PLAYER,
-  payload: { injuredPlayer, previousAssignment },
+  payload: { injuredPlayer, previousAssignment, student },
 });
 
 export const updateScoutPlayer = (state) => ({

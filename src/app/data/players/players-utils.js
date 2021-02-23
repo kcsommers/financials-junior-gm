@@ -1,4 +1,9 @@
-import { PlayerAssignments, PlayerPositions, TeamAssignments } from './players';
+import {
+  PlayerAssignments,
+  PlayerPositions,
+  TeamAssignments,
+  playerProps,
+} from './players';
 import { cloneDeep } from 'lodash';
 import { updateStudentById } from './../../api-helper';
 
@@ -87,6 +92,20 @@ export const isTeamPlayer = (player) => {
     PlayerAssignments.BENCH_ONE,
     PlayerAssignments.BENCH_TWO,
     PlayerAssignments.BENCH_THREE,
+  ].includes(player.playerAssignment);
+};
+
+export const isStarter = (player) => {
+  if (!player) {
+    return false;
+  }
+  return [
+    PlayerAssignments.F_ONE,
+    PlayerAssignments.F_TWO,
+    PlayerAssignments.F_THREE,
+    PlayerAssignments.D_ONE,
+    PlayerAssignments.D_TWO,
+    PlayerAssignments.G_ONE,
   ].includes(player.playerAssignment);
 };
 
@@ -266,4 +285,39 @@ export const handleTradePlayers = (
       )
       .catch((err) => reject(err));
   });
+};
+
+export const getMoneySpent = (players, totalBudget) => {
+  if (!players) {
+    return 0;
+  }
+  return Math.min(
+    players.reduce((total, p) => {
+      if (
+        p &&
+        (playerProps.includes(p.playerAssignment) ||
+          p.playerAssignment === PlayerAssignments.INJURED)
+      ) {
+        total += +p.playerCost;
+      }
+      return total;
+    }, 0),
+    totalBudget
+  );
+};
+
+export const getTeamRank = (players) => {
+  if (!players) {
+    return 0;
+  }
+
+  return Math.min(
+    players.reduce((total, p) => {
+      if (p && playerProps.includes(p.playerAssignment)) {
+        total += +p.overallRank;
+      }
+      return total;
+    }, 0),
+    100
+  );
 };
