@@ -19,8 +19,10 @@ export const TeamBudgetState = ({ title, isLarge, changes }) => {
           border: '5px solid #4b4b4b',
           borderRadius: '5px',
           backgroundColor: '#fff',
-          padding: '1rem 0',
+          height: isLarge ? '390px' : '285px',
           width: isLarge ? '440px' : '370px',
+          display: 'flex',
+          alignItems: 'center',
         }}
       >
         <div
@@ -34,62 +36,66 @@ export const TeamBudgetState = ({ title, isLarge, changes }) => {
             alignItems: 'center',
           }}
         >
-          <LevelStick
-            type='teamRank'
-            amount={teamRank}
-            denom={100}
-            color='#e06d00'
-            indicatorDirection='right'
-            isLarge={isLarge}
-            textJsx={
-              <span>
-                Team <br />
-                Rank
+          <div style={{ position: 'relative' }}>
+            <LevelStick
+              type='teamRank'
+              amount={teamRank}
+              denom={100}
+              color='#e06d00'
+              indicatorDirection='right'
+              isLarge={isLarge}
+              textJsx={
+                <span>
+                  Team <br />
+                  Rank
+                </span>
+              }
+            />
+            {changes && (
+              <span
+                style={{
+                  position: 'absolute',
+                  bottom: '0',
+                  right: '50%',
+                  fontSize: '2rem',
+                  color: '#00788d',
+                }}
+              >
+                +{changes[1]}
               </span>
-            }
-          />
-          <LevelStick
-            type='budget'
-            amount={student.totalBudget - moneySpent - student.savingsBudget}
-            denom={student.totalBudget}
-            color='#002f6c'
-            indicatorDirection='left'
-            inverse={true}
-            isLarge={isLarge}
-            textJsx={
-              <span>
-                Spending <br />
-                Budget
+            )}
+          </div>
+          <div style={{ position: 'relative' }}>
+            <LevelStick
+              type='budget'
+              amount={student.totalBudget - moneySpent - student.savingsBudget}
+              denom={student.totalBudget}
+              color='#002f6c'
+              indicatorDirection='left'
+              inverse={true}
+              isLarge={isLarge}
+              textJsx={
+                <span>
+                  Spending <br />
+                  Budget
+                </span>
+              }
+            />
+            {changes && (
+              <span
+                style={{
+                  position: 'absolute',
+                  bottom: '0',
+                  left: '50%',
+                  fontSize: '2rem',
+                  color: 'red',
+                }}
+              >
+                -${changes[0]}
               </span>
-            }
-          />
+            )}
+          </div>
         </div>
-        {changes && (
-          <span
-            style={{
-              position: 'relative',
-              top: '36%',
-              left: '-20%',
-              fontSize: '2rem',
-              color: '#00788d',
-            }}
-          >
-            +{changes[1]}
-          </span>
-        )}
-        {changes && (
-          <span
-            style={{
-              position: 'relative',
-              top: '36%',
-              right: '-5%',
-              fontSize: '2rem',
-              color: 'red',
-            }}
-          >
-            -${changes[0]}
-          </span>
-        )}
       </div>
     </>
   ) : (

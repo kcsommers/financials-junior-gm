@@ -109,6 +109,7 @@ export const LevelStick = ({
         width: isLarge ? '220px' : '190px',
         height: isLarge ? '315px' : '225px',
         position: 'relative',
+        top: isLarge ? '0px' : '8px',
       }}
     >
       <div
