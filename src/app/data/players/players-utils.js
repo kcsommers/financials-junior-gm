@@ -16,7 +16,7 @@ export const getOpenAssignment = (position, student) => {
         PlayerAssignments.F_THREE,
       ].find((a) => !student[a]);
     }
-    case PlayerPositions.DEFENDER: {
+    case PlayerPositions.DEFENSE: {
       return [PlayerAssignments.D_ONE, PlayerAssignments.D_TWO].find(
         (a) => !student[a]
       );
@@ -46,7 +46,7 @@ export const getAssignmentsByPosition = (position) => {
         PlayerAssignments.F_THREE,
       ];
     }
-    case PlayerPositions.DEFENDER: {
+    case PlayerPositions.DEFENSE: {
       return [PlayerAssignments.D_ONE, PlayerAssignments.D_TWO];
     }
     case PlayerPositions.GOALIE: {
@@ -118,7 +118,7 @@ export const getPlayerPositon = (assignment) => {
     }
     case PlayerAssignments.D_ONE:
     case PlayerAssignments.D_TWO: {
-      return PlayerPositions.DEFENDER;
+      return PlayerPositions.DEFENSE;
     }
     case PlayerAssignments.G_ONE: {
       return PlayerPositions.GOALIE;

@@ -21,7 +21,7 @@ import { getMoneyLevels } from '@utils';
 const initialState = {
   marketPlayers: {
     forward: [],
-    defender: [],
+    defense: [],
     goalie: [],
   },
   injuredPlayers: [],
@@ -36,7 +36,7 @@ const initialState = {
     },
     offeredScoutPlayers: {
       forward: [],
-      defender: [],
+      defense: [],
       goalie: [],
     },
   },
@@ -52,7 +52,7 @@ const playersReducer = (state = initialState, action) => {
       const moneyLevels = getMoneyLevels(student.level);
       const marketPlayers = {
         forward: [],
-        defender: [],
+        defense: [],
         goalie: [],
       };
       const scoutPlayers = {
@@ -63,7 +63,7 @@ const playersReducer = (state = initialState, action) => {
       };
       const offeredScoutPlayers = {
         forward: [],
-        defender: [],
+        defense: [],
         goalie: [],
       };
       const injuredPlayers = [];
@@ -76,8 +76,11 @@ const playersReducer = (state = initialState, action) => {
         if (p.playerAssignment === PlayerAssignments.MARKET) {
           if (p.playerPosition === PlayerPositions.FORWARD) {
             marketPlayers.forward.push(p);
-          } else if (p.playerPosition === PlayerPositions.DEFENDER) {
-            marketPlayers.defender.push(p);
+          } else if (
+            p.playerPosition === PlayerPositions.DEFENSE ||
+            p.playerPosition === 'defender'
+          ) {
+            marketPlayers.defense.push(p);
           } else if (p.playerPosition === PlayerPositions.GOALIE) {
             marketPlayers.goalie.push(p);
           }
@@ -94,8 +97,8 @@ const playersReducer = (state = initialState, action) => {
 
           if (p.playerPosition === PlayerPositions.FORWARD) {
             offeredScoutPlayers.forward.push(p);
-          } else if (p.playerPosition === PlayerPositions.DEFENDER) {
-            offeredScoutPlayers.defender.push(p);
+          } else if (p.playerPosition === PlayerPositions.DEFENSE) {
+            offeredScoutPlayers.defense.push(p);
           } else if (p.playerPosition === PlayerPositions.GOALIE) {
             offeredScoutPlayers.goalie.push(p);
           }
@@ -287,7 +290,7 @@ const playersReducer = (state = initialState, action) => {
     case SCOUTING_COMPLETE: {
       const { levelOne, levelTwo, levelThree } = action.payload;
       const forwards = [];
-      const defenders = [];
+      const defense = [];
       const goalies = [];
       const clonedState = cloneDeep(state);
       const placeByPosition = (player) => {
@@ -295,8 +298,8 @@ const playersReducer = (state = initialState, action) => {
           goalies.push(player);
         } else if (player.playerPosition === PlayerPositions.FORWARD) {
           forwards.push(player);
-        } else if (player.playerPosition === PlayerPositions.DEFENDER) {
-          defenders.push(player);
+        } else if (player.playerPosition === PlayerPositions.DEFENSE) {
+          defense.push(player);
         }
       };
       levelOne.forEach(placeByPosition);
@@ -307,7 +310,7 @@ const playersReducer = (state = initialState, action) => {
       clonedState.scoutingState.scoutPlayers.levelTwo = levelTwo;
       clonedState.scoutingState.scoutPlayers.levelThree = levelThree;
       clonedState.scoutingState.offeredScoutPlayers.forward = forwards;
-      clonedState.scoutingState.offeredScoutPlayers.defender = defenders;
+      clonedState.scoutingState.offeredScoutPlayers.defense = defense;
       clonedState.scoutingState.offeredScoutPlayers.goalie = goalies;
       clonedState.scoutingState.isComplete = true;
 
