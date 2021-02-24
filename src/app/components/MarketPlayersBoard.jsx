@@ -41,11 +41,11 @@ const getViewConfig = (position, marketPlayers) => {
         title: 'Forwards you can sign',
         position: 'forward',
       };
-    case PlayerPositions.DEFENDER:
+    case PlayerPositions.DEFENSE:
       return {
-        players: marketPlayers.defender,
-        title: 'Defenders you can sign',
-        position: 'defender',
+        players: marketPlayers.defense,
+        title: 'Defense you can sign',
+        position: 'defense',
       };
     case PlayerPositions.GOALIE:
       return {
@@ -110,8 +110,9 @@ export const MarketPlayersBoard = ({
   const goaliesActive =
     activePosition === PlayerPositions.GOALIE ||
     initialPosition === PlayerPositions.BENCH;
-  const defendersActive =
-    activePosition === PlayerPositions.DEFENDER ||
+  const defenseActive =
+    activePosition === PlayerPositions.DEFENSE ||
+    activePosition === 'defender' ||
     initialPosition === PlayerPositions.BENCH;
 
   return (
@@ -133,16 +134,16 @@ export const MarketPlayersBoard = ({
         </div>
         <div
           className={`box-shadow market-players-board-tab-btn${
-            defendersActive ? '' : ' disabled'
+            defenseActive ? '' : ' disabled'
           }`}
           onClick={() => {
-            if (defendersActive) {
-              setActivePosition(PlayerPositions.DEFENDER);
+            if (defenseActive) {
+              setActivePosition(PlayerPositions.DEFENSE);
             }
           }}
         >
           <div className='market-players-board-tab-btn-inner'>
-            <span className='outline-black'>Defender</span>
+            <span className='outline-black'>Defense</span>
           </div>
         </div>
         <div

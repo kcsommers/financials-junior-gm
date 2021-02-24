@@ -58,7 +58,7 @@ export const Jumbotron = ({
       animate={animationStates.stats}
       className='jumbotron-stats-container'
     >
-      <div className='jumbotron-stats-title'>Stats</div>
+      <div className='jumbotron-stats-title'>Game {nextIndex + 1} of 12</div>
       <div className='jumbotron-stats-inner'>
         <div className='jumbotron-stat-wrap'>
           Wins
