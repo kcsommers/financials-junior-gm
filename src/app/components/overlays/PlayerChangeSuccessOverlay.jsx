@@ -24,18 +24,18 @@ export const PlayerChangeSuccessOverlay = ({ player, message }) => {
           {message}
         </h2>
         <div
-          className='player-released-overlay-body'
           style={{
             display: 'flex',
             flex: 1,
             width: '100%',
+            padding: '0 2rem',
           }}
         >
           <div
             style={{
               flex: 1,
               display: 'flex',
-              alignItems: 'center',
+              paddingTop: '1.5rem',
               justifyContent: 'center',
             }}
           >

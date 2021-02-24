@@ -135,6 +135,7 @@ export const SeasonPage = () => {
   }
 
   const endSeason = () => {
+    const clonedStudent = cloneDeep(student);
     const studentTeamIndex = seasonState.standings.findIndex(
       (t) => t.name === seasonState.seasonTeam.name
     );
@@ -144,22 +145,27 @@ export const SeasonPage = () => {
       firstCup: studentTeamIndex === 0,
     };
 
-    const clonedSeasons = cloneDeep(student.seasons);
-    if (clonedSeasons[(student.level || 1) - 1]) {
-      clonedSeasons[(student.level || 1) - 1].push(seasonState.completedGames);
+    (clonedStudent.awards || []).splice(clonedStudent.level - 1, 1, awards);
+
+    if (clonedStudent.seasons[(student.level || 1) - 1]) {
+      clonedStudent.seasons[(student.level || 1) - 1].push(
+        seasonState.completedGames
+      );
     } else {
-      clonedSeasons[(student.level || 1) - 1] = [seasonState.completedGames];
+      clonedStudent.easons[(student.level || 1) - 1] = [
+        seasonState.completedGames,
+      ];
     }
 
     updateStudentById(student._id, {
-      seasons: clonedSeasons,
-      awards,
-      rollOverBudget: student.rollOverBudget + student.savingsBudget,
+      seasons: clonedStudent.seasons,
+      awards: clonedStudent.awards,
+      rollOverBudget: (student.rollOverBudget || 0) + student.savingsBudget,
       savingsBudget: 0,
     })
       .then((res) => {
         batch(() => {
-          dispatch(setSeasonComplete(student));
+          dispatch(setSeasonComplete(clonedStudent));
           dispatch(
             toggleOverlay({
               isOpen: true,
