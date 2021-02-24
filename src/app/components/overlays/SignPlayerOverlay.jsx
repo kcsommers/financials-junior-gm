@@ -32,7 +32,7 @@ export const SignPlayerOverlay = ({ assignment }) => {
 
   const availableSlots = {
     forwards: getAvailableSlots(TeamAssignments.offense, team),
-    defender: getAvailableSlots(TeamAssignments.defense, team),
+    defense: getAvailableSlots(TeamAssignments.defense, team),
     goalie: getAvailableSlots(TeamAssignments.goalie, team),
     bench: getAvailableSlots(TeamAssignments.bench, team),
   };
@@ -152,10 +152,8 @@ export const SignPlayerOverlay = ({ assignment }) => {
                   </span>
                 </div>
                 <div className='team-slots-board-row'>
-                  <span className='color-primary'>Defenders:</span>
-                  <span className='color-accent'>
-                    {availableSlots.defender}
-                  </span>
+                  <span className='color-primary'>Defense:</span>
+                  <span className='color-accent'>{availableSlots.defense}</span>
                 </div>
                 <div className='team-slots-board-row'>
                   <span className='color-primary'>Goalie:</span>

@@ -40,7 +40,7 @@ export const players = [
   },
   {
     playerName: 'Anabelle Rodrigues',
-    playerPosition: 'defender',
+    playerPosition: 'defense',
     offensiveRank: 21,
     passRank: 19,
     defensiveRank: 40,
@@ -53,7 +53,7 @@ export const players = [
   },
   {
     playerName: 'Mario Ferraro',
-    playerPosition: 'defender',
+    playerPosition: 'defense',
     offensiveRank: 7,
     passRank: 17,
     defensiveRank: 55,
@@ -66,7 +66,7 @@ export const players = [
   },
   {
     playerName: 'Randall Nixon',
-    playerPosition: 'defender',
+    playerPosition: 'defense',
     offensiveRank: 16,
     passRank: 20,
     defensiveRank: 24,
@@ -118,7 +118,7 @@ export const players = [
   },
   {
     playerName: 'Amanda Li',
-    playerPosition: 'defender',
+    playerPosition: 'defense',
     offensiveRank: 5,
     passRank: 10,
     defensiveRank: 30,
@@ -131,7 +131,7 @@ export const players = [
   },
   {
     playerName: 'Damien Goodwin',
-    playerPosition: 'defender',
+    playerPosition: 'defense',
     offensiveRank: 5,
     passRank: 15,
     defensiveRank: 25,
@@ -157,7 +157,7 @@ export const players = [
   },
   {
     playerName: 'Natasha Greer',
-    playerPosition: 'defender',
+    playerPosition: 'defense',
     offensiveRank: 5,
     passRank: 20,
     defensiveRank: 20,
@@ -222,7 +222,7 @@ export const players = [
   },
   {
     playerName: 'Theo Johnson',
-    playerPosition: 'defender',
+    playerPosition: 'defense',
     offensiveRank: 5,
     passRank: 5,
     defensiveRank: 20,
@@ -248,7 +248,7 @@ export const players = [
   },
   {
     playerName: 'Sanit Xie',
-    playerPosition: 'defender',
+    playerPosition: 'defense',
     offensiveRank: 5,
     passRank: 10,
     defensiveRank: 15,
@@ -287,7 +287,7 @@ export const players = [
   },
   {
     playerName: 'Emily Burch',
-    playerPosition: 'defender',
+    playerPosition: 'defense',
     offensiveRank: 2,
     passRank: 3,
     defensiveRank: 10,
