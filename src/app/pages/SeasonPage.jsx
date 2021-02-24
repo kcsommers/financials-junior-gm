@@ -13,6 +13,7 @@ import {
   SeasonCompleteOverlay,
   NextSeasonOverlay,
 } from '@components';
+import {NewLevelOverlay} from '../components/overlays/NewLevelOverlay'
 import seasonStick from '@images/season-stick.svg';
 import {
   GamePhases,
@@ -37,6 +38,7 @@ import {
 } from '@redux/actions';
 import {
   seasonSlides,
+  levelTwoSlides,
   SharkieButton,
   Tutorial,
   getConfirmSlides,
@@ -336,6 +338,15 @@ export const SeasonPage = () => {
       })
     );
   }
+
+  // dispatch(
+  //   toggleOverlay({
+  //     isOpen: true,
+  //     template: (
+  //       <NewLevelOverlay/>
+  //     )
+  //   })
+  // )
 
   return (
     <div className='page-container'>
