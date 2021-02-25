@@ -14,9 +14,7 @@ export const BudgetSlider = ({ budget, setValue, student }) => {
 
   const savingsIndicatorPosition = getSavingsIndicatorPosition();
 
-  const sliderWidth = `${
-    ((budget.total - budget.spent) / budget.total) * 100
-  }%`;
+  const sliderWidth = `${((budget.total - budget.spent) / 16) * 100}%`;
 
   const scaleMarkers = [];
   for (let i = 15; i >= 0; i--) {
@@ -28,18 +26,6 @@ export const BudgetSlider = ({ budget, setValue, student }) => {
       </div>
     );
   }
-
-  const getSpent = (spent) => {
-    if (+student.level === 1) {
-      return spent;
-    }
-    if (+student.level === 2) {
-      return spent / 10;
-    }
-    if (+student.level === 3) {
-      return spent / 100;
-    }
-  };
 
   return (
     <div className='budget-slider-wrap'>
@@ -64,11 +50,11 @@ export const BudgetSlider = ({ budget, setValue, student }) => {
         </div>
         <div className='slider-scale-wrap'>{scaleMarkers}</div>
         <div
-          className='slider-wrap'
+          className={`slider-wrap${
+            !budget.spent && budget.spent !== '0' ? ' no-spent' : ''
+          }`}
           style={{
-            width: `calc(${sliderWidth} + ${
-              71.46 / (budget.total / budget.spent) + 20
-            }px)`,
+            width: `calc(${sliderWidth} + 75px)`,
           }}
         >
           <input
