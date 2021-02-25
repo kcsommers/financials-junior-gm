@@ -9,6 +9,7 @@ import {
   Overlay,
   PlayerDetailsOverlay,
   BadScoutOverlay,
+  FaqOverlay,
   NextSeasonOverlay,
 } from '@components';
 import scoutStick from '@images/scout-stick.svg';
@@ -33,6 +34,7 @@ import { isEqual } from 'lodash';
 import { getMoneyLevels } from '@utils';
 import { cloneDeep } from 'lodash';
 import { PlayerAssignments } from '@data/players/players';
+import { faqs } from '@data/faqs/faqs';
 import { updateStudentById } from './../api-helper';
 import '@css/pages/ScoutPage.css';
 
@@ -439,10 +441,24 @@ export const ScoutPage = () => {
   );
 
   const onCallSharkie = () => {
-    setTutorialSlides([getConfirmSlides('scout'), scoutSlides]);
     dispatch(
-      setTutorialState({
-        isActive: true,
+      toggleOverlay({
+        isOpen: true,
+        template: (
+          <FaqOverlay
+            questions={faqs.scout}
+            title='Scout Page FAQs'
+            onStartTutorial={() => {
+              dispatch(
+                toggleOverlay({
+                  isOpen: false,
+                  template: null,
+                })
+              );
+              startTutorial([getConfirmSlides('scout'), scoutSlides]);
+            }}
+          />
+        ),
       })
     );
   };

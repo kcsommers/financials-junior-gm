@@ -12,8 +12,9 @@ import {
   Overlay,
   SeasonCompleteOverlay,
   NextSeasonOverlay,
+  FaqOverlay,
 } from '@components';
-import {NewLevelOverlay} from '../components/overlays/NewLevelOverlay'
+import { NewLevelOverlay } from '../components/overlays/NewLevelOverlay';
 import seasonStick from '@images/season-stick.svg';
 import {
   GamePhases,
@@ -46,6 +47,7 @@ import {
 import { motion } from 'framer-motion';
 import '@css/pages/SeasonPage.css';
 import { Objective, Objectives } from '@data/objectives/objectives';
+import { faqs } from '@data/faqs/faqs';
 
 const allActions = {
   [INJURE_PLAYER]: injurePlayer,
@@ -93,7 +95,26 @@ export const SeasonPage = () => {
   );
 
   const onCallSharkie = () => {
-    startTutorial([getConfirmSlides('season'), seasonSlides]);
+    dispatch(
+      toggleOverlay({
+        isOpen: true,
+        template: (
+          <FaqOverlay
+            questions={faqs.season}
+            title='Season Page FAQs'
+            onStartTutorial={() => {
+              dispatch(
+                toggleOverlay({
+                  isOpen: false,
+                  template: null,
+                })
+              );
+              startTutorial([getConfirmSlides('season'), seasonSlides]);
+            }}
+          />
+        ),
+      })
+    );
   };
 
   const opponenetIndexRef = useRef(state.currentOpponentIndex);
