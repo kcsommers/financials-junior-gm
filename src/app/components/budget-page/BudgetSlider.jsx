@@ -19,13 +19,27 @@ export const BudgetSlider = ({ budget, setValue, student }) => {
   }%`;
 
   const scaleMarkers = [];
-  for (let i = budget.total; i >= 0; i--) {
+  for (let i = 15; i >= 0; i--) {
     scaleMarkers.push(
       <div key={i} className='slider-scale-marker'>
-        <span>{i}</span>
+        <span>
+          {+student.level === 1 ? i : +student.level === 2 ? i * 10 : i * 100}
+        </span>
       </div>
     );
   }
+
+  const getSpent = (spent) => {
+    if (+student.level === 1) {
+      return spent;
+    }
+    if (+student.level === 2) {
+      return spent / 10;
+    }
+    if (+student.level === 3) {
+      return spent / 100;
+    }
+  };
 
   return (
     <div className='budget-slider-wrap'>
@@ -62,6 +76,7 @@ export const BudgetSlider = ({ budget, setValue, student }) => {
             min='0'
             max={budget.total - budget.spent}
             value={budget.savings}
+            step={+student.level === 1 ? 1 : +student.level === 2 ? 10 : 100}
             onChange={(e) => {
               setValue(e.target.value);
             }}

@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useSelector, useDispatch, batch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
 import {
   HeaderComponent,
   PageBoard,
@@ -12,8 +11,8 @@ import {
   Overlay,
   SeasonCompleteOverlay,
   NextSeasonOverlay,
+  FaqOverlay,
 } from '@components';
-import {NewLevelOverlay} from '../components/overlays/NewLevelOverlay'
 import seasonStick from '@images/season-stick.svg';
 import {
   GamePhases,
@@ -38,14 +37,15 @@ import {
 } from '@redux/actions';
 import {
   seasonSlides,
-  levelTwoSlides,
   SharkieButton,
   Tutorial,
   getConfirmSlides,
 } from '@tutorial';
 import { motion } from 'framer-motion';
-import '@css/pages/SeasonPage.css';
 import { Objective, Objectives } from '@data/objectives/objectives';
+import { faqs } from '@data/faqs/faqs';
+import { getMaxTeamRank } from '@data/players/players-utils';
+import '@css/pages/SeasonPage.css';
 
 const allActions = {
   [INJURE_PLAYER]: injurePlayer,
@@ -53,8 +53,7 @@ const allActions = {
 
 let timer = 0;
 
-export const SeasonPage = () => {
-  const history = useHistory();
+export const SeasonPage = ({ history }) => {
   const dispatch = useDispatch();
   const student = useSelector((state) => state.studentState.student);
   const { teamPlayers, teamRank } = useSelector((state) => state.players);
@@ -74,7 +73,7 @@ export const SeasonPage = () => {
     playButton: useSelector((state) => state.tutorial.season.playButton),
     studentRank: useSelector((state) => state.tutorial.season.studentRank),
   };
-  const currentPhase = gamePhases[state.currentPhaseIndex];
+  const currentPhase = gamePhases(+student.level)[state.currentPhaseIndex];
 
   const onTutorialComplete = () => {
     dispatch(setTutorialState({ isActive: false }));
@@ -93,7 +92,26 @@ export const SeasonPage = () => {
   );
 
   const onCallSharkie = () => {
-    startTutorial([getConfirmSlides('season'), seasonSlides]);
+    dispatch(
+      toggleOverlay({
+        isOpen: true,
+        template: (
+          <FaqOverlay
+            questions={faqs.season}
+            title='Season Page FAQs'
+            onStartTutorial={() => {
+              dispatch(
+                toggleOverlay({
+                  isOpen: false,
+                  template: null,
+                })
+              );
+              startTutorial([getConfirmSlides('season'), seasonSlides]);
+            }}
+          />
+        ),
+      })
+    );
   };
 
   const opponenetIndexRef = useRef(state.currentOpponentIndex);
@@ -120,12 +138,13 @@ export const SeasonPage = () => {
       state && state.currentBlock
         ? state.currentBlock[state.currentOpponentIndex]
         : null,
-    currentPhase: gamePhases[state.currentPhaseIndex],
+    currentPhase: gamePhases(+student.level)[state.currentPhaseIndex],
     currentScore: seasonState.completedGames[state.currentOpponentIndex]
       ? seasonState.completedGames[state.currentOpponentIndex].score
       : [0, 0],
-    message:
-      gamePhases[state.currentPhaseIndex].messages[state.currentMessageIndex],
+    message: gamePhases(+student.level)[state.currentPhaseIndex].messages[
+      state.currentMessageIndex
+    ],
   };
 
   if (
@@ -133,7 +152,7 @@ export const SeasonPage = () => {
     gameBlockState.currentPhase &&
     gameBlockState.currentPhase.phase === GamePhases.UP_NEXT
   ) {
-    gameBlockState.currentPhase.messages[1] = `Jr. Sharks vs ${gameBlockState.currentOpponent.name}`;
+    gameBlockState.currentPhase.messages[1] = `${seasonState.seasonTeam.name} vs ${gameBlockState.currentOpponent.name}`;
   }
 
   const endSeason = () => {
@@ -147,14 +166,14 @@ export const SeasonPage = () => {
       firstCup: studentTeamIndex === 0,
     };
 
-    (clonedStudent.awards || []).splice(clonedStudent.level - 1, 1, awards);
+    (clonedStudent.awards || []).splice(+clonedStudent.level - 1, 1, awards);
 
-    if (clonedStudent.seasons[(student.level || 1) - 1]) {
-      clonedStudent.seasons[(student.level || 1) - 1].push(
+    if (clonedStudent.seasons[(+student.level || 1) - 1]) {
+      clonedStudent.seasons[(+student.level || 1) - 1].push(
         seasonState.completedGames
       );
     } else {
-      clonedStudent.easons[(student.level || 1) - 1] = [
+      clonedStudent.seasons[(+student.level || 1) - 1] = [
         seasonState.completedGames,
       ];
     }
@@ -167,16 +186,16 @@ export const SeasonPage = () => {
     })
       .then((res) => {
         batch(() => {
-          dispatch(setSeasonComplete(clonedStudent));
+          dispatch(setSeasonComplete(res.updatedStudent));
           dispatch(
             toggleOverlay({
               isOpen: true,
               template: (
                 <SeasonCompleteOverlay
                   standings={seasonState.standings}
-                  level={student.level || 1}
+                  level={+res.updatedStudent.level}
                   team={seasonState.seasonTeam}
-                  student={student}
+                  student={res.updatedStudent}
                 />
               ),
               canClose: false,
@@ -198,7 +217,7 @@ export const SeasonPage = () => {
 
     // get the next scenario
     const currentScenario =
-      scenarios[student.level || 1][seasonState.currentBlockIndex];
+      scenarios[+student.level || 1][seasonState.currentBlockIndex];
     if (!currentScenario) {
       return;
     }
@@ -278,7 +297,9 @@ export const SeasonPage = () => {
       const results = getGameResult(teamRank, gameBlockState.currentOpponent);
       clonedState.currentMessageIndex = results.messageIndex;
       // clonedState.results.push(results);
-      dispatch(gameEnded(results, gameBlockState.currentOpponent));
+      dispatch(
+        gameEnded(results, gameBlockState.currentOpponent, +student.level)
+      );
     }
 
     setState(clonedState);
@@ -334,31 +355,30 @@ export const SeasonPage = () => {
   );
 
   if (seasonState.inTransition && !seasonState.inSession) {
-    dispatch(
-      toggleOverlay({
-        isOpen: true,
-        template: (
-          <NextSeasonOverlay student={student} awards={seasonState.awards} />
-        ),
-        canClose: false,
-      })
-    );
+    window.setTimeout(() => {
+      dispatch(
+        toggleOverlay({
+          isOpen: true,
+          template: (
+            <NextSeasonOverlay
+              student={student}
+              awards={seasonState.awards}
+              next={(levelChange) => {
+                history.push({ pathname: '/home', state: { levelChange } });
+              }}
+            />
+          ),
+          canClose: false,
+        })
+      );
+    });
   }
-
-  // dispatch(
-  //   toggleOverlay({
-  //     isOpen: true,
-  //     template: (
-  //       <NewLevelOverlay/>
-  //     )
-  //   })
-  // )
 
   return (
     <div className='page-container'>
       <HeaderComponent
         stickBtn={seasonStick}
-        level={student.level}
+        level={+student.level}
         tutorialActive={tutorialActive}
       />
 
@@ -388,7 +408,7 @@ export const SeasonPage = () => {
               <LevelStick
                 type='teamRank'
                 amount={teamRank}
-                denom={100}
+                denom={getMaxTeamRank(+student.level)}
                 color='#e06d00'
                 indicatorDirection='right'
                 isLarge={true}
@@ -416,7 +436,7 @@ export const SeasonPage = () => {
                     ? gameBlockState.currentOpponent.teamRank
                     : 0
                 }
-                denom={100}
+                denom={getMaxTeamRank(+student.level)}
                 color={
                   gameBlockState.currentOpponent
                     ? gameBlockState.currentOpponent.color

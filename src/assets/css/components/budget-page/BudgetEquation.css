@@ -6,12 +6,15 @@ div.budget-equation-wrap {
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
   position: relative;
   padding: 0.25rem 0;
+  width: 500px;
+  margin: 0 auto;
 }
 
 h4.budget-equation-title {
   text-align: center;
   font-size: 1.75rem;
   font-weight: bold;
+  white-space: nowrap;
 }
 
 div.equation-wrap {
