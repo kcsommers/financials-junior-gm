@@ -181,6 +181,7 @@ export const TeamPage = () => {
                 image={scoutStick}
                 animationState={playerCardAnimationStates.scoutStick}
                 link='/scout'
+                isDisabled={scoutingState.isComplete}
               />
             </div>
           </div>

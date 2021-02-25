@@ -22,7 +22,7 @@ export const getOpenAssignment = (position, student) => {
       );
     }
     case PlayerPositions.GOALIE: {
-      return student[PlayerAssignments.G_ONE];
+      return PlayerAssignments.G_ONE;
     }
     case PlayerPositions.BENCH: {
       return [
