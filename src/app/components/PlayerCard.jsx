@@ -10,7 +10,7 @@ const styles = {
   small: {
     wrap: {
       width: '90px',
-      height: '127.4px',
+      height: '135px',
     },
     header: {
       height: '22px',
@@ -103,6 +103,8 @@ const styles = {
   },
 };
 
+
+
 export const PlayerCard = ({
   player,
   animationStates,
@@ -143,12 +145,15 @@ export const PlayerCard = ({
             )}
           </div>
         </div>
-        <div className={player.sharkPlayer == "TRUE" ? 'box-shadow player-card-body player-card-color-shark' : 'box-shadow player-card-body player-card-color-reg' }>
+        <div className={player.sharkPlayer == "TRUE" ? 'box-shadow player-card-body player-card-color-shark' : 'box-shadow player-card-body player-card-color-reg'} style={{display: 'flex', flexDirection: 'column'}}>
+          <span  style={{fontSize: '0.5rem', marginLeft: 'auto', marginRight: 'auto', paddingBottom: '1px', marginTop: '-1px', color: '#000000'}}>{player.playerName.split(' ')[1]}</span>
           <div
             className='player-card-img-wrap'
             style={{
               ...styles[size].image,
               backgroundImage: `url(${player.playerPicture || playerImage})`,
+              marginLeft: 'auto',
+              marginRight: 'auto'
             }}
           ></div>
           {player.playerPosition == 'goalie' ? 
@@ -240,6 +245,7 @@ export const PlayerCard = ({
             style={{
               ...styles[size].image,
               backgroundImage: `url(${player.playerPicture || playerImage})`,
+              marginLeft: 'auto', marginRight: 'auto'
             }}
           ></div>
           {player.playerPosition == 'goalie' ? 
