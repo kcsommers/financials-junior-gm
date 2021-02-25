@@ -27,16 +27,18 @@ import { updateStudentById } from '../api-helper';
 import { cloneDeep } from 'lodash';
 import { Objectives } from '@data/objectives/objectives';
 import { getDollarString } from '@utils';
-import '@css/pages/BudgetPage.css';
 import { faqs } from '@data/faqs/faqs';
+import '@css/pages/BudgetPage.css';
 
 let debounceTimeout = 0;
 
-export const BudgetPage = () => {
+export const BudgetPage = ({ history }) => {
   const dispatch = useDispatch();
   const student = useSelector((state) => state.studentState.student);
   const { moneySpent } = useSelector((state) => state.players);
-  const { inTransition, awards } = useSelector((state) => state.season);
+  const { inTransition, awards, inSession } = useSelector(
+    (state) => state.season
+  );
 
   const tutorialActive = useSelector((state) => state.tutorial.isActive);
 
@@ -130,14 +132,24 @@ export const BudgetPage = () => {
     student.tutorials.budget
   );
 
-  if (inTransition) {
-    dispatch(
-      toggleOverlay({
-        isOpen: true,
-        template: <NextSeasonOverlay student={student} awards={awards} />,
-        canClose: false,
-      })
-    );
+  if (inTransition && !inSession) {
+    window.setTimeout(() => {
+      dispatch(
+        toggleOverlay({
+          isOpen: true,
+          template: (
+            <NextSeasonOverlay
+              student={student}
+              awards={awards}
+              next={(levelChange) => {
+                history.push({ pathname: '/home', state: { levelChange } });
+              }}
+            />
+          ),
+          canClose: false,
+        })
+      );
+    });
   }
 
   return (

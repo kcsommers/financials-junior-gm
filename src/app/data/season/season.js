@@ -22,6 +22,9 @@ import pinkpandasLg from '@images/icons/team-logos/pinkpandasLg.svg';
 import pinkpandasSm from '@images/icons/team-logos/pinkpandasSm.svg';
 import blackbeaversLg from '@images/icons/team-logos/blackbeaversLg.svg';
 import blackbeaversSm from '@images/icons/team-logos/blackbeaversSm.svg';
+import jrSharksLogo from '@images/icons/jr-sharks-logo-white-bg.svg';
+import sjbarracudalogo from '@images/icons/sjbarracuda-logo.svg';
+import sjsharkslogo from '@images/icons/sharks-logo.svg';
 import { INJURE_PLAYER } from '@redux/actions';
 import { PlayerAssignments, TeamAssignments } from '@data/players/players';
 import { cloneDeep } from 'lodash';
@@ -130,6 +133,50 @@ export const scenarios = {
       gameButtonAction: (team, history) => history.push('/team'),
     },
   ],
+  2: [
+    {
+      message: 'OH NO! One of your players was injured',
+      objective: 'Replace the injured player',
+      action: INJURE_PLAYER,
+      getPlayer: getSecondHighestPlayer,
+      playerAssignment: PlayerAssignments.INJURED,
+      player: null,
+      gameButtonLabel: 'Click the puck to sign a new player!',
+      gameButtonAction: (team, history) => history.push('/team'),
+    },
+    {
+      message: 'OH NO! One of your players was injured',
+      objective: 'Replace the injured player',
+      action: INJURE_PLAYER,
+      getPlayer: getStartingPlayer,
+      playerAssignment: PlayerAssignments.INJURED,
+      player: null,
+      gameButtonLabel: 'Click the puck to sign a new player!',
+      gameButtonAction: (team, history) => history.push('/team'),
+    },
+  ],
+  3: [
+    {
+      message: 'OH NO! One of your players was injured',
+      objective: 'Replace the injured player',
+      action: INJURE_PLAYER,
+      getPlayer: getSecondHighestPlayer,
+      playerAssignment: PlayerAssignments.INJURED,
+      player: null,
+      gameButtonLabel: 'Click the puck to sign a new player!',
+      gameButtonAction: (team, history) => history.push('/team'),
+    },
+    {
+      message: 'OH NO! One of your players was injured',
+      objective: 'Replace the injured player',
+      action: INJURE_PLAYER,
+      getPlayer: getStartingPlayer,
+      playerAssignment: PlayerAssignments.INJURED,
+      player: null,
+      gameButtonLabel: 'Click the puck to sign a new player!',
+      gameButtonAction: (team, history) => history.push('/team'),
+    },
+  ],
 };
 
 export const GamePhases = {
@@ -141,7 +188,7 @@ export const GamePhases = {
   TRANSITION: 'TRANSITION',
 };
 
-export const gamePhases = [
+export const gamePhases = (level) => [
   {
     phase: GamePhases.READY,
     messages: ['Your team is ready to play'],
@@ -165,14 +212,16 @@ export const gamePhases = [
     phase: GamePhases.GAME_OVER,
     timer: 5000,
     messages: [
-      'GET LOUD! The Jr. Sharks Won!',
-      'CLOSE! The Jr. Sharks won in overtime!',
-      'OH NO! The Jr. Sharks lost :(',
+      `GET LOUD! The ${studentTeams[level - 1].name} Won!`,
+      `CLOSE! The ${studentTeams[level - 1].name} won in overtime!`,
+      `OH NO! The ${studentTeams[level - 1].name} lost :(`,
     ],
   },
   {
     phase: GamePhases.TRANSITION,
     messages: [
+      'The next game starts in 5',
+      'The next game starts in 4',
       'The next game starts in 3',
       'The next game starts in 2',
       'The next game starts in 1',
@@ -181,8 +230,18 @@ export const gamePhases = [
   },
 ];
 
-export const getRandomTeamRank = () => {
-  return Math.max(Math.floor(Math.random() * 90), 50);
+export const getRandomTeamRank = (level) => {
+  if (level === 1) {
+    return Math.floor(Math.random() * (90 - 50) + 50);
+  }
+
+  if (level === 2) {
+    return Math.floor(Math.random() * (315 - 175) + 175);
+  }
+
+  if (level === 3) {
+    return Math.floor(Math.random() * (450 - 255) + 255);
+  }
 };
 
 export const getRandomStat = (mult) => {
@@ -216,9 +275,34 @@ export const getStanding = (team, standings) => {
 export const getAllOpponents = (level) => {
   const clonedTeams = cloneDeep(allOpponents);
   return clonedTeams.map((t) => {
-    t.teamRank = getRandomTeamRank();
+    t.teamRank = getRandomTeamRank(level);
     return t;
   });
+};
+
+export const studentTeams = [
+  {
+    name: 'Jr. Sharks',
+    nameFull: 'San Jose Jr. Sharks',
+    stats: { wins: 0, losses: 0, points: 0 },
+    logo: jrSharksLogo,
+  },
+  {
+    name: 'Barricuda',
+    nameFull: 'San Jose Barricuda',
+    stats: { wins: 0, losses: 0, points: 0 },
+    logo: sjbarracudalogo,
+  },
+  {
+    name: 'Sharks',
+    nameFull: 'San Jose Sharks',
+    stats: { wins: 0, losses: 0, points: 0 },
+    logo: sjsharkslogo,
+  },
+];
+
+export const getStudentTeam = (level) => {
+  return studentTeams[level - 1];
 };
 
 export const allOpponents = [

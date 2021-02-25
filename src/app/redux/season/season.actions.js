@@ -10,6 +10,8 @@ export const SET_CURRENT_OPPONENT_INDEX = 'SET_CURRENT_OPPONENT_INDEX';
 
 export const INITIALIZE_SEASON = 'INITIALIZE_SEASON';
 
+export const SET_IN_TRANSITION = 'SET_IN_TRANSITION';
+
 export const gameBlockEnded = () => ({
   type: GAME_BLOCK_ENDED,
   payload: null,
@@ -20,9 +22,9 @@ export const setSeasonComplete = (student) => ({
   payload: student,
 });
 
-export const gameEnded = (gameResult, opponent) => ({
+export const gameEnded = (gameResult, opponent, level) => ({
   type: GAME_ENDED,
-  payload: { gameResult, opponent },
+  payload: { gameResult, opponent, level },
 });
 
 export const throwScenario = (scenario) => ({
@@ -38,4 +40,9 @@ export const setCurrentOpponentIndex = (index) => ({
 export const initializeSeason = (student) => ({
   type: INITIALIZE_SEASON,
   payload: student,
+});
+
+export const setInTransition = (inTransition) => ({
+  type: SET_IN_TRANSITION,
+  payload: inTransition,
 });

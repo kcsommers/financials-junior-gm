@@ -4,11 +4,6 @@ div.budget-page-board-inner {
   position: relative;
 }
 
-div.budget-equation-container {
-  width: 55%;
-  margin: 0 auto;
-}
-
 p.helper-text {
   width: 40%;
   margin: 1rem auto;

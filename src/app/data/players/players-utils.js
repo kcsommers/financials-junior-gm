@@ -206,12 +206,12 @@ export const handleSignPlayer = (
         ) === 0
       ) {
         const studentSeasons = clonedStudent.seasons;
-        if (studentSeasons[(student.level || 1) - 1]) {
-          studentSeasons[(student.level || 1) - 1].push(
+        if (studentSeasons[(+student.level || 1) - 1]) {
+          studentSeasons[(+student.level || 1) - 1].push(
             seasonState.completedGames
           );
         } else {
-          studentSeasons[(student.level || 1) - 1] = [
+          studentSeasons[(+student.level || 1) - 1] = [
             seasonState.completedGames,
           ];
         }
@@ -287,6 +287,20 @@ export const handleTradePlayers = (
   });
 };
 
+export const getMaxTeamRank = (level) => {
+  if (level === 1) {
+    return 100;
+  }
+
+  if (level === 2) {
+    return 350;
+  }
+
+  if (level === 3) {
+    return 510;
+  }
+};
+
 export const getMoneySpent = (players, totalBudget) => {
   if (!players) {
     return 0;
@@ -306,7 +320,7 @@ export const getMoneySpent = (players, totalBudget) => {
   );
 };
 
-export const getTeamRank = (players) => {
+export const getTeamRank = (players, level) => {
   if (!players) {
     return 0;
   }
@@ -318,6 +332,6 @@ export const getTeamRank = (players) => {
       }
       return total;
     }, 0),
-    100
+    getMaxTeamRank(level)
   );
 };

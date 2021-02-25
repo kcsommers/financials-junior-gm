@@ -45,12 +45,13 @@ const boardMap = {
   levelThree: {},
 };
 
-export const ScoutPage = () => {
+export const ScoutPage = ({ history }) => {
   const dispatch = useDispatch();
-  const history = useHistory();
   const tutorialActive = useSelector((state) => state.tutorial.isActive);
   const student = useSelector((state) => state.studentState.student);
-  const { inTransition, awards } = useSelector((state) => state.season);
+  const { inTransition, awards, inSession } = useSelector(
+    (state) => state.season
+  );
   const { scoutingState } = useSelector((state) => state.players);
   const { scoutPlayers } = scoutingState;
   const availablePlayersAnimationState = useSelector(
@@ -431,7 +432,7 @@ export const ScoutPage = () => {
             scoutPlayers.levelOne,
             scoutPlayers.levelTwo,
             scoutPlayers.levelThree,
-            getMoneyLevels(student.level || 1),
+            getMoneyLevels(+student.level || 1),
             moneyLevelAnimationStates
           )
         );
@@ -525,12 +526,20 @@ export const ScoutPage = () => {
     student.tutorials.scout
   );
 
-  if (inTransition) {
-    setTimeout(() => {
+  if (inTransition && !inSession) {
+    window.setTimeout(() => {
       dispatch(
         toggleOverlay({
           isOpen: true,
-          template: <NextSeasonOverlay student={student} awards={awards} />,
+          template: (
+            <NextSeasonOverlay
+              student={student}
+              awards={awards}
+              next={(levelChange) => {
+                history.push({ pathname: '/home', state: { levelChange } });
+              }}
+            />
+          ),
           canClose: false,
         })
       );
@@ -562,7 +571,7 @@ export const ScoutPage = () => {
       <HeaderComponent
         stickBtn={scoutStick}
         largeStick={true}
-        level={student.level}
+        level={+student.level}
         tutorialActive={tutorialActive}
       />
       <PageBoard hideCloseBtn={true} includeBackButton={true}>

@@ -24,7 +24,7 @@ export const Navigation = ({ tutorialActive, student }) => {
   const history = useHistory();
 
   const resetSeasonConfirmed = () => {
-    resetSeason(student.level, student)
+    resetSeason(+student.level, student)
       .then((updatedStudent) => {
         batch(() => {
           dispatch(setStudent(updatedStudent));
