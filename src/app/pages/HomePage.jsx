@@ -131,7 +131,7 @@ export const HomePage = () => {
 
   return (
     <div className='home-page-container'>
-      <Navigation tutorialActive={tutorialActive} />
+      <Navigation tutorialActive={tutorialActive} student={student} />
       <div className='home-cards-row'>
         {tutorialActive ? (
           <motion.div
