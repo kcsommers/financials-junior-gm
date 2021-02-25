@@ -535,6 +535,26 @@ export const ScoutPage = () => {
         })
       );
     });
+  } else if (scoutingState.isComplete) {
+    window.setTimeout(() => {
+      dispatch(
+        toggleOverlay({
+          isOpen: true,
+          template: <ScoutingCompleteOverlay />,
+          canClose: false,
+        })
+      );
+      window.setTimeout(() => {
+        history.push('/team');
+        dispatch(
+          toggleOverlay({
+            isOpen: false,
+            template: null,
+            canClose: true,
+          })
+        );
+      }, 5000);
+    });
   }
 
   return (
