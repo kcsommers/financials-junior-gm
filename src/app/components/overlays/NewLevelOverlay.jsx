@@ -1,20 +1,7 @@
-import { useDispatch, batch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
-import {
-  setStudent,
-  initializeSeason,
-  setInitialPlayersState,
-} from '@redux/actions';
-import { OverlayBoard, Button } from '@components';
-import { resetSeason } from '@data/season/season';
-import sjbarracudalogo from '../../../assets/images/icons/sjbarracuda-logo.svg'
-import sjsharkslogo from '../../../assets/images/icons/sharks-logo.svg'
+import { OverlayBoard } from '@components';
 import { ReactSVG } from 'react-svg';
 
-export const NewLevelOverlay = ({ student }) => {
-  const dispatch = useDispatch();
-  const history = useHistory();
-
+export const NewLevelOverlay = ({ team }) => {
   return (
     <OverlayBoard>
       <div
@@ -74,11 +61,12 @@ export const NewLevelOverlay = ({ student }) => {
             lineHeight: '3.5rem',
           }}
         >
-            {/*Should say San Jose Sharks if they are promoted to level 3 */}
-          San Jose Barracuda!
+          {team.nameFull}
         </p>
-        {/*Should render sjsharks logo for level 3*/}
-        <ReactSVG src={sjbarracudalogo} style={{marginLeft: 'auto', marginRight: 'auto', marginTop: '20px'}}/>
+        <ReactSVG
+          src={team.logo}
+          style={{ marginLeft: 'auto', marginRight: 'auto', marginTop: '20px' }}
+        />
         <p
           style={{
             textAlign: 'center',

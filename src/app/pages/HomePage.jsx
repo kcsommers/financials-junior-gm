@@ -1,12 +1,13 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch, batch } from 'react-redux';
 import {
   ObjectivesBoard,
   StickButton,
   Navigation,
   LevelStick,
   NextSeasonOverlay,
+  NewLevelOverlay,
   Overlay,
 } from '@components';
 import {
@@ -26,10 +27,19 @@ import teamStick from '@images/team-stick.svg';
 import budgetStick from '@images/budget-stick.svg';
 import seasonStick from '@images/season-stick.svg';
 import trophiesStick from '@images/trophies-stick.svg';
-import { setTutorialState, updateStudent, toggleOverlay } from '@redux/actions';
+import {
+  setTutorialState,
+  updateStudent,
+  toggleOverlay,
+  setStudent,
+  setInitialPlayersState,
+  initializeSeason,
+} from '@redux/actions';
 import { updateStudentById } from './../api-helper';
 import { cloneDeep } from 'lodash';
 import '@css/pages/HomePage.css';
+import { getMaxTeamRank } from '@data/players/players-utils';
+import { getStudentTeam } from '@data/season/season';
 
 const homeSlides = [
   introSlides,
@@ -42,7 +52,7 @@ const homeSlides = [
   seasonStickSlides,
 ];
 
-export const HomePage = () => {
+export const HomePage = ({ location, history }) => {
   const tutorialActive = useSelector((state) => state.tutorial.isActive);
 
   const student = useSelector((state) => state.studentState.student);
@@ -91,7 +101,7 @@ export const HomePage = () => {
 
   const objectivesBoard = (
     <ObjectivesBoard
-      level={student ? student.level : 1}
+      level={student ? +student.level : 1}
       visibleObjectives={3}
       filterComplete={false}
     />
@@ -119,19 +129,61 @@ export const HomePage = () => {
     student.tutorials.home
   );
 
+  const nextSeason = useCallback(
+    (levelChange) => {
+      const { updatedStudent, isPromoted } = levelChange;
+      batch(() => {
+        dispatch(setStudent(updatedStudent));
+        dispatch(
+          setInitialPlayersState(updatedStudent.players, updatedStudent)
+        );
+        dispatch(initializeSeason(updatedStudent));
+        window.setTimeout(() => {
+          dispatch(
+            toggleOverlay({
+              isOpen: isPromoted,
+              template: isPromoted ? (
+                <NewLevelOverlay team={getStudentTeam(+updatedStudent.level)} />
+              ) : null,
+            })
+          );
+        });
+      });
+    },
+    [dispatch]
+  );
+
+  useEffect(() => {
+    if (location.state && location.state.levelChange) {
+      nextSeason(location.state.levelChange);
+
+      const stateCopy = cloneDeep(location.state);
+      delete stateCopy.levelChange;
+      history.replace({ state: stateCopy });
+    }
+  }, [nextSeason, history, location.state]);
+
   if (inTransition && !inSession) {
-    dispatch(
-      toggleOverlay({
-        isOpen: true,
-        template: <NextSeasonOverlay student={student} awards={awards} />,
-        canClose: false,
-      })
-    );
+    window.setTimeout(() => {
+      dispatch(
+        toggleOverlay({
+          isOpen: true,
+          template: (
+            <NextSeasonOverlay
+              student={student}
+              awards={awards}
+              next={nextSeason}
+            />
+          ),
+          canClose: false,
+        })
+      );
+    });
   }
 
   return (
     <div className='home-page-container'>
-      <Navigation tutorialActive={tutorialActive} />
+      <Navigation tutorialActive={tutorialActive} student={student} />
       <div className='home-cards-row'>
         {tutorialActive ? (
           <motion.div
@@ -142,7 +194,7 @@ export const HomePage = () => {
             <LevelStick
               type='teamRank'
               amount={teamRank}
-              denom={100}
+              denom={getMaxTeamRank(+student.level)}
               color='#e06d00'
               indicatorDirection='right'
               textJsx={
@@ -158,7 +210,7 @@ export const HomePage = () => {
             <LevelStick
               type='teamRank'
               amount={teamRank}
-              denom={100}
+              denom={getMaxTeamRank(+student.level)}
               color='#e06d00'
               indicatorDirection='right'
               textJsx={

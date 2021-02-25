@@ -1,45 +1,25 @@
-import { useDispatch, batch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
-import {
-  setStudent,
-  initializeSeason,
-  setInitialPlayersState,
-} from '@redux/actions';
 import { OverlayBoard, Button } from '@components';
 import { resetSeason } from '@data/season/season';
+import { useDispatch } from 'react-redux';
+import { setInTransition } from '@redux/season/season.actions';
 
-export const NextSeasonOverlay = ({ student }) => {
+export const NextSeasonOverlay = ({ student, next }) => {
   const dispatch = useDispatch();
-  const history = useHistory();
 
   const repeatSeason = () => {
-    resetSeason(student.level, student)
+    dispatch(setInTransition(false));
+    resetSeason(+student.level, student)
       .then((updatedStudent) => {
-        batch(() => {
-          dispatch(setStudent(updatedStudent));
-          dispatch(
-            setInitialPlayersState(updatedStudent.players, updatedStudent)
-          );
-          dispatch(initializeSeason(updatedStudent));
-        });
-
-        history.push('/home');
+        next({ updatedStudent, isPromoted: false });
       })
       .catch((err) => console.error(err));
   };
 
   const nextSeason = () => {
-    resetSeason(student.level + 1, student)
+    dispatch(setInTransition(false));
+    resetSeason(+student.level + 1, student)
       .then((updatedStudent) => {
-        batch(() => {
-          dispatch(setStudent(updatedStudent));
-          dispatch(
-            setInitialPlayersState(updatedStudent.players, updatedStudent)
-          );
-          dispatch(initializeSeason(updatedStudent));
-        });
-
-        history.push('/home');
+        next({ updatedStudent, isPromoted: true });
       })
       .catch((err) => console.error(err));
   };
@@ -83,7 +63,7 @@ export const NextSeasonOverlay = ({ student }) => {
           <Button text='Repeat Season' onClick={repeatSeason} />
           <Button
             text='Start Next Season'
-            isDisabled={true}
+            isDisabled={+student.level === 3}
             onClick={nextSeason}
           />
         </div>

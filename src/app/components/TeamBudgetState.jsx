@@ -1,6 +1,7 @@
 import React from 'react';
 import { LevelStick, LoadingSpinner } from '@components';
 import { useSelector } from 'react-redux';
+import { getMaxTeamRank } from '@data/players/players-utils';
 
 export const TeamBudgetState = ({ title, isLarge, changes }) => {
   const student = useSelector((state) => state.studentState.student);
@@ -40,7 +41,7 @@ export const TeamBudgetState = ({ title, isLarge, changes }) => {
             <LevelStick
               type='teamRank'
               amount={teamRank}
-              denom={100}
+              denom={getMaxTeamRank(+student.level)}
               color='#e06d00'
               indicatorDirection='right'
               isLarge={isLarge}
