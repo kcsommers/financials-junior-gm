@@ -1,4 +1,4 @@
-import { useDispatch, useSelector, batch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { ReactSVG } from 'react-svg';
 import jrSharksLogo from '@images/icons/jr-sharks-logo.svg';
 import {
@@ -10,13 +10,7 @@ import {
 } from '@components';
 import trophiesStick from '@images/trophies-stick.svg';
 import { awardsByLevel } from '@data/season/awards';
-import {
-  toggleOverlay,
-  setStudent,
-  setInitialPlayersState,
-  initializeSeason,
-} from '@redux/actions';
-import { useHistory } from 'react-router-dom';
+import { toggleOverlay } from '@redux/actions';
 import { resetSeason } from '@data/season/season';
 
 const styles = {
@@ -48,41 +42,30 @@ const styles = {
   },
 };
 
-export const TrophiesPage = () => {
-  const history = useHistory();
+export const TrophiesPage = ({ history }) => {
   const dispatch = useDispatch();
   const student = useSelector((state) => state.studentState.student);
   const tutorialActive = useSelector((state) => state.tutorial.isActive);
   const { inTransition, awards } = useSelector((state) => state.season);
 
   const repeatSeason = () => {
-    resetSeason(student.level, student)
+    resetSeason(+student.level, student)
       .then((updatedStudent) => {
-        batch(() => {
-          dispatch(setStudent(updatedStudent));
-          dispatch(
-            setInitialPlayersState(updatedStudent.players, updatedStudent)
-          );
-          dispatch(initializeSeason(updatedStudent));
+        history.push({
+          pathname: '/home',
+          state: { levelChange: { updatedStudent, isPromoted: false } },
         });
-
-        history.push('/home');
       })
       .catch((err) => console.error(err));
   };
 
   const nextSeason = () => {
-    resetSeason(student.level + 1, student)
+    resetSeason(+student.level + 1, student)
       .then((updatedStudent) => {
-        batch(() => {
-          dispatch(setStudent(updatedStudent));
-          dispatch(
-            setInitialPlayersState(updatedStudent.players, updatedStudent)
-          );
-          dispatch(initializeSeason(updatedStudent));
+        history.push({
+          pathname: '/home',
+          state: { levelChange: { updatedStudent, isPromoted: true } },
         });
-
-        history.push('/home');
       })
       .catch((err) => console.error(err));
   };
@@ -105,7 +88,7 @@ export const TrophiesPage = () => {
   [1, 2, 3].forEach((level) => {
     const levelAwards = awardsByLevel[level];
     const cupKeys = Object.keys(levelAwards);
-    const studentAwards = awards[level - 1] && awards[level - 1][0];
+    const studentAwards = awards[level - 1] && awards[level - 1];
 
     cupKeys.forEach((c) => {
       rows[level].push(
@@ -137,7 +120,7 @@ export const TrophiesPage = () => {
           flex: 1,
           borderBottom: '15px solid #4E3629',
           backgroundColor:
-            student && student.level >= 3 - i
+            student && +student.level >= 3 - i
               ? '#fff'
               : 'rgba(255, 255, 255, 0.25)',
         }}
@@ -163,7 +146,7 @@ export const TrophiesPage = () => {
     <div className='page-container'>
       <HeaderComponent
         stickBtn={trophiesStick}
-        level={student.level}
+        level={+student.level}
         inverse={true}
         tutorialActive={tutorialActive}
         inTransition={inTransition}
@@ -212,7 +195,13 @@ export const TrophiesPage = () => {
                 >
                   Repeat Season
                 </span>
-                <span className='box-shadow disabled' style={styles.button}>
+                <span
+                  className={`box-shadow${
+                    +student.level === 3 ? ' disabled' : ''
+                  }`}
+                  style={styles.button}
+                  onClick={nextSeason}
+                >
                   Start Next Season
                 </span>
               </div>

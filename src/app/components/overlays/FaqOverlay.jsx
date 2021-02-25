@@ -7,7 +7,6 @@ export const FaqOverlay = ({ questions, title, onStartTutorial }) => {
   const [questionStates, setQuestionStates] = useState({});
 
   useEffect(() => {
-    console.log('USE EFFECT:::: ');
     answerRefs.current = answerRefs.current.slice(0, questions.length);
   }, [questions]);
 
