@@ -146,7 +146,7 @@ export const PlayerCard = ({
           </div>
         </div>
         <div className={player.sharkPlayer == "TRUE" ? 'box-shadow player-card-body player-card-color-shark' : 'box-shadow player-card-body player-card-color-reg'} style={{display: 'flex', flexDirection: 'column'}}>
-          <span  style={{fontSize: '0.5rem', marginLeft: 'auto', marginRight: 'auto', paddingBottom: '1px', marginTop: '-1px', color: '#000000'}}>{player.playerName.split(' ')[1]}</span>
+          <span style={{fontSize: '0.5rem', marginLeft: 'auto', marginRight: 'auto', paddingBottom: '1px', marginTop: '-1px', color: '#000000'}}>{player.playerName.split(' ')[1]}</span>
           <div
             className='player-card-img-wrap'
             style={{

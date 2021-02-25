@@ -449,8 +449,18 @@ const slideConfigs = [
     ],
   },
   {
+    message: 'You can only scout players once every season!',
+    sharkie: 'speakInverse',
+    hasButtons: true,
+    timer: 0,
+    slideAnimate: {
+      y: '0%',
+      x: '0%',
+    },
+  },
+  {
     message: 'Since there are only a few spots in a level...',
-    sharkie: 'presentInverse',
+    sharkie: 'speakInverse',
     hasButtons: true,
     timer: 0,
     slideAnimate: {
@@ -460,7 +470,7 @@ const slideConfigs = [
   },
   {
     message: 'Choose your players wisely!',
-    sharkie: 'presentInverse',
+    sharkie: 'speakInverse',
     hasButtons: true,
     timer: 0,
     slideAnimate: {
