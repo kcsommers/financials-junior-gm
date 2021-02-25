@@ -10,7 +10,7 @@ const styles = {
   small: {
     wrap: {
       width: '90px',
-      height: '135px',
+      height: '130px',
     },
     header: {
       height: '22px',
@@ -103,8 +103,6 @@ const styles = {
   },
 };
 
-
-
 export const PlayerCard = ({
   player,
   animationStates,
@@ -153,35 +151,36 @@ export const PlayerCard = ({
               ...styles[size].image,
               backgroundImage: `url(${player.playerPicture || playerImage})`,
               marginLeft: 'auto',
-              marginRight: 'auto'
+              marginRight: 'auto',
             }}
           ></div>
-          {player.playerPosition == 'goalie' ? 
+          {player.playerPosition === 'goalie' ? (
             <div className='player-ranks'>
-            <PlayerRankPie
-              label='Saves'
-              sliceColor='#002f6c'
-              rank={+player.overallRank}
-            />
-          </div>
-          : 
-          <div className='player-ranks'>
-            <PlayerRankPie
-              label='Off'
-              sliceColor='#DC2D2D'
-              rank={+player.offensiveRank}
-            />
-            <PlayerRankPie
-              label='Pass'
-              sliceColor='#00788a'
-              rank={+player.passRank}
-            />
-            <PlayerRankPie
-              label='Def'
-              sliceColor='#002f6c'
-              rank={+player.defensiveRank}
-            />
-          </div>}
+              <PlayerRankPie
+                label='Saves'
+                sliceColor='#002f6c'
+                rank={+player.overallRank}
+              />
+            </div>
+          ) : (
+            <div className='player-ranks'>
+              <PlayerRankPie
+                label='Off'
+                sliceColor='#DC2D2D'
+                rank={+player.offensiveRank}
+              />
+              <PlayerRankPie
+                label='Pass'
+                sliceColor='#00788a'
+                rank={+player.passRank}
+              />
+              <PlayerRankPie
+                label='Def'
+                sliceColor='#002f6c'
+                rank={+player.defensiveRank}
+              />
+            </div>
+          )}
         </div>
       </div>
     </motion.div>
@@ -220,14 +219,20 @@ export const PlayerCard = ({
             {player.playerCost && (
               <span>{getDollarString(player.playerCost)}</span>
             )}
-            {player.sharkPlayer == "TRUE" && <span style={styles[size].logo}>
-              <ReactSVG src={sharksLogo} />
-            </span>}
+            {player.sharkPlayer === 'TRUE' && (
+              <span style={styles[size].logo}>
+                <ReactSVG src={sharksLogo} />
+              </span>
+            )}
           </div>
         </div>
         <motion.div
           animate={animationStates ? animationStates.playerCard : null}
-          className={player.sharkPlayer == "TRUE" ? 'box-shadow player-card-body player-card-color-shark' : 'box-shadow player-card-body player-card-color-reg' }
+          className={
+            player.sharkPlayer === 'TRUE'
+              ? 'box-shadow player-card-body player-card-color-shark'
+              : 'box-shadow player-card-body player-card-color-reg'
+          }
           transition={{
             default: {
               duration: 1,
@@ -245,45 +250,47 @@ export const PlayerCard = ({
             style={{
               ...styles[size].image,
               backgroundImage: `url(${player.playerPicture || playerImage})`,
-              marginLeft: 'auto', marginRight: 'auto'
+              marginLeft: 'auto',
+              marginRight: 'auto',
             }}
           ></div>
-          {player.playerPosition == 'goalie' ? 
-          <div
-          className='player-rank-graphs-container'
-          style={styles[size].graphsWrap}
-        >
-          <PlayerRankGraph
-            label='Saves'
-            rgb={[0, 47, 108]}
-            rank={+player.overallRank}
-            isSmall={size === 'medium'}
-          />
-        </div>
-          : 
-          <div
-            className='player-rank-graphs-container'
-            style={styles[size].graphsWrap}
-          >
-            <PlayerRankGraph
-              label='Offense'
-              rgb={[220, 45, 45]}
-              rank={+player.offensiveRank}
-              isSmall={size === 'medium'}
-            />
-            <PlayerRankGraph
-              label='Passing'
-              rank={+player.passRank}
-              rgb={[0, 120, 138]}
-              isSmall={size === 'medium'}
-            />
-            <PlayerRankGraph
-              label='Defense'
-              rank={+player.defensiveRank}
-              rgb={[0, 47, 108]}
-              isSmall={size === 'medium'}
-            />
-          </div>}
+          {player.playerPosition === 'goalie' ? (
+            <div
+              className='player-rank-graphs-container'
+              style={styles[size].graphsWrap}
+            >
+              <PlayerRankGraph
+                label='Saves'
+                rgb={[0, 47, 108]}
+                rank={+player.overallRank}
+                isSmall={size === 'medium'}
+              />
+            </div>
+          ) : (
+            <div
+              className='player-rank-graphs-container'
+              style={styles[size].graphsWrap}
+            >
+              <PlayerRankGraph
+                label='Offense'
+                rgb={[220, 45, 45]}
+                rank={+player.offensiveRank}
+                isSmall={size === 'medium'}
+              />
+              <PlayerRankGraph
+                label='Passing'
+                rank={+player.passRank}
+                rgb={[0, 120, 138]}
+                isSmall={size === 'medium'}
+              />
+              <PlayerRankGraph
+                label='Defense'
+                rank={+player.defensiveRank}
+                rgb={[0, 47, 108]}
+                isSmall={size === 'medium'}
+              />
+            </div>
+          )}
         </motion.div>
       </div>
     </div>

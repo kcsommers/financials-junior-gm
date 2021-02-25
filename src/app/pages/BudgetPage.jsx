@@ -6,6 +6,7 @@ import {
   PageBoard,
   NextSeasonOverlay,
   Overlay,
+  FaqOverlay,
 } from '@components';
 import budgetStick from '@images/budget-stick.svg';
 import { useSelector, useDispatch, batch } from 'react-redux';
@@ -26,15 +27,18 @@ import { updateStudentById } from '../api-helper';
 import { cloneDeep } from 'lodash';
 import { Objectives } from '@data/objectives/objectives';
 import { getDollarString } from '@utils';
+import { faqs } from '@data/faqs/faqs';
 import '@css/pages/BudgetPage.css';
 
 let debounceTimeout = 0;
 
-export const BudgetPage = () => {
+export const BudgetPage = ({ history }) => {
   const dispatch = useDispatch();
   const student = useSelector((state) => state.studentState.student);
   const { moneySpent } = useSelector((state) => state.players);
-  const { inTransition, awards } = useSelector((state) => state.season);
+  const { inTransition, awards, inSession } = useSelector(
+    (state) => state.season
+  );
 
   const tutorialActive = useSelector((state) => state.tutorial.isActive);
 
@@ -60,7 +64,26 @@ export const BudgetPage = () => {
   );
 
   const onCallSharkie = () => {
-    startTutorial([getConfirmSlides('budget'), budgetSlides]);
+    dispatch(
+      toggleOverlay({
+        isOpen: true,
+        template: (
+          <FaqOverlay
+            questions={faqs.budget}
+            title='Budget Page FAQs'
+            onStartTutorial={() => {
+              dispatch(
+                toggleOverlay({
+                  isOpen: false,
+                  template: null,
+                })
+              );
+              startTutorial([getConfirmSlides('budget'), budgetSlides]);
+            }}
+          />
+        ),
+      })
+    );
   };
 
   const budgetEquationStates = {
@@ -109,14 +132,24 @@ export const BudgetPage = () => {
     student.tutorials.budget
   );
 
-  if (inTransition) {
-    dispatch(
-      toggleOverlay({
-        isOpen: true,
-        template: <NextSeasonOverlay student={student} awards={awards} />,
-        canClose: false,
-      })
-    );
+  if (inTransition && !inSession) {
+    window.setTimeout(() => {
+      dispatch(
+        toggleOverlay({
+          isOpen: true,
+          template: (
+            <NextSeasonOverlay
+              student={student}
+              awards={awards}
+              next={(levelChange) => {
+                history.push({ pathname: '/home', state: { levelChange } });
+              }}
+            />
+          ),
+          canClose: false,
+        })
+      );
+    });
   }
 
   return (

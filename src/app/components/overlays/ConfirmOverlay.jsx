@@ -19,7 +19,7 @@ export const ConfirmOverlay = ({ children, message, cancel, confirm }) => {
           padding: '2rem 0',
         }}
       >
-        <div className='confirm-overlay-top'>{children}</div>
+        {children && <div className='confirm-overlay-top'>{children}</div>}
         <div className='confirm-overlay-bottom'>
           <p className='confirm-message'>{message}</p>
           <div
