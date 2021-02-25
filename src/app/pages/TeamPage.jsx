@@ -29,7 +29,7 @@ import { cloneDeep } from 'lodash';
 import '@css/pages/TeamPage.css';
 import { faqs } from '@data/faqs/faqs';
 
-export const TeamPage = () => {
+export const TeamPage = ({ history }) => {
   const dispatch = useDispatch();
   const tutorialActive = useSelector((state) => state.tutorial.isActive);
   const student = useSelector((state) => state.studentState.student);
@@ -69,7 +69,14 @@ export const TeamPage = () => {
         template: (
           <FaqOverlay
             questions={faqs.team}
+            title='Team Page FAQs'
             onStartTutorial={() => {
+              dispatch(
+                toggleOverlay({
+                  isOpen: false,
+                  template: null,
+                })
+              );
               startTutorial([getConfirmSlides('team'), teamSlides]);
             }}
           />
@@ -130,23 +137,31 @@ export const TeamPage = () => {
     student.tutorials.team
   );
 
-  if (seasonState.inTransition) {
-    dispatch(
-      toggleOverlay({
-        isOpen: true,
-        template: (
-          <NextSeasonOverlay student={student} awards={seasonState.awards} />
-        ),
-        canClose: false,
-      })
-    );
+  if (seasonState.inTransition && !seasonState.inSession) {
+    window.setTimeout(() => {
+      dispatch(
+        toggleOverlay({
+          isOpen: true,
+          template: (
+            <NextSeasonOverlay
+              student={student}
+              awards={seasonState.awards}
+              next={(levelChange) => {
+                history.push({ pathname: '/home', state: { levelChange } });
+              }}
+            />
+          ),
+          canClose: false,
+        })
+      );
+    });
   }
 
   return (
     <div className='page-container'>
       <HeaderComponent
         stickBtn={teamStick}
-        level={student.level}
+        level={+student.level}
         tutorialActive={tutorialActive}
       />
 
@@ -174,6 +189,7 @@ export const TeamPage = () => {
                 image={scoutStick}
                 animationState={playerCardAnimationStates.scoutStick}
                 link='/scout'
+                isDisabled={scoutingState.isComplete}
               />
             </div>
           </div>

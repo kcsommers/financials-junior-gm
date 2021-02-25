@@ -9,6 +9,7 @@ import {
   Overlay,
   PlayerDetailsOverlay,
   BadScoutOverlay,
+  FaqOverlay,
   NextSeasonOverlay,
 } from '@components';
 import scoutStick from '@images/scout-stick.svg';
@@ -33,6 +34,7 @@ import { isEqual } from 'lodash';
 import { getMoneyLevels } from '@utils';
 import { cloneDeep } from 'lodash';
 import { PlayerAssignments } from '@data/players/players';
+import { faqs } from '@data/faqs/faqs';
 import { updateStudentById } from './../api-helper';
 import '@css/pages/ScoutPage.css';
 
@@ -43,12 +45,13 @@ const boardMap = {
   levelThree: {},
 };
 
-export const ScoutPage = () => {
+export const ScoutPage = ({ history }) => {
   const dispatch = useDispatch();
-  const history = useHistory();
   const tutorialActive = useSelector((state) => state.tutorial.isActive);
   const student = useSelector((state) => state.studentState.student);
-  const { inTransition, awards } = useSelector((state) => state.season);
+  const { inTransition, awards, inSession } = useSelector(
+    (state) => state.season
+  );
   const { scoutingState } = useSelector((state) => state.players);
   const { scoutPlayers } = scoutingState;
   const availablePlayersAnimationState = useSelector(
@@ -429,7 +432,7 @@ export const ScoutPage = () => {
             scoutPlayers.levelOne,
             scoutPlayers.levelTwo,
             scoutPlayers.levelThree,
-            getMoneyLevels(student.level || 1),
+            getMoneyLevels(+student.level || 1),
             moneyLevelAnimationStates
           )
         );
@@ -439,10 +442,24 @@ export const ScoutPage = () => {
   );
 
   const onCallSharkie = () => {
-    setTutorialSlides([getConfirmSlides('scout'), scoutSlides]);
     dispatch(
-      setTutorialState({
-        isActive: true,
+      toggleOverlay({
+        isOpen: true,
+        template: (
+          <FaqOverlay
+            questions={faqs.scout}
+            title='Scout Page FAQs'
+            onStartTutorial={() => {
+              dispatch(
+                toggleOverlay({
+                  isOpen: false,
+                  template: null,
+                })
+              );
+              startTutorial([getConfirmSlides('scout'), scoutSlides]);
+            }}
+          />
+        ),
       })
     );
   };
@@ -509,15 +526,43 @@ export const ScoutPage = () => {
     student.tutorials.scout
   );
 
-  if (inTransition) {
-    setTimeout(() => {
+  if (inTransition && !inSession) {
+    window.setTimeout(() => {
       dispatch(
         toggleOverlay({
           isOpen: true,
-          template: <NextSeasonOverlay student={student} awards={awards} />,
+          template: (
+            <NextSeasonOverlay
+              student={student}
+              awards={awards}
+              next={(levelChange) => {
+                history.push({ pathname: '/home', state: { levelChange } });
+              }}
+            />
+          ),
           canClose: false,
         })
       );
+    });
+  } else if (scoutingState.isComplete) {
+    window.setTimeout(() => {
+      dispatch(
+        toggleOverlay({
+          isOpen: true,
+          template: <ScoutingCompleteOverlay />,
+          canClose: false,
+        })
+      );
+      window.setTimeout(() => {
+        history.push('/team');
+        dispatch(
+          toggleOverlay({
+            isOpen: false,
+            template: null,
+            canClose: true,
+          })
+        );
+      }, 5000);
     });
   }
 
@@ -526,7 +571,7 @@ export const ScoutPage = () => {
       <HeaderComponent
         stickBtn={scoutStick}
         largeStick={true}
-        level={student.level}
+        level={+student.level}
         tutorialActive={tutorialActive}
       />
       <PageBoard hideCloseBtn={true} includeBackButton={true}>

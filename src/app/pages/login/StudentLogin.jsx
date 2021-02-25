@@ -72,7 +72,7 @@ export const StudentLogin = ({ history, isLoggedIn }) => {
               }
 
               // initialize players on student
-              initPlayersByLevel(student.level || 1)
+              initPlayersByLevel(+student.level || 1)
                 .then((initializedStudentRes) => {
                   if (
                     !initializedStudentRes.success ||

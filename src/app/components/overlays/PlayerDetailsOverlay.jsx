@@ -158,7 +158,7 @@ export const PlayerDetailsOverlay = ({
         isOpen: true,
         template: (
           <ConfirmOverlay
-            message='Are you sure you want to add this player to the starting lineup?'
+            message={`Are you sure you want to add ${player.playerName} to the starting lineup?`}
             cancel={onCancel}
             confirm={moveToStartingLineupConfirmed}
           >

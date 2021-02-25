@@ -13,12 +13,13 @@ export const StickButton = ({
   styles,
   hideDuringTutorial,
   inTransition,
+  isDisabled,
 }) => {
   return tutorialActive ? (
     <motion.div
       className={`stick-btn-wrap${small ? ' stick-btn-small' : ''}${
         hideDuringTutorial ? ' transparent' : ''
-      }`}
+      }${isDisabled ? ' disabled' : ''}`}
       animate={animationState}
       style={styles}
     >
@@ -33,7 +34,9 @@ export const StickButton = ({
     </motion.div>
   ) : (
     <div
-      className={`stick-btn-wrap${small ? ' stick-btn-small' : ''}`}
+      className={`stick-btn-wrap${small ? ' stick-btn-small' : ''}${
+        isDisabled ? ' disabled' : ''
+      }`}
       style={styles}
     >
       <ReactSVG

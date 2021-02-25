@@ -1,5 +1,4 @@
 import { TeamCard } from './TeamCard';
-import jrSharksLogo from '@images/icons/jr-sharks-logo-white-bg.svg';
 import { GamePhases, getStanding } from '@data/season/season';
 import { TeamAssignments } from '@data/players/players';
 import { getAvailableSlots } from '@data/players/players-utils';
@@ -85,7 +84,7 @@ export const Jumbotron = ({
   const sharksTransitionView = (
     <div className='transition-view-left'>
       <TeamCard
-        logo={jrSharksLogo}
+        logo={seasonState.seasonTeam.logo}
         standing={getStanding(seasonState.seasonTeam, seasonState.standings)}
       />
       {statsView}
@@ -160,7 +159,7 @@ export const Jumbotron = ({
         <div className='game-on-top-left'>
           <div>
             <TeamCard
-              logo={jrSharksLogo}
+              logo={seasonState.seasonTeam.logo}
               standing={getStanding(
                 seasonState.seasonTeam,
                 seasonState.standings
