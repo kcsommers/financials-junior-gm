@@ -69,7 +69,14 @@ export const TeamPage = () => {
         template: (
           <FaqOverlay
             questions={faqs.team}
+            title='Team Page FAQs'
             onStartTutorial={() => {
+              dispatch(
+                toggleOverlay({
+                  isOpen: false,
+                  template: null,
+                })
+              );
               startTutorial([getConfirmSlides('team'), teamSlides]);
             }}
           />
