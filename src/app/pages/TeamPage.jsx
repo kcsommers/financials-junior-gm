@@ -11,6 +11,7 @@ import {
   SignPlayerOverlay,
   TeamBudgetState,
   NextSeasonOverlay,
+  FaqOverlay,
 } from '@components';
 import scoutStick from '@images/scout-stick.svg';
 import teamStick from '@images/team-stick.svg';
@@ -26,6 +27,7 @@ import { setTutorialState, toggleOverlay, updateStudent } from '@redux/actions';
 import { updateStudentById } from './../api-helper';
 import { cloneDeep } from 'lodash';
 import '@css/pages/TeamPage.css';
+import { faqs } from '@data/faqs/faqs';
 
 export const TeamPage = () => {
   const dispatch = useDispatch();
@@ -61,7 +63,26 @@ export const TeamPage = () => {
   );
 
   const onCallSharkie = () => {
-    startTutorial([getConfirmSlides('team'), teamSlides]);
+    dispatch(
+      toggleOverlay({
+        isOpen: true,
+        template: (
+          <FaqOverlay
+            questions={faqs.team}
+            title='Team Page FAQs'
+            onStartTutorial={() => {
+              dispatch(
+                toggleOverlay({
+                  isOpen: false,
+                  template: null,
+                })
+              );
+              startTutorial([getConfirmSlides('team'), teamSlides]);
+            }}
+          />
+        ),
+      })
+    );
   };
 
   const openPlayerDetailsOverlay = (player) => {

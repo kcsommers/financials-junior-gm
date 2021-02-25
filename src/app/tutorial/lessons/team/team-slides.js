@@ -36,7 +36,7 @@ const slideConfigs = [
   },
   // There are six players in your team
   {
-    message: 'There are six players in your team!',
+    message: 'There are six players on your team!',
     sharkie: 'speakInverse',
     hasButtons: true,
     timer: 0,

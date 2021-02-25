@@ -6,6 +6,7 @@ import {
   PageBoard,
   NextSeasonOverlay,
   Overlay,
+  FaqOverlay,
 } from '@components';
 import budgetStick from '@images/budget-stick.svg';
 import { useSelector, useDispatch, batch } from 'react-redux';
@@ -27,6 +28,7 @@ import { cloneDeep } from 'lodash';
 import { Objectives } from '@data/objectives/objectives';
 import { getDollarString } from '@utils';
 import '@css/pages/BudgetPage.css';
+import { faqs } from '@data/faqs/faqs';
 
 let debounceTimeout = 0;
 
@@ -60,7 +62,26 @@ export const BudgetPage = () => {
   );
 
   const onCallSharkie = () => {
-    startTutorial([getConfirmSlides('budget'), budgetSlides]);
+    dispatch(
+      toggleOverlay({
+        isOpen: true,
+        template: (
+          <FaqOverlay
+            questions={faqs.budget}
+            title='Budget Page FAQs'
+            onStartTutorial={() => {
+              dispatch(
+                toggleOverlay({
+                  isOpen: false,
+                  template: null,
+                })
+              );
+              startTutorial([getConfirmSlides('budget'), budgetSlides]);
+            }}
+          />
+        ),
+      })
+    );
   };
 
   const budgetEquationStates = {
