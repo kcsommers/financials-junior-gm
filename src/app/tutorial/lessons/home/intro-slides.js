@@ -36,7 +36,7 @@ const slideConfigs = [
     timer: 0,
   },
   {
-    message: "My name is S.J. Sharkie, I'm here to teach about your new job!",
+    message: "My name is S.J. Sharkie and I'm here to teach about your new job!",
     accentText: 'S.J. Sharkie',
     sharkie: 'speak',
     hasButtons: true,
