@@ -49,7 +49,7 @@ const playersReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_INITIAL_PLAYERS_STATE: {
       const { players, student } = action.payload;
-      const moneyLevels = getMoneyLevels(student.level);
+      const moneyLevels = getMoneyLevels(+student.level);
       const marketPlayers = {
         forward: [],
         defense: [],
@@ -69,7 +69,7 @@ const playersReducer = (state = initialState, action) => {
       const injuredPlayers = [];
       const teamPlayers = {};
       // make sure the players are for this level
-      players.filter((p) => p.playerLevel === student.level);
+      players.filter((p) => +p.playerLevel === +student.level);
 
       // loop players and place them in the appropriate cache
       players.forEach((p) => {
@@ -128,7 +128,10 @@ const playersReducer = (state = initialState, action) => {
           offeredScoutPlayers,
         },
         moneySpent: getMoneySpent(team, student.totalBudget),
-        teamRank: getTeamRank(team.filter((p) => isStarter(p))),
+        teamRank: getTeamRank(
+          team.filter((p) => isStarter(p)),
+          +student.level
+        ),
         injuredPlayers,
       };
     }
@@ -137,7 +140,7 @@ const playersReducer = (state = initialState, action) => {
       const signedPlayer = action.payload.player;
       const prevAssignment = action.payload.prevAssignment;
       const student = action.payload.student;
-      const moneyLevels = getMoneyLevels(student.level);
+      const moneyLevels = getMoneyLevels(+student.level);
       const position = getPlayerPositon(signedPlayer.playerAssignment);
 
       let playerCache = clonedState.marketPlayers;
@@ -159,12 +162,14 @@ const playersReducer = (state = initialState, action) => {
         );
       }
 
-      playerCache[signedPlayer.playerPosition].splice(
-        playerCache[signedPlayer.playerPosition].findIndex(
-          (p) => p._id === signedPlayer._id
-        ),
-        1
-      );
+      if (playerCache[signedPlayer.playerPosition]) {
+        playerCache[signedPlayer.playerPosition].splice(
+          playerCache[signedPlayer.playerPosition].findIndex(
+            (p) => p._id === signedPlayer._id
+          ),
+          1
+        );
+      }
 
       clonedState.teamPlayers[signedPlayer.playerAssignment] = signedPlayer;
       if (getPlayerPositon(prevAssignment) === PlayerPositions.BENCH) {
@@ -178,7 +183,10 @@ const playersReducer = (state = initialState, action) => {
         ...clonedState.injuredPlayers,
       ];
       clonedState.moneySpent = getMoneySpent(team, student.totalBudget);
-      clonedState.teamRank = getTeamRank(team.filter((p) => isStarter(p)));
+      clonedState.teamRank = getTeamRank(
+        team.filter((p) => isStarter(p)),
+        +student.level
+      );
 
       return clonedState;
     }
@@ -187,7 +195,7 @@ const playersReducer = (state = initialState, action) => {
       const releasedPlayer = action.payload.player;
       const prevAssignment = action.payload.prevAssignment;
       const student = action.payload.student;
-      const moneyLevels = getMoneyLevels(student.level);
+      const moneyLevels = getMoneyLevels(+student.level);
 
       const playerCache =
         releasedPlayer.playerAssignment === PlayerAssignments.OFFERED_SCOUT
@@ -207,7 +215,9 @@ const playersReducer = (state = initialState, action) => {
       }
 
       clonedState.teamPlayers[prevAssignment] = null;
-      playerCache[releasedPlayer.playerPosition].push(releasedPlayer);
+      if (playerCache[releasedPlayer.playerPosition]) {
+        playerCache[releasedPlayer.playerPosition].push(releasedPlayer);
+      }
 
       const team = [
         ...Object.keys(clonedState.teamPlayers).map(
@@ -216,14 +226,17 @@ const playersReducer = (state = initialState, action) => {
         ...clonedState.injuredPlayers,
       ];
       clonedState.moneySpent = getMoneySpent(team, student.totalBudget);
-      clonedState.teamRank = getTeamRank(team.filter((p) => isStarter(p)));
+      clonedState.teamRank = getTeamRank(
+        team.filter((p) => isStarter(p)),
+        +student.level
+      );
       return clonedState;
     }
     case TRADE_PLAYER: {
       const releasedPlayer = action.payload.releasedPlayer;
       const signedPlayer = action.payload.signedPlayer;
       const student = action.payload.student;
-      const moneyLevels = getMoneyLevels(student.level);
+      const moneyLevels = getMoneyLevels(+student.level);
       const clonedState = cloneDeep(state);
 
       const playerCache =
@@ -272,7 +285,10 @@ const playersReducer = (state = initialState, action) => {
         ...clonedState.injuredPlayers,
       ];
       clonedState.moneySpent = getMoneySpent(team, student.totalBudget);
-      clonedState.teamRank = getTeamRank(team.filter((p) => isStarter(p)));
+      clonedState.teamRank = getTeamRank(
+        team.filter((p) => isStarter(p)),
+        +student.level
+      );
 
       return clonedState;
     }
@@ -329,7 +345,10 @@ const playersReducer = (state = initialState, action) => {
         ...clonedState.injuredPlayers,
       ];
       clonedState.moneySpent = getMoneySpent(team, student.totalBudget);
-      clonedState.teamRank = getTeamRank(team.filter((p) => isStarter(p)));
+      clonedState.teamRank = getTeamRank(
+        team.filter((p) => isStarter(p)),
+        +student.level
+      );
       return clonedState;
     }
     default:

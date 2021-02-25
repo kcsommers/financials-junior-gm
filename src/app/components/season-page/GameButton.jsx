@@ -1,8 +1,8 @@
-import { useSelector } from 'react-redux';
 import { TeamAssignments } from '@data/players/players';
 import { getAvailableSlots } from '@data/players/players-utils';
 import { GameButtonSvg } from './GameButtonSvg';
 import { useHistory } from 'react-router-dom';
+import { GamePhases } from '@data/season/season';
 
 export const GameButton = ({
   onClick,
@@ -23,6 +23,12 @@ export const GameButton = ({
       team
     ) > 0;
 
+  const btnDisabled =
+    (seasonDisabled &&
+      (!currentScenario || !currentScenario.gameButtonAction)) ||
+    (currentPhase.phase !== GamePhases.READY &&
+      (!currentScenario || !currentScenario.gameButtonAction));
+
   const gameButtonClicked = () => {
     if (seasonDisabled && !currentScenario) {
       return;
@@ -38,9 +44,13 @@ export const GameButton = ({
 
   return (
     <div
-      onClick={gameButtonClicked}
+      onClick={() => {
+        if (!btnDisabled) {
+          gameButtonClicked();
+        }
+      }}
       style={{
-        cursor: !seasonDisabled || currentScenario ? 'pointer' : 'initial',
+        cursor: btnDisabled ? 'initial' : 'pointer',
         opacity: !seasonDisabled ? 1 : 0.75,
       }}
     >
