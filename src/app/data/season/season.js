@@ -288,7 +288,7 @@ export const studentTeams = [
     logo: jrSharksLogo,
   },
   {
-    name: 'Barricuda',
+    name: 'Barracuda',
     nameFull: 'San Jose Barricuda',
     stats: { wins: 0, losses: 0, points: 0 },
     logo: sjbarracudalogo,

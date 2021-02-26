@@ -180,7 +180,7 @@ const slideConfigs = [
   },
   {
     message: 'There are 3 levels.',
-    sharkie: 'speakInverse',
+    sharkie: 'lean',
     small: true,
     hasButtons: true,
     timer: 0,
@@ -221,7 +221,7 @@ const slideConfigs = [
   },
   {
     message: 'Each level has a different dollar value!',
-    sharkie: 'speakInverse',
+    sharkie: 'lean',
     small: true,
     hasButtons: true,
     timer: 0,
@@ -263,7 +263,7 @@ const slideConfigs = [
   {
     message:
       'Players will be offered the dollar value in the level they are placed in.',
-    sharkie: 'speakInverse',
+    sharkie: 'lean',
     hasButtons: true,
     small: true,
     timer: 0,
@@ -295,7 +295,7 @@ const slideConfigs = [
   {
     message:
       'You can look at their rank to see how good they are for your team!',
-    sharkie: 'speakInverse',
+    sharkie: 'lean',
     hasButtons: true,
     small: true,
     timer: 0,
@@ -343,7 +343,7 @@ const slideConfigs = [
   },
   {
     message: 'And drag them into the level you choose.',
-    sharkie: 'speakInverse',
+    sharkie: 'lean',
     small: true,
     timer: 0,
     hasButtons: true,
@@ -395,7 +395,7 @@ const slideConfigs = [
   {
     message:
       'Once you are finished you can pick the players you want to sign on the sign page.',
-    sharkie: 'speakInverse',
+    sharkie: 'lean',
     hasButtons: true,
     small: true,
     timer: 0,
@@ -423,7 +423,7 @@ const slideConfigs = [
   },
   {
     message: 'Click here when you are finished!',
-    sharkie: 'speakInverse',
+    sharkie: 'lean',
     hasButtons: true,
     small: true,
     timer: 0,
@@ -450,7 +450,7 @@ const slideConfigs = [
   },
   {
     message: 'You can only scout players once every season!',
-    sharkie: 'speakInverse',
+    sharkie: 'speak',
     hasButtons: true,
     timer: 0,
     slideAnimate: {
@@ -460,7 +460,7 @@ const slideConfigs = [
   },
   {
     message: 'Since there are only a few spots in a level...',
-    sharkie: 'speakInverse',
+    sharkie: 'speak',
     hasButtons: true,
     timer: 0,
     slideAnimate: {
@@ -470,7 +470,7 @@ const slideConfigs = [
   },
   {
     message: 'Choose your players wisely!',
-    sharkie: 'speakInverse',
+    sharkie: 'speak',
     hasButtons: true,
     timer: 0,
     slideAnimate: {

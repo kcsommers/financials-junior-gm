@@ -57,7 +57,7 @@ const teamStickSlideConfigs = [
 const budgetStickSlideConfigs = [
   {
     message: "The plan to manage your team's money is called a budget",
-    sharkie: 'speakInverse',
+    sharkie: 'lean',
     hasButtons: false,
     slideAnimate: {
       y: '20%',
@@ -70,7 +70,7 @@ const budgetStickSlideConfigs = [
   },
   {
     message: 'Go here to manage your budget and learn more about it!',
-    sharkie: 'presentInverse',
+    sharkie: 'lean',
     hasButtons: false,
     slideAnimate: {
       y: '20%',
@@ -124,7 +124,7 @@ const budgetStickSlideConfigs = [
 const trophiesStickSlideConfigs = [
   {
     message: 'You can earn trophies for managing your team!',
-    sharkie: 'speakInverse',
+    sharkie: 'lean',
     hasButtons: true,
     slideAnimate: {
       y: '50%',
@@ -136,7 +136,7 @@ const trophiesStickSlideConfigs = [
   },
   {
     message: 'Go to the trophy room to learn more about them!',
-    sharkie: 'presentInverse',
+    sharkie: 'lean',
     hasButtons: true,
     slideAnimate: {
       y: '50%',
