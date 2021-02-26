@@ -3,7 +3,7 @@ import {
   USER_ROLE_STORAGE_KEY,
   TEACHER_ID_STORAGE_KEY,
 } from '@data/auth/auth';
-import { destroySession } from '@redux/actions';
+import { setLoginState } from '@redux/actions';
 import { connect } from 'react-redux';
 
 import React from 'react';
@@ -181,7 +181,7 @@ class TeacherDashboard extends React.Component {
         localStorage.setItem(LOGIN_STORAGE_KEY, false);
         localStorage.setItem(USER_ROLE_STORAGE_KEY, '');
         localStorage.setItem(TEACHER_ID_STORAGE_KEY, '');
-        this.props.destroySession();
+        this.props.setLoginState();
         this.props.history.push('/dashboard');
       })
       .catch((err) => console.error(err));
@@ -371,5 +371,5 @@ class TeacherDashboard extends React.Component {
 }
 
 const stateToProps = (state) => ({ teacher: state.teacherState.teacher });
-const dispatchToProps = { destroySession };
+const dispatchToProps = { setLoginState };
 export default connect(stateToProps, dispatchToProps)(TeacherDashboard);
