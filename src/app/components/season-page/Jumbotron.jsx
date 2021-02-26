@@ -57,7 +57,6 @@ export const Jumbotron = ({
       animate={animationStates.stats}
       className='jumbotron-stats-container'
     >
-      <div className='jumbotron-stats-title'>Game {nextIndex + 1} of 12</div>
       <div className='jumbotron-stats-inner'>
         <div className='jumbotron-stat-wrap'>
           Wins
@@ -182,30 +181,27 @@ export const Jumbotron = ({
         >
           VS
         </span>
-        <div
+        <motion.div
           className='game-on-top-right'
           style={{
             backgroundColor: '#ffffff',
             borderRadius: '10px',
             marginTop: '-2px',
           }}
+          initial={{ transform: 'scale(0.5)' }}
+          animate={{ transform: 'scale(1)' }}
+          transition={{
+            default: {
+              type: 'tween',
+              duration: 1,
+            },
+          }}
         >
-          <motion.div
-            initial={{ transform: 'scale(0.5)' }}
-            animate={{ transform: 'scale(1)' }}
-            transition={{
-              default: {
-                type: 'tween',
-                duration: 1,
-              },
-            }}
-          >
-            <TeamCard
-              logo={currentOpponent && currentOpponent.logoLg}
-              standing={getStanding(currentOpponent, seasonState.standings)}
-            />
-          </motion.div>
-        </div>
+          <TeamCard
+            logo={currentOpponent && currentOpponent.logoLg}
+            standing={getStanding(currentOpponent, seasonState.standings)}
+          />
+        </motion.div>
       </div>
       <div className='game-on-bottom'>{scoreView}</div>
     </>

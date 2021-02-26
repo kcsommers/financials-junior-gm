@@ -8,6 +8,7 @@ import {
   setStudent,
   initializeSeason,
   setInitialPlayersState,
+  initializeObjectives,
 } from '@redux/actions';
 import { useDispatch, batch } from 'react-redux';
 import {
@@ -38,6 +39,7 @@ export const Navigation = ({ tutorialActive, student }) => {
               template: null,
             })
           );
+          dispatch(initializeObjectives(updatedStudent));
         });
       })
       .catch((err) => console.error(err));

@@ -48,6 +48,8 @@ export const TrophiesPage = ({ history }) => {
   const tutorialActive = useSelector((state) => state.tutorial.isActive);
   const { inTransition, awards } = useSelector((state) => state.season);
 
+  console.log('TROPHIES::::: ', awards);
+
   const repeatSeason = () => {
     resetSeason(+student.level, student)
       .then((updatedStudent) => {
