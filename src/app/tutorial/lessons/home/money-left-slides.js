@@ -4,7 +4,7 @@ import { SET_ANIMATION_STATE } from '@redux/actions';
 const slideConfigs = [
   {
     message: 'Signing new players to improve your team rank will cost money.',
-    sharkie: 'speakInverse',
+    sharkie: 'lean',
     hasButtons: true,
     slideAnimate: {
       y: '50%',
@@ -13,7 +13,7 @@ const slideConfigs = [
   },
   {
     message: 'This is the money that you have left to spend on your team.',
-    sharkie: 'speakInverse',
+    sharkie: 'lean',
     hasButtons: true,
     slideAnimate: {
       y: '50%',
@@ -22,7 +22,7 @@ const slideConfigs = [
   },
   {
     message: 'Your goal is to build a winning team',
-    sharkie: 'playInverse',
+    sharkie: 'lean',
     hasButtons: true,
     repeatIndex: 0,
     slideAnimate: {
@@ -33,13 +33,13 @@ const slideConfigs = [
   {
     message:
       'While being ready for anything a hockey season can throw your way!',
-    sharkie: 'playInverse',
+    sharkie: 'lean',
     hasButtons: true,
     timer: 0,
   },
   {
     message: 'Got it?',
-    sharkie: 'playInverse',
+    sharkie: 'lean',
     hasButtons: true,
     repeatIndex: 0,
     timer: 0,
