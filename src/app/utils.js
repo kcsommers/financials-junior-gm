@@ -38,25 +38,6 @@ export const getMoneyLevels = (level) => {
     case '2':
       return {
         0: {
-          short: '$3k',
-          long: 'three hundred dollar',
-          num: 300,
-        },
-        1: {
-          short: '$200',
-          long: 'two hundred dollar',
-          num: 200,
-        },
-        2: {
-          short: '$100',
-          long: 'one hundred dollar',
-          num: 100,
-        },
-      };
-    case 3:
-    case '3':
-      return {
-        0: {
           short: '$30',
           long: 'thirty dollar',
           num: 30,
@@ -70,6 +51,25 @@ export const getMoneyLevels = (level) => {
           short: '$10',
           long: 'ten dollar',
           num: 0,
+        },
+      };
+    case 3:
+    case '3':
+      return {
+        0: {
+          short: '$300',
+          long: 'three hundred dollar',
+          num: 300,
+        },
+        1: {
+          short: '$200',
+          long: 'two hundred dollar',
+          num: 200,
+        },
+        2: {
+          short: '$100',
+          long: 'one hundred dollar',
+          num: 100,
         },
       };
     default: {

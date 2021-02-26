@@ -305,6 +305,7 @@ export const getMoneySpent = (players, totalBudget) => {
   if (!players) {
     return 0;
   }
+
   return Math.min(
     players.reduce((total, p) => {
       if (
