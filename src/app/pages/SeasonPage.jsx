@@ -181,10 +181,11 @@ export const SeasonPage = ({ history }) => {
     updateStudentById(student._id, {
       seasons: clonedStudent.seasons,
       awards: clonedStudent.awards,
-      rollOverBudget: (student.rollOverBudget || 0) + student.savingsBudget,
+      rollOverBudget: (+student.rollOverBudget || 0) + +student.savingsBudget,
       savingsBudget: 0,
     })
       .then((res) => {
+        console.log('SEASON END RES:::: ', res);
         batch(() => {
           dispatch(setSeasonComplete(res.updatedStudent));
           dispatch(
@@ -473,6 +474,13 @@ export const SeasonPage = ({ history }) => {
                   currentScenario={seasonState.currentScenario}
                 />
               </motion.span>
+              <div className='game-count'>
+                Game{' '}
+                {state.currentOpponentIndex +
+                  1 +
+                  seasonState.currentBlockIndex * 4}{' '}
+                of {seasonState.allOpponents.length}
+              </div>
             </div>
             <div className='game-block-board-container'>
               <GameBlockBoard />

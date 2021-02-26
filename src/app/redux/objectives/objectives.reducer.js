@@ -22,6 +22,9 @@ const objectivesReducer = (state = initialState, action) => {
     case INITIALIZE_OBJECTIVES: {
       const student = action.payload;
       const clonedState = cloneDeep(state);
+
+      clonedState.currentObjectives = initialState.currentObjectives;
+
       // check if theyve watched the budget tutorial
       if (student.tutorials && student.tutorials.budget) {
         clonedState.currentObjectives[0].setIsComplete(true);
