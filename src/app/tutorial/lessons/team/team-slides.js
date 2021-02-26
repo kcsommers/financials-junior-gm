@@ -24,7 +24,7 @@ const player = {
 const slideConfigs = [
   {
     message: 'Welcome to your team!',
-    sharkie: 'speakInverse',
+    sharkie: 'lean',
     hasButtons: true,
     timer: 0,
     slideAnimate: {
@@ -37,7 +37,7 @@ const slideConfigs = [
   // There are six players in your team
   {
     message: 'There are six players on your team!',
-    sharkie: 'speakInverse',
+    sharkie: 'lean',
     hasButtons: true,
     timer: 0,
     small: true,
@@ -67,7 +67,7 @@ const slideConfigs = [
   // three forwards, 2 defense and one goalie
   {
     message: '3 forwards, 2 defense and a goalie',
-    sharkie: 'speakInverse',
+    sharkie: 'lean',
     hasButtons: true,
     timer: 0,
     small: true,
@@ -98,7 +98,7 @@ const slideConfigs = [
   // you can add a player by tapping on an empty spot
   {
     message: 'You can add a player by tapping on an empty player slot.',
-    sharkie: 'speakInverse',
+    sharkie: 'lean',
     hasButtons: true,
     timer: 0,
     small: true,
@@ -192,7 +192,7 @@ const slideConfigs = [
   {
     message:
       'Each player has a rank which tells you how good they are in their position',
-    sharkie: 'speakInverse',
+    sharkie: 'lean',
     hasButtons: true,
     timer: 0,
     small: true,
@@ -205,7 +205,7 @@ const slideConfigs = [
   },
   {
     message: 'The rank depends on three things...',
-    sharkie: 'speakInverse',
+    sharkie: 'lean',
     hasButtons: true,
     timer: 0,
     small: true,
@@ -219,7 +219,7 @@ const slideConfigs = [
   {
     message:
       'Their offense score, which is how good they are at scoring goals.',
-    sharkie: 'speakInverse',
+    sharkie: 'lean',
     hasButtons: true,
     timer: 0,
     small: true,
@@ -233,7 +233,7 @@ const slideConfigs = [
   {
     message:
       'Their passing score, which is how good they are at helping others score.',
-    sharkie: 'speakInverse',
+    sharkie: 'lean',
     hasButtons: true,
     timer: 0,
     small: true,
@@ -247,7 +247,7 @@ const slideConfigs = [
   {
     message:
       'And their defense score, or how good they are at blocking shots from the other team.',
-    sharkie: 'speakInverse',
+    sharkie: 'lean',
     hasButtons: true,
     timer: 0,
     small: true,
@@ -260,7 +260,7 @@ const slideConfigs = [
   },
   {
     message: 'Each player also has a contract value.',
-    sharkie: 'speakInverse',
+    sharkie: 'lean',
     hasButtons: true,
     timer: 0,
     small: true,
@@ -274,7 +274,7 @@ const slideConfigs = [
   {
     message:
       'The contract value is the money they are paid to play for your team.',
-    sharkie: 'speakInverse',
+    sharkie: 'lean',
     hasButtons: true,
     timer: 0,
     small: true,
@@ -288,7 +288,7 @@ const slideConfigs = [
   {
     message:
       'Players with a higher rank will usually have a higher contract value!',
-    sharkie: 'speakInverse',
+    sharkie: 'lean',
     hasButtons: true,
     timer: 0,
     small: true,
@@ -301,7 +301,7 @@ const slideConfigs = [
   },
   {
     message: 'You can choose to sign this player for their contract value!',
-    sharkie: 'speakInverse',
+    sharkie: 'lean',
     hasButtons: true,
     timer: 0,
     small: true,
@@ -315,7 +315,7 @@ const slideConfigs = [
   {
     message:
       'This will remove the money in their contract value from your budget',
-    sharkie: 'speakInverse',
+    sharkie: 'lean',
     hasButtons: true,
     timer: 0,
     small: true,
@@ -328,7 +328,7 @@ const slideConfigs = [
   },
   {
     message: 'And add their rank to your team rank!',
-    sharkie: 'speakInverse',
+    sharkie: 'lean',
     hasButtons: true,
     timer: 0,
     small: true,
@@ -341,7 +341,7 @@ const slideConfigs = [
   },
   {
     message: 'You can see these changes above!',
-    sharkie: 'presentInverse',
+    sharkie: 'lean',
     hasButtons: true,
     timer: 0,
     small: true,
@@ -364,7 +364,7 @@ const slideConfigs = [
   },
   {
     message: "Once you've signed a player, tapping them gives you two choices",
-    sharkie: 'speakInverse',
+    sharkie: 'lean',
     hasButtons: true,
     timer: 0,
     small: true,
@@ -387,7 +387,7 @@ const slideConfigs = [
   },
   {
     message: 'You can decide to release a player from the team',
-    sharkie: 'speakInverse',
+    sharkie: 'lean',
     hasButtons: true,
     timer: 0,
     small: true,
@@ -400,7 +400,7 @@ const slideConfigs = [
   },
   {
     message: 'This will add the money of their contract back to your budget!',
-    sharkie: 'speakInverse',
+    sharkie: 'lean',
     hasButtons: true,
     timer: 0,
     small: true,
@@ -438,7 +438,7 @@ const slideConfigs = [
   {
     message:
       'Your team also has a bench where you can add upto three extra players!',
-    sharkie: 'speakInverse',
+    sharkie: 'lean',
     hasButtons: true,
     timer: 0,
     small: true,
@@ -451,7 +451,7 @@ const slideConfigs = [
   },
   {
     message: 'You can add players of any position to the bench',
-    sharkie: 'speakInverse',
+    sharkie: 'lean',
     hasButtons: true,
     timer: 0,
     small: true,
@@ -464,7 +464,7 @@ const slideConfigs = [
   },
   {
     message: 'To be able to use your bench you need to scout players first!',
-    sharkie: 'speakInverse',
+    sharkie: 'lean',
     hasButtons: true,
     timer: 0,
     small: true,

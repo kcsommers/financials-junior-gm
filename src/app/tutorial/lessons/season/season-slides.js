@@ -110,7 +110,7 @@ const slideConfigs = [
   },
   {
     message: "The standings box shows your team's place in the season",
-    sharkie: 'presentInverse',
+    sharkie: 'lean',
     hasButtons: true,
     small: true,
     timer: 0,
@@ -123,7 +123,7 @@ const slideConfigs = [
 
   {
     message: 'This is decided by how many points your team has',
-    sharkie: 'speakInverse',
+    sharkie: 'lean',
     hasButtons: true,
     timer: 0,
     small: true,
@@ -166,7 +166,7 @@ const slideConfigs = [
   {
     message:
       "You can see the teams you'll be playing against here, along with their team ranks",
-    sharkie: 'speakInverse',
+    sharkie: 'lean',
     hasButtons: true,
     timer: 0,
     small: true,
@@ -219,7 +219,7 @@ const slideConfigs = [
   {
     message:
       'When you press play, the jumbotron will tell you the result of your games',
-    sharkie: 'speakInverse',
+    sharkie: 'lean',
     hasButtons: true,
     timer: 0,
     small: true,
@@ -231,7 +231,7 @@ const slideConfigs = [
   },
   {
     message: 'Your team will be playing against 12 other teams',
-    sharkie: 'speakInverse',
+    sharkie: 'lean',
     hasButtons: true,
     timer: 0,
     small: true,
@@ -243,7 +243,7 @@ const slideConfigs = [
   },
   {
     message: 'To get the most points and win the trophy...',
-    sharkie: 'speakInverse',
+    sharkie: 'lean',
     hasButtons: true,
     timer: 0,
     small: true,
@@ -349,7 +349,7 @@ const slideConfigs = [
   {
     message:
       "Don't forget to save money for emergencies, in case you lose a player",
-    sharkie: 'speakInverse',
+    sharkie: 'speak',
     hasButtons: true,
     timer: 0,
     slideAnimate: {
@@ -360,14 +360,14 @@ const slideConfigs = [
   },
   {
     message: 'Being in first place is not everything',
-    sharkie: 'speakInverse',
+    sharkie: 'speak',
     hasButtons: true,
     timer: 0,
     transparentBg: false,
   },
   {
     message: 'If you finish in the top 3, you can get a trophy',
-    sharkie: 'speakInverse',
+    sharkie: 'speak',
     hasButtons: true,
     timer: 0,
     transparentBg: false,
@@ -375,7 +375,7 @@ const slideConfigs = [
   {
     message:
       'You can also earn a trophy for having savings left over at the end of the season',
-    sharkie: 'speakInverse',
+    sharkie: 'speak',
     hasButtons: true,
 
     timer: 0,
@@ -384,7 +384,7 @@ const slideConfigs = [
   },
   {
     message: 'Got it?',
-    sharkie: 'speakInverse',
+    sharkie: 'speak',
     hasButtons: true,
 
     timer: 0,
@@ -393,7 +393,7 @@ const slideConfigs = [
   },
   {
     message: 'Cool!',
-    sharkie: 'speakInverse',
+    sharkie: 'speak',
     hasButtons: true,
 
     timer: 0,
@@ -402,7 +402,7 @@ const slideConfigs = [
   },
   {
     message: 'Good luck! We believe in you!',
-    sharkie: 'speakInverse',
+    sharkie: 'play',
     hasButtons: true,
     timer: 0,
     transparentBg: false,
