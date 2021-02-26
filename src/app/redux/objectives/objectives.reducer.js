@@ -26,11 +26,11 @@ const objectivesReducer = (state = initialState, action) => {
       clonedState.currentObjectives = initialState.currentObjectives;
 
       // check if theyve watched the budget tutorial
-      if (student.tutorials && student.tutorials.budget) {
-        clonedState.currentObjectives[0].setIsComplete(true);
-      }
+      clonedState.currentObjectives[0].setIsComplete(
+        !!(student.tutorials && student.tutorials.budget)
+      );
       // check if they have players
-      if (
+      clonedState.currentObjectives[1].setIsComplete(
         getAvailableSlots(
           [
             ...TeamAssignments.offense,
@@ -39,9 +39,7 @@ const objectivesReducer = (state = initialState, action) => {
           ],
           student
         ) === 0
-      ) {
-        clonedState.currentObjectives[1].setIsComplete(true);
-      }
+      );
       return clonedState;
     }
     case ADD_OBJECTIVE: {

@@ -7,7 +7,7 @@ import loginState from './login-state/login-state.reducer';
 import teacherState from './teacher-state/teacher-state-reducer';
 import season from './season/season.reducer';
 import objectives from './objectives/objectives.reducer';
-import { DESTROY_SESSION } from './actions';
+import { SET_LOGIN_STATE } from './login-state/login-state.actions';
 
 const appReducer = combineReducers({
   tutorial,
@@ -22,7 +22,7 @@ const appReducer = combineReducers({
 
 export const rootReducer = (state, action) => {
   // clears the redux store on logout
-  if (action.type === DESTROY_SESSION) {
+  if (action.type === SET_LOGIN_STATE && !action.payload.isLoggedIn) {
     state = undefined;
   }
   return appReducer(state, action);

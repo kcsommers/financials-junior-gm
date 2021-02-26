@@ -577,8 +577,7 @@ export const ScoutPage = ({ history }) => {
       <PageBoard hideCloseBtn={true} includeBackButton={true}>
         <div className='scout-page-board-header'>
           <p className='color-primary scout-page-helper-text'>
-            Give each new player an offered value by dragging them to their
-            money level!
+            Make an offer to a player by dragging them to a money level!
           </p>
           <span
             style={{ position: 'absolute', right: '0.5rem', top: '0.25rem' }}
