@@ -69,7 +69,10 @@ export const TeamBudgetState = ({ title, isLarge, changes }) => {
           <div style={{ position: 'relative' }}>
             <LevelStick
               type='budget'
-              amount={student.totalBudget - moneySpent - student.savingsBudget}
+              amount={Math.max(
+                student.totalBudget - moneySpent - student.savingsBudget,
+                0
+              )}
               denom={student.totalBudget}
               color='#002f6c'
               indicatorDirection='left'

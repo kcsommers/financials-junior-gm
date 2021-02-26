@@ -37,13 +37,16 @@ export const BudgetSlider = ({ budget, setValue, student }) => {
           {budget.spent > 0 && (
             <div className='spent-indicator-wrap'>
               <p className='color-primary'>
-                {getDollarString(budget.spent)} <br /> Spent
+                {getDollarString(budget.spent, true)} <br /> Spent
               </p>
             </div>
           )}
           <div className='spending-indicator-wrap'>
             <p className='color-primary'>
-              {getDollarString(budget.total - budget.spent - budget.savings)}{' '}
+              {getDollarString(
+                budget.total - budget.spent - budget.savings,
+                true
+              )}{' '}
               <br /> Spending Budget
             </p>
           </div>
