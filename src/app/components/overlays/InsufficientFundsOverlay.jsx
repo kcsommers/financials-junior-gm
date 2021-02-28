@@ -51,7 +51,9 @@ export const InsufficientFundsOverlay = ({
       totalBudget += releasingPlayer.playerCost;
     }
 
-    return student.rollOverBudget && student.rollOverBudget + totalBudget >= 0;
+    return !!(
+      +student.rollOverBudget && +student.rollOverBudget + totalBudget >= 0
+    );
   };
 
   return (

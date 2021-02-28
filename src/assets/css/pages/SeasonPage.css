@@ -35,8 +35,13 @@ div.play-btn-container {
   bottom: 0;
   right: 0;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+
+div.game-count {
+  margin-top: 0.5rem;
 }
 
 div.jumbotron-container {

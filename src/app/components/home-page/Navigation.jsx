@@ -3,11 +3,12 @@ import refreshBtn from '@images/refresh-btn.svg';
 import { logout } from '../../api-helper';
 import { useHistory } from 'react-router-dom';
 import {
-  destroySession,
+  setLoginState,
   toggleOverlay,
   setStudent,
   initializeSeason,
   setInitialPlayersState,
+  initializeObjectives,
 } from '@redux/actions';
 import { useDispatch, batch } from 'react-redux';
 import {
@@ -38,6 +39,7 @@ export const Navigation = ({ tutorialActive, student }) => {
               template: null,
             })
           );
+          dispatch(initializeObjectives(updatedStudent));
         });
       })
       .catch((err) => console.error(err));
@@ -71,7 +73,8 @@ export const Navigation = ({ tutorialActive, student }) => {
         localStorage.setItem(LOGIN_STORAGE_KEY, false);
         localStorage.setItem(USER_ROLE_STORAGE_KEY, '');
         localStorage.setItem(STUDENT_ID_STORAGE_KEY, '');
-        dispatch(destroySession());
+
+        dispatch(setLoginState(false, ''));
         history.push('/dashboard');
       })
       .catch((err) => console.error(err));
