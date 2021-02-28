@@ -186,7 +186,6 @@ export const Jumbotron = ({
           style={{
             backgroundColor: '#ffffff',
             borderRadius: '10px',
-            marginTop: '-2px',
           }}
           initial={{ transform: 'scale(0.5)' }}
           animate={{ transform: 'scale(1)' }}

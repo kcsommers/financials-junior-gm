@@ -5,7 +5,8 @@ export const TeamCard = ({ logo, standing, color }) => {
       style={{
         width: '200px',
         height: '167px',
-        borderRadius: '5px',
+        borderRadius: '10px',
+        backgroundColor: '#ffffff',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
