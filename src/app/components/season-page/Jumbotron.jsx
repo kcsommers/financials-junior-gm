@@ -187,7 +187,6 @@ export const Jumbotron = ({
           style={{
             backgroundColor: '#ffffff',
             borderRadius: '10px',
-            marginTop: '-2px',
           }}
         >
           <motion.div
