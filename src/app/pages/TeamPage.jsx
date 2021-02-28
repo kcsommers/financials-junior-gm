@@ -35,6 +35,7 @@ export const TeamPage = ({ history }) => {
   const student = useSelector((state) => state.studentState.student);
   const team = useSelector((state) => state.players.teamPlayers);
   const seasonState = useSelector((state) => state.season);
+  const studentTeam = seasonState.seasonTeam
   const scoutingState = useSelector((state) => state.players.scoutingState);
   const playerCardAnimationStates = {
     playerCard: useSelector((state) => state.tutorial.team.playerCard),
@@ -168,10 +169,10 @@ export const TeamPage = ({ history }) => {
       <PageBoard hideCloseBtn={true} includeBackButton={true}>
         <div className='team-page-board-header'>
           <div className='team-page-board-header-inner'>
-            <ReactSVG src={jrSharksLogo} />
+            <ReactSVG  src={studentTeam.logoSm} />
             <SharkieButton textPosition='left' onCallSharkie={onCallSharkie} />
           </div>
-          <h2 className='color-primary'>San Jose Jr. Sharks</h2>
+          <h2 className='color-primary'>{studentTeam.nameFull}</h2>
         </div>
 
         <div className='team-page-board-inner'>

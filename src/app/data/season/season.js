@@ -22,9 +22,12 @@ import pinkpandasLg from '@images/icons/team-logos/pinkpandasLg.svg';
 import pinkpandasSm from '@images/icons/team-logos/pinkpandasSm.svg';
 import blackbeaversLg from '@images/icons/team-logos/blackbeaversLg.svg';
 import blackbeaversSm from '@images/icons/team-logos/blackbeaversSm.svg';
-import jrSharksLogo from '@images/icons/jr-sharks-logo-white-bg.svg';
+import jrSharksLogo from '@images/icons/jr-sharks-logo-lg.svg';
 import sjbarracudalogo from '@images/icons/sjbarracuda-logo.svg';
-import sjsharkslogo from '@images/icons/sharks-logo.svg';
+import sjsharkslogo from '@images/icons/sjsharkslogo.svg';
+import jrSharksLogoSm from '@images/icons/jrsharks-logo-sm.svg';
+import sjbarracudaLogoSm from '@images/icons/sjbarracuda-logo-sm.svg';
+import sjsharksLogoSm from '@images/icons/sjsharks-logo-sm.svg';
 import { INJURE_PLAYER } from '@redux/actions';
 import { PlayerAssignments, TeamAssignments } from '@data/players/players';
 import { cloneDeep } from 'lodash';
@@ -286,18 +289,21 @@ export const studentTeams = [
     nameFull: 'San Jose Jr. Sharks',
     stats: { wins: 0, losses: 0, points: 0 },
     logo: jrSharksLogo,
+    logoSm: jrSharksLogoSm
   },
   {
     name: 'Barracuda',
-    nameFull: 'San Jose Barricuda',
+    nameFull: 'San Jose Barracuda',
     stats: { wins: 0, losses: 0, points: 0 },
     logo: sjbarracudalogo,
+    logoSm: sjbarracudaLogoSm
   },
   {
     name: 'Sharks',
     nameFull: 'San Jose Sharks',
     stats: { wins: 0, losses: 0, points: 0 },
     logo: sjsharkslogo,
+    logoSm: sjsharksLogoSm
   },
 ];
 
