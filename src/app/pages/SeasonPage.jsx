@@ -394,7 +394,7 @@ export const SeasonPage = ({ history }) => {
             zIndex: tutorialActive ? 0 : 1,
           }}
         >
-          <SharkieButton textPosition='left' onCallSharkie={onCallSharkie} />
+          <SharkieButton textPosition='left' style onCallSharkie={onCallSharkie} />
         </div>
         <div
           style={{
@@ -482,13 +482,15 @@ export const SeasonPage = ({ history }) => {
                 of {seasonState.allOpponents.length}
               </div>
             </div>
-            <div className='game-block-board-container'>
+            <div className='game-block-board-container' style={{}}>
+              <h6 style={{textAlign: 'center', color: '#000000'}}>Results</h6>
               <GameBlockBoard />
             </div>
             <motion.div
               animate={animationStates.standings}
               className='standings-board-container'
             >
+              <h6 style={{textAlign: 'center', color: '#000000'}}>Standings</h6>
               <StandingsBoard />
             </motion.div>
           </div>

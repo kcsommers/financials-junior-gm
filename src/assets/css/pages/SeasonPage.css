@@ -8,10 +8,10 @@ div.season-page-board-top {
 
 div.season-page-board-bottom {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: space-between;
   position: relative;
-  padding: 0 1rem 1rem 1rem;
+  padding: 0 1rem 0.5rem 1rem;
 }
 
 .play-btn-wrap {
