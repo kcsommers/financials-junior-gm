@@ -283,6 +283,7 @@ export const TeamPage = ({ history }) => {
               }`}
             >
               <p className='color-primary on-the-bench-text'>On the Bench</p>
+              {!scoutingState.isComplete ? <p className='color-primary on-the-bench-text' style={{marginTop: "35px"}} >Scout players to activate the bench!</p> : null}
               {scoutingState.isComplete && (
                 <div className='team-players-row team-bench-row'>
                   <PlayerCard

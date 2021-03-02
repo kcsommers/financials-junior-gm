@@ -17,7 +17,6 @@ const styles = (rgb, rank, index, isSmall) => {
       width: '100%',
       height: '100%',
       borderRadius: '100%',
-      boxShadow: 'inset 0 0 15px #121210',
       background: `linear-gradient(to right, rgba(${rgb.join(
         ','
       )}, 1) ${gradientPct}%, rgba(0, 0, 0, 0) ${gradientPct}%)`,
