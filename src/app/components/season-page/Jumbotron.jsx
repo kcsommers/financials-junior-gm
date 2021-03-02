@@ -266,6 +266,8 @@ export const Jumbotron = ({
     return '2.25rem';
   };
 
+  console.log('JUMBOTRON:::: ', gameBlockState, gameBlockState.message);
+
   const getMessage = () => {
     if (seasonDisabled && !seasonState.currentScenario) {
       return 'Fill up your team to play the season!';

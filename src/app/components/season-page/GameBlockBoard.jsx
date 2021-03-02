@@ -23,7 +23,7 @@ export const GameBlockBoard = () => {
             g.score[0] > g.score[1] ? ` color-primary font-bold` : ''
           }`}
         >
-          <span>Jr. Sharks</span>
+          <span>{seasonState.seasonTeam.name}</span>
           <span>{g.score[0]}</span>
         </div>
 

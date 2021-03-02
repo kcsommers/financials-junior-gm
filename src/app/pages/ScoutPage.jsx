@@ -21,7 +21,6 @@ import {
   Tutorial,
   getConfirmSlides,
 } from '@tutorial';
-import { useHistory } from 'react-router-dom';
 import { PageBoard } from './../components/PageBoard';
 import {
   setTutorialState,
@@ -299,7 +298,13 @@ export const ScoutPage = ({ history }) => {
     const sourceLevel = e.source.droppableId.split('-')[0];
     const droppedPlayer = boardMap[sourceLevel][e.source.droppableId];
 
-    if (droppedPlayer.overallRank >= 15 && dropLevel === 'levelThree') {
+    const levelThreeMaxRank =
+      +student.level === 1 ? 15 : +student.level === 2 ? 45 : 75;
+
+    if (
+      dropLevel === 'levelThree' &&
+      droppedPlayer.overallRank >= levelThreeMaxRank
+    ) {
       dispatch(
         toggleOverlay({
           isOpen: true,
@@ -449,6 +454,7 @@ export const ScoutPage = ({ history }) => {
           <FaqOverlay
             questions={faqs.scout}
             title='Scout Page FAQs'
+            level={+student.level}
             onStartTutorial={() => {
               dispatch(
                 toggleOverlay({

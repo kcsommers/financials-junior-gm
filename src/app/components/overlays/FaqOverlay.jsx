@@ -1,7 +1,7 @@
 import { OverlayBoard } from './OverlayBoard';
 import { useEffect, useRef, useState } from 'react';
 
-export const FaqOverlay = ({ questions, title, onStartTutorial }) => {
+export const FaqOverlay = ({ questions, title, onStartTutorial, level }) => {
   const answerRefs = useRef([]);
 
   const [questionStates, setQuestionStates] = useState({});
@@ -116,22 +116,24 @@ export const FaqOverlay = ({ questions, title, onStartTutorial }) => {
         >
           {questionsView}
         </div>
-        <div
-          className='box-shadow'
-          style={{
-            width: '100%',
-            borderRadius: '5px',
-            backgroundColor: '#f3901d',
-            color: '#fff',
-            padding: '1rem 0',
-            textAlign: 'center',
-            cursor: 'pointer',
-            fontSize: '1.2rem',
-          }}
-          onClick={onStartTutorial}
-        >
-          Watch Tutorial
-        </div>
+        {level === 1 && (
+          <div
+            className='box-shadow'
+            style={{
+              width: '100%',
+              borderRadius: '5px',
+              backgroundColor: '#f3901d',
+              color: '#fff',
+              padding: '1rem 0',
+              textAlign: 'center',
+              cursor: 'pointer',
+              fontSize: '1.2rem',
+            }}
+            onClick={onStartTutorial}
+          >
+            Watch Tutorial
+          </div>
+        )}
       </div>
     </OverlayBoard>
   );

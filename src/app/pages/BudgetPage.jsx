@@ -71,6 +71,7 @@ export const BudgetPage = ({ history }) => {
           <FaqOverlay
             questions={faqs.budget}
             title='Budget Page FAQs'
+            level={+student.level}
             onStartTutorial={() => {
               dispatch(
                 toggleOverlay({
