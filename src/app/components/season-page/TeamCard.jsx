@@ -13,7 +13,7 @@ export const TeamCard = ({ logo, standing, color }) => {
         position: 'relative',
       }}
     >
-      <ReactSVG src={logo} />
+      <ReactSVG src={logo} style={{transform: 'scale(0.85)'}} />
       <span
         style={{
           position: 'absolute',
