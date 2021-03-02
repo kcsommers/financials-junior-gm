@@ -6,9 +6,10 @@ export const PlayerRankPie = ({
   emptyColor = '#fff',
   size = 20,
   label,
+  max,
 }) => {
   const calculateRotation = (num) => {
-    let pct = num / 30;
+    let pct = num / max;
     if (pct > 1) {
       pct = 1;
     }

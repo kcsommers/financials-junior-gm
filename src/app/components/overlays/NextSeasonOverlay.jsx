@@ -24,6 +24,11 @@ export const NextSeasonOverlay = ({ student, next }) => {
       .catch((err) => console.error(err));
   };
 
+  const isTopThree =
+    student.awards &&
+    student.awards[student.level - 1] &&
+    student.awards[student.level - 1].thirdCup;
+
   return (
     <OverlayBoard>
       <div
@@ -61,11 +66,13 @@ export const NextSeasonOverlay = ({ student, next }) => {
           }}
         >
           <Button text='Repeat Season' onClick={repeatSeason} />
-          <Button
-            text='Start Next Season'
-            isDisabled={+student.level === 3}
-            onClick={nextSeason}
-          />
+          {isTopThree && (
+            <Button
+              text='Start Next Season'
+              isDisabled={+student.level === 3}
+              onClick={nextSeason}
+            />
+          )}
         </div>
       </div>
     </OverlayBoard>

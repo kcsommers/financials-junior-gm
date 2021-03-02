@@ -42,8 +42,6 @@ const seasonReducer = (state = initialState, action) => {
   switch (action.type) {
     case INITIALIZE_SEASON: {
       const { seasons, awards, level = 1 } = action.payload;
-
-      console.log('INIT SEASON:::: ', action.payload);
       if (!seasons || !seasons.length) {
         return state;
       }
