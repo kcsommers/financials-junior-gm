@@ -4,6 +4,7 @@ import playerImage from '@images/icons/player-image.svg';
 import { capitalize, getDollarString } from '@utils';
 import { PlayerRankPie, PlayerRankGraph } from '@components';
 import sharksLogo from '@images/icons/sharks-logo.svg';
+import { getPlayerStatMax } from '@data/players/players-utils';
 import '@css/components/PlayerCard.css';
 
 const styles = {
@@ -178,6 +179,7 @@ export const PlayerCard = ({
                 label='Saves'
                 sliceColor='#002f6c'
                 rank={+player.overallRank}
+                max={getPlayerStatMax(+player.playerLevel)}
               />
             </div>
           ) : (
@@ -186,16 +188,19 @@ export const PlayerCard = ({
                 label='Off'
                 sliceColor='#DC2D2D'
                 rank={+player.offensiveRank}
+                max={getPlayerStatMax(+player.playerLevel)}
               />
               <PlayerRankPie
                 label='Pass'
                 sliceColor='#00788a'
                 rank={+player.passRank}
+                max={getPlayerStatMax(+player.playerLevel)}
               />
               <PlayerRankPie
                 label='Def'
                 sliceColor='#002f6c'
                 rank={+player.defensiveRank}
+                max={getPlayerStatMax(+player.playerLevel)}
               />
             </div>
           )}
@@ -282,6 +287,7 @@ export const PlayerCard = ({
                 rgb={[0, 47, 108]}
                 rank={+player.overallRank}
                 isSmall={size === 'medium'}
+                max={getPlayerStatMax(+player.playerLevel)}
               />
             </div>
           ) : (
@@ -294,18 +300,21 @@ export const PlayerCard = ({
                 rgb={[220, 45, 45]}
                 rank={+player.offensiveRank}
                 isSmall={size === 'medium'}
+                max={getPlayerStatMax(+player.playerLevel)}
               />
               <PlayerRankGraph
                 label='Passing'
                 rank={+player.passRank}
                 rgb={[0, 120, 138]}
                 isSmall={size === 'medium'}
+                max={getPlayerStatMax(+player.playerLevel)}
               />
               <PlayerRankGraph
                 label='Defense'
                 rank={+player.defensiveRank}
                 rgb={[0, 47, 108]}
                 isSmall={size === 'medium'}
+                max={getPlayerStatMax(+player.playerLevel)}
               />
             </div>
           )}

@@ -1,6 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { ReactSVG } from 'react-svg';
-import jrSharksLogo from '@images/icons/jr-sharks-logo.svg';
 import {
   StickButton,
   PlayerCard,
@@ -35,7 +34,7 @@ export const TeamPage = ({ history }) => {
   const student = useSelector((state) => state.studentState.student);
   const team = useSelector((state) => state.players.teamPlayers);
   const seasonState = useSelector((state) => state.season);
-  const studentTeam = seasonState.seasonTeam
+  const studentTeam = seasonState.seasonTeam;
   const scoutingState = useSelector((state) => state.players.scoutingState);
   const playerCardAnimationStates = {
     playerCard: useSelector((state) => state.tutorial.team.playerCard),
@@ -71,6 +70,7 @@ export const TeamPage = ({ history }) => {
           <FaqOverlay
             questions={faqs.team}
             title='Team Page FAQs'
+            level={+student.level}
             onStartTutorial={() => {
               dispatch(
                 toggleOverlay({
@@ -169,7 +169,7 @@ export const TeamPage = ({ history }) => {
       <PageBoard hideCloseBtn={true} includeBackButton={true}>
         <div className='team-page-board-header'>
           <div className='team-page-board-header-inner'>
-            <ReactSVG  src={studentTeam.logoSm} />
+            <ReactSVG src={studentTeam.logoSm} />
             <SharkieButton textPosition='left' onCallSharkie={onCallSharkie} />
           </div>
           <h2 className='color-primary'>{studentTeam.nameFull}</h2>

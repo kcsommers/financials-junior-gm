@@ -29,6 +29,7 @@ const objectivesReducer = (state = initialState, action) => {
       clonedState.currentObjectives[0].setIsComplete(
         !!(student.tutorials && student.tutorials.budget)
       );
+
       // check if they have players
       clonedState.currentObjectives[1].setIsComplete(
         getAvailableSlots(

@@ -34,12 +34,13 @@ import {
   setStudent,
   setInitialPlayersState,
   initializeSeason,
+  initializeObjectives,
 } from '@redux/actions';
 import { updateStudentById } from './../api-helper';
 import { cloneDeep } from 'lodash';
-import '@css/pages/HomePage.css';
 import { getMaxTeamRank } from '@data/players/players-utils';
 import { getStudentTeam } from '@data/season/season';
+import '@css/pages/HomePage.css';
 
 const homeSlides = [
   introSlides,
@@ -138,6 +139,7 @@ export const HomePage = ({ location, history }) => {
           setInitialPlayersState(updatedStudent.players, updatedStudent)
         );
         dispatch(initializeSeason(updatedStudent));
+        dispatch(initializeObjectives(updatedStudent));
         window.setTimeout(() => {
           dispatch(
             toggleOverlay({

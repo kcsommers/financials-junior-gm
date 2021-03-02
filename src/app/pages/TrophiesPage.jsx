@@ -1,6 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { ReactSVG } from 'react-svg';
-import jrSharksLogo from '@images/icons/jr-sharks-logo.svg';
 import {
   PageBoard,
   HeaderComponent,
@@ -34,9 +33,7 @@ const styles = {
   },
   actionContainer: {
     display: 'flex',
-    justifyContent: 'space-between',
-    width: '50%',
-    margin: '0 auto',
+    justifyContent: 'center',
     alignItems: 'center',
     marginBottom: '0.25rem',
   },
@@ -46,9 +43,9 @@ export const TrophiesPage = ({ history }) => {
   const dispatch = useDispatch();
   const student = useSelector((state) => state.studentState.student);
   const tutorialActive = useSelector((state) => state.tutorial.isActive);
-  const { inTransition, awards } = useSelector((state) => state.season);
-
-  console.log('TROPHIES::::: ', awards);
+  const { inTransition, awards, seasonTeam } = useSelector(
+    (state) => state.season
+  );
 
   const repeatSeason = () => {
     resetSeason(+student.level, student)
@@ -144,6 +141,12 @@ export const TrophiesPage = ({ history }) => {
     );
   });
 
+  const isTopThree =
+    inTransition &&
+    awards &&
+    awards[student.level - 1] &&
+    awards[student.level - 1].thirdCup;
+
   return (
     <div className='page-container'>
       <HeaderComponent
@@ -179,11 +182,11 @@ export const TrophiesPage = ({ history }) => {
               style={{
                 position: 'absolute',
                 left: 0,
-                top: 0,
+                top: '0.5rem',
                 paddingLeft: '1rem',
               }}
             >
-              <ReactSVG src={jrSharksLogo} />
+              <img src={seasonTeam.logoSm} alt={seasonTeam.name + 'Logo'} />
             </div>
             {inTransition && (
               <div
@@ -197,15 +200,20 @@ export const TrophiesPage = ({ history }) => {
                 >
                   Repeat Season
                 </span>
-                <span
-                  className={`box-shadow${
-                    +student.level === 3 ? ' disabled' : ''
-                  }`}
-                  style={styles.button}
-                  onClick={nextSeason}
-                >
-                  Start Next Season
-                </span>
+                {isTopThree && (
+                  <span
+                    className={`box-shadow${
+                      +student.level === 3 ? ' disabled' : ''
+                    }`}
+                    style={Object.assign(
+                      { ...styles.button },
+                      { marginLeft: '1rem' }
+                    )}
+                    onClick={nextSeason}
+                  >
+                    Start Next Season
+                  </span>
+                )}
               </div>
             )}
             <h6

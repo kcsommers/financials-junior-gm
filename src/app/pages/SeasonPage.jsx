@@ -21,7 +21,6 @@ import {
   scenarios,
 } from '@data/season/season';
 import { cloneDeep } from 'lodash';
-import { INJURE_PLAYER } from '@redux/actions';
 import { updateStudentById } from './../api-helper';
 import {
   throwScenario,
@@ -34,6 +33,7 @@ import {
   updateStudent,
   setSeasonComplete,
   addObjective,
+  INJURE_PLAYER,
 } from '@redux/actions';
 import {
   seasonSlides,
@@ -99,6 +99,7 @@ export const SeasonPage = ({ history }) => {
           <FaqOverlay
             questions={faqs.season}
             title='Season Page FAQs'
+            level={+student.level}
             onStartTutorial={() => {
               dispatch(
                 toggleOverlay({
@@ -150,9 +151,11 @@ export const SeasonPage = ({ history }) => {
   if (
     gameBlockState.currentOpponent &&
     gameBlockState.currentPhase &&
-    gameBlockState.currentPhase.phase === GamePhases.UP_NEXT
+    gameBlockState.currentPhase.phase === GamePhases.UP_NEXT &&
+    state.currentMessageIndex === 1
   ) {
     gameBlockState.currentPhase.messages[1] = `${seasonState.seasonTeam.name} vs ${gameBlockState.currentOpponent.name}`;
+    gameBlockState.message = gameBlockState.currentPhase.messages[1];
   }
 
   const endSeason = () => {
@@ -185,8 +188,8 @@ export const SeasonPage = ({ history }) => {
       savingsBudget: 0,
     })
       .then((res) => {
-        console.log('SEASON END RES:::: ', res);
         batch(() => {
+          dispatch(setStudent(res.updateStudent));
           dispatch(setSeasonComplete(res.updatedStudent));
           dispatch(
             toggleOverlay({
@@ -386,18 +389,6 @@ export const SeasonPage = ({ history }) => {
       <PageBoard hideCloseBtn={true} includeBackButton={true}>
         <div
           style={{
-            position: 'absolute',
-            right: '0',
-            top: 0,
-            padding: '0.5rem',
-            transform: 'scale(0.85)',
-            zIndex: tutorialActive ? 0 : 1,
-          }}
-        >
-          <SharkieButton textPosition='left' style onCallSharkie={onCallSharkie} />
-        </div>
-        <div
-          style={{
             display: 'flex',
             flexDirection: 'column',
             height: '100%',
@@ -482,15 +473,33 @@ export const SeasonPage = ({ history }) => {
                 of {seasonState.allOpponents.length}
               </div>
             </div>
-            <div className='game-block-board-container' style={{}}>
-              <h6 style={{textAlign: 'center', color: '#000000'}}>Results</h6>
+            <div className='game-block-board-container'>
+              <div
+                style={{
+                  position: 'absolute',
+                  left: '-1rem',
+                  top: 0,
+                  padding: '0.5rem',
+                  transform: 'scale(0.85) translateY(-65%)',
+                  zIndex: tutorialActive ? 0 : 1,
+                }}
+              >
+                <SharkieButton
+                  textPosition='right'
+                  style
+                  onCallSharkie={onCallSharkie}
+                />
+              </div>
+              <h6 style={{ textAlign: 'center', color: '#000000' }}>Results</h6>
               <GameBlockBoard />
             </div>
             <motion.div
               animate={animationStates.standings}
               className='standings-board-container'
             >
-              <h6 style={{textAlign: 'center', color: '#000000'}}>Standings</h6>
+              <h6 style={{ textAlign: 'center', color: '#000000' }}>
+                Standings
+              </h6>
               <StandingsBoard />
             </motion.div>
           </div>
