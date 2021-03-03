@@ -1,6 +1,6 @@
 import Slide from '../../Slide';
 
-const slideConfigs = [
+const introSlideConfigs = [
   {
     message:
       'Hello, my name is S.J. Sharkie. Welcome to our arena, the SAP Center!',
@@ -33,10 +33,47 @@ const slideConfigs = [
   },
   {
     message:
-      'Click on the budget hockey stick to learn how to create a budget.',
+      'Click on the Budget hockey stick to learn how to create a budget.',
     sharkie: 'play',
     hasButtons: true,
+    accentText: 'Budget',
   },
 ];
 
-export const homeSlides = slideConfigs.map((c) => new Slide(c));
+const transitionSlidesTeamConfigs = [
+  {
+    message: 'You have learned about how to plan your budget!',
+    sharkie: 'speak',
+    hasButtons: true,
+  },
+  {
+    message:
+      'Click on the Team hockey stick to learn how to spend the money in your budget to sign players.',
+    sharkie: 'speak',
+    hasButtons: true,
+    accentText: 'Team',
+  },
+];
+
+const transitionSlidesSeasonConfigs = [
+  {
+    message:
+      'Great! You have now built a team, and you are ready for the season',
+    sharkie: 'speak',
+    hasButtons: true,
+  },
+  {
+    message: 'Click on the Season hockey stick to start competing!',
+    sharkie: 'speak',
+    hasButtons: true,
+    accentText: 'Season',
+  },
+];
+
+export const introSlides = introSlideConfigs.map((c) => new Slide(c));
+export const transitionSlidesTeam = transitionSlidesTeamConfigs.map(
+  (c) => new Slide(c)
+);
+export const transitionSlidesSeason = transitionSlidesSeasonConfigs.map(
+  (c) => new Slide(c)
+);

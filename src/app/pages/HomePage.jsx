@@ -10,7 +10,9 @@ import {
   Overlay,
 } from '@components';
 import {
-  homeSlides,
+  introSlides,
+  transitionSlidesTeam,
+  transitionSlidesSeason,
   SharkieButton,
   Tutorial,
   getConfirmSlides,
@@ -41,7 +43,7 @@ const getDisabledStickBtns = (student) => {
   states.season =
     !student ||
     !student.tutorials ||
-    (!student.season && getAvailableSlots(playerProps, student) < 9);
+    (!student.season && getAvailableSlots(playerProps, student) > 0);
 
   return states;
 };
@@ -51,8 +53,6 @@ export const HomePage = ({ location, history }) => {
 
   const student = useSelector((state) => state.studentState.student);
 
-  console.log('HOME:::::::', student, tutorialActive);
-
   const { moneySpent, teamRank } = useSelector((state) => state.players);
 
   const { inTransition, awards, inSession } = useSelector(
@@ -61,7 +61,7 @@ export const HomePage = ({ location, history }) => {
 
   const dispatch = useDispatch();
 
-  const [tutorialSlides, setTutorialSlides] = useState([homeSlides]);
+  const [tutorialSlides, setTutorialSlides] = useState([introSlides]);
 
   const [disabledStickBtns, setDisabledStickBtns] = useState(
     getDisabledStickBtns(student)
@@ -85,6 +85,16 @@ export const HomePage = ({ location, history }) => {
           });
         })
         .catch((err) => console.error(err));
+    } else if (!student.tutorials.team) {
+      setDisabledStickBtns({
+        ...disabledStickBtns,
+        team: student.tutorials.budget,
+      });
+    } else if (!student.tutorials.season) {
+      setDisabledStickBtns({
+        ...disabledStickBtns,
+        season: getAvailableSlots(playerProps, student) > 0,
+      });
     } else {
       dispatch(setTutorialState({ isActive: false }));
     }
@@ -103,7 +113,7 @@ export const HomePage = ({ location, history }) => {
   );
 
   const onCallSharkie = () => {
-    startTutorial([getConfirmSlides('home'), homeSlides]);
+    startTutorial([getConfirmSlides('home'), introSlides]);
   };
 
   const objectivesBoard = (
@@ -114,20 +124,32 @@ export const HomePage = ({ location, history }) => {
     />
   );
 
-  const hasSeenTutorial = useRef(
-    !!(student && student.tutorials && student.tutorials.home)
-  );
+  const tutorialsRef = useRef(student.tutorials);
   useEffect(() => {
-    if (student && !hasSeenTutorial.current) {
-      hasSeenTutorial.current = true;
-      startTutorial([homeSlides]);
+    if (!tutorialsRef.current || !tutorialsRef.current.home) {
+      startTutorial([introSlides]);
+      tutorialsRef.current = { home: true };
+      return;
+    }
+
+    if (
+      tutorialsRef.current.home &&
+      tutorialsRef.current.budget &&
+      !tutorialsRef.current.team
+    ) {
+      startTutorial([transitionSlidesTeam]);
+      tutorialsRef.current = { ...tutorialsRef.current, team: true };
+    }
+
+    if (
+      (!tutorialsRef.current.season,
+      getAvailableSlots(playerProps, student) > 0)
+    ) {
+      startTutorial([transitionSlidesSeason]);
+      tutorialsRef.current = { ...tutorialsRef.current, season: true };
     }
   }, [student, startTutorial]);
-  hasSeenTutorial.current = !!(
-    student &&
-    student.tutorials &&
-    student.tutorials.home
-  );
+  tutorialsRef.current = student.tutorials;
 
   const nextSeason = useCallback(
     (levelChange) => {
@@ -181,8 +203,6 @@ export const HomePage = ({ location, history }) => {
       );
     });
   }
-
-  console.log('DISABELD:::: ', disabledStickBtns);
 
   return (
     <div className='home-page-container'>

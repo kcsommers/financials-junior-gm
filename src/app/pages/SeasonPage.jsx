@@ -76,7 +76,21 @@ export const SeasonPage = ({ history }) => {
   const currentPhase = gamePhases(+student.level)[state.currentPhaseIndex];
 
   const onTutorialComplete = () => {
-    dispatch(setTutorialState({ isActive: false }));
+    // check if this was the first time the tutorial was viewed
+    if (!student.tutorials.season) {
+      // if so, update the student object and enable budget button
+      const tutorials = { ...student.tutorials, season: true };
+      updateStudentById(student._id, { tutorials })
+        .then(({ updatedStudent }) => {
+          batch(() => {
+            dispatch(setTutorialState({ isActive: false }));
+            dispatch(setStudent(updatedStudent));
+          });
+        })
+        .catch((err) => console.error(err));
+    } else {
+      dispatch(setTutorialState({ isActive: false }));
+    }
   };
 
   const startTutorial = useCallback(
@@ -342,16 +356,9 @@ export const SeasonPage = ({ history }) => {
   useEffect(() => {
     if (student && !hasSeenTutorial.current) {
       hasSeenTutorial.current = true;
-      const clonedTutorials = cloneDeep(student.tutorials || {});
-      clonedTutorials.season = true;
-      updateStudentById(student._id, { tutorials: clonedTutorials })
-        .then((res) => {
-          dispatch(updateStudent({ tutorials: clonedTutorials }));
-          startTutorial([seasonSlides]);
-        })
-        .catch((err) => console.error(err));
+      startTutorial([seasonSlides]);
     }
-  }, [student, dispatch, startTutorial]);
+  }, [student, startTutorial]);
   hasSeenTutorial.current = !!(
     student &&
     student.tutorials &&

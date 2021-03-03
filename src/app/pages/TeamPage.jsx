@@ -15,18 +15,17 @@ import {
 import scoutStick from '@images/scout-stick.svg';
 import teamStick from '@images/team-stick.svg';
 import iceBgSmall from '@images/ice-bg-small.svg';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch, batch } from 'react-redux';
 import {
   teamSlides,
   SharkieButton,
   Tutorial,
   getConfirmSlides,
 } from '@tutorial';
-import { setTutorialState, toggleOverlay, updateStudent } from '@redux/actions';
+import { setTutorialState, toggleOverlay, setStudent } from '@redux/actions';
 import { updateStudentById } from './../api-helper';
-import { cloneDeep } from 'lodash';
-import '@css/pages/TeamPage.css';
 import { faqs } from '@data/faqs/faqs';
+import '@css/pages/TeamPage.css';
 
 export const TeamPage = ({ history }) => {
   const dispatch = useDispatch();
@@ -47,7 +46,21 @@ export const TeamPage = ({ history }) => {
   const [tutorialSlides, setTutorialSlides] = useState([teamSlides]);
 
   const onTutorialComplete = () => {
-    dispatch(setTutorialState({ isActive: false }));
+    // check if this was the first time the tutorial was viewed
+    if (!student.tutorials || !student.tutorials.team) {
+      // if so, update the student object and enable budget button
+      const tutorials = { home: true, budget: true, team: true };
+      updateStudentById(student._id, { tutorials })
+        .then(({ updatedStudent }) => {
+          batch(() => {
+            dispatch(setTutorialState({ isActive: false }));
+            dispatch(setStudent(updatedStudent));
+          });
+        })
+        .catch((err) => console.error(err));
+    } else {
+      dispatch(setTutorialState({ isActive: false }));
+    }
   };
 
   const startTutorial = useCallback(
@@ -122,16 +135,9 @@ export const TeamPage = ({ history }) => {
   useEffect(() => {
     if (student && !hasSeenTutorial.current) {
       hasSeenTutorial.current = true;
-      const clonedTutorials = cloneDeep(student.tutorials || {});
-      clonedTutorials.team = true;
-      updateStudentById(student._id, { tutorials: clonedTutorials })
-        .then((res) => {
-          dispatch(updateStudent({ tutorials: clonedTutorials }));
-          startTutorial([teamSlides]);
-        })
-        .catch((err) => console.error(err));
+      startTutorial([teamSlides]);
     }
-  }, [student, dispatch, startTutorial]);
+  }, [student, startTutorial]);
   hasSeenTutorial.current = !!(
     student &&
     student.tutorials &&
@@ -283,7 +289,14 @@ export const TeamPage = ({ history }) => {
               }`}
             >
               <p className='color-primary on-the-bench-text'>On the Bench</p>
-              {!scoutingState.isComplete ? <p className='color-primary on-the-bench-text' style={{marginTop: "35px"}} >Scout players to activate the bench!</p> : null}
+              {!scoutingState.isComplete ? (
+                <p
+                  className='color-primary on-the-bench-text'
+                  style={{ marginTop: '35px' }}
+                >
+                  Scout players to activate the bench!
+                </p>
+              ) : null}
               {scoutingState.isComplete && (
                 <div className='team-players-row team-bench-row'>
                   <PlayerCard

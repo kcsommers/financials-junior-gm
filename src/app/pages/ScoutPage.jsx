@@ -26,7 +26,7 @@ import {
   setTutorialState,
   updateScoutPlayer,
   toggleOverlay,
-  updateStudent,
+  setStudent,
   scoutingComplete,
 } from '@redux/actions';
 import { isEqual } from 'lodash';
@@ -78,7 +78,21 @@ export const ScoutPage = ({ history }) => {
   const [tutorialSlides, setTutorialSlides] = useState([scoutSlides]);
 
   const onTutorialComplete = () => {
-    dispatch(setTutorialState({ isActive: false }));
+    // check if this was the first time the tutorial was viewed
+    if (!student.tutorials || !student.tutorials.scout) {
+      // if so, update the student object and enable budget button
+      const tutorials = { home: true, budget: true, team: true, scout: true };
+      updateStudentById(student._id, { tutorials })
+        .then(({ updatedStudent }) => {
+          batch(() => {
+            dispatch(setTutorialState({ isActive: false }));
+            dispatch(setStudent(updatedStudent));
+          });
+        })
+        .catch((err) => console.error(err));
+    } else {
+      dispatch(setTutorialState({ isActive: false }));
+    }
   };
 
   const startTutorial = useCallback(
@@ -516,16 +530,9 @@ export const ScoutPage = ({ history }) => {
   useEffect(() => {
     if (student && !hasSeenTutorial.current) {
       hasSeenTutorial.current = true;
-      const clonedTutorials = cloneDeep(student.tutorials || {});
-      clonedTutorials.scout = true;
-      updateStudentById(student._id, { tutorials: clonedTutorials })
-        .then((res) => {
-          dispatch(updateStudent({ tutorials: clonedTutorials }));
-          startTutorial([scoutSlides]);
-        })
-        .catch((err) => console.error(err));
+      startTutorial([scoutSlides]);
     }
-  }, [student, dispatch, startTutorial]);
+  }, [student, startTutorial]);
   hasSeenTutorial.current = !!(
     student &&
     student.tutorials &&
