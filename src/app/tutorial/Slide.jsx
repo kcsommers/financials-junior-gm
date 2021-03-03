@@ -19,18 +19,37 @@ export default class Slide {
     this.transparentBg = config.transparentBg;
     this.slideAnimate = config.slideAnimate;
     this.canCancel = config.canCancel;
+    this.msgLong = this.message && this.message.length >= 80;
   }
 
   getJsx() {
     if (!this.accentText) {
-      return <p className='slide-msg color-primary'>{this.message}</p>;
+      return (
+        <p
+          className={`slide-msg color-primary${
+            this.msgLong ? ' slide-msg-long' : ''
+          }`}
+        >
+          {this.message}
+        </p>
+      );
     }
 
     const messageSplit = this.message.split(this.accentText);
     return (
-      <p className='slide-msg color-primary'>
+      <p
+        className={`slide-msg color-primary${
+          this.msgLong ? ' slide-msg-long' : ''
+        }`}
+      >
         {messageSplit[0]}
-        <span className='color-accent font-xl'>{this.accentText}</span>
+        <span
+          className={`color-accent font-xl${
+            this.msgLong ? ' slide-msg-long' : ''
+          }`}
+        >
+          {this.accentText}
+        </span>
         {messageSplit[1]}
       </p>
     );

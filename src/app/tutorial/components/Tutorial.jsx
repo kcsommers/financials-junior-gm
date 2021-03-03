@@ -2,10 +2,8 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useDispatch } from 'react-redux';
 import { SharkieComponent } from './Sharkie';
-import refreshBtn from '@images/refresh-btn.svg';
 import backBtn from '@images/back-btn.svg';
 import backBtnRvrsd from '@images/back-btn-reversed.svg';
-import checkBtn from '@images/check-btn.svg';
 import {
   setAnimationState,
   toggleOverlay,
@@ -58,7 +56,10 @@ export const Tutorial = ({ slides, onComplete }) => {
     currentSlides: slides[0],
     inTransition: false,
     isComplete: false,
+    inPreTransition: false,
   });
+
+  const [buttonsAnimating, setButtonsAnimating] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -80,14 +81,14 @@ export const Tutorial = ({ slides, onComplete }) => {
     });
   }
 
-  const tutorialComplete = () => {
+  const tutorialComplete = (canceled) => {
     setState({
       ...state,
       isComplete: true,
     });
     // allow a second to animate out
     window.setTimeout(() => {
-      onComplete();
+      onComplete(canceled);
     }, 1000);
   };
 
@@ -98,6 +99,7 @@ export const Tutorial = ({ slides, onComplete }) => {
       inPreTransition: false,
     });
 
+    setButtonsAnimating(false);
     window.setTimeout(() => {
       setState({
         ...state,
@@ -106,6 +108,7 @@ export const Tutorial = ({ slides, onComplete }) => {
         inTransition: false,
         inPreTransition: false,
       });
+      setButtonsAnimating(false);
     }, 2000);
   };
 
@@ -121,6 +124,10 @@ export const Tutorial = ({ slides, onComplete }) => {
         ...state,
         slideIndex: newIndex,
       });
+
+      window.setTimeout(() => {
+        setButtonsAnimating(false);
+      }, 1000);
     } else {
       // check for next lesson
       const currentSlidesIndex = slides.indexOf(state.currentSlides);
@@ -137,16 +144,21 @@ export const Tutorial = ({ slides, onComplete }) => {
   };
 
   const onButtonClick = (newIndex) => {
+    if (buttonsAnimating || state.inPreTransition || state.inTransition) {
+      return;
+    }
+
     setState({
       ...state,
       inPreTransition: true,
     });
+    setButtonsAnimating(true);
     window.setTimeout(updateSlide.bind(this, newIndex), 500);
   };
 
   const onCancelClick = () => {
     if (currentSlide.canCancel) {
-      tutorialComplete();
+      tutorialComplete(true);
       return;
     }
     const newIndex = !isNaN(currentSlide.repeatIndex)

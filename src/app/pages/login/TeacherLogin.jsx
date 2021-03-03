@@ -20,9 +20,9 @@ export const TeacherLogin = ({ history, isLoggedIn }) => {
 
   const onLoginSuccess = (teacher) => {
     setIsLoggingIn(false);
-    localStorage.setItem(LOGIN_STORAGE_KEY, true);
-    localStorage.setItem(USER_ROLE_STORAGE_KEY, UserRoles.TEACHER);
-    localStorage.setItem(TEACHER_ID_STORAGE_KEY, teacher._id);
+    sessionStorage.setItem(LOGIN_STORAGE_KEY, true);
+    sessionStorage.setItem(USER_ROLE_STORAGE_KEY, UserRoles.TEACHER);
+    sessionStorage.setItem(TEACHER_ID_STORAGE_KEY, teacher._id);
 
     dispatch(setLoginState(true, UserRoles.TEACHER));
     history.push('/teacher/home');
@@ -33,9 +33,9 @@ export const TeacherLogin = ({ history, isLoggedIn }) => {
     setIsLoggingIn(false);
     setLoginError(msg);
     console.error(msg, error);
-    localStorage.setItem(LOGIN_STORAGE_KEY, false);
-    localStorage.setItem(USER_ROLE_STORAGE_KEY, '');
-    localStorage.setItem(TEACHER_ID_STORAGE_KEY, '');
+    sessionStorage.setItem(LOGIN_STORAGE_KEY, false);
+    sessionStorage.setItem(USER_ROLE_STORAGE_KEY, '');
+    sessionStorage.setItem(TEACHER_ID_STORAGE_KEY, '');
 
     dispatch(setLoginState(false, ''));
     if (isLoggedIn) {

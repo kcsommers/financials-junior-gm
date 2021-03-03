@@ -75,7 +75,12 @@ export const SeasonPage = ({ history }) => {
   };
   const currentPhase = gamePhases(+student.level)[state.currentPhaseIndex];
 
-  const onTutorialComplete = () => {
+  const onTutorialComplete = (canceled) => {
+    if (canceled) {
+      dispatch(setTutorialState({ isActive: false }));
+      return;
+    }
+
     // check if this was the first time the tutorial was viewed
     if (!student.tutorials.season) {
       // if so, update the student object and enable budget button

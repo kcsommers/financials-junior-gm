@@ -43,7 +43,12 @@ export const BudgetPage = ({ history }) => {
 
   const [tutorialSlides, setTutorialSlides] = useState([budgetSlides]);
 
-  const onTutorialComplete = () => {
+  const onTutorialComplete = (canceled) => {
+    if (canceled) {
+      dispatch(setTutorialState({ isActive: false }));
+      return;
+    }
+
     // check if this was the first time the tutorial was viewed
     if (!student.tutorials || !student.tutorials.budget) {
       // if so, update the student object and enable budget button

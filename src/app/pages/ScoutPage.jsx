@@ -77,7 +77,12 @@ export const ScoutPage = ({ history }) => {
   const [offeredPlayersBoard, setOfferedPlayersBoard] = useState([]);
   const [tutorialSlides, setTutorialSlides] = useState([scoutSlides]);
 
-  const onTutorialComplete = () => {
+  const onTutorialComplete = (canceled) => {
+    if (canceled) {
+      dispatch(setTutorialState({ isActive: false }));
+      return;
+    }
+
     // check if this was the first time the tutorial was viewed
     if (!student.tutorials || !student.tutorials.scout) {
       // if so, update the student object and enable budget button

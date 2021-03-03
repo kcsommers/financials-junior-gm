@@ -40,8 +40,24 @@ p.slide-msg {
   font-size: 2.5rem;
 }
 
+p.slide-msg.slide-msg-long {
+  font-size: 2.25rem;
+}
+
+p.slide-msg.slide-msg-long > span.font-xl {
+  font-size: 2.655rem !important;
+}
+
 div.slide-wrap-small p.slide-msg {
   font-size: 1.85rem;
+}
+
+div.slide-wrap-small p.slide-msg.slide-msg-long {
+  font-size: 1.665rem;
+}
+
+div.slide-wrap-small p.slide-msg.slide-msg-long > span.font-xl {
+  font-size: 1.96rem !important;
 }
 
 div.btns-wrap {
