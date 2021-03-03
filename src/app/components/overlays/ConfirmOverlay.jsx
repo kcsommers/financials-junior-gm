@@ -4,7 +4,13 @@ import cancelBig from '@images/icons/cancel-big.svg';
 import confirmBig from '@images/icons/confirm-big.svg';
 import '@css/components/ConfirmOverlay.css';
 
-export const ConfirmOverlay = ({ children, message, cancel, confirm }) => {
+export const ConfirmOverlay = ({
+  children,
+  message,
+  cancel,
+  confirm,
+  isDisabled,
+}) => {
   return (
     <OverlayBoard>
       <div
@@ -17,6 +23,7 @@ export const ConfirmOverlay = ({ children, message, cancel, confirm }) => {
           flexDirection: 'column',
           textAlign: 'center',
           padding: '2rem 0',
+          pointerEvents: isDisabled ? 'none' : 'auto',
         }}
       >
         {children && <div className='confirm-overlay-top'>{children}</div>}

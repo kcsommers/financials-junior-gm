@@ -8,12 +8,14 @@ export const ConfirmTradeOverlay = ({
   confirm,
   releasingPlayer,
   signingPlayer,
+  isDisabled,
 }) => {
   return (
     <ConfirmOverlay
       message='Are you sure you want to trade these players?'
       cancel={cancel}
       confirm={confirm}
+      isDisabled={isDisabled}
     >
       <div className='confirm-trade-overlay'>
         <div style={{ display: 'flex', padding: '2rem 0rem 0 3rem' }}>

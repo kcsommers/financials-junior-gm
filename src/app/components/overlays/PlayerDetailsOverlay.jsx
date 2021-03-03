@@ -89,7 +89,11 @@ export const PlayerDetailsOverlay = ({
       toggleOverlay({
         isOpen: true,
         template: (
-          <TradePlayerOverlay releasingPlayer={player} student={student} />
+          <TradePlayerOverlay
+            releasingPlayer={player}
+            student={student}
+            isDisabled={isDisabled}
+          />
         ),
       })
     );
@@ -104,6 +108,7 @@ export const PlayerDetailsOverlay = ({
             confirm={releaseConfirmed}
             cancel={onCancel}
             player={player}
+            isDisabled={isDisabled}
           />
         ),
       })
@@ -162,6 +167,7 @@ export const PlayerDetailsOverlay = ({
             message={`Are you sure you want to add ${player.playerName} to the starting lineup?`}
             cancel={onCancel}
             confirm={moveToStartingLineupConfirmed}
+            isDisabled={isDisabled}
           >
             <div style={{ display: 'flex', padding: '2rem 3rem 0 3rem' }}>
               <div style={{ flex: 1 }}>

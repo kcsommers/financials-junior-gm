@@ -3,9 +3,7 @@ import { SET_ANIMATION_STATE } from '../../../redux/tutorials/tutorials.actions'
 import { TOGGLE_OVERLAY } from '../../../redux/overlay/overlay.actions';
 import { SignPlayerOverlay, PlayerDetailsOverlay } from '@components';
 import { ConfirmSignOverlay } from '../../../components/overlays/ConfirmSignOverlay';
-import { useDispatch, useSelector } from 'react-redux';
-// const student = useSelector((state) => state.studentState.student)
-// const team = useSelector((state) => state.players.teamPlayers)
+
 const player = {
   defensiveRank: '16',
   offensiveRank: '24',
@@ -129,7 +127,12 @@ const slideConfigs = [
         type: TOGGLE_OVERLAY,
         payload: {
           isOpen: true,
-          template: <SignPlayerOverlay assignment='fOne'></SignPlayerOverlay>,
+          template: (
+            <SignPlayerOverlay
+              assignment='fOne'
+              isDisabled={true}
+            ></SignPlayerOverlay>
+          ),
           canClose: false,
         },
       },
@@ -183,7 +186,7 @@ const slideConfigs = [
         type: TOGGLE_OVERLAY,
         payload: {
           isOpen: true,
-          template: <ConfirmSignOverlay player={player} />,
+          template: <ConfirmSignOverlay player={player} isDisabled={true} />,
           canClose: false,
         },
       },
@@ -356,7 +359,7 @@ const slideConfigs = [
         type: TOGGLE_OVERLAY,
         payload: {
           isOpen: false,
-          template: <ConfirmSignOverlay player={player} />,
+          template: <ConfirmSignOverlay player={player} isDisabled={true} />,
           canClose: false,
         },
       },
@@ -379,7 +382,7 @@ const slideConfigs = [
         type: TOGGLE_OVERLAY,
         payload: {
           isOpen: true,
-          template: <PlayerDetailsOverlay player={player} />,
+          template: <PlayerDetailsOverlay player={player} isDisabled={true} />,
           canClose: false,
         },
       },

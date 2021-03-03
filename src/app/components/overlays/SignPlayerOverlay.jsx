@@ -113,6 +113,7 @@ export const SignPlayerOverlay = ({ assignment, isDisabled }) => {
             position={assignment}
             confirm={signConfirmed.bind(this, player, undefined)}
             cancel={signCancelled}
+            isDisabled={isDisabled}
           />
         ),
       })
