@@ -17,7 +17,6 @@ export const HeaderComponent = ({
   inverse,
   largeStick,
   level,
-  tutorialActive,
   inTransition,
 }) => {
   const stick = (
@@ -27,8 +26,7 @@ export const HeaderComponent = ({
       image={stickBtn}
       inverse={inverse}
       large={largeStick}
-      tutorialActive={tutorialActive}
-      inTransition={inTransition}
+      isDisabled={inTransition}
     />
   );
 

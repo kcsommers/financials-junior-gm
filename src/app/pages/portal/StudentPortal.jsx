@@ -10,13 +10,23 @@ import { UserRoles } from '@data/auth/auth';
 import { Redirect } from 'react-router-dom';
 import { getCurrentUser } from './../../api-helper';
 import { LoadingSpinner } from '@components';
+import { getAvailableSlots } from '@data/players/players-utils';
+import { playerProps } from '@data/players/players';
 
-export const StudentPortal = ({ screen, isLoggedIn, userRole }) => {
+export const StudentPortal = ({
+  screen,
+  isLoggedIn,
+  userRole,
+  pageName,
+  history,
+}) => {
   const dispatch = useDispatch();
 
   const student = useSelector((state) => state.studentState.student);
 
-  const [shouldRedirect, setShouldRedirect] = useState(false);
+  const [shouldRedirectToDashboard, setShouldRedirectToDashboard] = useState(
+    false
+  );
 
   const initializeStudent = useCallback(
     (student) => {
@@ -32,11 +42,22 @@ export const StudentPortal = ({ screen, isLoggedIn, userRole }) => {
 
   useEffect(() => {
     if (!isLoggedIn || userRole !== UserRoles.STUDENT) {
-      setShouldRedirect(true);
+      setShouldRedirectToDashboard(true);
       return;
     }
 
     if (student) {
+      // make sure pages can be visited
+      if (
+        (pageName !== 'home' && !student.tutorials) ||
+        (pageName === 'budget' && !student.tutorials.home) ||
+        (pageName === 'team' && !student.tutorials.budget) ||
+        (pageName === 'season' &&
+          !student.season &&
+          getAvailableSlots(playerProps, student) < 9)
+      ) {
+        history.push('/home');
+      }
       return;
     }
     getCurrentUser()
@@ -44,20 +65,31 @@ export const StudentPortal = ({ screen, isLoggedIn, userRole }) => {
         if (!res || !res.data) {
           throw res;
         }
-
-        if (res.data.role === UserRoles.STUDENT) {
-          initializeStudent(res.data);
+        const user = res.data;
+        if (user.role === UserRoles.STUDENT) {
+          if (
+            (pageName !== 'home' && !user.tutorials) ||
+            (pageName === 'budget' && !user.tutorials.home) ||
+            (pageName === 'team' && !user.tutorials.budget) ||
+            (pageName === 'season' &&
+              !res.data.season &&
+              getAvailableSlots(playerProps, user) < 9)
+          ) {
+            history.push('/home');
+            return;
+          }
+          initializeStudent(user);
         } else {
-          setShouldRedirect(true);
+          setShouldRedirectToDashboard(true);
         }
       })
       .catch((err) => {
         console.error('Unexpected error fetching current user', err);
-        setShouldRedirect(true);
+        setShouldRedirectToDashboard(true);
       });
-  }, [isLoggedIn, initializeStudent, student, userRole]);
+  }, [isLoggedIn, initializeStudent, student, userRole, pageName]);
 
-  if (shouldRedirect) {
+  if (shouldRedirectToDashboard) {
     return <Redirect to='dashboard' />;
   }
 
