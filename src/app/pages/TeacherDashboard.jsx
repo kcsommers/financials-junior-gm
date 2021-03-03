@@ -58,8 +58,8 @@ class TeacherDashboard extends React.Component {
 
   getStudentList = () => {
     let id = null;
-    if (localStorage.getItem(TEACHER_ID_STORAGE_KEY)) {
-      id = localStorage.getItem(TEACHER_ID_STORAGE_KEY);
+    if (sessionStorage.getItem(TEACHER_ID_STORAGE_KEY)) {
+      id = sessionStorage.getItem(TEACHER_ID_STORAGE_KEY);
     }
     api
       .getStudentList(id)
@@ -178,9 +178,9 @@ class TeacherDashboard extends React.Component {
     api
       .logout()
       .then(() => {
-        localStorage.setItem(LOGIN_STORAGE_KEY, false);
-        localStorage.setItem(USER_ROLE_STORAGE_KEY, '');
-        localStorage.setItem(TEACHER_ID_STORAGE_KEY, '');
+        sessionStorage.setItem(LOGIN_STORAGE_KEY, false);
+        sessionStorage.setItem(USER_ROLE_STORAGE_KEY, '');
+        sessionStorage.setItem(TEACHER_ID_STORAGE_KEY, '');
         this.props.setLoginState();
         this.props.history.push('/dashboard');
       })

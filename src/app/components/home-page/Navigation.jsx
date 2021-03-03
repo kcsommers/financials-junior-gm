@@ -70,9 +70,9 @@ export const Navigation = ({ tutorialActive, student }) => {
   const doLogout = () => {
     logout()
       .then(() => {
-        localStorage.setItem(LOGIN_STORAGE_KEY, false);
-        localStorage.setItem(USER_ROLE_STORAGE_KEY, '');
-        localStorage.setItem(STUDENT_ID_STORAGE_KEY, '');
+        sessionStorage.setItem(LOGIN_STORAGE_KEY, false);
+        sessionStorage.setItem(USER_ROLE_STORAGE_KEY, '');
+        sessionStorage.setItem(STUDENT_ID_STORAGE_KEY, '');
 
         dispatch(setLoginState(false, ''));
         history.push('/dashboard');

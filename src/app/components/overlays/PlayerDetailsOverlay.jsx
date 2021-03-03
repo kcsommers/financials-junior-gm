@@ -32,6 +32,7 @@ export const PlayerDetailsOverlay = ({
   player,
   student,
   seasonState,
+  isDisabled,
   includeActions = true,
 }) => {
   const dispatch = useDispatch();
@@ -189,6 +190,7 @@ export const PlayerDetailsOverlay = ({
           justifyContent: 'center',
           flexDirection: 'column',
           textAlign: 'center',
+          pointerEvents: isDisabled ? 'none' : 'auto',
         }}
       >
         <div className='player-details-player-wrap'>

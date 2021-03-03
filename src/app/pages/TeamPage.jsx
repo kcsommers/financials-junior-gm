@@ -45,7 +45,12 @@ export const TeamPage = ({ history }) => {
 
   const [tutorialSlides, setTutorialSlides] = useState([teamSlides]);
 
-  const onTutorialComplete = () => {
+  const onTutorialComplete = (canceled) => {
+    if (canceled) {
+      dispatch(setTutorialState({ isActive: false }));
+      return;
+    }
+
     // check if this was the first time the tutorial was viewed
     if (!student.tutorials || !student.tutorials.team) {
       // if so, update the student object and enable budget button
@@ -108,6 +113,7 @@ export const TeamPage = ({ history }) => {
             player={player}
             student={student}
             seasonState={seasonState}
+            isDisabled={tutorialActive}
           />
         ),
       })
@@ -123,6 +129,7 @@ export const TeamPage = ({ history }) => {
             team={team}
             assignment={assignment}
             student={student}
+            isDisabled={tutorialActive}
           />
         ),
       })

@@ -67,7 +67,12 @@ export const HomePage = ({ location, history }) => {
     getDisabledStickBtns(student)
   );
 
-  const onTutorialComplete = () => {
+  const onTutorialComplete = (canceled) => {
+    if (canceled) {
+      dispatch(setTutorialState({ isActive: false }));
+      return;
+    }
+
     // check if this was the first time the tutorial was viewed
     if (!student.tutorials || !student.tutorials.home) {
       // if so, update the student object and enable budget button
