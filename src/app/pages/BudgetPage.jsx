@@ -19,12 +19,11 @@ import {
 import {
   setTutorialState,
   setSavings,
-  updateStudent,
+  setStudent,
   toggleOverlay,
   setObjectiveComplete,
 } from '@redux/actions';
 import { updateStudentById } from '../api-helper';
-import { cloneDeep } from 'lodash';
 import { Objectives } from '@data/objectives/objectives';
 import { getDollarString } from '@utils';
 import { faqs } from '@data/faqs/faqs';
@@ -45,10 +44,25 @@ export const BudgetPage = ({ history }) => {
   const [tutorialSlides, setTutorialSlides] = useState([budgetSlides]);
 
   const onTutorialComplete = () => {
-    batch(() => {
-      dispatch(setTutorialState({ isActive: false }));
-      dispatch(setObjectiveComplete(Objectives.LEARN_BUDGET, true));
-    });
+    // check if this was the first time the tutorial was viewed
+    if (!student.tutorials || !student.tutorials.budget) {
+      // if so, update the student object and enable budget button
+      const tutorials = { home: true, budget: true };
+      updateStudentById(student._id, { tutorials })
+        .then(({ updatedStudent }) => {
+          batch(() => {
+            dispatch(setTutorialState({ isActive: false }));
+            dispatch(setStudent(updatedStudent));
+            dispatch(setObjectiveComplete(Objectives.LEARN_BUDGET, true));
+          });
+        })
+        .catch((err) => console.error(err));
+    } else {
+      batch(() => {
+        dispatch(setTutorialState({ isActive: false }));
+        dispatch(setObjectiveComplete(Objectives.LEARN_BUDGET, true));
+      });
+    }
   };
 
   const startTutorial = useCallback(
@@ -112,21 +126,14 @@ export const BudgetPage = ({ history }) => {
   };
 
   const hasSeenTutorial = useRef(
-    !!(student && student.tutorials && student.tutorials.home)
+    !!(student && student.tutorials && student.tutorials.budget)
   );
   useEffect(() => {
     if (student && !hasSeenTutorial.current) {
       hasSeenTutorial.current = true;
-      const clonedTutorials = cloneDeep(student.tutorials || {});
-      clonedTutorials.budget = true;
-      updateStudentById(student._id, { tutorials: clonedTutorials })
-        .then((res) => {
-          dispatch(updateStudent({ tutorials: clonedTutorials }));
-          startTutorial([budgetSlides]);
-        })
-        .catch((err) => console.error(err));
+      startTutorial([budgetSlides]);
     }
-  }, [student, dispatch, startTutorial]);
+  }, [student, startTutorial]);
   hasSeenTutorial.current = !!(
     student &&
     student.tutorials &&

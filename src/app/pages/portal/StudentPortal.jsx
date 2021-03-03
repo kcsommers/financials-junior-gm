@@ -54,9 +54,14 @@ export const StudentPortal = ({
         (pageName === 'team' && !student.tutorials.budget) ||
         (pageName === 'season' &&
           !student.season &&
-          getAvailableSlots(playerProps, student) < 9)
+          getAvailableSlots(playerProps, student) > 0)
       ) {
         history.push('/home');
+        return;
+      }
+      if (pageName === 'scout' && !student.tutorials.team) {
+        history.push('/team');
+        return;
       }
       return;
     }
@@ -67,18 +72,22 @@ export const StudentPortal = ({
         }
         const user = res.data;
         if (user.role === UserRoles.STUDENT) {
+          initializeStudent(user);
           if (
             (pageName !== 'home' && !user.tutorials) ||
             (pageName === 'budget' && !user.tutorials.home) ||
             (pageName === 'team' && !user.tutorials.budget) ||
             (pageName === 'season' &&
               !res.data.season &&
-              getAvailableSlots(playerProps, user) < 9)
+              getAvailableSlots(playerProps, user) > 0)
           ) {
             history.push('/home');
             return;
           }
-          initializeStudent(user);
+          if (pageName === 'scout' && !user.tutorials.team) {
+            history.push('/team');
+            return;
+          }
         } else {
           setShouldRedirectToDashboard(true);
         }
@@ -87,7 +96,7 @@ export const StudentPortal = ({
         console.error('Unexpected error fetching current user', err);
         setShouldRedirectToDashboard(true);
       });
-  }, [isLoggedIn, initializeStudent, student, userRole, pageName]);
+  }, [isLoggedIn, initializeStudent, student, userRole, pageName, history]);
 
   if (shouldRedirectToDashboard) {
     return <Redirect to='dashboard' />;
