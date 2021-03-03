@@ -93,7 +93,7 @@ export const HomePage = ({ location, history }) => {
     } else if (!student.tutorials.team) {
       setDisabledStickBtns({
         ...disabledStickBtns,
-        team: student.tutorials.budget,
+        team: !student.tutorials.budget,
       });
     } else if (!student.tutorials.season) {
       setDisabledStickBtns({
@@ -147,8 +147,8 @@ export const HomePage = ({ location, history }) => {
     }
 
     if (
-      (!tutorialsRef.current.season,
-      getAvailableSlots(playerProps, student) > 0)
+      !tutorialsRef.current.season &&
+      getAvailableSlots(playerProps, student) === 0
     ) {
       startTutorial([transitionSlidesSeason]);
       tutorialsRef.current = { ...tutorialsRef.current, season: true };
