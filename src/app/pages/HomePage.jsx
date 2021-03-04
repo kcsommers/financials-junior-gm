@@ -302,7 +302,7 @@ export const HomePage = ({ location, history }) => {
               isDisabled={disabledStickBtns.budget}
             />
             <p
-              className={`stick-btn-text${
+              className={`stick-btn-text stick-btn-text-right${
                 tutorialActive ? ' transparent' : ''
               }`}
             >
@@ -333,7 +333,7 @@ export const HomePage = ({ location, history }) => {
               image={trophiesStick}
             />
             <p
-              className={`stick-btn-text${
+              className={`stick-btn-text stick-btn-text-right${
                 tutorialActive ? ' transparent' : ''
               }`}
             >

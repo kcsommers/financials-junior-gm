@@ -7,6 +7,9 @@ import App from './app/App';
 import store from './app/redux/store';
 import { Provider } from 'react-redux';
 import * as serviceWorker from './serviceWorker';
+import { loadImages } from './app/image-loader';
+
+loadImages();
 
 ReactDOM.render(
   <React.StrictMode>

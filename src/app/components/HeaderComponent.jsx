@@ -1,4 +1,3 @@
-import { ReactSVG } from 'react-svg';
 import financialsLogo from '@images/financials-logo.svg';
 import { StickButton } from './StickButton';
 import { ObjectivesBoard } from './ObjectivesBoard';
@@ -43,7 +42,7 @@ export const HeaderComponent = ({
   const inner = inverse ? [board, stick] : [stick, board];
   return (
     <div style={styles}>
-      <ReactSVG src={financialsLogo} />
+      <img src={financialsLogo} alt='Financials Junior GM Program logo' />
       <div
         className='header-inner'
         style={{

@@ -1,4 +1,3 @@
-import { ReactSVG } from 'react-svg';
 import { OverlayBoard } from '@components';
 import cancelBig from '@images/icons/cancel-big.svg';
 import confirmBig from '@images/icons/confirm-big.svg';
@@ -39,18 +38,28 @@ export const ConfirmOverlay = ({
           >
             <div>
               <p>Cancel</p>
-              <ReactSVG
-                style={{ cursor: 'pointer' }}
+              <img
                 src={cancelBig}
                 onClick={cancel}
+                style={{
+                  display: 'inline-block',
+                  marginTop: '0.25rem',
+                  cursor: 'pointer',
+                }}
+                alt='Cancel'
               />
             </div>
             <div>
               <p>Confirm</p>
-              <ReactSVG
-                style={{ cursor: 'pointer' }}
+              <img
                 src={confirmBig}
                 onClick={confirm}
+                style={{
+                  display: 'inline-block',
+                  marginTop: '0.25rem',
+                  cursor: 'pointer',
+                }}
+                alt='Confirm'
               />
             </div>
           </div>

@@ -1,5 +1,4 @@
 import { OverlayBoard, PlayerCard, TeamBudgetState } from '@components';
-import { ReactSVG } from 'react-svg';
 import arrowRight from '@images/icons/arrow-right.svg';
 import arrowLeft from '@images/icons/arrow-left.svg';
 
@@ -47,8 +46,8 @@ export const PlayersTradedOverlay = ({ signedPlayer, releasedPlayer }) => {
                   flexDirection: 'column',
                 }}
               >
-                <ReactSVG src={arrowRight} />
-                <ReactSVG src={arrowLeft} />
+                <img src={arrowRight} alt='Arrow Right' />
+                <img src={arrowLeft} alt='Arrow Left' />
               </div>
               <div style={{ flex: 1 }}>
                 <h4 className='color-primary'>IN</h4>

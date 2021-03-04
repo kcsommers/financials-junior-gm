@@ -1,6 +1,4 @@
 import { OverlayBoard } from '@components';
-import { addScaleCorrection } from 'framer-motion';
-import { ReactSVG } from 'react-svg';
 
 export const NewLevelOverlay = ({ team }) => {
   return (
@@ -68,9 +66,14 @@ export const NewLevelOverlay = ({ team }) => {
         </p>
         <br></br>
         <br></br>
-        <ReactSVG
+        <img
           src={team.logo}
-          style={{ marginLeft: 'auto', marginRight: 'auto', marginTop: '20px', transform: 'scale(1.3)' }}
+          alt={team.name + ' logo'}
+          style={{
+            marginLeft: 'auto',
+            marginRight: 'auto',
+            width: '212px',
+          }}
         />
         <br></br>
         <p
@@ -90,40 +93,44 @@ export const NewLevelOverlay = ({ team }) => {
         >
           You now have a larger budget and higher ranked players to sign!
         </p>
-        {team.name == 'Barracuda' && <p
-          style={{
-            textAlign: 'center',
-            fontSize: '1.5rem',
-            fontWeight: 'bold',
-            color: '#006d75',
-            position: 'relative',
-            transform: '',
-            marginRight: 'auto',
-            marginLeft: 'auto',
-            marginTop: 'rem',
-            padding: '0 3.5rem',
-            lineHeight: '3.5rem',
-          }}
-        >
-          Remember to try and save $20-30 of your total budget!
-        </p>}
-        {team.name == 'Sharks' && <p
-          style={{
-            textAlign: 'center',
-            fontSize: '1.5rem',
-            fontWeight: 'bold',
-            color: '#006d75',
-            position: 'relative',
-            transform: '',
-            marginRight: 'auto',
-            marginLeft: 'auto',
-            marginTop: 'rem',
-            padding: '0 3.5rem',
-            lineHeight: '3.5rem',
-          }}
-        >
-          Remember to try and save $200-300 of your total budget!
-        </p>}
+        {team.name == 'Barracuda' && (
+          <p
+            style={{
+              textAlign: 'center',
+              fontSize: '1.5rem',
+              fontWeight: 'bold',
+              color: '#006d75',
+              position: 'relative',
+              transform: '',
+              marginRight: 'auto',
+              marginLeft: 'auto',
+              marginTop: 'rem',
+              padding: '0 3.5rem',
+              lineHeight: '3.5rem',
+            }}
+          >
+            Remember to try and save $20-30 of your total budget!
+          </p>
+        )}
+        {team.name == 'Sharks' && (
+          <p
+            style={{
+              textAlign: 'center',
+              fontSize: '1.5rem',
+              fontWeight: 'bold',
+              color: '#006d75',
+              position: 'relative',
+              transform: '',
+              marginRight: 'auto',
+              marginLeft: 'auto',
+              marginTop: 'rem',
+              padding: '0 3.5rem',
+              lineHeight: '3.5rem',
+            }}
+          >
+            Remember to try and save $200-300 of your total budget!
+          </p>
+        )}
       </div>
     </OverlayBoard>
   );
