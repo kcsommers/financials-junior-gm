@@ -1,5 +1,3 @@
-import closeBtn from '@images/icons/cancel.svg';
-import { Link } from 'react-router-dom';
 import { BackButton } from '@components';
 
 const styles = {

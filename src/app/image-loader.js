@@ -24,9 +24,11 @@ import arrowLeft from '@images/icons/arrow-left.svg';
 import binoculars from '@images/icons/binoculars.svg';
 import sharkieBtn from '@images/sharkie-btn.svg';
 import iceBgSmall from '@images/ice-bg-small.svg';
+import backBtnRvrsd from '@images/back-btn-reversed.svg';
 
 const images = [
   backBtn,
+  backBtnRvrsd,
   financialsLogo,
   ice,
   iceBgSmall,
