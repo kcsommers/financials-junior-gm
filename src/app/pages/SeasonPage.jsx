@@ -320,9 +320,7 @@ export const SeasonPage = ({ history }) => {
       const results = getGameResult(teamRank, gameBlockState.currentOpponent);
       clonedState.currentMessageIndex = results.messageIndex;
       // clonedState.results.push(results);
-      dispatch(
-        gameEnded(results, gameBlockState.currentOpponent, +student.level)
-      );
+      dispatch(gameEnded(results, gameBlockState.currentOpponent));
     }
 
     setState(clonedState);

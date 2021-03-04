@@ -146,7 +146,7 @@ export const PlayerDetailsOverlay = ({
             ) === 0;
 
           if (seasonState.currentScenario && objectiveComplete) {
-            dispatch(gameBlockEnded());
+            dispatch(gameBlockEnded(student));
             dispatch(removeObjective(Objectives.SEASON_SCENARIO));
           } else {
             dispatch(
