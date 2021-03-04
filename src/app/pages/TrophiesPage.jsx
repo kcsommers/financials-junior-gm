@@ -218,7 +218,7 @@ export const TrophiesPage = ({ history }) => {
                     )}
                     onClick={nextSeason}
                   >
-                    Start Next Season
+                    Accept Promotion
                   </span>
                 )}
               </div>

@@ -22,7 +22,7 @@ const slideConfigs = [
     timer: 0,
   },
   {
-    message: 'This plan is called a Budget',
+    message: 'This plan is called a Budget.',
     sharkie: 'speak',
     accentText: 'Budget',
     hasButtons: true,
@@ -68,7 +68,7 @@ const slideConfigs = [
     timer: 0,
   },
   {
-    message: 'It is divided into two parts',
+    message: 'It is divided into two parts.',
     sharkie: 'speak',
     timer: 0,
     hasButtons: true,
@@ -98,9 +98,9 @@ const slideConfigs = [
     ],
   },
   {
-    message: 'Your Spending Budget...',
+    message: 'The first part of your budget is your Spending budget.',
     sharkie: 'speak',
-    accentText: 'Spending Budget',
+    accentText: 'Spending',
     timer: 0,
     hasButtons: true,
     exitActions: [
@@ -129,7 +129,7 @@ const slideConfigs = [
     ],
   },
   {
-    message: 'And your Savings',
+    message: 'The second part of your budget is your Savings.',
     sharkie: 'speak',
     timer: 0,
     hasButtons: true,
@@ -160,7 +160,7 @@ const slideConfigs = [
     ],
   },
   {
-    message: 'Your spending budget is what you use to sign players.',
+    message: 'Your spending money is what you use to sign players.',
     sharkie: 'speak',
     timer: 0,
     hasButtons: true,
@@ -273,13 +273,13 @@ const slideConfigs = [
   },
   {
     message:
-      'If you have more questions, click on the as S.J. Sharkie button and choose the question you are looking for.',
+      'If you have more questions about your budget, click on the ask S.J. Sharkie button and choose the question you are looking for.',
     sharkie: 'speak',
     hasButtons: true,
   },
   {
     message:
-      'Once you are done exploring the budget page, click on the Budget hockey stick in the right hand corner.',
+      'Once you are done exploring the budget page, click on the blue hockey stick in the right hand corner that says Budget.',
     sharkie: 'speak',
     hasButtons: true,
     accentText: 'Budget',

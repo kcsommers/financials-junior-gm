@@ -3,80 +3,73 @@ import { SET_ANIMATION_STATE } from '@redux/actions';
 
 const slideConfigs = [
   {
-    message: 'Okay for your final objective, you will Scout new players!',
+    message: 'Welcome to the Scouting page!',
     sharkie: 'play',
-    accentText: 'Scout',
-    timer: 0,
+    accentText: 'Scouting',
+    hasButtons: true,
+  },
+  {
+    message: 'You will learn how to scout players.',
+    sharkie: 'speak',
     hasButtons: true,
   },
   {
     message: 'But what does Scouting mean?',
     sharkie: 'speak',
+    hasButtons: true,
     accentText: 'Scouting',
-    timer: 0,
-    hasButtons: true,
   },
   {
     message:
-      'Scouting is when a general manager studies new players to see how well they play!',
-    sharkie: 'speak',
-    accentText: 'Scouting',
-    timer: 0,
-    hasButtons: true,
-  },
-  {
-    message:
-      'Then the general manager can decide which players they want to sign to their team!',
-    sharkie: 'speak',
-    timer: 0,
-    hasButtons: true,
-  },
-  {
-    message: 'To sign them the general manager has to offer them money.',
-    sharkie: 'speak',
-    hasButtons: true,
-    timer: 0,
-  },
-  {
-    message:
-      'If a general manager really likes a player, they can offer more money to sign them!',
-    sharkie: 'speak',
-    timer: 0,
-    hasButtons: true,
-  },
-  {
-    message:
-      'But if a general manager does not offer them enough money, then the player can say no.',
-    sharkie: 'speak',
-    timer: 0,
-    hasButtons: true,
-  },
-  {
-    message:
-      'So when Scouting, a general manager has to be careful in deciding which players they like...',
+      'Scouting is when a general manager studies new players to see how well they play.',
     sharkie: 'speak',
     accentText: 'Scouting',
-    timer: 0,
     hasButtons: true,
   },
   {
-    message: 'And how much money to give them to join their team!',
+    message:
+      'Then the general manager can decide which players they want to sign to their team.',
     sharkie: 'speak',
-    timer: 0,
     hasButtons: true,
   },
   {
-    message: 'Do you understand what Scouting is?',
+    message: 'The general manager has to offer players money to sign them.',
     sharkie: 'speak',
-    accentText: 'Scouting',
-    timer: 0,
     hasButtons: true,
-    repeatIndex: 0,
   },
   {
-    message: 'Cool! Let me show you how its done!',
+    message:
+      'If a general manager really likes a player, they can offer more money to sign them.',
     sharkie: 'speak',
-    timer: 0,
+    hasButtons: true,
+  },
+  {
+    message:
+      'If a general manager does not offer them enough money, the player can say no to the offer.',
+    sharkie: 'speak',
+    hasButtons: true,
+  },
+  {
+    message:
+      'A general manager has to decide which players fit their team best.',
+    sharkie: 'speak',
+    hasButtons: true,
+  },
+  {
+    message: 'Every team is different and requires different types of players.',
+    sharkie: 'speak',
+    hasButtons: true,
+  },
+  {
+    message:
+      'A general manager has to make sure they offer each player the right amount of money.',
+    sharkie: 'speak',
+    hasButtons: true,
+  },
+  {
+    message:
+      "Now that you know a little more about scouting, let me show you how it's done.",
+    sharkie: 'speak',
     hasButtons: true,
     exitActions: [
       {
@@ -98,10 +91,9 @@ const slideConfigs = [
     ],
   },
   {
-    message: 'These are all the new players!',
+    message: 'These are all the new players.',
     sharkie: 'speak',
     small: true,
-    timer: 0,
     hasButtons: true,
     slideAnimate: {
       y: '50%',
@@ -109,11 +101,10 @@ const slideConfigs = [
     },
   },
   {
-    message: "They don't have a contract value yet!",
+    message: "They don't have a contract value yet.",
     sharkie: 'speak',
     small: true,
     hasButtons: true,
-    timer: 0,
     slideAnimate: {
       y: '50%',
       x: '58%',
@@ -121,11 +112,10 @@ const slideConfigs = [
   },
   {
     message:
-      'You have to decide how much money you want to offer them in their contract.',
+      'You get to decide how much money you want to offer each player to play for your team.',
     sharkie: 'speak',
     small: true,
     hasButtons: true,
-    timer: 0,
     slideAnimate: {
       y: '50%',
       x: '58%',
@@ -179,11 +169,10 @@ const slideConfigs = [
     ],
   },
   {
-    message: 'There are 3 levels.',
+    message: 'There are 3 levels of contract values.',
     sharkie: 'lean',
     small: true,
     hasButtons: true,
-    timer: 0,
     slideAnimate: {
       y: '50%',
       x: '-58%',
@@ -220,11 +209,10 @@ const slideConfigs = [
     ],
   },
   {
-    message: 'Each level has a different dollar value!',
+    message: 'Each level has a different dollar amount.',
     sharkie: 'lean',
     small: true,
     hasButtons: true,
-    timer: 0,
     slideAnimate: {
       y: '50%',
       x: '-58%',
@@ -262,11 +250,10 @@ const slideConfigs = [
   },
   {
     message:
-      'Players will be offered the dollar value in the level they are placed in.',
+      'Players will be offered the dollar amount of the level they are placed in.',
     sharkie: 'lean',
     hasButtons: true,
     small: true,
-    timer: 0,
     slideAnimate: {
       y: '50%',
       x: '-58%',
@@ -294,11 +281,10 @@ const slideConfigs = [
   },
   {
     message:
-      'You can look at their rank to see how good they are for your team!',
+      'You can look at their rank and position to see how they would fit on your team.',
     sharkie: 'lean',
     hasButtons: true,
     small: true,
-    timer: 0,
     slideAnimate: {
       y: '50%',
       x: '-58%',
@@ -342,10 +328,9 @@ const slideConfigs = [
     ],
   },
   {
-    message: 'And drag them into the level you choose.',
+    message: 'Drag them into the level you choose.',
     sharkie: 'lean',
     small: true,
-    timer: 0,
     hasButtons: true,
     slideAnimate: {
       y: '50%',
@@ -393,12 +378,20 @@ const slideConfigs = [
     ],
   },
   {
-    message:
-      'Once you are finished you can pick the players you want to sign on the sign page.',
+    message: 'Once you are finished, you will be sent back to the Team page.',
+    sharkie: 'lean',
+    small: true,
+    hasButtons: true,
+    slideAnimate: {
+      y: '50%',
+      x: '-58%',
+    },
+  },
+  {
+    message: 'The players you pick will be available to add to your bench.',
     sharkie: 'lean',
     hasButtons: true,
     small: true,
-    timer: 0,
     slideAnimate: {
       y: '50%',
       x: '-58%',
@@ -422,11 +415,10 @@ const slideConfigs = [
     ],
   },
   {
-    message: 'Click here when you are finished!',
+    message: 'Click here when you are finished.',
     sharkie: 'lean',
     hasButtons: true,
     small: true,
-    timer: 0,
     slideAnimate: {
       y: '75%',
       x: '50%',
@@ -449,34 +441,32 @@ const slideConfigs = [
     ],
   },
   {
-    message: 'You can only scout players once every season!',
+    message: 'You can only scout players once every season.',
     sharkie: 'speak',
     hasButtons: true,
-    timer: 0,
     slideAnimate: {
       y: '0%',
       x: '0%',
     },
   },
   {
-    message: 'Since there are only a few spots in a level...',
+    message:
+      'Since there are only a few spots in a level, choose your players wisely.',
     sharkie: 'speak',
     hasButtons: true,
-    timer: 0,
-    slideAnimate: {
-      y: '0%',
-      x: '0%',
-    },
   },
   {
-    message: 'Choose your players wisely!',
+    message:
+      'If you need more information about scouting, click on the ask S.J. Sharkie button and choose the question you are looking for.',
     sharkie: 'speak',
     hasButtons: true,
-    timer: 0,
-    slideAnimate: {
-      y: '0%',
-      x: '0%',
-    },
+  },
+  {
+    message:
+      'After you finish adding your players on the team page, click the Team hockey stick to get back to the home page.',
+    sharkie: 'speak',
+    hasButtons: true,
+    accentText: 'Team',
     exitActions: [
       {
         type: SET_ANIMATION_STATE,
