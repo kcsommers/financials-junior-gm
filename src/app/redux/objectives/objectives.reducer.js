@@ -11,7 +11,10 @@ import { getAvailableSlots } from '@data/players/players-utils';
 
 const initialState = {
   currentObjectives: [
-    new Objective('Learn about your budget.', Objectives.LEARN_BUDGET),
+    new Objective(
+      'Learn about your budget and adjust your savings.',
+      Objectives.LEARN_BUDGET
+    ),
     new Objective('Fill your team by signing players.', Objectives.FILL_TEAM),
     new Objective('Play the season!', Objectives.PLAY_SEASON),
   ],

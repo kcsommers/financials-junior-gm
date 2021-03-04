@@ -9,7 +9,7 @@ const introSlideConfigs = [
   },
   {
     message:
-      "I want to offer you the job to become the San Jose Jr.Sharks' new general manager.",
+      "I want to offer you the job to become the San Jose Jr. Sharks' new general manager.",
     sharkie: 'play',
     hasButtons: true,
   },
@@ -58,7 +58,7 @@ const transitionSlidesTeamConfigs = [
 const transitionSlidesSeasonConfigs = [
   {
     message:
-      'Great! You have now built a team, and you are ready for the season',
+      'Great! You have now built a team, and you are ready for the season.',
     sharkie: 'speak',
     hasButtons: true,
   },
