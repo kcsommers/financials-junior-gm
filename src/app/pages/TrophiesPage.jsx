@@ -141,11 +141,12 @@ export const TrophiesPage = ({ history }) => {
     );
   });
 
-  const isTopThree =
+  const isPromoted =
     inTransition &&
     awards &&
-    awards[student.level - 1] &&
-    awards[student.level - 1].thirdCup;
+    awards[+student.level - 1] &&
+    awards[+student.level - 1].thirdCup &&
+    awards[+student.level - 1].savingsCup;
 
   return (
     <div className='page-container'>
@@ -200,7 +201,7 @@ export const TrophiesPage = ({ history }) => {
                 >
                   Repeat Season
                 </span>
-                {isTopThree && (
+                {isPromoted && (
                   <span
                     className={`box-shadow${
                       +student.level === 3 ? ' disabled' : ''

@@ -11,7 +11,7 @@ import { Redirect } from 'react-router-dom';
 import { getCurrentUser } from './../../api-helper';
 import { LoadingSpinner } from '@components';
 import { getAvailableSlots } from '@data/players/players-utils';
-import { playerProps } from '@data/players/players';
+import { playerProps, TeamAssignments } from '@data/players/players';
 
 export const StudentPortal = ({
   screen,
@@ -53,8 +53,15 @@ export const StudentPortal = ({
         (pageName === 'budget' && !student.tutorials.home) ||
         (pageName === 'team' && !student.tutorials.budget) ||
         (pageName === 'season' &&
-          !student.season &&
-          getAvailableSlots(playerProps, student) > 0)
+          !student.tutorials.season &&
+          getAvailableSlots(
+            [
+              ...TeamAssignments.offense,
+              ...TeamAssignments.defense,
+              ...TeamAssignments.goalie,
+            ],
+            student
+          ) > 0)
       ) {
         history.push('/home');
         return;

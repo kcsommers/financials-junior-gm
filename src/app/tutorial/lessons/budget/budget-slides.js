@@ -1,5 +1,5 @@
 import Slide from '../../Slide';
-import { SET_ANIMATION_STATE} from '../../../redux/tutorials/tutorials.actions';
+import { SET_ANIMATION_STATE } from '../../../redux/tutorials/tutorials.actions';
 
 const slideConfigs = [
   {
@@ -10,7 +10,7 @@ const slideConfigs = [
     accentText: 'Budget',
   },
   {
-    message: 'In hockey, every team has some money to spend on players!',
+    message: 'In hockey, every team has some money to spend on players.',
     sharkie: 'speak',
     hasButtons: true,
     timer: 0,
@@ -209,13 +209,13 @@ const slideConfigs = [
     timer: 0,
   },
   {
-    message: 'If a player got hurt...',
+    message: 'If a player got injured...',
     sharkie: 'speak',
     hasButtons: true,
     timer: 0,
   },
   {
-    message: 'You would not have any money left to find a replacement.',
+    message: "You wouldn't have any money left to find a replacement player.",
     sharkie: 'speak',
     hasButtons: true,
     timer: 0,
@@ -234,22 +234,9 @@ const slideConfigs = [
   },
   {
     message:
-      'It is a good idea that for every 10 dollars of your total budget',
+      'It is a good idea that for every 10 dollars of your total budget, try to save a dollar or two.',
     sharkie: 'speak',
     hasButtons: true,
-    timer: 0,
-  },
-  {
-    message: 'Try to save a dollar or two.',
-    sharkie: 'speak',
-    hasButtons: true,
-    timer: 0,
-  },
-  {
-    message: "If you don't use any of your savings",
-    sharkie: 'speak',
-    hasButtons: true,
-    timer: 0,
     exitActions: [
       {
         type: SET_ANIMATION_STATE,
@@ -263,67 +250,44 @@ const slideConfigs = [
                 color: '#fff',
               },
             },
-            {
-              component: 'total',
-              state: {
-                scale: 1.2,
-                color: '#ffd782',
-              },
-            },
           ],
         },
       },
     ],
   },
   {
-    message: 'You can add it to your savings for the next season!',
+    message: 'You should try to have savings left over after every season.',
     sharkie: 'speak',
     hasButtons: true,
-    timer: 0,
-    exitActions: [
-      {
-        type: SET_ANIMATION_STATE,
-        payload: {
-          page: 'budget',
-          animationStates: [
-            {
-              component: 'total',
-              state: {
-                scale: 1,
-                color: '#fff',
-              },
-            },
-          ],
-        },
-      },
-    ],
   },
   {
-    message: 'So do you know the two parts of your budget?',
+    message: 'This money gets carried over to the next season.',
     sharkie: 'speak',
     hasButtons: true,
-    repeatIndex: 0,
   },
   {
-    message: 'Cool!',
+    message:
+      'If you do this, after a couple of seasons you will be able to save up to sign some really good players!',
     sharkie: 'speak',
-    timer: 3000,
-    exitActions: [
-      {
-        type: SET_ANIMATION_STATE,
-        payload: {
-          page: 'budget',
-          animationStates: [
-            {
-              component: 'board',
-              state: {
-                scale: 1,
-              },
-            },
-          ],
-        },
-      },
-    ],
+    hasButtons: true,
+  },
+  {
+    message:
+      'If you have more questions, click on the as S.J. Sharkie button and choose the question you are looking for.',
+    sharkie: 'speak',
+    hasButtons: true,
+  },
+  {
+    message:
+      'Once you are done exploring the budget page, click on the Budget hockey stick in the right hand corner.',
+    sharkie: 'speak',
+    hasButtons: true,
+    accentText: 'Budget',
+  },
+  {
+    message: 'It will take you back to the home screen.',
+    sharkie: 'speak',
+    hasButtons: true,
   },
 ];
 

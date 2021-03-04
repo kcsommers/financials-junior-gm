@@ -75,17 +75,26 @@ export const getGameResult = (studentTeamRank, opponent) => {
     (Math.abs(rankDiff) > 0 && Math.abs(rankDiff) <= 5) ||
     rankDiff === 0
   ) {
+    if (opponent.teamRank > studentTeamRank) {
+      return {
+        score: [1, 2],
+        messageIndex: 2,
+        opponent: opponent.name,
+        points: 1,
+        win: false,
+      };
+    }
     return {
       score: [2, 1],
       messageIndex: 1,
       opponent: opponent.name,
-      points: 1,
+      points: 2,
       win: true,
     };
   } else {
     return {
       score: [0, Math.min(Math.ceil(Math.abs(rankDiff / 10)), 5)],
-      messageIndex: 2,
+      messageIndex: 3,
       opponent: opponent.name,
       points: 0,
       win: false,
@@ -217,6 +226,7 @@ export const gamePhases = (level) => [
     messages: [
       `GET LOUD! The ${studentTeams[level - 1].name} Won!`,
       `CLOSE! The ${studentTeams[level - 1].name} won in overtime!`,
+      `CLOSE! The ${studentTeams[level - 1].name} lost in overtime!`,
       `OH NO! The ${studentTeams[level - 1].name} lost :(`,
     ],
   },
@@ -289,21 +299,21 @@ export const studentTeams = [
     nameFull: 'San Jose Jr. Sharks',
     stats: { wins: 0, losses: 0, points: 0 },
     logo: jrSharksLogo,
-    logoSm: jrSharksLogoSm
+    logoSm: jrSharksLogoSm,
   },
   {
     name: 'Barracuda',
     nameFull: 'San Jose Barracuda',
     stats: { wins: 0, losses: 0, points: 0 },
     logo: sjbarracudalogo,
-    logoSm: sjbarracudaLogoSm
+    logoSm: sjbarracudaLogoSm,
   },
   {
     name: 'Sharks',
     nameFull: 'San Jose Sharks',
     stats: { wins: 0, losses: 0, points: 0 },
     logo: sjsharkslogo,
-    logoSm: sjsharksLogoSm
+    logoSm: sjsharksLogoSm,
   },
 ];
 

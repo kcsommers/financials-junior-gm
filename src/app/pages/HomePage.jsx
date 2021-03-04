@@ -33,7 +33,7 @@ import { updateStudentById } from './../api-helper';
 import { cloneDeep } from 'lodash';
 import { getMaxTeamRank, getAvailableSlots } from '@data/players/players-utils';
 import { getStudentTeam } from '@data/season/season';
-import { playerProps } from '@data/players/players';
+import { TeamAssignments } from '@data/players/players';
 import '@css/pages/HomePage.css';
 
 const getDisabledStickBtns = (student) => {
@@ -43,8 +43,15 @@ const getDisabledStickBtns = (student) => {
   states.season =
     !student ||
     !student.tutorials ||
-    (!student.season && getAvailableSlots(playerProps, student) > 0);
-
+    (!student.tutorials.season &&
+      getAvailableSlots(
+        [
+          ...TeamAssignments.offense,
+          ...TeamAssignments.defense,
+          ...TeamAssignments.goalie,
+        ],
+        student
+      ) > 0);
   return states;
 };
 
@@ -98,7 +105,15 @@ export const HomePage = ({ location, history }) => {
     } else if (!student.tutorials.season) {
       setDisabledStickBtns({
         ...disabledStickBtns,
-        season: getAvailableSlots(playerProps, student) > 0,
+        season:
+          getAvailableSlots(
+            [
+              ...TeamAssignments.offense,
+              ...TeamAssignments.defense,
+              ...TeamAssignments.goalie,
+            ],
+            student
+          ) > 0,
       });
     } else {
       dispatch(setTutorialState({ isActive: false }));
@@ -148,7 +163,14 @@ export const HomePage = ({ location, history }) => {
 
     if (
       !tutorialsRef.current.season &&
-      getAvailableSlots(playerProps, student) === 0
+      getAvailableSlots(
+        [
+          ...TeamAssignments.offense,
+          ...TeamAssignments.defense,
+          ...TeamAssignments.goalie,
+        ],
+        student
+      ) === 0
     ) {
       startTutorial([transitionSlidesSeason]);
       tutorialsRef.current = { ...tutorialsRef.current, season: true };
