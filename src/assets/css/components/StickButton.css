@@ -18,14 +18,18 @@ a.stick-btn-link-disabled {
 
 .stick-btn-img {
   position: absolute;
-  bottom: -34%;
+  bottom: -29%;
   left: 0;
 }
 
 .stick-btn-img-inverse {
-  bottom: -41%;
+  bottom: -40%;
 }
 
 div.stick-btn-small {
   transform: scale(0.8);
+}
+
+p.stick-btn-text-right {
+  margin-top: 0.15rem;
 }

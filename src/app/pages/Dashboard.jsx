@@ -1,5 +1,4 @@
 import { useHistory } from 'react-router-dom';
-import { ReactSVG } from 'react-svg';
 import financialsLogo from '@images/financials-logo-big.svg';
 import { Button } from '@components';
 
@@ -19,7 +18,7 @@ export const Dashboard = () => {
       }}
     >
       <div style={{ width: '100%' }}>
-        <ReactSVG src={financialsLogo} />
+        <img src={financialsLogo} alt='Financials Junior GM Program logo' />
       </div>
 
       <div

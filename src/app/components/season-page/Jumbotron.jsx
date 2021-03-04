@@ -4,7 +4,6 @@ import { TeamAssignments } from '@data/players/players';
 import { getAvailableSlots } from '@data/players/players-utils';
 import { Indicator, PlayerCard } from '@components';
 import { motion } from 'framer-motion';
-import { ReactSVG } from 'react-svg';
 import '@css/components/season-page/Jumbotron.css';
 import { useSelector } from 'react-redux';
 
@@ -83,7 +82,7 @@ export const Jumbotron = ({
   const sharksTransitionView = (
     <div className='transition-view-left'>
       <TeamCard
-        logo={seasonState.seasonTeam.logo}
+        team={seasonState.seasonTeam}
         standing={getStanding(seasonState.seasonTeam, seasonState.standings)}
       />
       {statsView}
@@ -106,7 +105,14 @@ export const Jumbotron = ({
                     className='coming-up-opponent-name'
                     style={{ color: nextOpponent.color }}
                   >
-                    <ReactSVG src={nextOpponent.logoSm}></ReactSVG>
+                    <img
+                      src={nextOpponent.logo}
+                      alt={nextOpponent.name + ' logo'}
+                      style={{
+                        display: 'inline-block',
+                        width: '100%',
+                      }}
+                    />
                   </span>
                 </div>
                 <div className='opponent-indicator-wrap'>
@@ -133,7 +139,14 @@ export const Jumbotron = ({
                       className='coming-up-opponent-name'
                       style={{ color: team.color }}
                     >
-                      <ReactSVG src={team.logoSm}></ReactSVG>
+                      <img
+                        src={team.logo}
+                        alt={team.name + ' logo'}
+                        style={{
+                          display: 'inline-block',
+                          width: '100%',
+                        }}
+                      />
                     </span>
                   </div>
                   <div className='opponent-indicator-wrap'>
@@ -158,7 +171,7 @@ export const Jumbotron = ({
         <div className='game-on-top-left'>
           <div>
             <TeamCard
-              logo={seasonState.seasonTeam.logo}
+              team={seasonState.seasonTeam}
               standing={getStanding(
                 seasonState.seasonTeam,
                 seasonState.standings
@@ -197,7 +210,7 @@ export const Jumbotron = ({
           }}
         >
           <TeamCard
-            logo={currentOpponent && currentOpponent.logoLg}
+            team={currentOpponent}
             standing={getStanding(currentOpponent, seasonState.standings)}
           />
         </motion.div>

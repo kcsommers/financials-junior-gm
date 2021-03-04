@@ -1,5 +1,4 @@
 import closeBtn from '@images/icons/cancel.svg';
-import { ReactSVG } from 'react-svg';
 import { Link } from 'react-router-dom';
 import { BackButton } from '@components';
 
@@ -33,12 +32,7 @@ const styles = {
   },
 };
 
-export const PageBoard = ({
-  closeBtnLeft,
-  children,
-  hideCloseBtn,
-  includeBackButton,
-}) => {
+export const PageBoard = ({ children, includeBackButton }) => {
   return (
     <div style={styles.container}>
       <div
@@ -52,17 +46,7 @@ export const PageBoard = ({
       >
         {includeBackButton && <BackButton />}
       </div>
-      <div style={styles.board}>
-        {!hideCloseBtn && (
-          <Link
-            to='/home'
-            style={closeBtnLeft ? styles.closeBtnLeft : styles.closeBtnRight}
-          >
-            <ReactSVG src={closeBtn} />
-          </Link>
-        )}
-        {children}
-      </div>
+      <div style={styles.board}>{children}</div>
     </div>
   );
 };

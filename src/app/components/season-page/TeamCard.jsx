@@ -1,5 +1,4 @@
-import { ReactSVG } from 'react-svg';
-export const TeamCard = ({ logo, standing, color }) => {
+export const TeamCard = ({ team, standing }) => {
   return (
     <div
       style={{
@@ -13,18 +12,22 @@ export const TeamCard = ({ logo, standing, color }) => {
         position: 'relative',
       }}
     >
-      <ReactSVG src={logo} style={{transform: 'scale(0.85)'}} />
-      <span
-        style={{
-          position: 'absolute',
-          top: 0,
-          right: '1rem',
-          fontSize: '1.5rem',
-          color: color,
-        }}
-      >
-        {standing}
-      </span>
+      {team && (
+        <>
+          <img src={team.logo} alt={team.name + ' logo'} />
+          <span
+            style={{
+              position: 'absolute',
+              top: 0,
+              right: '1rem',
+              fontSize: '1.5rem',
+              color: team.color,
+            }}
+          >
+            {standing}
+          </span>
+        </>
+      )}
     </div>
   );
 };

@@ -1,5 +1,4 @@
 import sharkieBtn from '@images/sharkie-btn.svg';
-import { ReactSVG } from 'react-svg';
 
 const textStyles = {
   bottom: {
@@ -54,7 +53,10 @@ export const SharkieButton = ({ textPosition, onCallSharkie }) => {
       }}
       onClick={onCallSharkie}
     >
-      <ReactSVG src={sharkieBtn} style={{ marginTop: '12px' }} />
+      <img
+        src={sharkieBtn}
+        style={{ marginTop: '12px', display: 'inline-block' }}
+      />
       <span
         className='color-primary'
         style={textStyles[textPosition] || textStyles['bottom']}

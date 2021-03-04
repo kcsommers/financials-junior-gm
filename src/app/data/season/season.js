@@ -1,33 +1,18 @@
-import bluebearsLg from '@images/icons/team-logos/bluebearsLg.svg';
-import bluebearsSm from '@images/icons/team-logos/bluebearsSm.svg';
-import redrabbitsLg from '@images/icons/team-logos/redrabbitsLg.svg';
-import redrabbitsSm from '@images/icons/team-logos/redrabbitsSm.svg';
-import pinkpanthersLg from '@images/icons/team-logos/pinkpanthersLg.svg';
-import pinkpanthersSm from '@images/icons/team-logos/pinkpanthersSm.svg';
-import yellowyaksLg from '@images/icons/team-logos/yellowyaksLg.svg';
-import yellowyaksSm from '@images/icons/team-logos/yellowyaksSm.svg';
-import greengiraffesLg from '@images/icons/team-logos/greengiraffesLg.svg';
-import greengiraffesSm from '@images/icons/team-logos/greengiraffesSm.svg';
-import goldengeckosLg from '@images/icons/team-logos/goldengeckosLg.svg';
-import goldengeckosSm from '@images/icons/team-logos/goldengeckosSm.svg';
-import graygrasshoppersLg from '@images/icons/team-logos/graygrasshoppersLg.svg';
-import graygrasshoppersSm from '@images/icons/team-logos/graygrasshoppersSm.svg';
-import orangeowlsLg from '@images/icons/team-logos/orangeowlsLg.svg';
-import orangeowlsSm from '@images/icons/team-logos/orangeowlsSm.svg';
-import silverspidersLg from '@images/icons/team-logos/silverspidersLg.svg';
-import silverspidersSm from '@images/icons/team-logos/silverspidersSm.svg';
-import whitewolvesLg from '@images/icons/team-logos/whitewolvesLg.svg';
-import whitewolvesSm from '@images/icons/team-logos/whitewolvesSm.svg';
-import pinkpandasLg from '@images/icons/team-logos/pinkpandasLg.svg';
-import pinkpandasSm from '@images/icons/team-logos/pinkpandasSm.svg';
-import blackbeaversLg from '@images/icons/team-logos/blackbeaversLg.svg';
-import blackbeaversSm from '@images/icons/team-logos/blackbeaversSm.svg';
+import bluebearsLogo from '@images/icons/team-logos/bluebearsLg.svg';
+import redrabbitsLogo from '@images/icons/team-logos/redrabbitsLg.svg';
+import pinkpanthersLogo from '@images/icons/team-logos/pinkpanthersLg.svg';
+import yellowyaksLogo from '@images/icons/team-logos/yellowyaksLg.svg';
+import greengiraffesLogo from '@images/icons/team-logos/greengiraffesLg.svg';
+import goldengeckosLogo from '@images/icons/team-logos/goldengeckosLg.svg';
+import graygrasshoppersLogo from '@images/icons/team-logos/graygrasshoppersLg.svg';
+import orangeowlsLogo from '@images/icons/team-logos/orangeowlsLg.svg';
+import silverspidersLogo from '@images/icons/team-logos/silverspidersLg.svg';
+import whitewolvesLogo from '@images/icons/team-logos/whitewolvesLg.svg';
+import pinkpandasLogo from '@images/icons/team-logos/pinkpandasLg.svg';
+import blackbeaversLogo from '@images/icons/team-logos/blackbeaversLg.svg';
 import jrSharksLogo from '@images/icons/jr-sharks-logo-lg.svg';
 import sjbarracudalogo from '@images/icons/sjbarracuda-logo.svg';
 import sjsharkslogo from '@images/icons/sjsharkslogo.svg';
-import jrSharksLogoSm from '@images/icons/jrsharks-logo-sm.svg';
-import sjbarracudaLogoSm from '@images/icons/sjbarracuda-logo-sm.svg';
-import sjsharksLogoSm from '@images/icons/sjsharks-logo-sm.svg';
 import { INJURE_PLAYER } from '@redux/actions';
 import { PlayerAssignments, TeamAssignments } from '@data/players/players';
 import { cloneDeep } from 'lodash';
@@ -299,21 +284,18 @@ export const studentTeams = [
     nameFull: 'San Jose Jr. Sharks',
     stats: { wins: 0, losses: 0, points: 0 },
     logo: jrSharksLogo,
-    logoSm: jrSharksLogoSm,
   },
   {
     name: 'Barracuda',
     nameFull: 'San Jose Barracuda',
     stats: { wins: 0, losses: 0, points: 0 },
     logo: sjbarracudalogo,
-    logoSm: sjbarracudaLogoSm,
   },
   {
     name: 'Sharks',
     nameFull: 'San Jose Sharks',
     stats: { wins: 0, losses: 0, points: 0 },
     logo: sjsharkslogo,
-    logoSm: sjsharksLogoSm,
   },
 ];
 
@@ -324,8 +306,7 @@ export const getStudentTeam = (level) => {
 export const allOpponents = [
   {
     teamRank: 35,
-    logoLg: bluebearsLg,
-    logoSm: bluebearsSm,
+    logo: bluebearsLogo,
     name: 'Blue Bears',
     stats: { wins: 0, losses: 0, points: 0 },
     standings: '6th',
@@ -333,8 +314,7 @@ export const allOpponents = [
   },
   {
     teamRank: 50,
-    logoLg: redrabbitsLg,
-    logoSm: redrabbitsSm,
+    logo: redrabbitsLogo,
     name: 'Red Rabbits',
     stats: { wins: 0, losses: 0, points: 0 },
     standings: '6th',
@@ -342,8 +322,7 @@ export const allOpponents = [
   },
   {
     teamRank: 55,
-    logoLg: pinkpanthersLg,
-    logoSm: pinkpanthersSm,
+    logo: pinkpanthersLogo,
     name: 'Purple Panthers',
     stats: { wins: 0, losses: 0, points: 0 },
     standings: '6th',
@@ -351,8 +330,7 @@ export const allOpponents = [
   },
   {
     teamRank: 80,
-    logoLg: whitewolvesLg,
-    logoSm: whitewolvesSm,
+    logo: whitewolvesLogo,
     name: 'White Wolves',
     stats: { wins: 0, losses: 0, points: 0 },
     standings: '6th',
@@ -360,8 +338,7 @@ export const allOpponents = [
   },
   {
     teamRank: 65,
-    logoLg: greengiraffesLg,
-    logoSm: greengiraffesSm,
+    logo: greengiraffesLogo,
     name: 'Green Giraffes',
     stats: { wins: 0, losses: 0, points: 0 },
     standings: '6th',
@@ -369,8 +346,7 @@ export const allOpponents = [
   },
   {
     teamRank: 75,
-    logoLg: pinkpandasLg,
-    logoSm: pinkpandasSm,
+    logo: pinkpandasLogo,
     name: 'Pink Pandas',
     stats: { wins: 0, losses: 0, points: 0 },
     standings: '6th',
@@ -378,8 +354,7 @@ export const allOpponents = [
   },
   {
     teamRank: 65,
-    logoLg: orangeowlsLg,
-    logoSm: orangeowlsSm,
+    logo: orangeowlsLogo,
     name: 'Orange Owls',
     stats: { wins: 0, losses: 0, points: 0 },
     standings: '6th',
@@ -387,8 +362,7 @@ export const allOpponents = [
   },
   {
     teamRank: 70,
-    logoLg: silverspidersLg,
-    logoSm: silverspidersSm,
+    logo: silverspidersLogo,
     name: 'Silver Spiders',
     stats: { wins: 0, losses: 0, points: 0 },
     standings: '6th',
@@ -396,8 +370,7 @@ export const allOpponents = [
   },
   {
     teamRank: 55,
-    logoLg: goldengeckosLg,
-    logoSm: goldengeckosSm,
+    logo: goldengeckosLogo,
     name: 'Golden Geckos',
     stats: { wins: 0, losses: 0, points: 0 },
     standings: '6th',
@@ -405,8 +378,7 @@ export const allOpponents = [
   },
   {
     teamRank: 70,
-    logoLg: yellowyaksLg,
-    logoSm: yellowyaksSm,
+    logo: yellowyaksLogo,
     name: 'Yellow Yaks',
     stats: { wins: 0, losses: 0, points: 0 },
     standings: '12th',
@@ -414,8 +386,7 @@ export const allOpponents = [
   },
   {
     teamRank: 75,
-    logoLg: blackbeaversLg,
-    logoSm: blackbeaversSm,
+    logo: blackbeaversLogo,
     name: 'Black Beavers',
     stats: { wins: 0, losses: 0, points: 0 },
     standings: '10th',
@@ -423,8 +394,7 @@ export const allOpponents = [
   },
   {
     teamRank: 70,
-    logoLg: graygrasshoppersLg,
-    logoSm: graygrasshoppersSm,
+    logo: graygrasshoppersLogo,
     name: 'Gray Grasshoppers',
     stats: { wins: 0, losses: 0, points: 0 },
     standings: '6th',

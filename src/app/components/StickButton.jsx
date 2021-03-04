@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import { ReactSVG } from 'react-svg';
 import '@css/components/StickButton.css';
 
 export const StickButton = ({ link, image, inverse, small, isDisabled }) => {
@@ -9,7 +8,7 @@ export const StickButton = ({ link, image, inverse, small, isDisabled }) => {
         isDisabled ? ' disabled' : ''
       }`}
     >
-      <ReactSVG
+      <img
         className={`stick-btn-img${inverse ? ' stick-btn-img-inverse' : ''}`}
         src={image}
       />

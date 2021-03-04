@@ -1,5 +1,4 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
-import { ReactSVG } from 'react-svg';
 import {
   StickButton,
   PlayerCard,
@@ -179,10 +178,17 @@ export const TeamPage = ({ history }) => {
         tutorialActive={tutorialActive}
       />
 
-      <PageBoard hideCloseBtn={true} includeBackButton={true}>
+      <PageBoard includeBackButton={true}>
         <div className='team-page-board-header'>
           <div className='team-page-board-header-inner'>
-            <ReactSVG src={studentTeam.logoSm} />
+            <img
+              src={studentTeam.logo}
+              alt={studentTeam.name + ' logo'}
+              style={{
+                display: 'inline-block',
+                width: '85px',
+              }}
+            />
             <SharkieButton textPosition='left' onCallSharkie={onCallSharkie} />
           </div>
           <h2 className='color-primary'>{studentTeam.nameFull}</h2>
@@ -210,8 +216,9 @@ export const TeamPage = ({ history }) => {
 
           <div className='team-page-board-right'>
             <div className='team-players-card'>
-              <ReactSVG
+              <img
                 style={{
+                  display: 'inline-block',
                   position: 'absolute',
                   top: '25px',
                   left: '0',
@@ -220,6 +227,7 @@ export const TeamPage = ({ history }) => {
                   zIndex: 0,
                 }}
                 src={iceBgSmall}
+                alt='Ice Background'
               />
               <div className='team-players-row'>
                 <PlayerCard

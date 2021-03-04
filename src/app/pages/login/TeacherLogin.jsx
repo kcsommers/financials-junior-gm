@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { ReactSVG } from 'react-svg';
 import { teacherLogin, getCurrentUser, logout } from '../../api-helper';
 import financialsLogo from '@images/financials-logo-big.svg';
 import { LoginForm } from '@components';
@@ -77,7 +76,7 @@ export const TeacherLogin = ({ history, isLoggedIn }) => {
   return (
     <div className='login-page-container'>
       <div>
-        <ReactSVG src={financialsLogo} />
+        <img src={financialsLogo} alt='Financials Junior GM Program logo' />
       </div>
 
       <LoginForm

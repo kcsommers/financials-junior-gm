@@ -1,9 +1,8 @@
 import { useSelector, useDispatch } from 'react-redux';
-import '@css/components/Overlay.css';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ReactSVG } from 'react-svg';
-import closeBtn from '@images/icons/cancel.svg';
+import cancelBtn from '@images/icons/cancel-big.svg';
 import { toggleOverlay } from '@redux/actions';
+import '@css/components/Overlay.css';
 
 export const Overlay = () => {
   const overlayConfig = useSelector((state) => state.overlay);
@@ -38,9 +37,10 @@ export const Overlay = () => {
         >
           {overlayConfig.template}
           {overlayConfig.canClose && (
-            <ReactSVG
+            <img
               className='close-btn'
-              src={closeBtn}
+              src={cancelBtn}
+              alt='Close'
               onClick={closeOverlay.bind(this)}
             />
           )}

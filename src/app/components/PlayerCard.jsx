@@ -1,4 +1,3 @@
-import { ReactSVG } from 'react-svg';
 import { motion } from 'framer-motion';
 import playerImage from '@images/icons/player-image.svg';
 import { capitalize, getDollarString } from '@utils';
@@ -244,7 +243,10 @@ export const PlayerCard = ({
             )}
             {player.sharkPlayer === 'TRUE' && (
               <span style={styles[size].logo}>
-                <ReactSVG src={sharksLogo} />
+                <img
+                  src={sharksLogo}
+                  style={{ display: 'inline-block', width: '100%' }}
+                />
               </span>
             )}
           </div>

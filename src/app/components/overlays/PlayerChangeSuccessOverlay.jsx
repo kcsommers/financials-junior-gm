@@ -1,4 +1,3 @@
-import { ReactSVG } from 'react-svg';
 import { OverlayBoard, PlayerCard, TeamBudgetState } from '@components';
 import notepad from '@images/icons/notepaper-pen.svg';
 
@@ -41,19 +40,27 @@ export const PlayerChangeSuccessOverlay = ({ player, message }) => {
           >
             <TeamBudgetState isLarge={true} />
           </div>
-          <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+          <div
+            style={{
+              flex: 1,
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
             <div style={{ flex: 1 }}>
               <PlayerCard size='medium' player={player} />
             </div>
-            <div
+            <img
+              src={notepad}
+              alt='Notepad'
               style={{
-                flex: 0.75,
-                transform: 'scale(0.75)',
-                transformOrigin: '70% 100%',
+                display: 'inline-block',
+                width: '150px',
+                marginTop: '2rem',
               }}
-            >
-              <ReactSVG src={notepad} />
-            </div>
+            />
           </div>
         </div>
       </div>

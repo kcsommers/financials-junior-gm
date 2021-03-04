@@ -1,5 +1,4 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { ReactSVG } from 'react-svg';
 import {
   PageBoard,
   HeaderComponent,
@@ -158,7 +157,7 @@ export const TrophiesPage = ({ history }) => {
         inTransition={inTransition}
       />
 
-      <PageBoard hideCloseBtn={true} includeBackButton={!inTransition}>
+      <PageBoard includeBackButton={!inTransition}>
         <div
           style={{
             display: 'flex',
@@ -187,7 +186,14 @@ export const TrophiesPage = ({ history }) => {
                 paddingLeft: '1rem',
               }}
             >
-              <img src={seasonTeam.logoSm} alt={seasonTeam.name + 'Logo'} />
+              <img
+                src={seasonTeam.logo}
+                alt={seasonTeam.name + 'Logo'}
+                style={{
+                  display: 'inline-block',
+                  width: '85px',
+                }}
+              />
             </div>
             {inTransition && (
               <div
