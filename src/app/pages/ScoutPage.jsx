@@ -355,7 +355,7 @@ export const ScoutPage = ({ history }) => {
   const handleScoutingInvalid = () => {};
 
   const handleScoutingComplete = () => {
-    const moneyLevels = getMoneyLevels(student.level || 1);
+    const moneyLevels = getMoneyLevels(+student.level || 1);
 
     const levelOneCloned = cloneDeep(scoutPlayers.levelOne);
     const levelTwoCloned = cloneDeep(scoutPlayers.levelTwo);

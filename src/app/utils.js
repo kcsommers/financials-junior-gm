@@ -50,7 +50,7 @@ export const getMoneyLevels = (level) => {
         2: {
           short: '$10',
           long: 'ten dollar',
-          num: 0,
+          num: 10,
         },
       };
     case 3:
