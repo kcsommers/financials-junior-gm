@@ -3,12 +3,14 @@ import { getAvailableSlots } from '@data/players/players-utils';
 import { GameButtonSvg } from './GameButtonSvg';
 import { useHistory } from 'react-router-dom';
 import { GamePhases } from '@data/season/season';
+import { motion } from 'framer-motion';
 
 export const GameButton = ({
   onClick,
   gameBlockState,
   team,
   currentScenario,
+  animationState,
 }) => {
   const history = useHistory(';');
   const { currentPhase } = gameBlockState;
@@ -54,10 +56,17 @@ export const GameButton = ({
         opacity: !seasonDisabled ? 1 : 0.75,
       }}
     >
-      <GameButtonSvg
-        phase={currentPhase.phase}
-        currentScenario={currentScenario}
-      />
+      <motion.span
+        style={{ display: 'inline-block', transformOrigin: 'bottom' }}
+        animate={animationState}
+        transition={{ default: { duration: 1 } }}
+      >
+        <GameButtonSvg
+          animationState={animationState}
+          phase={currentPhase.phase}
+          currentScenario={currentScenario}
+        />
+      </motion.span>
     </div>
   );
 };

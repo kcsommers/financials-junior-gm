@@ -40,9 +40,8 @@ const slideConfigs = [
               component: 'stats',
               state: {
                 borderColor: '#ffd782',
-                borderWidth: '8px',
+                backgroundColor: 'rgba(112, 112, 112, 0.9)',
                 scale: 1.5,
-                color: '#ffd782',
                 zIndex: 10,
               },
             },
@@ -72,20 +71,24 @@ const slideConfigs = [
               component: 'stats',
               state: {
                 borderColor: 'rgba(0,0,0,0)',
-                borderWidth: '8px',
-                borderStyle: 'solid',
-                borderRadius: '10px',
-                color: '#ffffff',
+                backgroundColor: 'rgba(0,0,0,0)',
                 scale: 1,
+                zIndex: 0,
+                transition: {
+                  default: {
+                    duration: 1,
+                  },
+                  zIndex: {
+                    delay: 1,
+                  },
+                },
               },
             },
             {
               component: 'standings',
               state: {
                 borderColor: '#ffd782',
-                borderWidth: '8px',
                 scale: 1.1,
-                color: '#ffd782',
               },
             },
           ],
@@ -125,11 +128,7 @@ const slideConfigs = [
             {
               component: 'standings',
               state: {
-                borderColor: 'rgba(0,0,0,0)',
-                borderWidth: '0px',
-                borderStyle: 'solid',
-                borderRadius: '10px',
-                color: '#ffffff',
+                borderColor: '#707070',
                 scale: 1,
               },
             },
@@ -138,8 +137,7 @@ const slideConfigs = [
               state: {
                 borderColor: '#ffd782',
                 scale: 1.1,
-                color: '#ffd782',
-                borderWidth: '8px',
+                zIndex: 10,
               },
             },
           ],
@@ -168,11 +166,16 @@ const slideConfigs = [
               component: 'upcomingGames',
               state: {
                 borderColor: 'rgba(0,0,0,0)',
-                borderWidth: '0px',
-                borderStyle: 'solid',
-                borderRadius: '10px',
-                color: '#ffffff',
                 scale: 1,
+                zIndex: 0,
+                transition: {
+                  default: {
+                    duration: 1,
+                  },
+                  zIndex: {
+                    delay: 1,
+                  },
+                },
               },
             },
             {
@@ -180,18 +183,12 @@ const slideConfigs = [
               state: {
                 borderColor: '#ffd782',
                 scale: 1.1,
-                color: '#ffd782',
-                borderWidth: '8px',
               },
             },
             {
               component: 'playButton',
               state: {
-                borderColor: '#ffd782',
                 scale: 1.2,
-                borderWidth: '8px',
-                borderRadius: '60px',
-                color: '#ffd782',
               },
             },
           ],
@@ -232,8 +229,6 @@ const slideConfigs = [
               state: {
                 borderColor: '#ffd782',
                 scale: 1.1,
-                color: '#ffd782',
-                borderWidth: '8px',
               },
             },
             {
@@ -247,21 +242,12 @@ const slideConfigs = [
               component: 'jumbotext',
               state: {
                 borderColor: 'rgba(0,0,0,0)',
-                borderWidth: '0px',
-                borderStyle: 'solid',
-                borderRadius: '10px',
-                color: '#ffffff',
                 scale: 1,
               },
             },
             {
               component: 'playButton',
               state: {
-                borderColor: 'rgba(0,0,0,0)',
-                borderWidth: '0px',
-                borderStyle: 'solid',
-                borderRadius: '10px',
-                color: '#ffffff',
                 scale: 1,
               },
             },
@@ -292,10 +278,6 @@ const slideConfigs = [
               component: 'upcomingGames',
               state: {
                 borderColor: 'rgba(0,0,0,0)',
-                borderWidth: '0px',
-                borderStyle: 'solid',
-                borderRadius: '10px',
-                color: '#ffffff',
                 scale: 1,
               },
             },
@@ -339,7 +321,7 @@ const slideConfigs = [
   },
   {
     message:
-      'If you finish in the top 3 and having savings left over at the end of the season, you will be promoted to coach the San Jose Barracuda!',
+      'If you finish in the top 3 and having savings left over at the end of the season, you will be promoted to become the general manager of the San Jose Barracuda!',
     sharkie: 'speak',
     hasButtons: true,
   },

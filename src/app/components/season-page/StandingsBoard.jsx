@@ -1,7 +1,8 @@
 import { useSelector } from 'react-redux';
 import { cloneDeep } from 'lodash';
+import { motion } from 'framer-motion';
 
-export const StandingsBoard = () => {
+export const StandingsBoard = ({ animationState }) => {
   const { standings, seasonTeam } = useSelector((state) => state.season);
 
   const clonedStandings = cloneDeep(standings);
@@ -36,13 +37,21 @@ export const StandingsBoard = () => {
 
   return (
     <div className='standings-board-wrap'>
-      <div className='standings-board-wrap-inner'>
+      <motion.div
+        className='standings-board-wrap-inner'
+        animate={animationState}
+        transition={{
+          default: {
+            duration: 1,
+          },
+        }}
+      >
         <div className='standings-board-top-row standings-board-row'>
           <span>Team</span>
           <span>Points</span>
         </div>
         {rows}
-      </div>
+      </motion.div>
     </div>
   );
 };
