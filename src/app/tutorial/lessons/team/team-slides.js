@@ -45,7 +45,7 @@ const slideConfigs = [
     transparentBg: true,
   },
   {
-    message: '3 forwards, 2 defense and a goalie',
+    message: '3 forwards, 2 defense and a goalie.',
     sharkie: 'lean',
     hasButtons: true,
     timer: 0,
@@ -118,8 +118,6 @@ const slideConfigs = [
       },
     ],
   },
-  //tap a player to learn more about them.
-  //get rid of spaces on your team.
   {
     message: 'These are the players you can sign to this slot!',
     sharkie: 'speak',
@@ -134,7 +132,7 @@ const slideConfigs = [
     transparentBg: true,
   },
   {
-    message: 'Click a player to learn more about them!',
+    message: 'When you click on a player, you will learn more about them.',
     sharkie: 'speak',
     hasButtons: true,
     timer: 0,

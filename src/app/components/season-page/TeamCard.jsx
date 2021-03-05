@@ -2,7 +2,7 @@ export const TeamCard = ({ team, standing }) => {
   return (
     <div
       style={{
-        width: '200px',
+        width: '100%',
         height: '167px',
         borderRadius: '10px',
         backgroundColor: '#ffffff',

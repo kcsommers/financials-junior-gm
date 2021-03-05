@@ -458,10 +458,7 @@ export const SeasonPage = ({ history }) => {
           </div>
           <div className='season-page-board-bottom'>
             <div className='play-btn-container'>
-              <motion.span
-                animate={animationStates.playButton}
-                className='play-btn-wrap'
-              >
+              <span className='play-btn-wrap'>
                 {seasonState.currentScenario &&
                   seasonState.currentScenario.gameButtonLabel && (
                     <span className='color-primary'>
@@ -473,8 +470,9 @@ export const SeasonPage = ({ history }) => {
                   gameBlockState={gameBlockState}
                   team={teamPlayers}
                   currentScenario={seasonState.currentScenario}
+                  animationState={animationStates.playButton}
                 />
-              </motion.span>
+              </span>
               <div className='game-count'>
                 Game{' '}
                 {state.currentOpponentIndex +
@@ -503,15 +501,12 @@ export const SeasonPage = ({ history }) => {
               <h6 style={{ textAlign: 'center', color: '#000000' }}>Results</h6>
               <GameBlockBoard />
             </div>
-            <motion.div
-              animate={animationStates.standings}
-              className='standings-board-container'
-            >
+            <div className='standings-board-container'>
               <h6 style={{ textAlign: 'center', color: '#000000' }}>
                 Standings
               </h6>
-              <StandingsBoard />
-            </motion.div>
+              <StandingsBoard animationState={animationStates.standings} />
+            </div>
           </div>
         </div>
       </PageBoard>
