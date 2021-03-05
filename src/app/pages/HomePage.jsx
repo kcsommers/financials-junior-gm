@@ -98,11 +98,13 @@ export const HomePage = ({ location, history }) => {
         })
         .catch((err) => console.error(err));
     } else if (!student.tutorials.team) {
+      dispatch(setTutorialState({ isActive: false }));
       setDisabledStickBtns({
         ...disabledStickBtns,
         team: !student.tutorials.budget,
       });
     } else if (!student.tutorials.season) {
+      dispatch(setTutorialState({ isActive: false }));
       setDisabledStickBtns({
         ...disabledStickBtns,
         season:
