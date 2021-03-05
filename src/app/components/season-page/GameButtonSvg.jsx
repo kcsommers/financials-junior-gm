@@ -69,6 +69,9 @@ export const GameButtonSvg = ({ phase, currentScenario }) => {
       width='120'
       height='120'
       viewBox='0 0 120 120'
+      class={`${phase === GamePhases.GAME_ON ? 'game-button-game-on' : ''}${
+        phase === GamePhases.WARMING_UP ? 'game-button-warming-up' : ''
+      }`}
     >
       <defs>
         <radialGradient
@@ -101,6 +104,7 @@ export const GameButtonSvg = ({ phase, currentScenario }) => {
             stroke={getFill()}
             strokeWidth='1'
             style={{ transition: 'fill 0.5s ease' }}
+            class='active-puck-border'
           >
             <circle cx='60' cy='60' r='60' stroke='none' />
             <circle cx='60' cy='60' r='59.5' fill='none' />
