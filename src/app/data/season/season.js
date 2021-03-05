@@ -230,7 +230,7 @@ export const gamePhases = (level) => [
 
 export const getRandomTeamRank = (level) => {
   if (level === 1) {
-    return Math.floor(Math.random() * (90 - 50) + 50);
+    return Math.floor(Math.random() * (95 - 70) + 70);
   }
 
   if (level === 2) {
