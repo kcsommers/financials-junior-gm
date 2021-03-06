@@ -174,7 +174,7 @@ export const BudgetPage = ({ history }) => {
         tutorialActive={tutorialActive}
       />
 
-      <PageBoard includeBackButton={true}>
+      <PageBoard>
         <div className='budget-page-board-inner'>
           <div
             style={{

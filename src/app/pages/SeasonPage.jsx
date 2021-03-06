@@ -396,7 +396,7 @@ export const SeasonPage = ({ history }) => {
         tutorialActive={tutorialActive}
       />
 
-      <PageBoard includeBackButton={true}>
+      <PageBoard>
         <div
           style={{
             display: 'flex',

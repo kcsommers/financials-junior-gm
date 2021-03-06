@@ -157,7 +157,7 @@ export const TrophiesPage = ({ history }) => {
         inTransition={inTransition}
       />
 
-      <PageBoard includeBackButton={!inTransition}>
+      <PageBoard>
         <div
           style={{
             display: 'flex',
