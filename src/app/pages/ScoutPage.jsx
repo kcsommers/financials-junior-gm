@@ -592,7 +592,7 @@ export const ScoutPage = ({ history }) => {
         level={+student.level}
         tutorialActive={tutorialActive}
       />
-      <PageBoard includeBackButton={true}>
+      <PageBoard>
         <div className='scout-page-board-header'>
           <p className='color-primary scout-page-helper-text'>
             Make an offer to a player by dragging them to a money level!

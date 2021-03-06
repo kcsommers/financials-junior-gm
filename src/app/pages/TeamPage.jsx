@@ -178,7 +178,7 @@ export const TeamPage = ({ history }) => {
         tutorialActive={tutorialActive}
       />
 
-      <PageBoard includeBackButton={true}>
+      <PageBoard>
         <div className='team-page-board-header'>
           <div className='team-page-board-header-inner'>
             <img

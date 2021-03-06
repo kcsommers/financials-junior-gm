@@ -1,5 +1,3 @@
-import { BackButton } from '@components';
-
 const styles = {
   container: {
     flex: 1,
@@ -30,20 +28,9 @@ const styles = {
   },
 };
 
-export const PageBoard = ({ children, includeBackButton }) => {
+export const PageBoard = ({ children }) => {
   return (
     <div style={styles.container}>
-      <div
-        style={{
-          display: 'inline-block',
-          position: 'absolute',
-          left: 0,
-          top: '50%',
-          transform: 'translate(0px, -50%)',
-        }}
-      >
-        {includeBackButton && <BackButton />}
-      </div>
       <div style={styles.board}>{children}</div>
     </div>
   );
