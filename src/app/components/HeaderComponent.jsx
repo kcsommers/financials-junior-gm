@@ -17,11 +17,12 @@ export const HeaderComponent = ({
   largeStick,
   level,
   inTransition,
+  stickBtnLink = '/home',
 }) => {
   const stick = (
     <StickButton
       key='s'
-      link='/home'
+      link={stickBtnLink}
       image={stickBtn}
       inverse={inverse}
       large={largeStick}

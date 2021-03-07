@@ -2,10 +2,18 @@ import { OverlayBoard, Button } from '@components';
 import { toggleOverlay } from '@redux/actions';
 import { useDispatch } from 'react-redux';
 
-export const BadScoutOverlay = () => {
+export const BadScoutOverlay = ({
+  message1,
+  message2,
+  buttonText,
+  onButtonClick,
+}) => {
   const dispatch = useDispatch();
 
   const closeOverlay = () => {
+    if (onButtonClick) {
+      onButtonClick();
+    }
     dispatch(
       toggleOverlay({
         isOpen: false,
@@ -30,10 +38,13 @@ export const BadScoutOverlay = () => {
             className='color-primary'
             style={{ marginBottom: '2rem', fontSize: '2.15rem' }}
           >
-            The contract you are offering this player is not high enough!
+            {message1}
           </h3>
-          <p className='color-primary' style={{ fontSize: '1.75rem' }}>
-            Try putting them in a higher level to offer them more money.
+          <p
+            className='color-primary'
+            style={{ fontSize: '1.75rem', lineHeight: '3rem' }}
+          >
+            {message2}
           </p>
         </div>
         <div
@@ -45,7 +56,7 @@ export const BadScoutOverlay = () => {
             width: '100%',
           }}
         >
-          <Button text='Try Again' onClick={closeOverlay} />
+          <Button text={buttonText} onClick={closeOverlay} />
         </div>
       </div>
     </OverlayBoard>
