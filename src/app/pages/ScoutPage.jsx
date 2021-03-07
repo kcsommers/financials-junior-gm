@@ -313,12 +313,35 @@ export const ScoutPage = ({ history }) => {
       return;
     }
 
+    const updateBoard = () => {
+      // update the map where the player was dropped
+      boardMap[dropLevel][e.destination.droppableId] = droppedPlayer;
+
+      // update the slot the player was moved from
+      boardMap[sourceLevel][e.source.droppableId] = null;
+
+      // update scouting state
+      dispatch(
+        updateScoutPlayer({
+          [dropLevel]: Object.keys(boardMap[dropLevel]).map(
+            (k) => boardMap[dropLevel][k]
+          ),
+          [sourceLevel]: Object.keys(boardMap[sourceLevel]).map(
+            (k) => boardMap[sourceLevel][k]
+          ),
+        })
+      );
+    };
+
     const dropLevel = e.destination.droppableId.split('-')[0];
     const sourceLevel = e.source.droppableId.split('-')[0];
     const droppedPlayer = boardMap[sourceLevel][e.source.droppableId];
 
     const levelThreeMaxRank =
       +student.level === 1 ? 15 : +student.level === 2 ? 45 : 75;
+
+    const levelOneMinRank =
+      +student.level === 1 ? 5 : +student.level === 2 ? 35 : 65;
 
     if (
       dropLevel === 'levelThree' &&
@@ -327,29 +350,39 @@ export const ScoutPage = ({ history }) => {
       dispatch(
         toggleOverlay({
           isOpen: true,
-          template: <BadScoutOverlay />,
+          template: (
+            <BadScoutOverlay
+              message1='The contract you are offering this player is not high enough!'
+              message2='Try putting them in a higher level to offer them more money.'
+              buttonText='Try Again'
+            />
+          ),
         })
       );
       return;
     }
 
-    // update the map where the player was dropped
-    boardMap[dropLevel][e.destination.droppableId] = droppedPlayer;
+    if (
+      dropLevel === 'levelOne' &&
+      droppedPlayer.overallRank <= levelOneMinRank
+    ) {
+      dispatch(
+        toggleOverlay({
+          isOpen: true,
+          template: (
+            <BadScoutOverlay
+              message1='Are you sure?'
+              message2={`${droppedPlayer.playerName}'s rank is a little low for this contract level. Would you like to continue with this offer?`}
+              buttonText='Make Offer'
+              onButtonClick={updateBoard.bind(this)}
+            />
+          ),
+        })
+      );
+      return;
+    }
 
-    // update the slot the player was moved from
-    boardMap[sourceLevel][e.source.droppableId] = null;
-
-    // update scouting state
-    dispatch(
-      updateScoutPlayer({
-        [dropLevel]: Object.keys(boardMap[dropLevel]).map(
-          (k) => boardMap[dropLevel][k]
-        ),
-        [sourceLevel]: Object.keys(boardMap[sourceLevel]).map(
-          (k) => boardMap[sourceLevel][k]
-        ),
-      })
-    );
+    updateBoard();
   };
 
   const handleScoutingInvalid = () => {};
@@ -591,11 +624,12 @@ export const ScoutPage = ({ history }) => {
         largeStick={true}
         level={+student.level}
         tutorialActive={tutorialActive}
+        stickBtnLink='/team'
       />
       <PageBoard>
         <div className='scout-page-board-header'>
           <p className='color-primary scout-page-helper-text'>
-            Make an offer to a player by dragging them to a money level!
+            Make an offer to a player by dragging them to a contract level!
           </p>
           <span
             style={{ position: 'absolute', right: '0.5rem', top: '0.25rem' }}
