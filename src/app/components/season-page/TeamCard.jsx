@@ -24,6 +24,7 @@ export const TeamCard = ({ team, standing }) => {
                 textAlign: 'center',
                 fontWeight: 'bold',
                 display: 'inline-block',
+                padding: '0.25rem',
               }}
             >
               {team.name}
