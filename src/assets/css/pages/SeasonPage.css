@@ -120,6 +120,10 @@ div.game-block-board-row > div:last-child {
   flex: 1;
 }
 
+div.game-block-board-right {
+  white-space: nowrap;
+}
+
 span.game-block-board-dash {
   position: absolute;
   left: 35%;

@@ -280,7 +280,14 @@ export const getStanding = (team, standings) => {
 };
 
 export const getAllOpponents = (level) => {
-  const clonedTeams = cloneDeep(allOpponents);
+  let opponents = levelOneOpponents;
+  if (level === 2) {
+    opponents = levelTwoOpponents;
+  } else if (level === 3) {
+    opponents = levelThreeOpponents;
+  }
+
+  const clonedTeams = cloneDeep(opponents);
   return clonedTeams.map((t) => {
     t.teamRank = getRandomTeamRank(level);
     return t;
@@ -312,7 +319,7 @@ export const getStudentTeam = (level) => {
   return studentTeams[level - 1];
 };
 
-export const allOpponents = [
+export const levelOneOpponents = [
   {
     teamRank: 35,
     logo: bluebearsLogo,
@@ -408,5 +415,179 @@ export const allOpponents = [
     stats: { wins: 0, losses: 0, points: 0 },
     standings: '6th',
     color: '#CECECE',
+  },
+];
+
+export const levelTwoOpponents = [
+  {
+    teamRank: 241,
+    name: 'Bakersfield Condors',
+    stats: { wins: 0, losses: 0, points: 0 },
+    standings: '6th',
+    color: '#4b4b4b',
+  },
+  {
+    teamRank: 294,
+    name: 'Sand Diego Gulls',
+    stats: { wins: 0, losses: 0, points: 0 },
+    standings: '6th',
+    color: '#4b4b4b',
+  },
+  {
+    teamRank: 275,
+    name: 'Stockton Heat',
+    stats: { wins: 0, losses: 0, points: 0 },
+    standings: '6th',
+    color: '#4b4b4b',
+  },
+  {
+    teamRank: 280,
+    name: 'Colorado Eagles',
+    stats: { wins: 0, losses: 0, points: 0 },
+    standings: '6th',
+    color: '#4b4b4b',
+  },
+  {
+    teamRank: 265,
+    name: 'Ontario Reign',
+    stats: { wins: 0, losses: 0, points: 0 },
+    standings: '6th',
+    color: '#4b4b4b',
+  },
+  {
+    teamRank: 275,
+    name: 'Henderson Silver Knights',
+    stats: { wins: 0, losses: 0, points: 0 },
+    standings: '6th',
+    color: '#4b4b4b',
+  },
+  {
+    teamRank: 265,
+    name: 'Tucson Roadrunners',
+    stats: { wins: 0, losses: 0, points: 0 },
+    standings: '6th',
+    color: '#4b4b4b',
+  },
+  {
+    teamRank: 270,
+    name: 'Texas Stars',
+    stats: { wins: 0, losses: 0, points: 0 },
+    standings: '6th',
+    color: '#4b4b4b',
+  },
+  {
+    teamRank: 255,
+    name: 'Iowa Wild',
+    stats: { wins: 0, losses: 0, points: 0 },
+    standings: '6th',
+    color: '#4b4b4b',
+  },
+  {
+    teamRank: 270,
+    name: 'Manitoba Moose',
+    stats: { wins: 0, losses: 0, points: 0 },
+    standings: '12th',
+    color: '#4b4b4b',
+  },
+  {
+    teamRank: 275,
+    name: 'Rockford Icehogs',
+    stats: { wins: 0, losses: 0, points: 0 },
+    standings: '10th',
+    color: '#4b4b4b',
+  },
+  {
+    teamRank: 270,
+    name: 'Chicago Wolves',
+    stats: { wins: 0, losses: 0, points: 0 },
+    standings: '6th',
+    color: '#4b4b4b',
+  },
+];
+
+export const levelThreeOpponents = [
+  {
+    teamRank: 425,
+    name: 'Anaheim Ducks',
+    stats: { wins: 0, losses: 0, points: 0 },
+    standings: '6th',
+    color: '#4b4b4b',
+  },
+  {
+    teamRank: 490,
+    name: 'Arizona Coyotes',
+    stats: { wins: 0, losses: 0, points: 0 },
+    standings: '6th',
+    color: '#4b4b4b',
+  },
+  {
+    teamRank: 455,
+    name: 'Calgary Flames',
+    stats: { wins: 0, losses: 0, points: 0 },
+    standings: '6th',
+    color: '#4b4b4b',
+  },
+  {
+    teamRank: 480,
+    name: 'Edmonton Oilers',
+    stats: { wins: 0, losses: 0, points: 0 },
+    standings: '6th',
+    color: '#4b4b4b',
+  },
+  {
+    teamRank: 465,
+    name: 'Los Angeles Kings',
+    stats: { wins: 0, losses: 0, points: 0 },
+    standings: '6th',
+    color: '#4b4b4b',
+  },
+  {
+    teamRank: 475,
+    name: 'Vancouver Canucks',
+    stats: { wins: 0, losses: 0, points: 0 },
+    standings: '6th',
+    color: '#4b4b4b',
+  },
+  {
+    teamRank: 465,
+    name: 'Vegas Golden Knights',
+    stats: { wins: 0, losses: 0, points: 0 },
+    standings: '6th',
+    color: '#4b4b4b',
+  },
+  {
+    teamRank: 470,
+    name: 'Dallas Stars',
+    stats: { wins: 0, losses: 0, points: 0 },
+    standings: '6th',
+    color: '#4b4b4b',
+  },
+  {
+    teamRank: 455,
+    name: 'Colorado Avalanche',
+    stats: { wins: 0, losses: 0, points: 0 },
+    standings: '6th',
+    color: '#4b4b4b',
+  },
+  {
+    teamRank: 470,
+    name: 'Winnipeg Jets',
+    stats: { wins: 0, losses: 0, points: 0 },
+    standings: '12th',
+    color: '#4b4b4b',
+  },
+  {
+    teamRank: 475,
+    name: 'Minnesota Wild',
+    stats: { wins: 0, losses: 0, points: 0 },
+    standings: '10th',
+    color: '#4b4b4b',
+  },
+  {
+    teamRank: 470,
+    name: 'St. Louis Blues',
+    stats: { wins: 0, losses: 0, points: 0 },
+    standings: '6th',
+    color: '#4b4b4b',
   },
 ];

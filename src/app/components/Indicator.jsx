@@ -12,8 +12,12 @@ const getFontSize = (amount) => {
     return '1rem';
   }
 
-  if (_amount.length > 2) {
-    return '1.2rem';
+  if (_amount.length >= 3) {
+    return '1.3rem';
+  }
+
+  if (_amount.length >= 2) {
+    return '1.5rem';
   }
 
   return '2rem';
