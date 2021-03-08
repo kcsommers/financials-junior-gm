@@ -107,19 +107,33 @@ export const Jumbotron = ({
             {nextOpponent && (
               <>
                 <div className='coming-up-opponent-name-wrap'>
-                  <span
-                    className='coming-up-opponent-name'
-                    style={{ color: nextOpponent.color }}
-                  >
-                    <img
-                      src={nextOpponent.logo}
-                      alt={nextOpponent.name + ' logo'}
+                  {nextOpponent.logo ? (
+                    <span
+                      className='coming-up-opponent-name'
+                      style={{ color: nextOpponent.color }}
+                    >
+                      <img
+                        src={nextOpponent.logo}
+                        alt={nextOpponent.name + ' logo'}
+                        style={{
+                          display: 'inline-block',
+                          width: '100%',
+                        }}
+                      />
+                    </span>
+                  ) : (
+                    <span
                       style={{
+                        color: nextOpponent.color,
+                        fontSize: '1.2rem',
+                        textAlign: 'left',
                         display: 'inline-block',
-                        width: '100%',
+                        paddingRight: '0.5rem',
                       }}
-                    />
-                  </span>
+                    >
+                      {nextOpponent.name}
+                    </span>
+                  )}
                 </div>
                 <div className='opponent-indicator-wrap'>
                   <Indicator
@@ -145,19 +159,33 @@ export const Jumbotron = ({
               {team && (
                 <>
                   <div className='coming-up-opponent-name-wrap'>
-                    <span
-                      className='coming-up-opponent-name'
-                      style={{ color: team.color }}
-                    >
-                      <img
-                        src={team.logo}
-                        alt={team.name + ' logo'}
+                    {team.logo ? (
+                      <span
+                        className='coming-up-opponent-name'
+                        style={{ color: team.color }}
+                      >
+                        <img
+                          src={team.logo}
+                          alt={team.name + ' logo'}
+                          style={{
+                            display: 'inline-block',
+                            width: '100%',
+                          }}
+                        />
+                      </span>
+                    ) : (
+                      <span
                         style={{
+                          color: team.color,
+                          fontSize: '1.2rem',
+                          textAlign: 'left',
                           display: 'inline-block',
-                          width: '100%',
+                          paddingRight: '0.5rem',
                         }}
-                      />
-                    </span>
+                      >
+                        {team.name}
+                      </span>
+                    )}
                   </div>
                   <div className='opponent-indicator-wrap'>
                     <Indicator
