@@ -30,7 +30,6 @@ import {
   setTutorialState,
   toggleOverlay,
   setCurrentOpponentIndex,
-  updateStudent,
   setSeasonComplete,
   addObjective,
   INJURE_PLAYER,
@@ -41,7 +40,6 @@ import {
   Tutorial,
   getConfirmSlides,
 } from '@tutorial';
-import { motion } from 'framer-motion';
 import { Objective, Objectives } from '@data/objectives/objectives';
 import { faqs } from '@data/faqs/faqs';
 import { getMaxTeamRank } from '@data/players/players-utils';
@@ -182,13 +180,15 @@ export const SeasonPage = ({ history }) => {
     const studentTeamIndex = seasonState.standings.findIndex(
       (t) => t.name === seasonState.seasonTeam.name
     );
-    const awards = {
-      savingsCup: student.savingsBudget > 0,
-      thirdCup: studentTeamIndex < 3,
-      firstCup: studentTeamIndex === 0,
+    const prevAwards = (clonedStudent.awards || [])[+clonedStudent.level - 1];
+    const newAwards = {
+      savingsCup:
+        (prevAwards && prevAwards.savingsCup) || student.savingsBudget > 0,
+      thirdCup: (prevAwards && prevAwards.thirdCup) || studentTeamIndex < 3,
+      firstCup: (prevAwards && prevAwards.firstCup) || studentTeamIndex === 0,
     };
 
-    (clonedStudent.awards || []).splice(+clonedStudent.level - 1, 1, awards);
+    (clonedStudent.awards || []).splice(+clonedStudent.level - 1, 1, newAwards);
 
     if (clonedStudent.seasons[(+student.level || 1) - 1]) {
       clonedStudent.seasons[(+student.level || 1) - 1].push(

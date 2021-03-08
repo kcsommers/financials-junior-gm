@@ -8,7 +8,7 @@ export const NextSeasonOverlay = ({ student, next }) => {
 
   const repeatSeason = () => {
     dispatch(setInTransition(false));
-    resetSeason(+student.level, student)
+    resetSeason(+student.level, +student.level, student)
       .then((updatedStudent) => {
         next({ updatedStudent, isPromoted: false });
       })
@@ -17,7 +17,7 @@ export const NextSeasonOverlay = ({ student, next }) => {
 
   const nextSeason = () => {
     dispatch(setInTransition(false));
-    resetSeason(+student.level + 1, student)
+    resetSeason(+student.level + 1, +student.level, student)
       .then((updatedStudent) => {
         next({ updatedStudent, isPromoted: true });
       })

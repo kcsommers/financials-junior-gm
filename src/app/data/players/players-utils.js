@@ -289,15 +289,15 @@ export const handleTradePlayers = (
 
 export const getMaxTeamRank = (level) => {
   if (level === 1) {
-    return 100;
+    return 160;
   }
 
   if (level === 2) {
-    return 350;
+    return 330;
   }
 
   if (level === 3) {
-    return 510;
+    return 515;
   }
 };
 
