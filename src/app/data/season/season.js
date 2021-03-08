@@ -507,6 +507,13 @@ export const levelTwoOpponents = [
 
 export const levelThreeOpponents = [
   {
+    teamRank: 490,
+    name: 'Arizona Coyotes',
+    stats: { wins: 0, losses: 0, points: 0 },
+    standings: '6th',
+    color: '#4b4b4b',
+  },
+  {
     teamRank: 425,
     name: 'Anaheim Ducks',
     stats: { wins: 0, losses: 0, points: 0 },
