@@ -10,6 +10,7 @@ import {
   TeamBudgetState,
   NextSeasonOverlay,
   FaqOverlay,
+  ScoutingCompleteOverlay,
 } from '@components';
 import scoutStick from '@images/scout-stick.svg';
 import teamStick from '@images/team-stick.svg';
@@ -24,9 +25,10 @@ import {
 import { setTutorialState, toggleOverlay, setStudent } from '@redux/actions';
 import { updateStudentById } from './../api-helper';
 import { faqs } from '@data/faqs/faqs';
+import { cloneDeep } from 'lodash';
 import '@css/pages/TeamPage.css';
 
-export const TeamPage = ({ history }) => {
+export const TeamPage = ({ history, location }) => {
   const dispatch = useDispatch();
   const tutorialActive = useSelector((state) => state.tutorial.isActive);
   const student = useSelector((state) => state.studentState.student);
@@ -149,6 +151,21 @@ export const TeamPage = ({ history }) => {
     student.tutorials &&
     student.tutorials.team
   );
+
+  useEffect(() => {
+    if (location.state && location.state.showScoutingOverlay) {
+      dispatch(
+        toggleOverlay({
+          isOpen: true,
+          template: <ScoutingCompleteOverlay />,
+        })
+      );
+
+      const stateCopy = cloneDeep(location.state);
+      delete stateCopy.showScoutingOverlay;
+      history.replace({ state: stateCopy });
+    }
+  }, [dispatch, history, location.state]);
 
   if (seasonState.inTransition && !seasonState.inSession) {
     window.setTimeout(() => {

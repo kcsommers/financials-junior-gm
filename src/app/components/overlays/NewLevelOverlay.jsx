@@ -24,7 +24,7 @@ export const NewLevelOverlay = ({ team }) => {
             marginTop: '3.5rem',
             marginLeft: 'auto',
             marginRight: 'auto',
-            padding: '0 3.5rem',
+            padding: '0 3rem',
             lineHeight: '3.5rem',
           }}
         >
@@ -41,7 +41,7 @@ export const NewLevelOverlay = ({ team }) => {
             marginLeft: 'auto',
             marginRight: 'auto',
             marginTop: '1.5rem',
-            padding: '0 3.5rem',
+            padding: '0 3rem',
             lineHeight: '3.5rem',
           }}
         >
@@ -58,7 +58,7 @@ export const NewLevelOverlay = ({ team }) => {
             marginTop: '1.5rem',
             marginLeft: 'auto',
             marginRight: 'auto',
-            padding: '0 3.5rem',
+            padding: '0 3rem',
             lineHeight: '3.5rem',
           }}
         >
@@ -87,7 +87,7 @@ export const NewLevelOverlay = ({ team }) => {
             marginTop: '1.5rem',
             marginRight: 'auto',
             marginLeft: 'auto',
-            padding: '0 3.5rem',
+            padding: '0 3rem',
             lineHeight: '3.5rem',
           }}
         >
@@ -105,11 +105,11 @@ export const NewLevelOverlay = ({ team }) => {
               marginRight: 'auto',
               marginLeft: 'auto',
               marginTop: 'rem',
-              padding: '0 3.5rem',
+              padding: '0 3rem',
               lineHeight: '3.5rem',
             }}
           >
-            Remember to try and save $20-30 of your total budget!
+            Remember to try and save between $20-30 of your total budget!
           </p>
         )}
         {team.name == 'Sharks' && (
@@ -124,11 +124,11 @@ export const NewLevelOverlay = ({ team }) => {
               marginRight: 'auto',
               marginLeft: 'auto',
               marginTop: 'rem',
-              padding: '0 3.5rem',
+              padding: '0 3rem',
               lineHeight: '3.5rem',
             }}
           >
-            Remember to try and save $200-300 of your total budget!
+            Remember to try and save between $200-300 of your total budget!
           </p>
         )}
       </div>

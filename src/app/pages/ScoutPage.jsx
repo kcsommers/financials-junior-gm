@@ -423,28 +423,21 @@ export const ScoutPage = ({ history }) => {
 
     updateStudentById(student._id, { players: playersUpdated })
       .then((res) => {
+        history.push({
+          pathname: '/team',
+          state: { showScoutingOverlay: true },
+        });
         batch(() => {
           dispatch(
             toggleOverlay({
               isOpen: true,
               template: <ScoutingCompleteOverlay />,
-              canClose: false,
             })
           );
           dispatch(
             scoutingComplete(levelOneCloned, levelTwoCloned, levelThreeCloned)
           );
         });
-        window.setTimeout(() => {
-          history.push('/team');
-          dispatch(
-            toggleOverlay({
-              isOpen: false,
-              template: null,
-              canClose: true,
-            })
-          );
-        }, 5000);
       })
       .catch((err) => console.error(err));
   };
@@ -597,23 +590,10 @@ export const ScoutPage = ({ history }) => {
     });
   } else if (scoutingState.isComplete) {
     window.setTimeout(() => {
-      dispatch(
-        toggleOverlay({
-          isOpen: true,
-          template: <ScoutingCompleteOverlay />,
-          canClose: false,
-        })
-      );
-      window.setTimeout(() => {
-        history.push('/team');
-        dispatch(
-          toggleOverlay({
-            isOpen: false,
-            template: null,
-            canClose: true,
-          })
-        );
-      }, 5000);
+      history.push({
+        pathname: '/team',
+        state: { showScoutingOverlay: true },
+      });
     });
   }
 

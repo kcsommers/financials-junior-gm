@@ -47,7 +47,7 @@ export const TrophiesPage = ({ history }) => {
   );
 
   const repeatSeason = () => {
-    resetSeason(+student.level, student)
+    resetSeason(+student.level, +student.level, student)
       .then((updatedStudent) => {
         history.push({
           pathname: '/home',
@@ -58,7 +58,7 @@ export const TrophiesPage = ({ history }) => {
   };
 
   const nextSeason = () => {
-    resetSeason(+student.level + 1, student)
+    resetSeason(+student.level + 1, +student.level, student)
       .then((updatedStudent) => {
         history.push({
           pathname: '/home',

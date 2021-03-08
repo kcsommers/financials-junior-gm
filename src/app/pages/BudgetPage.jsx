@@ -185,11 +185,11 @@ export const BudgetPage = ({ history }) => {
               display: 'flex',
               alignItems: 'center',
               justifyContent:
-                student.rollOverBudget > 0 ? 'space-between' : 'flex-end',
+                +student.rollOverBudget > 0 ? 'space-between' : 'flex-end',
               padding: '1rem',
             }}
           >
-            {student.rollOverBudget > 0 && (
+            {+student.rollOverBudget > 0 && (
               <p
                 className='box-shadow'
                 style={{
@@ -202,7 +202,7 @@ export const BudgetPage = ({ history }) => {
               >
                 Rollover Budget
                 <br />
-                {getDollarString(student.rollOverBudget)}
+                {getDollarString(+student.rollOverBudget)}
               </p>
             )}
             <SharkieButton onCallSharkie={onCallSharkie} textPosition='left' />

@@ -18,19 +18,28 @@ import { PlayerAssignments, TeamAssignments } from '@data/players/players';
 import { cloneDeep } from 'lodash';
 import { initPlayersByLevel, updateStudentById } from './../../api-helper';
 
-export const resetSeason = (level, student) => {
+export const resetSeason = (newLevel, prevLevel, student) => {
   return new Promise((resolve, reject) => {
     const clonedSeasons = cloneDeep(student.seasons);
-    clonedSeasons[(level || 1) - 1] = [];
+    clonedSeasons[newLevel - 1] = [];
 
-    updateStudentById(student._id, { seasons: clonedSeasons, level })
+    const studentUpdates = {
+      seasons: clonedSeasons,
+      level: newLevel,
+    };
+
+    if (newLevel > prevLevel) {
+      studentUpdates.rollOverBudget = 0;
+    }
+
+    updateStudentById(student._id, studentUpdates)
       .then((res) => {
         if (!res.success || !res.updatedStudent) {
           console.error(new Error('Unexpected error updating student season'));
           return;
         }
 
-        initPlayersByLevel(level)
+        initPlayersByLevel(newLevel)
           .then((initializedStudentRes) => {
             const initializedStudent = initializedStudentRes.data;
             if (!initializedStudentRes.success || !initializedStudent) {
@@ -234,11 +243,11 @@ export const getRandomTeamRank = (level) => {
   }
 
   if (level === 2) {
-    return Math.floor(Math.random() * (315 - 175) + 175);
+    return Math.floor(Math.random() * (295 - 240) + 240);
   }
 
   if (level === 3) {
-    return Math.floor(Math.random() * (450 - 255) + 255);
+    return Math.floor(Math.random() * (490 - 425) + 425);
   }
 };
 
