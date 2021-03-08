@@ -6,6 +6,7 @@ import '@css/components/ConfirmOverlay.css';
 export const ConfirmOverlay = ({
   children,
   message,
+  subMessage,
   cancel,
   confirm,
   isDisabled,
@@ -28,6 +29,7 @@ export const ConfirmOverlay = ({
         {children && <div className='confirm-overlay-top'>{children}</div>}
         <div className='confirm-overlay-bottom'>
           <p className='confirm-message'>{message}</p>
+          {subMessage && <p className='confirm-message' style={{fontSize: '1rem'}}>{subMessage}</p>}
           <div
             className='confirm-options'
             style={{

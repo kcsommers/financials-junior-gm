@@ -80,6 +80,29 @@ export const Navigation = ({ tutorialActive, student }) => {
       .catch((err) => console.error(err));
   };
 
+  const logoutOverlay = () => {
+    dispatch(
+      toggleOverlay({
+        isOpen: true,
+        template: (
+          <ConfirmOverlay
+            message='Are you sure you would like to logout?'
+            subMessage = 'All your changes have been saved for next time.'
+            cancel={() => {
+              dispatch(
+                toggleOverlay({
+                  isOpen: false,
+                  template: null,
+                })
+              );
+            }}
+            confirm={doLogout}
+          ></ConfirmOverlay>
+        ),
+      })
+    );
+  }
+
   return (
     <div
       className='nav-container'
@@ -92,7 +115,7 @@ export const Navigation = ({ tutorialActive, student }) => {
         <img
           src={exitBtn}
           alt='Exit'
-          onClick={doLogout}
+          onClick={logoutOverlay}
           style={{ cursor: 'pointer' }}
         />
       </div>
