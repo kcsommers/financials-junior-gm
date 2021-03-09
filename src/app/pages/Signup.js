@@ -33,7 +33,7 @@ const Signup = () => {
     };
     try {
       const fetchResult = await fetch(
-        'https://cors-everywhere-me.herokuapp.com/http://ec2-18-236-146-143.us-west-2.compute.amazonaws.com/api/v1/auth/register',
+        'https://www.finjuniorgmapi.com/api/v1/auth/register',
         requestOptions
       );
       const result = await fetchResult.json();
