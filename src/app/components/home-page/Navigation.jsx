@@ -25,7 +25,7 @@ export const Navigation = ({ tutorialActive, student }) => {
   const history = useHistory();
 
   const resetSeasonConfirmed = () => {
-    resetSeason(+student.level, student)
+    resetSeason(+student.level, +student.level, student)
       .then((updatedStudent) => {
         batch(() => {
           dispatch(setStudent(updatedStudent));
@@ -87,7 +87,7 @@ export const Navigation = ({ tutorialActive, student }) => {
         template: (
           <ConfirmOverlay
             message='Are you sure you would like to logout?'
-            subMessage = 'All your changes have been saved for next time.'
+            subMessage='All your changes have been saved for next time.'
             cancel={() => {
               dispatch(
                 toggleOverlay({
@@ -101,7 +101,7 @@ export const Navigation = ({ tutorialActive, student }) => {
         ),
       })
     );
-  }
+  };
 
   return (
     <div
