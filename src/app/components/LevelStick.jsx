@@ -129,8 +129,7 @@ export const LevelStick = ({
           }
         >
           <LevelStickSvg
-            rank={amount}
-            num={amount}
+            num={Math.max(amount, 0)}
             denom={denom}
             color={color}
             inverse={inverse}
