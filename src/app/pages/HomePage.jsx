@@ -263,7 +263,10 @@ export const HomePage = ({ location, history }) => {
           <LevelStick
             type='budget'
             levelDirection='topToBottom'
-            amount={student.totalBudget - moneySpent - student.savingsBudget}
+            amount={Math.max(
+              +student.totalBudget - moneySpent - +student.savingsBudget,
+              0
+            )}
             denom={student.totalBudget}
             color='#002f6c'
             indicatorDirection='left'

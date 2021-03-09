@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 
 export const LevelStickSvg = ({ num, denom, color, inverse }) => {
   const stickHeight = 210;
-  const clipY = stickHeight * (num / denom);
+  const clipY = Math.max(stickHeight * (num / denom), 0);
 
   const guid = useMemo(() => Math.floor(Math.random() * 1000000), []);
   return (
