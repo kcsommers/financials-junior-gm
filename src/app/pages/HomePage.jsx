@@ -233,8 +233,6 @@ export const HomePage = ({ location, history }) => {
     });
   }
 
-  return <NewLevelOverlay team={getStudentTeam(2)} />;
-
   return (
     <div className='home-page-container'>
       <Navigation tutorialActive={tutorialActive} student={student} />
