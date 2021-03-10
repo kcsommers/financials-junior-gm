@@ -85,9 +85,10 @@ export const BudgetSlider = ({ budget, setValue, student }) => {
             style={savingsIndicatorPosition}
           >
             <Indicator
-              amount={`$${budget.savings}`}
+              amount={budget.savings}
               direction='top'
               highlight={true}
+              isMoney={true}
             />
             <p className='color-primary'>Savings</p>
           </div>
