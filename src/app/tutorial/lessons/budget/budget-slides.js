@@ -234,7 +234,7 @@ const slideConfigs = [
   },
   {
     message:
-      'It is a good idea that for every 10 dollars of your total budget, try to save a dollar or two.',
+      'It is a good idea that for every $10 dollars of your total budget, try to save a dollar or two.',
     sharkie: 'speak',
     hasButtons: true,
     exitActions: [

@@ -34,7 +34,7 @@ export default class Slide {
       if (this.small) {
         return { base: '1.48rem', accent: '1.258' };
       }
-      return { base: '2rem', accent: '2.35rem' };
+      return { base: '2rem', accent: '2rem' };
     }
 
     if (this.small) {
