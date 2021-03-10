@@ -324,6 +324,7 @@ const slideConfigs = [
       'If you finish in the top 3 and having savings left over at the end of the season, you will be promoted to become the general manager of the San Jose Barracuda!',
     sharkie: 'speak',
     hasButtons: true,
+    accentText: 'San Jose Barracuda',
   },
   {
     message: 'Just click the accept promotion button on the trophy page.',

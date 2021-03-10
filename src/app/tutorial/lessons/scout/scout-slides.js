@@ -9,17 +9,6 @@ const slideConfigs = [
     hasButtons: true,
   },
   {
-    message: 'You will learn how to scout players.',
-    sharkie: 'speak',
-    hasButtons: true,
-  },
-  {
-    message: 'But what does Scouting mean?',
-    sharkie: 'speak',
-    hasButtons: true,
-    accentText: 'Scouting',
-  },
-  {
     message:
       'Scouting is when a general manager studies new players to see how well they play.',
     sharkie: 'speak',
@@ -441,9 +430,10 @@ const slideConfigs = [
     ],
   },
   {
-    message: 'You can only scout players once every season.',
+    message: 'You can only scout players Once every season.',
     sharkie: 'speak',
     hasButtons: true,
+    accentText: 'Once',
     slideAnimate: {
       y: '0%',
       x: '0%',
