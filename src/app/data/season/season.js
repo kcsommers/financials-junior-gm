@@ -56,44 +56,159 @@ export const resetSeason = (newLevel, prevLevel, student) => {
 };
 
 export const getGameResult = (studentTeamRank, opponent) => {
-  const rankDiff = studentTeamRank - opponent.teamRank;
-  if (rankDiff > 5) {
-    return {
-      score: [Math.min(Math.ceil(rankDiff / 10), 5), 0],
-      messageIndex: 0,
-      opponent: opponent.name,
-      points: 2,
-      win: true,
-    };
-  } else if (
-    (Math.abs(rankDiff) > 0 && Math.abs(rankDiff) <= 5) ||
-    rankDiff === 0
-  ) {
-    if (opponent.teamRank > studentTeamRank) {
-      return {
-        score: [1, 2],
-        messageIndex: 2,
-        opponent: opponent.name,
-        points: 1,
-        win: false,
-      };
-    }
-    return {
-      score: [2, 1],
-      messageIndex: 1,
-      opponent: opponent.name,
-      points: 2,
-      win: true,
-    };
+  const possibleScores = [
+    [
+      [5, 0],
+      [5, 1],
+      [5, 2],
+      [5, 3],
+      [4, 0],
+      [4, 1],
+      [4, 2],
+      [3, 0],
+      [3, 1],
+      [6, 2],
+      [6, 3],
+      [6, 4],
+      [7, 2],
+      [7, 3],
+      [7, 4],
+    ],
+    [
+      [1, 0],
+      [2, 1],
+      [3, 0],
+      [3, 1],
+      [4, 0],
+      [4, 1],
+      [4, 2],
+      [5, 0],
+      [5, 1],
+      [5, 2],
+      [5, 3],
+      [6, 1],
+      [6, 2],
+      [6, 3],
+      [6, 4],
+      [7, 3],
+      [7, 4],
+      [7, 5],
+    ],
+    [
+      [1, 0],
+      [2, 0],
+      [2, 1],
+      [3, 0],
+      [3, 1],
+      [3, 2],
+      [4, 0],
+      [4, 1],
+      [4, 2],
+      [4, 3],
+      [5, 1],
+      [5, 2],
+      [5, 3],
+      [5, 4],
+      [6, 2],
+      [6, 3],
+      [6, 4],
+      [6, 5],
+      [7, 3],
+      [7, 4],
+      [7, 5],
+    ],
+    [
+      [1, 0],
+      [2, 0],
+      [3, 1],
+      [3, 2],
+      [4, 2],
+      [4, 3],
+      [5, 3],
+      [5, 4],
+    ],
+  ];
+
+  const rankDiff = Math.abs(studentTeamRank - opponent.teamRank);
+
+  let scoresIndex;
+  if (rankDiff > 50) {
+    scoresIndex = 0;
+  } else if (rankDiff > 20 && rankDiff <= 50) {
+    scoresIndex = 1;
+  } else if (rankDiff > 5 && rankDiff <= 20) {
+    scoresIndex = 2;
   } else {
-    return {
-      score: [0, Math.min(Math.ceil(Math.abs(rankDiff / 10)), 5)],
-      messageIndex: 3,
-      opponent: opponent.name,
-      points: 0,
-      win: false,
-    };
+    scoresIndex = 3;
   }
+
+  const score =
+    possibleScores[scoresIndex][
+      Math.floor(Math.random() * possibleScores[scoresIndex].length)
+    ];
+
+  let messageIndex;
+  let win;
+  let points;
+  if (studentTeamRank >= opponent.teamRank) {
+    win = true;
+    points = 2;
+    messageIndex = scoresIndex === 3 ? 1 : 0;
+  } else {
+    win = false;
+    points = scoresIndex === 3 ? 1 : 0;
+    messageIndex = scoresIndex === 3 ? 2 : 3;
+    const oppScore = score[0];
+    const studentScore = score[1];
+    score[0] = studentScore;
+    score[1] = oppScore;
+  }
+
+  return {
+    score,
+    messageIndex,
+    points,
+    win,
+    opponent: opponent.name,
+  };
+
+  // if (rankDiff > 5) {
+  //   return {
+  //     score: [Math.min(Math.ceil(rankDiff / 10), 5), 0],
+  //     messageIndex: 0,
+  //     opponent: opponent.name,
+  //     points: 2,
+  //     win: true,
+  //   };
+  // } else if (
+  //   (Math.abs(rankDiff) > 0 && Math.abs(rankDiff) <= 5) ||
+  //   rankDiff === 0
+  // ) {
+  //   if (opponent.teamRank > studentTeamRank) {
+  //     return {
+  //       score: [1, 2],
+  //       messageIndex: 2,
+  //       opponent: opponent.name,
+  //       points: 1,
+  //       win: false,
+  //     };
+  //   }
+  //   return {
+  //     score: [2, 1],
+  //     messageIndex: 1,
+  //     opponent: opponent.name,
+  //     points: 2,
+  //     win: true,
+  //   };
+  // } else {
+  //   return {
+  //     score: [0, Math.min(Math.ceil(Math.abs(rankDiff / 10)), 5)],
+  //     messageIndex: 3,
+  //     opponent: opponent.name,
+  //     points: 0,
+  //     win: false,
+  //   };
+  // }
 };
 
 const getSecondHighestPlayer = (team) => {
