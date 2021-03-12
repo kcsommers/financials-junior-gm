@@ -428,12 +428,7 @@ export const ScoutPage = ({ history }) => {
           state: { showScoutingOverlay: true },
         });
         batch(() => {
-          dispatch(
-            toggleOverlay({
-              isOpen: true,
-              template: <ScoutingCompleteOverlay />,
-            })
-          );
+          dispatch(setStudent(res.updatedStudent));
           dispatch(
             scoutingComplete(levelOneCloned, levelTwoCloned, levelThreeCloned)
           );
