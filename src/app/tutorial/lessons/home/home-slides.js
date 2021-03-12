@@ -12,6 +12,7 @@ const introSlideConfigs = [
       "I want to offer you the job to become the San Jose Jr. Sharks' new general manager.",
     sharkie: 'play',
     hasButtons: true,
+    accentText: "San Jose Jr. Sharks'",
   },
   {
     message: 'So what does a general manager do?',

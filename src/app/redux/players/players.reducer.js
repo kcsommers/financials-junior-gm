@@ -239,12 +239,18 @@ const playersReducer = (state = initialState, action) => {
       const moneyLevels = getMoneyLevels(+student.level);
       const clonedState = cloneDeep(state);
 
-      const playerCache =
+      const releasedPlayerCache =
         releasedPlayer.playerAssignment === PlayerAssignments.OFFERED_SCOUT
           ? clonedState.scoutingState.offeredScoutPlayers
           : clonedState.marketPlayers;
 
-      playerCache[releasedPlayer.playerPosition].push(releasedPlayer);
+      releasedPlayerCache[releasedPlayer.playerPosition].push(releasedPlayer);
+
+      clonedState.marketPlayers[
+        signedPlayer.playerPosition
+      ] = clonedState.marketPlayers[signedPlayer.playerPosition].filter(
+        (p) => p._id !== signedPlayer._id
+      );
 
       if (releasedPlayer.playerAssignment === PlayerAssignments.OFFERED_SCOUT) {
         if (+releasedPlayer.playerCost === moneyLevels[0].num) {
