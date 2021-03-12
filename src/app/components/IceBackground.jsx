@@ -1,4 +1,3 @@
-import { ReactSVG } from 'react-svg';
 import financialsLogo from '@images/financials-logo.svg';
 import ice from '@images/field.png';
 import { useLocation } from 'react-router-dom';
@@ -25,11 +24,13 @@ export const IceBackground = () => {
       }}
     >
       {location !== '/dashboard' && (
-        <ReactSVG
+        <img
           src={financialsLogo}
+          alt='Financials Junior GM Program logo'
           style={{
             position: 'relative',
             top: location === '/home' ? '200px' : '125px',
+            display: 'inline-block',
           }}
         />
       )}

@@ -1,51 +1,46 @@
-import bluebearsLg from '@images/icons/team-logos/bluebearsLg.svg';
-import bluebearsSm from '@images/icons/team-logos/bluebearsSm.svg';
-import redrabbitsLg from '@images/icons/team-logos/redrabbitsLg.svg';
-import redrabbitsSm from '@images/icons/team-logos/redrabbitsSm.svg';
-import pinkpanthersLg from '@images/icons/team-logos/pinkpanthersLg.svg';
-import pinkpanthersSm from '@images/icons/team-logos/pinkpanthersSm.svg';
-import yellowyaksLg from '@images/icons/team-logos/yellowyaksLg.svg';
-import yellowyaksSm from '@images/icons/team-logos/yellowyaksSm.svg';
-import greengiraffesLg from '@images/icons/team-logos/greengiraffesLg.svg';
-import greengiraffesSm from '@images/icons/team-logos/greengiraffesSm.svg';
-import goldengeckosLg from '@images/icons/team-logos/goldengeckosLg.svg';
-import goldengeckosSm from '@images/icons/team-logos/goldengeckosSm.svg';
-import graygrasshoppersLg from '@images/icons/team-logos/graygrasshoppersLg.svg';
-import graygrasshoppersSm from '@images/icons/team-logos/graygrasshoppersSm.svg';
-import orangeowlsLg from '@images/icons/team-logos/orangeowlsLg.svg';
-import orangeowlsSm from '@images/icons/team-logos/orangeowlsSm.svg';
-import silverspidersLg from '@images/icons/team-logos/silverspidersLg.svg';
-import silverspidersSm from '@images/icons/team-logos/silverspidersSm.svg';
-import whitewolvesLg from '@images/icons/team-logos/whitewolvesLg.svg';
-import whitewolvesSm from '@images/icons/team-logos/whitewolvesSm.svg';
-import pinkpandasLg from '@images/icons/team-logos/pinkpandasLg.svg';
-import pinkpandasSm from '@images/icons/team-logos/pinkpandasSm.svg';
-import blackbeaversLg from '@images/icons/team-logos/blackbeaversLg.svg';
-import blackbeaversSm from '@images/icons/team-logos/blackbeaversSm.svg';
+import bluebearsLogo from '@images/icons/team-logos/bluebearsLg.svg';
+import redrabbitsLogo from '@images/icons/team-logos/redrabbitsLg.svg';
+import pinkpanthersLogo from '@images/icons/team-logos/pinkpanthersLg.svg';
+import yellowyaksLogo from '@images/icons/team-logos/yellowyaksLg.svg';
+import greengiraffesLogo from '@images/icons/team-logos/greengiraffesLg.svg';
+import goldengeckosLogo from '@images/icons/team-logos/goldengeckosLg.svg';
+import graygrasshoppersLogo from '@images/icons/team-logos/graygrasshoppersLg.svg';
+import orangeowlsLogo from '@images/icons/team-logos/orangeowlsLg.svg';
+import silverspidersLogo from '@images/icons/team-logos/silverspidersLg.svg';
+import whitewolvesLogo from '@images/icons/team-logos/whitewolvesLg.svg';
+import pinkpandasLogo from '@images/icons/team-logos/pinkpandasLg.svg';
+import blackbeaversLogo from '@images/icons/team-logos/blackbeaversLg.svg';
 import jrSharksLogo from '@images/icons/jr-sharks-logo-lg.svg';
 import sjbarracudalogo from '@images/icons/sjbarracuda-logo.svg';
 import sjsharkslogo from '@images/icons/sjsharkslogo.svg';
-import jrSharksLogoSm from '@images/icons/jrsharks-logo-sm.svg';
-import sjbarracudaLogoSm from '@images/icons/sjbarracuda-logo-sm.svg';
-import sjsharksLogoSm from '@images/icons/sjsharks-logo-sm.svg';
 import { INJURE_PLAYER } from '@redux/actions';
 import { PlayerAssignments, TeamAssignments } from '@data/players/players';
 import { cloneDeep } from 'lodash';
 import { initPlayersByLevel, updateStudentById } from './../../api-helper';
 
-export const resetSeason = (level, student) => {
+export const resetSeason = (newLevel, prevLevel, student) => {
   return new Promise((resolve, reject) => {
     const clonedSeasons = cloneDeep(student.seasons);
-    clonedSeasons[(level || 1) - 1] = [];
+    clonedSeasons[newLevel - 1] = [];
 
-    updateStudentById(student._id, { seasons: clonedSeasons, level })
+    const studentUpdates = {
+      seasons: clonedSeasons,
+      level: newLevel,
+      objectives: {},
+    };
+
+    if (newLevel > prevLevel) {
+      studentUpdates.rollOverBudget = 0;
+    }
+
+    updateStudentById(student._id, studentUpdates)
       .then((res) => {
         if (!res.success || !res.updatedStudent) {
           console.error(new Error('Unexpected error updating student season'));
           return;
         }
 
-        initPlayersByLevel(level)
+        initPlayersByLevel(newLevel)
           .then((initializedStudentRes) => {
             const initializedStudent = initializedStudentRes.data;
             if (!initializedStudentRes.success || !initializedStudent) {
@@ -62,35 +57,118 @@ export const resetSeason = (level, student) => {
 };
 
 export const getGameResult = (studentTeamRank, opponent) => {
-  const rankDiff = studentTeamRank - opponent.teamRank;
-  if (rankDiff > 5) {
-    return {
-      score: [Math.min(Math.ceil(rankDiff / 10), 5), 0],
-      messageIndex: 0,
-      opponent: opponent.name,
-      points: 2,
-      win: true,
-    };
-  } else if (
-    (Math.abs(rankDiff) > 0 && Math.abs(rankDiff) <= 5) ||
-    rankDiff === 0
-  ) {
-    return {
-      score: [2, 1],
-      messageIndex: 1,
-      opponent: opponent.name,
-      points: 1,
-      win: true,
-    };
+  const possibleScores = [
+    [
+      [5, 0],
+      [5, 1],
+      [5, 2],
+      [5, 3],
+      [4, 0],
+      [4, 1],
+      [4, 2],
+      [3, 0],
+      [3, 1],
+      [6, 2],
+      [6, 3],
+      [6, 4],
+      [7, 2],
+      [7, 3],
+      [7, 4],
+    ],
+    [
+      [1, 0],
+      [2, 1],
+      [3, 0],
+      [3, 1],
+      [4, 0],
+      [4, 1],
+      [4, 2],
+      [5, 0],
+      [5, 1],
+      [5, 2],
+      [5, 3],
+      [6, 1],
+      [6, 2],
+      [6, 3],
+      [6, 4],
+      [7, 3],
+      [7, 4],
+      [7, 5],
+    ],
+    [
+      [1, 0],
+      [2, 0],
+      [2, 1],
+      [3, 0],
+      [3, 1],
+      [3, 2],
+      [4, 0],
+      [4, 1],
+      [4, 2],
+      [4, 3],
+      [5, 1],
+      [5, 2],
+      [5, 3],
+      [5, 4],
+      [6, 2],
+      [6, 3],
+      [6, 4],
+      [6, 5],
+      [7, 3],
+      [7, 4],
+      [7, 5],
+    ],
+    [
+      [1, 0],
+      [2, 1],
+      [3, 2],
+      [4, 3],
+      [5, 4],
+    ],
+  ];
+
+  const rankDiff = Math.abs(studentTeamRank - opponent.teamRank);
+
+  let scoresIndex;
+  if (rankDiff > 50) {
+    scoresIndex = 0;
+  } else if (rankDiff > 20 && rankDiff <= 50) {
+    scoresIndex = 1;
+  } else if (rankDiff > 5 && rankDiff <= 20) {
+    scoresIndex = 2;
   } else {
-    return {
-      score: [0, Math.min(Math.ceil(Math.abs(rankDiff / 10)), 5)],
-      messageIndex: 2,
-      opponent: opponent.name,
-      points: 0,
-      win: false,
-    };
+    scoresIndex = 3;
   }
+
+  const score =
+    possibleScores[scoresIndex][
+      Math.floor(Math.random() * possibleScores[scoresIndex].length)
+    ];
+
+  let messageIndex;
+  let win;
+  let points;
+  if (studentTeamRank >= opponent.teamRank) {
+    win = true;
+    points = 2;
+    messageIndex = scoresIndex === 3 ? 1 : 0;
+  } else {
+    win = false;
+    points = scoresIndex === 3 ? 1 : 0;
+    messageIndex = scoresIndex === 3 ? 2 : 3;
+    const oppScore = score[0];
+    const studentScore = score[1];
+    score[0] = studentScore;
+    score[1] = oppScore;
+  }
+
+  return {
+    score,
+    messageIndex,
+    points,
+    win,
+    opponent: opponent.name,
+  };
 };
 
 const getSecondHighestPlayer = (team) => {
@@ -217,6 +295,7 @@ export const gamePhases = (level) => [
     messages: [
       `GET LOUD! The ${studentTeams[level - 1].name} Won!`,
       `CLOSE! The ${studentTeams[level - 1].name} won in overtime!`,
+      `CLOSE! The ${studentTeams[level - 1].name} lost in overtime!`,
       `OH NO! The ${studentTeams[level - 1].name} lost :(`,
     ],
   },
@@ -235,15 +314,15 @@ export const gamePhases = (level) => [
 
 export const getRandomTeamRank = (level) => {
   if (level === 1) {
-    return Math.floor(Math.random() * (90 - 50) + 50);
+    return Math.floor(Math.random() * (95 - 70) + 70);
   }
 
   if (level === 2) {
-    return Math.floor(Math.random() * (315 - 175) + 175);
+    return Math.floor(Math.random() * (295 - 240) + 240);
   }
 
   if (level === 3) {
-    return Math.floor(Math.random() * (450 - 255) + 255);
+    return Math.floor(Math.random() * (490 - 425) + 425);
   }
 };
 
@@ -276,7 +355,14 @@ export const getStanding = (team, standings) => {
 };
 
 export const getAllOpponents = (level) => {
-  const clonedTeams = cloneDeep(allOpponents);
+  let opponents = levelOneOpponents;
+  if (level === 2) {
+    opponents = levelTwoOpponents;
+  } else if (level === 3) {
+    opponents = levelThreeOpponents;
+  }
+
+  const clonedTeams = cloneDeep(opponents);
   return clonedTeams.map((t) => {
     t.teamRank = getRandomTeamRank(level);
     return t;
@@ -289,21 +375,18 @@ export const studentTeams = [
     nameFull: 'San Jose Jr. Sharks',
     stats: { wins: 0, losses: 0, points: 0 },
     logo: jrSharksLogo,
-    logoSm: jrSharksLogoSm
   },
   {
     name: 'Barracuda',
     nameFull: 'San Jose Barracuda',
     stats: { wins: 0, losses: 0, points: 0 },
     logo: sjbarracudalogo,
-    logoSm: sjbarracudaLogoSm
   },
   {
     name: 'Sharks',
     nameFull: 'San Jose Sharks',
     stats: { wins: 0, losses: 0, points: 0 },
     logo: sjsharkslogo,
-    logoSm: sjsharksLogoSm
   },
 ];
 
@@ -311,11 +394,10 @@ export const getStudentTeam = (level) => {
   return studentTeams[level - 1];
 };
 
-export const allOpponents = [
+export const levelOneOpponents = [
   {
     teamRank: 35,
-    logoLg: bluebearsLg,
-    logoSm: bluebearsSm,
+    logo: bluebearsLogo,
     name: 'Blue Bears',
     stats: { wins: 0, losses: 0, points: 0 },
     standings: '6th',
@@ -323,8 +405,7 @@ export const allOpponents = [
   },
   {
     teamRank: 50,
-    logoLg: redrabbitsLg,
-    logoSm: redrabbitsSm,
+    logo: redrabbitsLogo,
     name: 'Red Rabbits',
     stats: { wins: 0, losses: 0, points: 0 },
     standings: '6th',
@@ -332,8 +413,7 @@ export const allOpponents = [
   },
   {
     teamRank: 55,
-    logoLg: pinkpanthersLg,
-    logoSm: pinkpanthersSm,
+    logo: pinkpanthersLogo,
     name: 'Purple Panthers',
     stats: { wins: 0, losses: 0, points: 0 },
     standings: '6th',
@@ -341,8 +421,7 @@ export const allOpponents = [
   },
   {
     teamRank: 80,
-    logoLg: whitewolvesLg,
-    logoSm: whitewolvesSm,
+    logo: whitewolvesLogo,
     name: 'White Wolves',
     stats: { wins: 0, losses: 0, points: 0 },
     standings: '6th',
@@ -350,8 +429,7 @@ export const allOpponents = [
   },
   {
     teamRank: 65,
-    logoLg: greengiraffesLg,
-    logoSm: greengiraffesSm,
+    logo: greengiraffesLogo,
     name: 'Green Giraffes',
     stats: { wins: 0, losses: 0, points: 0 },
     standings: '6th',
@@ -359,8 +437,7 @@ export const allOpponents = [
   },
   {
     teamRank: 75,
-    logoLg: pinkpandasLg,
-    logoSm: pinkpandasSm,
+    logo: pinkpandasLogo,
     name: 'Pink Pandas',
     stats: { wins: 0, losses: 0, points: 0 },
     standings: '6th',
@@ -368,8 +445,7 @@ export const allOpponents = [
   },
   {
     teamRank: 65,
-    logoLg: orangeowlsLg,
-    logoSm: orangeowlsSm,
+    logo: orangeowlsLogo,
     name: 'Orange Owls',
     stats: { wins: 0, losses: 0, points: 0 },
     standings: '6th',
@@ -377,8 +453,7 @@ export const allOpponents = [
   },
   {
     teamRank: 70,
-    logoLg: silverspidersLg,
-    logoSm: silverspidersSm,
+    logo: silverspidersLogo,
     name: 'Silver Spiders',
     stats: { wins: 0, losses: 0, points: 0 },
     standings: '6th',
@@ -386,8 +461,7 @@ export const allOpponents = [
   },
   {
     teamRank: 55,
-    logoLg: goldengeckosLg,
-    logoSm: goldengeckosSm,
+    logo: goldengeckosLogo,
     name: 'Golden Geckos',
     stats: { wins: 0, losses: 0, points: 0 },
     standings: '6th',
@@ -395,8 +469,7 @@ export const allOpponents = [
   },
   {
     teamRank: 70,
-    logoLg: yellowyaksLg,
-    logoSm: yellowyaksSm,
+    logo: yellowyaksLogo,
     name: 'Yellow Yaks',
     stats: { wins: 0, losses: 0, points: 0 },
     standings: '12th',
@@ -404,8 +477,7 @@ export const allOpponents = [
   },
   {
     teamRank: 75,
-    logoLg: blackbeaversLg,
-    logoSm: blackbeaversSm,
+    logo: blackbeaversLogo,
     name: 'Black Beavers',
     stats: { wins: 0, losses: 0, points: 0 },
     standings: '10th',
@@ -413,11 +485,184 @@ export const allOpponents = [
   },
   {
     teamRank: 70,
-    logoLg: graygrasshoppersLg,
-    logoSm: graygrasshoppersSm,
+    logo: graygrasshoppersLogo,
     name: 'Gray Grasshoppers',
     stats: { wins: 0, losses: 0, points: 0 },
     standings: '6th',
     color: '#CECECE',
+  },
+];
+
+export const levelTwoOpponents = [
+  {
+    teamRank: 241,
+    name: 'Bakersfield Condors',
+    stats: { wins: 0, losses: 0, points: 0 },
+    standings: '6th',
+    color: '#4b4b4b',
+  },
+  {
+    teamRank: 294,
+    name: 'Sand Diego Gulls',
+    stats: { wins: 0, losses: 0, points: 0 },
+    standings: '6th',
+    color: '#4b4b4b',
+  },
+  {
+    teamRank: 275,
+    name: 'Stockton Heat',
+    stats: { wins: 0, losses: 0, points: 0 },
+    standings: '6th',
+    color: '#4b4b4b',
+  },
+  {
+    teamRank: 280,
+    name: 'Colorado Eagles',
+    stats: { wins: 0, losses: 0, points: 0 },
+    standings: '6th',
+    color: '#4b4b4b',
+  },
+  {
+    teamRank: 265,
+    name: 'Ontario Reign',
+    stats: { wins: 0, losses: 0, points: 0 },
+    standings: '6th',
+    color: '#4b4b4b',
+  },
+  {
+    teamRank: 275,
+    name: 'Henderson Silver Knights',
+    stats: { wins: 0, losses: 0, points: 0 },
+    standings: '6th',
+    color: '#4b4b4b',
+  },
+  {
+    teamRank: 265,
+    name: 'Tucson Roadrunners',
+    stats: { wins: 0, losses: 0, points: 0 },
+    standings: '6th',
+    color: '#4b4b4b',
+  },
+  {
+    teamRank: 270,
+    name: 'Texas Stars',
+    stats: { wins: 0, losses: 0, points: 0 },
+    standings: '6th',
+    color: '#4b4b4b',
+  },
+  {
+    teamRank: 255,
+    name: 'Iowa Wild',
+    stats: { wins: 0, losses: 0, points: 0 },
+    standings: '6th',
+    color: '#4b4b4b',
+  },
+  {
+    teamRank: 270,
+    name: 'Manitoba Moose',
+    stats: { wins: 0, losses: 0, points: 0 },
+    standings: '12th',
+    color: '#4b4b4b',
+  },
+  {
+    teamRank: 275,
+    name: 'Rockford Icehogs',
+    stats: { wins: 0, losses: 0, points: 0 },
+    standings: '10th',
+    color: '#4b4b4b',
+  },
+  {
+    teamRank: 270,
+    name: 'Chicago Wolves',
+    stats: { wins: 0, losses: 0, points: 0 },
+    standings: '6th',
+    color: '#4b4b4b',
+  },
+];
+
+export const levelThreeOpponents = [
+  {
+    teamRank: 425,
+    name: 'Anaheim Ducks',
+    stats: { wins: 0, losses: 0, points: 0 },
+    standings: '6th',
+    color: '#4b4b4b',
+  },
+  {
+    teamRank: 490,
+    name: 'Arizona Coyotes',
+    stats: { wins: 0, losses: 0, points: 0 },
+    standings: '6th',
+    color: '#4b4b4b',
+  },
+  {
+    teamRank: 455,
+    name: 'Calgary Flames',
+    stats: { wins: 0, losses: 0, points: 0 },
+    standings: '6th',
+    color: '#4b4b4b',
+  },
+  {
+    teamRank: 480,
+    name: 'Edmonton Oilers',
+    stats: { wins: 0, losses: 0, points: 0 },
+    standings: '6th',
+    color: '#4b4b4b',
+  },
+  {
+    teamRank: 465,
+    name: 'Los Angeles Kings',
+    stats: { wins: 0, losses: 0, points: 0 },
+    standings: '6th',
+    color: '#4b4b4b',
+  },
+  {
+    teamRank: 475,
+    name: 'Vancouver Canucks',
+    stats: { wins: 0, losses: 0, points: 0 },
+    standings: '6th',
+    color: '#4b4b4b',
+  },
+  {
+    teamRank: 465,
+    name: 'Vegas Golden Knights',
+    stats: { wins: 0, losses: 0, points: 0 },
+    standings: '6th',
+    color: '#4b4b4b',
+  },
+  {
+    teamRank: 470,
+    name: 'Dallas Stars',
+    stats: { wins: 0, losses: 0, points: 0 },
+    standings: '6th',
+    color: '#4b4b4b',
+  },
+  {
+    teamRank: 455,
+    name: 'Colorado Avalanche',
+    stats: { wins: 0, losses: 0, points: 0 },
+    standings: '6th',
+    color: '#4b4b4b',
+  },
+  {
+    teamRank: 470,
+    name: 'Winnipeg Jets',
+    stats: { wins: 0, losses: 0, points: 0 },
+    standings: '12th',
+    color: '#4b4b4b',
+  },
+  {
+    teamRank: 475,
+    name: 'Minnesota Wild',
+    stats: { wins: 0, losses: 0, points: 0 },
+    standings: '10th',
+    color: '#4b4b4b',
+  },
+  {
+    teamRank: 470,
+    name: 'St. Louis Blues',
+    stats: { wins: 0, losses: 0, points: 0 },
+    standings: '6th',
+    color: '#4b4b4b',
   },
 ];

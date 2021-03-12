@@ -1,5 +1,4 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
-import { ReactSVG } from 'react-svg';
 import {
   StickButton,
   PlayerCard,
@@ -11,24 +10,25 @@ import {
   TeamBudgetState,
   NextSeasonOverlay,
   FaqOverlay,
+  ScoutingCompleteOverlay,
 } from '@components';
 import scoutStick from '@images/scout-stick.svg';
 import teamStick from '@images/team-stick.svg';
 import iceBgSmall from '@images/ice-bg-small.svg';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch, batch } from 'react-redux';
 import {
   teamSlides,
   SharkieButton,
   Tutorial,
   getConfirmSlides,
 } from '@tutorial';
-import { setTutorialState, toggleOverlay, updateStudent } from '@redux/actions';
+import { setTutorialState, toggleOverlay, setStudent } from '@redux/actions';
 import { updateStudentById } from './../api-helper';
+import { faqs } from '@data/faqs/faqs';
 import { cloneDeep } from 'lodash';
 import '@css/pages/TeamPage.css';
-import { faqs } from '@data/faqs/faqs';
 
-export const TeamPage = ({ history }) => {
+export const TeamPage = ({ history, location }) => {
   const dispatch = useDispatch();
   const tutorialActive = useSelector((state) => state.tutorial.isActive);
   const student = useSelector((state) => state.studentState.student);
@@ -46,8 +46,27 @@ export const TeamPage = ({ history }) => {
 
   const [tutorialSlides, setTutorialSlides] = useState([teamSlides]);
 
-  const onTutorialComplete = () => {
-    dispatch(setTutorialState({ isActive: false }));
+  const onTutorialComplete = (canceled) => {
+    if (canceled) {
+      dispatch(setTutorialState({ isActive: false }));
+      return;
+    }
+
+    // check if this was the first time the tutorial was viewed
+    if (!student.tutorials || !student.tutorials.team) {
+      // if so, update the student object and enable budget button
+      const tutorials = { home: true, budget: true, team: true };
+      updateStudentById(student._id, { tutorials })
+        .then(({ updatedStudent }) => {
+          batch(() => {
+            dispatch(setTutorialState({ isActive: false }));
+            dispatch(setStudent(updatedStudent));
+          });
+        })
+        .catch((err) => console.error(err));
+    } else {
+      dispatch(setTutorialState({ isActive: false }));
+    }
   };
 
   const startTutorial = useCallback(
@@ -95,6 +114,7 @@ export const TeamPage = ({ history }) => {
             player={player}
             student={student}
             seasonState={seasonState}
+            isDisabled={tutorialActive}
           />
         ),
       })
@@ -110,6 +130,7 @@ export const TeamPage = ({ history }) => {
             team={team}
             assignment={assignment}
             student={student}
+            isDisabled={tutorialActive}
           />
         ),
       })
@@ -122,21 +143,29 @@ export const TeamPage = ({ history }) => {
   useEffect(() => {
     if (student && !hasSeenTutorial.current) {
       hasSeenTutorial.current = true;
-      const clonedTutorials = cloneDeep(student.tutorials || {});
-      clonedTutorials.team = true;
-      updateStudentById(student._id, { tutorials: clonedTutorials })
-        .then((res) => {
-          dispatch(updateStudent({ tutorials: clonedTutorials }));
-          startTutorial([teamSlides]);
-        })
-        .catch((err) => console.error(err));
+      startTutorial([teamSlides]);
     }
-  }, [student, dispatch, startTutorial]);
+  }, [student, startTutorial]);
   hasSeenTutorial.current = !!(
     student &&
     student.tutorials &&
     student.tutorials.team
   );
+
+  useEffect(() => {
+    if (location.state && location.state.showScoutingOverlay) {
+      dispatch(
+        toggleOverlay({
+          isOpen: true,
+          template: <ScoutingCompleteOverlay />,
+        })
+      );
+
+      const stateCopy = cloneDeep(location.state);
+      delete stateCopy.showScoutingOverlay;
+      history.replace({ state: stateCopy });
+    }
+  }, [dispatch, history, location.state]);
 
   if (seasonState.inTransition && !seasonState.inSession) {
     window.setTimeout(() => {
@@ -166,10 +195,17 @@ export const TeamPage = ({ history }) => {
         tutorialActive={tutorialActive}
       />
 
-      <PageBoard hideCloseBtn={true} includeBackButton={true}>
+      <PageBoard>
         <div className='team-page-board-header'>
           <div className='team-page-board-header-inner'>
-            <ReactSVG src={studentTeam.logoSm} />
+            <img
+              src={studentTeam.logo}
+              alt={studentTeam.name + ' logo'}
+              style={{
+                display: 'inline-block',
+                width: '85px',
+              }}
+            />
             <SharkieButton textPosition='left' onCallSharkie={onCallSharkie} />
           </div>
           <h2 className='color-primary'>{studentTeam.nameFull}</h2>
@@ -197,8 +233,9 @@ export const TeamPage = ({ history }) => {
 
           <div className='team-page-board-right'>
             <div className='team-players-card'>
-              <ReactSVG
+              <img
                 style={{
+                  display: 'inline-block',
                   position: 'absolute',
                   top: '25px',
                   left: '0',
@@ -207,6 +244,7 @@ export const TeamPage = ({ history }) => {
                   zIndex: 0,
                 }}
                 src={iceBgSmall}
+                alt='Ice Background'
               />
               <div className='team-players-row'>
                 <PlayerCard
@@ -283,6 +321,14 @@ export const TeamPage = ({ history }) => {
               }`}
             >
               <p className='color-primary on-the-bench-text'>On the Bench</p>
+              {!scoutingState.isComplete ? (
+                <p
+                  className='color-primary on-the-bench-text'
+                  style={{ marginTop: '35px' }}
+                >
+                  Scout players to activate the bench!
+                </p>
+              ) : null}
               {scoutingState.isComplete && (
                 <div className='team-players-row team-bench-row'>
                   <PlayerCard

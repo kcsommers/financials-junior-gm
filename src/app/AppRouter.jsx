@@ -38,9 +38,11 @@ export const AppRouter = ({ isLoggedIn, userRole }) => {
           path='/home'
           render={(props) => (
             <StudentPortal
+              pageName='home'
               isLoggedIn={isLoggedIn}
               userRole={userRole}
               screen={<HomePage {...props} />}
+              {...props}
             />
           )}
         />
@@ -49,9 +51,11 @@ export const AppRouter = ({ isLoggedIn, userRole }) => {
           path='/team'
           render={(props) => (
             <StudentPortal
+              pageName='team'
               isLoggedIn={isLoggedIn}
               userRole={userRole}
               screen={<TeamPage {...props} />}
+              {...props}
             />
           )}
         />
@@ -60,9 +64,11 @@ export const AppRouter = ({ isLoggedIn, userRole }) => {
           path='/scout'
           render={(props) => (
             <StudentPortal
+              pageName='scout'
               isLoggedIn={isLoggedIn}
               userRole={userRole}
               screen={<ScoutPage {...props} />}
+              {...props}
             />
           )}
         />
@@ -71,9 +77,11 @@ export const AppRouter = ({ isLoggedIn, userRole }) => {
           path='/budget'
           render={(props) => (
             <StudentPortal
+              pageName='budget'
               isLoggedIn={isLoggedIn}
               userRole={userRole}
               screen={<BudgetPage {...props} />}
+              {...props}
             />
           )}
         />
@@ -82,9 +90,11 @@ export const AppRouter = ({ isLoggedIn, userRole }) => {
           path='/season'
           render={(props) => (
             <StudentPortal
+              pageName='season'
               isLoggedIn={isLoggedIn}
               userRole={userRole}
               screen={<SeasonPage {...props} />}
+              {...props}
             />
           )}
         />
@@ -93,9 +103,11 @@ export const AppRouter = ({ isLoggedIn, userRole }) => {
           path='/trophies'
           render={(props) => (
             <StudentPortal
+              pageName='trophies'
               isLoggedIn={isLoggedIn}
               userRole={userRole}
               screen={<TrophiesPage {...props} />}
+              {...props}
             />
           )}
         />

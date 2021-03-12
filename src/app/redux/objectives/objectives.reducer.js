@@ -11,7 +11,10 @@ import { getAvailableSlots } from '@data/players/players-utils';
 
 const initialState = {
   currentObjectives: [
-    new Objective('Learn about your budget.', Objectives.LEARN_BUDGET),
+    new Objective(
+      'Learn about your budget and adjust your savings.',
+      Objectives.LEARN_BUDGET
+    ),
     new Objective('Fill your team by signing players.', Objectives.FILL_TEAM),
     new Objective('Play the season!', Objectives.PLAY_SEASON),
   ],
@@ -27,7 +30,7 @@ const objectivesReducer = (state = initialState, action) => {
 
       // check if theyve watched the budget tutorial
       clonedState.currentObjectives[0].setIsComplete(
-        !!(student.tutorials && student.tutorials.budget)
+        !!(student.objectives && student.objectives[Objectives.LEARN_BUDGET])
       );
 
       // check if they have players

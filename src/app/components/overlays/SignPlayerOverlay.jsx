@@ -23,7 +23,7 @@ import {
 import { Objectives } from '@data/objectives/objectives';
 import '@css/components/team-page/SignPlayerOverlay.css';
 
-export const SignPlayerOverlay = ({ assignment }) => {
+export const SignPlayerOverlay = ({ assignment, isDisabled }) => {
   const dispatch = useDispatch();
   const student = useSelector((state) => state.studentState.student);
   const team = useSelector((state) => state.players.teamPlayers);
@@ -87,7 +87,7 @@ export const SignPlayerOverlay = ({ assignment }) => {
           ) === 0;
 
         if (seasonState.currentScenario && objectiveComplete) {
-          dispatch(gameBlockEnded());
+          dispatch(gameBlockEnded(student));
           dispatch(removeObjective(Objectives.SEASON_SCENARIO));
         } else {
           dispatch(
@@ -113,6 +113,7 @@ export const SignPlayerOverlay = ({ assignment }) => {
             position={assignment}
             confirm={signConfirmed.bind(this, player, undefined)}
             cancel={signCancelled}
+            isDisabled={isDisabled}
           />
         ),
       })
@@ -128,6 +129,7 @@ export const SignPlayerOverlay = ({ assignment }) => {
           padding: '3rem 0',
           display: 'flex',
           flexDirection: 'column',
+          pointerEvents: isDisabled ? 'none' : 'auto',
         }}
       >
         <div className='sign-player-overlay-top' style={{ display: 'flex' }}>

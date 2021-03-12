@@ -1,6 +1,5 @@
 import backBtn from '@images/back-btn.svg';
 import { useHistory } from 'react-router-dom';
-import { ReactSVG } from 'react-svg';
 
 export const BackButton = ({ path }) => {
   const history = useHistory();
@@ -22,7 +21,7 @@ export const BackButton = ({ path }) => {
         justifyContent: 'center',
       }}
     >
-      <ReactSVG src={backBtn} />
+      <img src={backBtn} alt='Back' />
       <span
         style={{
           color: '#121210',

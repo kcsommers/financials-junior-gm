@@ -3,9 +3,7 @@ import { SET_ANIMATION_STATE } from '../../../redux/tutorials/tutorials.actions'
 import { TOGGLE_OVERLAY } from '../../../redux/overlay/overlay.actions';
 import { SignPlayerOverlay, PlayerDetailsOverlay } from '@components';
 import { ConfirmSignOverlay } from '../../../components/overlays/ConfirmSignOverlay';
-import { useDispatch, useSelector } from 'react-redux';
-// const student = useSelector((state) => state.studentState.student)
-// const team = useSelector((state) => state.players.teamPlayers)
+
 const player = {
   defensiveRank: '16',
   offensiveRank: '24',
@@ -34,9 +32,8 @@ const slideConfigs = [
     small: true,
     transparentBg: true,
   },
-  // There are six players in your team
   {
-    message: 'There are six players on your team!',
+    message: 'There are six players on your team.',
     sharkie: 'lean',
     hasButtons: true,
     timer: 0,
@@ -46,27 +43,9 @@ const slideConfigs = [
       x: '-63%',
     },
     transparentBg: true,
-    exitActions: [
-      {
-        type: SET_ANIMATION_STATE,
-        payload: {
-          page: 'team',
-          animationStates: [
-            {
-              component: 'playerCard',
-              state: {
-                borderColor: '#ffd782',
-                scale: 1.2,
-              },
-            },
-          ],
-        },
-      },
-    ],
   },
-  // three forwards, 2 defense and one goalie
   {
-    message: '3 forwards, 2 defense and a goalie',
+    message: '3 forwards, 2 defense and a goalie.',
     sharkie: 'lean',
     hasButtons: true,
     timer: 0,
@@ -95,9 +74,8 @@ const slideConfigs = [
       },
     ],
   },
-  // you can add a player by tapping on an empty spot
   {
-    message: 'You can add a player by tapping on an empty player slot.',
+    message: 'You can add a player by clicking on an empty player slot.',
     sharkie: 'lean',
     hasButtons: true,
     timer: 0,
@@ -129,14 +107,17 @@ const slideConfigs = [
         type: TOGGLE_OVERLAY,
         payload: {
           isOpen: true,
-          template: <SignPlayerOverlay assignment='fOne'></SignPlayerOverlay>,
+          template: (
+            <SignPlayerOverlay
+              assignment='fOne'
+              isDisabled={true}
+            ></SignPlayerOverlay>
+          ),
           canClose: false,
         },
       },
     ],
   },
-  //tap a player to learn more about them.
-  //get rid of spaces on your team.
   {
     message: 'These are the players you can sign to this slot!',
     sharkie: 'speak',
@@ -149,25 +130,9 @@ const slideConfigs = [
       zIndex: 1000,
     },
     transparentBg: true,
-    exitActions: [
-      {
-        type: SET_ANIMATION_STATE,
-        payload: {
-          page: 'team',
-          animationStates: [
-            {
-              component: 'playerCard',
-              state: {
-                scale: 1.1,
-              },
-            },
-          ],
-        },
-      },
-    ],
   },
   {
-    message: 'Tap a player to learn more about them!',
+    message: 'When you click on a player, you will learn more about them.',
     sharkie: 'speak',
     hasButtons: true,
     timer: 0,
@@ -183,15 +148,14 @@ const slideConfigs = [
         type: TOGGLE_OVERLAY,
         payload: {
           isOpen: true,
-          template: <ConfirmSignOverlay player={player} />,
+          template: <ConfirmSignOverlay player={player} isDisabled={true} />,
           canClose: false,
         },
       },
     ],
   },
   {
-    message:
-      'Each player has a rank which tells you how good they are in their position',
+    message: 'Each player has a rank which tells you how good the player is.',
     sharkie: 'lean',
     hasButtons: true,
     timer: 0,
@@ -204,7 +168,7 @@ const slideConfigs = [
     transparentBg: true,
   },
   {
-    message: 'The rank depends on three things...',
+    message: 'For defense and forwards, the rank depends on three things...',
     sharkie: 'lean',
     hasButtons: true,
     timer: 0,
@@ -217,8 +181,7 @@ const slideConfigs = [
     transparentBg: true,
   },
   {
-    message:
-      'Their offense score, which is how good they are at scoring goals.',
+    message: 'Their offense score, which is how good they are at scoring.',
     sharkie: 'lean',
     hasButtons: true,
     timer: 0,
@@ -246,7 +209,7 @@ const slideConfigs = [
   },
   {
     message:
-      'And their defense score, or how good they are at blocking shots from the other team.',
+      'Finally their defensive score, which is how good they are at stopping the puck.',
     sharkie: 'lean',
     hasButtons: true,
     timer: 0,
@@ -256,6 +219,15 @@ const slideConfigs = [
       x: '-63%',
       zIndex: 1000,
     },
+    transparentBg: true,
+  },
+  {
+    message:
+      "A goalie's rank depends on how they stop the puck from going into the goal. This is called a save.",
+    sharkie: 'lean',
+    hasButtons: true,
+    timer: 0,
+    small: true,
     transparentBg: true,
   },
   {
@@ -287,7 +259,7 @@ const slideConfigs = [
   },
   {
     message:
-      'Players with a higher rank will usually have a higher contract value!',
+      'Players with a higher rank will usually have a higher contract value.',
     sharkie: 'lean',
     hasButtons: true,
     timer: 0,
@@ -300,7 +272,7 @@ const slideConfigs = [
     transparentBg: true,
   },
   {
-    message: 'You can choose to sign this player for their contract value!',
+    message: 'You can choose to sign this player for their contract value.',
     sharkie: 'lean',
     hasButtons: true,
     timer: 0,
@@ -314,7 +286,7 @@ const slideConfigs = [
   },
   {
     message:
-      'This will remove the money in their contract value from your budget',
+      'This will remove the money of their contract value from your budget.',
     sharkie: 'lean',
     hasButtons: true,
     timer: 0,
@@ -327,7 +299,7 @@ const slideConfigs = [
     transparentBg: true,
   },
   {
-    message: 'And add their rank to your team rank!',
+    message: 'Their rank will then be added to your team rank.',
     sharkie: 'lean',
     hasButtons: true,
     timer: 0,
@@ -356,14 +328,15 @@ const slideConfigs = [
         type: TOGGLE_OVERLAY,
         payload: {
           isOpen: false,
-          template: <ConfirmSignOverlay player={player} />,
+          template: <ConfirmSignOverlay player={player} isDisabled={true} />,
           canClose: false,
         },
       },
     ],
   },
   {
-    message: "Once you've signed a player, tapping them gives you two choices",
+    message:
+      "Once you've signed a player, clicking on them gives you two choices.",
     sharkie: 'lean',
     hasButtons: true,
     timer: 0,
@@ -379,14 +352,14 @@ const slideConfigs = [
         type: TOGGLE_OVERLAY,
         payload: {
           isOpen: true,
-          template: <PlayerDetailsOverlay player={player} />,
+          template: <PlayerDetailsOverlay player={player} isDisabled={true} />,
           canClose: false,
         },
       },
     ],
   },
   {
-    message: 'You can decide to release a player from the team',
+    message: 'You can decide to release the player from the team.',
     sharkie: 'lean',
     hasButtons: true,
     timer: 0,
@@ -399,7 +372,7 @@ const slideConfigs = [
     transparentBg: true,
   },
   {
-    message: 'This will add the money of their contract back to your budget!',
+    message: 'This will add the money of their contract back to your budget.',
     sharkie: 'lean',
     hasButtons: true,
     timer: 0,
@@ -412,8 +385,7 @@ const slideConfigs = [
     transparentBg: true,
   },
   {
-    message:
-      'You can also trade players for others with the same contract value!',
+    message: 'Or you can trade a player for other available players.',
     sharkie: 'speak',
     hasButtons: true,
     timer: 0,
@@ -437,7 +409,7 @@ const slideConfigs = [
   },
   {
     message:
-      'Your team also has a bench where you can add upto three extra players!',
+      'Your team also has a bench where you can add up to three extra players.',
     sharkie: 'lean',
     hasButtons: true,
     timer: 0,
@@ -450,7 +422,7 @@ const slideConfigs = [
     transparentBg: true,
   },
   {
-    message: 'You can add players of any position to the bench',
+    message: 'You can add players of any position to the bench.',
     sharkie: 'lean',
     hasButtons: true,
     timer: 0,
@@ -463,7 +435,7 @@ const slideConfigs = [
     transparentBg: true,
   },
   {
-    message: 'To be able to use your bench you need to scout players first!',
+    message: 'In order to use your bench, you need to scout players.',
     sharkie: 'lean',
     hasButtons: true,
     timer: 0,
@@ -476,7 +448,7 @@ const slideConfigs = [
     transparentBg: true,
   },
   {
-    message: 'Try filling out your team by signing players!',
+    message: 'Try filling out your team by signing players.',
     sharkie: 'speak',
     hasButtons: true,
     timer: 0,
@@ -505,7 +477,7 @@ const slideConfigs = [
     ],
   },
   {
-    message: 'Then tap the scout button to learn about scouting!',
+    message: 'Then click the scout button to learn about scouting.',
     sharkie: 'speak',
     hasButtons: true,
     timer: 0,
@@ -533,10 +505,20 @@ const slideConfigs = [
       },
     ],
   },
-  //your team also has a bench where you can add upto three extra players
-  //you can add players of any position to the bench
-  //to be able to fill oout your bench you need to scout players first!
-  //click the scout button to fil out your bench.
+  {
+    message:
+      'If you ever need help with building your team, click the ask S.J. Sharkie button and choose the questions you need answered.',
+    sharkie: 'speak',
+    hasButtons: true,
+    timer: 0,
+    small: true,
+    slideAnimate: {
+      y: '91%',
+      x: '63%',
+      zIndex: 1000,
+    },
+    transparentBg: true,
+  },
 ];
 
 export const teamSlides = slideConfigs.map((c) => new Slide(c));

@@ -30,7 +30,6 @@ import {
   setTutorialState,
   toggleOverlay,
   setCurrentOpponentIndex,
-  updateStudent,
   setSeasonComplete,
   addObjective,
   INJURE_PLAYER,
@@ -41,7 +40,6 @@ import {
   Tutorial,
   getConfirmSlides,
 } from '@tutorial';
-import { motion } from 'framer-motion';
 import { Objective, Objectives } from '@data/objectives/objectives';
 import { faqs } from '@data/faqs/faqs';
 import { getMaxTeamRank } from '@data/players/players-utils';
@@ -75,8 +73,27 @@ export const SeasonPage = ({ history }) => {
   };
   const currentPhase = gamePhases(+student.level)[state.currentPhaseIndex];
 
-  const onTutorialComplete = () => {
-    dispatch(setTutorialState({ isActive: false }));
+  const onTutorialComplete = (canceled) => {
+    if (canceled) {
+      dispatch(setTutorialState({ isActive: false }));
+      return;
+    }
+
+    // check if this was the first time the tutorial was viewed
+    if (!student.tutorials.season) {
+      // if so, update the student object and enable budget button
+      const tutorials = { ...student.tutorials, season: true };
+      updateStudentById(student._id, { tutorials })
+        .then(({ updatedStudent }) => {
+          batch(() => {
+            dispatch(setTutorialState({ isActive: false }));
+            dispatch(setStudent(updatedStudent));
+          });
+        })
+        .catch((err) => console.error(err));
+    } else {
+      dispatch(setTutorialState({ isActive: false }));
+    }
   };
 
   const startTutorial = useCallback(
@@ -163,13 +180,15 @@ export const SeasonPage = ({ history }) => {
     const studentTeamIndex = seasonState.standings.findIndex(
       (t) => t.name === seasonState.seasonTeam.name
     );
-    const awards = {
-      savingsCup: student.savingsBudget > 0,
-      thirdCup: studentTeamIndex < 3,
-      firstCup: studentTeamIndex === 0,
+    const prevAwards = (clonedStudent.awards || [])[+clonedStudent.level - 1];
+    const newAwards = {
+      savingsCup:
+        (prevAwards && prevAwards.savingsCup) || student.savingsBudget > 0,
+      thirdCup: (prevAwards && prevAwards.thirdCup) || studentTeamIndex < 3,
+      firstCup: (prevAwards && prevAwards.firstCup) || studentTeamIndex === 0,
     };
 
-    (clonedStudent.awards || []).splice(+clonedStudent.level - 1, 1, awards);
+    (clonedStudent.awards || []).splice(+clonedStudent.level - 1, 1, newAwards);
 
     if (clonedStudent.seasons[(+student.level || 1) - 1]) {
       clonedStudent.seasons[(+student.level || 1) - 1].push(
@@ -301,9 +320,7 @@ export const SeasonPage = ({ history }) => {
       const results = getGameResult(teamRank, gameBlockState.currentOpponent);
       clonedState.currentMessageIndex = results.messageIndex;
       // clonedState.results.push(results);
-      dispatch(
-        gameEnded(results, gameBlockState.currentOpponent, +student.level)
-      );
+      dispatch(gameEnded(results, gameBlockState.currentOpponent));
     }
 
     setState(clonedState);
@@ -342,16 +359,9 @@ export const SeasonPage = ({ history }) => {
   useEffect(() => {
     if (student && !hasSeenTutorial.current) {
       hasSeenTutorial.current = true;
-      const clonedTutorials = cloneDeep(student.tutorials || {});
-      clonedTutorials.season = true;
-      updateStudentById(student._id, { tutorials: clonedTutorials })
-        .then((res) => {
-          dispatch(updateStudent({ tutorials: clonedTutorials }));
-          startTutorial([seasonSlides]);
-        })
-        .catch((err) => console.error(err));
+      startTutorial([seasonSlides]);
     }
-  }, [student, dispatch, startTutorial]);
+  }, [student, startTutorial]);
   hasSeenTutorial.current = !!(
     student &&
     student.tutorials &&
@@ -386,7 +396,7 @@ export const SeasonPage = ({ history }) => {
         tutorialActive={tutorialActive}
       />
 
-      <PageBoard hideCloseBtn={true} includeBackButton={true}>
+      <PageBoard>
         <div
           style={{
             display: 'flex',
@@ -448,10 +458,7 @@ export const SeasonPage = ({ history }) => {
           </div>
           <div className='season-page-board-bottom'>
             <div className='play-btn-container'>
-              <motion.span
-                animate={animationStates.playButton}
-                className='play-btn-wrap'
-              >
+              <span className='play-btn-wrap'>
                 {seasonState.currentScenario &&
                   seasonState.currentScenario.gameButtonLabel && (
                     <span className='color-primary'>
@@ -463,8 +470,10 @@ export const SeasonPage = ({ history }) => {
                   gameBlockState={gameBlockState}
                   team={teamPlayers}
                   currentScenario={seasonState.currentScenario}
+                  animationState={animationStates.playButton}
+                  student={student}
                 />
-              </motion.span>
+              </span>
               <div className='game-count'>
                 Game{' '}
                 {state.currentOpponentIndex +
@@ -493,15 +502,12 @@ export const SeasonPage = ({ history }) => {
               <h6 style={{ textAlign: 'center', color: '#000000' }}>Results</h6>
               <GameBlockBoard />
             </div>
-            <motion.div
-              animate={animationStates.standings}
-              className='standings-board-container'
-            >
+            <div className='standings-board-container'>
               <h6 style={{ textAlign: 'center', color: '#000000' }}>
                 Standings
               </h6>
-              <StandingsBoard />
-            </motion.div>
+              <StandingsBoard animationState={animationStates.standings} />
+            </div>
           </div>
         </div>
       </PageBoard>

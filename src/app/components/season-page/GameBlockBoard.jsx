@@ -15,6 +15,13 @@ export const GameBlockBoard = () => {
       ]
     : [];
 
+  const getFontSize = (teamName) => {
+    if (!teamName || teamName.length < 20) {
+      return '1.1rem';
+    }
+    return '0.95rem';
+  };
+
   const rows = games.map((g, i) =>
     i < 4 ? (
       <div key={`game-row-${i}`} className='game-block-board-row'>
@@ -34,7 +41,9 @@ export const GameBlockBoard = () => {
             g.score[0] < g.score[1] ? ` color-primary font-bold` : ''
           }`}
         >
-          <span>{g.opponent}</span>
+          <span style={{ fontSize: getFontSize(g.opponent) }}>
+            {g.opponent}
+          </span>
           <span>{g.score[1]}</span>
         </div>
       </div>

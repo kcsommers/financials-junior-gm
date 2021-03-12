@@ -12,8 +12,12 @@ const getFontSize = (amount) => {
     return '1rem';
   }
 
-  if (_amount.length > 2) {
-    return '1.2rem';
+  if (_amount.length >= 3) {
+    return '1.3rem';
+  }
+
+  if (_amount.length >= 2) {
+    return '1.5rem';
   }
 
   return '2rem';
@@ -27,6 +31,8 @@ export const Indicator = ({
   rotate,
   color = '#00788a',
 }) => {
+  const validAmount = Math.max(amount, 0);
+
   return (
     <div
       className={`amount-indicator-wrap${
@@ -50,12 +56,12 @@ export const Indicator = ({
               direction === 'right'
                 ? `rotate(-${rotate}deg)`
                 : `rotate(${rotate}deg)`,
-            fontSize: getFontSize(amount),
+            fontSize: getFontSize(validAmount),
             color: color,
             transition: 'all 0.3s ease',
           }}
         >
-          {isMoney ? getDollarString(amount, true) : amount}
+          {isMoney ? getDollarString(validAmount, true) : validAmount}
         </p>
       </div>
     </div>

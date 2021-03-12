@@ -11,11 +11,11 @@ export const UserRoles = {
 
 export const getIsLoggedIn = () => {
   return !!(
-    localStorage.getItem(LOGIN_STORAGE_KEY) === 'true' ||
-    localStorage.getItem(LOGIN_STORAGE_KEY) === true
+    sessionStorage.getItem(LOGIN_STORAGE_KEY) === 'true' ||
+    sessionStorage.getItem(LOGIN_STORAGE_KEY) === true
   );
 };
 
 export const getUserRole = () => {
-  return localStorage.getItem(USER_ROLE_STORAGE_KEY);
+  return sessionStorage.getItem(USER_ROLE_STORAGE_KEY);
 };

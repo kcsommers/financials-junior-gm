@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="245" height="68.5" viewBox="0 0 245 68.5">
-  <g id="Tertiary_nav" data-name="Tertiary nav" transform="translate(2 0.5)">
-    <g id="logos" transform="translate(15)">
-      <path id="Path_3" data-name="Path 3" d="M201.092,45.426c4.854,0,10-4.411,8.712-10.288l-6.748-28.1A8.753,8.753,0,0,0,194.5,0H15.4A8.933,8.933,0,0,0,6.913,7.039L.192,35.138c-1.245,5.877,3.9,10.316,8.684,10.288H201.092" transform="translate(-0.004)" fill="#ea7200" stroke="#070707" stroke-width="1"/>
-      <text id="Position" transform="translate(-15 3)" fill="#fff" stroke="#000" stroke-width="2" font-size="30" font-family="Interstate-RegularComp, Interstate"><tspan x="94.355" y="27">Goalie</tspan></text>
-    </g>
-  </g>
-</svg>

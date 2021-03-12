@@ -8,7 +8,7 @@ export const NextSeasonOverlay = ({ student, next }) => {
 
   const repeatSeason = () => {
     dispatch(setInTransition(false));
-    resetSeason(+student.level, student)
+    resetSeason(+student.level, +student.level, student)
       .then((updatedStudent) => {
         next({ updatedStudent, isPromoted: false });
       })
@@ -17,17 +17,18 @@ export const NextSeasonOverlay = ({ student, next }) => {
 
   const nextSeason = () => {
     dispatch(setInTransition(false));
-    resetSeason(+student.level + 1, student)
+    resetSeason(+student.level + 1, +student.level, student)
       .then((updatedStudent) => {
         next({ updatedStudent, isPromoted: true });
       })
       .catch((err) => console.error(err));
   };
 
-  const isTopThree =
+  const isPromoted =
     student.awards &&
-    student.awards[student.level - 1] &&
-    student.awards[student.level - 1].thirdCup;
+    student.awards[+student.level - 1] &&
+    student.awards[+student.level - 1].thirdCup &&
+    student.awards[+student.level - 1].savingsCup;
 
   return (
     <OverlayBoard>
@@ -66,9 +67,9 @@ export const NextSeasonOverlay = ({ student, next }) => {
           }}
         >
           <Button text='Repeat Season' onClick={repeatSeason} />
-          {isTopThree && (
+          {isPromoted && (
             <Button
-              text='Start Next Season'
+              text='Accept Promotion'
               isDisabled={+student.level === 3}
               onClick={nextSeason}
             />

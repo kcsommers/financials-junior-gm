@@ -1,5 +1,4 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { ReactSVG } from 'react-svg';
 import {
   PageBoard,
   HeaderComponent,
@@ -48,7 +47,7 @@ export const TrophiesPage = ({ history }) => {
   );
 
   const repeatSeason = () => {
-    resetSeason(+student.level, student)
+    resetSeason(+student.level, +student.level, student)
       .then((updatedStudent) => {
         history.push({
           pathname: '/home',
@@ -59,7 +58,7 @@ export const TrophiesPage = ({ history }) => {
   };
 
   const nextSeason = () => {
-    resetSeason(+student.level + 1, student)
+    resetSeason(+student.level + 1, +student.level, student)
       .then((updatedStudent) => {
         history.push({
           pathname: '/home',
@@ -141,11 +140,12 @@ export const TrophiesPage = ({ history }) => {
     );
   });
 
-  const isTopThree =
+  const isPromoted =
     inTransition &&
     awards &&
-    awards[student.level - 1] &&
-    awards[student.level - 1].thirdCup;
+    awards[+student.level - 1] &&
+    awards[+student.level - 1].thirdCup &&
+    awards[+student.level - 1].savingsCup;
 
   return (
     <div className='page-container'>
@@ -157,7 +157,7 @@ export const TrophiesPage = ({ history }) => {
         inTransition={inTransition}
       />
 
-      <PageBoard hideCloseBtn={true} includeBackButton={!inTransition}>
+      <PageBoard>
         <div
           style={{
             display: 'flex',
@@ -186,7 +186,14 @@ export const TrophiesPage = ({ history }) => {
                 paddingLeft: '1rem',
               }}
             >
-              <img src={seasonTeam.logoSm} alt={seasonTeam.name + 'Logo'} />
+              <img
+                src={seasonTeam.logo}
+                alt={seasonTeam.name + 'Logo'}
+                style={{
+                  display: 'inline-block',
+                  width: '85px',
+                }}
+              />
             </div>
             {inTransition && (
               <div
@@ -200,7 +207,7 @@ export const TrophiesPage = ({ history }) => {
                 >
                   Repeat Season
                 </span>
-                {isTopThree && (
+                {isPromoted && (
                   <span
                     className={`box-shadow${
                       +student.level === 3 ? ' disabled' : ''
@@ -211,7 +218,7 @@ export const TrophiesPage = ({ history }) => {
                     )}
                     onClick={nextSeason}
                   >
-                    Start Next Season
+                    Accept Promotion
                   </span>
                 )}
               </div>

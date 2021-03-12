@@ -70,7 +70,7 @@ export const TeamBudgetState = ({ title, isLarge, changes }) => {
             <LevelStick
               type='budget'
               amount={Math.max(
-                student.totalBudget - moneySpent - student.savingsBudget,
+                +student.totalBudget - moneySpent - +student.savingsBudget,
                 0
               )}
               denom={student.totalBudget}

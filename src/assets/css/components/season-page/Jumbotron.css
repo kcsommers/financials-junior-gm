@@ -31,15 +31,19 @@ div.jumbotron-main-section {
   flex: 1;
   z-index: 1;
   display: flex;
-  padding: 1rem;
   flex-direction: column;
 }
 
 div.game-on-top {
   display: flex;
-  justify-content: space-between;
   position: relative;
   flex: 1;
+}
+
+div.game-on-top-left,
+div.game-on-top-right {
+  flex: 1;
+  padding: 1rem 1rem 0.5rem 1rem;
 }
 
 div.game-on-bottom {
@@ -47,7 +51,7 @@ div.game-on-bottom {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 3rem;
+  padding: 0 3.25rem;
 }
 
 h2.jumbotron-message {
@@ -59,6 +63,7 @@ h2.jumbotron-message {
   border-radius: 10px;
   background-color: #00788a;
   color: #fff;
+  border: 5px solid rgba(0, 0, 0, 0);
 }
 
 div.jumbotron-score-container {
@@ -98,17 +103,29 @@ div.transition-view-container {
 
 div.transition-view-left,
 div.transition-view-right {
+  max-width: 50%;
   flex: 1;
   display: flex;
   align-items: center;
-  justify-content: center;
   flex-direction: column;
+}
+
+div.transition-view-left {
+  padding: 1rem;
+}
+
+div.transition-view-right {
+  padding: 0.5rem 1rem 0.5rem 0;
 }
 
 div.jumbotron-stats-container {
   color: #fff;
-  width: 100%;
-  padding: 0.5rem;
+  width: calc(100% + 0.5rem);
+  border: 5px solid rgba(0, 0, 0, 0);
+  border-radius: 5px;
+  transform-origin: center 80%;
+  margin-top: 1rem;
+  padding: 0.25rem;
 }
 
 div.jumbotron-stats-inner {
@@ -140,7 +157,6 @@ div.jumbotron-stat-inner {
 
 div.jumbotron-coming-up-container {
   flex: 1;
-  padding-left: 0.5rem;
 }
 
 div.jumbotron-coming-up-container,
@@ -163,7 +179,7 @@ div.jumbotron-next-opponent-container > h3 {
 
 div.jumbotron-upcoming-games-container {
   flex: 1;
-  margin-top: 0.25rem;
+  margin-top: 0.65rem;
 }
 
 div.jumbotron-upcoming-games-container > h4 {
@@ -172,7 +188,7 @@ div.jumbotron-upcoming-games-container > h4 {
 }
 
 div.jumbotron-next-opponent-card {
-  padding: 0.25rem 0.5rem;
+  padding: 0.25rem;
 }
 
 div.jumbotron-next-opponent-card,
@@ -184,6 +200,8 @@ div.jumbotron-upcoming-games-card {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  transform-origin: bottom;
+  border: 5px solid rgba(0, 0, 0, 0);
 }
 
 div.coming-up-opponent-row {
@@ -209,5 +227,5 @@ span.coming-up-opponent-name {
 }
 
 div.upcoming-games-row {
-  transform: scale(0.85);
+  transform: scale(0.9);
 }

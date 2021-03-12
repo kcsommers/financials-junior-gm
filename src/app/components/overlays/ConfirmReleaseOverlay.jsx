@@ -1,11 +1,17 @@
 import { TeamBudgetState, ConfirmOverlay, PlayerCard } from '@components';
 
-export const ConfirmReleaseOverlay = ({ cancel, confirm, player }) => {
+export const ConfirmReleaseOverlay = ({
+  cancel,
+  confirm,
+  player,
+  isDisabled,
+}) => {
   return (
     <ConfirmOverlay
       message='Are you sure you want to release this player?'
       cancel={cancel}
       confirm={confirm}
+      isDisabled={isDisabled}
     >
       <div className='confirm-release-overlay'>
         <div style={{ display: 'flex', padding: '2rem 3rem 0 3rem' }}>

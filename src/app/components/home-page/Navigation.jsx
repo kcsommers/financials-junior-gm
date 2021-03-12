@@ -25,7 +25,7 @@ export const Navigation = ({ tutorialActive, student }) => {
   const history = useHistory();
 
   const resetSeasonConfirmed = () => {
-    resetSeason(+student.level, student)
+    resetSeason(+student.level, +student.level, student)
       .then((updatedStudent) => {
         batch(() => {
           dispatch(setStudent(updatedStudent));
@@ -70,14 +70,37 @@ export const Navigation = ({ tutorialActive, student }) => {
   const doLogout = () => {
     logout()
       .then(() => {
-        localStorage.setItem(LOGIN_STORAGE_KEY, false);
-        localStorage.setItem(USER_ROLE_STORAGE_KEY, '');
-        localStorage.setItem(STUDENT_ID_STORAGE_KEY, '');
+        sessionStorage.setItem(LOGIN_STORAGE_KEY, false);
+        sessionStorage.setItem(USER_ROLE_STORAGE_KEY, '');
+        sessionStorage.setItem(STUDENT_ID_STORAGE_KEY, '');
 
         dispatch(setLoginState(false, ''));
         history.push('/dashboard');
       })
       .catch((err) => console.error(err));
+  };
+
+  const logoutOverlay = () => {
+    dispatch(
+      toggleOverlay({
+        isOpen: true,
+        template: (
+          <ConfirmOverlay
+            message='Are you sure you would like to logout?'
+            subMessage='All your changes have been saved for next time.'
+            cancel={() => {
+              dispatch(
+                toggleOverlay({
+                  isOpen: false,
+                  template: null,
+                })
+              );
+            }}
+            confirm={doLogout}
+          ></ConfirmOverlay>
+        ),
+      })
+    );
   };
 
   return (
@@ -92,7 +115,7 @@ export const Navigation = ({ tutorialActive, student }) => {
         <img
           src={exitBtn}
           alt='Exit'
-          onClick={doLogout}
+          onClick={logoutOverlay}
           style={{ cursor: 'pointer' }}
         />
       </div>

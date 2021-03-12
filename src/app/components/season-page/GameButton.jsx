@@ -1,19 +1,25 @@
 import { TeamAssignments } from '@data/players/players';
 import { getAvailableSlots } from '@data/players/players-utils';
+import { Objectives } from '@data/objectives/objectives';
 import { GameButtonSvg } from './GameButtonSvg';
 import { useHistory } from 'react-router-dom';
 import { GamePhases } from '@data/season/season';
+import { motion } from 'framer-motion';
 
 export const GameButton = ({
   onClick,
   gameBlockState,
   team,
   currentScenario,
+  animationState,
+  student,
 }) => {
   const history = useHistory(';');
   const { currentPhase } = gameBlockState;
 
-  const seasonDisabled =
+  const seasonDisabled = !!(
+    !student.objectives ||
+    !student.objectives[Objectives.LEARN_BUDGET] ||
     getAvailableSlots(
       [
         ...TeamAssignments.offense,
@@ -21,7 +27,8 @@ export const GameButton = ({
         ...TeamAssignments.goalie,
       ],
       team
-    ) > 0;
+    ) > 0
+  );
 
   const btnDisabled =
     (seasonDisabled &&
@@ -54,10 +61,17 @@ export const GameButton = ({
         opacity: !seasonDisabled ? 1 : 0.75,
       }}
     >
-      <GameButtonSvg
-        phase={currentPhase.phase}
-        currentScenario={currentScenario}
-      />
+      <motion.span
+        style={{ display: 'inline-block', transformOrigin: 'bottom' }}
+        animate={animationState}
+        transition={{ default: { duration: 1 } }}
+      >
+        <GameButtonSvg
+          animationState={animationState}
+          phase={currentPhase.phase}
+          currentScenario={currentScenario}
+        />
+      </motion.span>
     </div>
   );
 };

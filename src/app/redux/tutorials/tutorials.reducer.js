@@ -2,38 +2,7 @@ import { SET_ANIMATION_STATE, SET_TUTORIAL_STATE } from './tutorials.actions';
 
 const initialState = {
   isActive: false,
-  home: {
-    objectivesBoard: {
-      x: '0%',
-      y: '0%',
-      scale: 1,
-      opacity: 0,
-    },
-    teamRankCard: {
-      x: '0%',
-      y: '0%',
-      scale: 1,
-      opacity: 0,
-    },
-    budgetCard: {
-      x: '0%',
-      y: '0%',
-      scale: 1,
-      opacity: 0,
-    },
-    teamStick: {
-      x: '0%',
-      y: '0%',
-      scale: 1,
-      opacity: 0,
-    },
-    budgetStick: {
-      x: '0%',
-      y: '0%',
-      scale: 1,
-      opacity: 0,
-    },
-  },
+  home: {},
   team: {
     playerCard: {
       borderColor: 'rgba(0,0,0,0)',
@@ -48,8 +17,8 @@ const initialState = {
       scale: 1,
     },
     scoutStick: {
-      scale: 1
-    }
+      scale: 1,
+    },
   },
   scout: {
     availablePlayersBoard: {
@@ -98,48 +67,25 @@ const initialState = {
   season: {
     stats: {
       borderColor: 'rgba(0,0,0,0)',
-      borderWidth: '0px',
-      borderStyle: 'solid',
-      borderRadius: '10px',
-      color: '#ffffff',
+      backgroundColor: 'rgba(0,0,0,0)',
       scale: 1,
       zIndex: 0,
     },
     standings: {
-      borderColor: 'rgba(0,0,0,0)',
-      borderWidth: '0px',
-      borderStyle: 'solid',
-      borderRadius: '10px',
-      color: '#ffffff',
+      borderColor: '#707070',
       scale: 1,
-      zIndex: 0,
     },
     upcomingGames: {
       borderColor: 'rgba(0,0,0,0)',
-      borderWidth: '0px',
-      borderStyle: 'solid',
-      borderRadius: '10px',
-      color: '#ffffff',
       scale: 1,
       zIndex: 0,
     },
     jumbotext: {
       borderColor: 'rgba(0,0,0,0)',
-      borderWidth: '0px',
-      borderStyle: 'solid',
-      borderRadius: '10px',
-      color: '#ffffff',
       scale: 1,
-      zIndex: 0,
     },
     playButton: {
-      borderColor: 'rgba(0,0,0,0)',
-      borderWidth: '0px',
-      borderStyle: 'solid',
-      borderRadius: '10px',
-      color: '#ffffff',
       scale: 1,
-      zIndex: 0,
     },
     studentRank: {
       scale: 1,

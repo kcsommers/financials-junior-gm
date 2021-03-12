@@ -1,5 +1,5 @@
-const getGradientPct = (rank, index) => {
-  const pct = (rank / 30) * 100;
+const getGradientPct = (rank, index, max) => {
+  const pct = (rank / max) * 100;
   const indexPct = 20 * index;
   if (pct >= indexPct) {
     return 100;
@@ -10,14 +10,13 @@ const getGradientPct = (rank, index) => {
   return Math.min(100, pct);
 };
 
-const styles = (rgb, rank, index, isSmall) => {
-  const gradientPct = getGradientPct(rank, index);
+const styles = (rgb, rank, index, isSmall, max) => {
+  const gradientPct = getGradientPct(rank, index, max);
   return {
     inner: {
       width: '100%',
       height: '100%',
       borderRadius: '100%',
-      boxShadow: 'inset 0 0 15px #121210',
       background: `linear-gradient(to right, rgba(${rgb.join(
         ','
       )}, 1) ${gradientPct}%, rgba(0, 0, 0, 0) ${gradientPct}%)`,
@@ -31,7 +30,7 @@ const styles = (rgb, rank, index, isSmall) => {
   };
 };
 
-export const PlayerRankGraph = ({ label, rgb, rank, isSmall }) => {
+export const PlayerRankGraph = ({ label, rgb, rank, isSmall, max }) => {
   return (
     <div className='graph-wrap'>
       <p
@@ -55,47 +54,47 @@ export const PlayerRankGraph = ({ label, rgb, rank, isSmall }) => {
       >
         <div
           className='graph-circle-wrap'
-          style={styles(rgb, rank, 1, isSmall).outer}
+          style={styles(rgb, rank, 1, isSmall, max).outer}
         >
           <div
             className='graph-circle'
-            style={styles(rgb, rank, 1, isSmall).inner}
+            style={styles(rgb, rank, 1, isSmall, max).inner}
           ></div>
         </div>
         <div
           className='graph-circle-wrap'
-          style={styles(rgb, rank, 2, isSmall).outer}
+          style={styles(rgb, rank, 2, isSmall, max).outer}
         >
           <div
             className='graph-circle'
-            style={styles(rgb, rank, 2, isSmall).inner}
+            style={styles(rgb, rank, 2, isSmall, max).inner}
           ></div>
         </div>
         <div
           className='graph-circle-wrap'
-          style={styles(rgb, rank, 3, isSmall).outer}
+          style={styles(rgb, rank, 3, isSmall, max).outer}
         >
           <div
             className='graph-circle'
-            style={styles(rgb, rank, 3, isSmall).inner}
+            style={styles(rgb, rank, 3, isSmall, max).inner}
           ></div>
         </div>
         <div
           className='graph-circle-wrap'
-          style={styles(rgb, rank, 4, isSmall).outer}
+          style={styles(rgb, rank, 4, isSmall, max).outer}
         >
           <div
             className='graph-circle'
-            style={styles(rgb, rank, 4, isSmall).inner}
+            style={styles(rgb, rank, 4, isSmall, max).inner}
           ></div>
         </div>
         <div
           className='graph-circle-wrap'
-          style={styles(rgb, rank, 5, isSmall).outer}
+          style={styles(rgb, rank, 5, isSmall, max).outer}
         >
           <div
             className='graph-circle'
-            style={styles(rgb, rank, 5, isSmall).inner}
+            style={styles(rgb, rank, 5, isSmall, max).inner}
           ></div>
         </div>
       </div>

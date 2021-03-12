@@ -83,6 +83,7 @@ div.game-block-board-wrap-inner {
   justify-content: center;
   padding: 1rem;
   border: 5px solid #707070;
+  transform-origin: bottom right;
 }
 
 div.game-block-board-container {
@@ -117,6 +118,10 @@ div.game-block-board-row > div:first-child {
 div.game-block-board-row > div:last-child {
   padding-left: 1rem;
   flex: 1;
+}
+
+div.game-block-board-right {
+  white-space: nowrap;
 }
 
 span.game-block-board-dash {
@@ -165,4 +170,27 @@ div.standings-board-row > span:last-child {
   justify-content: center;
   border-left: 1px solid #121210;
   align-self: stretch;
+}
+
+svg.game-button-warming-up {
+  animation: spin 5s cubic-bezier(0.75, 1.65, 0.7, -0.65);
+  -webkit-animation: spin 5s cubic-bezier(0.75, 1.65, 0.7, -0.65);
+}
+
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+svg.game-button-game-on g.active-puck-border {
+  animation: fillShift 2.5s ease-in-out infinite;
+  -webkit-animation: fillShift 2.5s ease-in-out infinite;
+}
+
+@keyframes fillShift {
+  50% {
+    fill: #00788a;
+  }
 }

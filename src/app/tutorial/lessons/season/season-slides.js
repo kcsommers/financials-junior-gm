@@ -3,47 +3,33 @@ import { SET_ANIMATION_STATE } from '@redux/actions';
 
 const slideConfigs = [
   {
-    message:
-      'Nice job! Now that your team is ready you can begin playing the season',
+    message: 'Welcome to the Season page!',
     sharkie: 'speak',
     hasButtons: true,
-    timer: 0,
-    transparentBg: false,
+    accentText: 'Season',
   },
   {
     message:
-      'In the season, your team will play against other teams for trophies!',
+      'During the season, your team will play against 12 other teams for trophies.',
     sharkie: 'speak',
     hasButtons: true,
-    timer: 0,
-
-    transparentBg: false,
   },
   {
     message:
-      'In a hockey season, the winning team is the one with the most points',
+      'The team with the most points at the end of the season wins 1st place.',
     sharkie: 'speak',
     hasButtons: true,
-    timer: 0,
-
-    transparentBg: false,
   },
   {
-    message: 'If your team wins in regular time, they earn two points',
+    message: 'If your team wins a game, your team earns 2 points.',
     sharkie: 'speak',
     hasButtons: true,
-    timer: 0,
-
-    transparentBg: false,
   },
   {
     message:
-      'If the game is close, it can go to overtime and your team earns one point ',
+      'If your team loses a game, you earn 0 points, unless they lose in overtime. Then you earn 1 point.',
     sharkie: 'speak',
     hasButtons: true,
-    timer: 0,
-
-    transparentBg: false,
     exitActions: [
       {
         type: SET_ANIMATION_STATE,
@@ -54,9 +40,8 @@ const slideConfigs = [
               component: 'stats',
               state: {
                 borderColor: '#ffd782',
-                borderWidth: '8px',
+                backgroundColor: 'rgba(112, 112, 112, 0.9)',
                 scale: 1.5,
-                color: '#ffd782',
                 zIndex: 10,
               },
             },
@@ -67,11 +52,10 @@ const slideConfigs = [
   },
   {
     message:
-      "You can see your team's wins, losses and points here on the jumbotron!",
+      "You can see your team's wins, losses and points here on the jumbotron.",
     sharkie: 'present',
     hasButtons: true,
     small: true,
-    timer: 0,
     slideAnimate: {
       y: '80%',
       x: '63%',
@@ -87,20 +71,24 @@ const slideConfigs = [
               component: 'stats',
               state: {
                 borderColor: 'rgba(0,0,0,0)',
-                borderWidth: '8px',
-                borderStyle: 'solid',
-                borderRadius: '10px',
-                color: '#ffffff',
+                backgroundColor: 'rgba(0,0,0,0)',
                 scale: 1,
+                zIndex: 0,
+                transition: {
+                  default: {
+                    duration: 1,
+                  },
+                  zIndex: {
+                    delay: 1,
+                  },
+                },
               },
             },
             {
               component: 'standings',
               state: {
                 borderColor: '#ffd782',
-                borderWidth: '8px',
                 scale: 1.1,
-                color: '#ffd782',
               },
             },
           ],
@@ -109,11 +97,10 @@ const slideConfigs = [
     ],
   },
   {
-    message: "The standings box shows your team's place in the season",
+    message: "The standings box shows your team's standing in the season.",
     sharkie: 'lean',
     hasButtons: true,
     small: true,
-    timer: 0,
     transparentBg: true,
     slideAnimate: {
       y: '90%',
@@ -122,7 +109,7 @@ const slideConfigs = [
   },
 
   {
-    message: 'This is decided by how many points your team has',
+    message: 'This is decided by how many points your team has earned.',
     sharkie: 'lean',
     hasButtons: true,
     timer: 0,
@@ -141,11 +128,7 @@ const slideConfigs = [
             {
               component: 'standings',
               state: {
-                borderColor: 'rgba(0,0,0,0)',
-                borderWidth: '0px',
-                borderStyle: 'solid',
-                borderRadius: '10px',
-                color: '#ffffff',
+                borderColor: '#707070',
                 scale: 1,
               },
             },
@@ -154,8 +137,7 @@ const slideConfigs = [
               state: {
                 borderColor: '#ffd782',
                 scale: 1.1,
-                color: '#ffd782',
-                borderWidth: '8px',
+                zIndex: 10,
               },
             },
           ],
@@ -165,10 +147,9 @@ const slideConfigs = [
   },
   {
     message:
-      "You can see the teams you'll be playing against here, along with their team ranks",
+      "You can see the teams you'll be playing against here, along with their team ranks.",
     sharkie: 'lean',
     hasButtons: true,
-    timer: 0,
     small: true,
     transparentBg: true,
     slideAnimate: {
@@ -185,11 +166,16 @@ const slideConfigs = [
               component: 'upcomingGames',
               state: {
                 borderColor: 'rgba(0,0,0,0)',
-                borderWidth: '0px',
-                borderStyle: 'solid',
-                borderRadius: '10px',
-                color: '#ffffff',
                 scale: 1,
+                zIndex: 0,
+                transition: {
+                  default: {
+                    duration: 1,
+                  },
+                  zIndex: {
+                    delay: 1,
+                  },
+                },
               },
             },
             {
@@ -197,18 +183,12 @@ const slideConfigs = [
               state: {
                 borderColor: '#ffd782',
                 scale: 1.1,
-                color: '#ffd782',
-                borderWidth: '8px',
               },
             },
             {
               component: 'playButton',
               state: {
-                borderColor: '#ffd782',
                 scale: 1.2,
-                borderWidth: '8px',
-                borderRadius: '60px',
-                color: '#ffd782',
               },
             },
           ],
@@ -218,10 +198,9 @@ const slideConfigs = [
   },
   {
     message:
-      'When you press play, the jumbotron will tell you the result of your games',
+      'When you press play, the jumbotron will tell you the score of the game and how many points your team earned.',
     sharkie: 'lean',
     hasButtons: true,
-    timer: 0,
     small: true,
     transparentBg: true,
     slideAnimate: {
@@ -230,22 +209,9 @@ const slideConfigs = [
     },
   },
   {
-    message: 'Your team will be playing against 12 other teams',
+    message: 'Your team will play against 12 other teams in a season.',
     sharkie: 'lean',
     hasButtons: true,
-    timer: 0,
-    small: true,
-    transparentBg: true,
-    slideAnimate: {
-      y: '-25%',
-      x: '-50%',
-    },
-  },
-  {
-    message: 'To get the most points and win the trophy...',
-    sharkie: 'lean',
-    hasButtons: true,
-    timer: 0,
     small: true,
     transparentBg: true,
     slideAnimate: {
@@ -263,8 +229,6 @@ const slideConfigs = [
               state: {
                 borderColor: '#ffd782',
                 scale: 1.1,
-                color: '#ffd782',
-                borderWidth: '8px',
               },
             },
             {
@@ -278,21 +242,12 @@ const slideConfigs = [
               component: 'jumbotext',
               state: {
                 borderColor: 'rgba(0,0,0,0)',
-                borderWidth: '0px',
-                borderStyle: 'solid',
-                borderRadius: '10px',
-                color: '#ffffff',
                 scale: 1,
               },
             },
             {
               component: 'playButton',
               state: {
-                borderColor: 'rgba(0,0,0,0)',
-                borderWidth: '0px',
-                borderStyle: 'solid',
-                borderRadius: '10px',
-                color: '#ffffff',
                 scale: 1,
               },
             },
@@ -303,7 +258,7 @@ const slideConfigs = [
   },
   {
     message:
-      "Try to make sure your rank is as high as the teams you'll be playing against",
+      'Your team has to have a higher score than the team they are playing to win a game.',
     sharkie: 'speak',
     hasButtons: true,
     timer: 0,
@@ -323,10 +278,6 @@ const slideConfigs = [
               component: 'upcomingGames',
               state: {
                 borderColor: 'rgba(0,0,0,0)',
-                borderWidth: '0px',
-                borderStyle: 'solid',
-                borderRadius: '10px',
-                color: '#ffffff',
                 scale: 1,
               },
             },
@@ -348,64 +299,78 @@ const slideConfigs = [
   },
   {
     message:
-      "Don't forget to save money for emergencies, in case you lose a player",
+      'If your team is in first place at the end of the season you will earn a first place trophy.',
     sharkie: 'speak',
     hasButtons: true,
-    timer: 0,
     slideAnimate: {
-      y: '25%',
-      x: '0',
+      y: '0%',
+      x: '0%',
     },
-    transparentBg: false,
-  },
-  {
-    message: 'Being in first place is not everything',
-    sharkie: 'speak',
-    hasButtons: true,
-    timer: 0,
-    transparentBg: false,
-  },
-  {
-    message: 'If you finish in the top 3, you can get a trophy',
-    sharkie: 'speak',
-    hasButtons: true,
-    timer: 0,
-    transparentBg: false,
   },
   {
     message:
-      'You can also earn a trophy for having savings left over at the end of the season',
+      'You can also earn trophies for finishing in the top 3 and having savings leftover at the end of the season.',
     sharkie: 'speak',
     hasButtons: true,
-
-    timer: 0,
-
-    transparentBg: false,
   },
   {
-    message: 'Got it?',
+    message:
+      'You can see all of the trophies you earned on the trophy page, after the season is over.',
     sharkie: 'speak',
     hasButtons: true,
-
-    timer: 0,
-
-    transparentBg: false,
   },
   {
-    message: 'Cool!',
+    message:
+      'If you finish in the top 3 and having savings left over at the end of the season, you will be promoted to become the general manager of the San Jose Barracuda!',
     sharkie: 'speak',
     hasButtons: true,
-
-    timer: 0,
-
-    transparentBg: false,
+    accentText: 'San Jose Barracuda',
   },
   {
-    message: 'Good luck! We believe in you!',
+    message: 'Just click the accept promotion button on the trophy page.',
+    sharkie: 'speak',
+    hasButtons: true,
+  },
+  {
+    message: 'Make sure you have savings in case your team loses players.',
+    sharkie: 'speak',
+    hasButtons: true,
+  },
+  {
+    message:
+      "Remember the savings that you don't use carry over to the next season.",
+    sharkie: 'speak',
+    hasButtons: true,
+  },
+  {
+    message:
+      'So you should have enough savings for emergencies and a little left over at the end of every season.',
+    sharkie: 'speak',
+    hasButtons: true,
+  },
+  {
+    message:
+      'You should save money after every season so you can sign the best players and still have money in case of emergencies.',
+    sharkie: 'speak',
+    hasButtons: true,
+  },
+  {
+    message:
+      'If you need more information about the season, click on the ask S.J. Sharkie button and choose the question you are looking for.',
+    sharkie: 'speak',
+    hasButtons: true,
+  },
+  {
+    message:
+      'If you need to go back to the home page, click on the orange hockey stick that says Season.',
+    sharkie: 'speak',
+    hasButtons: true,
+    accentText: 'Season',
+  },
+  {
+    message: 'Good luck and we believe in you!',
     sharkie: 'play',
     hasButtons: true,
-    timer: 0,
-    transparentBg: false,
   },
 ];
 

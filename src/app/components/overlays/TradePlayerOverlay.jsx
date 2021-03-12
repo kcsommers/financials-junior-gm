@@ -8,16 +8,17 @@ import { useDispatch } from 'react-redux';
 import { toggleOverlay, tradePlayer, setStudent } from '@redux/actions';
 import { ConfirmTradeOverlay } from './ConfirmTradeOverlay';
 import { PlayerDetailsOverlay } from './PlayerDetailsOverlay';
-import { PlayerAssignments, PlayerPositions } from '@data/players/players';
 import {
   getPlayerPositon,
   handleTradePlayers,
 } from '@data/players/players-utils';
-import { cloneDeep } from 'lodash';
-import { updateStudentById } from '../../api-helper';
 import { PlayersTradedOverlay } from './PlayersTradedOverlay';
 
-export const TradePlayerOverlay = ({ releasingPlayer, student }) => {
+export const TradePlayerOverlay = ({
+  releasingPlayer,
+  student,
+  isDisabled,
+}) => {
   const dispatch = useDispatch();
 
   const tradeCancelled = () => {
@@ -80,6 +81,7 @@ export const TradePlayerOverlay = ({ releasingPlayer, student }) => {
             signingPlayer={signingPlayer}
             cancel={tradeCancelled}
             confirm={tradeConfirmed.bind(this, signingPlayer, undefined)}
+            isDisabled={isDisabled}
           />
         ),
       })

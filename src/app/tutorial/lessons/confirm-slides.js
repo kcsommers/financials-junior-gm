@@ -1,28 +1,6 @@
 import Slide from '../Slide';
-import { SET_ANIMATION_STATE } from '@redux/actions';
 
-const confirmActions = {
-  home: [
-    {
-      type: SET_ANIMATION_STATE,
-      payload: {
-        page: 'home',
-        animationStates: [
-          {
-            component: 'objectivesBoard',
-            state: {
-              scale: 1.5,
-              y: '15%',
-              opacity: 1,
-              zIndex: 1001,
-              transition: { duration: 1 },
-            },
-          },
-        ],
-      },
-    },
-  ],
-};
+const confirmActions = {};
 
 export const getConfirmSlides = (page) => {
   return [

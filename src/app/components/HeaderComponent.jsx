@@ -1,4 +1,3 @@
-import { ReactSVG } from 'react-svg';
 import financialsLogo from '@images/financials-logo.svg';
 import { StickButton } from './StickButton';
 import { ObjectivesBoard } from './ObjectivesBoard';
@@ -17,35 +16,35 @@ export const HeaderComponent = ({
   inverse,
   largeStick,
   level,
-  tutorialActive,
   inTransition,
+  stickBtnLink = '/home',
 }) => {
   const stick = (
     <StickButton
       key='s'
-      link='/home'
+      link={stickBtnLink}
       image={stickBtn}
       inverse={inverse}
       large={largeStick}
-      tutorialActive={tutorialActive}
-      inTransition={inTransition}
+      isDisabled={inTransition}
     />
   );
 
   const board = (
-    <ObjectivesBoard
-      key='ob'
-      visibleObjectives={1}
-      level={level}
-      smallText={true}
-      filterComplete={true}
-    />
+    <div key='ob' style={{ maxWidth: '350px' }}>
+      <ObjectivesBoard
+        visibleObjectives={1}
+        level={level}
+        smallText={true}
+        filterComplete={true}
+      />
+    </div>
   );
 
   const inner = inverse ? [board, stick] : [stick, board];
   return (
     <div style={styles}>
-      <ReactSVG src={financialsLogo} />
+      <img src={financialsLogo} alt='Financials Junior GM Program logo' />
       <div
         className='header-inner'
         style={{

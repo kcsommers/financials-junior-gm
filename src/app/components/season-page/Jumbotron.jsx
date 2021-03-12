@@ -4,7 +4,6 @@ import { TeamAssignments } from '@data/players/players';
 import { getAvailableSlots } from '@data/players/players-utils';
 import { Indicator, PlayerCard } from '@components';
 import { motion } from 'framer-motion';
-import { ReactSVG } from 'react-svg';
 import '@css/components/season-page/Jumbotron.css';
 import { useSelector } from 'react-redux';
 
@@ -54,8 +53,13 @@ export const Jumbotron = ({
 
   const statsView = (
     <motion.div
-      animate={animationStates.stats}
       className='jumbotron-stats-container'
+      animate={animationStates.stats}
+      transition={{
+        default: {
+          duration: 1,
+        },
+      }}
     >
       <div className='jumbotron-stats-inner'>
         <div className='jumbotron-stat-wrap'>
@@ -83,7 +87,7 @@ export const Jumbotron = ({
   const sharksTransitionView = (
     <div className='transition-view-left'>
       <TeamCard
-        logo={seasonState.seasonTeam.logo}
+        team={seasonState.seasonTeam}
         standing={getStanding(seasonState.seasonTeam, seasonState.standings)}
       />
       {statsView}
@@ -91,23 +95,45 @@ export const Jumbotron = ({
   );
 
   const comingUpView = (
-    <motion.div
-      animate={animationStates.upcomingGames}
-      className='jumbotron-coming-up-container'
-    >
+    <div className='jumbotron-coming-up-container'>
       <div className='jumbotron-next-opponent-container'>
         <h3>Next Opponent</h3>
-        <div className='jumbotron-next-opponent-card'>
+        <motion.div
+          className='jumbotron-next-opponent-card'
+          animate={animationStates.upcomingGames}
+          transition={{ default: { duration: 1 } }}
+        >
           <div className='coming-up-opponent-row'>
             {nextOpponent && (
               <>
                 <div className='coming-up-opponent-name-wrap'>
-                  <span
-                    className='coming-up-opponent-name'
-                    style={{ color: nextOpponent.color }}
-                  >
-                    <ReactSVG src={nextOpponent.logoSm}></ReactSVG>
-                  </span>
+                  {nextOpponent.logo ? (
+                    <span
+                      className='coming-up-opponent-name'
+                      style={{ color: nextOpponent.color }}
+                    >
+                      <img
+                        src={nextOpponent.logo}
+                        alt={nextOpponent.name + ' logo'}
+                        style={{
+                          display: 'inline-block',
+                          width: '100%',
+                        }}
+                      />
+                    </span>
+                  ) : (
+                    <span
+                      style={{
+                        color: nextOpponent.color,
+                        fontSize: '1.2rem',
+                        textAlign: 'left',
+                        display: 'inline-block',
+                        paddingRight: '0.5rem',
+                      }}
+                    >
+                      {nextOpponent.name}
+                    </span>
+                  )}
                 </div>
                 <div className='opponent-indicator-wrap'>
                   <Indicator
@@ -119,22 +145,47 @@ export const Jumbotron = ({
               </>
             )}
           </div>
-        </div>
+        </motion.div>
       </div>
       <div className='jumbotron-upcoming-games-container'>
         <h4>Upcoming Games</h4>
-        <div className='jumbotron-upcoming-games-card'>
+        <motion.div
+          className='jumbotron-upcoming-games-card'
+          animate={animationStates.upcomingGames}
+          transition={{ default: { duration: 1 } }}
+        >
           {upcomingGames.map((team, i) => (
             <div key={i} className='upcoming-games-row coming-up-opponent-row'>
               {team && (
                 <>
                   <div className='coming-up-opponent-name-wrap'>
-                    <span
-                      className='coming-up-opponent-name'
-                      style={{ color: team.color }}
-                    >
-                      <ReactSVG src={team.logoSm}></ReactSVG>
-                    </span>
+                    {team.logo ? (
+                      <span
+                        className='coming-up-opponent-name'
+                        style={{ color: team.color }}
+                      >
+                        <img
+                          src={team.logo}
+                          alt={team.name + ' logo'}
+                          style={{
+                            display: 'inline-block',
+                            width: '100%',
+                          }}
+                        />
+                      </span>
+                    ) : (
+                      <span
+                        style={{
+                          color: team.color,
+                          fontSize: '1.2rem',
+                          textAlign: 'left',
+                          display: 'inline-block',
+                          paddingRight: '0.5rem',
+                        }}
+                      >
+                        {team.name}
+                      </span>
+                    )}
                   </div>
                   <div className='opponent-indicator-wrap'>
                     <Indicator
@@ -147,9 +198,9 @@ export const Jumbotron = ({
               )}
             </div>
           ))}
-        </div>
+        </motion.div>
       </div>
-    </motion.div>
+    </div>
   );
 
   const gameOnView = (
@@ -158,7 +209,7 @@ export const Jumbotron = ({
         <div className='game-on-top-left'>
           <div>
             <TeamCard
-              logo={seasonState.seasonTeam.logo}
+              team={seasonState.seasonTeam}
               standing={getStanding(
                 seasonState.seasonTeam,
                 seasonState.standings
@@ -183,10 +234,6 @@ export const Jumbotron = ({
         </span>
         <motion.div
           className='game-on-top-right'
-          style={{
-            backgroundColor: '#ffffff',
-            borderRadius: '10px',
-          }}
           initial={{ transform: 'scale(0.5)' }}
           animate={{ transform: 'scale(1)' }}
           transition={{
@@ -197,7 +244,7 @@ export const Jumbotron = ({
           }}
         >
           <TeamCard
-            logo={currentOpponent && currentOpponent.logoLg}
+            team={currentOpponent}
             standing={getStanding(currentOpponent, seasonState.standings)}
           />
         </motion.div>
@@ -219,7 +266,7 @@ export const Jumbotron = ({
       <div className='transition-view-right'>
         <motion.div
           initial={{ scale: 0.75 }}
-          animate={{ scale: 1, position: 'relative', top: '-1rem' }}
+          animate={{ scale: 1, position: 'relative', top: '-0.35rem' }}
           transition={{
             scale: {
               type: 'spring',
@@ -284,14 +331,18 @@ export const Jumbotron = ({
         <div className='jumbotron-border jumbotron-border-right'></div>
       </div>
       {tutorialActive ? (
-        <motion.div animate={animationStates.jumboText}>
-          <h2
-            className='jumbotron-message box-shadow'
-            style={{ fontSize: getFontSize(message) }}
-          >
-            {message}
-          </h2>
-        </motion.div>
+        <motion.h2
+          className='jumbotron-message box-shadow'
+          style={{ fontSize: getFontSize(message) }}
+          animate={animationStates.jumboText}
+          transition={{
+            default: {
+              duration: 1,
+            },
+          }}
+        >
+          {message}
+        </motion.h2>
       ) : (
         <h2
           className='jumbotron-message box-shadow'

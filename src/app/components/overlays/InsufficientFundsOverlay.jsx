@@ -39,7 +39,7 @@ export const InsufficientFundsOverlay = ({
     }
 
     const newRolloverBudget = Math.max(
-      student.rollOverBudget - Math.abs(totalBudget),
+      +student.rollOverBudget - Math.abs(totalBudget),
       0
     );
     onUseRollover(signingPlayer, true, newRolloverBudget);

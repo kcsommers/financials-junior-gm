@@ -19,15 +19,15 @@ import {
 import {
   setTutorialState,
   setSavings,
-  updateStudent,
+  setStudent,
   toggleOverlay,
   setObjectiveComplete,
 } from '@redux/actions';
 import { updateStudentById } from '../api-helper';
-import { cloneDeep } from 'lodash';
 import { Objectives } from '@data/objectives/objectives';
 import { getDollarString } from '@utils';
 import { faqs } from '@data/faqs/faqs';
+import { cloneDeep } from 'lodash';
 import '@css/pages/BudgetPage.css';
 
 let debounceTimeout = 0;
@@ -44,11 +44,36 @@ export const BudgetPage = ({ history }) => {
 
   const [tutorialSlides, setTutorialSlides] = useState([budgetSlides]);
 
-  const onTutorialComplete = () => {
-    batch(() => {
+  const onTutorialComplete = (canceled) => {
+    if (canceled) {
       dispatch(setTutorialState({ isActive: false }));
-      dispatch(setObjectiveComplete(Objectives.LEARN_BUDGET, true));
-    });
+      return;
+    }
+
+    // check if this was the first time the tutorial was viewed
+    if (!student.tutorials || !student.tutorials.budget) {
+      // if so, update the student object and enable budget button
+      const tutorials = { home: true, budget: true };
+      const objectives = student.objectives
+        ? cloneDeep(student.objectives)
+        : {};
+      objectives[Objectives.LEARN_BUDGET] = true;
+
+      updateStudentById(student._id, { tutorials, objectives })
+        .then(({ updatedStudent }) => {
+          batch(() => {
+            dispatch(setTutorialState({ isActive: false }));
+            dispatch(setStudent(updatedStudent));
+            dispatch(setObjectiveComplete(Objectives.LEARN_BUDGET, true));
+          });
+        })
+        .catch((err) => console.error(err));
+    } else {
+      batch(() => {
+        dispatch(setTutorialState({ isActive: false }));
+        dispatch(setObjectiveComplete(Objectives.LEARN_BUDGET, true));
+      });
+    }
   };
 
   const startTutorial = useCallback(
@@ -111,22 +136,37 @@ export const BudgetPage = ({ history }) => {
     }, 1000);
   };
 
+  useEffect(() => {
+    if (
+      student.tutorials &&
+      student.tutorials.budget &&
+      (!student.objectives || !student.objectives[Objectives.LEARN_BUDGET])
+    ) {
+      const objectives = student.objectives
+        ? cloneDeep(student.objectives)
+        : {};
+      objectives[Objectives.LEARN_BUDGET] = true;
+
+      updateStudentById(student._id, { objectives })
+        .then(({ updatedStudent }) => {
+          batch(() => {
+            dispatch(setStudent(updatedStudent));
+            dispatch(setObjectiveComplete(Objectives.LEARN_BUDGET, true));
+          });
+        })
+        .catch((err) => console.error(err));
+    }
+  }, [dispatch, student]);
+
   const hasSeenTutorial = useRef(
-    !!(student && student.tutorials && student.tutorials.home)
+    !!(student && student.tutorials && student.tutorials.budget)
   );
   useEffect(() => {
     if (student && !hasSeenTutorial.current) {
       hasSeenTutorial.current = true;
-      const clonedTutorials = cloneDeep(student.tutorials || {});
-      clonedTutorials.budget = true;
-      updateStudentById(student._id, { tutorials: clonedTutorials })
-        .then((res) => {
-          dispatch(updateStudent({ tutorials: clonedTutorials }));
-          startTutorial([budgetSlides]);
-        })
-        .catch((err) => console.error(err));
+      startTutorial([budgetSlides]);
     }
-  }, [student, dispatch, startTutorial]);
+  }, [student, startTutorial]);
   hasSeenTutorial.current = !!(
     student &&
     student.tutorials &&
@@ -162,7 +202,7 @@ export const BudgetPage = ({ history }) => {
         tutorialActive={tutorialActive}
       />
 
-      <PageBoard hideCloseBtn={true} includeBackButton={true}>
+      <PageBoard>
         <div className='budget-page-board-inner'>
           <div
             style={{
@@ -173,11 +213,11 @@ export const BudgetPage = ({ history }) => {
               display: 'flex',
               alignItems: 'center',
               justifyContent:
-                student.rollOverBudget > 0 ? 'space-between' : 'flex-end',
+                +student.rollOverBudget > 0 ? 'space-between' : 'flex-end',
               padding: '1rem',
             }}
           >
-            {student.rollOverBudget > 0 && (
+            {+student.rollOverBudget > 0 && (
               <p
                 className='box-shadow'
                 style={{
@@ -190,7 +230,7 @@ export const BudgetPage = ({ history }) => {
               >
                 Rollover Budget
                 <br />
-                {getDollarString(student.rollOverBudget)}
+                {getDollarString(+student.rollOverBudget)}
               </p>
             )}
             <SharkieButton onCallSharkie={onCallSharkie} textPosition='left' />

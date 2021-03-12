@@ -1,10 +1,16 @@
-import { ReactSVG } from 'react-svg';
 import { OverlayBoard } from '@components';
 import cancelBig from '@images/icons/cancel-big.svg';
 import confirmBig from '@images/icons/confirm-big.svg';
 import '@css/components/ConfirmOverlay.css';
 
-export const ConfirmOverlay = ({ children, message, cancel, confirm }) => {
+export const ConfirmOverlay = ({
+  children,
+  message,
+  subMessage,
+  cancel,
+  confirm,
+  isDisabled,
+}) => {
   return (
     <OverlayBoard>
       <div
@@ -17,11 +23,13 @@ export const ConfirmOverlay = ({ children, message, cancel, confirm }) => {
           flexDirection: 'column',
           textAlign: 'center',
           padding: '2rem 0',
+          pointerEvents: isDisabled ? 'none' : 'auto',
         }}
       >
         {children && <div className='confirm-overlay-top'>{children}</div>}
         <div className='confirm-overlay-bottom'>
           <p className='confirm-message'>{message}</p>
+          {subMessage && <p className='confirm-message' style={{fontSize: '1rem'}}>{subMessage}</p>}
           <div
             className='confirm-options'
             style={{
@@ -32,18 +40,28 @@ export const ConfirmOverlay = ({ children, message, cancel, confirm }) => {
           >
             <div>
               <p>Cancel</p>
-              <ReactSVG
-                style={{ cursor: 'pointer' }}
+              <img
                 src={cancelBig}
                 onClick={cancel}
+                style={{
+                  display: 'inline-block',
+                  marginTop: '0.25rem',
+                  cursor: 'pointer',
+                }}
+                alt='Cancel'
               />
             </div>
             <div>
               <p>Confirm</p>
-              <ReactSVG
-                style={{ cursor: 'pointer' }}
+              <img
                 src={confirmBig}
                 onClick={confirm}
+                style={{
+                  display: 'inline-block',
+                  marginTop: '0.25rem',
+                  cursor: 'pointer',
+                }}
+                alt='Confirm'
               />
             </div>
           </div>

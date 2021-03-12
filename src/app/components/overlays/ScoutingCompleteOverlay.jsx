@@ -1,6 +1,5 @@
-import { ReactSVG } from 'react-svg';
 import binoculars from '@images/icons/binoculars.svg';
-import confirmBig from '@images/icons/confirm-big.svg';
+import confirmBtn from '@images/icons/confirm-big.svg';
 import { OverlayBoard } from '@components';
 
 export const ScoutingCompleteOverlay = () => {
@@ -27,15 +26,15 @@ export const ScoutingCompleteOverlay = () => {
             justifyContent: 'center',
           }}
         >
-          <ReactSVG
+          <img
             src={binoculars}
-            className='binos'
-            style={{ marginRight: '2rem' }}
+            alt='Binoculars'
+            style={{ marginRight: '2rem', display: 'inline-block' }}
           />
-          <ReactSVG
-            src={confirmBig}
-            className='con-big'
-            style={{ marginLeft: '2rem' }}
+          <img
+            src={confirmBtn}
+            alt='Checkmark'
+            style={{ marginLeft: '2rem', display: 'inline-block' }}
           />
         </div>
         <h2 className='color-primary' style={{ marginTop: '2rem' }}>
