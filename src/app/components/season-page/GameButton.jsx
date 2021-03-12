@@ -1,5 +1,6 @@
 import { TeamAssignments } from '@data/players/players';
 import { getAvailableSlots } from '@data/players/players-utils';
+import { Objectives } from '@data/objectives/objectives';
 import { GameButtonSvg } from './GameButtonSvg';
 import { useHistory } from 'react-router-dom';
 import { GamePhases } from '@data/season/season';
@@ -11,11 +12,14 @@ export const GameButton = ({
   team,
   currentScenario,
   animationState,
+  student,
 }) => {
   const history = useHistory(';');
   const { currentPhase } = gameBlockState;
 
-  const seasonDisabled =
+  const seasonDisabled = !!(
+    !student.objectives ||
+    !student.objectives[Objectives.LEARN_BUDGET] ||
     getAvailableSlots(
       [
         ...TeamAssignments.offense,
@@ -23,7 +27,8 @@ export const GameButton = ({
         ...TeamAssignments.goalie,
       ],
       team
-    ) > 0;
+    ) > 0
+  );
 
   const btnDisabled =
     (seasonDisabled &&

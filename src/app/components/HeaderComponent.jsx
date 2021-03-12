@@ -31,13 +31,14 @@ export const HeaderComponent = ({
   );
 
   const board = (
-    <ObjectivesBoard
-      key='ob'
-      visibleObjectives={1}
-      level={level}
-      smallText={true}
-      filterComplete={true}
-    />
+    <div key='ob' style={{ maxWidth: '350px' }}>
+      <ObjectivesBoard
+        visibleObjectives={1}
+        level={level}
+        smallText={true}
+        filterComplete={true}
+      />
+    </div>
   );
 
   const inner = inverse ? [board, stick] : [stick, board];

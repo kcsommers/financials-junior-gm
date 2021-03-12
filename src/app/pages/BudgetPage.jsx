@@ -27,6 +27,7 @@ import { updateStudentById } from '../api-helper';
 import { Objectives } from '@data/objectives/objectives';
 import { getDollarString } from '@utils';
 import { faqs } from '@data/faqs/faqs';
+import { cloneDeep } from 'lodash';
 import '@css/pages/BudgetPage.css';
 
 let debounceTimeout = 0;
@@ -53,7 +54,12 @@ export const BudgetPage = ({ history }) => {
     if (!student.tutorials || !student.tutorials.budget) {
       // if so, update the student object and enable budget button
       const tutorials = { home: true, budget: true };
-      updateStudentById(student._id, { tutorials })
+      const objectives = student.objectives
+        ? cloneDeep(student.objectives)
+        : {};
+      objectives[Objectives.LEARN_BUDGET] = true;
+
+      updateStudentById(student._id, { tutorials, objectives })
         .then(({ updatedStudent }) => {
           batch(() => {
             dispatch(setTutorialState({ isActive: false }));
@@ -129,6 +135,28 @@ export const BudgetPage = ({ history }) => {
       updateSavingsOnServer(+value);
     }, 1000);
   };
+
+  useEffect(() => {
+    if (
+      student.tutorials &&
+      student.tutorials.budget &&
+      (!student.objectives || !student.objectives[Objectives.LEARN_BUDGET])
+    ) {
+      const objectives = student.objectives
+        ? cloneDeep(student.objectives)
+        : {};
+      objectives[Objectives.LEARN_BUDGET] = true;
+
+      updateStudentById(student._id, { objectives })
+        .then(({ updatedStudent }) => {
+          batch(() => {
+            dispatch(setStudent(updatedStudent));
+            dispatch(setObjectiveComplete(Objectives.LEARN_BUDGET, true));
+          });
+        })
+        .catch((err) => console.error(err));
+    }
+  }, [dispatch, student]);
 
   const hasSeenTutorial = useRef(
     !!(student && student.tutorials && student.tutorials.budget)
