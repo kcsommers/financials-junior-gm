@@ -30,7 +30,7 @@ const objectivesReducer = (state = initialState, action) => {
 
       // check if theyve watched the budget tutorial
       clonedState.currentObjectives[0].setIsComplete(
-        !!(student.tutorials && student.tutorials.budget)
+        !!(student.objectives && student.objectives[Objectives.LEARN_BUDGET])
       );
 
       // check if they have players

@@ -26,6 +26,7 @@ export const resetSeason = (newLevel, prevLevel, student) => {
     const studentUpdates = {
       seasons: clonedSeasons,
       level: newLevel,
+      objectives: {},
     };
 
     if (newLevel > prevLevel) {
@@ -119,12 +120,9 @@ export const getGameResult = (studentTeamRank, opponent) => {
     ],
     [
       [1, 0],
-      [2, 0],
-      [3, 1],
+      [2, 1],
       [3, 2],
-      [4, 2],
       [4, 3],
-      [5, 3],
       [5, 4],
     ],
   ];
@@ -171,44 +169,6 @@ export const getGameResult = (studentTeamRank, opponent) => {
     win,
     opponent: opponent.name,
   };
-
-  // if (rankDiff > 5) {
-  //   return {
-  //     score: [Math.min(Math.ceil(rankDiff / 10), 5), 0],
-  //     messageIndex: 0,
-  //     opponent: opponent.name,
-  //     points: 2,
-  //     win: true,
-  //   };
-  // } else if (
-  //   (Math.abs(rankDiff) > 0 && Math.abs(rankDiff) <= 5) ||
-  //   rankDiff === 0
-  // ) {
-  //   if (opponent.teamRank > studentTeamRank) {
-  //     return {
-  //       score: [1, 2],
-  //       messageIndex: 2,
-  //       opponent: opponent.name,
-  //       points: 1,
-  //       win: false,
-  //     };
-  //   }
-  //   return {
-  //     score: [2, 1],
-  //     messageIndex: 1,
-  //     opponent: opponent.name,
-  //     points: 2,
-  //     win: true,
-  //   };
-  // } else {
-  //   return {
-  //     score: [0, Math.min(Math.ceil(Math.abs(rankDiff / 10)), 5)],
-  //     messageIndex: 3,
-  //     opponent: opponent.name,
-  //     points: 0,
-  //     win: false,
-  //   };
-  // }
 };
 
 const getSecondHighestPlayer = (team) => {

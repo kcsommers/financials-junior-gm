@@ -471,6 +471,7 @@ export const SeasonPage = ({ history }) => {
                   team={teamPlayers}
                   currentScenario={seasonState.currentScenario}
                   animationState={animationStates.playButton}
+                  student={student}
                 />
               </span>
               <div className='game-count'>
