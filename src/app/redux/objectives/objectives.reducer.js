@@ -6,8 +6,7 @@ import {
   INITIALIZE_OBJECTIVES,
 } from './objectives.actions';
 import { cloneDeep } from 'lodash';
-import { TeamAssignments } from '@data/players/players';
-import { getAvailableSlots } from '@data/players/players-utils';
+import { startingLineupFull } from '@data/players/players-utils';
 
 const initialState = {
   currentObjectives: [
@@ -35,14 +34,7 @@ const objectivesReducer = (state = initialState, action) => {
 
       // check if they have players
       clonedState.currentObjectives[1].setIsComplete(
-        getAvailableSlots(
-          [
-            ...TeamAssignments.offense,
-            ...TeamAssignments.defense,
-            ...TeamAssignments.goalie,
-          ],
-          student
-        ) === 0
+        startingLineupFull(student)
       );
       return clonedState;
     }
@@ -76,6 +68,9 @@ const objectivesReducer = (state = initialState, action) => {
         ),
         1
       );
+
+      console.log('REMOVEOBJ:L:::: ', clonedState);
+
       return clonedState;
     }
 

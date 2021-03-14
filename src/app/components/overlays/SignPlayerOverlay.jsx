@@ -12,6 +12,7 @@ import {
   gameBlockEnded,
   removeObjective,
   setObjectiveComplete,
+  setSeasonActive,
 } from '@redux/actions';
 import { ConfirmSignOverlay } from './ConfirmSignOverlay';
 import { TeamAssignments } from '@data/players/players';
@@ -19,6 +20,7 @@ import {
   getAvailableSlots,
   getPlayerPositon,
   handleSignPlayer,
+  startingLineupFull,
 } from '@data/players/players-utils';
 import { Objectives } from '@data/objectives/objectives';
 import '@css/components/team-page/SignPlayerOverlay.css';
@@ -76,23 +78,24 @@ export const SignPlayerOverlay = ({ assignment, isDisabled }) => {
           })
         );
 
-        const objectiveComplete =
-          getAvailableSlots(
-            [
-              ...TeamAssignments.offense,
-              ...TeamAssignments.defense,
-              ...TeamAssignments.goalie,
-            ],
-            updatedStudent
-          ) === 0;
+        const objectiveComplete = startingLineupFull(updatedStudent);
 
-        if (seasonState.currentScenario && objectiveComplete) {
-          dispatch(gameBlockEnded(student));
-          dispatch(removeObjective(Objectives.SEASON_SCENARIO));
-        } else {
-          dispatch(
-            setObjectiveComplete(Objectives.FILL_TEAM, objectiveComplete)
-          );
+        if (objectiveComplete) {
+          if (seasonState.currentScenario) {
+            dispatch(gameBlockEnded(student));
+            dispatch(removeObjective(Objectives.SEASON_SCENARIO));
+          } else {
+            dispatch(
+              setObjectiveComplete(Objectives.FILL_TEAM, objectiveComplete)
+            );
+
+            if (
+              student.objectives &&
+              student.objectives[Objectives.LEARN_BUDGET]
+            ) {
+              dispatch(setSeasonActive(true));
+            }
+          }
         }
       });
     });

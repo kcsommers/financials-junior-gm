@@ -65,6 +65,19 @@ export const getAssignmentsByPosition = (position) => {
   }
 };
 
+export const startingLineupFull = (team) => {
+  return (
+    getAvailableSlots(
+      [
+        ...TeamAssignments.offense,
+        ...TeamAssignments.defense,
+        ...TeamAssignments.goalie,
+      ],
+      team
+    ) === 0
+  );
+};
+
 export const getAvailableSlots = (props, team) => {
   if (!team) {
     return props.length;
@@ -195,16 +208,7 @@ export const handleSignPlayer = (
     // and end the current game block if so
     if (seasonState && seasonState.currentScenario) {
       clonedStudent[assignment] = signedPlayer._id;
-      if (
-        getAvailableSlots(
-          [
-            ...TeamAssignments.offense,
-            ...TeamAssignments.defense,
-            ...TeamAssignments.goalie,
-          ],
-          clonedStudent
-        ) === 0
-      ) {
+      if (startingLineupFull(clonedStudent)) {
         const studentSeasons = clonedStudent.seasons;
         if (studentSeasons[(+student.level || 1) - 1]) {
           studentSeasons[(+student.level || 1) - 1].push(
@@ -244,7 +248,7 @@ export const handleTradePlayers = (
     releasedPlayer.playerAssignment =
       prevPosition === PlayerPositions.BENCH
         ? PlayerAssignments.OFFERED_SCOUT
-        : PlayerAssignments.MARKET;
+        : PlayerAssignments.UNAVAILABLE;
     signedPlayer.playerAssignment = prevAssignment;
 
     const playersCopy = cloneDeep(student.players).reduce((arr, p) => {
@@ -267,7 +271,7 @@ export const handleTradePlayers = (
       [releasedPlayer.playerAssignment]:
         prevPosition === PlayerPositions.BENCH
           ? PlayerAssignments.OFFERED_SCOUT
-          : PlayerAssignments.MARKET,
+          : PlayerAssignments.UNAVAILABLE,
       players: playersCopy,
     };
 
@@ -311,7 +315,7 @@ export const getMoneySpent = (players, totalBudget) => {
       if (
         p &&
         (playerProps.includes(p.playerAssignment) ||
-          p.playerAssignment === PlayerAssignments.INJURED)
+          p.playerAssignment === PlayerAssignments.UNAVAILABLE)
       ) {
         total += +p.playerCost;
       }

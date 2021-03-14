@@ -1,11 +1,10 @@
 import { TeamCard } from './TeamCard';
 import { GamePhases, getStanding } from '@data/season/season';
-import { TeamAssignments } from '@data/players/players';
-import { getAvailableSlots } from '@data/players/players-utils';
 import { Indicator, PlayerCard } from '@components';
 import { motion } from 'framer-motion';
 import '@css/components/season-page/Jumbotron.css';
 import { useSelector } from 'react-redux';
+import { startingLineupFull } from '@data/players/players-utils';
 
 export const Jumbotron = ({
   gameBlockState,
@@ -20,15 +19,7 @@ export const Jumbotron = ({
     upcomingGames: useSelector((state) => state.tutorial.season.upcomingGames),
     jumboText: useSelector((state) => state.tutorial.season.jumbotext),
   };
-  const seasonDisabled =
-    getAvailableSlots(
-      [
-        ...TeamAssignments.offense,
-        ...TeamAssignments.defense,
-        ...TeamAssignments.goalie,
-      ],
-      team
-    ) > 0;
+  const seasonDisabled = !startingLineupFull(team);
 
   // if its the first game, the next opponent is the current opponent
   const nextIndex =

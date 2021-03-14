@@ -31,6 +31,8 @@ export const ObjectivesBoard = ({
     i++;
   }
 
+  console.log('CURR::: ', currentObjectives);
+
   return (
     <div
       className={`objectives-board-wrap${
