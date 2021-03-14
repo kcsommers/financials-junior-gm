@@ -6,11 +6,14 @@ export const getDollarString = (num, showZero = false) => {
   if (!num || num === 'null') {
     return showZero ? '$0' : '';
   }
-  if (+num % 1 === 0) {
-    return `$${num}`;
+
+  const safeNum = Math.max(0, +num);
+
+  if (safeNum % 1 === 0) {
+    return `$${safeNum}`;
   }
 
-  return `$${parseFloat(num).toFixed(2)}`;
+  return `$${parseFloat(safeNum).toFixed(2)}`;
 };
 
 export const getMoneyLevels = (level) => {

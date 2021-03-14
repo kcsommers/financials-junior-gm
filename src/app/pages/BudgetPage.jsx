@@ -249,9 +249,10 @@ export const BudgetPage = ({ history }) => {
           <div className='budget-equation-container'>
             <BudgetEquation
               budget={{
-                total: student.totalBudget,
+                total: +student.totalBudget + (+student.rollOverBudget || 0),
                 savings: student.savingsBudget,
                 spent: moneySpent,
+                rollOver: +student.rollOverBudget,
               }}
               animationStates={budgetEquationStates}
             />
@@ -262,9 +263,10 @@ export const BudgetPage = ({ history }) => {
           <div className='budget-slider-container'>
             <BudgetSlider
               budget={{
-                total: student.totalBudget,
-                savings: student.savingsBudget,
+                total: +student.totalBudget,
+                savings: +student.savingsBudget,
                 spent: moneySpent,
+                rollOver: +student.rollOverBudget,
               }}
               setValue={updateSavings}
               student={student}
