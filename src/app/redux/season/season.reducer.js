@@ -15,6 +15,7 @@ import {
   SET_CURRENT_OPPONENT_INDEX,
   INITIALIZE_SEASON,
   SET_IN_TRANSITION,
+  SET_SEASON_ACTIVE,
 } from './season.actions';
 
 const allOpponents = getAllOpponents(1);
@@ -36,6 +37,7 @@ const initialState = {
   awards: [],
   inTransition: false,
   inSession: false,
+  seasonActive: false,
 };
 
 const seasonReducer = (state = initialState, action) => {
@@ -110,12 +112,21 @@ const seasonReducer = (state = initialState, action) => {
         clonedState.seasonTeam,
       ]);
 
+      // season is active if there are gameblocks in the current season
+      clonedState.seasonActive = currentSeason.length;
+
       // game is in transition if the length of the game blocks array is 3
       // and the length of the seasons array is equal to the current level
       clonedState.inTransition =
         student.seasons[level - 1] &&
         student.seasons[level - 1].length === 3 &&
         level === student.seasons.length;
+
+      return clonedState;
+    }
+    case SET_SEASON_ACTIVE: {
+      const clonedState = cloneDeep(state);
+      clonedState.seasonActive = action.payload;
 
       return clonedState;
     }
@@ -201,6 +212,7 @@ const seasonReducer = (state = initialState, action) => {
         student.awards[(+student.level || 1) - 1];
       clonedState.inTransition = true;
       clonedState.inSession = true;
+      clonedState.seasonActive = false;
 
       return clonedState;
     }

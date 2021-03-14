@@ -17,14 +17,14 @@ import {
   Button,
   ConfirmOverlay,
 } from '@components';
-import { PlayerPositions, TeamAssignments } from '@data/players/players';
+import { PlayerPositions } from '@data/players/players';
 import {
   getPlayerPositon,
   getAssignmentsByPosition,
   handleSignPlayer,
   getOpenAssignment,
   handleReleasePlayer,
-  getAvailableSlots,
+  startingLineupFull,
 } from '@data/players/players-utils';
 import { Objectives } from '@data/objectives/objectives';
 
@@ -67,15 +67,7 @@ export const PlayerDetailsOverlay = ({
               canClose: true,
             })
           );
-          const objectiveComplete =
-            getAvailableSlots(
-              [
-                ...TeamAssignments.offense,
-                ...TeamAssignments.defense,
-                ...TeamAssignments.goalie,
-              ],
-              updatedStudent
-            ) === 0;
+          const objectiveComplete = startingLineupFull(updatedStudent);
           dispatch(
             setObjectiveComplete(Objectives.FILL_TEAM, objectiveComplete)
           );
@@ -135,16 +127,8 @@ export const PlayerDetailsOverlay = ({
               ),
             })
           );
-          const objectiveComplete =
-            getAvailableSlots(
-              [
-                ...TeamAssignments.offense,
-                ...TeamAssignments.defense,
-                ...TeamAssignments.goalie,
-              ],
-              updatedStudent
-            ) === 0;
 
+          const objectiveComplete = startingLineupFull(updatedStudent);
           if (seasonState.currentScenario && objectiveComplete) {
             dispatch(gameBlockEnded(student));
             dispatch(removeObjective(Objectives.SEASON_SCENARIO));
@@ -218,9 +202,9 @@ export const PlayerDetailsOverlay = ({
                 onClick={confirmMoveToStartingLineup}
                 isDisabled={!positionOpen(player.playerPosition)}
               />
-            ) : (
+            ) : seasonState.seasonActive ? (
               <Button text='Trade' onClick={confirmTrade} />
-            )}
+            ) : null}
 
             <Button text='Release' onClick={confirmRelease} />
           </div>

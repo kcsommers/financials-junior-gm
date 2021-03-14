@@ -102,7 +102,7 @@ const playersReducer = (state = initialState, action) => {
           } else if (p.playerPosition === PlayerPositions.GOALIE) {
             offeredScoutPlayers.goalie.push(p);
           }
-        } else if (p.playerAssignment === PlayerAssignments.INJURED) {
+        } else if (p.playerAssignment === PlayerAssignments.UNAVAILABLE) {
           injuredPlayers.push(p);
         } else if (isTeamPlayer(p)) {
           teamPlayers[p.playerAssignment] = p;
@@ -233,25 +233,28 @@ const playersReducer = (state = initialState, action) => {
       return clonedState;
     }
     case TRADE_PLAYER: {
+      /** traded players do not go back in the market */
+
       const releasedPlayer = action.payload.releasedPlayer;
       const signedPlayer = action.payload.signedPlayer;
       const student = action.payload.student;
       const moneyLevels = getMoneyLevels(+student.level);
       const clonedState = cloneDeep(state);
 
-      const releasedPlayerCache =
-        releasedPlayer.playerAssignment === PlayerAssignments.OFFERED_SCOUT
-          ? clonedState.scoutingState.offeredScoutPlayers
-          : clonedState.marketPlayers;
-
-      releasedPlayerCache[releasedPlayer.playerPosition].push(releasedPlayer);
-
+      // remove the signed player from the market
       clonedState.marketPlayers[
         signedPlayer.playerPosition
       ] = clonedState.marketPlayers[signedPlayer.playerPosition].filter(
         (p) => p._id !== signedPlayer._id
       );
 
+      // if released player is a scout player, put them back in the scout cache
+      if (releasedPlayer.playerAssignment === PlayerAssignments.OFFERED_SCOUT) {
+        clonedState.scoutingState.offeredScoutPlayers[
+          releasedPlayer.playerPosition
+        ].push(releasedPlayer);
+      }
+      // also put them back at the appropriate money level
       if (releasedPlayer.playerAssignment === PlayerAssignments.OFFERED_SCOUT) {
         if (+releasedPlayer.playerCost === moneyLevels[0].num) {
           clonedState.scoutingState.scoutPlayers.levelOne.push(releasedPlayer);
@@ -264,6 +267,7 @@ const playersReducer = (state = initialState, action) => {
         }
       }
 
+      // if a bench player was signed, remove them from the scout cache
       if (
         getPlayerPositon(signedPlayer.playerAssignment) ===
         PlayerPositions.BENCH
@@ -282,6 +286,7 @@ const playersReducer = (state = initialState, action) => {
           1
         );
       }
+      // set the signed player on the team
       clonedState.teamPlayers[signedPlayer.playerAssignment] = signedPlayer;
 
       const team = [

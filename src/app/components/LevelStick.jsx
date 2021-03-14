@@ -62,7 +62,7 @@ const getIndicatorTransforms = (num, denom) => {
   let y = stickHeight * (1 - num / denom) - 30;
 
   if (y > 100) {
-    rotate = y - 90;
+    rotate = y - 95;
     y = 100;
   }
   return {
@@ -77,7 +77,7 @@ const getIndicatorTransformsLarge = (num, denom) => {
   let y = stickHeight * (1 - num / denom) - 30;
 
   if (y > 160) {
-    rotate = y - 150;
+    rotate = y - 155;
     y = 160;
   }
   return {

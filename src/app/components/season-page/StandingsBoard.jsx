@@ -23,7 +23,7 @@ export const StandingsBoard = ({ animationState }) => {
         }`}
       >
         {team.name === seasonTeam.name ? studentTeamIndex + 1 : i + 1}.{' '}
-        {team.name}
+        {team.name === seasonTeam.name ? 'S.J. ' + team.name : team.name}
       </span>
       <span
         className={`${

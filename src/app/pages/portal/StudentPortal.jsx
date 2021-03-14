@@ -10,8 +10,11 @@ import { UserRoles } from '@data/auth/auth';
 import { Redirect } from 'react-router-dom';
 import { getCurrentUser } from './../../api-helper';
 import { LoadingSpinner } from '@components';
-import { getAvailableSlots } from '@data/players/players-utils';
-import { playerProps, TeamAssignments } from '@data/players/players';
+import {
+  getAvailableSlots,
+  startingLineupFull,
+} from '@data/players/players-utils';
+import { playerProps } from '@data/players/players';
 
 export const StudentPortal = ({
   screen,
@@ -54,14 +57,7 @@ export const StudentPortal = ({
         (pageName === 'team' && !student.tutorials.budget) ||
         (pageName === 'season' &&
           !student.tutorials.season &&
-          getAvailableSlots(
-            [
-              ...TeamAssignments.offense,
-              ...TeamAssignments.defense,
-              ...TeamAssignments.goalie,
-            ],
-            student
-          ) > 0)
+          startingLineupFull(student))
       ) {
         history.push('/home');
         return;
