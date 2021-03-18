@@ -25,6 +25,30 @@ import binoculars from '@images/icons/binoculars.svg';
 import sharkieBtn from '@images/sharkie-btn.svg';
 import iceBgSmall from '@images/ice-bg-small.svg';
 import backBtnRvrsd from '@images/back-btn-reversed.svg';
+import condorsLogo from '@images/icons/team-logos/ahl/bakersfieldcondorsLG.png';
+import wolvesLogo from '@images/icons/team-logos/ahl/chicagowolvesLG.png';
+import eaglesLogo from '@images/icons/team-logos/ahl/coloradoeaglesLG.png';
+import silverKinghtsLogo from '@images/icons/team-logos/ahl/hendersonsilverknightsLG.png';
+import iowaWildLogo from '@images/icons/team-logos/ahl/iowawildLG.png';
+import mooseLogo from '@images/icons/team-logos/ahl/manitobamooseLG.png';
+import reignLogo from '@images/icons/team-logos/ahl/ontarioreignLG.png';
+import iceHogsLogo from '@images/icons/team-logos/ahl/rockfordicehogsLG.png';
+import gullesLogo from '@images/icons/team-logos/ahl/sandiegogullsLG.png';
+import heatLogo from '@images/icons/team-logos/ahl/stocktonheatLG.png';
+import texasStartsLogo from '@images/icons/team-logos/ahl/texasstarsLG.png';
+import roadRunnersLogo from '@images/icons/team-logos/ahl/tucsonroadrunnersLG.png';
+import ducksLogo from '@images/icons/team-logos/nhl/anaheimducksLG.png';
+import coyotesLogo from '@images/icons/team-logos/nhl/arizonacoyotesLG.png';
+import flamesLogo from '@images/icons/team-logos/nhl/calgaryflamesLG.png';
+import avalancheLogo from '@images/icons/team-logos/nhl/coloradoavalancheLG.png';
+import dallasStarsLogo from '@images/icons/team-logos/nhl/dallasstarsLG.png';
+import oilersLogo from '@images/icons/team-logos/nhl/edmontonoilersLG.png';
+import kingsLogo from '@images/icons/team-logos/nhl/losangeleskingsLG.png';
+import minnesotaWildLogo from '@images/icons/team-logos/nhl/minnesotawildLG.png';
+import bluesLogo from '@images/icons/team-logos/nhl/stlouisbluesLG.png';
+import canucksLogo from '@images/icons/team-logos/nhl/vancouvercanucksLG.png';
+import goldenKnightsLogo from '@images/icons/team-logos/nhl/vegasgoldenknightsLG.png';
+import jetsLogo from '@images/icons/team-logos/nhl/winnipegjetsLG.png';
 
 const images = [
   backBtn,
@@ -54,6 +78,30 @@ const images = [
   arrowRight,
   binoculars,
   sharkieBtn,
+  condorsLogo,
+  wolvesLogo,
+  eaglesLogo,
+  silverKinghtsLogo,
+  iowaWildLogo,
+  mooseLogo,
+  reignLogo,
+  iceHogsLogo,
+  gullesLogo,
+  heatLogo,
+  texasStartsLogo,
+  roadRunnersLogo,
+  ducksLogo,
+  coyotesLogo,
+  flamesLogo,
+  avalancheLogo,
+  dallasStarsLogo,
+  oilersLogo,
+  kingsLogo,
+  minnesotaWildLogo,
+  bluesLogo,
+  canucksLogo,
+  goldenKnightsLogo,
+  jetsLogo,
 ];
 
 export const loadImages = () => {
