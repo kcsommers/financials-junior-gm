@@ -54,7 +54,7 @@ export const BudgetSlider = ({ budget, setValue, student }) => {
           <div className='spending-indicator-wrap'>
             <p className='color-primary'>
               {getDollarString(
-                budget.total + budget.rollOver - budget.spent - budget.savings,
+                budget.total + budget.spent - budget.savings,
                 true
               )}{' '}
               <br /> Spending Budget
@@ -87,7 +87,7 @@ export const BudgetSlider = ({ budget, setValue, student }) => {
             <Indicator
               amount={budget.savings}
               direction='top'
-              highlight={true}
+              borderColor='#ffd782'
               isMoney={true}
             />
             <p className='color-primary'>Savings</p>

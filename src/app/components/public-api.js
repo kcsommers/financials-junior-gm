@@ -1,4 +1,5 @@
 export { AwardDetailsOverlay } from './overlays/AwardDetailsOverlay';
+export { RolloverBudgetOverlay } from './overlays/RolloverBudgetOverlay';
 export { NewLevelOverlay } from './overlays/NewLevelOverlay';
 export { FaqOverlay } from './overlays/FaqOverlay';
 export { NextSeasonOverlay } from './overlays/NextSeasonOverlay';
