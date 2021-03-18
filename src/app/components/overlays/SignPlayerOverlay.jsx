@@ -54,59 +54,53 @@ export const SignPlayerOverlay = ({ assignment, isDisabled }) => {
     );
   };
 
-  const signConfirmed = (signedPlayer, newRolloverBudget) => {
+  const signConfirmed = (signedPlayer) => {
     const prevAssignment = signedPlayer.playerAssignment;
-    handleSignPlayer(
-      signedPlayer,
-      assignment,
-      student,
-      seasonState,
-      newRolloverBudget
-    ).then(({ updatedStudent, updatedPlayer }) => {
-      batch(() => {
-        dispatch(signPlayer(updatedPlayer, prevAssignment, updatedStudent));
-        dispatch(setStudent(updatedStudent));
-        dispatch(
-          toggleOverlay({
-            isOpen: true,
-            template: (
-              <PlayerChangeSuccessOverlay
-                player={updatedPlayer}
-                message={`${updatedPlayer.playerName} has been signed!`}
-              />
-            ),
-          })
-        );
+    handleSignPlayer(signedPlayer, assignment, student, seasonState).then(
+      ({ updatedStudent, updatedPlayer }) => {
+        batch(() => {
+          dispatch(signPlayer(updatedPlayer, prevAssignment, updatedStudent));
+          dispatch(setStudent(updatedStudent));
+          dispatch(
+            toggleOverlay({
+              isOpen: true,
+              template: (
+                <PlayerChangeSuccessOverlay
+                  player={updatedPlayer}
+                  message={`${updatedPlayer.playerName} has been signed!`}
+                />
+              ),
+            })
+          );
 
-        const objectiveComplete = startingLineupFull(updatedStudent);
+          const objectiveComplete = startingLineupFull(updatedStudent);
 
-        if (objectiveComplete) {
-          if (seasonState.currentScenario) {
-            dispatch(gameBlockEnded(student));
-            dispatch(removeObjective(Objectives.SEASON_SCENARIO));
-          } else {
-            dispatch(
-              setObjectiveComplete(Objectives.FILL_TEAM, objectiveComplete)
-            );
+          if (objectiveComplete) {
+            if (seasonState.currentScenario) {
+              dispatch(gameBlockEnded(student));
+              dispatch(removeObjective(Objectives.SEASON_SCENARIO));
+              dispatch(
+                setObjectiveComplete(Objectives.FILL_TEAM, objectiveComplete)
+              );
+            } else {
+              dispatch(
+                setObjectiveComplete(Objectives.FILL_TEAM, objectiveComplete)
+              );
 
-            if (
-              student.objectives &&
-              student.objectives[Objectives.LEARN_BUDGET]
-            ) {
-              dispatch(setSeasonActive(true));
+              if (
+                student.objectives &&
+                student.objectives[Objectives.LEARN_BUDGET]
+              ) {
+                dispatch(setSeasonActive(true));
+              }
             }
           }
-        }
-      });
-    });
+        });
+      }
+    );
   };
 
-  const confirmSign = (player, skipConfirm, newRolloverBudget) => {
-    if (skipConfirm) {
-      signConfirmed(player, newRolloverBudget);
-      return;
-    }
-
+  const confirmSign = (player) => {
     dispatch(
       toggleOverlay({
         isOpen: true,

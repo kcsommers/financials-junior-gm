@@ -141,7 +141,7 @@ export const TeamPage = ({ history, location }) => {
     !!(student && student.tutorials && student.tutorials.team)
   );
   useEffect(() => {
-    if (student && !hasSeenTutorial.current) {
+    if (student && hasSeenTutorial.current) {
       hasSeenTutorial.current = true;
       startTutorial([teamSlides]);
     }

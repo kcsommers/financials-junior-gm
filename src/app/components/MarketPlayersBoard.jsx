@@ -88,14 +88,7 @@ export const MarketPlayersBoard = ({
       dispatch(
         toggleOverlay({
           isOpen: true,
-          template: (
-            <InsufficientFundsOverlay
-              budget={budget}
-              student={student}
-              signingPlayer={signingPlayer}
-              onUseRollover={onPlayerCardClick}
-            />
-          ),
+          template: <InsufficientFundsOverlay />,
         })
       );
       return;
