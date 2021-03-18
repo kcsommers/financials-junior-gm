@@ -18,6 +18,7 @@ export const HeaderComponent = ({
   level,
   inTransition,
   stickBtnLink = '/home',
+  tutorialActive,
 }) => {
   const stick = (
     <StickButton
@@ -26,7 +27,7 @@ export const HeaderComponent = ({
       image={stickBtn}
       inverse={inverse}
       large={largeStick}
-      isDisabled={inTransition}
+      isDisabled={inTransition || tutorialActive}
     />
   );
 

@@ -129,7 +129,7 @@ export const PlayerDetailsOverlay = ({
           );
 
           const objectiveComplete = startingLineupFull(updatedStudent);
-          if (seasonState.currentScenario && objectiveComplete) {
+          if (seasonState && seasonState.currentScenario && objectiveComplete) {
             dispatch(gameBlockEnded(student));
             dispatch(removeObjective(Objectives.SEASON_SCENARIO));
           } else {
@@ -202,7 +202,7 @@ export const PlayerDetailsOverlay = ({
                 onClick={confirmMoveToStartingLineup}
                 isDisabled={!positionOpen(player.playerPosition)}
               />
-            ) : seasonState.seasonActive ? (
+            ) : seasonState && seasonState.seasonActive ? (
               <Button text='Trade' onClick={confirmTrade} />
             ) : null}
 

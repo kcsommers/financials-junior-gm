@@ -3,13 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { toggleOverlay } from '@redux/actions';
 
-export const InsufficientFundsOverlay = ({
-  student,
-  signingPlayer,
-  releasingPlayer,
-  budget,
-  onUseRollover,
-}) => {
+export const InsufficientFundsOverlay = () => {
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -29,31 +23,6 @@ export const InsufficientFundsOverlay = ({
         isOpen: false,
         template: null,
       })
-    );
-  };
-
-  const useRolloverBudget = () => {
-    let totalBudget = budget - signingPlayer.playerCost;
-    if (releasingPlayer) {
-      totalBudget += +releasingPlayer.playerCost;
-    }
-
-    const newRolloverBudget = Math.max(
-      +student.rollOverBudget - Math.abs(totalBudget),
-      0
-    );
-
-    onUseRollover(signingPlayer, true, newRolloverBudget);
-  };
-
-  const showRolloverBudget = () => {
-    let totalBudget = budget - signingPlayer.playerCost;
-    if (releasingPlayer) {
-      totalBudget += releasingPlayer.playerCost;
-    }
-
-    return !!(
-      +student.rollOverBudget && +student.rollOverBudget + totalBudget >= 0
     );
   };
 
@@ -79,23 +48,6 @@ export const InsufficientFundsOverlay = ({
             You'll have to find a way to increase your budget.
           </p>
         </div>
-        {showRolloverBudget() && (
-          <div
-            style={{
-              marginTop: '0rem',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-around',
-              width: '100%',
-            }}
-          >
-            <Button
-              text='Use Rollover Budget'
-              onClick={useRolloverBudget}
-              background='#002f6c'
-            />
-          </div>
-        )}
         <div
           style={{
             marginTop: '3rem',
