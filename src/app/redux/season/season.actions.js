@@ -12,6 +12,8 @@ export const INITIALIZE_SEASON = 'INITIALIZE_SEASON';
 
 export const SET_IN_TRANSITION = 'SET_IN_TRANSITION';
 
+export const SET_SEASON_ACTIVE = 'SET_SEASON_ACTIVE';
+
 export const gameBlockEnded = (student) => ({
   type: GAME_BLOCK_ENDED,
   payload: student,
@@ -20,6 +22,11 @@ export const gameBlockEnded = (student) => ({
 export const setSeasonComplete = (student) => ({
   type: SET_SEASON_COMPLETE,
   payload: student,
+});
+
+export const setSeasonActive = (isActive) => ({
+  type: SET_SEASON_ACTIVE,
+  payload: isActive,
 });
 
 export const gameEnded = (gameResult, opponent) => ({

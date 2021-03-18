@@ -31,9 +31,11 @@ import {
 } from '@redux/actions';
 import { updateStudentById } from './../api-helper';
 import { cloneDeep } from 'lodash';
-import { getMaxTeamRank, getAvailableSlots } from '@data/players/players-utils';
+import {
+  getMaxTeamRank,
+  startingLineupFull,
+} from '@data/players/players-utils';
 import { getStudentTeam } from '@data/season/season';
-import { TeamAssignments } from '@data/players/players';
 import '@css/pages/HomePage.css';
 
 const getDisabledStickBtns = (student) => {
@@ -43,15 +45,7 @@ const getDisabledStickBtns = (student) => {
   states.season =
     !student ||
     !student.tutorials ||
-    (!student.tutorials.season &&
-      getAvailableSlots(
-        [
-          ...TeamAssignments.offense,
-          ...TeamAssignments.defense,
-          ...TeamAssignments.goalie,
-        ],
-        student
-      ) > 0);
+    (!student.tutorials.season && !startingLineupFull(student));
   return states;
 };
 
@@ -107,15 +101,7 @@ export const HomePage = ({ location, history }) => {
       dispatch(setTutorialState({ isActive: false }));
       setDisabledStickBtns({
         ...disabledStickBtns,
-        season:
-          getAvailableSlots(
-            [
-              ...TeamAssignments.offense,
-              ...TeamAssignments.defense,
-              ...TeamAssignments.goalie,
-            ],
-            student
-          ) > 0,
+        season: !startingLineupFull(student),
       });
     } else {
       dispatch(setTutorialState({ isActive: false }));
@@ -163,17 +149,7 @@ export const HomePage = ({ location, history }) => {
       tutorialsRef.current = { ...tutorialsRef.current, team: true };
     }
 
-    if (
-      !tutorialsRef.current.season &&
-      getAvailableSlots(
-        [
-          ...TeamAssignments.offense,
-          ...TeamAssignments.defense,
-          ...TeamAssignments.goalie,
-        ],
-        student
-      ) === 0
-    ) {
+    if (!tutorialsRef.current.season && startingLineupFull(student)) {
       startTutorial([transitionSlidesSeason]);
       tutorialsRef.current = { ...tutorialsRef.current, season: true };
     }

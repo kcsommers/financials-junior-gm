@@ -1,10 +1,9 @@
-import { TeamAssignments } from '@data/players/players';
-import { getAvailableSlots } from '@data/players/players-utils';
 import { Objectives } from '@data/objectives/objectives';
 import { GameButtonSvg } from './GameButtonSvg';
 import { useHistory } from 'react-router-dom';
 import { GamePhases } from '@data/season/season';
 import { motion } from 'framer-motion';
+import { startingLineupFull } from '@data/players/players-utils';
 
 export const GameButton = ({
   onClick,
@@ -20,14 +19,7 @@ export const GameButton = ({
   const seasonDisabled = !!(
     !student.objectives ||
     !student.objectives[Objectives.LEARN_BUDGET] ||
-    getAvailableSlots(
-      [
-        ...TeamAssignments.offense,
-        ...TeamAssignments.defense,
-        ...TeamAssignments.goalie,
-      ],
-      team
-    ) > 0
+    !startingLineupFull(team)
   );
 
   const btnDisabled =

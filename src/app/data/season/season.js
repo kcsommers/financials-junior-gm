@@ -13,6 +13,31 @@ import blackbeaversLogo from '@images/icons/team-logos/blackbeaversLg.svg';
 import jrSharksLogo from '@images/icons/jr-sharks-logo-lg.svg';
 import sjbarracudalogo from '@images/icons/sjbarracuda-logo.svg';
 import sjsharkslogo from '@images/icons/sjsharkslogo.svg';
+import condorsLogo from '@images/icons/team-logos/ahl/bakersfieldcondorsLG.png';
+import wolvesLogo from '@images/icons/team-logos/ahl/chicagowolvesLG.png';
+import eaglesLogo from '@images/icons/team-logos/ahl/coloradoeaglesLG.png';
+import silverKnightsLogo from '@images/icons/team-logos/ahl/hendersonsilverknightsLG.png';
+import iowaWildLogo from '@images/icons/team-logos/ahl/iowawildLG.png';
+import mooseLogo from '@images/icons/team-logos/ahl/manitobamooseLG.png';
+import reignLogo from '@images/icons/team-logos/ahl/ontarioreignLG.png';
+import iceHogsLogo from '@images/icons/team-logos/ahl/rockfordicehogsLG.png';
+import gullsLogo from '@images/icons/team-logos/ahl/sandiegogullsLG.png';
+import heatLogo from '@images/icons/team-logos/ahl/stocktonheatLG.png';
+import texasStarsLogo from '@images/icons/team-logos/ahl/texasstarsLG.png';
+import roadRunnersLogo from '@images/icons/team-logos/ahl/tucsonroadrunnersLG.png';
+import ducksLogo from '@images/icons/team-logos/nhl/anaheimducksLG.png';
+import coyotesLogo from '@images/icons/team-logos/nhl/arizonacoyotesLG.png';
+import flamesLogo from '@images/icons/team-logos/nhl/calgaryflamesLG.png';
+import avalancheLogo from '@images/icons/team-logos/nhl/coloradoavalancheLG.png';
+import dallasStarsLogo from '@images/icons/team-logos/nhl/dallasstarsLG.png';
+import oilersLogo from '@images/icons/team-logos/nhl/edmontonoilersLG.png';
+import kingsLogo from '@images/icons/team-logos/nhl/losangeleskingsLG.png';
+import minnesotaWildLogo from '@images/icons/team-logos/nhl/minnesotawildLG.png';
+import bluesLogo from '@images/icons/team-logos/nhl/stlouisbluesLG.png';
+import canucksLogo from '@images/icons/team-logos/nhl/vancouvercanucksLG.png';
+import goldenKnightsLogo from '@images/icons/team-logos/nhl/vegasgoldenknightsLG.png';
+import jetsLogo from '@images/icons/team-logos/nhl/winnipegjetsLG.png';
+
 import { INJURE_PLAYER } from '@redux/actions';
 import { PlayerAssignments, TeamAssignments } from '@data/players/players';
 import { cloneDeep } from 'lodash';
@@ -198,7 +223,7 @@ export const scenarios = {
       objective: 'Replace the injured player',
       action: INJURE_PLAYER,
       getPlayer: getSecondHighestPlayer,
-      playerAssignment: PlayerAssignments.INJURED,
+      playerAssignment: PlayerAssignments.UNAVAILABLE,
       player: null,
       gameButtonLabel: 'Click the puck to sign a new player!',
       gameButtonAction: (team, history) => history.push('/team'),
@@ -208,7 +233,7 @@ export const scenarios = {
       objective: 'Replace the injured player',
       action: INJURE_PLAYER,
       getPlayer: getStartingPlayer,
-      playerAssignment: PlayerAssignments.INJURED,
+      playerAssignment: PlayerAssignments.UNAVAILABLE,
       player: null,
       gameButtonLabel: 'Click the puck to sign a new player!',
       gameButtonAction: (team, history) => history.push('/team'),
@@ -220,7 +245,7 @@ export const scenarios = {
       objective: 'Replace the injured player',
       action: INJURE_PLAYER,
       getPlayer: getSecondHighestPlayer,
-      playerAssignment: PlayerAssignments.INJURED,
+      playerAssignment: PlayerAssignments.UNAVAILABLE,
       player: null,
       gameButtonLabel: 'Click the puck to sign a new player!',
       gameButtonAction: (team, history) => history.push('/team'),
@@ -230,7 +255,7 @@ export const scenarios = {
       objective: 'Replace the injured player',
       action: INJURE_PLAYER,
       getPlayer: getStartingPlayer,
-      playerAssignment: PlayerAssignments.INJURED,
+      playerAssignment: PlayerAssignments.UNAVAILABLE,
       player: null,
       gameButtonLabel: 'Click the puck to sign a new player!',
       gameButtonAction: (team, history) => history.push('/team'),
@@ -242,7 +267,7 @@ export const scenarios = {
       objective: 'Replace the injured player',
       action: INJURE_PLAYER,
       getPlayer: getSecondHighestPlayer,
-      playerAssignment: PlayerAssignments.INJURED,
+      playerAssignment: PlayerAssignments.UNAVAILABLE,
       player: null,
       gameButtonLabel: 'Click the puck to sign a new player!',
       gameButtonAction: (team, history) => history.push('/team'),
@@ -252,7 +277,7 @@ export const scenarios = {
       objective: 'Replace the injured player',
       action: INJURE_PLAYER,
       getPlayer: getStartingPlayer,
-      playerAssignment: PlayerAssignments.INJURED,
+      playerAssignment: PlayerAssignments.UNAVAILABLE,
       player: null,
       gameButtonLabel: 'Click the puck to sign a new player!',
       gameButtonAction: (team, history) => history.push('/team'),
@@ -496,173 +521,197 @@ export const levelOneOpponents = [
 export const levelTwoOpponents = [
   {
     teamRank: 241,
+    logo: condorsLogo,
     name: 'Bakersfield Condors',
     stats: { wins: 0, losses: 0, points: 0 },
     standings: '6th',
-    color: '#4b4b4b',
+    color: '#FA4C06',
   },
   {
     teamRank: 294,
-    name: 'Sand Diego Gulls',
+    logo: gullsLogo,
+    name: 'San Diego Gulls',
     stats: { wins: 0, losses: 0, points: 0 },
     standings: '6th',
-    color: '#4b4b4b',
+    color: '#F47937',
   },
   {
     teamRank: 275,
+    logo: heatLogo,
     name: 'Stockton Heat',
     stats: { wins: 0, losses: 0, points: 0 },
     standings: '6th',
-    color: '#4b4b4b',
+    color: '#D01E2D',
   },
   {
     teamRank: 280,
+    logo: eaglesLogo,
     name: 'Colorado Eagles',
     stats: { wins: 0, losses: 0, points: 0 },
     standings: '6th',
-    color: '#4b4b4b',
+    color: '#FCD659',
   },
   {
     teamRank: 265,
+    logo: reignLogo,
     name: 'Ontario Reign',
     stats: { wins: 0, losses: 0, points: 0 },
     standings: '6th',
-    color: '#4b4b4b',
+    color: '#221E20',
   },
   {
     teamRank: 275,
+    logo: silverKnightsLogo,
     name: 'Henderson Silver Knights',
     stats: { wins: 0, losses: 0, points: 0 },
     standings: '6th',
-    color: '#4b4b4b',
+    color: '#C1C5C7',
   },
   {
     teamRank: 265,
+    logo: roadRunnersLogo,
     name: 'Tucson Roadrunners',
     stats: { wins: 0, losses: 0, points: 0 },
     standings: '6th',
-    color: '#4b4b4b',
+    color: '#900028',
   },
   {
     teamRank: 270,
+    logo: texasStarsLogo,
     name: 'Texas Stars',
     stats: { wins: 0, losses: 0, points: 0 },
     standings: '6th',
-    color: '#4b4b4b',
+    color: '#045F34',
   },
   {
     teamRank: 255,
+    logo: iowaWildLogo,
     name: 'Iowa Wild',
     stats: { wins: 0, losses: 0, points: 0 },
     standings: '6th',
-    color: '#4b4b4b',
+    color: '#004730',
   },
   {
     teamRank: 270,
+    logo: mooseLogo,
     name: 'Manitoba Moose',
     stats: { wins: 0, losses: 0, points: 0 },
     standings: '12th',
-    color: '#4b4b4b',
+    color: '#0E2749',
   },
   {
     teamRank: 275,
+    logo: iceHogsLogo,
     name: 'Rockford Icehogs',
     stats: { wins: 0, losses: 0, points: 0 },
     standings: '10th',
-    color: '#4b4b4b',
+    color: '#AA272E',
   },
   {
     teamRank: 270,
+    logo: wolvesLogo,
     name: 'Chicago Wolves',
     stats: { wins: 0, losses: 0, points: 0 },
     standings: '6th',
-    color: '#4b4b4b',
+    color: '#929283',
   },
 ];
 
 export const levelThreeOpponents = [
   {
     teamRank: 425,
+    logo: ducksLogo,
     name: 'Anaheim Ducks',
     stats: { wins: 0, losses: 0, points: 0 },
     standings: '6th',
-    color: '#4b4b4b',
+    color: '#BC9C64',
   },
   {
     teamRank: 490,
+    logo: coyotesLogo,
     name: 'Arizona Coyotes',
     stats: { wins: 0, losses: 0, points: 0 },
     standings: '6th',
-    color: '#4b4b4b',
+    color: '#900028',
   },
   {
     teamRank: 455,
+    logo: flamesLogo,
     name: 'Calgary Flames',
     stats: { wins: 0, losses: 0, points: 0 },
     standings: '6th',
-    color: '#4b4b4b',
+    color: '#DD0024',
   },
   {
     teamRank: 480,
+    logo: oilersLogo,
     name: 'Edmonton Oilers',
     stats: { wins: 0, losses: 0, points: 0 },
     standings: '6th',
-    color: '#4b4b4b',
+    color: '#002147',
   },
   {
     teamRank: 465,
+    logo: kingsLogo,
     name: 'Los Angeles Kings',
     stats: { wins: 0, losses: 0, points: 0 },
     standings: '6th',
-    color: '#4b4b4b',
+    color: '#231F20',
   },
   {
     teamRank: 475,
+    logo: canucksLogo,
     name: 'Vancouver Canucks',
     stats: { wins: 0, losses: 0, points: 0 },
     standings: '6th',
-    color: '#4b4b4b',
+    color: '#002D56',
   },
   {
     teamRank: 465,
+    logo: goldenKnightsLogo,
     name: 'Vegas Golden Knights',
     stats: { wins: 0, losses: 0, points: 0 },
     standings: '6th',
-    color: '#4b4b4b',
+    color: '#8D744A',
   },
   {
     teamRank: 470,
+    logo: dallasStarsLogo,
     name: 'Dallas Stars',
     stats: { wins: 0, losses: 0, points: 0 },
     standings: '6th',
-    color: '#4b4b4b',
+    color: '#124733',
   },
   {
     teamRank: 455,
+    logo: avalancheLogo,
     name: 'Colorado Avalanche',
     stats: { wins: 0, losses: 0, points: 0 },
     standings: '6th',
-    color: '#4b4b4b',
+    color: '#6E263C',
   },
   {
     teamRank: 470,
+    logo: jetsLogo,
     name: 'Winnipeg Jets',
     stats: { wins: 0, losses: 0, points: 0 },
     standings: '12th',
-    color: '#4b4b4b',
+    color: '#081F3F',
   },
   {
     teamRank: 475,
+    logo: minnesotaWildLogo,
     name: 'Minnesota Wild',
     stats: { wins: 0, losses: 0, points: 0 },
     standings: '10th',
-    color: '#4b4b4b',
+    color: '#124733',
   },
   {
     teamRank: 470,
+    logo: bluesLogo,
     name: 'St. Louis Blues',
     stats: { wins: 0, losses: 0, points: 0 },
     standings: '6th',
-    color: '#4b4b4b',
+    color: '#002F86',
   },
 ];

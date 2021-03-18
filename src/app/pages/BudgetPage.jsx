@@ -22,6 +22,7 @@ import {
   setStudent,
   toggleOverlay,
   setObjectiveComplete,
+  setSeasonActive,
 } from '@redux/actions';
 import { updateStudentById } from '../api-helper';
 import { Objectives } from '@data/objectives/objectives';
@@ -29,6 +30,7 @@ import { getDollarString } from '@utils';
 import { faqs } from '@data/faqs/faqs';
 import { cloneDeep } from 'lodash';
 import '@css/pages/BudgetPage.css';
+import { startingLineupFull } from '@data/players/players-utils';
 
 let debounceTimeout = 0;
 
@@ -43,6 +45,12 @@ export const BudgetPage = ({ history }) => {
   const tutorialActive = useSelector((state) => state.tutorial.isActive);
 
   const [tutorialSlides, setTutorialSlides] = useState([budgetSlides]);
+
+  const _setSeasonActive = () => {
+    if (startingLineupFull(student)) {
+      dispatch(setSeasonActive(true));
+    }
+  };
 
   const onTutorialComplete = (canceled) => {
     if (canceled) {
@@ -65,6 +73,7 @@ export const BudgetPage = ({ history }) => {
             dispatch(setTutorialState({ isActive: false }));
             dispatch(setStudent(updatedStudent));
             dispatch(setObjectiveComplete(Objectives.LEARN_BUDGET, true));
+            _setSeasonActive();
           });
         })
         .catch((err) => console.error(err));
@@ -72,6 +81,7 @@ export const BudgetPage = ({ history }) => {
       batch(() => {
         dispatch(setTutorialState({ isActive: false }));
         dispatch(setObjectiveComplete(Objectives.LEARN_BUDGET, true));
+        _setSeasonActive();
       });
     }
   };
@@ -152,6 +162,7 @@ export const BudgetPage = ({ history }) => {
           batch(() => {
             dispatch(setStudent(updatedStudent));
             dispatch(setObjectiveComplete(Objectives.LEARN_BUDGET, true));
+            _setSeasonActive();
           });
         })
         .catch((err) => console.error(err));
@@ -238,9 +249,10 @@ export const BudgetPage = ({ history }) => {
           <div className='budget-equation-container'>
             <BudgetEquation
               budget={{
-                total: student.totalBudget,
+                total: +student.totalBudget + (+student.rollOverBudget || 0),
                 savings: student.savingsBudget,
                 spent: moneySpent,
+                rollOver: +student.rollOverBudget,
               }}
               animationStates={budgetEquationStates}
             />
@@ -251,9 +263,10 @@ export const BudgetPage = ({ history }) => {
           <div className='budget-slider-container'>
             <BudgetSlider
               budget={{
-                total: student.totalBudget,
-                savings: student.savingsBudget,
+                total: +student.totalBudget,
+                savings: +student.savingsBudget,
                 spent: moneySpent,
+                rollOver: +student.rollOverBudget,
               }}
               setValue={updateSavings}
               student={student}

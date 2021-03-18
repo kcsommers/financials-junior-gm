@@ -17,7 +17,7 @@ export const PlayerAssignments = {
 
   OFFERED_SCOUT: 'offeredScoutPlayer',
 
-  INJURED: null,
+  UNAVAILABLE: null,
 
   F_ONE: 'fOne',
 
