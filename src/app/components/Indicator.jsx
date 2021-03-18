@@ -26,10 +26,10 @@ const getFontSize = (amount) => {
 export const Indicator = ({
   amount,
   direction,
-  highlight,
   isMoney,
   rotate,
   color = '#00788a',
+  borderColor = '#4b4b4b',
 }) => {
   const validAmount = Math.max(amount, 0);
 
@@ -37,7 +37,7 @@ export const Indicator = ({
     <div
       className={`amount-indicator-wrap${
         direction ? ` amount-indicator-${direction}` : ''
-      }${highlight ? ' amount-indicator-highlight' : ''}`}
+      }`}
       style={{
         transform:
           direction === 'right'
@@ -45,8 +45,13 @@ export const Indicator = ({
             : `rotate(-${rotate}deg)`,
       }}
     >
-      {direction && <div className='amount-indicator-pointer'></div>}
-      <div className='amount-indicator'>
+      {direction && (
+        <div
+          className='amount-indicator-pointer'
+          style={{ backgroundColor: borderColor }}
+        ></div>
+      )}
+      <div className='amount-indicator' style={{ borderColor }}>
         <p
           className={`amount-indicator-amount color-primary${
             isMoney ? ' amount-indicator-amount-money' : ''
