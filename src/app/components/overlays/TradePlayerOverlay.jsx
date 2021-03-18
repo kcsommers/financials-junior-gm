@@ -32,13 +32,8 @@ export const TradePlayerOverlay = ({
     );
   };
 
-  const tradeConfirmed = (signingPlayer, newRolloverBudget) => {
-    handleTradePlayers(
-      signingPlayer,
-      releasingPlayer,
-      student,
-      newRolloverBudget
-    )
+  const tradeConfirmed = (signingPlayer) => {
+    handleTradePlayers(signingPlayer, releasingPlayer, student)
       .then(
         ({ updatedSignedPlayer, updatedReleasedPlayer, updatedStudent }) => {
           dispatch(
@@ -66,12 +61,7 @@ export const TradePlayerOverlay = ({
       .catch((err) => console.error(err));
   };
 
-  const confirmTrade = (signingPlayer, skipConfirm, newRolloverBudget) => {
-    if (skipConfirm) {
-      tradeConfirmed(signingPlayer, newRolloverBudget);
-      return;
-    }
-
+  const confirmTrade = (signingPlayer) => {
     dispatch(
       toggleOverlay({
         isOpen: true,

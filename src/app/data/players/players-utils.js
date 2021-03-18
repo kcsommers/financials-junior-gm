@@ -183,8 +183,7 @@ export const handleSignPlayer = (
   signedPlayer,
   assignment,
   student,
-  seasonState,
-  newRolloverBudget
+  seasonState
 ) => {
   return new Promise((resolve, reject) => {
     signedPlayer.playerAssignment = assignment;
@@ -199,10 +198,6 @@ export const handleSignPlayer = (
       [assignment]: signedPlayer._id,
       players: clonedStudent.players,
     };
-
-    if (newRolloverBudget !== undefined) {
-      studentUpdates.rollOverBudget = newRolloverBudget;
-    }
 
     // if theres an active season scenario, check that the team is full
     // and end the current game block if so
@@ -235,12 +230,7 @@ export const handleSignPlayer = (
   });
 };
 
-export const handleTradePlayers = (
-  signedPlayer,
-  releasedPlayer,
-  student,
-  newRolloverBudget
-) => {
+export const handleTradePlayers = (signedPlayer, releasedPlayer, student) => {
   return new Promise((resolve, reject) => {
     const prevAssignment = releasedPlayer.playerAssignment;
     const prevPosition = getPlayerPositon(prevAssignment);
@@ -274,10 +264,6 @@ export const handleTradePlayers = (
           : PlayerAssignments.UNAVAILABLE,
       players: playersCopy,
     };
-
-    if (newRolloverBudget !== undefined) {
-      studentUpdates.rollOverBudget = newRolloverBudget;
-    }
 
     updateStudentById(student._id, studentUpdates)
       .then((res) =>
