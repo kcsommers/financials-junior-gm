@@ -177,7 +177,7 @@ export const BudgetPage = ({ history }) => {
         })
         .catch((err) => console.error(err));
     }
-  }, [dispatch, student]);
+  }, [dispatch, student, _setSeasonActive]);
 
   const hasSeenTutorial = useRef(
     !!(student && student.tutorials && student.tutorials.budget)

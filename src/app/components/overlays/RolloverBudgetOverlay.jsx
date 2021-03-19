@@ -1,9 +1,8 @@
+import { useState } from 'react';
 import { OverlayBoard, BudgetSlider, Button } from '@components';
 
 export const RolloverBudgetOverlay = ({ student }) => {
-  const updateRolloverBudget = (newAmount) => {
-    console.log('NEW AMOUNT:::: ', newAmount);
-  };
+  const [rollOverToAdd, setRollOverToAdd] = useState(0);
 
   const addToSavings = (newAmount) => {
     console.log('NEW AMOUNT:::: ', newAmount);
@@ -26,22 +25,22 @@ export const RolloverBudgetOverlay = ({ student }) => {
           <p>
             When you run out of savings in your budget, move the yellow puck to
             pick how much money you want to use and click the orange button to
-            add them to your savings.
+            add it to your budget.
           </p>
         </div>
         <div className='rollover-budget-slider-wrap'>
           <BudgetSlider
             budget={{
-              total: +student.totalBudget,
-              savings: +student.savingsBudget,
+              total: +student.rollOverBudget,
+              savings: rollOverToAdd,
               spent: 0,
             }}
-            setValue={updateRolloverBudget}
+            setValue={setRollOverToAdd}
             student={student}
           />
         </div>
         <div>
-          <Button onClick={addToSavings} text='Add to Savings' />
+          <Button onClick={addToSavings} text='Add to Budget' />
         </div>
       </div>
     </OverlayBoard>

@@ -61,7 +61,7 @@ if (!myInterceptor) {
 }
 axios.defaults.withCredentials = true;
 function getHostName() {
-  if (HOST_SERVER_NAME == 'PROD') {
+  if (HOST_SERVER_NAME === 'PROD') {
     return 'https://www.finjuniorgmapi.com'; //'http://ec2-18-236-146-143.us-west-2.compute.amazonaws.com'; //AWS PROD
   } else {
     return 'https://www.finjuniorgmapi.com'; //'http://ec2-18-236-146-143.us-west-2.compute.amazonaws.com'; //AWS TEST
