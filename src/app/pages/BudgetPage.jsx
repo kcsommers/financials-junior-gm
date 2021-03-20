@@ -47,11 +47,11 @@ export const BudgetPage = ({ history }) => {
 
   const [tutorialSlides, setTutorialSlides] = useState([budgetSlides]);
 
-  const _setSeasonActive = () => {
+  const _setSeasonActive = useCallback(() => {
     if (startingLineupFull(student)) {
       dispatch(setSeasonActive(true));
     }
-  };
+  }, [dispatch, student]);
 
   const onTutorialComplete = (canceled) => {
     if (canceled) {
