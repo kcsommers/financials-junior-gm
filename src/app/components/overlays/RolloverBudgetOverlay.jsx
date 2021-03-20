@@ -1,11 +1,33 @@
 import { useState } from 'react';
 import { OverlayBoard, BudgetSlider, Button } from '@components';
+import { updateStudentById } from './../../api-helper';
+import { batch, useDispatch } from 'react-redux';
+import { toggleOverlay, setStudent } from '@redux/actions';
 
 export const RolloverBudgetOverlay = ({ student }) => {
+  const dispatch = useDispatch();
   const [rollOverToAdd, setRollOverToAdd] = useState(0);
 
-  const addToSavings = (newAmount) => {
-    console.log('NEW AMOUNT:::: ', newAmount);
+  const addToSavings = () => {
+    const newTotalBudget = +student.totalBudget + +rollOverToAdd;
+    const newRollOverBudget = +student.rollOverBudget - +rollOverToAdd;
+
+    updateStudentById(student._id, {
+      totalBudget: newTotalBudget,
+      rollOverBudget: newRollOverBudget,
+    })
+      .then((res) => {
+        batch(() => {
+          dispatch(setStudent(res.updatedStudent));
+          dispatch(
+            toggleOverlay({
+              isOpen: false,
+              template: null,
+            })
+          );
+        });
+      })
+      .catch((err) => console.error(err));
   };
 
   return (

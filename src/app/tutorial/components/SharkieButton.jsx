@@ -56,6 +56,7 @@ export const SharkieButton = ({ textPosition, onCallSharkie }) => {
       <img
         src={sharkieBtn}
         style={{ marginTop: '12px', display: 'inline-block' }}
+        alt='Sharkie'
       />
       <span
         className='color-primary'

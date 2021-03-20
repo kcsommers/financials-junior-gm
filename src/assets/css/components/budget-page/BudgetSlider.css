@@ -4,15 +4,19 @@ div.budget-slider-wrap {
 
 div.slider-outer {
   width: 835px;
-  margin: 1rem auto 0 auto;
-  position: relative;
+  margin: 0 auto;
 }
 
 div.slider-wrap {
   position: relative;
-  height: 75px;
   margin-left: auto;
   margin-top: 3rem;
+}
+
+div.slider-input-wrap {
+  position: relative;
+  height: 75px;
+  margin-left: auto;
 }
 
 div.savings-indicator-wrap {
