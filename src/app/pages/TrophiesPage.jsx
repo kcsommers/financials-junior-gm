@@ -9,7 +9,7 @@ import {
 import trophiesStick from '@images/trophies-stick.svg';
 import { awardsByLevel } from '@data/season/awards';
 import { toggleOverlay } from '@redux/actions';
-import { resetSeason } from '@data/season/season';
+import { resetSeason } from '@data/season/season-utils';
 
 const styles = {
   levelLabel: {

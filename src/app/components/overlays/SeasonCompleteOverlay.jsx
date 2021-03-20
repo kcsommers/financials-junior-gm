@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { useDispatch } from 'react-redux';
-import { getStanding } from '@data/season/season';
+import { getStanding } from '@data/season/season-utils';
 import { TrophySvg, OverlayBoard, Button } from '@components';
 import { toggleOverlay } from '@redux/actions';
 
