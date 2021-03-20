@@ -4,9 +4,12 @@ import { getStanding } from '@data/season/season';
 import { TrophySvg, OverlayBoard, Button } from '@components';
 import { toggleOverlay } from '@redux/actions';
 
-export const SeasonCompleteOverlay = ({ team, level, standings, student }) => {
+export const SeasonCompleteOverlay = ({ team, standings }) => {
   const dispatch = useDispatch();
-  const standing = useMemo(() => getStanding(team, standings), []);
+  const standing = useMemo(() => getStanding(team, standings), [
+    team,
+    standings,
+  ]);
 
   return (
     <OverlayBoard>

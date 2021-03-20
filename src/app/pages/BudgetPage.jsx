@@ -7,6 +7,8 @@ import {
   NextSeasonOverlay,
   Overlay,
   FaqOverlay,
+  Indicator,
+  RolloverBudgetOverlay,
 } from '@components';
 import budgetStick from '@images/budget-stick.svg';
 import { useSelector, useDispatch, batch } from 'react-redux';
@@ -26,11 +28,10 @@ import {
 } from '@redux/actions';
 import { updateStudentById } from '../api-helper';
 import { Objectives } from '@data/objectives/objectives';
-import { getDollarString } from '@utils';
 import { faqs } from '@data/faqs/faqs';
 import { cloneDeep } from 'lodash';
-import '@css/pages/BudgetPage.css';
 import { startingLineupFull } from '@data/players/players-utils';
+import '@css/pages/BudgetPage.css';
 
 let debounceTimeout = 0;
 
@@ -46,11 +47,11 @@ export const BudgetPage = ({ history }) => {
 
   const [tutorialSlides, setTutorialSlides] = useState([budgetSlides]);
 
-  const _setSeasonActive = () => {
+  const _setSeasonActive = useCallback(() => {
     if (startingLineupFull(student)) {
       dispatch(setSeasonActive(true));
     }
-  };
+  }, [dispatch, student]);
 
   const onTutorialComplete = (canceled) => {
     if (canceled) {
@@ -122,6 +123,15 @@ export const BudgetPage = ({ history }) => {
     );
   };
 
+  const openRolloverBudgetOverlay = () => {
+    dispatch(
+      toggleOverlay({
+        isOpen: true,
+        template: <RolloverBudgetOverlay student={student} />,
+      })
+    );
+  };
+
   const budgetEquationStates = {
     board: useSelector((state) => state.tutorial.budget.equationBoard),
     total: useSelector((state) => state.tutorial.budget.total),
@@ -167,7 +177,7 @@ export const BudgetPage = ({ history }) => {
         })
         .catch((err) => console.error(err));
     }
-  }, [dispatch, student]);
+  }, [dispatch, student, _setSeasonActive]);
 
   const hasSeenTutorial = useRef(
     !!(student && student.tutorials && student.tutorials.budget)
@@ -215,41 +225,35 @@ export const BudgetPage = ({ history }) => {
 
       <PageBoard>
         <div className='budget-page-board-inner'>
+          {+student.rollOverBudget > 0 && (
+            <div className='rollover-budget-wrap'>
+              <span
+                className='rollover-budget-indicator-wrap'
+                onClick={openRolloverBudgetOverlay}
+              >
+                <Indicator
+                  amount={+student.rollOverBudget}
+                  isMoney={true}
+                  borderColor='#00788a'
+                />
+              </span>
+
+              <p className='color-primary'>Use Previous Season's Savings</p>
+            </div>
+          )}
           <div
             style={{
               position: 'absolute',
-              left: '0',
-              width: '100%',
-              top: '0',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent:
-                +student.rollOverBudget > 0 ? 'space-between' : 'flex-end',
-              padding: '1rem',
+              right: '1rem',
+              top: '1rem',
             }}
           >
-            {+student.rollOverBudget > 0 && (
-              <p
-                className='box-shadow'
-                style={{
-                  textAlign: 'center',
-                  backgroundColor: '#f3901d',
-                  color: '#fff',
-                  padding: '0.5rem',
-                  borderRadius: '5px',
-                }}
-              >
-                Rollover Budget
-                <br />
-                {getDollarString(+student.rollOverBudget)}
-              </p>
-            )}
             <SharkieButton onCallSharkie={onCallSharkie} textPosition='left' />
           </div>
           <div className='budget-equation-container'>
             <BudgetEquation
               budget={{
-                total: +student.totalBudget + (+student.rollOverBudget || 0),
+                total: +student.totalBudget,
                 savings: student.savingsBudget,
                 spent: moneySpent,
                 rollOver: +student.rollOverBudget,
@@ -266,7 +270,6 @@ export const BudgetPage = ({ history }) => {
                 total: +student.totalBudget,
                 savings: +student.savingsBudget,
                 spent: moneySpent,
-                rollOver: +student.rollOverBudget,
               }}
               setValue={updateSavings}
               student={student}

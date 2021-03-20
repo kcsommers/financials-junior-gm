@@ -5,7 +5,6 @@ import {
   PlayerDragItem,
   HeaderComponent,
   PlayerCard,
-  ScoutingCompleteOverlay,
   Overlay,
   PlayerDetailsOverlay,
   BadScoutOverlay,
