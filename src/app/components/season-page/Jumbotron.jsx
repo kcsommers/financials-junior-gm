@@ -1,5 +1,6 @@
 import { TeamCard } from './TeamCard';
-import { GamePhases, getStanding } from '@data/season/season';
+import { GamePhases } from '@data/season/season';
+import { getStanding } from '@data/season/season-utils';
 import { Indicator, PlayerCard } from '@components';
 import { motion } from 'framer-motion';
 import '@css/components/season-page/Jumbotron.css';

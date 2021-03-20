@@ -5,7 +5,7 @@ import {
   PageBoard,
   Jumbotron,
   LevelStick,
-  GameBlockBoard,
+  // GameBlockBoard,
   StandingsBoard,
   GameButton,
   Overlay,
@@ -14,12 +14,8 @@ import {
   FaqOverlay,
 } from '@components';
 import seasonStick from '@images/season-stick.svg';
-import {
-  GamePhases,
-  gamePhases,
-  getGameResult,
-  scenarios,
-} from '@data/season/season';
+import { GamePhases, scenarios } from '@data/season/season';
+import { getGameResult, getGamePhases } from '@data/season/season-utils';
 import { cloneDeep } from 'lodash';
 import { updateStudentById } from './../api-helper';
 import {
@@ -71,7 +67,7 @@ export const SeasonPage = ({ history }) => {
     playButton: useSelector((state) => state.tutorial.season.playButton),
     studentRank: useSelector((state) => state.tutorial.season.studentRank),
   };
-  const currentPhase = gamePhases(+student.level)[state.currentPhaseIndex];
+  const currentPhase = getGamePhases(+student.level)[state.currentPhaseIndex];
 
   const onTutorialComplete = (canceled) => {
     if (canceled) {
@@ -156,11 +152,11 @@ export const SeasonPage = ({ history }) => {
       state && state.currentBlock
         ? state.currentBlock[state.currentOpponentIndex]
         : null,
-    currentPhase: gamePhases(+student.level)[state.currentPhaseIndex],
+    currentPhase: getGamePhases(+student.level)[state.currentPhaseIndex],
     currentScore: seasonState.completedGames[state.currentOpponentIndex]
       ? seasonState.completedGames[state.currentOpponentIndex].score
       : [0, 0],
-    message: gamePhases(+student.level)[state.currentPhaseIndex].messages[
+    message: getGamePhases(+student.level)[state.currentPhaseIndex].messages[
       state.currentMessageIndex
     ],
   };
