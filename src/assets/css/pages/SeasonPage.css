@@ -9,7 +9,7 @@ div.season-page-board-top {
 div.season-page-board-bottom {
   display: flex;
   align-items: flex-end;
-  justify-content: space-between;
+  justify-content: flex-end;
   position: relative;
   padding: 0 1rem 0.5rem 1rem;
 }
@@ -72,8 +72,8 @@ div.opposing-team-rank-container {
   right: -53px;
 }
 
-div.standings-board-wrap-inner,
-div.game-block-board-wrap-inner {
+/* div.game-block-board-wrap-inner, */
+div.standings-board-wrap-inner {
   width: 320px;
   height: 200px;
   border-radius: 10px;
@@ -89,7 +89,7 @@ div.standings-board-wrap-inner {
   justify-content: center;
 }
 
-div.game-block-board-wrap-inner > div {
+/* div.game-block-board-wrap-inner > div {
   display: inline-flex;
   flex-direction: column;
   justify-content: center;
@@ -141,7 +141,7 @@ div.game-block-board-row {
 
 div.game-block-board-right {
   white-space: nowrap;
-}
+} */
 
 div.standings-board-wrap-inner {
   padding: 0;

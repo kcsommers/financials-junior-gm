@@ -1,16 +1,14 @@
 import axios from 'axios';
 import { PlayerAssignments } from '@data/players/players';
+import { environments } from './environment';
 
-let HOST_SERVER_NAME = 'TEST';
-// let HOST_SERVER_NAME = "PROD";
-
-let https = require('https');
+const https = require('https');
 
 let myInterceptor;
 
 if (!myInterceptor) {
   myInterceptor = axios.interceptors.request.use(
-    function (config) {
+    (config) => {
       config.timeout = 0.5 * 60 * 1000;
 
       config.headers['Content-Type'] = 'application/json';
@@ -22,19 +20,19 @@ if (!myInterceptor) {
       config.httpsAgent = agent;
       return config;
     },
-    function (error) {
+    (error) => {
       return Promise.reject(error);
     }
   );
 
   axios.interceptors.response.use(
-    function (response) {
+    (response) => {
       if (response && response.data) {
         return response.data;
       }
       return Promise.reject(response);
     },
-    function (error) {
+    (error) => {
       let response = {
         data: {
           message: '',
@@ -60,35 +58,32 @@ if (!myInterceptor) {
   );
 }
 axios.defaults.withCredentials = true;
-function getHostName() {
-  if (HOST_SERVER_NAME === 'PROD') {
-    return 'https://www.finjuniorgmapi.com'; //'http://ec2-18-236-146-143.us-west-2.compute.amazonaws.com'; //AWS PROD
-  } else {
-    return 'https://www.finjuniorgmapi.com'; //'http://ec2-18-236-146-143.us-west-2.compute.amazonaws.com'; //AWS TEST
-  }
-}
+
+const getBaseUrl = () => {
+  return environments[process.env.NODE_ENV].API_BASE_URL;
+};
 
 //Teacher Login
-export function teacherLogin(body) {
-  return axios.post(`${getHostName()}/api/v1/auth/login`, body);
-}
+export const teacherLogin = (body) => {
+  return axios.post(`${getBaseUrl()}/api/v1/auth/login`, body);
+};
 
 //Student Login
-export function studentLogin(body) {
-  return axios.post(`${getHostName()}/api/v1/auth/student/login`, body);
-}
+export const studentLogin = (body) => {
+  return axios.post(`${getBaseUrl()}/api/v1/auth/student/login`, body);
+};
 
 //Get Students
 
 export function getStudentList(id) {
   return axios.get(
-    `${getHostName()}/api/v1/student?user=${id}&sort=firstName,lastName`
+    `${getBaseUrl()}/api/v1/student?user=${id}&sort=firstName,lastName`
   );
 }
 
 //Add a Student
 export function addStudent(body) {
-  return axios.post(`${getHostName()}/api/v1/student`, body);
+  return axios.post(`${getBaseUrl()}/api/v1/student`, body);
 }
 
 //Add a Student in bulk
@@ -100,39 +95,39 @@ export function addStudentInBulk(file) {
       'content-type': 'multipart/form-data',
     },
   };
-  return axios.post(`${getHostName()}/api/v1/student/bulk`, formData, config);
+  return axios.post(`${getBaseUrl()}/api/v1/student/bulk`, formData, config);
 }
 
 //Update a Student
 export function updateStudent(id, body) {
-  return axios.put(`${getHostName()}/api/v1/student/${id}`, body);
+  return axios.put(`${getBaseUrl()}/api/v1/student/${id}`, body);
 }
 
 //Delete a Student /api/v1/student
 export function deleteStudent(id) {
-  return axios.delete(`${getHostName()}/api/v1/student/${id}`);
+  return axios.delete(`${getBaseUrl()}/api/v1/student/${id}`);
 }
 
 //Logout
 export function logout() {
-  return axios.get(`${getHostName()}/api/v1/auth/logout`);
+  return axios.get(`${getBaseUrl()}/api/v1/auth/logout`);
 }
 
 // get current student
 export const getCurrentUser = () => {
-  return axios.get(`${getHostName()}/api/v1/auth/user`);
+  return axios.get(`${getBaseUrl()}/api/v1/auth/user`);
 };
 
 // init players
 export const initPlayersByLevel = (level) => {
   return axios.get(
-    `${getHostName()}/api/v1/student/init/players/level/${level}`
+    `${getBaseUrl()}/api/v1/student/init/players/level/${level}`
   );
 };
 
 // update student
 export const updateStudentById = (id, data) => {
-  return axios.put(`${getHostName()}/api/v1/student/${id}`, data);
+  return axios.put(`${getBaseUrl()}/api/v1/student/${id}`, data);
 };
 
 // set initial team

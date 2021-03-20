@@ -57,7 +57,7 @@ export const StudentPortal = ({
         (pageName === 'team' && !student.tutorials.budget) ||
         (pageName === 'season' &&
           !student.tutorials.season &&
-          startingLineupFull(student))
+          !startingLineupFull(student))
       ) {
         history.push('/home');
         return;
