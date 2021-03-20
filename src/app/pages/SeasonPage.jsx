@@ -5,7 +5,6 @@ import {
   PageBoard,
   Jumbotron,
   LevelStick,
-  // GameBlockBoard,
   StandingsBoard,
   GameButton,
   Overlay,
@@ -49,126 +48,56 @@ let timer = 0;
 
 export const SeasonPage = ({ history }) => {
   const dispatch = useDispatch();
+
   const student = useSelector((state) => state.studentState.student);
   const { teamPlayers, teamRank } = useSelector((state) => state.players);
+
   const tutorialActive = useSelector((state) => state.tutorial.isActive);
-
-  const seasonState = useSelector((state) => state.season);
-
-  const [state, setState] = useState({
-    currentBlock: seasonState.gameBlocks[seasonState.currentBlockIndex],
-    currentOpponentIndex: seasonState.currentOpponentIndex,
-    currentPhaseIndex: 0,
-    currentMessageIndex: 0,
-  });
   const [tutorialSlides, setTutorialSlides] = useState([seasonSlides]);
   const animationStates = {
     standings: useSelector((state) => state.tutorial.season.standings),
     playButton: useSelector((state) => state.tutorial.season.playButton),
     studentRank: useSelector((state) => state.tutorial.season.studentRank),
   };
-  const currentPhase = getGamePhases(+student.level)[state.currentPhaseIndex];
 
-  const onTutorialComplete = (canceled) => {
-    if (canceled) {
-      dispatch(setTutorialState({ isActive: false }));
-      return;
-    }
-
-    // check if this was the first time the tutorial was viewed
-    if (!student.tutorials.season) {
-      // if so, update the student object and enable budget button
-      const tutorials = { ...student.tutorials, season: true };
-      updateStudentById(student._id, { tutorials })
-        .then(({ updatedStudent }) => {
-          batch(() => {
-            dispatch(setTutorialState({ isActive: false }));
-            dispatch(setStudent(updatedStudent));
-          });
-        })
-        .catch((err) => console.error(err));
-    } else {
-      dispatch(setTutorialState({ isActive: false }));
-    }
+  const gamePhases = getGamePhases(+student.level);
+  const seasonState = useSelector((state) => state.season);
+  const [localGameState, setLocalGameState] = useState({
+    currentPhaseIndex: 0,
+    currentMessageIndex: 0,
+  });
+  const gameState = {
+    opponent: seasonState.allOpponents[localGameState.currentOpponentIndex],
+    phase: gamePhases[localGameState.currentPhaseIndex],
+    score: seasonState.completedGames[seasonState.currentOpponentIndex]
+      ? seasonState.completedGames[seasonState.currentOpponentIndex].score
+      : [0, 0],
+    message:
+      gamePhases[localGameState.currentPhaseIndex].messages[
+        localGameState.currentMessageIndex
+      ],
   };
-
-  const startTutorial = useCallback(
-    (slides) => {
-      setTutorialSlides(slides);
-      dispatch(
-        setTutorialState({
-          isActive: true,
-        })
-      );
-    },
-    [dispatch]
-  );
-
-  const onCallSharkie = () => {
-    dispatch(
-      toggleOverlay({
-        isOpen: true,
-        template: (
-          <FaqOverlay
-            questions={faqs.season}
-            title='Season Page FAQs'
-            level={+student.level}
-            onStartTutorial={() => {
-              dispatch(
-                toggleOverlay({
-                  isOpen: false,
-                  template: null,
-                })
-              );
-              startTutorial([getConfirmSlides('season'), seasonSlides]);
-            }}
-          />
-        ),
-      })
-    );
-  };
-
-  const opponenetIndexRef = useRef(state.currentOpponentIndex);
-  useEffect(() => {
-    return () => {
-      if (opponenetIndexRef.current === state.currentOpponentIndex) {
-        // if we're here and the opponent index hasnt changed, it means
-        // the component is unmounting. Store the index in redux
-        if (timer) {
-          window.clearTimeout(timer);
-        }
-        dispatch(setCurrentOpponentIndex(state.currentOpponentIndex));
-      }
-    };
-  }, [dispatch, state.currentOpponentIndex]);
-  opponenetIndexRef.current = state.currentOpponentIndex;
 
   if (timer) {
     window.clearTimeout(timer);
   }
 
-  const gameBlockState = {
-    currentOpponent:
-      state && state.currentBlock
-        ? state.currentBlock[state.currentOpponentIndex]
-        : null,
-    currentPhase: getGamePhases(+student.level)[state.currentPhaseIndex],
-    currentScore: seasonState.completedGames[state.currentOpponentIndex]
-      ? seasonState.completedGames[state.currentOpponentIndex].score
-      : [0, 0],
-    message: getGamePhases(+student.level)[state.currentPhaseIndex].messages[
-      state.currentMessageIndex
-    ],
-  };
-
   if (
-    gameBlockState.currentOpponent &&
-    gameBlockState.currentPhase &&
-    gameBlockState.currentPhase.phase === GamePhases.UP_NEXT &&
-    state.currentMessageIndex === 1
+    gameState.opponent &&
+    gameState.phase &&
+    gameState.phase.phase === GamePhases.UP_NEXT &&
+    localGameState.currentMessageIndex === 1
   ) {
-    gameBlockState.currentPhase.messages[1] = `${seasonState.seasonTeam.name} vs ${gameBlockState.currentOpponent.name}`;
-    gameBlockState.message = gameBlockState.currentPhase.messages[1];
+    gameState.currentPhase.messages[1] = `${seasonState.seasonTeam.name} vs ${gameState.opponent.name}`;
+    gameState.message = gameState.currentPhase.messages[1];
+  }
+
+  if (!seasonState.currentScenario && gameState.phase) {
+    if (gameState.phase.messages.length > 1 && gameState.phase.messageTimer) {
+      timer = window.setTimeout(nextMessage, gameState.phase.messageTimer);
+    } else if (gameState.phase.timer) {
+      timer = window.setTimeout(nextPhase, gameState.phase.timer);
+    }
   }
 
   const endSeason = () => {
@@ -227,16 +156,18 @@ export const SeasonPage = ({ history }) => {
       .catch((err) => console.error(err));
   };
 
-  const endBlock = () => {
+  const newScenario = (scenarioIndex) => {
     // if this is the last game block season is over
-    if (seasonState.currentBlockIndex === seasonState.gameBlocks.length - 1) {
+    if (
+      seasonState.currentOpponentIndex ===
+      seasonState.allOpponents.length - 1
+    ) {
       endSeason();
       return;
     }
 
     // get the next scenario
-    const currentScenario =
-      scenarios[+student.level || 1][seasonState.currentBlockIndex];
+    const currentScenario = scenarios[+student.level || 1][scenarioIndex];
     if (!currentScenario) {
       return;
     }
@@ -334,20 +265,86 @@ export const SeasonPage = ({ history }) => {
     setState(clonedState);
   };
 
-  const startGameBlock = () => {
-    setState({
-      ...state,
+  const startGame = () => {
+    setLocalGameState({
+      ...localGameState,
       currentPhaseIndex: 1,
     });
   };
 
-  if (!seasonState.currentScenario && currentPhase) {
-    if (currentPhase.messages.length > 1 && currentPhase.messageTimer) {
-      timer = window.setTimeout(nextMessage, currentPhase.messageTimer);
-    } else if (currentPhase.timer) {
-      timer = window.setTimeout(nextPhase, currentPhase.timer);
+  const onTutorialComplete = (canceled) => {
+    if (canceled) {
+      dispatch(setTutorialState({ isActive: false }));
+      return;
     }
-  }
+
+    // check if this was the first time the tutorial was viewed
+    if (!student.tutorials.season) {
+      // if so, update the student object and enable budget button
+      const tutorials = { ...student.tutorials, season: true };
+      updateStudentById(student._id, { tutorials })
+        .then(({ updatedStudent }) => {
+          batch(() => {
+            dispatch(setTutorialState({ isActive: false }));
+            dispatch(setStudent(updatedStudent));
+          });
+        })
+        .catch((err) => console.error(err));
+    } else {
+      dispatch(setTutorialState({ isActive: false }));
+    }
+  };
+
+  const startTutorial = useCallback(
+    (slides) => {
+      setTutorialSlides(slides);
+      dispatch(
+        setTutorialState({
+          isActive: true,
+        })
+      );
+    },
+    [dispatch]
+  );
+
+  const onCallSharkie = () => {
+    dispatch(
+      toggleOverlay({
+        isOpen: true,
+        template: (
+          <FaqOverlay
+            questions={faqs.season}
+            title='Season Page FAQs'
+            level={+student.level}
+            onStartTutorial={() => {
+              dispatch(
+                toggleOverlay({
+                  isOpen: false,
+                  template: null,
+                })
+              );
+              startTutorial([getConfirmSlides('season'), seasonSlides]);
+            }}
+          />
+        ),
+      })
+    );
+  };
+
+  // const opponenetIndexRef = useRef(state.currentOpponentIndex);
+  // useEffect(() => {
+  //   return () => {
+  //     if (opponenetIndexRef.current === state.currentOpponentIndex) {
+  //       // if we're here and the opponent index hasnt changed, it means
+  //       // the component is unmounting. Store the index in redux
+  //       if (timer) {
+  //         window.clearTimeout(timer);
+  //       }
+  //       dispatch(setCurrentOpponentIndex(state.currentOpponentIndex));
+  //     }
+  //   };
+  // }, [dispatch, state.currentOpponentIndex]);
+  // opponenetIndexRef.current = state.currentOpponentIndex;
 
   const hasSeenTutorial = useRef(
     !!(student && student.tutorials && student.tutorials.season)
@@ -477,8 +474,8 @@ export const SeasonPage = ({ history }) => {
                     </span>
                   )}
                 <GameButton
-                  onClick={startGameBlock}
-                  gameBlockState={gameBlockState}
+                  onClick={startGame}
+                  gameState={gameState}
                   team={teamPlayers}
                   currentScenario={seasonState.currentScenario}
                   animationState={animationStates.playButton}
@@ -493,10 +490,6 @@ export const SeasonPage = ({ history }) => {
                 of {seasonState.allOpponents.length}
               </div>
             </div>
-            {/* <div className='game-block-board-container'>
-              <h6 style={{ textAlign: 'center', color: '#000000' }}>Results</h6>
-              <GameBlockBoard />
-            </div> */}
             <div className='standings-board-container'>
               <h6 style={{ textAlign: 'center', color: '#000000' }}>
                 Standings
