@@ -403,8 +403,23 @@ export const SeasonPage = ({ history }) => {
             flexDirection: 'column',
             height: '100%',
             overflowX: 'hidden',
+            position: 'relative',
           }}
         >
+          <div
+            style={{
+              position: 'absolute',
+              left: '1rem',
+              bottom: '0rem',
+              zIndex: tutorialActive ? 0 : 1,
+            }}
+          >
+            <SharkieButton
+              textPosition='right'
+              style
+              onCallSharkie={onCallSharkie}
+            />
+          </div>
           <div className='season-page-board-top'>
             <div className='student-team-rank-container'>
               <LevelStick
@@ -482,26 +497,10 @@ export const SeasonPage = ({ history }) => {
                 of {seasonState.allOpponents.length}
               </div>
             </div>
-            <div className='game-block-board-container'>
-              <div
-                style={{
-                  position: 'absolute',
-                  left: '-1rem',
-                  top: 0,
-                  padding: '0.5rem',
-                  transform: 'scale(0.85) translateY(-65%)',
-                  zIndex: tutorialActive ? 0 : 1,
-                }}
-              >
-                <SharkieButton
-                  textPosition='right'
-                  style
-                  onCallSharkie={onCallSharkie}
-                />
-              </div>
+            {/* <div className='game-block-board-container'>
               <h6 style={{ textAlign: 'center', color: '#000000' }}>Results</h6>
               <GameBlockBoard />
-            </div>
+            </div> */}
             <div className='standings-board-container'>
               <h6 style={{ textAlign: 'center', color: '#000000' }}>
                 Standings

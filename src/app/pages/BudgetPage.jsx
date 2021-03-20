@@ -168,9 +168,10 @@ export const BudgetPage = ({ history }) => {
       objectives[Objectives.LEARN_BUDGET] = true;
 
       updateStudentById(student._id, { objectives })
-        .then(({ updatedStudent }) => {
+        .then((res) => {
+          console.log('RES:::: ', res);
           batch(() => {
-            dispatch(setStudent(updatedStudent));
+            dispatch(setStudent(res.updatedStudent));
             dispatch(setObjectiveComplete(Objectives.LEARN_BUDGET, true));
             _setSeasonActive();
           });

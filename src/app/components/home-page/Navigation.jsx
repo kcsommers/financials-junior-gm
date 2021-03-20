@@ -11,11 +11,7 @@ import {
   initializeObjectives,
 } from '@redux/actions';
 import { useDispatch, batch } from 'react-redux';
-import {
-  LOGIN_STORAGE_KEY,
-  USER_ROLE_STORAGE_KEY,
-  STUDENT_ID_STORAGE_KEY,
-} from '@data/auth/auth';
+import { clearSessionStorage } from '@data/auth/auth';
 import { ConfirmOverlay } from '@components';
 import { resetSeason } from '@data/season/season';
 import '@css/components/home-page/Navigation.css';
@@ -70,9 +66,7 @@ export const Navigation = ({ tutorialActive, student }) => {
   const doLogout = () => {
     logout()
       .then(() => {
-        sessionStorage.setItem(LOGIN_STORAGE_KEY, false);
-        sessionStorage.setItem(USER_ROLE_STORAGE_KEY, '');
-        sessionStorage.setItem(STUDENT_ID_STORAGE_KEY, '');
+        clearSessionStorage();
 
         dispatch(setLoginState(false, ''));
         history.push('/dashboard');

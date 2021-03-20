@@ -3,7 +3,12 @@ import { BudgetSliderSvg } from './BudgetSliderSvg';
 import { getDollarString } from '@utils';
 import '@css/components/budget-page/BudgetSlider.css';
 
-export const BudgetSlider = ({ budget, setValue, student }) => {
+export const BudgetSlider = ({
+  budget,
+  setValue,
+  student,
+  spendingLabel = 'Spending Budget',
+}) => {
   const getSavingsIndicatorPosition = () => {
     const pct = (budget.savings / (budget.total - budget.spent)) * 100;
     return {
@@ -58,7 +63,7 @@ export const BudgetSlider = ({ budget, setValue, student }) => {
               budget.total + budget.spent - budget.savings,
               true
             )}{' '}
-            <br /> Spending Budget
+            <br /> {spendingLabel}
           </p>
         </div>
       </div>

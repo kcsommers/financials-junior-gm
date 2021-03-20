@@ -59,6 +59,7 @@ export const RolloverBudgetOverlay = ({ student }) => {
             }}
             setValue={setRollOverToAdd}
             student={student}
+            spendingLabel='Rollover Budget'
           />
         </div>
         <div>

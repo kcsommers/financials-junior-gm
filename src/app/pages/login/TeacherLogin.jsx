@@ -8,6 +8,7 @@ import {
   UserRoles,
   USER_ROLE_STORAGE_KEY,
   TEACHER_ID_STORAGE_KEY,
+  clearSessionStorage,
 } from '@data/auth/auth';
 import { setLoginState } from '@redux/actions';
 import '@css/pages/Login.css';
@@ -31,10 +32,9 @@ export const TeacherLogin = ({ history, isLoggedIn }) => {
     const msg = 'Unexpected login error. Please try again';
     setIsLoggingIn(false);
     setLoginError(msg);
+    clearSessionStorage();
+
     console.error(msg, error);
-    sessionStorage.setItem(LOGIN_STORAGE_KEY, false);
-    sessionStorage.setItem(USER_ROLE_STORAGE_KEY, '');
-    sessionStorage.setItem(TEACHER_ID_STORAGE_KEY, '');
 
     dispatch(setLoginState(false, ''));
     if (isLoggedIn) {
