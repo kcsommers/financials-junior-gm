@@ -17,10 +17,6 @@ div.amount-indicator {
   justify-content: center;
 }
 
-div.amount-indicator-highlight div.amount-indicator {
-  border-color: #ffd782;
-}
-
 div.amount-indicator-pointer {
   width: 15px;
   height: 15px;
@@ -29,10 +25,6 @@ div.amount-indicator-pointer {
   right: 0;
   top: 50%;
   right: 0;
-}
-
-div.amount-indicator-highlight div.amount-indicator-pointer {
-  background-color: #ffd782;
 }
 
 div.amount-indicator-right div.amount-indicator-pointer {

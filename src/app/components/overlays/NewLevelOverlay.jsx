@@ -93,7 +93,7 @@ export const NewLevelOverlay = ({ team }) => {
         >
           You now have a larger budget and higher ranked players to sign!
         </p>
-        {team.name == 'Barracuda' && (
+        {team.name === 'Barracuda' && (
           <p
             style={{
               textAlign: 'center',
@@ -112,7 +112,7 @@ export const NewLevelOverlay = ({ team }) => {
             Remember to try and save between $20-30 of your total budget!
           </p>
         )}
-        {team.name == 'Sharks' && (
+        {team.name === 'Sharks' && (
           <p
             style={{
               textAlign: 'center',

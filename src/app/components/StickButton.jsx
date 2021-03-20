@@ -11,6 +11,7 @@ export const StickButton = ({ link, image, inverse, small, isDisabled }) => {
       <img
         className={`stick-btn-img${inverse ? ' stick-btn-img-inverse' : ''}`}
         src={image}
+        alt={link}
       />
       <Link
         className={`text-link stick-btn-link${

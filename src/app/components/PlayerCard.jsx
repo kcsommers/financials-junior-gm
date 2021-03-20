@@ -145,7 +145,7 @@ export const PlayerCard = ({
         </div>
         <div
           className={
-            player.sharkPlayer == 'TRUE'
+            player.sharkPlayer === 'TRUE'
               ? 'box-shadow player-card-body player-card-color-shark'
               : 'box-shadow player-card-body player-card-color-reg'
           }
@@ -246,6 +246,7 @@ export const PlayerCard = ({
                 <img
                   src={sharksLogo}
                   style={{ display: 'inline-block', width: '100%' }}
+                  alt='S.J. Sharks Logo'
                 />
               </span>
             )}
