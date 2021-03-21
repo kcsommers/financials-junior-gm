@@ -141,8 +141,8 @@ const seasonReducer = (state = initialState, action) => {
         clonedState.seasonTeam,
       ]);
 
-      // season is active if there are gameblocks in the current season
-      clonedState.seasonActive = currentSeason.length;
+      // season is active if there are completed games in the current season
+      clonedState.seasonActive = clonedState.completedGames.length;
 
       // game is in transition if the length of the game blocks array is 3
       // and the length of the seasons array is equal to the current level
@@ -189,7 +189,7 @@ const seasonReducer = (state = initialState, action) => {
       return clonedState;
     }
     case GAME_ENDED: {
-      const { gameResult, opponent } = action.payload;
+      const { gameResult, opponent, newOpponentIndex } = action.payload;
       const clonedState = cloneDeep(state);
 
       // update student team points
@@ -228,6 +228,9 @@ const seasonReducer = (state = initialState, action) => {
 
       // push game result into completed games cache
       clonedState.completedGames.push(gameResult);
+
+      // update opponent index
+      clonedState.currentOpponentIndex = newOpponentIndex;
 
       return clonedState;
     }

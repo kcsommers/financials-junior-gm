@@ -122,17 +122,6 @@ export const getGamePhases = (level) => [
       `OH NO! The ${studentTeams[level - 1].name} lost :(`,
     ],
   },
-  {
-    phase: GamePhases.TRANSITION,
-    messages: [
-      'The next game starts in 5',
-      'The next game starts in 4',
-      'The next game starts in 3',
-      'The next game starts in 2',
-      'The next game starts in 1',
-    ],
-    messageTimer: 1000,
-  },
 ];
 
 export const getRandomTeamRank = (level) => {
