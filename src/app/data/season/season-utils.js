@@ -8,6 +8,7 @@ import {
   studentTeams,
 } from './season';
 import { cloneDeep } from 'lodash';
+import { scenarioConfigs, SeasonScenario } from './scenarios';
 
 export const resetSeason = (newLevel, prevLevel, student) => {
   return new Promise((resolve, reject) => {
@@ -183,4 +184,9 @@ export const getAllOpponents = (level) => {
 
 export const getStudentTeam = (level) => {
   return studentTeams[level - 1];
+};
+
+export const getNewScenario = (level, index, team) => {
+  const config = scenarioConfigs[level][index];
+  return new SeasonScenario(config, team);
 };

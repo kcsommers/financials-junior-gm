@@ -9,7 +9,6 @@ import {
   toggleOverlay,
   signPlayer,
   setStudent,
-  gameBlockEnded,
   removeObjective,
   setObjectiveComplete,
   setSeasonActive,
@@ -77,7 +76,7 @@ export const SignPlayerOverlay = ({ assignment, isDisabled }) => {
 
           if (objectiveComplete) {
             if (seasonState.currentScenario) {
-              dispatch(gameBlockEnded(student));
+              // @TODO
               dispatch(removeObjective(Objectives.SEASON_SCENARIO));
               dispatch(
                 setObjectiveComplete(Objectives.FILL_TEAM, objectiveComplete)

@@ -25,6 +25,7 @@ div.team-page-board-header-inner {
 
 div.team-page-board-inner {
   display: flex;
+  height: calc(100% - 80px);
 }
 
 div.team-page-board-left {
@@ -63,26 +64,9 @@ div.team-players-card {
   flex-direction: column;
 }
 
-div.team-players-card,
-div.bench-players-card {
+div.team-players-card {
   color: #006b77;
   border: 5px solid #4b4b4b;
   border-radius: 5px;
   background: white;
-}
-
-div.bench-players-card {
-  margin-top: 1rem;
-  height: 170px;
-}
-
-div.bench-players-card > div.team-players-row {
-  padding: 0 0 0.5rem 0;
-}
-
-p.on-the-bench-text {
-  text-align: center;
-  font-weight: bold;
-  font-size: 1.1rem;
-  margin-top: 0.25rem;
 }
