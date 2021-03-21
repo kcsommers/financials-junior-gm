@@ -13,8 +13,12 @@ import {
   FaqOverlay,
 } from '@components';
 import seasonStick from '@images/season-stick.svg';
-import { GamePhases, scenarios } from '@data/season/season';
-import { getGameResult, getGamePhases } from '@data/season/season-utils';
+import { GamePhases } from '@data/season/season';
+import {
+  getGameResult,
+  getGamePhases,
+  getNewScenario,
+} from '@data/season/season-utils';
 import { cloneDeep } from 'lodash';
 import { updateStudentById } from './../api-helper';
 import {
@@ -147,20 +151,21 @@ export const SeasonPage = ({ history }) => {
 
   const newScenario = (scenarioIndex) => {
     // get the next scenario
-    const currentScenario = scenarios[+student.level || 1][scenarioIndex];
+    const currentScenario = getNewScenario(
+      +student.level,
+      scenarioIndex,
+      teamPlayers
+    );
     if (!currentScenario) {
       return;
     }
 
-    // each scenario should have a getPlayer function for selecting the appropriate player
-    const scenarioPlayer = currentScenario.getPlayer(teamPlayers);
-    const prevAssignment = scenarioPlayer.playerAssignment;
+    const scenarioPlayer = currentScenario.getPlayer();
+    const prevAssignment = currentScenario.playerAssignment;
     const playersCopy = cloneDeep(student.players);
 
     // also should have a new assignment for the selected player
     scenarioPlayer.playerAssignment = currentScenario.playerAssignment;
-    // set the player on the scenario object
-    currentScenario.player = scenarioPlayer;
 
     // splice the scenario player into the players array
     playersCopy.splice(

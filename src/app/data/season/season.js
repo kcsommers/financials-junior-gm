@@ -38,9 +38,6 @@ import canucksLogo from '@images/icons/team-logos/nhl/vancouvercanucksLG.png';
 import goldenKnightsLogo from '@images/icons/team-logos/nhl/vegasgoldenknightsLG.png';
 import jetsLogo from '@images/icons/team-logos/nhl/winnipegjetsLG.png';
 
-import { INJURE_PLAYER } from '@redux/actions';
-import { PlayerAssignments, TeamAssignments } from '@data/players/players';
-
 export const possibleScores = [
   [
     [5, 0],
@@ -110,95 +107,6 @@ export const possibleScores = [
     [5, 4],
   ],
 ];
-
-const getSecondHighestPlayer = (team) => {
-  return Object.keys(team)
-    .filter((p) => !TeamAssignments.bench.includes(p))
-    .map((p) => team[p])
-    .sort((a, b) => +b.overallRank - +a.overallRank)[1];
-};
-
-const getStartingPlayer = (team) => {
-  const props = [
-    PlayerAssignments.F_ONE,
-    PlayerAssignments.F_TWO,
-    PlayerAssignments.F_THREE,
-    PlayerAssignments.G_ONE,
-    PlayerAssignments.D_ONE,
-    PlayerAssignments.D_TWO,
-  ];
-  const i = Math.floor(Math.random() * props.length);
-  return team[props[i]];
-};
-
-export const scenarios = {
-  1: [
-    {
-      message: 'OH NO! One of your players was injured',
-      objective: 'Replace the injured player',
-      action: INJURE_PLAYER,
-      getPlayer: getSecondHighestPlayer,
-      playerAssignment: PlayerAssignments.UNAVAILABLE,
-      player: null,
-      gameButtonLabel: 'Click the puck to sign a new player!',
-      gameButtonAction: (team, history) => history.push('/team'),
-    },
-    {
-      message: 'OH NO! One of your players was injured',
-      objective: 'Replace the injured player',
-      action: INJURE_PLAYER,
-      getPlayer: getStartingPlayer,
-      playerAssignment: PlayerAssignments.UNAVAILABLE,
-      player: null,
-      gameButtonLabel: 'Click the puck to sign a new player!',
-      gameButtonAction: (team, history) => history.push('/team'),
-    },
-  ],
-  2: [
-    {
-      message: 'OH NO! One of your players was injured',
-      objective: 'Replace the injured player',
-      action: INJURE_PLAYER,
-      getPlayer: getSecondHighestPlayer,
-      playerAssignment: PlayerAssignments.UNAVAILABLE,
-      player: null,
-      gameButtonLabel: 'Click the puck to sign a new player!',
-      gameButtonAction: (team, history) => history.push('/team'),
-    },
-    {
-      message: 'OH NO! One of your players was injured',
-      objective: 'Replace the injured player',
-      action: INJURE_PLAYER,
-      getPlayer: getStartingPlayer,
-      playerAssignment: PlayerAssignments.UNAVAILABLE,
-      player: null,
-      gameButtonLabel: 'Click the puck to sign a new player!',
-      gameButtonAction: (team, history) => history.push('/team'),
-    },
-  ],
-  3: [
-    {
-      message: 'OH NO! One of your players was injured',
-      objective: 'Replace the injured player',
-      action: INJURE_PLAYER,
-      getPlayer: getSecondHighestPlayer,
-      playerAssignment: PlayerAssignments.UNAVAILABLE,
-      player: null,
-      gameButtonLabel: 'Click the puck to sign a new player!',
-      gameButtonAction: (team, history) => history.push('/team'),
-    },
-    {
-      message: 'OH NO! One of your players was injured',
-      objective: 'Replace the injured player',
-      action: INJURE_PLAYER,
-      getPlayer: getStartingPlayer,
-      playerAssignment: PlayerAssignments.UNAVAILABLE,
-      player: null,
-      gameButtonLabel: 'Click the puck to sign a new player!',
-      gameButtonAction: (team, history) => history.push('/team'),
-    },
-  ],
-};
 
 export const GamePhases = {
   READY: 'READY',

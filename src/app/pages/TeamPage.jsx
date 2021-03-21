@@ -314,50 +314,6 @@ export const TeamPage = ({ history, location }) => {
                 />
               </div>
             </div>
-
-            <div
-              className={`bench-players-card${
-                !scoutingState.isComplete ? ' disabled' : ''
-              }`}
-            >
-              <p className='color-primary on-the-bench-text'>On the Bench</p>
-              {!scoutingState.isComplete ? (
-                <p
-                  className='color-primary on-the-bench-text'
-                  style={{ marginTop: '35px' }}
-                >
-                  Scout players to activate the bench!
-                </p>
-              ) : null}
-              {scoutingState.isComplete && (
-                <div className='team-players-row team-bench-row'>
-                  <PlayerCard
-                    player={team.benchOne}
-                    onClick={
-                      team.benchOne
-                        ? openPlayerDetailsOverlay
-                        : openSignPlayerOverlay.bind(this, 'benchOne')
-                    }
-                  />
-                  <PlayerCard
-                    player={team.benchTwo}
-                    onClick={
-                      team.benchTwo
-                        ? openPlayerDetailsOverlay
-                        : openSignPlayerOverlay.bind(this, 'benchTwo')
-                    }
-                  />
-                  <PlayerCard
-                    player={team.benchThree}
-                    onClick={
-                      team.benchThree
-                        ? openPlayerDetailsOverlay
-                        : openSignPlayerOverlay.bind(this, 'benchThree')
-                    }
-                  />
-                </div>
-              )}
-            </div>
           </div>
         </div>
       </PageBoard>

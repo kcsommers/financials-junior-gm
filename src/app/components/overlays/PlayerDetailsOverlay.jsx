@@ -4,7 +4,6 @@ import {
   setStudent,
   releasePlayer,
   signPlayer,
-  gameBlockEnded,
   removeObjective,
   setObjectiveComplete,
 } from '@redux/actions';
@@ -130,7 +129,7 @@ export const PlayerDetailsOverlay = ({
 
           const objectiveComplete = startingLineupFull(updatedStudent);
           if (seasonState && seasonState.currentScenario && objectiveComplete) {
-            dispatch(gameBlockEnded(student));
+            // @TODO
             dispatch(removeObjective(Objectives.SEASON_SCENARIO));
           } else {
             dispatch(
@@ -206,7 +205,9 @@ export const PlayerDetailsOverlay = ({
               <Button text='Trade' onClick={confirmTrade} />
             ) : null}
 
-            <Button text='Release' onClick={confirmRelease} />
+            {seasonState && !seasonState.seasonActive && (
+              <Button text='Release' onClick={confirmRelease} />
+            )}
           </div>
         )}
       </div>
