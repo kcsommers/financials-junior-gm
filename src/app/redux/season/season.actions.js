@@ -29,9 +29,9 @@ export const setSeasonActive = (isActive) => ({
   payload: isActive,
 });
 
-export const gameEnded = (gameResult, opponent) => ({
+export const gameEnded = (gameResult, opponent, newOpponentIndex) => ({
   type: GAME_ENDED,
-  payload: { gameResult, opponent },
+  payload: { gameResult, opponent, newOpponentIndex },
 });
 
 export const throwScenario = (scenario) => ({

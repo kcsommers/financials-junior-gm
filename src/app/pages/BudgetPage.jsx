@@ -169,7 +169,6 @@ export const BudgetPage = ({ history }) => {
 
       updateStudentById(student._id, { objectives })
         .then((res) => {
-          console.log('RES:::: ', res);
           batch(() => {
             dispatch(setStudent(res.updatedStudent));
             dispatch(setObjectiveComplete(Objectives.LEARN_BUDGET, true));

@@ -7,14 +7,14 @@ import { startingLineupFull } from '@data/players/players-utils';
 
 export const GameButton = ({
   onClick,
-  gameBlockState,
+  gameState,
   team,
   currentScenario,
   animationState,
   student,
 }) => {
-  const history = useHistory(';');
-  const { currentPhase } = gameBlockState;
+  const history = useHistory();
+  const { phase } = gameState;
 
   const seasonDisabled = !!(
     !student.objectives ||
@@ -25,7 +25,7 @@ export const GameButton = ({
   const btnDisabled =
     (seasonDisabled &&
       (!currentScenario || !currentScenario.gameButtonAction)) ||
-    (currentPhase.phase !== GamePhases.READY &&
+    (phase.phase !== GamePhases.READY &&
       (!currentScenario || !currentScenario.gameButtonAction));
 
   const gameButtonClicked = () => {
@@ -60,7 +60,7 @@ export const GameButton = ({
       >
         <GameButtonSvg
           animationState={animationState}
-          phase={currentPhase.phase}
+          phase={phase.phase}
           currentScenario={currentScenario}
         />
       </motion.span>

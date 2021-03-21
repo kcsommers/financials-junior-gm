@@ -69,8 +69,6 @@ const objectivesReducer = (state = initialState, action) => {
         1
       );
 
-      console.log('REMOVEOBJ:L:::: ', clonedState);
-
       return clonedState;
     }
 
