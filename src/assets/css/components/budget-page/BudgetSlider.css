@@ -2,21 +2,10 @@ div.budget-slider-wrap {
   position: relative;
 }
 
-div.slider-outer {
-  width: 835px;
-  margin: 0 auto;
-}
-
 div.slider-wrap {
   position: relative;
-  margin-left: auto;
-  margin-top: 3rem;
-}
-
-div.slider-input-wrap {
-  position: relative;
-  height: 75px;
-  margin-left: auto;
+  width: calc(100% - 75px);
+  margin: 3.5rem auto 0 auto;
 }
 
 div.savings-indicator-wrap {
@@ -56,6 +45,34 @@ div.spent-indicator-wrap p {
 div.budget-slider-stick-wrap {
   text-align: center;
   margin: 0 auto;
+}
+
+div.slider-input-wrap {
+  position: relative;
+  height: 75px;
+  margin-left: auto;
+}
+
+div.slider-input-wrap-inner {
+  width: calc(100% + 75px);
+  transform: translateX(-37.5px);
+  height: 100%;
+  position: relative;
+}
+
+.slider-wrap input:focus {
+  background: none;
+  outline: none;
+}
+
+.slider-wrap input {
+  width: 100%;
+  -webkit-appearance: none;
+  z-index: 2;
+  opacity: 0;
+  direction: rtl;
+  height: 100%;
+  background: none;
 }
 
 .slider-wrap input::-webkit-slider-thumb {
@@ -114,25 +131,21 @@ div.budget-slider-stick-wrap {
   border-radius: 3px;
 }
 
-.slider-wrap input:focus {
-  background: none;
-  outline: none;
-}
-
-.slider-wrap input {
+div.slider-scale-wrap {
+  height: 40px;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  left: 0;
   width: 100%;
-  -webkit-appearance: none;
-  z-index: 2;
-  opacity: 0;
-  direction: rtl;
-  height: 100%;
-  background: none;
+  top: 0;
+  transform: translateY(calc(-100% - 15px));
 }
 
 div.ticks-container {
   display: flex;
   justify-content: space-between;
-  padding: 0 37.5px;
+  flex: 1;
 }
 
 span.tick {
@@ -144,16 +157,15 @@ span.tick:after {
   background-color: #000;
   width: 2px;
   height: 15px;
-  top: -3rem;
+  top: 0;
   left: 0px;
   transform: translateX(-50%);
 }
 
 div.tick-labels-container {
-  background-color: lightblue;
+  flex: 1;
   display: flex;
   justify-content: space-between;
-  padding: 0 37.5px;
 }
 
 span.tick-label {
@@ -164,6 +176,6 @@ span.tick-label {
 span.tick-label-inner {
   position: absolute;
   left: 0;
-  top: -2rem;
+  top: 0;
   transform: translateX(-50%);
 }

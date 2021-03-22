@@ -17,6 +17,15 @@ export const BudgetSlider = ({
     };
   };
 
+  const getSliderWidth = () => {
+    if (!budget.spent) {
+      return '100%';
+    }
+
+    const spentPct = budget.spent / budget.total;
+    return `${(1 - spentPct) * 100}%`;
+  };
+
   const desc = (i) => {
     if (+student.level === 3) {
       return i - 100;
@@ -70,41 +79,46 @@ export const BudgetSlider = ({
       <div className='budget-slider-stick-wrap'>
         <BudgetSliderSvg budget={budget} />
       </div>
+
       <div className='slider-outer'>
         <div className='slider-wrap'>
-          <div className='ticks-container'>{ticks}</div>
-          <div className='tick-labels-container'>{tickLabels}</div>
+          <div className='slider-scale-wrap'>
+            <div className='ticks-container'>{ticks}</div>
+            <div className='tick-labels-container'>{tickLabels}</div>
+          </div>
 
           <div
             className='slider-input-wrap'
             style={{
-              width: `calc(${(1 - budget.spent / budget.total) * 100}% + ${
-                budget.spent ? 37.5 : 0
-              }px)`,
+              width: getSliderWidth(),
             }}
           >
-            <div
-              className='savings-indicator-wrap'
-              style={getSavingsIndicatorPosition()}
-            >
-              <Indicator
-                amount={budget.savings}
-                direction='top'
-                borderColor='#ffd782'
-                isMoney={true}
+            <div className='slider-input-wrap-inner'>
+              <div
+                className='savings-indicator-wrap'
+                style={getSavingsIndicatorPosition()}
+              >
+                <Indicator
+                  amount={budget.savings}
+                  direction='top'
+                  borderColor='#ffd782'
+                  isMoney={true}
+                />
+                <p className='color-primary'>Savings</p>
+              </div>
+              <input
+                type='range'
+                min='0'
+                max={budget.total - budget.spent}
+                value={budget.savings}
+                step={
+                  +student.level === 1 ? 1 : +student.level === 2 ? 10 : 100
+                }
+                onChange={(e) => {
+                  setValue(e.target.value);
+                }}
               />
-              <p className='color-primary'>Savings</p>
             </div>
-            <input
-              type='range'
-              min='0'
-              max={budget.total - budget.spent}
-              value={budget.savings}
-              step={+student.level === 1 ? 1 : +student.level === 2 ? 10 : 100}
-              onChange={(e) => {
-                setValue(e.target.value);
-              }}
-            />
           </div>
         </div>
       </div>
