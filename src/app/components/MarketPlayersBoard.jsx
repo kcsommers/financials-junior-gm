@@ -76,7 +76,6 @@ export const MarketPlayersBoard = ({
       : state.players.marketPlayers
   );
 
-  console.log('MAKRET:::: ', marketPlayers);
   const { moneySpent } = useSelector((state) => state.players);
   const [activePosition, setActivePosition] = useState(initialPosition);
 
