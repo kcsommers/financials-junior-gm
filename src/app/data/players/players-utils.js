@@ -6,6 +6,7 @@ import {
 } from './players';
 import { cloneDeep } from 'lodash';
 import { updateStudentById } from './../../api-helper';
+import { Objectives } from '@data/objectives/objectives';
 
 export const getOpenAssignment = (position, student) => {
   switch (position) {
@@ -179,44 +180,37 @@ export const handleReleasePlayer = (releasedPlayer, student) => {
   });
 };
 
-export const handleSignPlayer = (
-  signedPlayer,
-  assignment,
-  student,
-  seasonState
-) => {
+export const handleSignPlayer = (signedPlayer, assignment, student) => {
   return new Promise((resolve, reject) => {
     signedPlayer.playerAssignment = assignment;
+
     const clonedStudent = cloneDeep(student);
+    clonedStudent[assignment] = signedPlayer;
     clonedStudent.players.splice(
       clonedStudent.players.findIndex((p) => p._id === signedPlayer._id),
       1,
       signedPlayer
     );
 
+    const teamFull = startingLineupFull(clonedStudent);
+
     const studentUpdates = {
       [assignment]: signedPlayer._id,
       players: clonedStudent.players,
     };
 
-    // if theres an active season scenario, check that the team is full
-    // and end the current game block if so
-    if (seasonState && seasonState.currentScenario) {
-      clonedStudent[assignment] = signedPlayer._id;
-      if (startingLineupFull(clonedStudent)) {
-        const studentSeasons = clonedStudent.seasons;
-        if (studentSeasons[(+student.level || 1) - 1]) {
-          studentSeasons[(+student.level || 1) - 1].push(
-            seasonState.completedGames
-          );
-        } else {
-          studentSeasons[(+student.level || 1) - 1] = [
-            seasonState.completedGames,
-          ];
-        }
-
-        studentUpdates.seasons = studentSeasons;
-      }
+    // check for a season scenario objective on the student
+    // if its false (incomplete), check that the team is full
+    if (
+      student.objectives &&
+      student.objectives[Objectives.SEASON_SCENARIO] === false &&
+      teamFull
+    ) {
+      // if so set the objective to complete (true)
+      studentUpdates.objectives = {
+        ...student.objectives,
+        [Objectives.SEASON_SCENARIO]: true,
+      };
     }
 
     updateStudentById(student._id, studentUpdates)
@@ -224,6 +218,7 @@ export const handleSignPlayer = (
         resolve({
           updatedStudent: res.updatedStudent,
           updatedPlayer: signedPlayer,
+          startingLineupFull: teamFull,
         })
       )
       .catch((err) => reject(err));

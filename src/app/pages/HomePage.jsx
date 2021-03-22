@@ -35,7 +35,7 @@ import {
   getMaxTeamRank,
   startingLineupFull,
 } from '@data/players/players-utils';
-import { getStudentTeam } from '@data/season/season';
+import { getStudentTeam } from '@data/season/season-utils';
 import '@css/pages/HomePage.css';
 
 const getDisabledStickBtns = (student) => {
