@@ -10,6 +10,8 @@ export const SET_IN_TRANSITION = 'SET_IN_TRANSITION';
 
 export const SET_SEASON_ACTIVE = 'SET_SEASON_ACTIVE';
 
+export const REMOVE_SCENARIO = 'REMOVE_SCENARIO';
+
 export const setSeasonComplete = (student) => ({
   type: SET_SEASON_COMPLETE,
   payload: student,
@@ -28,6 +30,10 @@ export const gameEnded = (gameResult, opponent, newOpponentIndex) => ({
 export const throwScenario = (scenario) => ({
   type: THROW_SCENARIO,
   payload: scenario,
+});
+
+export const removeScenario = () => ({
+  type: THROW_SCENARIO,
 });
 
 export const initializeSeason = (student) => ({

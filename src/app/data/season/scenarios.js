@@ -15,11 +15,17 @@ export class SeasonScenario {
   }
 
   setPlayer(player) {
+    this.playerPrevAssignment = player.playerAssignment;
+    player.playerAssignment = this.playerAssignment;
     this.player = player;
   }
 
   getPlayer() {
     return this.player;
+  }
+
+  getPlayerPrevAssignment() {
+    return this.playerPrevAssignment;
   }
 }
 

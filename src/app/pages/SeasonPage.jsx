@@ -31,6 +31,7 @@ import {
   setSeasonComplete,
   addObjective,
   INJURE_PLAYER,
+  setSeasonActive,
 } from '@redux/actions';
 import {
   seasonSlides,
@@ -161,11 +162,8 @@ export const SeasonPage = ({ history }) => {
     }
 
     const scenarioPlayer = currentScenario.getPlayer();
-    const prevAssignment = currentScenario.playerAssignment;
+    const prevAssignment = currentScenario.getPlayerPrevAssignment();
     const playersCopy = cloneDeep(student.players);
-
-    // also should have a new assignment for the selected player
-    scenarioPlayer.playerAssignment = currentScenario.playerAssignment;
 
     // splice the scenario player into the players array
     playersCopy.splice(
@@ -176,7 +174,7 @@ export const SeasonPage = ({ history }) => {
 
     // update student with new players array and player assignment
     updateStudentById(student._id, {
-      [prevAssignment]: currentScenario.playerAssignment,
+      [prevAssignment]: null,
       players: playersCopy,
     })
       .then((res) => {
@@ -205,6 +203,15 @@ export const SeasonPage = ({ history }) => {
   };
 
   const startGame = () => {
+    // check if this is the first game of the season
+    // if so set seasonActive to true
+    if (
+      !student.seasons ||
+      !student.seasons[+student.level] ||
+      !student.seasons[+student.level].length
+    ) {
+      dispatch(setSeasonActive(true));
+    }
     // set current phase to 1
     setLocalGameState({
       ...localGameState,
@@ -223,7 +230,23 @@ export const SeasonPage = ({ history }) => {
     }
     clonedSeasons[+student.level - 1].push(localGameState.results);
 
-    updateStudentById(student._id, { seasons: clonedSeasons })
+    const studentUpdates = {
+      seasons: clonedSeasons,
+    };
+
+    // throw scenario every 4 games
+    // (setting objective to false indicates the scenario is incomplete)
+    if (
+      nextOpponentIndex % 4 === 0 &&
+      nextOpponentIndex < seasonState.allOpponents.length
+    ) {
+      studentUpdates.objectives = {
+        ...student.objectives,
+        [Objectives.SEASON_SCENARIO]: false,
+      };
+    }
+
+    updateStudentById(student._id, studentUpdates)
       .then((res) => {
         batch(() => {
           // set game results in redux store
@@ -251,10 +274,11 @@ export const SeasonPage = ({ history }) => {
           currentPhaseIndex: 0,
         });
 
-        // throw scenario every 4 games
-        if (nextOpponentIndex % 4 === 0) {
+        if (
+          res.updatedStudent.objectives &&
+          res.updatedStudent.objectives[Objectives.SEASON_SCENARIO] === false
+        ) {
           newScenario(nextOpponentIndex / 4 - 1);
-          return;
         }
       })
       .catch((err) => console.error(err));

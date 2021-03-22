@@ -85,7 +85,7 @@ export const ScoutPage = ({ history }) => {
     // check if this was the first time the tutorial was viewed
     if (!student.tutorials || !student.tutorials.scout) {
       // if so, update the student object and enable budget button
-      const tutorials = { home: true, budget: true, team: true, scout: true };
+      const tutorials = { ...(student.tutorials || {}), scout: true };
       updateStudentById(student._id, { tutorials })
         .then(({ updatedStudent }) => {
           batch(() => {
