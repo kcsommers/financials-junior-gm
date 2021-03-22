@@ -60,7 +60,7 @@ export const BudgetSlider = ({
         <div className='spending-indicator-wrap'>
           <p className='color-primary'>
             {getDollarString(
-              budget.total + budget.spent - budget.savings,
+              budget.total - budget.spent - budget.savings,
               true
             )}{' '}
             <br /> {spendingLabel}

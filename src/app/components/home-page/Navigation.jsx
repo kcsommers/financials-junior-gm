@@ -13,7 +13,7 @@ import {
 import { useDispatch, batch } from 'react-redux';
 import { clearSessionStorage } from '@data/auth/auth';
 import { ConfirmOverlay } from '@components';
-import { resetSeason } from '@data/season/season';
+import { resetSeason } from '@data/season/season-utils';
 import '@css/components/home-page/Navigation.css';
 
 export const Navigation = ({ tutorialActive, student }) => {
