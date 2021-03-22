@@ -129,8 +129,8 @@ export const TeamPage = ({ history, location }) => {
           <SignPlayerOverlay
             team={team}
             assignment={assignment}
-            student={student}
             isDisabled={tutorialActive}
+            currentScenario={seasonState.currentScenario}
           />
         ),
       })
@@ -247,71 +247,46 @@ export const TeamPage = ({ history, location }) => {
                 alt='Ice Background'
               />
               <div className='team-players-row'>
-                <PlayerCard
-                  animationStates={playerCardAnimationStates}
-                  player={team.fOne}
-                  onClick={
-                    team.fOne
-                      ? openPlayerDetailsOverlay
-                      : openSignPlayerOverlay.bind(this, 'fOne')
-                  }
-                />
-                <div style={{ position: 'relative', top: '15px' }}>
-                  <PlayerCard
-                    animationStates={playerCardAnimationStates}
-                    player={team.fTwo}
-                    onClick={
-                      team.fTwo
-                        ? openPlayerDetailsOverlay
-                        : openSignPlayerOverlay.bind(this, 'fTwo')
-                    }
-                  />
-                </div>
-                <PlayerCard
-                  animationStates={playerCardAnimationStates}
-                  player={team.fThree}
-                  onClick={
-                    team.fThree
-                      ? openPlayerDetailsOverlay
-                      : openSignPlayerOverlay.bind(this, 'fThree')
-                  }
-                />
+                {['fOne', 'fTwo', 'fThree'].map((assignment, i) => (
+                  <div
+                    key={assignment}
+                    style={{
+                      position: 'relative',
+                      top: i === 1 ? '15px' : '0px',
+                    }}
+                  >
+                    <PlayerCard
+                      animationStates={playerCardAnimationStates}
+                      player={team[assignment]}
+                      onClick={
+                        team[assignment]
+                          ? openPlayerDetailsOverlay
+                          : openSignPlayerOverlay.bind(this, assignment)
+                      }
+                    />
+                  </div>
+                ))}
               </div>
               <div className='team-players-row team-players-row-2'>
-                <PlayerCard
-                  animationStates={playerCardAnimationStates}
-                  player={team.dOne}
-                  onClick={
-                    team.dOne
-                      ? openPlayerDetailsOverlay
-                      : openSignPlayerOverlay.bind(this, 'dOne')
-                  }
-                />
-                <div
-                  style={{
-                    position: 'relative',
-                    top: team.gOne ? '15px' : '30px',
-                  }}
-                >
-                  <PlayerCard
-                    animationStates={playerCardAnimationStates}
-                    player={team.gOne}
-                    onClick={
-                      team.gOne
-                        ? openPlayerDetailsOverlay
-                        : openSignPlayerOverlay.bind(this, 'gOne')
-                    }
-                  />
-                </div>
-                <PlayerCard
-                  animationStates={playerCardAnimationStates}
-                  player={team.dTwo}
-                  onClick={
-                    team.dTwo
-                      ? openPlayerDetailsOverlay
-                      : openSignPlayerOverlay.bind(this, 'dTwo')
-                  }
-                />
+                {['dOne', 'gOne', 'dTwo'].map((assignment, i) => (
+                  <div
+                    key={assignment}
+                    style={{
+                      position: 'relative',
+                      top: i === 1 ? '15px' : '0px',
+                    }}
+                  >
+                    <PlayerCard
+                      animationStates={playerCardAnimationStates}
+                      player={team[assignment]}
+                      onClick={
+                        team[assignment]
+                          ? openPlayerDetailsOverlay
+                          : openSignPlayerOverlay.bind(this, assignment)
+                      }
+                    />
+                  </div>
+                ))}
               </div>
             </div>
           </div>

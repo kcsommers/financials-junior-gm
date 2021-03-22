@@ -13,6 +13,7 @@ import {
   INITIALIZE_SEASON,
   SET_IN_TRANSITION,
   SET_SEASON_ACTIVE,
+  REMOVE_SCENARIO,
 } from './season.actions';
 
 const allOpponents = getAllOpponents(1);
@@ -95,11 +96,11 @@ const seasonReducer = (state = initialState, action) => {
       // season is active if there are completed games in the current season
       clonedState.seasonActive = clonedState.completedGames.length;
 
-      // game is in transition if the length of the game blocks array is 3
+      // game is in transition if all teams have been played
       // and the length of the seasons array is equal to the current level
       clonedState.inTransition =
         student.seasons[level - 1] &&
-        student.seasons[level - 1].length === 3 &&
+        student.seasons[level - 1].length === clonedState.allOpponents.length &&
         level === student.seasons.length;
 
       return clonedState;
@@ -120,6 +121,12 @@ const seasonReducer = (state = initialState, action) => {
       const clonedState = cloneDeep(state);
       const scenario = action.payload;
       clonedState.currentScenario = scenario;
+
+      return clonedState;
+    }
+    case REMOVE_SCENARIO: {
+      const clonedState = cloneDeep(state);
+      clonedState.currentScenario = null;
 
       return clonedState;
     }
