@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { PlayerAssignments } from '@data/players/players';
 import { environments } from './environment';
+import Cookie from 'js-cookie';
 
 const https = require('https');
 
@@ -13,6 +14,9 @@ if (!myInterceptor) {
 
       config.headers['Content-Type'] = 'application/json';
       config.headers['Access-Control-Allow-Credentials'] = true;
+      config.headers['Authorization'] = Cookie.get('token')
+        ? Cookie.get('token')
+        : ''; // Attaching persisted token from the browser cookie
       const agent = new https.Agent({
         rejectUnauthorized: false,
       });
@@ -110,7 +114,8 @@ export function deleteStudent(id) {
 
 //Logout
 export function logout() {
-  return axios.get(`${getBaseUrl()}/api/v1/auth/logout`);
+  Cookie.remove('token'); //
+  return Promise.resolve();
 }
 
 // get current student

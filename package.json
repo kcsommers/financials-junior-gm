@@ -10,6 +10,7 @@
     "@testing-library/user-event": "^7.1.2",
     "axios": "^0.21.1",
     "framer-motion": "^3.2.2-rc.1",
+    "js-cookie": "^2.2.1",
     "react": "^17.0.1",
     "react-beautiful-dnd": "^13.0.0",
     "react-crud-table": "^0.2.0",
