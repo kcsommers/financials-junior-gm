@@ -1,14 +1,4 @@
-export const playerProps = [
-  'fOne',
-  'fTwo',
-  'fThree',
-  'dOne',
-  'dTwo',
-  'gOne',
-  'benchOne',
-  'benchTwo',
-  'benchThree',
-];
+export const playerProps = ['fOne', 'fTwo', 'fThree', 'dOne', 'dTwo', 'gOne'];
 
 export const PlayerAssignments = {
   MARKET: 'marketPlayer',
@@ -30,12 +20,6 @@ export const PlayerAssignments = {
   D_TWO: 'dTwo',
 
   G_ONE: 'gOne',
-
-  BENCH_ONE: 'benchOne',
-
-  BENCH_TWO: 'benchTwo',
-
-  BENCH_THREE: 'benchThree',
 };
 
 export const PlayerPositions = {
@@ -44,13 +28,10 @@ export const PlayerPositions = {
   DEFENSE: 'defense',
 
   GOALIE: 'goalie',
-
-  BENCH: 'bench',
 };
 
 export const TeamAssignments = {
   offense: ['fOne', 'fTwo', 'fThree'],
   defense: ['dOne', 'dTwo'],
   goalie: ['gOne'],
-  bench: ['benchOne', 'benchTwo', 'benchThree'],
 };
