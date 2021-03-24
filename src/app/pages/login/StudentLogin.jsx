@@ -17,6 +17,7 @@ import {
 } from '@data/auth/auth';
 import '@css/pages/Login.css';
 import { setLoginState } from '@redux/actions';
+import Cookie from 'js-cookie'; /// JS-Cookie lib to store cookie on the browser
 
 export const StudentLogin = ({ history, isLoggedIn }) => {
   const dispatch = useDispatch();
@@ -56,6 +57,8 @@ export const StudentLogin = ({ history, isLoggedIn }) => {
           if (!res || !res.success) {
             throw res;
           }
+
+          Cookie.set('token', res.token); // Setting cookie on the browser
 
           getCurrentUser()
             .then((studentRes) => {
