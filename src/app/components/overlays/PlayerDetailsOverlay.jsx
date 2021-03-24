@@ -36,9 +36,6 @@ export const PlayerDetailsOverlay = ({
 }) => {
   const dispatch = useDispatch();
 
-  const isBenchPlayer =
-    getPlayerPositon(player.playerAssignment) === PlayerPositions.BENCH;
-
   const onCancel = () => {
     dispatch(
       toggleOverlay({
@@ -195,13 +192,7 @@ export const PlayerDetailsOverlay = ({
               width: '100%',
             }}
           >
-            {isBenchPlayer ? (
-              <Button
-                text='Add to Starting Lineup'
-                onClick={confirmMoveToStartingLineup}
-                isDisabled={!positionOpen(player.playerPosition)}
-              />
-            ) : seasonState && seasonState.seasonActive ? (
+            {seasonState && seasonState.seasonActive ? (
               <Button text='Trade' onClick={confirmTrade} />
             ) : null}
 

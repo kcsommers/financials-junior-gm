@@ -145,7 +145,7 @@ const playersReducer = (state = initialState, action) => {
 
       let playerCache = clonedState.marketPlayers;
 
-      if (position === PlayerPositions.BENCH) {
+      if (position === PlayerPositions.OFFERED_SCOUT) {
         playerCache = clonedState.scoutingState.offeredScoutPlayers;
         let levelCache;
         if (+signedPlayer.playerCost === moneyLevels[0].num) {
@@ -172,9 +172,6 @@ const playersReducer = (state = initialState, action) => {
       }
 
       clonedState.teamPlayers[signedPlayer.playerAssignment] = signedPlayer;
-      if (getPlayerPositon(prevAssignment) === PlayerPositions.BENCH) {
-        clonedState.teamPlayers[prevAssignment] = null;
-      }
 
       const team = [
         ...Object.keys(clonedState.teamPlayers).map(
@@ -270,7 +267,7 @@ const playersReducer = (state = initialState, action) => {
       // if a bench player was signed, remove them from the scout cache
       if (
         getPlayerPositon(signedPlayer.playerAssignment) ===
-        PlayerPositions.BENCH
+        PlayerPositions.OFFERED_SCOUT
       ) {
         let levelCache;
         if (+signedPlayer.playerCost === moneyLevels[0].num) {
