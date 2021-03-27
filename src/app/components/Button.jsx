@@ -1,12 +1,12 @@
 import { LoadingSpinner } from '@components';
 import '@css/components/Button.css';
 
-const getFontSize = (str) => {
+const getFontSize = (str, btnSize) => {
   if (str && str.length > 18) {
-    return '1.5rem';
+    return btnSize === 'large' ? '1.5rem' : '1.25rem';
   }
 
-  return '2rem';
+  return btnSize === 'large' ? '2rem' : '1.5rem';
 };
 
 export const Button = ({
@@ -16,23 +16,30 @@ export const Button = ({
   onClick,
   isLoading,
   isDisabled = false,
+  size = 'large',
+  image,
 }) => {
+  const inner = image ? (
+    <>
+      <img className='btn-img' src={image} alt={text} />
+      <span className='outline-black'>{text}</span>
+    </>
+  ) : (
+    <span className='outline-black'>{text}</span>
+  );
+
   return (
     <div
-      className={`box-shadow btn${isDisabled ? ' disabled' : ''}`}
+      className={`box-shadow btn-${size} btn${isDisabled ? ' disabled' : ''}`}
       style={{
         backgroundColor: background,
         color: color,
-        fontSize: getFontSize(text),
+        fontSize: getFontSize(text, size),
       }}
       onClick={onClick}
     >
       <div className='btn-inner'>
-        {!isLoading ? (
-          <span className='outline-black'>{text}</span>
-        ) : (
-          <LoadingSpinner size='small' />
-        )}
+        {!isLoading ? inner : <LoadingSpinner size='small' />}
       </div>
     </div>
   );

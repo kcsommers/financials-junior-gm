@@ -11,6 +11,7 @@ import {
   SeasonCompleteOverlay,
   NextSeasonOverlay,
   FaqOverlay,
+  FooterComponent,
 } from '@components';
 import seasonStick from '@images/season-stick.svg';
 import { GamePhases } from '@data/season/season';
@@ -551,6 +552,8 @@ export const SeasonPage = ({ history }) => {
           </div>
         </div>
       </PageBoard>
+      <FooterComponent links={['team', 'season', 'budget']} history={history} />
+
       <Overlay />
       {tutorialActive && (
         <Tutorial slides={tutorialSlides} onComplete={onTutorialComplete} />
