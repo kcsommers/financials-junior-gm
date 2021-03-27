@@ -244,7 +244,10 @@ export const Jumbotron = ({ gameState, seasonState, team }) => {
   const scenarioView = seasonState.currentScenario ? (
     <div className='transition-view-container'>
       {sharksTransitionView}
-      <div className='transition-view-right'>
+      <div
+        className='transition-view-right'
+        style={{ transform: 'scale(0.94)', transformOrigin: 'top' }}
+      >
         <motion.div
           initial={{ scale: 0.75 }}
           animate={{ scale: 1, position: 'relative', top: '-0.35rem' }}
