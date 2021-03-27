@@ -1,6 +1,6 @@
 div.jumbotron-wrap {
   display: flex;
-  height: 324.19px;
+  height: 300.19px;
   position: relative;
   width: 464px;
   z-index: 0;
@@ -160,31 +160,27 @@ div.jumbotron-coming-up-container {
 }
 
 div.jumbotron-coming-up-container,
-div.jumbotron-next-opponent-container,
-div.jumbotron-upcoming-games-container {
+div.jumbotron-next-opponent-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
 }
 
-div.jumbotron-next-opponent-container {
-  height: 113px;
-}
-
 div.jumbotron-next-opponent-container > h3 {
   color: #fff;
-  font-size: 1.35rem;
+  font-size: 1.15rem;
 }
 
 div.jumbotron-upcoming-games-container {
   flex: 1;
-  margin-top: 0.65rem;
+  margin-top: 0.25rem;
+  width: 100%;
 }
 
 div.jumbotron-upcoming-games-container > h4 {
   color: #fff;
-  font-size: 1.25rem;
+  font-size: 1.05rem;
 }
 
 div.jumbotron-next-opponent-card {
@@ -226,6 +222,20 @@ span.coming-up-opponent-name {
   border-radius: 10px;
 }
 
-div.upcoming-games-row {
-  transform: scale(0.9);
+div.jumbotron-upcoming-games-card {
+  height: 140px;
+  margin-top: 0.15rem;
+  text-align: center;
+}
+
+div.upcoming-games-row > div {
+  transform: scale(0.8);
+}
+
+div.upcoming-games-row > div:first-child {
+  transform-origin: right;
+}
+
+div.upcoming-games-row > div:last-child {
+  transform-origin: left;
 }

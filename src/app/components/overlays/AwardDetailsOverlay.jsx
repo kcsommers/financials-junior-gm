@@ -1,4 +1,5 @@
-import { OverlayBoard, TrophySvg } from '@components';
+import { OverlayBoard } from '@components';
+import trophyIcon from '@images/icons/trophy.svg';
 
 export const AwardDetailsOverlay = ({ award }) => {
   return (
@@ -29,7 +30,7 @@ export const AwardDetailsOverlay = ({ award }) => {
               transformOrigin: 'top center',
             }}
           >
-            <TrophySvg isEarned={true} />
+            <img src={trophyIcon} alt='Trophy' />
           </span>
         </div>
         <p

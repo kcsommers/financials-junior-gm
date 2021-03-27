@@ -17,13 +17,6 @@ export const Jumbotron = ({ gameState, seasonState, team }) => {
   };
   const seasonDisabled = !startingLineupFull(team);
 
-  // // if its the first game, the next opponent is the current opponent
-  // const nextIndex =
-  //   (seasonState.currentOpponentIndex === 0
-  //     ? seasonState.currentOpponentIndex
-  //     : seasonState.currentOpponentIndex + 1) +
-  //   seasonState.currentBlockIndex * 4;
-
   const nextOpponent =
     seasonState.allOpponents[seasonState.currentOpponentIndex];
   const upcomingGames = seasonState.allOpponents.slice(
