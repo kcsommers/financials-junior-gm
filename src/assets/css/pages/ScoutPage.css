@@ -14,14 +14,29 @@ div.scout-page-board-inner > div {
 
 div.scout-page-board-header {
   position: relative;
-  height: 50px;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+div.scout-page-board-header-inner {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 1rem;
+  justify-content: space-between;
 }
 
 p.scout-page-helper-text {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   margin: 0.25rem auto;
   text-align: center;
-  width: 50%;
+  width: 35%;
 }
 
 p.money-level-text {
@@ -42,7 +57,15 @@ div.scout-board {
   border-radius: 10px;
   background: #fff;
   width: 406px;
-  height: 480px;
+  height: 487px;
+  position: relative;
+}
+
+div.scout-page-board-left > p {
+  left: 0;
+  text-align: center;
+  margin-top: -15px;
+  font-size: 0.8rem;
 }
 
 div.scout-page-board-right {
@@ -110,20 +133,6 @@ div.offered-player-row div.player-card-drop {
 
 div.offered-player-row div.player-card-drop-small {
   padding: 0.5rem 0.25rem;
-}
-
-div.scout-page-board-footer {
-  padding: 0.25rem 1.5rem;
-  position: relative;
-  top: -10px;
-}
-
-div.scout-page-board-footer,
-div.finished-btn a {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 1rem;
 }
 
 .check-btn-small {

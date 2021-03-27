@@ -6,7 +6,7 @@ import budgetLogo from '@images/icons/dollar-sign.svg';
 
 const styles = {
   container: {
-    padding: '1rem 3rem',
+    padding: '0.75rem 3rem',
   },
   inner: {
     display: 'flex',

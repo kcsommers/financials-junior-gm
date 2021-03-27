@@ -92,6 +92,7 @@ export const TrophiesPage = ({ history }) => {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
+            padding: '0.25rem 0 0 0',
           }}
         >
           <span

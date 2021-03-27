@@ -523,6 +523,9 @@ export const SeasonPage = ({ history }) => {
           <div className='season-page-board-bottom'>
             <div className='play-btn-container'>
               <span className='play-btn-wrap'>
+                <span className='color-primary'>
+                  Click the puck to sign a new player!
+                </span>
                 {seasonState.currentScenario &&
                   seasonState.currentScenario.gameButtonLabel && (
                     <span className='color-primary'>
