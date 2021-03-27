@@ -2,11 +2,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   PageBoard,
   HeaderComponent,
-  TrophySvg,
   AwardDetailsOverlay,
   Overlay,
+  FooterComponent,
 } from '@components';
 import trophiesStick from '@images/trophies-stick.svg';
+import trophyIcon from '@images/icons/trophy.svg';
 import { awardsByLevel } from '@data/season/awards';
 import { toggleOverlay } from '@redux/actions';
 import { resetSeason } from '@data/season/season-utils';
@@ -29,12 +30,6 @@ const styles = {
     alignItems: 'center',
     color: '#fff',
     cursor: 'pointer',
-  },
-  actionContainer: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: '0.25rem',
   },
 };
 
@@ -97,11 +92,26 @@ export const TrophiesPage = ({ history }) => {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            cursor: 'pointer',
+            padding: '0.25rem 0 0 0',
           }}
-          onClick={openDetailsOverlay.bind(this, levelAwards[c])}
         >
-          <TrophySvg isEarned={studentAwards && studentAwards[c]} />
+          <span
+            style={{
+              display: 'inline-block',
+              opacity: studentAwards && studentAwards[c] ? 1 : 0.5,
+              cursor: 'pointer',
+            }}
+            onClick={openDetailsOverlay.bind(this, levelAwards[c])}
+          >
+            <img
+              style={{
+                display: 'inline-block',
+                width: '100%',
+              }}
+              src={trophyIcon}
+              alt='Trophy'
+            />
+          </span>
         </div>
       );
     });
@@ -131,7 +141,7 @@ export const TrophiesPage = ({ history }) => {
             alignItems: 'center',
             justifyContent: 'center',
             position: 'relative',
-            bottom: '-15px',
+            bottom: '-10px',
           }}
         >
           {level}
@@ -159,122 +169,111 @@ export const TrophiesPage = ({ history }) => {
 
       <PageBoard>
         <div
+          className='trophies-page-board-header'
           style={{
+            position: 'relative',
+            textAlign: 'center',
             display: 'flex',
-            flexDirection: 'column',
-            height: '100%',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: '80px',
           }}
         >
           <div
-            className='trophies-page-board-header'
+            className='trophies-page-board-header-inner'
             style={{
-              position: 'relative',
-              textAlign: 'center',
-              height: '80px',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
-              alignItems: 'center',
+              position: 'absolute',
+              left: 0,
+              top: '0.5rem',
+              paddingLeft: '1rem',
             }}
           >
-            <div
-              className='trophies-page-board-header-inner'
+            <img
+              src={seasonTeam.logo}
+              alt={seasonTeam.name + 'Logo'}
               style={{
-                position: 'absolute',
-                left: 0,
-                top: '0.5rem',
-                paddingLeft: '1rem',
+                display: 'inline-block',
+                width: '85px',
               }}
-            >
-              <img
-                src={seasonTeam.logo}
-                alt={seasonTeam.name + 'Logo'}
-                style={{
-                  display: 'inline-block',
-                  width: '85px',
-                }}
-              />
-            </div>
-            {inTransition && (
-              <div
-                style={styles.actionContainer}
-                className='next-level-actions-container'
+            />
+          </div>
+          {inTransition ? (
+            <>
+              <span
+                className='box-shadow'
+                style={styles.button}
+                onClick={repeatSeason}
               >
+                Repeat Season
+              </span>
+              {isPromoted && (
                 <span
-                  className='box-shadow'
-                  style={styles.button}
-                  onClick={repeatSeason}
+                  className={`box-shadow${
+                    +student.level === 3 ? ' disabled' : ''
+                  }`}
+                  style={Object.assign(
+                    { ...styles.button },
+                    { marginLeft: '1rem' }
+                  )}
+                  onClick={nextSeason}
                 >
-                  Repeat Season
+                  Accept Promotion
                 </span>
-                {isPromoted && (
-                  <span
-                    className={`box-shadow${
-                      +student.level === 3 ? ' disabled' : ''
-                    }`}
-                    style={Object.assign(
-                      { ...styles.button },
-                      { marginLeft: '1rem' }
-                    )}
-                    onClick={nextSeason}
-                  >
-                    Accept Promotion
-                  </span>
-                )}
-              </div>
-            )}
+              )}
+            </>
+          ) : (
             <h6
               style={inTransition ? { position: 'relative', top: '1rem' } : {}}
               className='color-primary'
             >
               Tap a trophy to learn more about it!
             </h6>
-          </div>
+          )}
+        </div>
 
+        <div
+          className='trophies-page-board-inner'
+          style={{
+            display: 'flex',
+            flex: 1,
+            flexDirection: 'column',
+          }}
+        >
           <div
-            className='trophies-page-board-inner'
+            className='trophy-case'
             style={{
-              display: 'flex',
               flex: 1,
+              margin: '0 auto',
+              width: '80%',
+              borderRadius: '10px',
+              border: '5px solid #4E3629',
+              display: 'flex',
               flexDirection: 'column',
-              paddingBottom: '2rem',
+              position: 'relative',
             }}
           >
             <div
-              className='trophy-case'
+              className='level-lables'
               style={{
-                flex: 1,
-                margin: '1rem auto',
-                width: '80%',
-                borderRadius: '10px',
-                border: '5px solid #4E3629',
+                position: 'absolute',
+                top: 0,
+                bottom: 0,
+                left: 0,
+                width: '100px',
                 display: 'flex',
                 flexDirection: 'column',
-                position: 'relative',
+                transform: 'translateX(-100%)',
               }}
             >
-              <div
-                className='level-lables'
-                style={{
-                  position: 'absolute',
-                  top: 0,
-                  bottom: 0,
-                  left: 0,
-                  width: '100px',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  transform: 'translateX(-100%)',
-                }}
-              >
-                <p style={styles.levelLabel}>Level 3</p>
-                <p style={styles.levelLabel}>Level 2</p>
-                <p style={styles.levelLabel}>Level 1</p>
-              </div>
-              {levels}
+              <p style={styles.levelLabel}>Level 3</p>
+              <p style={styles.levelLabel}>Level 2</p>
+              <p style={styles.levelLabel}>Level 1</p>
             </div>
+            {levels}
           </div>
         </div>
       </PageBoard>
+      <FooterComponent links={['team', 'season', 'budget']} history={history} />
       <Overlay />
     </div>
   );

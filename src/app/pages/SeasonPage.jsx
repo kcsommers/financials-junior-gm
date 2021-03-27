@@ -11,6 +11,7 @@ import {
   SeasonCompleteOverlay,
   NextSeasonOverlay,
   FaqOverlay,
+  FooterComponent,
 } from '@components';
 import seasonStick from '@images/season-stick.svg';
 import { GamePhases } from '@data/season/season';
@@ -118,6 +119,7 @@ export const SeasonPage = ({ history }) => {
 
     // set completed games in student seasons array
     clonedStudent.seasons[+student.level - 1] = seasonState.completedGames;
+    console.log('[season.endSeason] clonedStudent:::: ', clonedStudent);
 
     updateStudentById(student._id, {
       seasons: clonedStudent.seasons,
@@ -126,6 +128,10 @@ export const SeasonPage = ({ history }) => {
       savingsBudget: 0,
     })
       .then((res) => {
+        console.log(
+          '[season.endSeason] updatedStudent:::: ',
+          res.updatedStudent
+        );
         batch(() => {
           dispatch(setStudent(res.updateStudent));
           dispatch(setSeasonComplete(res.updatedStudent));
@@ -216,6 +222,7 @@ export const SeasonPage = ({ history }) => {
     setLocalGameState({
       ...localGameState,
       currentPhaseIndex: 1,
+      results: null,
     });
   };
 
@@ -267,18 +274,18 @@ export const SeasonPage = ({ history }) => {
           return;
         }
 
-        // update local state
-        setLocalGameState({
-          ...localGameState,
-          currentMessageIndex: 0,
-          currentPhaseIndex: 0,
-        });
-
         if (
           res.updatedStudent.objectives &&
           res.updatedStudent.objectives[Objectives.SEASON_SCENARIO] === false
         ) {
           newScenario(nextOpponentIndex / 4 - 1);
+        } else {
+          // update local state
+          setLocalGameState({
+            ...localGameState,
+            currentMessageIndex: 0,
+            currentPhaseIndex: 0,
+          });
         }
       })
       .catch((err) => console.error(err));
@@ -436,6 +443,8 @@ export const SeasonPage = ({ history }) => {
     gameState.message = gameState.phase.messages[1];
   }
 
+  console.log('[seasonPage render] gameState::::  ', gameState, seasonState);
+
   return (
     <div className='page-container'>
       <HeaderComponent
@@ -543,6 +552,8 @@ export const SeasonPage = ({ history }) => {
           </div>
         </div>
       </PageBoard>
+      <FooterComponent links={['team', 'season', 'budget']} history={history} />
+
       <Overlay />
       {tutorialActive && (
         <Tutorial slides={tutorialSlides} onComplete={onTutorialComplete} />

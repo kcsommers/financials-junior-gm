@@ -25,13 +25,6 @@ export const getOpenAssignment = (position, student) => {
     case PlayerPositions.GOALIE: {
       return PlayerAssignments.G_ONE;
     }
-    case PlayerPositions.BENCH: {
-      return [
-        PlayerAssignments.BENCH_ONE,
-        PlayerAssignments.BENCH_TWO,
-        PlayerAssignments.BENCH_THREE,
-      ].find((a) => !student[a]);
-    }
     default: {
       return [];
     }
@@ -52,13 +45,6 @@ export const getAssignmentsByPosition = (position) => {
     }
     case PlayerPositions.GOALIE: {
       return [PlayerAssignments.G_ONE];
-    }
-    case PlayerPositions.BENCH: {
-      return [
-        PlayerAssignments.BENCH_ONE,
-        PlayerAssignments.BENCH_TWO,
-        PlayerAssignments.BENCH_THREE,
-      ];
     }
     default: {
       return [];
@@ -103,9 +89,6 @@ export const isTeamPlayer = (player) => {
     PlayerAssignments.D_ONE,
     PlayerAssignments.D_TWO,
     PlayerAssignments.G_ONE,
-    PlayerAssignments.BENCH_ONE,
-    PlayerAssignments.BENCH_TWO,
-    PlayerAssignments.BENCH_THREE,
   ].includes(player.playerAssignment);
 };
 
@@ -137,11 +120,6 @@ export const getPlayerPositon = (assignment) => {
     case PlayerAssignments.G_ONE: {
       return PlayerPositions.GOALIE;
     }
-    case PlayerAssignments.BENCH_ONE:
-    case PlayerAssignments.BENCH_TWO:
-    case PlayerAssignments.BENCH_THREE: {
-      return PlayerPositions.BENCH;
-    }
     default: {
       return null;
     }
@@ -151,11 +129,7 @@ export const getPlayerPositon = (assignment) => {
 export const handleReleasePlayer = (releasedPlayer, student) => {
   return new Promise((resolve, reject) => {
     const prevAssignment = releasedPlayer.playerAssignment;
-    const prevPosition = getPlayerPositon(prevAssignment);
-    releasedPlayer.playerAssignment =
-      prevPosition === PlayerPositions.BENCH
-        ? PlayerAssignments.OFFERED_SCOUT
-        : PlayerAssignments.MARKET;
+    releasedPlayer.playerAssignment = PlayerAssignments.MARKET;
 
     const playersCopy = cloneDeep(student.players);
 
@@ -230,10 +204,7 @@ export const handleTradePlayers = (signedPlayer, releasedPlayer, student) => {
     const prevAssignment = releasedPlayer.playerAssignment;
     const prevPosition = getPlayerPositon(prevAssignment);
 
-    releasedPlayer.playerAssignment =
-      prevPosition === PlayerPositions.BENCH
-        ? PlayerAssignments.OFFERED_SCOUT
-        : PlayerAssignments.UNAVAILABLE;
+    releasedPlayer.playerAssignment = PlayerAssignments.UNAVAILABLE;
     signedPlayer.playerAssignment = prevAssignment;
 
     const playersCopy = cloneDeep(student.players).reduce((arr, p) => {
@@ -253,10 +224,7 @@ export const handleTradePlayers = (signedPlayer, releasedPlayer, student) => {
 
     const studentUpdates = {
       [signedPlayer.playerAssignment]: signedPlayer._id,
-      [releasedPlayer.playerAssignment]:
-        prevPosition === PlayerPositions.BENCH
-          ? PlayerAssignments.OFFERED_SCOUT
-          : PlayerAssignments.UNAVAILABLE,
+      [releasedPlayer.playerAssignment]: PlayerAssignments.UNAVAILABLE,
       players: playersCopy,
     };
 

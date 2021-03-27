@@ -31,7 +31,6 @@ export class SeasonScenario {
 
 const getSecondHighestPlayer = (team) => {
   return Object.keys(team)
-    .filter((p) => !TeamAssignments.bench.includes(p))
     .map((p) => team[p])
     .sort((a, b) => +b.overallRank - +a.overallRank)[1];
 };
