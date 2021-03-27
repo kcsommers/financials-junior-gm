@@ -600,31 +600,66 @@ export const ScoutPage = ({ history }) => {
         tutorialActive={tutorialActive}
         stickBtnLink='/team'
       />
-      <PageBoard>
+      <PageBoard height='98%'>
         <div className='scout-page-board-header'>
           <p className='color-primary scout-page-helper-text'>
             Make an offer to a player by dragging them to a contract level!
           </p>
-          <span
-            style={{ position: 'absolute', right: '0.5rem', top: '0.25rem' }}
-          >
-            <SharkieButton onCallSharkie={onCallSharkie} textPosition='left' />
-          </span>
+          <div className='scout-page-board-header-inner'>
+            <SharkieButton onCallSharkie={onCallSharkie} textPosition='right' />
+            <motion.div
+              className='color-primary'
+              animate={finishedBtnAnimationState}
+            >
+              <div
+                className={!scoutingIsValid() ? 'disabled' : ''}
+                onClick={() => {
+                  if (!scoutingState.isComplete) {
+                    validateScouting();
+                  }
+                }}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  cursor: 'pointer',
+                  fontSize: '1rem',
+                  width: '200px',
+                  textAlign: 'right',
+                }}
+              >
+                Click here when you finish!
+                <div
+                  className='check-btn'
+                  style={{ marginLeft: '0.5rem' }}
+                ></div>
+              </div>
+            </motion.div>
+          </div>
         </div>
 
         <DragDropContext onDragEnd={onPlayerDropped}>
           <div className='scout-page-board-inner'>
             <div className='scout-page-board-left'>
               {tutorialActive ? (
-                <motion.div
-                  className='scout-board'
-                  animate={availablePlayersAnimationState}
-                  transition={{ default: { duration: 1 } }}
-                >
-                  {availablePlayersBoard}
-                </motion.div>
+                <>
+                  <p className='color-primary'>
+                    Remember to tap a player to learn more about them!
+                  </p>
+                  <motion.div
+                    className='scout-board'
+                    animate={availablePlayersAnimationState}
+                    transition={{ default: { duration: 1 } }}
+                  >
+                    {availablePlayersBoard}{' '}
+                  </motion.div>
+                </>
               ) : (
-                <div className='scout-board'>{availablePlayersBoard}</div>
+                <>
+                  <p className='color-primary'>
+                    Remember to tap a player to learn more about them!
+                  </p>
+                  <div className='scout-board'>{availablePlayersBoard}</div>
+                </>
               )}
             </div>
 
@@ -638,32 +673,6 @@ export const ScoutPage = ({ history }) => {
             </div>
           </div>
         </DragDropContext>
-        <div className='scout-page-board-footer'>
-          <p className='color-primary'>
-            Remember to tap a player to learn more about them!
-          </p>
-          <motion.div
-            className='color-primary finished-btn'
-            animate={finishedBtnAnimationState}
-          >
-            <div
-              className={!scoutingIsValid() ? 'disabled' : ''}
-              onClick={() => {
-                if (!scoutingState.isComplete) {
-                  validateScouting();
-                }
-              }}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                cursor: 'pointer',
-              }}
-            >
-              <span>Click here when you finish!</span>
-              <div className='check-btn-small'></div>
-            </div>
-          </motion.div>
-        </div>
       </PageBoard>
       <Overlay />
       {tutorialActive && (

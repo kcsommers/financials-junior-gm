@@ -19,11 +19,14 @@ export const resetSeason = (newLevel, prevLevel, student) => {
       seasons: clonedSeasons,
       level: newLevel,
       objectives: {},
+      savingsBudget: 0,
     };
 
     if (newLevel > prevLevel) {
       studentUpdates.rollOverBudget = 0;
     }
+
+    console.log('[resetSeason] studentUpdates:::: ', studentUpdates);
 
     updateStudentById(student._id, studentUpdates)
       .then((res) => {
@@ -35,6 +38,10 @@ export const resetSeason = (newLevel, prevLevel, student) => {
         initPlayersByLevel(newLevel)
           .then((initializedStudentRes) => {
             const initializedStudent = initializedStudentRes.data;
+            console.log(
+              '[resetSeason] initializedStudent:::: ',
+              initializedStudent
+            );
             if (!initializedStudentRes.success || !initializedStudent) {
               console.error(new Error('Unexpected error initializing players'));
               return;

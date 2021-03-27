@@ -16,9 +16,7 @@ import {
   Button,
   ConfirmOverlay,
 } from '@components';
-import { PlayerPositions } from '@data/players/players';
 import {
-  getPlayerPositon,
   getAssignmentsByPosition,
   handleSignPlayer,
   getOpenAssignment,
@@ -35,9 +33,6 @@ export const PlayerDetailsOverlay = ({
   includeActions = true,
 }) => {
   const dispatch = useDispatch();
-
-  const isBenchPlayer =
-    getPlayerPositon(player.playerAssignment) === PlayerPositions.BENCH;
 
   const onCancel = () => {
     dispatch(
@@ -195,13 +190,7 @@ export const PlayerDetailsOverlay = ({
               width: '100%',
             }}
           >
-            {isBenchPlayer ? (
-              <Button
-                text='Add to Starting Lineup'
-                onClick={confirmMoveToStartingLineup}
-                isDisabled={!positionOpen(player.playerPosition)}
-              />
-            ) : seasonState && seasonState.seasonActive ? (
+            {seasonState && seasonState.seasonActive ? (
               <Button text='Trade' onClick={confirmTrade} />
             ) : null}
 

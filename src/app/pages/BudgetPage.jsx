@@ -9,6 +9,7 @@ import {
   FaqOverlay,
   Indicator,
   RolloverBudgetOverlay,
+  FooterComponent,
 } from '@components';
 import budgetStick from '@images/budget-stick.svg';
 import { useSelector, useDispatch, batch } from 'react-redux';
@@ -215,7 +216,7 @@ export const BudgetPage = ({ history }) => {
   }
 
   return (
-    <div className='page-container'>
+    <div className='page-container budget-page-container'>
       <HeaderComponent
         stickBtn={budgetStick}
         level={student.level}
@@ -223,7 +224,7 @@ export const BudgetPage = ({ history }) => {
         tutorialActive={tutorialActive}
       />
 
-      <PageBoard>
+      <PageBoard height='100%'>
         <div className='budget-page-board-inner'>
           {+student.rollOverBudget > 0 && (
             <div className='rollover-budget-wrap'>
@@ -277,6 +278,11 @@ export const BudgetPage = ({ history }) => {
           </div>
         </div>
       </PageBoard>
+
+      <FooterComponent
+        links={['team', 'season', 'trophies']}
+        history={history}
+      />
       <Overlay />
       {tutorialActive && (
         <Tutorial slides={tutorialSlides} onComplete={onTutorialComplete} />

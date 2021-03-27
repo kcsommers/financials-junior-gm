@@ -1,4 +1,5 @@
 export { AwardDetailsOverlay } from './overlays/AwardDetailsOverlay';
+export { FooterComponent } from './FooterComponent';
 export { RolloverBudgetOverlay } from './overlays/RolloverBudgetOverlay';
 export { NewLevelOverlay } from './overlays/NewLevelOverlay';
 export { FaqOverlay } from './overlays/FaqOverlay';
@@ -13,7 +14,6 @@ export { GameButton } from './season-page/GameButton';
 export { StandingsBoard } from './season-page/StandingsBoard';
 export { GameBlockBoard } from './season-page/GameBlockBoard';
 export { Jumbotron } from './season-page/Jumbotron';
-export { TrophySvg } from './trophies-page/TrophySvg';
 export { BadScoutOverlay } from './overlays/BadScoutOverlay';
 export { LevelStickSvg } from './LevelStickSvg';
 export { PlayerRankPie } from './PlayerRankPie';

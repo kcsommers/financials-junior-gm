@@ -141,11 +141,12 @@ const playersReducer = (state = initialState, action) => {
       const prevAssignment = action.payload.prevAssignment;
       const student = action.payload.student;
       const moneyLevels = getMoneyLevels(+student.level);
-      const position = getPlayerPositon(signedPlayer.playerAssignment);
+
+      console.log('PREV ASS:::: ', signedPlayer, prevAssignment, moneyLevels);
 
       let playerCache = clonedState.marketPlayers;
 
-      if (position === PlayerPositions.BENCH) {
+      if (prevAssignment === PlayerAssignments.OFFERED_SCOUT) {
         playerCache = clonedState.scoutingState.offeredScoutPlayers;
         let levelCache;
         if (+signedPlayer.playerCost === moneyLevels[0].num) {
@@ -156,10 +157,13 @@ const playersReducer = (state = initialState, action) => {
           levelCache = clonedState.scoutingState.scoutPlayers.levelThree;
         }
 
+        console.log('LEVEL CACHE 1:::: ', levelCache);
+
         levelCache.splice(
           levelCache.findIndex((p) => p._id === signedPlayer._id),
           1
         );
+        console.log('LEVEL CACHE 2:::: ', levelCache);
       }
 
       if (playerCache[signedPlayer.playerPosition]) {
@@ -172,9 +176,6 @@ const playersReducer = (state = initialState, action) => {
       }
 
       clonedState.teamPlayers[signedPlayer.playerAssignment] = signedPlayer;
-      if (getPlayerPositon(prevAssignment) === PlayerPositions.BENCH) {
-        clonedState.teamPlayers[prevAssignment] = null;
-      }
 
       const team = [
         ...Object.keys(clonedState.teamPlayers).map(
@@ -267,11 +268,8 @@ const playersReducer = (state = initialState, action) => {
         }
       }
 
-      // if a bench player was signed, remove them from the scout cache
-      if (
-        getPlayerPositon(signedPlayer.playerAssignment) ===
-        PlayerPositions.BENCH
-      ) {
+      // if a scout player was signed, remove them from the scout cache
+      if (signedPlayer.playerAssignment === PlayerAssignments.OFFERED_SCOUT) {
         let levelCache;
         if (+signedPlayer.playerCost === moneyLevels[0].num) {
           levelCache = clonedState.scoutingState.scoutPlayers.levelOne;

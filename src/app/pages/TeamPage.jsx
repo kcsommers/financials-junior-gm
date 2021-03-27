@@ -11,6 +11,7 @@ import {
   NextSeasonOverlay,
   FaqOverlay,
   ScoutingCompleteOverlay,
+  FooterComponent,
 } from '@components';
 import scoutStick from '@images/scout-stick.svg';
 import teamStick from '@images/team-stick.svg';
@@ -218,7 +219,7 @@ export const TeamPage = ({ history, location }) => {
               style={{
                 position: 'absolute',
                 left: '-41px',
-                bottom: '3rem',
+                bottom: '1rem',
               }}
             >
               <StickButton
@@ -292,6 +293,10 @@ export const TeamPage = ({ history, location }) => {
           </div>
         </div>
       </PageBoard>
+      <FooterComponent
+        links={['season', 'budget', 'trophies']}
+        history={history}
+      />
       <Overlay />
       {tutorialActive && (
         <Tutorial slides={tutorialSlides} onComplete={onTutorialComplete} />

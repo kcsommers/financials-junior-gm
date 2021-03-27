@@ -17,13 +17,6 @@ export const Jumbotron = ({ gameState, seasonState, team }) => {
   };
   const seasonDisabled = !startingLineupFull(team);
 
-  // // if its the first game, the next opponent is the current opponent
-  // const nextIndex =
-  //   (seasonState.currentOpponentIndex === 0
-  //     ? seasonState.currentOpponentIndex
-  //     : seasonState.currentOpponentIndex + 1) +
-  //   seasonState.currentBlockIndex * 4;
-
   const nextOpponent =
     seasonState.allOpponents[seasonState.currentOpponentIndex];
   const upcomingGames = seasonState.allOpponents.slice(
@@ -251,7 +244,10 @@ export const Jumbotron = ({ gameState, seasonState, team }) => {
   const scenarioView = seasonState.currentScenario ? (
     <div className='transition-view-container'>
       {sharksTransitionView}
-      <div className='transition-view-right'>
+      <div
+        className='transition-view-right'
+        style={{ transform: 'scale(0.94)', transformOrigin: 'top' }}
+      >
         <motion.div
           initial={{ scale: 0.75 }}
           animate={{ scale: 1, position: 'relative', top: '-0.35rem' }}
