@@ -45,6 +45,7 @@ export const SignPlayerOverlay = ({ assignment, isDisabled }) => {
 
   const signConfirmed = (signedPlayer) => {
     const prevAssignment = signedPlayer.playerAssignment;
+    console.log('SIGNCONFIMRS:::: ', prevAssignment);
     handleSignPlayer(signedPlayer, assignment, student).then(
       ({ updatedStudent, updatedPlayer, startingLineupFull }) => {
         batch(() => {

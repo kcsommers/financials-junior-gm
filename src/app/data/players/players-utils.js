@@ -129,11 +129,7 @@ export const getPlayerPositon = (assignment) => {
 export const handleReleasePlayer = (releasedPlayer, student) => {
   return new Promise((resolve, reject) => {
     const prevAssignment = releasedPlayer.playerAssignment;
-    const prevPosition = getPlayerPositon(prevAssignment);
-    releasedPlayer.playerAssignment =
-      prevPosition === PlayerPositions.OFFERED_SCOUT
-        ? PlayerAssignments.OFFERED_SCOUT
-        : PlayerAssignments.MARKET;
+    releasedPlayer.playerAssignment = PlayerAssignments.MARKET;
 
     const playersCopy = cloneDeep(student.players);
 

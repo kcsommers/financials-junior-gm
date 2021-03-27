@@ -47,6 +47,11 @@ const seasonReducer = (state = initialState, action) => {
 
       // set the completed games cache and current opponent index
       clonedState.completedGames = student.seasons[level - 1] || [];
+      console.log(
+        '[seasonReduce initSeason] completedGames:::: ',
+        clonedState.completedGames,
+        clonedState.completedGames.length
+      );
       clonedState.currentOpponentIndex = clonedState.completedGames.length;
 
       // set the opponents for the current level
@@ -182,8 +187,8 @@ const seasonReducer = (state = initialState, action) => {
 
       clonedState.currentOpponentIndex = 0;
       clonedState.currentScenario = null;
-      clonedState.awards[(+student.level || 1) - 1] =
-        student.awards[(+student.level || 1) - 1];
+      clonedState.awards[+student.level - 1] =
+        student.awards[+student.level - 1];
       clonedState.inTransition = true;
       clonedState.inSession = true;
       clonedState.seasonActive = false;

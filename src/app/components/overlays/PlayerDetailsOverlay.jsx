@@ -16,9 +16,7 @@ import {
   Button,
   ConfirmOverlay,
 } from '@components';
-import { PlayerPositions } from '@data/players/players';
 import {
-  getPlayerPositon,
   getAssignmentsByPosition,
   handleSignPlayer,
   getOpenAssignment,
