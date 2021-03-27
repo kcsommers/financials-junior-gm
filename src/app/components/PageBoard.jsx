@@ -2,8 +2,6 @@ const styles = (height) => ({
   container: {
     flex: 1,
     position: 'relative',
-    display: 'flex',
-    alignItems: 'center',
   },
   board: {
     width: '88%',
