@@ -12,6 +12,7 @@ import {
   NextSeasonOverlay,
   FaqOverlay,
   FooterComponent,
+  Cheermeter,
 } from '@components';
 import seasonStick from '@images/season-stick.svg';
 import { GamePhases } from '@data/season/season';
@@ -49,7 +50,8 @@ const allActions = {
   [INJURE_PLAYER]: injurePlayer,
 };
 
-let timer = 0;
+let phaseTimer = 0;
+let cheerInterval = 0;
 
 export const SeasonPage = ({ history }) => {
   const dispatch = useDispatch();
@@ -82,19 +84,25 @@ export const SeasonPage = ({ history }) => {
       ],
   };
 
-  const setTimer = () => {
-    if (timer) {
-      window.clearTimeout(timer);
+  const [cheerLevel, setCheerLevel] = useState(0);
+  const [cheerCounter, setCheerCounter] = useState(0);
+
+  const setPhaseTimer = () => {
+    if (phaseTimer) {
+      window.clearTimeout(phaseTimer);
     }
 
     if (!seasonState.currentScenario && gameState.phase) {
       // if the current phase contains more than one message
       // set the message timer and call next message
       if (gameState.phase.messages.length > 1 && gameState.phase.messageTimer) {
-        timer = window.setTimeout(nextMessage, gameState.phase.messageTimer);
+        phaseTimer = window.setTimeout(
+          nextMessage,
+          gameState.phase.messageTimer
+        );
       } else if (gameState.phase.timer) {
         // otherwise timer will move on to next phase
-        timer = window.setTimeout(nextPhase, gameState.phase.timer);
+        phaseTimer = window.setTimeout(nextPhase, gameState.phase.timer);
       }
     }
   };
@@ -119,7 +127,6 @@ export const SeasonPage = ({ history }) => {
 
     // set completed games in student seasons array
     clonedStudent.seasons[+student.level - 1] = seasonState.completedGames;
-    console.log('[season.endSeason] clonedStudent:::: ', clonedStudent);
 
     updateStudentById(student._id, {
       seasons: clonedStudent.seasons,
@@ -128,10 +135,6 @@ export const SeasonPage = ({ history }) => {
       savingsBudget: 0,
     })
       .then((res) => {
-        console.log(
-          '[season.endSeason] updatedStudent:::: ',
-          res.updatedStudent
-        );
         batch(() => {
           dispatch(setStudent(res.updateStudent));
           dispatch(setSeasonComplete(res.updatedStudent));
@@ -227,6 +230,13 @@ export const SeasonPage = ({ history }) => {
   };
 
   const endGame = () => {
+    // reset cheer state
+    setCheerLevel(0);
+    setCheerCounter(0);
+    if (cheerInterval) {
+      window.clearInterval(cheerInterval);
+    }
+
     const nextOpponentIndex = seasonState.currentOpponentIndex + 1;
 
     // add the game results to student season
@@ -336,6 +346,38 @@ export const SeasonPage = ({ history }) => {
     });
   };
 
+  const setCheerInterval = () => {
+    console.log(':::: SETCHEER TIMER ::::', cheerLevel);
+
+    if (cheerInterval) {
+      window.clearInterval(cheerInterval);
+    }
+
+    cheerInterval = window.setInterval(() => {
+      setCheerLevel((prevLevel) => Math.max(0, prevLevel - 1));
+      setCheerCounter((prevCount) => Math.max(0, prevCount - 5));
+    }, 2000);
+  };
+
+  const onCheer = () => {
+    if (cheerLevel === 12) {
+      return;
+    }
+
+    // initial cheer
+    if (cheerLevel === 0 && cheerCounter === 0) {
+      setCheerInterval();
+    }
+
+    const newCount = cheerCounter + 1;
+    setCheerCounter(newCount);
+
+    if (newCount % 5 === 0) {
+      setCheerLevel((prevLevel) => prevLevel + 1);
+      setCheerInterval();
+    }
+  };
+
   const onTutorialComplete = (canceled) => {
     if (canceled) {
       dispatch(setTutorialState({ isActive: false }));
@@ -430,7 +472,21 @@ export const SeasonPage = ({ history }) => {
     });
   }
 
-  setTimer();
+  const prevPhaseIndex = useRef(-1);
+  const prevMessageIndex = useRef(localGameState.currentMessageIndex);
+  useEffect(() => {
+    if (prevPhaseIndex.current !== localGameState.currentPhaseIndex) {
+      prevPhaseIndex.current = localGameState.currentPhaseIndex;
+      setPhaseTimer();
+      return;
+    }
+
+    if (prevMessageIndex.current !== localGameState.currentMessageIndex) {
+      prevMessageIndex.current = localGameState.currentMessageIndex;
+      setPhaseTimer();
+      return;
+    }
+  });
 
   // in UP_NEXT phase, need to add the team names to the gameState message
   if (
@@ -443,7 +499,28 @@ export const SeasonPage = ({ history }) => {
     gameState.message = gameState.phase.messages[1];
   }
 
-  console.log('[seasonPage render] gameState::::  ', gameState, seasonState);
+  const getGameButtonLabel = () => {
+    if (gameState.phase.phase !== GamePhases.GAME_ON) {
+      return (
+        <span className='color-primary'>
+          Click the puck to cheer for your team!
+        </span>
+      );
+    }
+
+    if (
+      seasonState.currentScenario &&
+      seasonState.currentScenario.gameButtonLabel
+    ) {
+      return (
+        <span className='color-primary'>
+          {seasonState.currentScenario.gameButtonLabel}
+        </span>
+      );
+    }
+
+    return null;
+  };
 
   return (
     <div className='page-container'>
@@ -459,24 +536,10 @@ export const SeasonPage = ({ history }) => {
             display: 'flex',
             flexDirection: 'column',
             height: '100%',
-            overflowX: 'hidden',
+            overflow: 'hidden',
             position: 'relative',
           }}
         >
-          <div
-            style={{
-              position: 'absolute',
-              left: '1rem',
-              bottom: '0rem',
-              zIndex: tutorialActive ? 0 : 1,
-            }}
-          >
-            <SharkieButton
-              textPosition='right'
-              style
-              onCallSharkie={onCallSharkie}
-            />
-          </div>
           <div className='season-page-board-top'>
             <div className='student-team-rank-container'>
               <LevelStick
@@ -521,26 +584,33 @@ export const SeasonPage = ({ history }) => {
             </div>
           </div>
           <div className='season-page-board-bottom'>
-            <div className='play-btn-container'>
-              <span className='play-btn-wrap'>
-                {seasonState.currentScenario &&
-                  seasonState.currentScenario.gameButtonLabel && (
-                    <span className='color-primary'>
-                      {seasonState.currentScenario.gameButtonLabel}
-                    </span>
-                  )}
-                <GameButton
-                  onClick={startGame}
-                  gameState={gameState}
-                  team={teamPlayers}
-                  currentScenario={seasonState.currentScenario}
-                  animationState={animationStates.playButton}
-                  student={student}
-                />
-              </span>
-              <div className='game-count'>
-                Game {seasonState.currentOpponentIndex + 1} of{' '}
-                {seasonState.allOpponents.length}
+            <div className='cheermeter-container'>
+              <Cheermeter cheerLevel={cheerLevel} />
+            </div>
+            <div className='game-btn-container'>
+              <div className='game-btn-container-inner'>
+                <div className='game-btn-label-wrap'>
+                  {getGameButtonLabel()}
+                </div>
+
+                <div className='game-btn-wrap'>
+                  <GameButton
+                    onStartGame={startGame}
+                    onCheer={onCheer}
+                    gameState={gameState}
+                    team={teamPlayers}
+                    currentScenario={seasonState.currentScenario}
+                    animationState={animationStates.playButton}
+                    student={student}
+                  />
+                </div>
+
+                <div className='game-count-wrap'>
+                  <span className='game-count'>
+                    Game {seasonState.currentOpponentIndex + 1} of{' '}
+                    {seasonState.allOpponents.length}
+                  </span>
+                </div>
               </div>
             </div>
             <div className='standings-board-container'>
@@ -552,7 +622,10 @@ export const SeasonPage = ({ history }) => {
           </div>
         </div>
       </PageBoard>
-      <FooterComponent links={['team', 'season', 'budget']} history={history} />
+      <FooterComponent
+        links={['team', 'budget', 'trophies']}
+        history={history}
+      />
 
       <Overlay />
       {tutorialActive && (

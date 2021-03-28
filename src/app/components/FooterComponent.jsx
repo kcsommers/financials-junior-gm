@@ -48,6 +48,7 @@ export const FooterComponent = ({ links, history }) => {
       <div className='footer-inner' style={styles.inner}>
         {links.map((l) => (
           <Button
+            key={l}
             size='small'
             text={btnConfigs[l].text}
             background={btnConfigs[l].background}

@@ -232,10 +232,18 @@ div.upcoming-games-row > div {
   transform: scale(0.8);
 }
 
-div.upcoming-games-row > div:first-child {
-  transform-origin: right;
+div.upcoming-games-row:first-child > div:first-child {
+  transform-origin: right 90%;
 }
 
-div.upcoming-games-row > div:last-child {
-  transform-origin: left;
+div.upcoming-games-row:first-child > div:last-child {
+  transform-origin: left 90%;
+}
+
+div.upcoming-games-row:last-child > div:first-child {
+  transform-origin: right 10%;
+}
+
+div.upcoming-games-row:last-child > div:last-child {
+  transform-origin: left 10%;
 }
