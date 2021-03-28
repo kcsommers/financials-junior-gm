@@ -118,7 +118,7 @@ export const getGamePhases = (level) => [
   {
     phase: GamePhases.GAME_ON,
     messages: ['The game is being played'],
-    timer: 5000,
+    timer: 15000,
   },
   {
     phase: GamePhases.GAME_OVER,

@@ -142,8 +142,6 @@ const playersReducer = (state = initialState, action) => {
       const student = action.payload.student;
       const moneyLevels = getMoneyLevels(+student.level);
 
-      console.log('PREV ASS:::: ', signedPlayer, prevAssignment, moneyLevels);
-
       let playerCache = clonedState.marketPlayers;
 
       if (prevAssignment === PlayerAssignments.OFFERED_SCOUT) {
@@ -157,13 +155,10 @@ const playersReducer = (state = initialState, action) => {
           levelCache = clonedState.scoutingState.scoutPlayers.levelThree;
         }
 
-        console.log('LEVEL CACHE 1:::: ', levelCache);
-
         levelCache.splice(
           levelCache.findIndex((p) => p._id === signedPlayer._id),
           1
         );
-        console.log('LEVEL CACHE 2:::: ', levelCache);
       }
 
       if (playerCache[signedPlayer.playerPosition]) {

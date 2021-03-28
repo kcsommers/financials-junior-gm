@@ -38,9 +38,6 @@ const objectivesReducer = (state = initialState, action) => {
       );
 
       // check for a season scenario
-
-      console.log('[objectivesReduce initObjects]:::: ', student);
-
       if (
         student.objectives &&
         student.objectives[Objectives.SEASON_SCENARIO] === false

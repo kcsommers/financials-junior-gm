@@ -6,7 +6,8 @@ import { motion } from 'framer-motion';
 import { startingLineupFull } from '@data/players/players-utils';
 
 export const GameButton = ({
-  onClick,
+  onStartGame,
+  onCheer,
   gameState,
   team,
   currentScenario,
@@ -22,11 +23,13 @@ export const GameButton = ({
     !startingLineupFull(team)
   );
 
-  const btnDisabled =
+  const btnDisabled = !!(
     (seasonDisabled &&
       (!currentScenario || !currentScenario.gameButtonAction)) ||
     (phase.phase !== GamePhases.READY &&
-      (!currentScenario || !currentScenario.gameButtonAction));
+      phase.phase !== GamePhases.GAME_ON &&
+      (!currentScenario || !currentScenario.gameButtonAction))
+  );
 
   const gameButtonClicked = () => {
     if (seasonDisabled && !currentScenario) {
@@ -38,7 +41,11 @@ export const GameButton = ({
       return;
     }
 
-    onClick();
+    if (phase.phase === GamePhases.GAME_ON) {
+      onCheer();
+    } else {
+      onStartGame();
+    }
   };
 
   return (
