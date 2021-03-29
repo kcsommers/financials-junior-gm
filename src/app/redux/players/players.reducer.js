@@ -11,7 +11,6 @@ import { cloneDeep } from 'lodash';
 import { PlayerAssignments, PlayerPositions } from '@data/players/players';
 import {
   isTeamPlayer,
-  getPlayerPositon,
   getTeamRank,
   getMoneySpent,
   isStarter,
