@@ -273,7 +273,11 @@ export const TrophiesPage = ({ history }) => {
           </div>
         </div>
       </PageBoard>
-      <FooterComponent links={['team', 'season', 'budget']} history={history} />
+      <FooterComponent
+        links={['team', 'season', 'budget']}
+        history={history}
+        inTransition={inTransition}
+      />
       <Overlay />
     </div>
   );

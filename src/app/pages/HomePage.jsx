@@ -165,7 +165,7 @@ export const HomePage = ({ location, history }) => {
           setInitialPlayersState(updatedStudent.players, updatedStudent)
         );
         dispatch(initializeSeason(updatedStudent));
-        dispatch(initializeObjectives(updatedStudent));
+        dispatch(initializeObjectives(updatedStudent, true));
         window.setTimeout(() => {
           dispatch(
             toggleOverlay({

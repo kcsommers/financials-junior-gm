@@ -26,8 +26,6 @@ export const resetSeason = (newLevel, prevLevel, student) => {
       studentUpdates.rollOverBudget = 0;
     }
 
-    console.log('[resetSeason] studentUpdates:::: ', studentUpdates);
-
     updateStudentById(student._id, studentUpdates)
       .then((res) => {
         if (!res.success || !res.updatedStudent) {
@@ -38,10 +36,6 @@ export const resetSeason = (newLevel, prevLevel, student) => {
         initPlayersByLevel(newLevel)
           .then((initializedStudentRes) => {
             const initializedStudent = initializedStudentRes.data;
-            console.log(
-              '[resetSeason] initializedStudent:::: ',
-              initializedStudent
-            );
             if (!initializedStudentRes.success || !initializedStudent) {
               console.error(new Error('Unexpected error initializing players'));
               return;
@@ -118,7 +112,7 @@ export const getGamePhases = (level) => [
   {
     phase: GamePhases.GAME_ON,
     messages: ['The game is being played'],
-    timer: 5000,
+    timer: 15000,
   },
   {
     phase: GamePhases.GAME_OVER,

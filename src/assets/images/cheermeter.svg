@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="299.515" height="161.731" viewBox="0 0 299.515 161.731">
+  <g id="Image" transform="translate(0 0)">
+    <g id="Backdrop" transform="translate(-117.013 -486.269)">
+      <g id="Group_625" data-name="Group 625" transform="translate(138.739 494)">
+        <g id="XMLID_501_" transform="translate(0.994 15.184)">
+          <path id="XMLID_502_" d="M90,40l54.957,108.654L199.914,40Z" transform="translate(-19.341 -35.322)" fill="#ea7200"/>
+          <path id="XMLID_503_" d="M125.616,148.654H0L70.659,40Z" transform="translate(0 -35.322)" fill="#00788a"/>
+          <path id="XMLID_504_" d="M160,153.332H282.026L213.386,40Z" transform="translate(-34.384 -40)" fill="#fe3400"/>
+        </g>
+        <g id="Path_2099" data-name="Path 2099" transform="translate(1.896 2)" fill="none">
+          <path d="M123.763,0C191.776,0,249.84,64.5,249.84,132.511c-68.927-.5-161.83-1-251.737,0C-1.9,64.5,55.75,0,123.763,0Z" stroke="none"/>
+          <path d="M 123.763053894043 19.99998474121094 C 74.8841552734375 19.99998474121094 29.86204528808594 61.90243530273438 20.06781005859375 112.2958679199219 C 50.86735534667969 112.0352172851563 81.758544921875 111.9345092773438 111.6725311279297 111.9345092773438 C 153.2590789794922 111.9345092773438 192.9532775878906 112.1291122436523 227.8804321289063 112.3585815429688 C 218.0727386474609 61.93724060058594 172.8555297851563 19.99998474121094 123.763053894043 19.99998474121094 M 123.763053894043 -1.52587890625e-05 C 191.7759399414063 -1.52587890625e-05 249.8402557373047 64.49835205078125 249.8402557373047 132.5112457275391 C 210.0466003417969 132.2228546142578 162.2589416503906 131.9344940185547 111.6725463867188 131.9344940185547 C 74.63787841796875 131.9344940185547 36.10429382324219 132.0890197753906 -1.896469116210938 132.5112457275391 C -1.896469116210938 64.49835205078125 55.75015258789063 -1.52587890625e-05 123.763053894043 -1.52587890625e-05 Z" stroke="none" fill="#E5E5E5"/>
+        </g>
+      </g>
+    </g>
+    <text id="Cheermeter_" data-name="Cheermeter
+" transform="translate(67.595 129.731)" fill="#070707" font-size="26" font-family="MADETOMMY-Bold, MADE TOMMY" font-weight="700"><tspan x="6.602" y="25">Cheermeter</tspan></text>
+    <g id="Labels" transform="translate(-96.485 -503.269)">
+      <text id="LOUD_" data-name="LOUD
+" transform="matrix(0.616, -0.788, 0.788, 0.616, 96.485, 629.351)" fill="#00788a" font-size="16" font-family="MADETOMMY-Bold, MADE TOMMY" font-weight="700"><tspan x="58.384" y="16">LOUD</tspan></text>
+      <text id="LOUDER_" data-name="LOUDER
+" transform="translate(164.08 514)" fill="#ea7200" font-size="16" font-family="MADETOMMY-Bold, MADE TOMMY" font-weight="700"><tspan x="48.872" y="16">LOUDER</tspan></text>
+      <text id="LOUDEST_" data-name="LOUDEST
+" transform="matrix(0.616, 0.788, -0.788, 0.616, 297.494, 509.135)" fill="#fe3400" font-size="16" font-family="MADETOMMY-Bold, MADE TOMMY" font-weight="700"><tspan x="44.824" y="16">LOUDEST</tspan></text>
+    </g>
+  </g>
+</svg>

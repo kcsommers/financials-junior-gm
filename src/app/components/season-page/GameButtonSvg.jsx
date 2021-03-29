@@ -1,11 +1,24 @@
 import { GamePhases } from '@data/season/season';
 
-export const GameButtonSvg = ({ phase, currentScenario }) => {
+export const GameButtonSvg = ({ phase, currentScenario, cheerLevel }) => {
   const getFill = () => {
     if (currentScenario) {
       return '#ffd782';
     }
-    return '#070707';
+
+    if (phase !== GamePhases.GAME_ON) {
+      return '#070707';
+    }
+
+    if (cheerLevel <= 5) {
+      return '#00788A';
+    }
+
+    if (cheerLevel <= 10) {
+      return '#EA7200';
+    }
+
+    return '#FE3400';
   };
 
   const pausedView = (
@@ -97,8 +110,22 @@ export const GameButtonSvg = ({ phase, currentScenario }) => {
           transform='translate(1 230.429)'
         >
           <g
-            id='Ellipse_24'
-            data-name='Ellipse 24'
+            id='active-boder-layer-1'
+            data-name='active-border-layer-1'
+            transform='translate(451 321)'
+            fill='#070707'
+            stroke='#070707'
+            style={{
+              opacity: currentScenario ? 0 : 1,
+            }}
+            strokeWidth='1'
+          >
+            <circle cx='60' cy='60' r='60' stroke='none' />
+            <circle cx='60' cy='60' r='59.5' fill='none' />
+          </g>
+          <g
+            id='active-border-layer-2'
+            data-name='active-border-layer-2'
             transform='translate(451 321)'
             fill={getFill()}
             stroke={getFill()}

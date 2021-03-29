@@ -22,7 +22,7 @@ const initialState = {
 const objectivesReducer = (state = initialState, action) => {
   switch (action.type) {
     case INITIALIZE_OBJECTIVES: {
-      const student = action.payload;
+      const { student, reset } = action.payload;
       const clonedState = cloneDeep(state);
 
       clonedState.currentObjectives = initialState.currentObjectives;
@@ -37,10 +37,13 @@ const objectivesReducer = (state = initialState, action) => {
         startingLineupFull(student)
       );
 
+      if (reset) {
+        clonedState.currentObjectives = clonedState.currentObjectives.filter(
+          (o) => o.type !== Objectives.SEASON_SCENARIO
+        );
+      }
+
       // check for a season scenario
-
-      console.log('[objectivesReduce initObjects]:::: ', student);
-
       if (
         student.objectives &&
         student.objectives[Objectives.SEASON_SCENARIO] === false
