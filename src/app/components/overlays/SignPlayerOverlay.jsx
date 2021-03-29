@@ -45,6 +45,7 @@ export const SignPlayerOverlay = ({ assignment, isDisabled }) => {
 
   const signConfirmed = (signedPlayer) => {
     const prevAssignment = signedPlayer.playerAssignment;
+
     handleSignPlayer(signedPlayer, assignment, student).then(
       ({ updatedStudent, updatedPlayer, startingLineupFull }) => {
         batch(() => {
@@ -82,7 +83,7 @@ export const SignPlayerOverlay = ({ assignment, isDisabled }) => {
           <ConfirmSignOverlay
             player={player}
             position={assignment}
-            confirm={signConfirmed.bind(this, player, undefined)}
+            confirm={signConfirmed.bind(this, player)}
             cancel={signCancelled}
             isDisabled={isDisabled}
           />

@@ -96,57 +96,64 @@ export const SeasonPage = ({ history }) => {
     false
   );
 
-  const endSeason = useCallback(() => {
-    const clonedStudent = cloneDeep(student);
+  const endSeason = useCallback(
+    (completedGames) => {
+      const clonedStudent = cloneDeep(student);
 
-    // get the students standing
-    const studentTeamIndex = seasonState.standings.findIndex(
-      (t) => t.name === seasonState.seasonTeam.name
-    );
+      // get the students standing
+      const studentTeamIndex = seasonState.standings.findIndex(
+        (t) => t.name === seasonState.seasonTeam.name
+      );
 
-    // update student awards
-    const prevAwards = (clonedStudent.awards || [])[+clonedStudent.level - 1];
-    const newAwards = {
-      savingsCup:
-        (prevAwards && prevAwards.savingsCup) || student.savingsBudget > 0,
-      thirdCup: (prevAwards && prevAwards.thirdCup) || studentTeamIndex < 3,
-      firstCup: (prevAwards && prevAwards.firstCup) || studentTeamIndex === 0,
-    };
-    (clonedStudent.awards || []).splice(+clonedStudent.level - 1, 1, newAwards);
+      // update student awards
+      const prevAwards = (clonedStudent.awards || [])[+clonedStudent.level - 1];
+      const newAwards = {
+        savingsCup:
+          (prevAwards && prevAwards.savingsCup) || student.savingsBudget > 0,
+        thirdCup: (prevAwards && prevAwards.thirdCup) || studentTeamIndex < 3,
+        firstCup: (prevAwards && prevAwards.firstCup) || studentTeamIndex === 0,
+      };
+      (clonedStudent.awards || []).splice(
+        +clonedStudent.level - 1,
+        1,
+        newAwards
+      );
 
-    // set completed games in student seasons array
-    clonedStudent.seasons[+student.level - 1] = seasonState.completedGames;
+      // set completed games in student seasons array
+      clonedStudent.seasons[+student.level - 1] = completedGames;
 
-    updateStudentById(student._id, {
-      seasons: clonedStudent.seasons,
-      awards: clonedStudent.awards,
-      rollOverBudget: (+student.rollOverBudget || 0) + +student.savingsBudget,
-      savingsBudget: 0,
-    })
-      .then((res) => {
-        batch(() => {
-          dispatch(setStudent(res.updateStudent));
-          dispatch(setSeasonComplete(res.updatedStudent));
-          dispatch(
-            toggleOverlay({
-              isOpen: true,
-              template: (
-                <SeasonCompleteOverlay
-                  standings={seasonState.standings}
-                  level={+res.updatedStudent.level}
-                  team={seasonState.seasonTeam}
-                  student={res.updatedStudent}
-                />
-              ),
-              canClose: false,
-            })
-          );
-        });
-
-        history.push('/trophies');
+      updateStudentById(student._id, {
+        seasons: clonedStudent.seasons,
+        awards: clonedStudent.awards,
+        rollOverBudget: (+student.rollOverBudget || 0) + +student.savingsBudget,
+        savingsBudget: 0,
       })
-      .catch((err) => console.error(err));
-  }, [student, dispatch, history, seasonState]);
+        .then((res) => {
+          batch(() => {
+            dispatch(setStudent(res.updateStudent));
+            dispatch(setSeasonComplete(res.updatedStudent));
+            dispatch(
+              toggleOverlay({
+                isOpen: true,
+                template: (
+                  <SeasonCompleteOverlay
+                    standings={seasonState.standings}
+                    level={+res.updatedStudent.level}
+                    team={seasonState.seasonTeam}
+                    student={res.updatedStudent}
+                  />
+                ),
+                canClose: false,
+              })
+            );
+          });
+
+          history.push('/trophies');
+        })
+        .catch((err) => console.error(err));
+    },
+    [student, dispatch, history, seasonState]
+  );
 
   const newScenario = useCallback(
     (scenarioIndex) => {
@@ -271,7 +278,7 @@ export const SeasonPage = ({ history }) => {
 
         // end of season when all teams are played
         if (nextOpponentIndex === seasonState.allOpponents.length) {
-          endSeason();
+          endSeason(clonedSeasons[+student.level - 1]);
           return;
         }
 

@@ -115,6 +115,9 @@ export const GameButtonSvg = ({ phase, currentScenario, cheerLevel }) => {
             transform='translate(451 321)'
             fill='#070707'
             stroke='#070707'
+            style={{
+              opacity: currentScenario ? 0 : 1,
+            }}
             strokeWidth='1'
           >
             <circle cx='60' cy='60' r='60' stroke='none' />

@@ -1,5 +1,5 @@
 import { INJURE_PLAYER } from '@redux/actions';
-import { PlayerAssignments, TeamAssignments } from '@data/players/players';
+import { PlayerAssignments } from '@data/players/players';
 
 export class SeasonScenario {
   constructor(config, team) {
