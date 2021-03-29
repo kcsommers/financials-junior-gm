@@ -4,10 +4,8 @@ import cheermeter from '@images/cheermeter.svg';
 import cheermeterNeedle from '@images/cheermeter-needle.svg';
 
 export const Cheermeter = ({ cheerLevel = 0 }) => {
-  console.log('CHEER LEVEL:::: ', cheerLevel);
-
   const getRotate = () => {
-    const rotate = 15 * cheerLevel;
+    const rotate = 12 * cheerLevel;
     return rotate - 25;
   };
 

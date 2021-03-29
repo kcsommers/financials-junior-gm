@@ -10,17 +10,21 @@ export const GameButton = ({
   onCheer,
   gameState,
   team,
-  currentScenario,
   animationState,
   student,
+  cheerLevel,
+  seasonState,
 }) => {
   const history = useHistory();
   const { phase } = gameState;
 
+  const currentScenario = seasonState.currentScenario;
+
   const seasonDisabled = !!(
     !student.objectives ||
     !student.objectives[Objectives.LEARN_BUDGET] ||
-    !startingLineupFull(team)
+    !startingLineupFull(team) ||
+    seasonState.currentOpponentIndex >= seasonState.allOpponents.length
   );
 
   const btnDisabled = !!(
@@ -69,6 +73,7 @@ export const GameButton = ({
           animationState={animationState}
           phase={phase.phase}
           currentScenario={currentScenario}
+          cheerLevel={cheerLevel}
         />
       </motion.span>
     </div>

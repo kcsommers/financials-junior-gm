@@ -44,14 +44,12 @@ import {
 import { Objective, Objectives } from '@data/objectives/objectives';
 import { faqs } from '@data/faqs/faqs';
 import { getMaxTeamRank } from '@data/players/players-utils';
+import { useInterval } from './../hooks/use-interval';
 import '@css/pages/SeasonPage.css';
 
 const allActions = {
   [INJURE_PLAYER]: injurePlayer,
 };
-
-let phaseTimer = 0;
-let cheerInterval = 0;
 
 export const SeasonPage = ({ history }) => {
   const dispatch = useDispatch();
@@ -69,6 +67,7 @@ export const SeasonPage = ({ history }) => {
 
   const gamePhases = getGamePhases(+student.level);
   const seasonState = useSelector((state) => state.season);
+
   const [localGameState, setLocalGameState] = useState({
     currentPhaseIndex: 0,
     currentMessageIndex: 0,
@@ -86,28 +85,18 @@ export const SeasonPage = ({ history }) => {
 
   const [cheerLevel, setCheerLevel] = useState(0);
   const [cheerCounter, setCheerCounter] = useState(0);
+  const [cheerPoints, setCheerPoints] = useState(0);
 
-  const setPhaseTimer = () => {
-    if (phaseTimer) {
-      window.clearTimeout(phaseTimer);
-    }
+  const [resetCheerInterval, toggleCheerInterval] = useInterval(
+    () => {
+      setCheerLevel((prevLevel) => Math.max(0, prevLevel - 1));
+      setCheerCounter((prevCount) => Math.max(0, prevCount - 5));
+    },
+    2000,
+    false
+  );
 
-    if (!seasonState.currentScenario && gameState.phase) {
-      // if the current phase contains more than one message
-      // set the message timer and call next message
-      if (gameState.phase.messages.length > 1 && gameState.phase.messageTimer) {
-        phaseTimer = window.setTimeout(
-          nextMessage,
-          gameState.phase.messageTimer
-        );
-      } else if (gameState.phase.timer) {
-        // otherwise timer will move on to next phase
-        phaseTimer = window.setTimeout(nextPhase, gameState.phase.timer);
-      }
-    }
-  };
-
-  const endSeason = () => {
+  const endSeason = useCallback(() => {
     const clonedStudent = cloneDeep(student);
 
     // get the students standing
@@ -157,59 +146,62 @@ export const SeasonPage = ({ history }) => {
         history.push('/trophies');
       })
       .catch((err) => console.error(err));
-  };
+  }, [student, dispatch, history, seasonState]);
 
-  const newScenario = (scenarioIndex) => {
-    // get the next scenario
-    const currentScenario = getNewScenario(
-      +student.level,
-      scenarioIndex,
-      teamPlayers
-    );
-    if (!currentScenario) {
-      return;
-    }
+  const newScenario = useCallback(
+    (scenarioIndex) => {
+      // get the next scenario
+      const currentScenario = getNewScenario(
+        +student.level,
+        scenarioIndex,
+        teamPlayers
+      );
+      if (!currentScenario) {
+        return;
+      }
 
-    const scenarioPlayer = currentScenario.getPlayer();
-    const prevAssignment = currentScenario.getPlayerPrevAssignment();
-    const playersCopy = cloneDeep(student.players);
+      const scenarioPlayer = currentScenario.getPlayer();
+      const prevAssignment = currentScenario.getPlayerPrevAssignment();
+      const playersCopy = cloneDeep(student.players);
 
-    // splice the scenario player into the players array
-    playersCopy.splice(
-      playersCopy.findIndex((p) => p._id === scenarioPlayer._id),
-      1,
-      scenarioPlayer
-    );
+      // splice the scenario player into the players array
+      playersCopy.splice(
+        playersCopy.findIndex((p) => p._id === scenarioPlayer._id),
+        1,
+        scenarioPlayer
+      );
 
-    // update student with new players array and player assignment
-    updateStudentById(student._id, {
-      [prevAssignment]: null,
-      players: playersCopy,
-    })
-      .then((res) => {
-        batch(() => {
-          dispatch(
-            allActions[currentScenario.action](
-              scenarioPlayer,
-              prevAssignment,
-              student
-            )
-          );
-          dispatch(setStudent(res.updatedStudent));
-          dispatch(throwScenario(currentScenario));
-          dispatch(
-            addObjective(
-              new Objective(
-                currentScenario.objective,
-                Objectives.SEASON_SCENARIO,
-                true
-              )
-            )
-          );
-        });
+      // update student with new players array and player assignment
+      updateStudentById(student._id, {
+        [prevAssignment]: null,
+        players: playersCopy,
       })
-      .catch((err) => console.error(err));
-  };
+        .then((res) => {
+          batch(() => {
+            dispatch(
+              allActions[currentScenario.action](
+                scenarioPlayer,
+                prevAssignment,
+                student
+              )
+            );
+            dispatch(setStudent(res.updatedStudent));
+            dispatch(throwScenario(currentScenario));
+            dispatch(
+              addObjective(
+                new Objective(
+                  currentScenario.objective,
+                  Objectives.SEASON_SCENARIO,
+                  true
+                )
+              )
+            );
+          });
+        })
+        .catch((err) => console.error(err));
+    },
+    [student, dispatch, teamPlayers]
+  );
 
   const startGame = () => {
     // check if this is the first game of the season
@@ -229,13 +221,12 @@ export const SeasonPage = ({ history }) => {
     });
   };
 
-  const endGame = () => {
+  const endGame = useCallback(() => {
     // reset cheer state
     setCheerLevel(0);
     setCheerCounter(0);
-    if (cheerInterval) {
-      window.clearInterval(cheerInterval);
-    }
+    setCheerPoints(0);
+    toggleCheerInterval();
 
     const nextOpponentIndex = seasonState.currentOpponentIndex + 1;
 
@@ -299,45 +290,19 @@ export const SeasonPage = ({ history }) => {
         }
       })
       .catch((err) => console.error(err));
-  };
-
-  const nextPhase = () => {
-    const currentPhase = gameState.phase.phase;
-
-    // end of phases, run end game logic
-    if (currentPhase === GamePhases.GAME_OVER) {
-      endGame();
-      return;
-    }
-
-    let messageIndex = 0;
-    let results = null;
-    if (currentPhase === GamePhases.GAME_ON) {
-      // time to get game results
-      results = getGameResult(teamRank, gameState.opponent);
-      messageIndex = results.messageIndex;
-    }
-
-    // go to next phase
-    const nextPhaseIndex = localGameState.currentPhaseIndex + 1;
-    setLocalGameState({
-      ...localGameState,
-      currentMessageIndex: messageIndex,
-      currentPhaseIndex: nextPhaseIndex,
-      results,
-    });
-  };
+  }, [
+    seasonState,
+    student,
+    setLocalGameState,
+    dispatch,
+    endSeason,
+    gameState.opponent,
+    localGameState,
+    newScenario,
+    toggleCheerInterval,
+  ]);
 
   const nextMessage = () => {
-    // end of messages, go to next phase
-    if (
-      localGameState.currentMessageIndex ===
-      gameState.phase.messages.length - 1
-    ) {
-      nextPhase();
-      return;
-    }
-
     // go to next message
     const nextMessageIndex = localGameState.currentMessageIndex + 1;
     setLocalGameState({
@@ -346,37 +311,37 @@ export const SeasonPage = ({ history }) => {
     });
   };
 
-  const setCheerInterval = () => {
-    console.log(':::: SETCHEER TIMER ::::', cheerLevel);
-
-    if (cheerInterval) {
-      window.clearInterval(cheerInterval);
-    }
-
-    cheerInterval = window.setInterval(() => {
-      setCheerLevel((prevLevel) => Math.max(0, prevLevel - 1));
-      setCheerCounter((prevCount) => Math.max(0, prevCount - 5));
-    }, 2000);
-  };
-
   const onCheer = () => {
-    if (cheerLevel === 12) {
-      return;
-    }
-
     // initial cheer
     if (cheerLevel === 0 && cheerCounter === 0) {
-      setCheerInterval();
+      toggleCheerInterval();
     }
 
+    // update the click count
     const newCount = cheerCounter + 1;
     setCheerCounter(newCount);
 
+    // every 5 clicks the cheerlevel increases and
+    // the timer is reset
     if (newCount % 5 === 0) {
-      setCheerLevel((prevLevel) => prevLevel + 1);
-      setCheerInterval();
+      setCheerLevel((prevLevel) => Math.min(prevLevel + 1, 15));
+      resetCheerInterval();
     }
   };
+
+  const prevCheerCount = useRef(cheerCounter);
+  useEffect(() => {
+    if (prevCheerCount.current > cheerCounter) {
+      // if the cheer count has gone down,
+      // reduce the team rank
+      setCheerPoints((prevPoints) => Math.max(prevPoints - 1, 0));
+    } else if (cheerCounter && cheerCounter % 15 === 0) {
+      // otherwise every 15 clicks the team rank goes up 1 (max 5)
+      setCheerPoints((prevPoints) => Math.min(prevPoints + 1, 5));
+    }
+
+    prevCheerCount.current = cheerCounter;
+  }, [cheerCounter]);
 
   const onTutorialComplete = (canceled) => {
     if (canceled) {
@@ -412,6 +377,157 @@ export const SeasonPage = ({ history }) => {
     },
     [dispatch]
   );
+
+  // phase interval effect
+  const [
+    resetPhaseInterval,
+    togglePhaseInterval,
+    phaseIntervalRunning,
+  ] = useInterval(() => nextPhase(), gameState.phase.timer, false);
+
+  const nextPhase = useCallback(() => {
+    const currentPhase = gameState.phase.phase;
+
+    // end of phases, clear interval
+    if (currentPhase === GamePhases.GAME_OVER) {
+      togglePhaseInterval();
+      endGame();
+      return;
+    }
+
+    let messageIndex = 0;
+    let results = null;
+    if (currentPhase === GamePhases.GAME_ON) {
+      // time to get game results
+      results = getGameResult(teamRank + cheerPoints, gameState.opponent);
+      messageIndex = results.messageIndex;
+    }
+
+    // go to next phase
+    const nextPhaseIndex = localGameState.currentPhaseIndex + 1;
+    setLocalGameState({
+      ...localGameState,
+      currentMessageIndex: messageIndex,
+      currentPhaseIndex: nextPhaseIndex,
+      results,
+    });
+  }, [
+    gameState.phase,
+    gameState.opponent,
+    localGameState,
+    teamRank,
+    cheerPoints,
+    setLocalGameState,
+    endGame,
+    togglePhaseInterval,
+  ]);
+
+  const prevPhaseIndex = useRef(0);
+  useEffect(() => {
+    // exit if message timer exists
+    if (gameState.phase.messageTimer || !gameState.phase.timer) {
+      if (phaseIntervalRunning) {
+        togglePhaseInterval();
+      }
+      return;
+    }
+
+    if (prevPhaseIndex.current === localGameState.currentPhaseIndex) {
+      return;
+    }
+
+    prevPhaseIndex.current = localGameState.currentPhaseIndex;
+    phaseIntervalRunning ? resetPhaseInterval() : togglePhaseInterval();
+
+    return;
+  }, [
+    localGameState.currentPhaseIndex,
+    gameState.phase,
+    togglePhaseInterval,
+    resetPhaseInterval,
+    phaseIntervalRunning,
+  ]);
+
+  // message interval effect
+  const [
+    resetMessageInterval,
+    toggleMessageInterval,
+    messageIntervalRunning,
+  ] = useInterval(nextMessage, gameState.phase.messageTimer, false);
+  const prevMessageIndex = useRef(0);
+  useEffect(() => {
+    if (!gameState.phase.messageTimer || !gameState.phase.messages.length) {
+      return;
+    }
+
+    // end of messages, clear interval
+    if (
+      messageIntervalRunning &&
+      gameState.phase.messages.length === localGameState.currentMessageIndex
+    ) {
+      toggleMessageInterval();
+      nextPhase();
+      return;
+    }
+
+    // begin message interval
+    if (!messageIntervalRunning && localGameState.currentMessageIndex === 0) {
+      toggleMessageInterval();
+      return;
+    }
+
+    // reset message interval
+    if (
+      messageIntervalRunning &&
+      prevMessageIndex.current === localGameState.currentMessageIndex
+    ) {
+      prevMessageIndex.current = localGameState.currentMessageIndex;
+      resetMessageInterval();
+    }
+
+    return;
+  }, [
+    gameState.phase,
+    localGameState.currentMessageIndex,
+    toggleMessageInterval,
+    resetMessageInterval,
+    messageIntervalRunning,
+    nextPhase,
+  ]);
+
+  // in UP_NEXT phase, need to add the team names to the gameState message
+  if (
+    gameState.opponent &&
+    gameState.phase &&
+    gameState.phase.phase === GamePhases.UP_NEXT &&
+    localGameState.currentMessageIndex === 1
+  ) {
+    gameState.phase.messages[1] = `${seasonState.seasonTeam.name} vs ${gameState.opponent.name}`;
+    gameState.message = gameState.phase.messages[1];
+  }
+
+  const getGameButtonLabel = () => {
+    if (gameState.phase.phase === GamePhases.GAME_ON) {
+      return (
+        <span className='color-primary'>
+          Click the puck to cheer for your team!
+        </span>
+      );
+    }
+
+    if (
+      seasonState.currentScenario &&
+      seasonState.currentScenario.gameButtonLabel
+    ) {
+      return (
+        <span className='color-primary'>
+          {seasonState.currentScenario.gameButtonLabel}
+        </span>
+      );
+    }
+
+    return null;
+  };
 
   const onCallSharkie = () => {
     dispatch(
@@ -472,56 +588,6 @@ export const SeasonPage = ({ history }) => {
     });
   }
 
-  const prevPhaseIndex = useRef(-1);
-  const prevMessageIndex = useRef(localGameState.currentMessageIndex);
-  useEffect(() => {
-    if (prevPhaseIndex.current !== localGameState.currentPhaseIndex) {
-      prevPhaseIndex.current = localGameState.currentPhaseIndex;
-      setPhaseTimer();
-      return;
-    }
-
-    if (prevMessageIndex.current !== localGameState.currentMessageIndex) {
-      prevMessageIndex.current = localGameState.currentMessageIndex;
-      setPhaseTimer();
-      return;
-    }
-  });
-
-  // in UP_NEXT phase, need to add the team names to the gameState message
-  if (
-    gameState.opponent &&
-    gameState.phase &&
-    gameState.phase.phase === GamePhases.UP_NEXT &&
-    localGameState.currentMessageIndex === 1
-  ) {
-    gameState.phase.messages[1] = `${seasonState.seasonTeam.name} vs ${gameState.opponent.name}`;
-    gameState.message = gameState.phase.messages[1];
-  }
-
-  const getGameButtonLabel = () => {
-    if (gameState.phase.phase !== GamePhases.GAME_ON) {
-      return (
-        <span className='color-primary'>
-          Click the puck to cheer for your team!
-        </span>
-      );
-    }
-
-    if (
-      seasonState.currentScenario &&
-      seasonState.currentScenario.gameButtonLabel
-    ) {
-      return (
-        <span className='color-primary'>
-          {seasonState.currentScenario.gameButtonLabel}
-        </span>
-      );
-    }
-
-    return null;
-  };
-
   return (
     <div className='page-container'>
       <HeaderComponent
@@ -540,11 +606,21 @@ export const SeasonPage = ({ history }) => {
             position: 'relative',
           }}
         >
+          <span
+            style={{
+              position: 'absolute',
+              left: '0.5rem',
+              bottom: '23%',
+              zIndex: tutorialActive ? 0 : 1,
+            }}
+          >
+            <SharkieButton textPosition='right' onCallSharkie={onCallSharkie} />
+          </span>
           <div className='season-page-board-top'>
             <div className='student-team-rank-container'>
               <LevelStick
                 type='teamRank'
-                amount={teamRank}
+                amount={teamRank + cheerPoints}
                 denom={getMaxTeamRank(+student.level)}
                 color='#e06d00'
                 indicatorDirection='right'
@@ -599,16 +675,21 @@ export const SeasonPage = ({ history }) => {
                     onCheer={onCheer}
                     gameState={gameState}
                     team={teamPlayers}
-                    currentScenario={seasonState.currentScenario}
                     animationState={animationStates.playButton}
                     student={student}
+                    cheerLevel={cheerLevel}
+                    seasonState={seasonState}
                   />
                 </div>
 
                 <div className='game-count-wrap'>
                   <span className='game-count'>
-                    Game {seasonState.currentOpponentIndex + 1} of{' '}
-                    {seasonState.allOpponents.length}
+                    Game{' '}
+                    {Math.min(
+                      seasonState.currentOpponentIndex + 1,
+                      seasonState.allOpponents.length
+                    )}{' '}
+                    of {seasonState.allOpponents.length}
                   </span>
                 </div>
               </div>
