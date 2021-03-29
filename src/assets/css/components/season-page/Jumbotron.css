@@ -185,6 +185,7 @@ div.jumbotron-upcoming-games-container > h4 {
 
 div.jumbotron-next-opponent-card {
   padding: 0.25rem;
+  height: 93px;
 }
 
 div.jumbotron-next-opponent-card,

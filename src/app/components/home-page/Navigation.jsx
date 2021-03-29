@@ -35,7 +35,7 @@ export const Navigation = ({ tutorialActive, student }) => {
               template: null,
             })
           );
-          dispatch(initializeObjectives(updatedStudent));
+          dispatch(initializeObjectives(updatedStudent, true));
         });
       })
       .catch((err) => console.error(err));

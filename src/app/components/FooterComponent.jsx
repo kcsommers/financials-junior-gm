@@ -42,7 +42,7 @@ const btnConfigs = {
   },
 };
 
-export const FooterComponent = ({ links, history }) => {
+export const FooterComponent = ({ links, history, inTransition }) => {
   return (
     <div style={styles.container}>
       <div className='footer-inner' style={styles.inner}>
@@ -50,6 +50,7 @@ export const FooterComponent = ({ links, history }) => {
           <Button
             key={l}
             size='small'
+            isDisabled={inTransition}
             text={btnConfigs[l].text}
             background={btnConfigs[l].background}
             link={btnConfigs[l].link}
