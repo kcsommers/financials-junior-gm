@@ -21,7 +21,7 @@ export const removeObjective = (objectiveType) => ({
   payload: objectiveType,
 });
 
-export const initializeObjectives = (student) => ({
+export const initializeObjectives = (student, reset) => ({
   type: INITIALIZE_OBJECTIVES,
-  payload: student,
+  payload: { student, reset },
 });

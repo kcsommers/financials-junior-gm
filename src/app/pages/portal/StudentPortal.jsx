@@ -37,7 +37,7 @@ export const StudentPortal = ({
         dispatch(setStudent(student));
         dispatch(setInitialPlayersState(student.players, student));
         dispatch(initializeSeason(student));
-        dispatch(initializeObjectives(student));
+        dispatch(initializeObjectives(student, false));
       });
     },
     [dispatch]
