@@ -3,21 +3,30 @@ import {
   SET_TUTORIAL_STATE,
   SET_ADVANCE_LISTENER,
 } from './tutorials.actions';
+import { PlayerPositions } from '@data/players/players';
 
 const initialState = {
   isActive: false,
   advanceListener: null,
   home: {},
   team: {
-    playerCard: {
-      borderColor: 'rgba(0,0,0,0)',
-      borderWidth: '0px',
-      borderStyle: 'solid',
+    teamBoard: {
+      zIndex: 0,
       scale: 1,
     },
-    playerCardEmpty: {
+    playerCard: {
+      scale: 1,
+    },
+    [PlayerPositions.FORWARD]: {
       borderColor: '#f3901d',
-      borderStyle: 'solid',
+      scale: 1,
+    },
+    [PlayerPositions.DEFENSE]: {
+      borderColor: '#f3901d',
+      scale: 1,
+    },
+    [PlayerPositions.GOALIE]: {
+      borderColor: '#f3901d',
       scale: 1,
     },
     scoutStick: {

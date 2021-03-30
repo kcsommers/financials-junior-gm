@@ -27,7 +27,9 @@ import { setTutorialState, toggleOverlay, setStudent } from '@redux/actions';
 import { updateStudentById } from './../api-helper';
 import { faqs } from '@data/faqs/faqs';
 import { cloneDeep } from 'lodash';
+import { PlayerPositions } from '@data/players/players';
 import '@css/pages/TeamPage.css';
+import { motion } from 'framer-motion';
 
 export const TeamPage = ({ history, location }) => {
   const dispatch = useDispatch();
@@ -37,12 +39,19 @@ export const TeamPage = ({ history, location }) => {
   const seasonState = useSelector((state) => state.season);
   const studentTeam = seasonState.seasonTeam;
   const scoutingState = useSelector((state) => state.players.scoutingState);
-  const playerCardAnimationStates = {
+  const animationStates = {
     playerCard: useSelector((state) => state.tutorial.team.playerCard),
-    playerCardEmpty: useSelector(
-      (state) => state.tutorial.team.playerCardEmpty
+    [PlayerPositions.FORWARD]: useSelector(
+      (state) => state.tutorial.team[PlayerPositions.FORWARD]
+    ),
+    [PlayerPositions.DEFENSE]: useSelector(
+      (state) => state.tutorial.team[PlayerPositions.DEFENSE]
+    ),
+    [PlayerPositions.GOALIE]: useSelector(
+      (state) => state.tutorial.team[PlayerPositions.GOALIE]
     ),
     scoutStick: useSelector((state) => state.tutorial.team.scoutStick),
+    teamBoard: useSelector((state) => state.tutorial.team.teamBoard),
   };
 
   const [tutorialSlides, setTutorialSlides] = useState([teamSlides]);
@@ -225,7 +234,7 @@ export const TeamPage = ({ history, location }) => {
               <StickButton
                 small={true}
                 image={scoutStick}
-                animationState={playerCardAnimationStates.scoutStick}
+                animationState={animationStates.scoutStick}
                 link='/scout'
                 isDisabled={scoutingState.isComplete}
               />
@@ -233,7 +242,11 @@ export const TeamPage = ({ history, location }) => {
           </div>
 
           <div className='team-page-board-right'>
-            <div className='team-players-card'>
+            <motion.div
+              className='team-players-card'
+              animate={animationStates.teamBoard}
+              transition={{ default: { duration: 1 } }}
+            >
               <img
                 style={{
                   display: 'inline-block',
@@ -257,8 +270,9 @@ export const TeamPage = ({ history, location }) => {
                     }}
                   >
                     <PlayerCard
-                      animationStates={playerCardAnimationStates}
-                      player={team[assignment]}
+                      animationStates={animationStates}
+                      player={!tutorialActive ? team[assignment] : null}
+                      slotPosition={PlayerPositions.FORWARD}
                       onClick={
                         team[assignment]
                           ? openPlayerDetailsOverlay
@@ -278,8 +292,13 @@ export const TeamPage = ({ history, location }) => {
                     }}
                   >
                     <PlayerCard
-                      animationStates={playerCardAnimationStates}
-                      player={team[assignment]}
+                      animationStates={animationStates}
+                      player={!tutorialActive ? team[assignment] : null}
+                      slotPosition={
+                        assignment === 'gOne'
+                          ? PlayerPositions.GOALIE
+                          : PlayerPositions.DEFENSE
+                      }
                       onClick={
                         team[assignment]
                           ? openPlayerDetailsOverlay
@@ -289,7 +308,7 @@ export const TeamPage = ({ history, location }) => {
                   </div>
                 ))}
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
       </PageBoard>

@@ -1,8 +1,11 @@
 import Slide from '../../Slide';
-import { SET_ANIMATION_STATE } from '../../../redux/tutorials/tutorials.actions';
-import { TOGGLE_OVERLAY } from '../../../redux/overlay/overlay.actions';
-import { SignPlayerOverlay, PlayerDetailsOverlay } from '@components';
-import { ConfirmSignOverlay } from '../../../components/overlays/ConfirmSignOverlay';
+import {
+  SignPlayerOverlay,
+  PlayerDetailsOverlay,
+  ConfirmSignOverlay,
+} from '@components';
+import { TOGGLE_OVERLAY, SET_ANIMATION_STATE } from '@redux/actions';
+import { PlayerPositions } from '@data/players/players';
 
 const player = {
   defensiveRank: '16',
@@ -22,18 +25,34 @@ const player = {
 const slideConfigs = [
   {
     message: 'Welcome to your team!',
-    sharkie: 'lean',
+    sharkie: 'speak',
     hasButtons: true,
-    timer: 0,
-    slideAnimate: {
-      y: '63%',
-      x: '-63%',
-    },
-    small: true,
-    transparentBg: true,
+    exitActions: [
+      {
+        type: SET_ANIMATION_STATE,
+        payload: {
+          page: 'team',
+          animationStates: [
+            {
+              component: PlayerPositions.FORWARD,
+              state: {
+                borderColor: '#ffd782',
+              },
+            },
+            {
+              component: 'teamBoard',
+              state: {
+                zIndex: 1,
+                scale: 1.1,
+              },
+            },
+          ],
+        },
+      },
+    ],
   },
   {
-    message: 'Sign three forwards to help your team score goals.  ',
+    message: 'Sign three forwards to help your team score goals.',
     sharkie: 'lean',
     hasButtons: true,
     timer: 0,
@@ -42,7 +61,28 @@ const slideConfigs = [
       x: '-63%',
     },
     small: true,
-    transparentBg: true,
+    exitActions: [
+      {
+        type: SET_ANIMATION_STATE,
+        payload: {
+          page: 'team',
+          animationStates: [
+            {
+              component: PlayerPositions.FORWARD,
+              state: {
+                borderColor: '#f3901d',
+              },
+            },
+            {
+              component: PlayerPositions.DEFENSE,
+              state: {
+                borderColor: '#ffd782',
+              },
+            },
+          ],
+        },
+      },
+    ],
   },
   {
     message:
@@ -55,7 +95,28 @@ const slideConfigs = [
       y: '63%',
       x: '-63%',
     },
-    transparentBg: true,
+    exitActions: [
+      {
+        type: SET_ANIMATION_STATE,
+        payload: {
+          page: 'team',
+          animationStates: [
+            {
+              component: PlayerPositions.DEFENSE,
+              state: {
+                borderColor: '#f3901d',
+              },
+            },
+            {
+              component: PlayerPositions.GOALIE,
+              state: {
+                borderColor: '#ffd782',
+              },
+            },
+          ],
+        },
+      },
+    ],
   },
   {
     message:
@@ -68,7 +129,6 @@ const slideConfigs = [
       y: '63%',
       x: '-63%',
     },
-    transparentBg: true,
     exitActions: [
       {
         type: SET_ANIMATION_STATE,
@@ -76,9 +136,22 @@ const slideConfigs = [
           page: 'team',
           animationStates: [
             {
-              component: 'playerCardEmpty',
+              component: PlayerPositions.FORWARD,
               state: {
                 borderColor: '#ffd782',
+                scale: 1.1,
+              },
+            },
+            {
+              component: PlayerPositions.DEFENSE,
+              state: {
+                borderColor: '#ffd782',
+                scale: 1.1,
+              },
+            },
+            {
+              component: PlayerPositions.GOALIE,
+              state: {
                 scale: 1.1,
               },
             },
@@ -98,7 +171,6 @@ const slideConfigs = [
       x: '-63%',
       zIndex: 1000,
     },
-    transparentBg: true,
     exitActions: [
       {
         type: SET_ANIMATION_STATE,
@@ -106,9 +178,30 @@ const slideConfigs = [
           page: 'team',
           animationStates: [
             {
-              component: 'playerCardEmpty',
+              component: PlayerPositions.FORWARD,
               state: {
                 borderColor: '#f3901d',
+                scale: 1,
+              },
+            },
+            {
+              component: PlayerPositions.DEFENSE,
+              state: {
+                borderColor: '#f3901d',
+                scale: 1,
+              },
+            },
+            {
+              component: PlayerPositions.GOALIE,
+              state: {
+                borderColor: '#f3901d',
+                scale: 1,
+              },
+            },
+            {
+              component: 'teamBoard',
+              state: {
+                zIndex: 0,
                 scale: 1,
               },
             },
@@ -142,7 +235,6 @@ const slideConfigs = [
       x: '63%',
       zIndex: 1000,
     },
-    transparentBg: true,
     exitActions: [
       {
         type: TOGGLE_OVERLAY,
@@ -165,7 +257,6 @@ const slideConfigs = [
       x: '63%',
       zIndex: 1000,
     },
-    transparentBg: true,
     exitActions: [
       {
         type: TOGGLE_OVERLAY,
@@ -189,7 +280,6 @@ const slideConfigs = [
       x: '-63%',
       zIndex: 1000,
     },
-    transparentBg: true,
     exitActions: [
       {
         type: TOGGLE_OVERLAY,
@@ -203,16 +293,13 @@ const slideConfigs = [
   {
     message:
       'When you are finished filling out your team, click on the scout hockey stick to add some replacement players. ',
-    sharkie: 'lean',
+    sharkie: 'speak',
     hasButtons: true,
-    timer: 0,
-    small: true,
     slideAnimate: {
-      y: '21%',
-      x: '-63%',
+      y: '0',
+      x: '0',
       zIndex: 1000,
     },
-    transparentBg: true,
   },
 ];
 

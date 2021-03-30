@@ -108,6 +108,7 @@ export const PlayerCard = ({
   animationStates,
   size = 'small',
   onClick,
+  slotPosition,
 }) => {
   const playerTemplateSmall = player ? (
     <motion.div
@@ -334,7 +335,14 @@ export const PlayerCard = ({
     >
       <motion.div
         className='box-shadow player-card-empty-inner border-accent'
-        animate={animationStates ? animationStates.playerCardEmpty : null}
+        animate={
+          animationStates && slotPosition ? animationStates[slotPosition] : null
+        }
+        transition={{
+          default: {
+            duration: 1,
+          },
+        }}
         onClick={() => {
           if (onClick) {
             onClick(player);
