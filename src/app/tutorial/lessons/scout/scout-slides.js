@@ -30,6 +30,7 @@ const slideConfigs = [
       'These are the players you will sign if you ever need to replace a starting player on your team.',
     sharkie: 'speak',
     hasButtons: true,
+    small: true,
     slideAnimate: {
       y: '50%',
       x: '58%',
@@ -298,10 +299,9 @@ const slideConfigs = [
     message: 'Click here when you are finished.',
     sharkie: 'lean',
     hasButtons: true,
-    small: true,
     slideAnimate: {
-      y: '75%',
-      x: '50%',
+      y: '-30%',
+      x: '-20%',
     },
     exitActions: [
       {

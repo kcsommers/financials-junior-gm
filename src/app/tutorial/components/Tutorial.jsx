@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { SharkieComponent } from './Sharkie';
 import backBtn from '@images/back-btn.svg';
 import backBtnRvrsd from '@images/back-btn-reversed.svg';
@@ -9,12 +9,16 @@ import {
   toggleOverlay,
   SET_ANIMATION_STATE,
   TOGGLE_OVERLAY,
+  SET_ADVANCE_LISTENER,
+  setAdvanceListener,
 } from '@redux/actions';
 import '@css/tutorial/tutorials.css';
+import { useAdvanceSlideListener } from './../../hooks/use-advance-slide-listener';
 
 const allActions = {
   [SET_ANIMATION_STATE]: setAnimationState,
   [TOGGLE_OVERLAY]: toggleOverlay,
+  [SET_ADVANCE_LISTENER]: setAdvanceListener,
 };
 
 let timer = 0;
@@ -63,6 +67,10 @@ export const Tutorial = ({ slides, onComplete }) => {
 
   const dispatch = useDispatch();
 
+  const slideIndexRef = useRef(state.slideIndex);
+
+  const [shouldAdvance, setShouldAdvance] = useState(null);
+
   if (timer) {
     window.clearTimeout(timer);
   }
@@ -73,12 +81,6 @@ export const Tutorial = ({ slides, onComplete }) => {
     timer = window.setTimeout(() => {
       updateSlide(state.slideIndex + 1);
     }, currentSlide.timer);
-  }
-
-  if (currentSlide.enterActions) {
-    currentSlide.enterActions.forEach((a) => {
-      dispatch(allActions[a.type](a.payload));
-    });
   }
 
   const tutorialComplete = (canceled) => {
@@ -113,9 +115,22 @@ export const Tutorial = ({ slides, onComplete }) => {
   };
 
   const updateSlide = (newIndex) => {
+    slideIndexRef.current = newIndex;
+
     if (currentSlide.exitActions) {
       currentSlide.exitActions.forEach((a) => {
-        dispatch(allActions[a.type](a.payload));
+        let payload = a.payload;
+
+        // if the action is an advance slide listener
+        // set the method returned from the hook in redux store
+        // to be used across the app
+        // also need to update listener locally in order to update the hook
+        if (a.type === SET_ADVANCE_LISTENER) {
+          setShouldAdvance(() => a.payload);
+          payload = onAdvanceEvent;
+        }
+
+        dispatch(allActions[a.type](payload));
       });
     }
 
@@ -142,6 +157,11 @@ export const Tutorial = ({ slides, onComplete }) => {
       setNextLesson(nextSlides);
     }
   };
+  const [onAdvanceEvent] = useAdvanceSlideListener(
+    shouldAdvance,
+    state.slideIndex,
+    updateSlide
+  );
 
   const onButtonClick = (newIndex) => {
     if (buttonsAnimating || state.inPreTransition || state.inTransition) {

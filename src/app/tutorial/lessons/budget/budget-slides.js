@@ -1,11 +1,10 @@
 import Slide from '../../Slide';
-import { SET_ANIMATION_STATE } from '../../../redux/tutorials/tutorials.actions';
+import { SET_ADVANCE_LISTENER, SET_ANIMATION_STATE } from '@redux/actions';
 
 const slideConfigs = [
   {
     message: 'Welcome to your Budget!',
     sharkie: 'speak',
-    timer: 0,
     hasButtons: true,
     accentText: 'Budget',
   },
@@ -13,14 +12,12 @@ const slideConfigs = [
     message: 'In hockey, every team has some money to spend on players.',
     sharkie: 'speak',
     hasButtons: true,
-    timer: 0,
   },
   {
     message:
       'You have to make a plan on how to spend your money. This plan is called a budget',
     sharkie: 'speak',
     hasButtons: true,
-    timer: 0,
     exitActions: [
       {
         type: SET_ANIMATION_STATE,
@@ -50,7 +47,6 @@ const slideConfigs = [
     message: 'This is your total budget.',
     sharkie: 'speak',
     accentText: 'total budget',
-    timer: 0,
     hasButtons: true,
     slideAnimate: {
       y: '50%',
@@ -60,7 +56,6 @@ const slideConfigs = [
     message: 'Your total budget is the money you have to make your budget.',
     sharkie: 'speak',
     hasButtons: true,
-    timer: 0,
     exitActions: [
       {
         type: SET_ANIMATION_STATE,
@@ -90,7 +85,6 @@ const slideConfigs = [
     message: 'This is your savings.',
     sharkie: 'speak',
     accentText: 'savings',
-    timer: 0,
     hasButtons: true,
   },
   {
@@ -98,7 +92,6 @@ const slideConfigs = [
       'Your savings are used for emergencies like an injured player or to save up to sign a really good player.',
     sharkie: 'speak',
     accentText: 'savings',
-    timer: 0,
     hasButtons: true,
     exitActions: [
       {
@@ -129,16 +122,8 @@ const slideConfigs = [
     message:
       "What's left is your spending budget. It is the money you have to sign players.",
     sharkie: 'speak',
-    timer: 0,
     hasButtons: true,
     accentText: 'spending budget',
-  },
-  {
-    message:
-      'Move the yellow puck to the right, so you have $14 to spend on signing players.',
-    sharkie: 'speak',
-    timer: 0,
-    hasButtons: true,
     exitActions: [
       {
         type: SET_ANIMATION_STATE,
@@ -156,7 +141,124 @@ const slideConfigs = [
               component: 'equationBoard',
               state: {
                 scale: 1,
+              },
+            },
+            {
+              component: 'slider',
+              state: {
+                scale: 1.1,
                 zIndex: 1,
+              },
+            },
+          ],
+        },
+      },
+      {
+        type: SET_ADVANCE_LISTENER,
+        payload: (sliderValue) => {
+          return sliderValue === 1;
+        },
+      },
+    ],
+  },
+  {
+    message:
+      'Move the yellow puck to the right, so you have $14 to spend on signing players.',
+    sharkie: 'speakInverse',
+    small: true,
+    slideAnimate: {
+      y: '0%',
+      x: '-58%',
+    },
+    exitActions: [
+      {
+        type: SET_ANIMATION_STATE,
+        payload: {
+          page: 'budget',
+          animationStates: [
+            {
+              component: 'savingsIndicator',
+              state: {
+                opacity: [0.5, 0.5, 1],
+                times: [0, 2.75, 3],
+                transition: {
+                  duration: 3,
+                },
+              },
+            },
+          ],
+        },
+      },
+      {
+        type: SET_ADVANCE_LISTENER,
+        payload: (sliderValue) => {
+          return sliderValue === 3;
+        },
+      },
+    ],
+  },
+  {
+    message:
+      'Good job! Now move the yellow puck to the left so you have $3 in savings for signing extra players, in case you lose a few players.',
+    sharkie: 'speakInverse',
+    small: true,
+    slideAnimate: {
+      y: '0%',
+      x: '-58%',
+    },
+    exitActions: [
+      {
+        type: SET_ANIMATION_STATE,
+        payload: {
+          page: 'budget',
+          animationStates: [
+            {
+              component: 'savingsIndicator',
+              state: {
+                opacity: [0.5, 0.5, 1],
+                times: [0, 2.75, 3],
+                transition: {
+                  duration: 3,
+                },
+              },
+            },
+          ],
+        },
+      },
+      {
+        type: SET_ADVANCE_LISTENER,
+        payload: (sliderValue) => {
+          return sliderValue === 4;
+        },
+      },
+    ],
+  },
+  {
+    message:
+      'Awesome! Now move the puck to the left so you have one extra dollar to save for the next season to add to your total budget. You should have $4 of savings.',
+    sharkie: 'speakInverse',
+    small: true,
+    slideAnimate: {
+      y: '0%',
+      x: '-58%',
+    },
+    exitActions: [
+      {
+        type: SET_ANIMATION_STATE,
+        payload: {
+          page: 'budget',
+          animationStates: [
+            {
+              component: 'equationBoard',
+              state: {
+                opacity: 0.5,
+              },
+            },
+            {
+              component: 'slider',
+              state: {
+                scale: 1,
+                opacity: 0.5,
               },
             },
           ],
@@ -166,31 +268,42 @@ const slideConfigs = [
   },
   {
     message:
-      'Good job! Now move the yellow puck to the left, so you have $3 in savings for signing extra players, in case you lose a few players.',
-    sharkie: 'speak',
-    timer: 0,
-    hasButtons: true,
-  },
-  {
-    message:
-      'Awesome! Now move the puck to the left, so you have one extra dollar to save for the next season to add to your total budget. You should have $4 of savings.',
-    sharkie: 'speak',
-    timer: 0,
-    hasButtons: true,
-  },
-  {
-    message:
       'You just made your first budget! If you have any more questions about your budget, click on the call S.J. Sharkie button.',
     sharkie: 'speak',
     hasButtons: true,
-    timer: 0,
+    slideAnimate: {
+      y: '0%',
+      x: '0%',
+    },
   },
   {
     message:
       'Click on the blue budget hockey stick when you are done exploring the budget page.',
     sharkie: 'speak',
     hasButtons: true,
-    timer: 0,
+    exitActions: [
+      {
+        type: SET_ANIMATION_STATE,
+        payload: {
+          page: 'budget',
+          animationStates: [
+            {
+              component: 'equationBoard',
+              state: {
+                opacity: 1,
+                zIndex: 0,
+              },
+            },
+            {
+              component: 'slider',
+              state: {
+                opacity: 1,
+              },
+            },
+          ],
+        },
+      },
+    ],
   },
 ];
 

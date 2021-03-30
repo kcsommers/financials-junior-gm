@@ -44,9 +44,14 @@ export const BudgetPage = ({ history }) => {
     (state) => state.season
   );
 
-  const tutorialActive = useSelector((state) => state.tutorial.isActive);
-
+  const tutorialState = useSelector((state) => state.tutorial);
   const [tutorialSlides, setTutorialSlides] = useState([budgetSlides]);
+  const [tutorialPaused, setTutorialPaused] = useState(false);
+  const [tutorialBudget, setTutorialBudget] = useState({
+    total: 15,
+    savings: 9,
+    spent: 0,
+  });
 
   const _setSeasonActive = useCallback(() => {
     if (startingLineupFull(student)) {
@@ -147,6 +152,27 @@ export const BudgetPage = ({ history }) => {
   };
 
   const updateSavings = (value) => {
+    if (tutorialPaused) {
+      return;
+    }
+
+    if (tutorialState.isActive) {
+      if (tutorialState.advanceListener) {
+        const canAdvance = tutorialState.advanceListener(+value);
+        if (canAdvance) {
+          setTutorialPaused(true);
+          setTimeout(() => {
+            setTutorialPaused(false);
+          }, 3000);
+        }
+      }
+      setTutorialBudget({
+        ...tutorialBudget,
+        savings: +value,
+      });
+      return;
+    }
+
     dispatch(setSavings(+value));
 
     if (debounceTimeout) {
@@ -221,7 +247,7 @@ export const BudgetPage = ({ history }) => {
         stickBtn={budgetStick}
         level={student.level}
         inverse={true}
-        tutorialActive={tutorialActive}
+        tutorialActive={tutorialState.isActive}
       />
 
       <PageBoard height='100%'>
@@ -253,12 +279,16 @@ export const BudgetPage = ({ history }) => {
           </div>
           <div className='budget-equation-container'>
             <BudgetEquation
-              budget={{
-                total: +student.totalBudget,
-                savings: student.savingsBudget,
-                spent: moneySpent,
-                rollOver: +student.rollOverBudget,
-              }}
+              budget={
+                tutorialState.isActive
+                  ? tutorialBudget
+                  : {
+                      total: +student.totalBudget,
+                      savings: student.savingsBudget,
+                      spent: moneySpent,
+                      rollOver: +student.rollOverBudget,
+                    }
+              }
               animationStates={budgetEquationStates}
             />
           </div>
@@ -267,11 +297,15 @@ export const BudgetPage = ({ history }) => {
           </p>
           <div className='budget-slider-container'>
             <BudgetSlider
-              budget={{
-                total: +student.totalBudget,
-                savings: +student.savingsBudget,
-                spent: moneySpent,
-              }}
+              budget={
+                tutorialState.isActive
+                  ? tutorialBudget
+                  : {
+                      total: +student.totalBudget,
+                      savings: +student.savingsBudget,
+                      spent: moneySpent,
+                    }
+              }
               setValue={updateSavings}
               student={student}
             />
@@ -282,10 +316,10 @@ export const BudgetPage = ({ history }) => {
       <FooterComponent
         links={['team', 'season', 'trophies']}
         history={history}
-        tutorialActive={tutorialActive}
+        tutorialActive={tutorialState.isActive}
       />
       <Overlay />
-      {tutorialActive && (
+      {tutorialState.isActive && (
         <Tutorial slides={tutorialSlides} onComplete={onTutorialComplete} />
       )}
     </div>
