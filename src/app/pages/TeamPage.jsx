@@ -296,6 +296,7 @@ export const TeamPage = ({ history, location }) => {
       <FooterComponent
         links={['season', 'budget', 'trophies']}
         history={history}
+        tutorialActive={tutorialActive}
       />
       <Overlay />
       {tutorialActive && (

@@ -282,6 +282,7 @@ export const BudgetPage = ({ history }) => {
       <FooterComponent
         links={['team', 'season', 'trophies']}
         history={history}
+        tutorialActive={tutorialActive}
       />
       <Overlay />
       {tutorialActive && (

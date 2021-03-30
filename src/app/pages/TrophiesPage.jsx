@@ -277,6 +277,7 @@ export const TrophiesPage = ({ history }) => {
         links={['team', 'season', 'budget']}
         history={history}
         inTransition={inTransition}
+        tutorialActive={tutorialActive}
       />
       <Overlay />
     </div>

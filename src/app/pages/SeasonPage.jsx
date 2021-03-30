@@ -713,6 +713,7 @@ export const SeasonPage = ({ history }) => {
       <FooterComponent
         links={['team', 'budget', 'trophies']}
         history={history}
+        tutorialActive={tutorialActive}
       />
 
       <Overlay />

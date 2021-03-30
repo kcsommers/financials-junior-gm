@@ -12,7 +12,6 @@ const initialState = {
     },
     playerCardEmpty: {
       borderColor: '#f3901d',
-      borderWidth: '3px',
       borderStyle: 'solid',
       scale: 1,
     },
