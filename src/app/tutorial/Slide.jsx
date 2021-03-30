@@ -13,7 +13,7 @@ export default class Slide {
     this.y = config.y;
     this.repeatIndex = config.repeatIndex;
     this.bubbleDelay = config.bubbleDelay;
-    this.enterActions = config.enterActions;
+    this.eventListener = config.eventListener;
     this.exitActions = config.exitActions;
     this.small = config.small;
     this.transparentBg = config.transparentBg;
@@ -32,7 +32,7 @@ export default class Slide {
 
     if (this.message.length >= 110) {
       if (this.small) {
-        return { base: '1.48rem', accent: '1.258' };
+        return { base: '1.39rem', accent: '1.258' };
       }
       return { base: '2rem', accent: '2rem' };
     }

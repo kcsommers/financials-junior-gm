@@ -1,7 +1,12 @@
-import { SET_ANIMATION_STATE, SET_TUTORIAL_STATE } from './tutorials.actions';
+import {
+  SET_ANIMATION_STATE,
+  SET_TUTORIAL_STATE,
+  SET_ADVANCE_LISTENER,
+} from './tutorials.actions';
 
 const initialState = {
   isActive: false,
+  advanceListener: null,
   home: {},
   team: {
     playerCard: {
@@ -62,6 +67,14 @@ const initialState = {
       scale: 1,
       opacity: 1,
     },
+    slider: {
+      scale: 1,
+      opacity: 1,
+      zIndex: 0,
+    },
+    savingsIndicator: {
+      opacity: 1,
+    },
   },
   season: {
     stats: {
@@ -119,6 +132,13 @@ const tutorialsReducer = (state = initialState, action) => {
           ...state[payload.page],
           ...componentStates,
         },
+      };
+    }
+    case SET_ADVANCE_LISTENER: {
+      const listener = action.payload;
+      return {
+        ...state,
+        advanceListener: listener,
       };
     }
     default:

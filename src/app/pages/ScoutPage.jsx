@@ -610,6 +610,7 @@ export const ScoutPage = ({ history }) => {
             <motion.div
               className='color-primary'
               animate={finishedBtnAnimationState}
+              style={{ transformOrigin: 'right' }}
             >
               <div
                 className={!scoutingIsValid() ? 'disabled' : ''}

@@ -1,7 +1,9 @@
 import { Indicator } from '@components';
 import { BudgetSliderSvg } from './BudgetSliderSvg';
 import { getDollarString } from '@utils';
+import { useSelector } from 'react-redux';
 import '@css/components/budget-page/BudgetSlider.css';
+import { motion } from 'framer-motion';
 
 export const BudgetSlider = ({
   budget,
@@ -9,6 +11,13 @@ export const BudgetSlider = ({
   student,
   spendingLabel = 'Spending Budget',
 }) => {
+  const sliderAnimationState = useSelector(
+    (state) => state.tutorial.budget.slider
+  );
+  const indicatorAnimationState = useSelector(
+    (state) => state.tutorial.budget.savingsIndicator
+  );
+
   const getSavingsIndicatorPosition = () => {
     const pct = (budget.savings / (budget.total - budget.spent)) * 100;
     return {
@@ -57,7 +66,11 @@ export const BudgetSlider = ({
   }
 
   return (
-    <div className='budget-slider-wrap'>
+    <motion.div
+      className='budget-slider-wrap'
+      transition={{ default: { duration: 1 } }}
+      animate={sliderAnimationState}
+    >
       <div className='top-indicators-container'>
         {budget.spent > 0 && (
           <div className='spent-indicator-wrap'>
@@ -94,9 +107,10 @@ export const BudgetSlider = ({
             }}
           >
             <div className='slider-input-wrap-inner'>
-              <div
+              <motion.div
                 className='savings-indicator-wrap'
                 style={getSavingsIndicatorPosition()}
+                animate={indicatorAnimationState}
               >
                 <Indicator
                   amount={budget.savings}
@@ -105,7 +119,7 @@ export const BudgetSlider = ({
                   isMoney={true}
                 />
                 <p className='color-primary'>Savings</p>
-              </div>
+              </motion.div>
               <input
                 type='range'
                 min='0'
@@ -122,6 +136,6 @@ export const BudgetSlider = ({
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
