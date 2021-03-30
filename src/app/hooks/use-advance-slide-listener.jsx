@@ -34,7 +34,6 @@ export const useAdvanceSlideListener = (callback, slideIndex, updateSlide) => {
   }, [slideIndex]);
 
   useEffect(() => {
-    console.log('update slide effect');
     updateSlideRef.current = updateSlide;
   }, [updateSlide]);
 

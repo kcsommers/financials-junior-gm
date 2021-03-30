@@ -1,4 +1,5 @@
 export { AwardDetailsOverlay } from './overlays/AwardDetailsOverlay';
+export { ConfirmSignOverlay } from './overlays/ConfirmSignOverlay';
 export { Cheermeter } from './season-page/Cheermeter';
 export { FooterComponent } from './FooterComponent';
 export { RolloverBudgetOverlay } from './overlays/RolloverBudgetOverlay';
