@@ -33,7 +33,20 @@ const slideConfigs = [
     transparentBg: true,
   },
   {
-    message: 'There are six players on your team.',
+    message: 'Sign three forwards to help your team score goals.  ',
+    sharkie: 'lean',
+    hasButtons: true,
+    timer: 0,
+    slideAnimate: {
+      y: '63%',
+      x: '-63%',
+    },
+    small: true,
+    transparentBg: true,
+  },
+  {
+    message:
+      'Sign two defenses to help your team stop the other team from scoring goals.',
     sharkie: 'lean',
     hasButtons: true,
     timer: 0,
@@ -45,7 +58,8 @@ const slideConfigs = [
     transparentBg: true,
   },
   {
-    message: '3 forwards, 2 defense and a goalie.',
+    message:
+      'Sign one goalie to help your team save the puck from going in your goal.',
     sharkie: 'lean',
     hasButtons: true,
     timer: 0,
@@ -65,7 +79,6 @@ const slideConfigs = [
               component: 'playerCardEmpty',
               state: {
                 borderColor: '#ffd782',
-                borderWidth: '4px',
                 scale: 1.1,
               },
             },
@@ -75,7 +88,7 @@ const slideConfigs = [
     ],
   },
   {
-    message: 'You can add a player by clicking on an empty player slot.',
+    message: 'You can add a player by clicking on an empty player space.',
     sharkie: 'lean',
     hasButtons: true,
     timer: 0,
@@ -96,7 +109,6 @@ const slideConfigs = [
               component: 'playerCardEmpty',
               state: {
                 borderColor: '#f3901d',
-                borderWidth: '3px',
                 scale: 1,
               },
             },
@@ -119,7 +131,8 @@ const slideConfigs = [
     ],
   },
   {
-    message: 'These are the players you can sign to this slot!',
+    message:
+      'When you click on a space, you can see all the players you can sign to that space.',
     sharkie: 'speak',
     hasButtons: true,
     timer: 0,
@@ -130,6 +143,16 @@ const slideConfigs = [
       zIndex: 1000,
     },
     transparentBg: true,
+    exitActions: [
+      {
+        type: TOGGLE_OVERLAY,
+        payload: {
+          isOpen: true,
+          template: <PlayerDetailsOverlay player={player} isDisabled={true} />,
+          canClose: false,
+        },
+      },
+    ],
   },
   {
     message: 'When you click on a player, you will learn more about them.',
@@ -155,47 +178,8 @@ const slideConfigs = [
     ],
   },
   {
-    message: 'Each player has a rank which tells you how good the player is.',
-    sharkie: 'lean',
-    hasButtons: true,
-    timer: 0,
-    small: true,
-    slideAnimate: {
-      y: '21%',
-      x: '-63%',
-      zIndex: 1000,
-    },
-    transparentBg: true,
-  },
-  {
-    message: 'For defense and forwards, the rank depends on three things...',
-    sharkie: 'lean',
-    hasButtons: true,
-    timer: 0,
-    small: true,
-    slideAnimate: {
-      y: '21%',
-      x: '-63%',
-      zIndex: 1000,
-    },
-    transparentBg: true,
-  },
-  {
-    message: 'Their offense score, which is how good they are at scoring.',
-    sharkie: 'lean',
-    hasButtons: true,
-    timer: 0,
-    small: true,
-    slideAnimate: {
-      y: '21%',
-      x: '-63%',
-      zIndex: 1000,
-    },
-    transparentBg: true,
-  },
-  {
     message:
-      'Their passing score, which is how good they are at helping others score.',
+      'When you sign a player, their rank is added to your team rank and their contract value is subtracted from your spending budget.',
     sharkie: 'lean',
     hasButtons: true,
     timer: 0,
@@ -203,196 +187,6 @@ const slideConfigs = [
     slideAnimate: {
       y: '21%',
       x: '-63%',
-      zIndex: 1000,
-    },
-    transparentBg: true,
-  },
-  {
-    message:
-      'Finally their defensive score, which is how good they are at stopping the puck.',
-    sharkie: 'lean',
-    hasButtons: true,
-    timer: 0,
-    small: true,
-    slideAnimate: {
-      y: '21%',
-      x: '-63%',
-      zIndex: 1000,
-    },
-    transparentBg: true,
-  },
-  {
-    message:
-      "A goalie's rank depends on how they stop the puck from going into the goal. This is called a save.",
-    sharkie: 'lean',
-    hasButtons: true,
-    timer: 0,
-    small: true,
-    transparentBg: true,
-  },
-  {
-    message: 'Each player also has a contract value.',
-    sharkie: 'lean',
-    hasButtons: true,
-    timer: 0,
-    small: true,
-    slideAnimate: {
-      y: '21%',
-      x: '-63%',
-      zIndex: 1000,
-    },
-    transparentBg: true,
-  },
-  {
-    message:
-      'The contract value is the money they are paid to play for your team.',
-    sharkie: 'lean',
-    hasButtons: true,
-    timer: 0,
-    small: true,
-    slideAnimate: {
-      y: '21%',
-      x: '-63%',
-      zIndex: 1000,
-    },
-    transparentBg: true,
-  },
-  {
-    message:
-      'Players with a higher rank will usually have a higher contract value.',
-    sharkie: 'lean',
-    hasButtons: true,
-    timer: 0,
-    small: true,
-    slideAnimate: {
-      y: '21%',
-      x: '-63%',
-      zIndex: 1000,
-    },
-    transparentBg: true,
-  },
-  {
-    message: 'You can choose to sign this player for their contract value.',
-    sharkie: 'lean',
-    hasButtons: true,
-    timer: 0,
-    small: true,
-    slideAnimate: {
-      y: '21%',
-      x: '-63%',
-      zIndex: 1000,
-    },
-    transparentBg: true,
-  },
-  {
-    message:
-      'This will remove the money of their contract value from your budget.',
-    sharkie: 'lean',
-    hasButtons: true,
-    timer: 0,
-    small: true,
-    slideAnimate: {
-      y: '21%',
-      x: '-63%',
-      zIndex: 1000,
-    },
-    transparentBg: true,
-  },
-  {
-    message: 'Their rank will then be added to your team rank.',
-    sharkie: 'lean',
-    hasButtons: true,
-    timer: 0,
-    small: true,
-    slideAnimate: {
-      y: '21%',
-      x: '-63%',
-      zIndex: 1000,
-    },
-    transparentBg: true,
-  },
-  {
-    message: 'You can see these changes above!',
-    sharkie: 'lean',
-    hasButtons: true,
-    timer: 0,
-    small: true,
-    slideAnimate: {
-      y: '61%',
-      x: '-63%',
-      zIndex: 1000,
-    },
-    transparentBg: true,
-    exitActions: [
-      {
-        type: TOGGLE_OVERLAY,
-        payload: {
-          isOpen: false,
-          template: <ConfirmSignOverlay player={player} isDisabled={true} />,
-          canClose: false,
-        },
-      },
-    ],
-  },
-  {
-    message:
-      "Once you've signed a player, clicking on them gives you two choices.",
-    sharkie: 'lean',
-    hasButtons: true,
-    timer: 0,
-    small: true,
-    slideAnimate: {
-      y: '21%',
-      x: '-63%',
-      zIndex: 1000,
-    },
-    transparentBg: true,
-    exitActions: [
-      {
-        type: TOGGLE_OVERLAY,
-        payload: {
-          isOpen: true,
-          template: <PlayerDetailsOverlay player={player} isDisabled={true} />,
-          canClose: false,
-        },
-      },
-    ],
-  },
-  {
-    message: 'You can decide to release the player from the team.',
-    sharkie: 'lean',
-    hasButtons: true,
-    timer: 0,
-    small: true,
-    slideAnimate: {
-      y: '91%',
-      x: '-63%',
-      zIndex: 1000,
-    },
-    transparentBg: true,
-  },
-  {
-    message: 'This will add the money of their contract back to your budget.',
-    sharkie: 'lean',
-    hasButtons: true,
-    timer: 0,
-    small: true,
-    slideAnimate: {
-      y: '81%',
-      x: '-63%',
-      zIndex: 1000,
-    },
-    transparentBg: true,
-  },
-  {
-    message: 'Or you can trade a player for other available players.',
-    sharkie: 'speak',
-    hasButtons: true,
-    timer: 0,
-    small: true,
-    slideAnimate: {
-      y: '81%',
-      x: '50%',
       zIndex: 1000,
     },
     transparentBg: true,
@@ -402,14 +196,13 @@ const slideConfigs = [
         payload: {
           isOpen: false,
           template: null,
-          canClose: true,
         },
       },
     ],
   },
   {
     message:
-      'Your team also has a bench where you can add up to three extra players.',
+      'When you are finished filling out your team, click on the scout hockey stick to add some replacement players. ',
     sharkie: 'lean',
     hasButtons: true,
     timer: 0,
@@ -417,104 +210,6 @@ const slideConfigs = [
     slideAnimate: {
       y: '21%',
       x: '-63%',
-      zIndex: 1000,
-    },
-    transparentBg: true,
-  },
-  {
-    message: 'You can add players of any position to the bench.',
-    sharkie: 'lean',
-    hasButtons: true,
-    timer: 0,
-    small: true,
-    slideAnimate: {
-      y: '21%',
-      x: '-63%',
-      zIndex: 1000,
-    },
-    transparentBg: true,
-  },
-  {
-    message: 'In order to use your bench, you need to scout players.',
-    sharkie: 'lean',
-    hasButtons: true,
-    timer: 0,
-    small: true,
-    slideAnimate: {
-      y: '21%',
-      x: '-63%',
-      zIndex: 1000,
-    },
-    transparentBg: true,
-  },
-  {
-    message: 'Try filling out your team by signing players.',
-    sharkie: 'speak',
-    hasButtons: true,
-    timer: 0,
-    small: true,
-    slideAnimate: {
-      y: '21%',
-      x: '63%',
-      zIndex: 1000,
-    },
-    transparentBg: true,
-    exitActions: [
-      {
-        type: SET_ANIMATION_STATE,
-        payload: {
-          page: 'team',
-          animationStates: [
-            {
-              component: 'scoutStick',
-              state: {
-                scale: 1.1,
-              },
-            },
-          ],
-        },
-      },
-    ],
-  },
-  {
-    message: 'Then click the scout button to learn about scouting.',
-    sharkie: 'speak',
-    hasButtons: true,
-    timer: 0,
-    small: true,
-    slideAnimate: {
-      y: '91%',
-      x: '63%',
-      zIndex: 1000,
-    },
-    transparentBg: true,
-    exitActions: [
-      {
-        type: SET_ANIMATION_STATE,
-        payload: {
-          page: 'team',
-          animationStates: [
-            {
-              component: 'scoutStick',
-              state: {
-                scale: 1,
-              },
-            },
-          ],
-        },
-      },
-    ],
-  },
-  {
-    message:
-      'If you ever need help with building your team, click the ask S.J. Sharkie button and choose the questions you need answered.',
-    sharkie: 'speak',
-    hasButtons: true,
-    timer: 0,
-    small: true,
-    slideAnimate: {
-      y: '91%',
-      x: '63%',
       zIndex: 1000,
     },
     transparentBg: true,
