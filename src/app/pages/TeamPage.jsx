@@ -22,14 +22,15 @@ import {
   SharkieButton,
   Tutorial,
   getConfirmSlides,
+  finishedScoutingSlides,
 } from '@tutorial';
 import { setTutorialState, toggleOverlay, setStudent } from '@redux/actions';
 import { updateStudentById } from './../api-helper';
 import { faqs } from '@data/faqs/faqs';
 import { cloneDeep } from 'lodash';
 import { PlayerPositions } from '@data/players/players';
-import '@css/pages/TeamPage.css';
 import { motion } from 'framer-motion';
+import '@css/pages/TeamPage.css';
 
 export const TeamPage = ({ history, location }) => {
   const dispatch = useDispatch();
@@ -168,6 +169,11 @@ export const TeamPage = ({ history, location }) => {
         toggleOverlay({
           isOpen: true,
           template: <ScoutingCompleteOverlay />,
+          onClose: () => {
+            if (!student.tutorials || !student.tutorials.season) {
+              startTutorial([finishedScoutingSlides]);
+            }
+          },
         })
       );
 

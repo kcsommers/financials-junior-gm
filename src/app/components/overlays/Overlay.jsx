@@ -10,6 +10,9 @@ export const Overlay = () => {
   const dispatch = useDispatch();
 
   const closeOverlay = () => {
+    if (overlayConfig.onClose) {
+      overlayConfig.onClose();
+    }
     dispatch(toggleOverlay({ isOpen: false, template: null, sign: null }));
   };
 
