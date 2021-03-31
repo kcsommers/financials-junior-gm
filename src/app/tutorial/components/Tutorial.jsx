@@ -95,6 +95,8 @@ export const Tutorial = ({ slides, onComplete }) => {
   };
 
   const setNextLesson = (nextSlides) => {
+    slideIndexRef.current = 0;
+
     setState({
       ...state,
       inTransition: true,
@@ -115,10 +117,16 @@ export const Tutorial = ({ slides, onComplete }) => {
   };
 
   const updateSlide = (newIndex) => {
+    const actions =
+      slideIndexRef.current > newIndex
+        ? currentSlide.previousActions
+        : currentSlide.exitActions;
+    console.log('ACTIONS:::: ', actions);
+
     slideIndexRef.current = newIndex;
 
-    if (currentSlide.exitActions) {
-      currentSlide.exitActions.forEach((a) => {
+    if (actions) {
+      actions.forEach((a) => {
         let payload = a.payload;
 
         // if the action is an advance slide listener

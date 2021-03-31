@@ -15,6 +15,7 @@ export default class Slide {
     this.bubbleDelay = config.bubbleDelay;
     this.eventListener = config.eventListener;
     this.exitActions = config.exitActions;
+    this.previousActions = config.previousActions;
     this.small = config.small;
     this.transparentBg = config.transparentBg;
     this.slideAnimate = config.slideAnimate;
