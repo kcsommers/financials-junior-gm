@@ -51,6 +51,30 @@ const slideConfigs = [
     slideAnimate: {
       y: '50%',
     },
+    previousActions: [
+      {
+        type: SET_ANIMATION_STATE,
+        payload: {
+          page: 'budget',
+          animationStates: [
+            {
+              component: 'equationBoard',
+              state: {
+                scale: 1,
+                zIndex: 0,
+              },
+            },
+            {
+              component: 'total',
+              state: {
+                scale: 1,
+                color: '#fff',
+              },
+            },
+          ],
+        },
+      },
+    ],
   },
   {
     message: 'Your total budget is the money you have to make your budget.',
@@ -86,6 +110,30 @@ const slideConfigs = [
     sharkie: 'speak',
     accentText: 'savings',
     hasButtons: true,
+    previousActions: [
+      {
+        type: SET_ANIMATION_STATE,
+        payload: {
+          page: 'budget',
+          animationStates: [
+            {
+              component: 'total',
+              state: {
+                scale: 1.2,
+                color: '#ffd782',
+              },
+            },
+            {
+              component: 'savings',
+              state: {
+                scale: 1,
+                color: '#fff',
+              },
+            },
+          ],
+        },
+      },
+    ],
   },
   {
     message:
@@ -157,6 +205,30 @@ const slideConfigs = [
         type: SET_ADVANCE_LISTENER,
         payload: (sliderValue) => {
           return sliderValue === 1;
+        },
+      },
+    ],
+    previousActions: [
+      {
+        type: SET_ANIMATION_STATE,
+        payload: {
+          page: 'budget',
+          animationStates: [
+            {
+              component: 'savings',
+              state: {
+                scale: 1.2,
+                color: '#ffd782',
+              },
+            },
+            {
+              component: 'spending',
+              state: {
+                scale: 1,
+                color: '#fff',
+              },
+            },
+          ],
         },
       },
     ],
@@ -275,6 +347,35 @@ const slideConfigs = [
       y: '0%',
       x: '0%',
     },
+    previousActions: [
+      {
+        type: SET_ANIMATION_STATE,
+        payload: {
+          page: 'budget',
+          animationStates: [
+            {
+              component: 'equationBoard',
+              state: {
+                opacity: 1,
+              },
+            },
+            {
+              component: 'slider',
+              state: {
+                scale: 1.1,
+                opacity: 1,
+              },
+            },
+          ],
+        },
+      },
+      {
+        type: SET_ADVANCE_LISTENER,
+        payload: (sliderValue) => {
+          return sliderValue === 4;
+        },
+      },
+    ],
   },
   {
     message:
