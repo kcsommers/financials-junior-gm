@@ -61,6 +61,10 @@ div.scout-board {
   position: relative;
 }
 
+div.scout-board-disabled {
+  pointer-events: none;
+}
+
 div.scout-page-board-left > p {
   left: 0;
   text-align: center;
