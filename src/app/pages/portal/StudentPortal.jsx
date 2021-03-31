@@ -70,6 +70,8 @@ export const StudentPortal = ({
     }
     getCurrentUser()
       .then((res) => {
+        console.log('RES:::: ', res);
+
         if (!res || !res.data) {
           throw res;
         }

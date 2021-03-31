@@ -1,13 +1,17 @@
-const getGradientPct = (rank, index, max) => {
-  const pct = (rank / max) * 100;
-  const indexPct = 20 * index;
-  if (pct >= indexPct) {
+const getGradientPct = (rank, circleIndex, max) => {
+  const circleTotal = max / 5;
+  const filledCircles = rank / circleTotal;
+
+  if (circleIndex <= filledCircles) {
     return 100;
   }
-  if (pct <= 20 * (index - 1)) {
-    return 0;
+
+  if (filledCircles > circleIndex - 1) {
+    const pct = filledCircles - (circleIndex - 1);
+    return pct * 100;
   }
-  return Math.min(100, pct);
+
+  return 0;
 };
 
 const styles = (rgb, rank, index, isSmall, max) => {
