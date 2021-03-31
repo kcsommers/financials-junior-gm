@@ -250,7 +250,6 @@ const slideConfigs = [
     message: 'When you click on a player, you will learn more about them.',
     sharkie: 'speak',
     hasButtons: true,
-    timer: 0,
     small: true,
     slideAnimate: {
       y: '-40%',
@@ -262,7 +261,13 @@ const slideConfigs = [
         type: TOGGLE_OVERLAY,
         payload: {
           isOpen: true,
-          template: <ConfirmSignOverlay player={player} isDisabled={true} />,
+          template: (
+            <ConfirmSignOverlay
+              player={player}
+              isDisabled={true}
+              tutorialState={{ teamRank: 20, budget: 13, changes: [2, 20] }}
+            />
+          ),
           canClose: false,
         },
       },
@@ -271,13 +276,13 @@ const slideConfigs = [
   {
     message:
       'When you sign a player, their rank is added to your team rank and their contract value is subtracted from your spending budget.',
-    sharkie: 'lean',
+    sharkie: 'speak',
     hasButtons: true,
     timer: 0,
     small: true,
     slideAnimate: {
-      y: '21%',
-      x: '-63%',
+      y: '-40%',
+      x: '63%',
       zIndex: 1000,
     },
     exitActions: [

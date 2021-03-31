@@ -223,7 +223,11 @@ export const TeamPage = ({ history, location }) => {
 
         <div className='team-page-board-inner'>
           <div className='team-page-board-left'>
-            <TeamBudgetState />
+            <TeamBudgetState
+              tutorialState={
+                tutorialActive ? { teamRank: 0, budget: 15 } : null
+              }
+            />
             <div
               style={{
                 position: 'absolute',
