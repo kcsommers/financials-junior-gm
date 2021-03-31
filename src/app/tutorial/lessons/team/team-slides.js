@@ -55,7 +55,6 @@ const slideConfigs = [
     message: 'Sign three forwards to help your team score goals.',
     sharkie: 'lean',
     hasButtons: true,
-    timer: 0,
     slideAnimate: {
       y: '63%',
       x: '-63%',
@@ -89,7 +88,6 @@ const slideConfigs = [
       'Sign two defenses to help your team stop the other team from scoring goals.',
     sharkie: 'lean',
     hasButtons: true,
-    timer: 0,
     small: true,
     slideAnimate: {
       y: '63%',
@@ -123,7 +121,6 @@ const slideConfigs = [
       'Sign one goalie to help your team save the puck from going in your goal.',
     sharkie: 'lean',
     hasButtons: true,
-    timer: 0,
     small: true,
     slideAnimate: {
       y: '63%',
@@ -164,7 +161,6 @@ const slideConfigs = [
     message: 'You can add a player by clicking on an empty player space.',
     sharkie: 'lean',
     hasButtons: true,
-    timer: 0,
     small: true,
     slideAnimate: {
       y: '63%',
@@ -228,7 +224,6 @@ const slideConfigs = [
       'When you click on a space, you can see all the players you can sign to that space.',
     sharkie: 'speak',
     hasButtons: true,
-    timer: 0,
     small: true,
     slideAnimate: {
       y: '-40%',
@@ -278,7 +273,6 @@ const slideConfigs = [
       'When you sign a player, their rank is added to your team rank and their contract value is subtracted from your spending budget.',
     sharkie: 'speak',
     hasButtons: true,
-    timer: 0,
     small: true,
     slideAnimate: {
       y: '-40%',
@@ -308,4 +302,16 @@ const slideConfigs = [
   },
 ];
 
+const finishedScoutingSlideConnfigs = [
+  {
+    message:
+      'If you are done making changes to your team, click on the orange team hockey stick.',
+    sharkie: 'speak',
+    hasButtons: true,
+  },
+];
+
 export const teamSlides = slideConfigs.map((c) => new Slide(c));
+export const finishedScoutingSlides = finishedScoutingSlideConnfigs.map(
+  (c) => new Slide(c)
+);
