@@ -78,7 +78,9 @@ export const ScoutPage = ({ history }) => {
 
   const onTutorialComplete = (canceled) => {
     if (canceled) {
-      dispatch(setTutorialState({ isActive: false }));
+      setTimeout(() => {
+        dispatch(setTutorialState({ isActive: false }));
+      }, 1000);
       return;
     }
 
@@ -651,7 +653,7 @@ export const ScoutPage = ({ history }) => {
                     Remember to tap a player to learn more about them!
                   </p>
                   <motion.div
-                    className='scout-board'
+                    className='scout-board scout-board-disabled'
                     animate={availablePlayersAnimationState}
                     transition={{ default: { duration: 1 } }}
                     style={{ transformOrigin: 'bottom' }}

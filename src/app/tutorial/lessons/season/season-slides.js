@@ -30,6 +30,10 @@ const slideConfigs = [
       'If your team loses a game, you earn 0 points, unless they lose in overtime. Then you earn 1 point.',
     sharkie: 'speak',
     hasButtons: true,
+    slideAnimate: {
+      y: '0%',
+      x: '0%',
+    },
     exitActions: [
       {
         type: SET_ANIMATION_STATE,
@@ -95,6 +99,25 @@ const slideConfigs = [
         },
       },
     ],
+    previousActions: [
+      {
+        type: SET_ANIMATION_STATE,
+        payload: {
+          page: 'season',
+          animationStates: [
+            {
+              component: 'stats',
+              state: {
+                borderColor: 'rgba(0, 0, 0, 0)',
+                backgroundColor: 'rgba(0, 0, 0, 0)',
+                scale: 1,
+                zIndex: 0,
+              },
+            },
+          ],
+        },
+      },
+    ],
   },
   {
     message: "The standings box shows your team's standing in the season.",
@@ -129,6 +152,32 @@ const slideConfigs = [
         },
       },
     ],
+    previousActions: [
+      {
+        type: SET_ANIMATION_STATE,
+        payload: {
+          page: 'season',
+          animationStates: [
+            {
+              component: 'stats',
+              state: {
+                borderColor: '#ffd782',
+                backgroundColor: 'rgba(112, 112, 112, 0.9)',
+                scale: 1.5,
+                zIndex: 10,
+              },
+            },
+            {
+              component: 'standings',
+              state: {
+                borderColor: '#707070',
+                scale: 1,
+              },
+            },
+          ],
+        },
+      },
+    ],
   },
   {
     message: 'To start a game, press play.',
@@ -156,6 +205,29 @@ const slideConfigs = [
         },
       },
     ],
+    previousActions: [
+      {
+        type: SET_ANIMATION_STATE,
+        payload: {
+          page: 'season',
+          animationStates: [
+            {
+              component: 'standings',
+              state: {
+                borderColor: '#ffd782',
+                scale: 1.1,
+              },
+            },
+            {
+              component: 'playButton',
+              state: {
+                scale: 1,
+              },
+            },
+          ],
+        },
+      },
+    ],
   },
   {
     message:
@@ -166,6 +238,22 @@ const slideConfigs = [
       y: '0%',
       x: '0%',
     },
+    previousActions: [
+      {
+        type: SET_ANIMATION_STATE,
+        payload: {
+          page: 'season',
+          animationStates: [
+            {
+              component: 'playButton',
+              state: {
+                scale: 1.2,
+              },
+            },
+          ],
+        },
+      },
+    ],
   },
   {
     message:
