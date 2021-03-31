@@ -18,6 +18,10 @@ const slideConfigs = [
       'You have to make a plan on how to spend your money. This plan is called a budget',
     sharkie: 'speak',
     hasButtons: true,
+    slideAnimate: {
+      y: '0%',
+      x: '0%',
+    },
     exitActions: [
       {
         type: SET_ANIMATION_STATE,
@@ -50,6 +54,7 @@ const slideConfigs = [
     hasButtons: true,
     slideAnimate: {
       y: '50%',
+      x: '0%',
     },
     previousActions: [
       {
@@ -172,6 +177,10 @@ const slideConfigs = [
     sharkie: 'speak',
     hasButtons: true,
     accentText: 'spending budget',
+    slideAnimate: {
+      y: '50%',
+      x: '0%',
+    },
     exitActions: [
       {
         type: SET_ANIMATION_STATE,

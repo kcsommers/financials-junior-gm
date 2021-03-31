@@ -27,6 +27,10 @@ const slideConfigs = [
     message: 'Welcome to your team!',
     sharkie: 'speak',
     hasButtons: true,
+    slideAnimate: {
+      y: '0%',
+      x: '0%',
+    },
     exitActions: [
       {
         type: SET_ANIMATION_STATE,
@@ -82,6 +86,29 @@ const slideConfigs = [
         },
       },
     ],
+    previousActions: [
+      {
+        type: SET_ANIMATION_STATE,
+        payload: {
+          page: 'team',
+          animationStates: [
+            {
+              component: PlayerPositions.FORWARD,
+              state: {
+                borderColor: '#f3901d',
+              },
+            },
+            {
+              component: 'teamBoard',
+              state: {
+                zIndex: 0,
+                scale: 1,
+              },
+            },
+          ],
+        },
+      },
+    ],
   },
   {
     message:
@@ -109,6 +136,28 @@ const slideConfigs = [
               component: PlayerPositions.GOALIE,
               state: {
                 borderColor: '#ffd782',
+              },
+            },
+          ],
+        },
+      },
+    ],
+    previousActions: [
+      {
+        type: SET_ANIMATION_STATE,
+        payload: {
+          page: 'team',
+          animationStates: [
+            {
+              component: PlayerPositions.FORWARD,
+              state: {
+                borderColor: '#ffd782',
+              },
+            },
+            {
+              component: PlayerPositions.DEFENSE,
+              state: {
+                borderColor: '#f3901d',
               },
             },
           ],
@@ -150,6 +199,28 @@ const slideConfigs = [
               component: PlayerPositions.GOALIE,
               state: {
                 scale: 1.1,
+              },
+            },
+          ],
+        },
+      },
+    ],
+    previousActions: [
+      {
+        type: SET_ANIMATION_STATE,
+        payload: {
+          page: 'team',
+          animationStates: [
+            {
+              component: PlayerPositions.DEFENSE,
+              state: {
+                borderColor: '#ffd782',
+              },
+            },
+            {
+              component: PlayerPositions.GOALIE,
+              state: {
+                borderColor: '#f3901d',
               },
             },
           ],
@@ -218,6 +289,37 @@ const slideConfigs = [
         },
       },
     ],
+    previousActions: [
+      {
+        type: SET_ANIMATION_STATE,
+        payload: {
+          page: 'team',
+          animationStates: [
+            {
+              component: PlayerPositions.FORWARD,
+              state: {
+                borderColor: '#f3901d',
+                scale: 1,
+              },
+            },
+            {
+              component: PlayerPositions.DEFENSE,
+              state: {
+                borderColor: '#f3901d',
+                scale: 1,
+              },
+            },
+            {
+              component: PlayerPositions.GOALIE,
+              state: {
+                scale: 1,
+                borderColor: '#f3901d',
+              },
+            },
+          ],
+        },
+      },
+    ],
   },
   {
     message:
@@ -237,6 +339,51 @@ const slideConfigs = [
           isOpen: true,
           template: <PlayerDetailsOverlay player={player} isDisabled={true} />,
           canClose: false,
+        },
+      },
+    ],
+    previousActions: [
+      {
+        type: TOGGLE_OVERLAY,
+        payload: {
+          isOpen: false,
+          template: null,
+        },
+      },
+      {
+        type: SET_ANIMATION_STATE,
+        payload: {
+          page: 'team',
+          animationStates: [
+            {
+              component: PlayerPositions.FORWARD,
+              state: {
+                borderColor: '#ffd782',
+                scale: 1.1,
+              },
+            },
+            {
+              component: PlayerPositions.DEFENSE,
+              state: {
+                borderColor: '#ffd782',
+                scale: 1.1,
+              },
+            },
+            {
+              component: PlayerPositions.GOALIE,
+              state: {
+                scale: 1.1,
+                borderColor: '#ffd782',
+              },
+            },
+            {
+              component: 'teamBoard',
+              state: {
+                zIndex: 1,
+                scale: 1.1,
+              },
+            },
+          ],
         },
       },
     ],
@@ -260,8 +407,23 @@ const slideConfigs = [
             <ConfirmSignOverlay
               player={player}
               isDisabled={true}
-              tutorialState={{ teamRank: 20, budget: 13, changes: [2, 20] }}
+              tutorialState={{ teamRank: 0, budget: 15, changes: [2, 20] }}
             />
+          ),
+          canClose: false,
+        },
+      },
+    ],
+    previousActions: [
+      {
+        type: TOGGLE_OVERLAY,
+        payload: {
+          isOpen: true,
+          template: (
+            <SignPlayerOverlay
+              assignment='fOne'
+              isDisabled={true}
+            ></SignPlayerOverlay>
           ),
           canClose: false,
         },
@@ -288,6 +450,16 @@ const slideConfigs = [
         },
       },
     ],
+    previousActions: [
+      {
+        type: TOGGLE_OVERLAY,
+        payload: {
+          isOpen: true,
+          template: <PlayerDetailsOverlay player={player} isDisabled={true} />,
+          canClose: false,
+        },
+      },
+    ],
   },
   {
     message:
@@ -299,6 +471,22 @@ const slideConfigs = [
       x: '0',
       zIndex: 1000,
     },
+    previousActions: [
+      {
+        type: TOGGLE_OVERLAY,
+        payload: {
+          isOpen: true,
+          template: (
+            <ConfirmSignOverlay
+              player={player}
+              isDisabled={true}
+              tutorialState={{ teamRank: 0, budget: 15, changes: [2, 20] }}
+            />
+          ),
+          canClose: false,
+        },
+      },
+    ],
   },
 ];
 
