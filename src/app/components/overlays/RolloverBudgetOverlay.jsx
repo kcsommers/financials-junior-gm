@@ -52,7 +52,7 @@ export const RolloverBudgetOverlay = ({ student }) => {
         <div className='rollover-budget-slider-wrap'>
           <BudgetSlider
             budget={{
-              total: +student.rollOverBudget || 5,
+              total: +student.rollOverBudget,
               savings: rollOverToAdd,
               spent: 0,
             }}
