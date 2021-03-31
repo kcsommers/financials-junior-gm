@@ -6,6 +6,10 @@ const slideConfigs = [
     message: 'Welcome to the Scouting page!',
     sharkie: 'play',
     hasButtons: true,
+    slideAnimate: {
+      y: '0%',
+      x: '0%',
+    },
     exitActions: [
       {
         type: SET_ANIMATION_STATE,
@@ -35,6 +39,24 @@ const slideConfigs = [
       y: '50%',
       x: '58%',
     },
+    previousActions: [
+      {
+        type: SET_ANIMATION_STATE,
+        payload: {
+          page: 'scout',
+          animationStates: [
+            {
+              component: 'availablePlayersBoard',
+              state: {
+                scale: 1,
+                zIndex: 0,
+                borderColor: '#4b4b4b',
+              },
+            },
+          ],
+        },
+      },
+    ],
   },
   {
     message:
@@ -72,9 +94,6 @@ const slideConfigs = [
                 scale: 1.2,
                 zIndex: 1,
                 borderColor: '#ffd782',
-                transition: {
-                  duration: 1,
-                },
               },
             },
             {
@@ -114,9 +133,6 @@ const slideConfigs = [
               state: {
                 scale: 1,
                 borderColor: '#4b4b4b',
-                transition: {
-                  duration: 1,
-                },
               },
             },
             {
@@ -124,9 +140,31 @@ const slideConfigs = [
               state: {
                 scale: 1.2,
                 borderColor: '#ffd782',
-                transition: {
-                  duration: 1,
-                },
+              },
+            },
+          ],
+        },
+      },
+    ],
+    previousActions: [
+      {
+        type: SET_ANIMATION_STATE,
+        payload: {
+          page: 'scout',
+          animationStates: [
+            {
+              component: 'availablePlayersBoard',
+              state: {
+                scale: 1.2,
+                opacity: 1,
+                borderColor: '#ffd782',
+              },
+            },
+            {
+              component: 'moneyLevel1',
+              state: {
+                scale: 1,
+                borderColor: '#4b4b4b',
               },
             },
           ],
@@ -154,9 +192,6 @@ const slideConfigs = [
               state: {
                 scale: 1,
                 borderColor: '#4b4b4b',
-                transition: {
-                  duration: 1,
-                },
               },
             },
             {
@@ -164,9 +199,30 @@ const slideConfigs = [
               state: {
                 scale: 1.2,
                 borderColor: '#ffd782',
-                transition: {
-                  duration: 1,
-                },
+              },
+            },
+          ],
+        },
+      },
+    ],
+    previousActions: [
+      {
+        type: SET_ANIMATION_STATE,
+        payload: {
+          page: 'scout',
+          animationStates: [
+            {
+              component: 'moneyLevel1',
+              state: {
+                scale: 1.2,
+                borderColor: '#ffd782',
+              },
+            },
+            {
+              component: 'moneyLevel2',
+              state: {
+                scale: 1,
+                borderColor: '#4b4b4b',
               },
             },
           ],
@@ -195,9 +251,30 @@ const slideConfigs = [
               state: {
                 scale: 1,
                 borderColor: '#4b4b4b',
-                transition: {
-                  duration: 1,
-                },
+              },
+            },
+          ],
+        },
+      },
+    ],
+    previousActions: [
+      {
+        type: SET_ANIMATION_STATE,
+        payload: {
+          page: 'scout',
+          animationStates: [
+            {
+              component: 'moneyLevel2',
+              state: {
+                scale: 1.2,
+                borderColor: '#ffd782',
+              },
+            },
+            {
+              component: 'moneyLevel3',
+              state: {
+                scale: 1,
+                borderColor: '#4b4b4b',
               },
             },
           ],
@@ -226,9 +303,6 @@ const slideConfigs = [
               state: {
                 opacity: 0.5,
                 borderColor: '#4b4b4b',
-                transition: {
-                  duration: 1,
-                },
               },
             },
             {
@@ -236,9 +310,6 @@ const slideConfigs = [
               state: {
                 opacity: 0.5,
                 borderColor: '#4b4b4b',
-                transition: {
-                  duration: 1,
-                },
               },
             },
             {
@@ -246,9 +317,23 @@ const slideConfigs = [
               state: {
                 opacity: 0.5,
                 borderColor: '#4b4b4b',
-                transition: {
-                  duration: 1,
-                },
+              },
+            },
+          ],
+        },
+      },
+    ],
+    previousActions: [
+      {
+        type: SET_ANIMATION_STATE,
+        payload: {
+          page: 'scout',
+          animationStates: [
+            {
+              component: 'moneyLevel3',
+              state: {
+                scale: 1.2,
+                borderColor: '#ffd782',
               },
             },
           ],
@@ -259,23 +344,52 @@ const slideConfigs = [
   {
     message:
       'You can only scout players once every season, so pick the players who fit your team the best.',
-    sharkie: 'lean',
-    small: true,
+    sharkie: 'speakInverse',
     hasButtons: true,
     slideAnimate: {
-      y: '50%',
-      x: '-58%',
+      y: '0%',
+      x: '0%',
     },
+    previousActions: [
+      {
+        type: SET_ANIMATION_STATE,
+        payload: {
+          page: 'scout',
+          animationStates: [
+            {
+              component: 'moneyLevel1',
+              state: {
+                opacity: 1,
+                borderColor: '#ffd782',
+              },
+            },
+            {
+              component: 'moneyLevel2',
+              state: {
+                opacity: 1,
+                borderColor: '#ffd782',
+              },
+            },
+            {
+              component: 'moneyLevel3',
+              state: {
+                opacity: 1,
+                borderColor: '#ffd782',
+              },
+            },
+          ],
+        },
+      },
+    ],
   },
   {
     message:
       'If you need help deciding which players to pick or want to know how to sign these players, click on the call S.J. Sharkie button.',
-    sharkie: 'lean',
+    sharkie: 'speakInverse',
     hasButtons: true,
-    small: true,
     slideAnimate: {
-      y: '50%',
-      x: '-58%',
+      y: '0%',
+      x: '0%',
     },
     exitActions: [
       {
@@ -297,37 +411,11 @@ const slideConfigs = [
   },
   {
     message: 'Click here when you are finished.',
-    sharkie: 'lean',
+    sharkie: 'speakInverse',
     hasButtons: true,
     slideAnimate: {
-      y: '-30%',
-      x: '-20%',
-    },
-    exitActions: [
-      {
-        type: SET_ANIMATION_STATE,
-        payload: {
-          page: 'scout',
-          animationStates: [
-            {
-              component: 'finishedBtn',
-              state: {
-                scale: 1,
-              },
-            },
-          ],
-        },
-      },
-    ],
-  },
-  {
-    message:
-      'If you are done making changes to your team, click on the orange team hockey stick.',
-    sharkie: 'speak',
-    hasButtons: true,
-    slideAnimate: {
-      y: '0%',
-      x: '0%',
+      y: '-10%',
+      x: '10%',
     },
     exitActions: [
       {
@@ -340,13 +428,31 @@ const slideConfigs = [
             'moneyLevel1',
             'moneyLevel2',
             'moneyLevel3',
+            'finishedBtn',
           ].map((c) => ({
             component: c,
             state: {
               opacity: 1,
               zIndex: 0,
+              scale: 1,
             },
           })),
+        },
+      },
+    ],
+    previousActions: [
+      {
+        type: SET_ANIMATION_STATE,
+        payload: {
+          page: 'scout',
+          animationStates: [
+            {
+              component: 'finishedBtn',
+              state: {
+                scale: 1,
+              },
+            },
+          ],
         },
       },
     ],
