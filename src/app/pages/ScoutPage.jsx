@@ -288,6 +288,7 @@ export const ScoutPage = ({ history }) => {
           key={`offered-player-row-${i}`}
           className='offered-player-row-wrap'
           animate={moneyLevelAnimationStates[i]}
+          transition={{ default: { duration: 1 } }}
         >
           <span className='money-level-short color-primary'>
             {moneyLevels[i].short}
@@ -611,6 +612,9 @@ export const ScoutPage = ({ history }) => {
               className='color-primary'
               animate={finishedBtnAnimationState}
               style={{ transformOrigin: 'right' }}
+              transition={{
+                default: { duration: 1 },
+              }}
             >
               <div
                 className={!scoutingIsValid() ? 'disabled' : ''}
@@ -650,6 +654,7 @@ export const ScoutPage = ({ history }) => {
                     className='scout-board'
                     animate={availablePlayersAnimationState}
                     transition={{ default: { duration: 1 } }}
+                    style={{ transformOrigin: 'bottom' }}
                   >
                     {availablePlayersBoard}{' '}
                   </motion.div>
