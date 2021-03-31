@@ -2,14 +2,15 @@ import { Indicator } from '@components';
 import { BudgetSliderSvg } from './BudgetSliderSvg';
 import { getDollarString } from '@utils';
 import { useSelector } from 'react-redux';
-import '@css/components/budget-page/BudgetSlider.css';
 import { motion } from 'framer-motion';
+import '@css/components/budget-page/BudgetSlider.css';
 
 export const BudgetSlider = ({
   budget,
   setValue,
   student,
   spendingLabel = 'Spending Budget',
+  totalDisplay,
 }) => {
   const sliderAnimationState = useSelector(
     (state) => state.tutorial.budget.slider
@@ -82,7 +83,9 @@ export const BudgetSlider = ({
         <div className='spending-indicator-wrap'>
           <p className='color-primary'>
             {getDollarString(
-              budget.total - budget.spent - budget.savings,
+              totalDisplay
+                ? totalDisplay
+                : budget.total - budget.spent - budget.savings,
               true
             )}{' '}
             <br /> {spendingLabel}

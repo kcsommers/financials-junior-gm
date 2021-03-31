@@ -23,7 +23,7 @@ div.rollover-budget-wrap {
 }
 
 div.rollover-budget-wrap > p {
-  font-size: 1.1rem;
+  font-size: 1rem;
   margin-top: 0.5rem;
 }
 
@@ -34,15 +34,11 @@ span.rollover-budget-indicator-wrap {
 
 div.rollover-budget-overlay-header-wrap > p {
   text-align: center;
-  width: 450px;
+  width: 500px;
   margin: 0 auto;
 }
 
-div.rollover-budget-overlay-header-wrap > p:first-child {
-  margin-bottom: 1rem;
-}
-
 div.rollover-budget-slider-wrap {
-  margin-top: -3rem;
+  margin-top: -1rem;
   margin-bottom: 3rem;
 }

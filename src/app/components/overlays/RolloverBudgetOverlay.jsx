@@ -43,27 +43,27 @@ export const RolloverBudgetOverlay = ({ student }) => {
         }}
       >
         <div className='rollover-budget-overlay-header-wrap'>
-          <p>These are your savings from the previous season!</p>
           <p>
-            When you run out of savings in your budget, move the yellow puck to
-            pick how much money you want to use and click the orange button to
-            add it to your budget.
+            Move the yellow puck to the left to choose how much of your season's
+            savings you want to add to you total budget. Then press the add to
+            budget button. This money will be added to your total budget.
           </p>
         </div>
         <div className='rollover-budget-slider-wrap'>
           <BudgetSlider
             budget={{
-              total: +student.rollOverBudget,
+              total: +student.rollOverBudget || 5,
               savings: rollOverToAdd,
               spent: 0,
             }}
             setValue={setRollOverToAdd}
             student={student}
-            spendingLabel='Rollover Budget'
+            spendingLabel='Total Budget'
+            totalDisplay={+student.totalBudget + +rollOverToAdd}
           />
         </div>
         <div>
-          <Button onClick={addToSavings} text='Add to Budget' />
+          <Button onClick={addToSavings} text='Add to Total Budget' />
         </div>
       </div>
     </OverlayBoard>
