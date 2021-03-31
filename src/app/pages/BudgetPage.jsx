@@ -265,7 +265,9 @@ export const BudgetPage = ({ history }) => {
                 />
               </span>
 
-              <p className='color-primary'>Use Previous Season's Savings</p>
+              <p className='color-primary'>
+                Click the circle above to use last season's savings
+              </p>
             </div>
           )}
           <div
