@@ -13,6 +13,11 @@
   src: url('../fonts/MADE_TOMMY_OUTLINE/MADE\ TOMMY\ Regular\ Outline.otf');
 }
 
+@font-face {
+  font-family: 'made-tommy-bold';
+  src: url('../fonts/MADE_TOMMY/MADE\ TOMMY\ Bold.otf');
+}
+
 html {
   background-color: #eee;
 }
@@ -26,9 +31,15 @@ html {
   min-height: 100vh;
 }
 
+text {
+  font-family: made-tommy-bold;
+  color: white;
+  outline: none;
+}
+
 body,
 button {
-  font-family: made-tommy, serif;
+  font-family: made-tommy, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-size: 1.25rem;

@@ -11,7 +11,6 @@ import {
   RolloverBudgetOverlay,
   FooterComponent,
 } from '@components';
-import budgetStick from '@images/budget-stick.svg';
 import { useSelector, useDispatch, batch } from 'react-redux';
 import {
   budgetSlides,
@@ -244,7 +243,7 @@ export const BudgetPage = ({ history }) => {
   return (
     <div className='page-container budget-page-container'>
       <HeaderComponent
-        stickBtn={budgetStick}
+        stickBtn='budget'
         level={student.level}
         inverse={true}
         tutorialActive={tutorialState.isActive}

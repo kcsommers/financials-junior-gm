@@ -11,7 +11,6 @@ import {
   FaqOverlay,
   NextSeasonOverlay,
 } from '@components';
-import scoutStick from '@images/scout-stick.svg';
 import { useSelector, useDispatch, batch } from 'react-redux';
 import { motion } from 'framer-motion';
 import {
@@ -597,7 +596,7 @@ export const ScoutPage = ({ history }) => {
   return (
     <div className='page-container scout-page-container'>
       <HeaderComponent
-        stickBtn={scoutStick}
+        stickBtn='scout'
         largeStick={true}
         level={+student.level}
         tutorialActive={tutorialActive}
