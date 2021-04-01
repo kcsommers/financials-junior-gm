@@ -9,6 +9,17 @@ import { updateStudentById } from './../../api-helper';
 import { Objectives } from '@data/objectives/objectives';
 
 export const getOpenAssignment = (position, student) => {
+  if (!position) {
+    return [
+      PlayerAssignments.F_ONE,
+      PlayerAssignments.F_TWO,
+      PlayerAssignments.F_THREE,
+      PlayerAssignments.D_ONE,
+      PlayerAssignments.D_TWO,
+      PlayerAssignments.G_ONE,
+    ].find((a) => !student[a]);
+  }
+
   switch (position) {
     case PlayerPositions.FORWARD: {
       return [
