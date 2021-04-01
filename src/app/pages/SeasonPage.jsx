@@ -14,7 +14,6 @@ import {
   FooterComponent,
   Cheermeter,
 } from '@components';
-import seasonStick from '@images/season-stick.svg';
 import { GamePhases } from '@data/season/season';
 import {
   getGameResult,
@@ -598,7 +597,7 @@ export const SeasonPage = ({ history }) => {
   return (
     <div className='page-container'>
       <HeaderComponent
-        stickBtn={seasonStick}
+        stickBtn='season'
         level={+student.level}
         tutorialActive={tutorialActive}
       />

@@ -6,7 +6,6 @@ import {
   Overlay,
   FooterComponent,
 } from '@components';
-import trophiesStick from '@images/trophies-stick.svg';
 import trophyIcon from '@images/icons/trophy.svg';
 import { awardsByLevel } from '@data/season/awards';
 import { toggleOverlay } from '@redux/actions';
@@ -160,7 +159,7 @@ export const TrophiesPage = ({ history }) => {
   return (
     <div className='page-container'>
       <HeaderComponent
-        stickBtn={trophiesStick}
+        stickBtn='trophies'
         level={+student.level}
         inverse={true}
         tutorialActive={tutorialActive}

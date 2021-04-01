@@ -17,10 +17,6 @@ import {
   Tutorial,
   getConfirmSlides,
 } from '@tutorial';
-import teamStick from '@images/team-stick.svg';
-import budgetStick from '@images/budget-stick.svg';
-import seasonStick from '@images/season-stick.svg';
-import trophiesStick from '@images/trophies-stick.svg';
 import {
   setTutorialState,
   toggleOverlay,
@@ -263,7 +259,7 @@ export const HomePage = ({ location, history }) => {
             <StickButton
               tutorialActive={tutorialActive}
               link='/team'
-              image={teamStick}
+              stick='team'
               isDisabled={disabledStickBtns.team}
             />
             <p
@@ -279,7 +275,7 @@ export const HomePage = ({ location, history }) => {
               tutorialActive={tutorialActive}
               link='/budget'
               inverse={true}
-              image={budgetStick}
+              stick='budget'
               isDisabled={disabledStickBtns.budget}
             />
             <p
@@ -296,7 +292,7 @@ export const HomePage = ({ location, history }) => {
             <StickButton
               tutorialActive={tutorialActive}
               link='/season'
-              image={seasonStick}
+              stick='season'
               isDisabled={disabledStickBtns.season}
             />
             <p
@@ -308,11 +304,7 @@ export const HomePage = ({ location, history }) => {
             </p>
           </div>
           <div className='stick-btn-container'>
-            <StickButton
-              inverse={true}
-              link='/trophies'
-              image={trophiesStick}
-            />
+            <StickButton inverse={true} link='/trophies' stick='trophies' />
             <p
               className={`stick-btn-text stick-btn-text-right${
                 tutorialActive ? ' transparent' : ''

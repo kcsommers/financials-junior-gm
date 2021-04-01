@@ -13,8 +13,6 @@ import {
   ScoutingCompleteOverlay,
   FooterComponent,
 } from '@components';
-import scoutStick from '@images/scout-stick.svg';
-import teamStick from '@images/team-stick.svg';
 import iceBgSmall from '@images/ice-bg-small.svg';
 import { useSelector, useDispatch, batch } from 'react-redux';
 import {
@@ -206,7 +204,7 @@ export const TeamPage = ({ history, location }) => {
   return (
     <div className='page-container'>
       <HeaderComponent
-        stickBtn={teamStick}
+        stickBtn='team'
         level={+student.level}
         tutorialActive={tutorialActive}
       />
@@ -243,7 +241,7 @@ export const TeamPage = ({ history, location }) => {
             >
               <StickButton
                 small={true}
-                image={scoutStick}
+                stick='scout'
                 animationState={animationStates.scoutStick}
                 link='/scout'
                 isDisabled={scoutingState.isComplete}

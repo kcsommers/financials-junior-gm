@@ -24,7 +24,7 @@ export const HeaderComponent = ({
     <StickButton
       key='s'
       link={stickBtnLink}
-      image={stickBtn}
+      stick={stickBtn}
       inverse={inverse}
       large={largeStick}
       isDisabled={inTransition || tutorialActive}
