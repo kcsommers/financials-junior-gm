@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { toggleOverlay } from '@redux/actions';
 import { Objectives } from '@data/objectives/objectives';
 import '@css/components/MarketPlayersBoard.css';
+import { getOpenAssignment } from '../data/players/players-utils';
 
 const getPlayerCardStyles = (arrLength, playerIndex) => {
   let scale = 1.15;
@@ -64,14 +65,22 @@ export const MarketPlayersBoard = ({
   onPlayerCardClick,
   student,
   releasingPlayer,
+  signAssignment,
 }) => {
   const dispatch = useDispatch();
+
+  const { currentScenario } = useSelector((state) => state.season);
+
+  const scenarioAssignment =
+    student.objectives &&
+    student.objectives[Objectives.SEASON_SCENARIO] === false
+      ? getOpenAssignment(null, student)
+      : '';
 
   // if there is an active season scenario, only the scouted players
   // should be available to sign
   const marketPlayers = useSelector((state) =>
-    student.objectives &&
-    student.objectives[Objectives.SEASON_SCENARIO] === false
+    scenarioAssignment && scenarioAssignment === signAssignment
       ? state.players.scoutingState.offeredScoutPlayers
       : state.players.marketPlayers
   );

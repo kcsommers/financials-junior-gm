@@ -121,7 +121,6 @@ export const Tutorial = ({ slides, onComplete }) => {
       slideIndexRef.current > newIndex
         ? currentSlide.previousActions
         : currentSlide.exitActions;
-    console.log('ACTIONS:::: ', actions);
 
     slideIndexRef.current = newIndex;
 

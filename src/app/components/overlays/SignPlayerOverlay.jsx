@@ -143,6 +143,7 @@ export const SignPlayerOverlay = ({ assignment, isDisabled }) => {
             initialPosition={getPlayerPositon(assignment)}
             onPlayerCardClick={confirmSign}
             student={student}
+            signAssignment={assignment}
           />
         </div>
       </div>
