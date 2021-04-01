@@ -19,6 +19,10 @@ import { TeacherPortal } from './pages/portal/TeacherPortal';
 import Signup from './pages/Signup';
 import { IceBackground } from '@components';
 import { StudentPortal } from './pages/portal/StudentPortal';
+import { AdminPage } from './pages/AdminPage';
+import { AdminLogin } from './pages/login/AdminLogin';
+import { AdminPortal } from './pages/portal/AdminPortal';
+
 const protectedRoutes = [
   '/home',
   '/team',
@@ -124,6 +128,17 @@ export const AppRouter = ({ isLoggedIn, userRole }) => {
         />
         <Route
           exact
+          path='/admin'
+          render={(props) => (
+            <AdminPortal
+              isLoggedIn={isLoggedIn}
+              userRole={userRole}
+              screen={<AdminPage {...props} />}
+            />
+          )}
+        />
+        <Route
+          exact
           path='/login/teacher'
           render={(props) => (
             <TeacherLogin {...props} isLoggedIn={isLoggedIn} />
@@ -135,6 +150,11 @@ export const AppRouter = ({ isLoggedIn, userRole }) => {
           render={(props) => (
             <StudentLogin {...props} isLoggedIn={isLoggedIn} />
           )}
+        />
+        <Route
+          exact
+          path='/admin/login'
+          render={(props) => <AdminLogin {...props} isLoggedIn={isLoggedIn} />}
         />
         <Route exact path='/signup' component={Signup} />
         <Route exact path='/dashboard' component={Dashboard} />
@@ -158,10 +178,18 @@ export const AppRouter = ({ isLoggedIn, userRole }) => {
             <StudentLogin {...props} isLoggedIn={isLoggedIn} />
           )}
         />
+        <Route
+          exact
+          path='/admin/login'
+          render={(props) => <AdminLogin {...props} isLoggedIn={isLoggedIn} />}
+        />
         <Route exact path='/signup' component={Signup} />
         <Route exact path='/dashboard' component={Dashboard} />
         {protectedRoutes.includes(window.location.pathname) && (
           <Redirect to='/dashboard' />
+        )}
+        {window.location.pathname === '/admin' && (
+          <Redirect to='/admin/login' />
         )}
         <Redirect from='/' to='/dashboard' />
         <Route component={PageNotFound} />
