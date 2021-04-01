@@ -17,6 +17,7 @@ if (!myInterceptor) {
       config.headers['Authorization'] = Cookie.get('token')
         ? Cookie.get('token')
         : ''; // Attaching persisted token from the browser cookie
+
       const agent = new https.Agent({
         rejectUnauthorized: false,
       });
@@ -75,6 +76,11 @@ export const teacherLogin = (body) => {
 //Student Login
 export const studentLogin = (body) => {
   return axios.post(`${getBaseUrl()}/api/v1/auth/student/login`, body);
+};
+
+//Admin Login
+export const adminLogin = (body) => {
+  return axios.post(`${getBaseUrl()}/api/v1/auth/admin/login `, body);
 };
 
 //Get Students
