@@ -80,7 +80,7 @@ export const studentLogin = (body) => {
 
 //Admin Login
 export const adminLogin = (body) => {
-  return axios.post(`${getBaseUrl()}/api/v1/auth/admin/login `, body);
+  return axios.post(`${getBaseUrl()}/api/v1/auth/admin/login`, body);
 };
 
 //Get Students

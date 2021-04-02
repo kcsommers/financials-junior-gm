@@ -26,7 +26,7 @@ export const AdminLogin = ({ history, isLoggedIn }) => {
     sessionStorage.setItem(ADMIN_ID_STORAGE_KEY, admin._id);
 
     dispatch(setLoginState(true, UserRoles.ADMIN));
-    history.push('/home');
+    history.push('/admin');
   };
 
   const onLoginError = (error) => {
