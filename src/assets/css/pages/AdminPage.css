@@ -1,0 +1,70 @@
+div.admin-page-header {
+  min-height: 125px;
+  max-height: 125px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1rem;
+}
+
+div.admin-page-header > h1 {
+  font-size: 1.75rem;
+  color: #002f6c;
+  font-weight: bold;
+}
+
+div.admin-page-body-container {
+  padding: 3rem;
+  background-color: rgba(238, 238, 238, 0.5);
+  flex: 1;
+  min-height: calc(100% - 125px);
+  overflow-y: auto;
+}
+
+div.admin-total-wrap {
+  font-size: 2rem;
+  background-color: #fff;
+  color: #002f6c;
+  border-radius: 3px;
+  padding: 1rem 1rem 1rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+div.admin-total-wrap:first-child {
+  margin-bottom: 2rem;
+}
+
+div.admin-total-left {
+  display: flex;
+  align-items: center;
+}
+
+div.admin-total-left > div.loading-spinner,
+div.admin-total-left > span {
+  margin-right: 0.65rem;
+}
+
+div.admin-total-left > span {
+  font-size: 2.5rem;
+  color: #00788a;
+}
+
+div.admin-loading-wrap {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+div.admin-teacher-wrap {
+  background-color: #fff;
+  padding: 1rem 1rem 1rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+  border-radius: 3px;
+}

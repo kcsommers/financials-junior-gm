@@ -83,7 +83,15 @@ export const adminLogin = (body) => {
   return axios.post(`${getBaseUrl()}/api/v1/auth/admin/login`, body);
 };
 
+export const getAllTeachers = () => {
+  return axios.get(`${getBaseUrl()}/api/v1/admin/teachers `);
+};
+
 //Get Students
+
+export const getAllStudents = () => {
+  return axios.get(`${getBaseUrl()}/api/v1/student`);
+};
 
 export function getStudentList(id) {
   return axios.get(

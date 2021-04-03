@@ -10,9 +10,9 @@ import {
   ADMIN_ID_STORAGE_KEY,
   clearSessionStorage,
 } from '@data/auth/auth';
-import '@css/pages/Login.css';
 import { setLoginState } from '@redux/actions';
 import Cookie from 'js-cookie'; /// JS-Cookie lib to store cookie on the browser
+import '@css/pages/Login.css';
 
 export const AdminLogin = ({ history, isLoggedIn }) => {
   const dispatch = useDispatch();
