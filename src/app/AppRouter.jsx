@@ -19,7 +19,7 @@ import { TeacherPortal } from './pages/portal/TeacherPortal';
 import Signup from './pages/Signup';
 import { IceBackground } from '@components';
 import { StudentPortal } from './pages/portal/StudentPortal';
-import { AdminPage } from './pages/AdminPage';
+import { AdminPage } from './pages/admin/AdminPage';
 import { AdminLogin } from './pages/login/AdminLogin';
 import { AdminPortal } from './pages/portal/AdminPortal';
 
@@ -128,7 +128,7 @@ export const AppRouter = ({ isLoggedIn, userRole }) => {
         />
         <Route
           exact
-          path='/admin'
+          path={['/admin', '/admin/teachers', '/admin/teachers/:id']}
           render={(props) => (
             <AdminPortal
               isLoggedIn={isLoggedIn}
