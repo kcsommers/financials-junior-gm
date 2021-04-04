@@ -10,6 +10,8 @@ import {
   BadScoutOverlay,
   FaqOverlay,
   NextSeasonOverlay,
+  OverlayBoard,
+  Button,
 } from '@components';
 import { useSelector, useDispatch, batch } from 'react-redux';
 import { motion } from 'framer-motion';
@@ -142,7 +144,7 @@ export const ScoutPage = ({ history }) => {
             key={player.playerName}
             draggableId={player.playerName}
             index={0}
-            className='draggable-player'
+            className="draggable-player"
           >
             {(dragProvided, dragSnapshot) => (
               <div
@@ -171,7 +173,7 @@ export const ScoutPage = ({ history }) => {
           </div>
         )
       ) : (
-        <div className='empty-player-slot'></div>
+        <div className="empty-player-slot"></div>
       );
 
       return (
@@ -240,7 +242,7 @@ export const ScoutPage = ({ history }) => {
         .map((row, j) => (
           <div
             key={`available-player-row-${j}`}
-            className='available-player-row'
+            className="available-player-row"
           >
             {row.map((p) => p)}
           </div>
@@ -287,17 +289,17 @@ export const ScoutPage = ({ history }) => {
       return offeredPlayers.map((row, i) => (
         <motion.div
           key={`offered-player-row-${i}`}
-          className='offered-player-row-wrap'
+          className="offered-player-row-wrap"
           animate={moneyLevelAnimationStates[i]}
           transition={{ default: { duration: 1 } }}
         >
-          <span className='money-level-short color-primary'>
+          <span className="money-level-short color-primary">
             {moneyLevels[i].short}
           </span>
           <p className={`money-level-text money-level-text-${i}`}>
             These players get a {moneyLevels[i].long} contract offered
           </p>
-          <div className='offered-player-row'>
+          <div className="offered-player-row">
             <div className={`offered-player-row-inner level-${i + 1}`}>
               {row.map((p) => p)}
             </div>
@@ -353,9 +355,9 @@ export const ScoutPage = ({ history }) => {
           isOpen: true,
           template: (
             <BadScoutOverlay
-              message1='The contract you are offering this player is not high enough!'
-              message2='Try putting them in a higher level to offer them more money.'
-              buttonText='Try Again'
+              message1="The contract you are offering this player is not high enough!"
+              message2="Try putting them in a higher level to offer them more money."
+              buttonText="Try Again"
             />
           ),
         })
@@ -372,9 +374,9 @@ export const ScoutPage = ({ history }) => {
           isOpen: true,
           template: (
             <BadScoutOverlay
-              message1='Are you sure?'
+              message1="Are you sure?"
               message2={`${droppedPlayer.playerName}'s rank is a little low for this contract level. Would you like to continue with this offer?`}
-              buttonText='Make Offer'
+              buttonText="Make Offer"
               onButtonClick={updateBoard.bind(this)}
             />
           ),
@@ -494,7 +496,7 @@ export const ScoutPage = ({ history }) => {
         template: (
           <FaqOverlay
             questions={faqs.scout}
-            title='Scout Page FAQs'
+            title="Scout Page FAQs"
             level={+student.level}
             onStartTutorial={() => {
               dispatch(
@@ -594,23 +596,68 @@ export const ScoutPage = ({ history }) => {
   }
 
   return (
-    <div className='page-container scout-page-container'>
+    <div className="page-container scout-page-container">
       <HeaderComponent
-        stickBtn='scout'
+        stickBtn="scout"
         largeStick={true}
         level={+student.level}
         tutorialActive={tutorialActive}
-        stickBtnLink='/team'
+        stickBtnLink="/team"
+        beforeNav={() => {
+          dispatch(
+            toggleOverlay({
+              isOpen: true,
+              template: (
+                <OverlayBoard>
+                  <div
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      flexDirection: 'column',
+                      textAlign: 'center',
+                      padding: '3rem',
+                    }}
+                  >
+                    <p
+                      style={{
+                        fontSize: '2rem',
+                        marginBottom: '3rem',
+                      }}
+                    >
+                      Please scout all 6 players before leaving the scout page.
+                    </p>
+                    <Button
+                      text="Keep Scouting"
+                      onClick={() => {
+                        dispatch(
+                          toggleOverlay({
+                            isOpen: false,
+                            template: null,
+                          })
+                        );
+                      }}
+                    />
+                  </div>
+                </OverlayBoard>
+              ),
+            })
+          );
+
+          return false;
+        }}
       />
-      <PageBoard height='98%'>
-        <div className='scout-page-board-header'>
-          <p className='color-primary scout-page-helper-text'>
+      <PageBoard height="98%">
+        <div className="scout-page-board-header">
+          <p className="color-primary scout-page-helper-text">
             Make an offer to a player by dragging them to a contract level!
           </p>
-          <div className='scout-page-board-header-inner'>
-            <SharkieButton onCallSharkie={onCallSharkie} textPosition='right' />
+          <div className="scout-page-board-header-inner">
+            <SharkieButton onCallSharkie={onCallSharkie} textPosition="right" />
             <motion.div
-              className='color-primary'
+              className="color-primary"
               animate={finishedBtnAnimationState}
               style={{ transformOrigin: 'right' }}
               transition={{
@@ -635,7 +682,7 @@ export const ScoutPage = ({ history }) => {
               >
                 Click here when you finish!
                 <div
-                  className='check-btn'
+                  className="check-btn"
                   style={{ marginLeft: '0.5rem' }}
                 ></div>
               </div>
@@ -644,15 +691,15 @@ export const ScoutPage = ({ history }) => {
         </div>
 
         <DragDropContext onDragEnd={onPlayerDropped}>
-          <div className='scout-page-board-inner'>
-            <div className='scout-page-board-left'>
+          <div className="scout-page-board-inner">
+            <div className="scout-page-board-left">
               {tutorialActive ? (
                 <>
-                  <p className='color-primary'>
+                  <p className="color-primary">
                     Remember to tap a player to learn more about them!
                   </p>
                   <motion.div
-                    className='scout-board scout-board-disabled'
+                    className="scout-board scout-board-disabled"
                     animate={availablePlayersAnimationState}
                     transition={{ default: { duration: 1 } }}
                     style={{ transformOrigin: 'bottom' }}
@@ -662,15 +709,15 @@ export const ScoutPage = ({ history }) => {
                 </>
               ) : (
                 <>
-                  <p className='color-primary'>
+                  <p className="color-primary">
                     Remember to tap a player to learn more about them!
                   </p>
-                  <div className='scout-board'>{availablePlayersBoard}</div>
+                  <div className="scout-board">{availablePlayersBoard}</div>
                 </>
               )}
             </div>
 
-            <div className='scout-page-board-right'>
+            <div className="scout-page-board-right">
               <motion.div
                 style={{ position: 'relative', top: '-13px' }}
                 animate={offeredPlayersAnimationState}
