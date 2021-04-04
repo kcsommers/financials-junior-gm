@@ -31,7 +31,6 @@ import {
   getMaxTeamRank,
   startingLineupFull,
 } from '@data/players/players-utils';
-import { getStudentTeam } from '@data/season/season-utils';
 import '@css/pages/HomePage.css';
 
 const getDisabledStickBtns = (student) => {
@@ -167,7 +166,7 @@ export const HomePage = ({ location, history }) => {
             toggleOverlay({
               isOpen: isPromoted,
               template: isPromoted ? (
-                <NewLevelOverlay team={getStudentTeam(+updatedStudent.level)} />
+                <NewLevelOverlay completedLevel={+updatedStudent.level - 1} />
               ) : null,
             })
           );
@@ -177,15 +176,49 @@ export const HomePage = ({ location, history }) => {
     [dispatch]
   );
 
+  const gameFinished = useCallback(
+    (updatedStudent) => {
+      batch(() => {
+        dispatch(setStudent(updatedStudent));
+        dispatch(
+          setInitialPlayersState(updatedStudent.players, updatedStudent)
+        );
+        dispatch(initializeSeason(updatedStudent));
+        dispatch(initializeObjectives(updatedStudent, true));
+        window.setTimeout(() => {
+          dispatch(
+            toggleOverlay({
+              isOpen: true,
+              template: <NewLevelOverlay completedLevel={3} />,
+            })
+          );
+        });
+      });
+    },
+    [dispatch]
+  );
+
   useEffect(() => {
-    if (location.state && location.state.levelChange) {
+    if (!location.state) {
+      return;
+    }
+
+    if (location.state.levelChange) {
       nextSeason(location.state.levelChange);
 
       const stateCopy = cloneDeep(location.state);
       delete stateCopy.levelChange;
       history.replace({ state: stateCopy });
     }
-  }, [nextSeason, history, location.state]);
+
+    if (location.state.gameFinished) {
+      gameFinished(location.state.gameFinished.updatedStudent);
+
+      const stateCopy = cloneDeep(location.state);
+      delete stateCopy.gameFinished;
+      history.replace({ state: stateCopy });
+    }
+  }, [nextSeason, history, location.state, gameFinished]);
 
   if (inTransition && !inSession) {
     window.setTimeout(() => {
@@ -197,6 +230,9 @@ export const HomePage = ({ location, history }) => {
               student={student}
               awards={awards}
               next={nextSeason}
+              finished={(_gameFinished) =>
+                gameFinished(_gameFinished.updatedStudent)
+              }
             />
           ),
           canClose: false,

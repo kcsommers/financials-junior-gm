@@ -35,7 +35,7 @@ const seasonReducer = (state = initialState, action) => {
   switch (action.type) {
     case INITIALIZE_SEASON: {
       const student = action.payload;
-      const level = +student.level;
+      const level = Math.min(+student.level, 3);
 
       // if no seasons have been played yet, just return the initial state
       if (!student.seasons || !student.seasons.length) {

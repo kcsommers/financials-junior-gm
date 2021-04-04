@@ -52,11 +52,22 @@ export const TrophiesPage = ({ history }) => {
   };
 
   const nextSeason = () => {
-    resetSeason(+student.level + 1, +student.level, student)
+    resetSeason(Math.min(+student.level + 1, 3), +student.level, student)
       .then((updatedStudent) => {
         history.push({
           pathname: '/home',
           state: { levelChange: { updatedStudent, isPromoted: true } },
+        });
+      })
+      .catch((err) => console.error(err));
+  };
+
+  const finishGame = () => {
+    resetSeason(+student.level, +student.level, student)
+      .then((updatedStudent) => {
+        history.push({
+          pathname: '/home',
+          state: { gameFinished: { updatedStudent } },
         });
       })
       .catch((err) => console.error(err));
@@ -207,16 +218,14 @@ export const TrophiesPage = ({ history }) => {
               </span>
               {isPromoted && (
                 <span
-                  className={`box-shadow${
-                    +student.level === 3 ? ' disabled' : ''
-                  }`}
+                  className="box-shadow"
                   style={Object.assign(
                     { ...styles.button },
                     { marginLeft: '1rem' }
                   )}
-                  onClick={nextSeason}
+                  onClick={+student.level === 3 ? finishGame : nextSeason}
                 >
-                  Accept Promotion
+                  {+student.level === 3 ? 'Finish Game' : 'Accept Promotion'}
                 </span>
               )}
             </>

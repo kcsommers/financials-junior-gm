@@ -179,7 +179,7 @@ export const TeamPage = ({ history, location }) => {
       delete stateCopy.showScoutingOverlay;
       history.replace({ state: stateCopy });
     }
-  }, [dispatch, history, location.state]);
+  }, [dispatch, history, location.state, startTutorial, student.tutorials]);
 
   if (seasonState.inTransition && !seasonState.inSession) {
     window.setTimeout(() => {
@@ -192,6 +192,9 @@ export const TeamPage = ({ history, location }) => {
               awards={seasonState.awards}
               next={(levelChange) => {
                 history.push({ pathname: '/home', state: { levelChange } });
+              }}
+              finished={(gameFinished) => {
+                history.push({ pathname: '/home', state: { gameFinished } });
               }}
             />
           ),
