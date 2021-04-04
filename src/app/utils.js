@@ -96,7 +96,7 @@ export const formatNumber = (num) => {
   var tier = (Math.log10(Math.abs(num)) / 3) | 0;
 
   // if zero, we don't need a suffix
-  if (tier == 0) {
+  if (tier === 0) {
     return num;
   }
 

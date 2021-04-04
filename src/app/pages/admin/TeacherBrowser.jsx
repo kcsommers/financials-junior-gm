@@ -1,6 +1,12 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { LoadingSpinner } from '@components';
 import { useDebounce } from './../../hooks/use-debounce';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faChevronRight,
+  faChevronLeft,
+  faDownload,
+} from '@fortawesome/free-solid-svg-icons';
 
 const teacherDetails = [
   ['userName', 'Username'],
@@ -48,6 +54,7 @@ export const TeacherBrowser = ({ allTeachers }) => {
   const [initialized, setInitialized] = useState(false);
 
   const [currentPage, setCurrentPage] = useState('1');
+  const [skipDebounce, setSkipDebounce] = useState(false);
   const debouncedCurrentPage = useDebounce(currentPage, 1000);
   const prevCurrentPageRef = useRef(currentPage);
 
@@ -70,10 +77,10 @@ export const TeacherBrowser = ({ allTeachers }) => {
   const [filteredTeachers, setFilteredTeachers] = useState(allTeachers);
 
   const getDisplayedTeachers = useCallback(
-    (teachers) => {
+    (teachers, page) => {
       const start =
-        TEACHERS_PER_PAGE * debouncedCurrentPage - TEACHERS_PER_PAGE;
-      const end = TEACHERS_PER_PAGE * debouncedCurrentPage;
+        TEACHERS_PER_PAGE * (page || debouncedCurrentPage) - TEACHERS_PER_PAGE;
+      const end = TEACHERS_PER_PAGE * (page || debouncedCurrentPage);
       const displayed = teachers.slice(start, end);
       return displayed;
     },
@@ -171,6 +178,21 @@ export const TeacherBrowser = ({ allTeachers }) => {
     getDisplayedTeachers,
   ]);
 
+  const rowsRangeRef = useRef('');
+  const getRowsRange = () => {
+    const page = skipDebounce ? +currentPage : +debouncedCurrentPage;
+    if (!page) {
+      return rowsRangeRef.current;
+    }
+    const start = page * TEACHERS_PER_PAGE - TEACHERS_PER_PAGE + 1;
+    const end =
+      page * TEACHERS_PER_PAGE > allTeachers.length
+        ? allTeachers.length
+        : page * TEACHERS_PER_PAGE;
+    rowsRangeRef.current = `${start} - ${end} of ${allTeachers.length}`;
+    return rowsRangeRef.current;
+  };
+
   // debounced search effects
   // Name
   useEffect(() => {
@@ -229,9 +251,27 @@ export const TeacherBrowser = ({ allTeachers }) => {
     }
 
     prevCurrentPageRef.current = debouncedCurrentPage;
-    setDisplayedTeachers(getDisplayedTeachers(filteredTeachers));
+    if (!skipDebounce) {
+      setDisplayedTeachers(getDisplayedTeachers(filteredTeachers));
+    } else {
+      setSkipDebounce(false);
+    }
   }, [
     allTeachers,
+    debouncedCurrentPage,
+    getDisplayedTeachers,
+    filteredTeachers,
+    skipDebounce,
+  ]);
+
+  // current page skip debounce
+  useEffect(() => {
+    if (currentPage !== debouncedCurrentPage && skipDebounce) {
+      setDisplayedTeachers(getDisplayedTeachers(filteredTeachers, currentPage));
+    }
+  }, [
+    currentPage,
+    skipDebounce,
     debouncedCurrentPage,
     getDisplayedTeachers,
     filteredTeachers,
@@ -279,6 +319,11 @@ export const TeacherBrowser = ({ allTeachers }) => {
           }`}
           onClick={downloadCsv}
         >
+          <FontAwesomeIcon
+            icon={faDownload}
+            color="#fff"
+            style={{ marginRight: '0.5rem' }}
+          />
           Download CSV
         </button>
       </div>
@@ -317,6 +362,15 @@ export const TeacherBrowser = ({ allTeachers }) => {
 
       <div className="teacher-browser-pagination-wrap">
         <div className="current-page-wrap">
+          <span
+            className={`${currentPage <= 1 ? 'disabled' : ''}`}
+            onClick={() => {
+              setCurrentPage(String(+debouncedCurrentPage - 1));
+              setSkipDebounce(true);
+            }}
+          >
+            <FontAwesomeIcon icon={faChevronLeft} color="#00788a" />
+          </span>
           Page
           <input
             className="current-page-input"
@@ -340,22 +394,28 @@ export const TeacherBrowser = ({ allTeachers }) => {
             }}
           />
           of {totalPages}
+          <span
+            className={`${currentPage >= totalPages ? 'disabled' : ''}`}
+            onClick={() => {
+              setCurrentPage(String(+debouncedCurrentPage + 1));
+              setSkipDebounce(true);
+            }}
+          >
+            <FontAwesomeIcon
+              icon={faChevronRight}
+              color="#00788a"
+              style={{ marginLeft: '0.5rem' }}
+            />
+          </span>
         </div>
         <div className="current-rows-wrap">
-          <p>
-            {+debouncedCurrentPage * TEACHERS_PER_PAGE - TEACHERS_PER_PAGE + 1}{' '}
-            -{' '}
-            {+debouncedCurrentPage * TEACHERS_PER_PAGE > allTeachers.length
-              ? allTeachers.length
-              : +debouncedCurrentPage * TEACHERS_PER_PAGE}{' '}
-            of {allTeachers.length}
-          </p>
+          <p>{getRowsRange()}</p>
         </div>
       </div>
 
       <div className="teacher-table-wrap box-shadow">
         <div className="teacher-table-header-row teacher-table-row">
-          <span className="teacher-table-plus-wrap"></span>
+          <span className="teacher-table-arrow-wrap"></span>
           <div>Name</div>
           <div className="grade-taught-column">Grade Taught</div>
           <div>School</div>
@@ -369,8 +429,18 @@ export const TeacherBrowser = ({ allTeachers }) => {
             onClick={toggleTeacher.bind(this, i)}
           >
             <div className="teacher-table-row">
-              <span className="teacher-table-plus-wrap">
-                <span className="teacher-table-plus">+</span>
+              <span className="teacher-table-arrow-wrap">
+                <span
+                  className="teacher-table-arrow"
+                  style={{
+                    transform:
+                      detailsStates[i] && detailsStates[i].isExpanded
+                        ? 'rotate(90deg)'
+                        : 'none',
+                  }}
+                >
+                  <FontAwesomeIcon icon={faChevronRight} color="#f3901d" />
+                </span>
               </span>
               <div>{t.name || '--'}</div>
               <div className="grade-taught-column">{t.gradeTaught || '--'}</div>
