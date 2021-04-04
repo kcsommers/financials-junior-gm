@@ -28,7 +28,6 @@ export const NextSeasonOverlay = ({ student, next, finished }) => {
     dispatch(setInTransition(false));
     resetSeason(+student.level, +student.level, student)
       .then((updatedStudent) => {
-        console.log('UPDATE:::: ', updatedStudent);
         finished({ updatedStudent });
       })
       .catch((err) => console.error(err));
