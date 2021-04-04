@@ -58,6 +58,12 @@ div.admin-loading-wrap {
   justify-content: center;
 }
 
+div.teacher-browser-wrap > h3 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: #002f6c;
+}
+
 div.admin-teacher-wrap {
   background-color: #fff;
   padding: 1rem 1rem 1rem 3rem;
@@ -87,6 +93,7 @@ span.admin-teacher-plus-icon {
   top: 50%;
   transform: translateY(-50%);
 }
+
 span.admin-teacher-plus-icon > span {
   display: inline-flex;
   justify-content: center;
@@ -118,34 +125,28 @@ span.admin-teacher-detail {
   flex: 1;
 }
 
-div.teacher-browser-search-wrap {
-  display: flex;
+div.teacher-browser-search-wrap > p {
   margin-bottom: 1rem;
-}
-
-div.optionListContainer > ul > li.highlight,
-div.optionListContainer > ul > li:hover {
-  background: #00788a;
-}
-
-div.teacher-search-input-wrap {
-  min-height: 22px;
-  display: flex;
-  align-items: center;
-  margin-left: 1rem;
-}
-
-input.searchBox {
   font-size: 1rem;
 }
 
+div.teacher-search-input-wrap {
+  display: flex;
+  margin-bottom: 1.5rem;
+}
+
+div.teacher-search-input-wrap > span {
+  flex: 0.2;
+}
+
 div.teacher-search-input-wrap > input {
-  display: inline-block;
+  display: block;
+  flex: 1;
   background: none;
   border: none;
   border-bottom: 1px solid #00788a;
-  min-height: 100%;
   transition: all 0.2s ease;
+  padding: 0 0.25rem;
 }
 
 div.teacher-search-input-wrap > input:focus {

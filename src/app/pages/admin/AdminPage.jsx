@@ -1,30 +1,42 @@
 import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { getAllTeachers, getAllStudents } from '../../api-helper';
 import { LoadingSpinner } from '@components';
 import { Route, Switch } from 'react-router-dom';
 import { TeacherBrowser } from './TeacherBrowser';
 import { TeacherDetails } from './TeacherDetails';
+import { logout } from './../../api-helper';
+import { clearSessionStorage } from '@data/auth/auth';
+import { setLoginState } from '@redux/actions';
 import '@css/pages/AdminPage.css';
 
 export const AdminPage = ({ history }) => {
+  const dispatch = useDispatch();
+
   const [allTeachers, setAllTeachers] = useState(null);
+
   const [allStudents, setAllStudents] = useState(null);
 
-  const logout = () => {
-    console.log('LOUGGOUT::::');
+  const doLogout = () => {
+    logout()
+      .then(() => {
+        clearSessionStorage();
+
+        dispatch(setLoginState(false, ''));
+        history.push('/dashboard');
+      })
+      .catch((err) => console.error(err));
   };
 
   useEffect(() => {
     getAllTeachers()
       .then((res) => {
-        console.log('TEACHRES:::: ', res);
         setAllTeachers(res.data);
       })
       .catch((err) => console.error(err));
 
     getAllStudents()
       .then((res) => {
-        console.log('STUDENTs:::: ', res);
         setAllStudents(res.data);
       })
       .catch((err) => console.error(err));
@@ -34,7 +46,7 @@ export const AdminPage = ({ history }) => {
     <div className='page-container admin-page-container'>
       <div className='admin-page-header'>
         <h1>Financials Junior GM Admin</h1>
-        <button className='btn-accent' onClick={logout}>
+        <button className='btn-accent' onClick={doLogout}>
           Logout
         </button>
       </div>
