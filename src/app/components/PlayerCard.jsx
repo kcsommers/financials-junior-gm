@@ -351,7 +351,7 @@ export const PlayerCard = ({
         }}
       >
         <p className="add-player-text color-primary outline-accent">
-          Add {toTitleCase(slotPosition)}
+          Add {slotPosition ? toTitleCase(slotPosition) : 'Player'}
         </p>
       </motion.div>
     </div>
