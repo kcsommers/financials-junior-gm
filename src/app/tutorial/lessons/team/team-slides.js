@@ -40,7 +40,7 @@ const slideConfigs = [
             {
               component: PlayerPositions.FORWARD,
               state: {
-                borderColor: '#ffd782',
+                borderColor: '#006272',
               },
             },
             {
@@ -79,7 +79,7 @@ const slideConfigs = [
             {
               component: PlayerPositions.DEFENSE,
               state: {
-                borderColor: '#ffd782',
+                borderColor: '#006272',
               },
             },
           ],
@@ -135,7 +135,7 @@ const slideConfigs = [
             {
               component: PlayerPositions.GOALIE,
               state: {
-                borderColor: '#ffd782',
+                borderColor: '#006272',
               },
             },
           ],
@@ -151,7 +151,7 @@ const slideConfigs = [
             {
               component: PlayerPositions.FORWARD,
               state: {
-                borderColor: '#ffd782',
+                borderColor: '#006272',
               },
             },
             {
@@ -184,14 +184,14 @@ const slideConfigs = [
             {
               component: PlayerPositions.FORWARD,
               state: {
-                borderColor: '#ffd782',
+                borderColor: '#006272',
                 scale: 1.1,
               },
             },
             {
               component: PlayerPositions.DEFENSE,
               state: {
-                borderColor: '#ffd782',
+                borderColor: '#006272',
                 scale: 1.1,
               },
             },
@@ -214,7 +214,7 @@ const slideConfigs = [
             {
               component: PlayerPositions.DEFENSE,
               state: {
-                borderColor: '#ffd782',
+                borderColor: '#006272',
               },
             },
             {
@@ -281,7 +281,7 @@ const slideConfigs = [
           isOpen: true,
           template: (
             <SignPlayerOverlay
-              assignment='fOne'
+              assignment="fOne"
               isDisabled={true}
             ></SignPlayerOverlay>
           ),
@@ -358,14 +358,14 @@ const slideConfigs = [
             {
               component: PlayerPositions.FORWARD,
               state: {
-                borderColor: '#ffd782',
+                borderColor: '#006272',
                 scale: 1.1,
               },
             },
             {
               component: PlayerPositions.DEFENSE,
               state: {
-                borderColor: '#ffd782',
+                borderColor: '#006272',
                 scale: 1.1,
               },
             },
@@ -373,7 +373,7 @@ const slideConfigs = [
               component: PlayerPositions.GOALIE,
               state: {
                 scale: 1.1,
-                borderColor: '#ffd782',
+                borderColor: '#006272',
               },
             },
             {
@@ -421,7 +421,7 @@ const slideConfigs = [
           isOpen: true,
           template: (
             <SignPlayerOverlay
-              assignment='fOne'
+              assignment="fOne"
               isDisabled={true}
             ></SignPlayerOverlay>
           ),

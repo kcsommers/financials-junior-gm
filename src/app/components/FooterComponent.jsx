@@ -48,15 +48,25 @@ export const FooterComponent = ({
   history,
   inTransition,
   tutorialActive,
+  student,
 }) => {
+  const allTutorialsViewed =
+    student &&
+    student.tutorials &&
+    student.tutorials.home &&
+    student.tutorials.budget &&
+    student.tutorials.team &&
+    student.tutorials.scout &&
+    student.tutorials.season;
+
   return (
     <div style={styles(tutorialActive).container}>
-      <div className='footer-inner' style={styles(tutorialActive).inner}>
+      <div className="footer-inner" style={styles(tutorialActive).inner}>
         {links.map((l) => (
           <Button
             key={l}
-            size='small'
-            isDisabled={inTransition || tutorialActive}
+            size="small"
+            isDisabled={inTransition || tutorialActive || !allTutorialsViewed}
             text={btnConfigs[l].text}
             background={btnConfigs[l].background}
             link={btnConfigs[l].link}

@@ -515,7 +515,7 @@ export const SeasonPage = ({ history }) => {
   const getGameButtonLabel = () => {
     if (gameState.phase.phase === GamePhases.GAME_ON) {
       return (
-        <span className='color-primary'>
+        <span className="color-primary">
           Click the puck to cheer for your team!
         </span>
       );
@@ -526,7 +526,7 @@ export const SeasonPage = ({ history }) => {
       seasonState.currentScenario.gameButtonLabel
     ) {
       return (
-        <span className='color-primary'>
+        <span className="color-primary">
           {seasonState.currentScenario.gameButtonLabel}
         </span>
       );
@@ -542,7 +542,7 @@ export const SeasonPage = ({ history }) => {
         template: (
           <FaqOverlay
             questions={faqs.season}
-            title='Season Page FAQs'
+            title="Season Page FAQs"
             level={+student.level}
             onStartTutorial={() => {
               dispatch(
@@ -595,9 +595,9 @@ export const SeasonPage = ({ history }) => {
   }
 
   return (
-    <div className='page-container'>
+    <div className="page-container">
       <HeaderComponent
-        stickBtn='season'
+        stickBtn="season"
         level={+student.level}
         tutorialActive={tutorialActive}
       />
@@ -620,16 +620,16 @@ export const SeasonPage = ({ history }) => {
               zIndex: tutorialActive ? 0 : 1,
             }}
           >
-            <SharkieButton textPosition='right' onCallSharkie={onCallSharkie} />
+            <SharkieButton textPosition="right" onCallSharkie={onCallSharkie} />
           </span>
-          <div className='season-page-board-top'>
-            <div className='student-team-rank-container'>
+          <div className="season-page-board-top">
+            <div className="student-team-rank-container">
               <LevelStick
-                type='teamRank'
+                type="teamRank"
                 amount={teamRank + cheerPoints}
                 denom={getMaxTeamRank(+student.level)}
-                color='#e06d00'
-                indicatorDirection='right'
+                color="#e06d00"
+                indicatorDirection="right"
                 isLarge={true}
                 textJsx={
                   <span>
@@ -639,7 +639,7 @@ export const SeasonPage = ({ history }) => {
                 }
               />
             </div>
-            <div className='jumbotron-container'>
+            <div className="jumbotron-container">
               <Jumbotron
                 gameState={gameState}
                 seasonState={seasonState}
@@ -647,13 +647,13 @@ export const SeasonPage = ({ history }) => {
                 team={teamPlayers}
               />
             </div>
-            <div className='opposing-team-rank-container'>
+            <div className="opposing-team-rank-container">
               <LevelStick
-                type='teamRank'
+                type="teamRank"
                 amount={gameState.opponent ? gameState.opponent.teamRank : 0}
                 denom={getMaxTeamRank(+student.level)}
                 color={gameState.opponent ? gameState.opponent.color : '#fff'}
-                indicatorDirection='left'
+                indicatorDirection="left"
                 isLarge={true}
                 inverse={true}
                 textJsx={
@@ -665,17 +665,17 @@ export const SeasonPage = ({ history }) => {
               />
             </div>
           </div>
-          <div className='season-page-board-bottom'>
-            <div className='cheermeter-container'>
+          <div className="season-page-board-bottom">
+            <div className="cheermeter-container">
               <Cheermeter cheerLevel={cheerLevel} />
             </div>
-            <div className='game-btn-container'>
-              <div className='game-btn-container-inner'>
-                <div className='game-btn-label-wrap'>
+            <div className="game-btn-container">
+              <div className="game-btn-container-inner">
+                <div className="game-btn-label-wrap">
                   {getGameButtonLabel()}
                 </div>
 
-                <div className='game-btn-wrap'>
+                <div className="game-btn-wrap">
                   <GameButton
                     onStartGame={startGame}
                     onCheer={onCheer}
@@ -688,8 +688,8 @@ export const SeasonPage = ({ history }) => {
                   />
                 </div>
 
-                <div className='game-count-wrap'>
-                  <span className='game-count'>
+                <div className="game-count-wrap">
+                  <span className="game-count">
                     Game{' '}
                     {Math.min(
                       seasonState.currentOpponentIndex + 1,
@@ -700,7 +700,7 @@ export const SeasonPage = ({ history }) => {
                 </div>
               </div>
             </div>
-            <div className='standings-board-container'>
+            <div className="standings-board-container">
               <h6 style={{ textAlign: 'center', color: '#000000' }}>
                 Standings
               </h6>
@@ -713,6 +713,7 @@ export const SeasonPage = ({ history }) => {
         links={['team', 'budget', 'trophies']}
         history={history}
         tutorialActive={tutorialActive}
+        student={student}
       />
 
       <Overlay />
