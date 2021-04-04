@@ -5,6 +5,7 @@ import studentState from './student-state/student-state.reducer';
 import players from './players/players.reducer';
 import loginState from './login-state/login-state.reducer';
 import teacherState from './teacher-state/teacher-state-reducer';
+import adminState from './admin-state/admin-state-reducer';
 import season from './season/season.reducer';
 import objectives from './objectives/objectives.reducer';
 import { SET_LOGIN_STATE } from './login-state/login-state.actions';
@@ -18,6 +19,7 @@ const appReducer = combineReducers({
   loginState,
   teacherState,
   objectives,
+  adminState,
 });
 
 export const rootReducer = (state, action) => {
