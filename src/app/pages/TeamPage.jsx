@@ -97,7 +97,7 @@ export const TeamPage = ({ history, location }) => {
         template: (
           <FaqOverlay
             questions={faqs.team}
-            title='Team Page FAQs'
+            title="Team Page FAQs"
             level={+student.level}
             onStartTutorial={() => {
               dispatch(
@@ -202,16 +202,16 @@ export const TeamPage = ({ history, location }) => {
   }
 
   return (
-    <div className='page-container'>
+    <div className="page-container">
       <HeaderComponent
-        stickBtn='team'
+        stickBtn="team"
         level={+student.level}
         tutorialActive={tutorialActive}
       />
 
       <PageBoard>
-        <div className='team-page-board-header'>
-          <div className='team-page-board-header-inner'>
+        <div className="team-page-board-header">
+          <div className="team-page-board-header-inner">
             <img
               src={studentTeam.logo}
               alt={studentTeam.name + ' logo'}
@@ -220,13 +220,13 @@ export const TeamPage = ({ history, location }) => {
                 width: '85px',
               }}
             />
-            <SharkieButton textPosition='left' onCallSharkie={onCallSharkie} />
+            <SharkieButton textPosition="left" onCallSharkie={onCallSharkie} />
           </div>
-          <h2 className='color-primary'>{studentTeam.nameFull}</h2>
+          <h2 className="color-primary">{studentTeam.nameFull}</h2>
         </div>
 
-        <div className='team-page-board-inner'>
-          <div className='team-page-board-left'>
+        <div className="team-page-board-inner">
+          <div className="team-page-board-left">
             <TeamBudgetState
               tutorialState={
                 tutorialActive ? { teamRank: 0, budget: 15 } : null
@@ -241,17 +241,17 @@ export const TeamPage = ({ history, location }) => {
             >
               <StickButton
                 small={true}
-                stick='scout'
+                stick="scout"
                 animationState={animationStates.scoutStick}
-                link='/scout'
+                link="/scout"
                 isDisabled={scoutingState.isComplete}
               />
             </div>
           </div>
 
-          <div className='team-page-board-right'>
+          <div className="team-page-board-right">
             <motion.div
-              className='team-players-card'
+              className="team-players-card"
               animate={animationStates.teamBoard}
               transition={{ default: { duration: 1 } }}
             >
@@ -266,9 +266,9 @@ export const TeamPage = ({ history, location }) => {
                   zIndex: 0,
                 }}
                 src={iceBgSmall}
-                alt='Ice Background'
+                alt="Ice Background"
               />
-              <div className='team-players-row'>
+              <div className="team-players-row">
                 {['fOne', 'fTwo', 'fThree'].map((assignment, i) => (
                   <div
                     key={assignment}
@@ -290,7 +290,7 @@ export const TeamPage = ({ history, location }) => {
                   </div>
                 ))}
               </div>
-              <div className='team-players-row team-players-row-2'>
+              <div className="team-players-row team-players-row-2">
                 {['dOne', 'gOne', 'dTwo'].map((assignment, i) => (
                   <div
                     key={assignment}
@@ -324,6 +324,7 @@ export const TeamPage = ({ history, location }) => {
         links={['season', 'budget', 'trophies']}
         history={history}
         tutorialActive={tutorialActive}
+        student={student}
       />
       <Overlay />
       {tutorialActive && (

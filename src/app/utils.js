@@ -110,3 +110,14 @@ export const formatNumber = (num) => {
   // format number and add suffix
   return (isInt(scaled) ? scaled : scaled.toFixed(1)) + suffix;
 };
+
+export const toTitleCase = (str) => {
+  if (!str) {
+    return str;
+  }
+
+  return str
+    .split(' ')
+    .map((w) => w.charAt(0).toUpperCase() + w.substr(1))
+    .join(' ');
+};
