@@ -131,6 +131,19 @@ div.teacher-browser-pagination-wrap {
   margin-bottom: 1rem;
 }
 
+div.current-page-wrap > span {
+  display: inline-block;
+  cursor: pointer;
+}
+
+div.current-page-wrap > span:first-child {
+  margin-right: 0.75rem;
+}
+
+div.current-page-wrap > span:last-child {
+  margin-left: 0.75rem;
+}
+
 input.current-page-input {
   background: none;
   margin: 0 0.5rem;
@@ -181,20 +194,16 @@ div.grade-taught-column {
   max-width: 150px;
 }
 
-span.teacher-table-plus-wrap {
+span.teacher-table-arrow-wrap {
   min-width: 3rem;
   max-width: 3rem;
   text-align: center;
-}
-
-span.teacher-table-plus {
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  border-radius: 100%;
-  width: 25px;
-  height: 25px;
-  border: 1px solid #f3901d;
-  font-size: 15px;
-  color: #f3901d;
+}
+
+span.teacher-table-arrow {
+  display: inline-block;
+  transition: transform 0.3s ease;
 }
