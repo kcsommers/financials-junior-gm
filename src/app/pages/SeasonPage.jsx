@@ -586,6 +586,9 @@ export const SeasonPage = ({ history }) => {
               next={(levelChange) => {
                 history.push({ pathname: '/home', state: { levelChange } });
               }}
+              finished={(gameFinished) => {
+                history.push({ pathname: '/home', state: { gameFinished } });
+              }}
             />
           ),
           canClose: false,
