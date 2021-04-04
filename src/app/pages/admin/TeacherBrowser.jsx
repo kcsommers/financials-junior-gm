@@ -3,7 +3,7 @@ import { LoadingSpinner } from '@components';
 import { useDebounce } from './../../hooks/use-debounce';
 
 const teacherDetails = [
-  ['userName', 'User Name'],
+  ['userName', 'Username'],
   ['email', 'Email Address'],
   ['gradeTaught', 'Grade Taught'],
   ['classSize', 'Class Size'],
@@ -36,12 +36,16 @@ const searchByOptions = [
 
 const TEACHERS_PER_PAGE = 50;
 
-export const TeacherBrowser = ({ allTeachers, history }) => {
+export const TeacherBrowser = ({ allTeachers }) => {
   const detailsRefs = useRef([]);
+
+  const downloadTag = useRef(document.createElement('a'));
 
   const [detailsStates, setDetailsStates] = useState({});
 
   const [isLoading, setIsLoading] = useState(!allTeachers);
+
+  const [initialized, setInitialized] = useState(false);
 
   const [currentPage, setCurrentPage] = useState('1');
   const debouncedCurrentPage = useDebounce(currentPage, 1000);
@@ -67,7 +71,6 @@ export const TeacherBrowser = ({ allTeachers, history }) => {
 
   const getDisplayedTeachers = useCallback(
     (teachers) => {
-      console.log('GET DISPLAYED:::: ', debouncedCurrentPage);
       const start =
         TEACHERS_PER_PAGE * debouncedCurrentPage - TEACHERS_PER_PAGE;
       const end = TEACHERS_PER_PAGE * debouncedCurrentPage;
@@ -78,6 +81,30 @@ export const TeacherBrowser = ({ allTeachers, history }) => {
   );
 
   const [displayedTeachers, setDisplayedTeachers] = useState([]);
+
+  const downloadCsv = () => {
+    let csvStr =
+      'Name,Username,Email Address,Grade Taught,Class Size,School,School District,School Address,City,State,Zip Code\n';
+
+    filteredTeachers
+      .map((teacher) => {
+        const row = [];
+        row.push(`"${teacher.name || '--'}"`);
+        teacherDetails.forEach((d) => row.push(`"${teacher[d[0]] || '--'}"`));
+        return row;
+      })
+      .forEach((row) => {
+        csvStr += row.join(',');
+        csvStr += '\n';
+      });
+
+    downloadTag.current.href = `data:text/csv;charset=utf-8,${encodeURI(
+      csvStr
+    )}`;
+    downloadTag.current.target = '_blank';
+    downloadTag.current.download = 'teachers.csv';
+    downloadTag.current.click();
+  };
 
   const getTotalPages = useCallback(() => {
     if (!allTeachers) {
@@ -126,7 +153,9 @@ export const TeacherBrowser = ({ allTeachers, history }) => {
       );
 
       _filteredTeachers = allTeachers.filter((t) =>
-        searchKeys.every((k) => String(t[k]).includes(searchTermMap[k]))
+        searchKeys.every((k) =>
+          String(t[k]).toLowerCase().includes(searchTermMap[k].toLowerCase())
+        )
       );
     }
 
@@ -208,15 +237,28 @@ export const TeacherBrowser = ({ allTeachers, history }) => {
     filteredTeachers,
   ]);
 
-  // Loading
+  // initialization
   useEffect(() => {
-    if (allTeachers && isLoading) {
-      setIsLoading(false);
+    if (allTeachers && !isLoading && !initialized) {
+      setInitialized(true);
       setDisplayedTeachers(getDisplayedTeachers(allTeachers));
       setTotalPages(getTotalPages());
       setFilteredTeachers(allTeachers);
     }
-  }, [allTeachers, isLoading, getDisplayedTeachers, getTotalPages]);
+  }, [
+    allTeachers,
+    isLoading,
+    initialized,
+    getDisplayedTeachers,
+    getTotalPages,
+  ]);
+
+  // loading
+  useEffect(() => {
+    if (allTeachers && isLoading) {
+      setIsLoading(false);
+    }
+  }, [allTeachers, isLoading]);
 
   // details refs effect
   useEffect(() => {
@@ -229,7 +271,17 @@ export const TeacherBrowser = ({ allTeachers, history }) => {
 
   return !isLoading ? (
     <div className="teacher-browser-wrap">
-      <h3>Teachers</h3>
+      <div className="teacher-browser-header-wrap">
+        <h3>Teachers</h3>
+        <button
+          className={`btn-accent btn-small${
+            !filteredTeachers || !filteredTeachers.length ? ' disabled' : ''
+          }`}
+          onClick={downloadCsv}
+        >
+          Download CSV
+        </button>
+      </div>
       <div className="teacher-browser-search-wrap">
         <p>Search by...</p>
         {searchByOptions.map((o) => (
@@ -303,6 +355,7 @@ export const TeacherBrowser = ({ allTeachers, history }) => {
 
       <div className="teacher-table-wrap box-shadow">
         <div className="teacher-table-header-row teacher-table-row">
+          <span className="teacher-table-plus-wrap"></span>
           <div>Name</div>
           <div className="grade-taught-column">Grade Taught</div>
           <div>School</div>
@@ -310,16 +363,15 @@ export const TeacherBrowser = ({ allTeachers, history }) => {
         </div>
 
         {displayedTeachers.map((t, i) => (
-          <div key={`${t.name}_${i}`} onClick={toggleTeacher.bind(this, i)}>
-            <div
-              className="teacher-table-row"
-              style={{
-                borderBottom:
-                  detailsStates[i] && detailsStates[i].isExpanded
-                    ? 'none'
-                    : '1px solid #00788a',
-              }}
-            >
+          <div
+            className="teacher-table-row-wrap"
+            key={`${t.name}_${i}`}
+            onClick={toggleTeacher.bind(this, i)}
+          >
+            <div className="teacher-table-row">
+              <span className="teacher-table-plus-wrap">
+                <span className="teacher-table-plus">+</span>
+              </span>
               <div>{t.name || '--'}</div>
               <div className="grade-taught-column">{t.gradeTaught || '--'}</div>
               <div>{t.school || '--'}</div>
@@ -333,12 +385,8 @@ export const TeacherBrowser = ({ allTeachers, history }) => {
                   : '0px',
                 padding:
                   detailsStates[i] && detailsStates[i].isExpanded
-                    ? '1rem 2rem'
-                    : '0px 2rem',
-                borderBottom:
-                  detailsStates[i] && detailsStates[i].isExpanded
-                    ? '1px solid #00788a'
-                    : 'none',
+                    ? '1rem 3rem'
+                    : '0px 3rem',
               }}
             >
               <div

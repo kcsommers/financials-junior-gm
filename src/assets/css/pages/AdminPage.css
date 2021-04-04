@@ -7,7 +7,7 @@ div.admin-page-header {
   padding: 0 1rem;
 }
 
-div.admin-page-header > h1 {
+div.admin-page-header > a {
   font-size: 1.75rem;
   color: #002f6c;
   font-weight: bold;
@@ -58,7 +58,13 @@ div.admin-loading-wrap {
   justify-content: center;
 }
 
-div.teacher-browser-wrap > h3 {
+div.teacher-browser-header-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+div.teacher-browser-header-wrap > h3 {
   font-size: 2rem;
   margin-bottom: 1rem;
   color: #002f6c;
@@ -141,19 +147,24 @@ div.teacher-table-wrap {
   border-radius: 3px;
 }
 
+div.teacher-table-header-row,
+div.teacher-table-row-wrap:not(:last-child) {
+  border-bottom: 1px solid #00788a;
+}
+
 div.teacher-table-row {
   display: flex;
   align-items: center;
-  padding: 1rem;
+  padding: 1rem 1rem 1rem 0rem;
   cursor: pointer;
-  margin: 0 0.25rem 0 0;
   font-size: 1rem;
 }
 
 div.teacher-table-header-row {
-  border-bottom: 2px solid #00788a;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 1rem 0.5rem 0rem;
   cursor: initial;
+  color: #00788a;
+  border-bottom: 2.5px solid #00788a;
 }
 
 div.teacher-table-header-row > div {
@@ -168,4 +179,22 @@ div.teacher-table-row > div {
 
 div.grade-taught-column {
   max-width: 150px;
+}
+
+span.teacher-table-plus-wrap {
+  min-width: 3rem;
+  max-width: 3rem;
+  text-align: center;
+}
+
+span.teacher-table-plus {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100%;
+  width: 25px;
+  height: 25px;
+  border: 1px solid #f3901d;
+  font-size: 15px;
+  color: #f3901d;
 }
