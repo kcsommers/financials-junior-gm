@@ -64,53 +64,16 @@ div.teacher-browser-wrap > h3 {
   color: #002f6c;
 }
 
-div.admin-teacher-wrap {
-  background-color: #fff;
-  padding: 1rem 1rem 1rem 3rem;
-  margin-bottom: 1rem;
-  border-radius: 3px;
-}
-
-div.admin-teacher-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-size: 1.25rem;
-  position: relative;
-  cursor: pointer;
-}
-
 div.admin-teacher-details-wrap {
   transition: all 0.3s ease;
   overflow: hidden;
-}
-
-span.admin-teacher-plus-icon {
-  width: 3rem;
-  text-align: center;
-  position: absolute;
-  left: -3rem;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-span.admin-teacher-plus-icon > span {
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 100%;
-  width: 25px;
-  height: 25px;
-  border: 1px solid #f3901d;
-  font-size: 1.5rem;
-  color: #f3901d;
-  text-align: center;
 }
 
 div.admin-teacher-detail-wrap {
   display: flex;
   align-items: center;
   margin-bottom: 1rem;
+  font-size: 1rem;
 }
 
 span.admin-teacher-detail-label {
@@ -149,6 +112,60 @@ div.teacher-search-input-wrap > input {
   padding: 0 0.25rem;
 }
 
+input.current-page-input:focus,
 div.teacher-search-input-wrap > input:focus {
   border-color: #f3901d;
+}
+
+div.teacher-browser-pagination-wrap {
+  font-size: 1.1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+input.current-page-input {
+  background: none;
+  margin: 0 0.5rem;
+  outline: none;
+  border: 1px solid #00788a;
+  border-radius: 3px;
+  width: 50px;
+  text-align: center;
+  padding: 0.25rem 0;
+}
+
+div.teacher-table-wrap {
+  background-color: #fff;
+  border-radius: 3px;
+}
+
+div.teacher-table-row {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  cursor: pointer;
+  margin: 0 0.25rem 0 0;
+  font-size: 1rem;
+}
+
+div.teacher-table-header-row {
+  border-bottom: 2px solid #00788a;
+  padding: 0.5rem 1rem;
+  cursor: initial;
+}
+
+div.teacher-table-header-row > div {
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+div.teacher-table-row > div {
+  flex: 1;
+  text-align: left;
+}
+
+div.grade-taught-column {
+  max-width: 150px;
 }

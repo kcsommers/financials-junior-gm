@@ -43,7 +43,9 @@ export const TeacherBrowser = ({ allTeachers, history }) => {
 
   const [isLoading, setIsLoading] = useState(!allTeachers);
 
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState('1');
+  const debouncedCurrentPage = useDebounce(currentPage, 1000);
+  const prevCurrentPageRef = useRef(currentPage);
 
   const [nameSearch, setNameSearch] = useState('');
   const debouncedNameSearch = useDebounce(nameSearch, 1000);
@@ -61,20 +63,21 @@ export const TeacherBrowser = ({ allTeachers, history }) => {
   const debouncedSchoolDistrictSearch = useDebounce(schoolDistrictSearch, 1000);
   const prevSchoolDistrictSearchRef = useRef(schoolDistrictSearch);
 
+  const [filteredTeachers, setFilteredTeachers] = useState(allTeachers);
+
   const getDisplayedTeachers = useCallback(
     (teachers) => {
-      console.log('GET DISPLAYED:::: ');
-      const start = TEACHERS_PER_PAGE * currentPage - TEACHERS_PER_PAGE;
-      const end = TEACHERS_PER_PAGE * currentPage;
+      console.log('GET DISPLAYED:::: ', debouncedCurrentPage);
+      const start =
+        TEACHERS_PER_PAGE * debouncedCurrentPage - TEACHERS_PER_PAGE;
+      const end = TEACHERS_PER_PAGE * debouncedCurrentPage;
       const displayed = teachers.slice(start, end);
       return displayed;
     },
-    [currentPage]
+    [debouncedCurrentPage]
   );
 
-  const [displayedTeachers, setDisplayedTeachers] = useState(
-    !allTeachers ? [] : getDisplayedTeachers(allTeachers)
-  );
+  const [displayedTeachers, setDisplayedTeachers] = useState([]);
 
   const getTotalPages = useCallback(() => {
     if (!allTeachers) {
@@ -88,7 +91,7 @@ export const TeacherBrowser = ({ allTeachers, history }) => {
     return Math.ceil(allTeachers.length / TEACHERS_PER_PAGE);
   }, [allTeachers]);
 
-  const [totalPages, setTotalPages] = useState(getTotalPages());
+  const [totalPages, setTotalPages] = useState(0);
 
   const toggleTeacher = (index) => {
     const detailsRef = detailsRefs.current[index];
@@ -105,7 +108,7 @@ export const TeacherBrowser = ({ allTeachers, history }) => {
   };
 
   const filterTeachers = useCallback(() => {
-    let filteredTeachers = allTeachers;
+    let _filteredTeachers = allTeachers;
     if (
       debouncedNameSearch ||
       debouncedGradeTaughtSearch ||
@@ -122,14 +125,14 @@ export const TeacherBrowser = ({ allTeachers, history }) => {
         (k) => !!searchTermMap[k]
       );
 
-      filteredTeachers = allTeachers.filter((t) =>
+      _filteredTeachers = allTeachers.filter((t) =>
         searchKeys.every((k) => String(t[k]).includes(searchTermMap[k]))
       );
     }
 
-    console.log('filter eff:::: ');
-    setDisplayedTeachers(getDisplayedTeachers(filteredTeachers));
-    setCurrentPage(1);
+    setFilteredTeachers(_filteredTeachers);
+    setDisplayedTeachers(getDisplayedTeachers(_filteredTeachers));
+    setCurrentPage('1');
   }, [
     allTeachers,
     debouncedNameSearch,
@@ -186,13 +189,32 @@ export const TeacherBrowser = ({ allTeachers, history }) => {
     filterTeachers();
   }, [allTeachers, debouncedSchoolDistrictSearch, filterTeachers]);
 
+  // Current Page
+  useEffect(() => {
+    if (!allTeachers || prevCurrentPageRef.current === debouncedCurrentPage) {
+      return;
+    }
+
+    if (!debouncedCurrentPage) {
+      return;
+    }
+
+    prevCurrentPageRef.current = debouncedCurrentPage;
+    setDisplayedTeachers(getDisplayedTeachers(filteredTeachers));
+  }, [
+    allTeachers,
+    debouncedCurrentPage,
+    getDisplayedTeachers,
+    filteredTeachers,
+  ]);
+
   // Loading
   useEffect(() => {
     if (allTeachers && isLoading) {
       setIsLoading(false);
-      console.log('loading eff:::: ');
       setDisplayedTeachers(getDisplayedTeachers(allTeachers));
       setTotalPages(getTotalPages());
+      setFilteredTeachers(allTeachers);
     }
   }, [allTeachers, isLoading, getDisplayedTeachers, getTotalPages]);
 
@@ -206,15 +228,15 @@ export const TeacherBrowser = ({ allTeachers, history }) => {
   }, [allTeachers]);
 
   return !isLoading ? (
-    <div className='teacher-browser-wrap'>
+    <div className="teacher-browser-wrap">
       <h3>Teachers</h3>
-      <div className='teacher-browser-search-wrap'>
+      <div className="teacher-browser-search-wrap">
         <p>Search by...</p>
         {searchByOptions.map((o) => (
-          <div key={o.value} className='teacher-search-input-wrap'>
+          <div key={o.value} className="teacher-search-input-wrap">
             <span>{o.label}</span>
             <input
-              type='text'
+              type="text"
               onChange={(e) => {
                 switch (o.value) {
                   case 'name': {
@@ -233,6 +255,7 @@ export const TeacherBrowser = ({ allTeachers, history }) => {
                     setSchoolDistrictSearch(e.target.value);
                     break;
                   }
+                  default:
                 }
               }}
             />
@@ -240,82 +263,104 @@ export const TeacherBrowser = ({ allTeachers, history }) => {
         ))}
       </div>
 
-      <div className='teacher-browser-pagination-wrap'>
-        Page
-        <input
-          type='text'
-          value={currentPage}
-          onChange={(e) => {
-            if (!isNaN(+e.target.value)) {
-              const page =
-                +e.target.value > totalPages
-                  ? totalPages
-                  : +e.target.value <= 0
-                  ? 1
-                  : Math.round(+e.target.value);
+      <div className="teacher-browser-pagination-wrap">
+        <div className="current-page-wrap">
+          Page
+          <input
+            className="current-page-input"
+            type="text"
+            value={currentPage}
+            onChange={(e) => {
+              if (!e.target.value) {
+                setCurrentPage('');
+                return;
+              }
+              if (!isNaN(+e.target.value)) {
+                const page =
+                  +e.target.value > totalPages
+                    ? totalPages
+                    : +e.target.value <= 0
+                    ? 1
+                    : Math.round(+e.target.value);
 
-              console.log('PAGE', page);
-              setCurrentPage(page);
-            }
-          }}
-        />
-        of
-        {totalPages}
+                setCurrentPage(String(page));
+              }
+            }}
+          />
+          of {totalPages}
+        </div>
+        <div className="current-rows-wrap">
+          <p>
+            {+debouncedCurrentPage * TEACHERS_PER_PAGE - TEACHERS_PER_PAGE + 1}{' '}
+            -{' '}
+            {+debouncedCurrentPage * TEACHERS_PER_PAGE > allTeachers.length
+              ? allTeachers.length
+              : +debouncedCurrentPage * TEACHERS_PER_PAGE}{' '}
+            of {allTeachers.length}
+          </p>
+        </div>
       </div>
 
-      {displayedTeachers.map((t, i) => (
-        <div
-          key={`${t.name}_${i}`}
-          className='admin-teacher-wrap box-shadow'
-          onClick={toggleTeacher.bind(this, i)}
-        >
-          <div className='admin-teacher-top'>
-            <span className='admin-teacher-plus-icon'>
-              <span>+</span>
-            </span>
-            <div className='admin-teacher-left'>{t.name}</div>
-            <div className='admin-teacher-left'>
-              <button
-                className='btn-primary btn-small'
-                onClick={() => {
-                  history.push(`/admin/teachers/${t._id}`);
-                }}
-              >
-                View Students
-              </button>
-            </div>
-          </div>
-          <div
-            className='admin-teacher-details-wrap'
-            style={{
-              height: detailsStates[i]
-                ? `${detailsStates[i].detailsHeight}px`
-                : '0px',
-              padding:
-                detailsStates[i] && detailsStates[i].isExpanded
-                  ? '2rem 0rem'
-                  : '0px',
-            }}
-          >
-            <div
-              className='admin-teacher-details-inner'
-              ref={(el) => (detailsRefs.current[i] = el)}
-            >
-              {teacherDetails.map((d) => (
-                <div key={d[0]} className='admin-teacher-detail-wrap'>
-                  <span className='admin-teacher-detail-label'>{d[1]}</span>
-                  <span className='admin-teacher-detail'>
-                    {t[d[0]] || '--'}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
+      <div className="teacher-table-wrap box-shadow">
+        <div className="teacher-table-header-row teacher-table-row">
+          <div>Name</div>
+          <div className="grade-taught-column">Grade Taught</div>
+          <div>School</div>
+          <div>School District</div>
         </div>
-      ))}
+
+        {displayedTeachers.map((t, i) => (
+          <div key={`${t.name}_${i}`} onClick={toggleTeacher.bind(this, i)}>
+            <div
+              className="teacher-table-row"
+              style={{
+                borderBottom:
+                  detailsStates[i] && detailsStates[i].isExpanded
+                    ? 'none'
+                    : '1px solid #00788a',
+              }}
+            >
+              <div>{t.name || '--'}</div>
+              <div className="grade-taught-column">{t.gradeTaught || '--'}</div>
+              <div>{t.school || '--'}</div>
+              <div>{t.schoolDistrict || '--'}</div>
+            </div>
+            <div
+              className="admin-teacher-details-wrap"
+              style={{
+                height: detailsStates[i]
+                  ? `${detailsStates[i].detailsHeight}px`
+                  : '0px',
+                padding:
+                  detailsStates[i] && detailsStates[i].isExpanded
+                    ? '1rem 2rem'
+                    : '0px 2rem',
+                borderBottom:
+                  detailsStates[i] && detailsStates[i].isExpanded
+                    ? '1px solid #00788a'
+                    : 'none',
+              }}
+            >
+              <div
+                className="admin-teacher-details-inner"
+                ref={(el) => (detailsRefs.current[i] = el)}
+              >
+                {teacherDetails.map((d) => (
+                  <div key={d[0]} className="admin-teacher-detail-wrap">
+                    <span className="admin-teacher-detail-label">{d[1]}</span>
+                    <span className="admin-teacher-detail">
+                      {t[d[0]] || '--'}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   ) : (
-    <div className='admin-loading-wrap'>
+    <div className="admin-loading-wrap">
       <LoadingSpinner />
     </div>
   );
