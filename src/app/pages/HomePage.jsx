@@ -206,16 +206,16 @@ export const HomePage = ({ location, history }) => {
   }
 
   return (
-    <div className='home-page-container'>
+    <div className="home-page-container">
       <Navigation tutorialActive={tutorialActive} student={student} />
-      <div className='home-cards-row'>
-        <div className='level-stick-card'>
+      <div className="home-cards-row">
+        <div className="level-stick-card">
           <LevelStick
-            type='teamRank'
+            type="teamRank"
             amount={teamRank}
             denom={getMaxTeamRank(+student.level)}
-            color='#e06d00'
-            indicatorDirection='right'
+            color="#e06d00"
+            indicatorDirection="right"
             textJsx={
               <span>
                 Team <br />
@@ -225,23 +225,23 @@ export const HomePage = ({ location, history }) => {
           />
         </div>
 
-        <div className='objectives-board-container'>{objectivesBoard}</div>
+        <div className="objectives-board-container">{objectivesBoard}</div>
 
-        <div className='sharkie-btn-container'>
-          <SharkieButton textPosition='bottom' onCallSharkie={onCallSharkie} />
+        <div className="sharkie-btn-container">
+          <SharkieButton textPosition="bottom" onCallSharkie={onCallSharkie} />
         </div>
 
-        <div className='level-stick-card card'>
+        <div className="level-stick-card card">
           <LevelStick
-            type='budget'
-            levelDirection='topToBottom'
+            type="budget"
+            levelDirection="topToBottom"
             amount={Math.max(
               +student.totalBudget - moneySpent - +student.savingsBudget,
               0
             )}
             denom={student.totalBudget}
-            color='#002f6c'
-            indicatorDirection='left'
+            color="#002f6c"
+            indicatorDirection="left"
             inverse={true}
             textJsx={
               <span>
@@ -253,13 +253,13 @@ export const HomePage = ({ location, history }) => {
         </div>
       </div>
 
-      <div className='hockey-sticks-container'>
-        <div className='hockey-sticks-row'>
-          <div className='stick-btn-container'>
+      <div className="hockey-sticks-container">
+        <div className="hockey-sticks-row">
+          <div className="stick-btn-container">
             <StickButton
               tutorialActive={tutorialActive}
-              link='/team'
-              stick='team'
+              link="/team"
+              stick="team"
               isDisabled={disabledStickBtns.team}
             />
             <p
@@ -270,12 +270,12 @@ export const HomePage = ({ location, history }) => {
               Build your team by signing players!
             </p>
           </div>
-          <div className='stick-btn-container'>
+          <div className="stick-btn-container">
             <StickButton
               tutorialActive={tutorialActive}
-              link='/budget'
+              link="/budget"
               inverse={true}
-              stick='budget'
+              stick="budget"
               isDisabled={disabledStickBtns.budget}
             />
             <p
@@ -287,12 +287,12 @@ export const HomePage = ({ location, history }) => {
             </p>
           </div>
         </div>
-        <div className='hockey-sticks-row hockey-sticks-row-2'>
-          <div className='stick-btn-container'>
+        <div className="hockey-sticks-row hockey-sticks-row-2">
+          <div className="stick-btn-container">
             <StickButton
               tutorialActive={tutorialActive}
-              link='/season'
-              stick='season'
+              link="/season"
+              stick="season"
               isDisabled={disabledStickBtns.season}
             />
             <p
@@ -303,8 +303,8 @@ export const HomePage = ({ location, history }) => {
               Play games and win the championship!
             </p>
           </div>
-          <div className='stick-btn-container'>
-            <StickButton inverse={true} link='/trophies' stick='trophies' />
+          <div className="stick-btn-container">
+            <StickButton inverse={true} link="/trophies" stick="trophies" />
             <p
               className={`stick-btn-text stick-btn-text-right${
                 tutorialActive ? ' transparent' : ''
