@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import React from 'react';
 import '@css/pages/TeacherDashboard.css';
-import * as api from '../api-helper';
+import * as api from '../../api-helper';
 import CRUDTable, {
   Fields,
   Field,
@@ -175,25 +175,25 @@ class TeacherDashboard extends React.Component {
           this.state.showCSVForm ? 'show' : 'hide'
         }`}
       >
-        <div className='crud-modal-wrapper__background'></div>
-        <div className='crud-modal-wrapper__modal'>
-          <h3 className='crud-modal-wrapper__title'>Add Student in Bulk</h3>
+        <div className="crud-modal-wrapper__background"></div>
+        <div className="crud-modal-wrapper__modal">
+          <h3 className="crud-modal-wrapper__title">Add Student in Bulk</h3>
           <div>
-            <form className='crud-modal-form'>
-              <div className='crud-modal-form__field-container'>
-                <label for='inputFile' className='crud-modal-form__label'>
+            <form className="crud-modal-form">
+              <div className="crud-modal-form__field-container">
+                <label for="inputFile" className="crud-modal-form__label">
                   Select file
                 </label>
                 <input
-                  name='inputFile'
-                  type='file'
+                  name="inputFile"
+                  type="file"
                   onChange={this.handleSelectFile}
-                  accept='.csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'
+                  accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
                 />
               </div>
               {/* <button type="submit" onClick={this.addStudentInBulk} className="crud-button crud-button--positive">Add</button> */}
               <div
-                className='crud-button crud-button--positive'
+                className="crud-button crud-button--positive"
                 style={{ display: 'inline-block' }}
                 onClick={this.addStudentInBulk}
               >
@@ -229,42 +229,42 @@ class TeacherDashboard extends React.Component {
     return (
       <div style={{ maxHeight: '768px', overflow: 'auto' }}>
         <button
-          className='crud-button crud-button--positive'
+          className="crud-button crud-button--positive"
           onClick={this.uploadCSVFile}
         >
           Upload CSV
         </button>
         <button
           style={{ marginLeft: '10px' }}
-          className='crud-button crud-button--positive'
+          className="crud-button crud-button--positive"
           onClick={this.logoutSession}
         >
           Logout
         </button>
-        <CRUDTable caption='List of Students' items={this.state.dataList}>
+        <CRUDTable caption="List of Students" items={this.state.dataList}>
           <Fields>
-            <Field name='name' label='Name' hideInCreateForm hideInUpdateForm />
+            <Field name="name" label="Name" hideInCreateForm hideInUpdateForm />
             <Field
-              name='firstName'
-              label='First Name'
-              placeholder='Please enter first name'
+              name="firstName"
+              label="First Name"
+              placeholder="Please enter first name"
               hideFromTable
             />
             <Field
-              name='lastName'
-              label='Last Name'
-              placeholder='Please enter last name'
+              name="lastName"
+              label="Last Name"
+              placeholder="Please enter last name"
               hideFromTable
             />
             <Field
-              name='userName'
-              label='User Name'
+              name="userName"
+              label="User Name"
               hideInCreateForm
               hideInUpdateForm
             />
             <Field
-              name='password'
-              label='Password'
+              name="password"
+              label="Password"
               sortable={false}
               hideInCreateForm
               hideInUpdateForm
@@ -272,10 +272,10 @@ class TeacherDashboard extends React.Component {
           </Fields>
 
           <CreateForm
-            title='Add Student'
-            trigger='Add Student'
+            title="Add Student"
+            trigger="Add Student"
             onSubmit={(task) => service.create(task)}
-            submitText='Create'
+            submitText="Create"
             validate={(values) => {
               const errors = {};
               if (!values.firstName) {
@@ -290,10 +290,10 @@ class TeacherDashboard extends React.Component {
             }}
           />
           <UpdateForm
-            title='Update Student'
-            trigger='Update'
+            title="Update Student"
+            trigger="Update"
             onSubmit={(task) => service.update(task)}
-            submitText='Update'
+            submitText="Update"
             validate={(values) => {
               const errors = {};
               if (!values.firstName) {
@@ -307,11 +307,11 @@ class TeacherDashboard extends React.Component {
           />
 
           <DeleteForm
-            title='Delete Student'
-            message='Are you sure you want to delete this student?'
-            trigger='Delete'
+            title="Delete Student"
+            message="Are you sure you want to delete this student?"
+            trigger="Delete"
             onSubmit={(task) => service.delete(task)}
-            submitText='Delete'
+            submitText="Delete"
           />
         </CRUDTable>
         {this.state.dataList.length == 0 ? (
@@ -328,7 +328,7 @@ class TeacherDashboard extends React.Component {
 
   render() {
     return (
-      <div className='teacher-dash-div'>
+      <div className="teacher-dash-div">
         {this.renderStudentBulkAdd()}
 
         {this.renderTable()}
