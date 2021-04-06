@@ -23,7 +23,7 @@ import {
   finishedScoutingSlides,
 } from '@tutorial';
 import { setTutorialState, toggleOverlay, setStudent } from '@redux/actions';
-import { updateStudentById } from './../api-helper';
+import { updateStudentById } from '../../api-helper';
 import { faqs } from '@data/faqs/faqs';
 import { cloneDeep } from 'lodash';
 import { PlayerPositions } from '@data/players/players';

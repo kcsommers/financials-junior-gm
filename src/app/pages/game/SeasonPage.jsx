@@ -21,7 +21,7 @@ import {
   getNewScenario,
 } from '@data/season/season-utils';
 import { cloneDeep } from 'lodash';
-import { updateStudentById } from './../api-helper';
+import { updateStudentById } from '../../api-helper';
 import {
   throwScenario,
   injurePlayer,
@@ -43,7 +43,7 @@ import {
 import { Objective, Objectives } from '@data/objectives/objectives';
 import { faqs } from '@data/faqs/faqs';
 import { getMaxTeamRank } from '@data/players/players-utils';
-import { useInterval } from './../hooks/use-interval';
+import { useInterval } from '../../hooks/use-interval';
 import '@css/pages/SeasonPage.css';
 
 const allActions = {
