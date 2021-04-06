@@ -4,15 +4,16 @@ div.stick-btn-wrap {
   height: 110px;
 }
 
-a.stick-btn-link {
+span.stick-btn-link {
   width: 100%;
   height: 100%;
   display: inline-block;
   position: relative;
   z-index: 1;
+  cursor: pointer;
 }
 
-a.stick-btn-link-disabled {
+span.stick-btn-link-disabled {
   pointer-events: none;
 }
 

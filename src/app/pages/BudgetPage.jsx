@@ -111,7 +111,7 @@ export const BudgetPage = ({ history }) => {
         template: (
           <FaqOverlay
             questions={faqs.budget}
-            title='Budget Page FAQs'
+            title="Budget Page FAQs"
             level={+student.level}
             onStartTutorial={() => {
               dispatch(
@@ -232,6 +232,9 @@ export const BudgetPage = ({ history }) => {
               next={(levelChange) => {
                 history.push({ pathname: '/home', state: { levelChange } });
               }}
+              finished={(gameFinished) => {
+                history.push({ pathname: '/home', state: { gameFinished } });
+              }}
             />
           ),
           canClose: false,
@@ -241,30 +244,30 @@ export const BudgetPage = ({ history }) => {
   }
 
   return (
-    <div className='page-container budget-page-container'>
+    <div className="page-container budget-page-container">
       <HeaderComponent
-        stickBtn='budget'
+        stickBtn="budget"
         level={student.level}
         inverse={true}
         tutorialActive={tutorialState.isActive}
       />
 
-      <PageBoard height='100%'>
-        <div className='budget-page-board-inner'>
+      <PageBoard height="100%">
+        <div className="budget-page-board-inner">
           {+student.rollOverBudget > 0 && (
-            <div className='rollover-budget-wrap'>
+            <div className="rollover-budget-wrap">
               <span
-                className='rollover-budget-indicator-wrap'
+                className="rollover-budget-indicator-wrap"
                 onClick={openRolloverBudgetOverlay}
               >
                 <Indicator
                   amount={+student.rollOverBudget}
                   isMoney={true}
-                  borderColor='#00788a'
+                  borderColor="#00788a"
                 />
               </span>
 
-              <p className='color-primary'>
+              <p className="color-primary">
                 Click the circle above to use last season's savings
               </p>
             </div>
@@ -276,9 +279,9 @@ export const BudgetPage = ({ history }) => {
               top: '1rem',
             }}
           >
-            <SharkieButton onCallSharkie={onCallSharkie} textPosition='left' />
+            <SharkieButton onCallSharkie={onCallSharkie} textPosition="left" />
           </div>
-          <div className='budget-equation-container'>
+          <div className="budget-equation-container">
             <BudgetEquation
               budget={
                 tutorialState.isActive
@@ -293,10 +296,10 @@ export const BudgetPage = ({ history }) => {
               animationStates={budgetEquationStates}
             />
           </div>
-          <p className='helper-text color-primary'>
+          <p className="helper-text color-primary">
             Move the yellow puck to change how much you save!
           </p>
-          <div className='budget-slider-container'>
+          <div className="budget-slider-container">
             <BudgetSlider
               budget={
                 tutorialState.isActive
@@ -318,6 +321,7 @@ export const BudgetPage = ({ history }) => {
         links={['team', 'season', 'trophies']}
         history={history}
         tutorialActive={tutorialState.isActive}
+        student={student}
       />
       <Overlay />
       {tutorialState.isActive && (
