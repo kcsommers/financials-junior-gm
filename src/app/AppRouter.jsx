@@ -4,13 +4,13 @@ import {
   Route,
   Switch,
 } from 'react-router-dom';
-import { HomePage } from './pages/HomePage';
-import { TeamPage } from './pages/TeamPage';
-import { ScoutPage } from './pages/ScoutPage';
-import { BudgetPage } from './pages/BudgetPage';
+import { HomePage } from './pages/game/HomePage';
+import { TeamPage } from './pages/game/TeamPage';
+import { ScoutPage } from './pages/game/ScoutPage';
+import { BudgetPage } from './pages/game/BudgetPage';
 import { Dashboard } from './pages/Dashboard';
-import { TrophiesPage } from './pages/TrophiesPage';
-import { SeasonPage } from './pages/SeasonPage';
+import { TrophiesPage } from './pages/game/TrophiesPage';
+import { SeasonPage } from './pages/game/SeasonPage';
 import { TeacherLogin } from './pages/login/TeacherLogin.jsx';
 import { StudentLogin } from './pages/login/StudentLogin.jsx';
 import TeacherDashboard from './pages/TeacherDashboard';
