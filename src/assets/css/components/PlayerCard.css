@@ -80,7 +80,7 @@ div.player-card-wrap-large div.player-card-header:after {
   transform: skewX(-12deg);
 }
 
-div.player-card-body{
+div.player-card-body {
   text-align: center;
   flex: 1;
   border-bottom-left-radius: 10px;
@@ -123,4 +123,5 @@ p.add-player-text {
   display: flex;
   align-items: center;
   justify-content: center;
+  font-size: 1.1rem;
 }

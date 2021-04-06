@@ -52,11 +52,22 @@ export const TrophiesPage = ({ history }) => {
   };
 
   const nextSeason = () => {
-    resetSeason(+student.level + 1, +student.level, student)
+    resetSeason(Math.min(+student.level + 1, 3), +student.level, student)
       .then((updatedStudent) => {
         history.push({
           pathname: '/home',
           state: { levelChange: { updatedStudent, isPromoted: true } },
+        });
+      })
+      .catch((err) => console.error(err));
+  };
+
+  const finishGame = () => {
+    resetSeason(+student.level, +student.level, student)
+      .then((updatedStudent) => {
+        history.push({
+          pathname: '/home',
+          state: { gameFinished: { updatedStudent } },
         });
       })
       .catch((err) => console.error(err));
@@ -108,7 +119,7 @@ export const TrophiesPage = ({ history }) => {
                 width: '100%',
               }}
               src={trophyIcon}
-              alt='Trophy'
+              alt="Trophy"
             />
           </span>
         </div>
@@ -120,7 +131,7 @@ export const TrophiesPage = ({ history }) => {
     return (
       <div
         key={`level-${i}`}
-        className='trophies-row'
+        className="trophies-row"
         style={{
           display: 'flex',
           alignItems: 'center',
@@ -133,7 +144,7 @@ export const TrophiesPage = ({ history }) => {
         }}
       >
         <div
-          className='trophies-wrap'
+          className="trophies-wrap"
           style={{
             flex: 1,
             display: 'flex',
@@ -157,9 +168,9 @@ export const TrophiesPage = ({ history }) => {
     awards[+student.level - 1].savingsCup;
 
   return (
-    <div className='page-container'>
+    <div className="page-container">
       <HeaderComponent
-        stickBtn='trophies'
+        stickBtn="trophies"
         level={+student.level}
         inverse={true}
         tutorialActive={tutorialActive}
@@ -168,7 +179,7 @@ export const TrophiesPage = ({ history }) => {
 
       <PageBoard>
         <div
-          className='trophies-page-board-header'
+          className="trophies-page-board-header"
           style={{
             position: 'relative',
             textAlign: 'center',
@@ -179,7 +190,7 @@ export const TrophiesPage = ({ history }) => {
           }}
         >
           <div
-            className='trophies-page-board-header-inner'
+            className="trophies-page-board-header-inner"
             style={{
               position: 'absolute',
               left: 0,
@@ -199,7 +210,7 @@ export const TrophiesPage = ({ history }) => {
           {inTransition ? (
             <>
               <span
-                className='box-shadow'
+                className="box-shadow"
                 style={styles.button}
                 onClick={repeatSeason}
               >
@@ -207,23 +218,21 @@ export const TrophiesPage = ({ history }) => {
               </span>
               {isPromoted && (
                 <span
-                  className={`box-shadow${
-                    +student.level === 3 ? ' disabled' : ''
-                  }`}
+                  className="box-shadow"
                   style={Object.assign(
                     { ...styles.button },
                     { marginLeft: '1rem' }
                   )}
-                  onClick={nextSeason}
+                  onClick={+student.level === 3 ? finishGame : nextSeason}
                 >
-                  Accept Promotion
+                  {+student.level === 3 ? 'Finish Game' : 'Accept Promotion'}
                 </span>
               )}
             </>
           ) : (
             <h6
               style={inTransition ? { position: 'relative', top: '1rem' } : {}}
-              className='color-primary'
+              className="color-primary"
             >
               Tap a trophy to learn more about it!
             </h6>
@@ -231,7 +240,7 @@ export const TrophiesPage = ({ history }) => {
         </div>
 
         <div
-          className='trophies-page-board-inner'
+          className="trophies-page-board-inner"
           style={{
             display: 'flex',
             flex: 1,
@@ -239,7 +248,7 @@ export const TrophiesPage = ({ history }) => {
           }}
         >
           <div
-            className='trophy-case'
+            className="trophy-case"
             style={{
               flex: 1,
               margin: '0 auto',
@@ -252,7 +261,7 @@ export const TrophiesPage = ({ history }) => {
             }}
           >
             <div
-              className='level-lables'
+              className="level-lables"
               style={{
                 position: 'absolute',
                 top: 0,
@@ -277,6 +286,7 @@ export const TrophiesPage = ({ history }) => {
         history={history}
         inTransition={inTransition}
         tutorialActive={tutorialActive}
+        student={student}
       />
       <Overlay />
     </div>
