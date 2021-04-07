@@ -61,6 +61,7 @@ button.btn-small {
   font-size: 1rem;
 }
 
+input[type='submit'],
 button.btn-primary {
   background-color: #00788a;
   color: #fff;
@@ -70,6 +71,7 @@ button.btn-primary {
   cursor: pointer;
 }
 
+input[type='submit'],
 button.btn-accent {
   background-color: #f3901d;
   color: #fff;
