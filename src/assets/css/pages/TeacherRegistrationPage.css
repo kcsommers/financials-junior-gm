@@ -1,0 +1,136 @@
+div.teacher-registration-page-container {
+  overflow-y: auto;
+  padding-bottom: 2rem;
+}
+
+div.teacher-registration-page-header {
+  min-height: 125px;
+  max-height: 125px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0 1rem;
+  position: relative;
+  margin-bottom: 2rem;
+}
+
+span.back-btn-wrap {
+  display: inline-block;
+  position: relative;
+  z-index: 2;
+}
+
+div.teacher-registration-page-header > h2 {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  z-index: 1;
+}
+
+div.teacher-registration-page-form-wrap {
+  background-color: #e5e5e5;
+  width: 85%;
+  margin: 0 auto;
+  border-radius: 3px;
+  padding: 2rem 7rem;
+}
+
+div.teacher-registration-page-form-wrap > h4 {
+  text-align: center;
+  font-weight: bold;
+}
+
+div.teacher-registration-page-form-wrap label {
+  font-size: 1.3rem;
+  margin-bottom: 0.25rem;
+  text-align: center;
+}
+
+div.teacher-registration-page-form-wrap input {
+  margin-bottom: 2rem;
+  padding: 0.5rem;
+  border-radius: 3px;
+  border: 1.5px solid #000;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+div.teacher-registration-page-form-wrap input:focus {
+  border-color: #00788a;
+}
+
+div.teacher-registration-page-form-wrap select {
+  width: 100%;
+  padding: 0 0.5rem;
+  border-radius: 3px;
+  border: 1.5px solid #000;
+  margin-bottom: 2rem;
+}
+
+div.teacher-registration-page-form-wrap select:focus {
+  border-color: #00788a;
+}
+
+div.teacher-registration-page-form-wrap select:focus {
+  border-color: #00788a;
+}
+
+div.teacher-registration-page-form-wrap p.error {
+  color: #dc2d2d;
+  font-size: 1rem;
+  margin-bottom: 0.25rem;
+}
+
+div.form-columns-wrap {
+  display: flex;
+}
+
+div.form-columns-wrap input.col-1-input {
+  margin-right: 0.5rem;
+}
+
+div.form-columns-wrap input.col-2-input {
+  margin-left: 0.5rem;
+}
+
+div.form-columns-wrap > div {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  align-items: center;
+}
+
+div.form-submit-wrap.btn-accent {
+  padding: 0;
+  text-align: center;
+}
+
+span.reg-form-spinner-wrap {
+  display: inline-block;
+  padding: 0.15rem;
+}
+
+input[type='submit'] {
+  padding: 0.75rem !important;
+  border: none !important;
+  box-shadow: none;
+  margin-bottom: 0 !important;
+  font-weight: bold;
+}
+
+div.fixed-overlay-wrap {
+  position: fixed;
+  margin: 0 auto;
+  width: 1024px;
+  height: 768px;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}

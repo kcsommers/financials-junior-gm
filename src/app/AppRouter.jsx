@@ -4,24 +4,25 @@ import {
   Route,
   Switch,
 } from 'react-router-dom';
-import { HomePage } from './pages/HomePage';
-import { TeamPage } from './pages/TeamPage';
-import { ScoutPage } from './pages/ScoutPage';
-import { BudgetPage } from './pages/BudgetPage';
-import { Dashboard } from './pages/Dashboard';
-import { TrophiesPage } from './pages/TrophiesPage';
-import { SeasonPage } from './pages/SeasonPage';
+import { HomePage } from './pages/game/HomePage';
+import { TeamPage } from './pages/game/TeamPage';
+import { ScoutPage } from './pages/game/ScoutPage';
+import { BudgetPage } from './pages/game/BudgetPage';
+import { Dashboard } from './pages/teacher/Dashboard';
+import { TrophiesPage } from './pages/game/TrophiesPage';
+import { SeasonPage } from './pages/game/SeasonPage';
 import { TeacherLogin } from './pages/login/TeacherLogin.jsx';
 import { StudentLogin } from './pages/login/StudentLogin.jsx';
-import TeacherDashboard from './pages/TeacherDashboard';
+import TeacherDashboard from './pages/teacher/TeacherDashboard';
 import PageNotFound from './components/page-not-found';
 import { TeacherPortal } from './pages/portal/TeacherPortal';
-import Signup from './pages/Signup';
+import Signup from './pages/teacher/Signup';
 import { IceBackground } from '@components';
 import { StudentPortal } from './pages/portal/StudentPortal';
 import { AdminPage } from './pages/admin/AdminPage';
 import { AdminLogin } from './pages/login/AdminLogin';
 import { AdminPortal } from './pages/portal/AdminPortal';
+import { TeacherRegsitrationPage } from './pages/teacher/TeacherRegistrationPage';
 
 const protectedRoutes = [
   '/home',
@@ -157,6 +158,11 @@ export const AppRouter = ({ isLoggedIn, userRole }) => {
           render={(props) => <AdminLogin {...props} isLoggedIn={isLoggedIn} />}
         />
         <Route exact path="/signup" component={Signup} />
+        <Route
+          exact
+          path="/register/teacher"
+          render={(props) => <TeacherRegsitrationPage {...props} />}
+        />
         <Route exact path="/dashboard" component={Dashboard} />
         <Redirect from="/" to="/home" />
         <Route component={PageNotFound} />
@@ -184,6 +190,11 @@ export const AppRouter = ({ isLoggedIn, userRole }) => {
           render={(props) => <AdminLogin {...props} isLoggedIn={isLoggedIn} />}
         />
         <Route exact path="/signup" component={Signup} />
+        <Route
+          exact
+          path="/register/teacher"
+          render={(props) => <TeacherRegsitrationPage {...props} />}
+        />
         <Route exact path="/dashboard" component={Dashboard} />
         {protectedRoutes.includes(window.location.pathname) && (
           <Redirect to="/dashboard" />

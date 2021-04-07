@@ -56,11 +56,8 @@ button {
   border: none;
 }
 
-button.btn-small {
-  padding: 0.5rem 1.5rem;
-  font-size: 1rem;
-}
-
+a.btn-primary,
+input[type='submit'],
 button.btn-primary {
   background-color: #00788a;
   color: #fff;
@@ -70,6 +67,9 @@ button.btn-primary {
   cursor: pointer;
 }
 
+a.btn-accent,
+div.btn-accent,
+input[type='submit'],
 button.btn-accent {
   background-color: #f3901d;
   color: #fff;
@@ -77,6 +77,12 @@ button.btn-accent {
   padding: 1rem 1.5rem;
   border-radius: 3px;
   cursor: pointer;
+}
+
+a.btn-small,
+button.btn-small {
+  padding: 0.5rem 1.5rem;
+  font-size: 1rem;
 }
 
 .color-primary {
