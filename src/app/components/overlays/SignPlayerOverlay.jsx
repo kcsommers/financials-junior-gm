@@ -9,10 +9,9 @@ import {
   toggleOverlay,
   signPlayer,
   setStudent,
-  gameBlockEnded,
   removeObjective,
   setObjectiveComplete,
-  setSeasonActive,
+  removeScenario,
 } from '@redux/actions';
 import { ConfirmSignOverlay } from './ConfirmSignOverlay';
 import { TeamAssignments } from '@data/players/players';
@@ -20,7 +19,6 @@ import {
   getAvailableSlots,
   getPlayerPositon,
   handleSignPlayer,
-  startingLineupFull,
 } from '@data/players/players-utils';
 import { Objectives } from '@data/objectives/objectives';
 import '@css/components/team-page/SignPlayerOverlay.css';
@@ -30,34 +28,26 @@ export const SignPlayerOverlay = ({ assignment, isDisabled }) => {
   const student = useSelector((state) => state.studentState.student);
   const team = useSelector((state) => state.players.teamPlayers);
 
-  const seasonState = useSelector((state) => state.season);
-
   const availableSlots = {
     forwards: getAvailableSlots(TeamAssignments.offense, team),
     defense: getAvailableSlots(TeamAssignments.defense, team),
     goalie: getAvailableSlots(TeamAssignments.goalie, team),
-    bench: getAvailableSlots(TeamAssignments.bench, team),
   };
 
   const signCancelled = () => {
     dispatch(
       toggleOverlay({
         isOpen: true,
-        template: (
-          <SignPlayerOverlay
-            team={team}
-            assignment={assignment}
-            student={student}
-          />
-        ),
+        template: <SignPlayerOverlay team={team} assignment={assignment} />,
       })
     );
   };
 
   const signConfirmed = (signedPlayer) => {
     const prevAssignment = signedPlayer.playerAssignment;
-    handleSignPlayer(signedPlayer, assignment, student, seasonState).then(
-      ({ updatedStudent, updatedPlayer }) => {
+
+    handleSignPlayer(signedPlayer, assignment, student).then(
+      ({ updatedStudent, updatedPlayer, startingLineupFull }) => {
         batch(() => {
           dispatch(signPlayer(updatedPlayer, prevAssignment, updatedStudent));
           dispatch(setStudent(updatedStudent));
@@ -73,27 +63,12 @@ export const SignPlayerOverlay = ({ assignment, isDisabled }) => {
             })
           );
 
-          const objectiveComplete = startingLineupFull(updatedStudent);
-
-          if (objectiveComplete) {
-            if (seasonState.currentScenario) {
-              dispatch(gameBlockEnded(student));
-              dispatch(removeObjective(Objectives.SEASON_SCENARIO));
-              dispatch(
-                setObjectiveComplete(Objectives.FILL_TEAM, objectiveComplete)
-              );
-            } else {
-              dispatch(
-                setObjectiveComplete(Objectives.FILL_TEAM, objectiveComplete)
-              );
-
-              if (
-                student.objectives &&
-                student.objectives[Objectives.LEARN_BUDGET]
-              ) {
-                dispatch(setSeasonActive(true));
-              }
-            }
+          // if the starting lineup is full the fill team
+          // and (if applicable) season scenario objectives are complete
+          if (startingLineupFull) {
+            dispatch(setObjectiveComplete(Objectives.FILL_TEAM, true));
+            dispatch(removeObjective(Objectives.SEASON_SCENARIO));
+            dispatch(removeScenario());
           }
         });
       }
@@ -108,7 +83,7 @@ export const SignPlayerOverlay = ({ assignment, isDisabled }) => {
           <ConfirmSignOverlay
             player={player}
             position={assignment}
-            confirm={signConfirmed.bind(this, player, undefined)}
+            confirm={signConfirmed.bind(this, player)}
             cancel={signCancelled}
             isDisabled={isDisabled}
           />
@@ -158,10 +133,6 @@ export const SignPlayerOverlay = ({ assignment, isDisabled }) => {
                   <span className='color-primary'>Goalie:</span>
                   <span className='color-accent'>{availableSlots.goalie}</span>
                 </div>
-                <div className='team-slots-board-row'>
-                  <span className='color-primary'>Bench:</span>
-                  <span className='color-accent'>{availableSlots.bench}</span>
-                </div>
               </div>
             </div>
           }
@@ -172,6 +143,7 @@ export const SignPlayerOverlay = ({ assignment, isDisabled }) => {
             initialPosition={getPlayerPositon(assignment)}
             onPlayerCardClick={confirmSign}
             student={student}
+            signAssignment={assignment}
           />
         </div>
       </div>

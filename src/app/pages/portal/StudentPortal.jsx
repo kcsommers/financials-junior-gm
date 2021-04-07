@@ -37,7 +37,7 @@ export const StudentPortal = ({
         dispatch(setStudent(student));
         dispatch(setInitialPlayersState(student.players, student));
         dispatch(initializeSeason(student));
-        dispatch(initializeObjectives(student));
+        dispatch(initializeObjectives(student, false));
       });
     },
     [dispatch]
@@ -57,7 +57,7 @@ export const StudentPortal = ({
         (pageName === 'team' && !student.tutorials.budget) ||
         (pageName === 'season' &&
           !student.tutorials.season &&
-          startingLineupFull(student))
+          !startingLineupFull(student))
       ) {
         history.push('/home');
         return;

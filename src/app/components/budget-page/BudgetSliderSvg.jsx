@@ -1,6 +1,11 @@
+import { useMemo } from 'react';
+
 export const BudgetSliderSvg = ({ budget }) => {
   const savingsPct = budget.savings / budget.total;
   const spentPct = budget.spent / budget.total;
+
+  const guid = useMemo(() => Math.floor(Math.random() * 1000000), []);
+
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
@@ -9,7 +14,7 @@ export const BudgetSliderSvg = ({ budget }) => {
       viewBox='0 0 792 236'
     >
       <defs>
-        <clipPath id='savingsClipPath'>
+        <clipPath id={`savingsClipPath-${guid}`}>
           <rect
             id='Rectangle_158'
             data-name='Rectangle 158'
@@ -20,7 +25,7 @@ export const BudgetSliderSvg = ({ budget }) => {
             style={{ transition: 'all 0.1s ease' }}
           />
         </clipPath>
-        <clipPath id='spentClipPath'>
+        <clipPath id={`spentClipPath-${guid}`}>
           <rect
             id='Rectangle_1588'
             data-name='Rectangle 1588'
@@ -77,7 +82,7 @@ export const BudgetSliderSvg = ({ budget }) => {
         id='Mask_Group_25'
         data-name='Mask Group 25'
         transform='translate(-128 -264)'
-        clipPath='url(#spentClipPath)'
+        clipPath={`url(#spentClipPath-${guid})`}
       >
         <g
           id='shape'
@@ -118,7 +123,7 @@ export const BudgetSliderSvg = ({ budget }) => {
         id='Mask_Group_25'
         data-name='Mask Group 25'
         transform='translate(-128 -264)'
-        clipPath='url(#savingsClipPath)'
+        clipPath={`url(#savingsClipPath-${guid})`}
       >
         <g
           id='shape'

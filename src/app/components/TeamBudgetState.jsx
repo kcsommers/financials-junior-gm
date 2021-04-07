@@ -3,7 +3,7 @@ import { LevelStick, LoadingSpinner } from '@components';
 import { useSelector } from 'react-redux';
 import { getMaxTeamRank } from '@data/players/players-utils';
 
-export const TeamBudgetState = ({ title, isLarge, changes }) => {
+export const TeamBudgetState = ({ title, isLarge, changes, tutorialState }) => {
   const student = useSelector((state) => state.studentState.student);
   const { moneySpent, teamRank } = useSelector((state) => state.players);
 
@@ -40,8 +40,8 @@ export const TeamBudgetState = ({ title, isLarge, changes }) => {
           <div style={{ position: 'relative' }}>
             <LevelStick
               type='teamRank'
-              amount={teamRank}
-              denom={getMaxTeamRank(+student.level)}
+              amount={tutorialState ? tutorialState.teamRank : teamRank}
+              denom={getMaxTeamRank(tutorialState ? 1 : +student.level)}
               color='#e06d00'
               indicatorDirection='right'
               isLarge={isLarge}
@@ -52,7 +52,7 @@ export const TeamBudgetState = ({ title, isLarge, changes }) => {
                 </span>
               }
             />
-            {changes && (
+            {(changes || (tutorialState && tutorialState.changes)) && (
               <span
                 style={{
                   position: 'absolute',
@@ -62,17 +62,23 @@ export const TeamBudgetState = ({ title, isLarge, changes }) => {
                   color: '#00788d',
                 }}
               >
-                +{changes[1]}
+                +{tutorialState ? tutorialState.changes[1] : changes[1]}
               </span>
             )}
           </div>
           <div style={{ position: 'relative' }}>
             <LevelStick
               type='budget'
-              amount={Math.max(
-                +student.totalBudget - moneySpent - +student.savingsBudget,
-                0
-              )}
+              amount={
+                tutorialState
+                  ? tutorialState.budget
+                  : Math.max(
+                      +student.totalBudget -
+                        moneySpent -
+                        +student.savingsBudget,
+                      0
+                    )
+              }
               denom={student.totalBudget}
               color='#002f6c'
               indicatorDirection='left'
@@ -85,7 +91,7 @@ export const TeamBudgetState = ({ title, isLarge, changes }) => {
                 </span>
               }
             />
-            {changes && (
+            {(changes || (tutorialState && tutorialState.changes)) && (
               <span
                 style={{
                   position: 'absolute',
@@ -95,7 +101,7 @@ export const TeamBudgetState = ({ title, isLarge, changes }) => {
                   color: 'red',
                 }}
               >
-                -${changes[0]}
+                -${tutorialState ? tutorialState.changes[0] : changes[0]}
               </span>
             )}
           </div>

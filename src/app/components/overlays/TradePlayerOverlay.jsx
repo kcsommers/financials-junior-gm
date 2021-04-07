@@ -114,6 +114,7 @@ export const TradePlayerOverlay = ({
             onPlayerCardClick={confirmTrade}
             student={student}
             releasingPlayer={releasingPlayer}
+            signAssignment={releasingPlayer.playerAssignment}
           />
         </div>
       </div>

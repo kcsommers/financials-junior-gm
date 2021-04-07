@@ -1,12 +1,16 @@
 import { useMemo } from 'react';
 import { useDispatch } from 'react-redux';
-import { getStanding } from '@data/season/season';
-import { TrophySvg, OverlayBoard, Button } from '@components';
+import { getStanding } from '@data/season/season-utils';
+import { OverlayBoard, Button } from '@components';
 import { toggleOverlay } from '@redux/actions';
+import trophyIcon from '@images/icons/trophy.svg';
 
-export const SeasonCompleteOverlay = ({ team, level, standings, student }) => {
+export const SeasonCompleteOverlay = ({ team, standings }) => {
   const dispatch = useDispatch();
-  const standing = useMemo(() => getStanding(team, standings), []);
+  const standing = useMemo(() => getStanding(team, standings), [
+    team,
+    standings,
+  ]);
 
   return (
     <OverlayBoard>
@@ -37,7 +41,7 @@ export const SeasonCompleteOverlay = ({ team, level, standings, student }) => {
               transformOrigin: 'top center',
             }}
           >
-            <TrophySvg isEarned={true} />
+            <img src={trophyIcon} alt='Trophy' />
           </span>
         </div>
         <p className='color-primary' style={{ fontSize: '1.75rem' }}>

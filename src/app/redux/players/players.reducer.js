@@ -11,7 +11,6 @@ import { cloneDeep } from 'lodash';
 import { PlayerAssignments, PlayerPositions } from '@data/players/players';
 import {
   isTeamPlayer,
-  getPlayerPositon,
   getTeamRank,
   getMoneySpent,
   isStarter,
@@ -141,11 +140,10 @@ const playersReducer = (state = initialState, action) => {
       const prevAssignment = action.payload.prevAssignment;
       const student = action.payload.student;
       const moneyLevels = getMoneyLevels(+student.level);
-      const position = getPlayerPositon(signedPlayer.playerAssignment);
 
       let playerCache = clonedState.marketPlayers;
 
-      if (position === PlayerPositions.BENCH) {
+      if (prevAssignment === PlayerAssignments.OFFERED_SCOUT) {
         playerCache = clonedState.scoutingState.offeredScoutPlayers;
         let levelCache;
         if (+signedPlayer.playerCost === moneyLevels[0].num) {
@@ -172,9 +170,6 @@ const playersReducer = (state = initialState, action) => {
       }
 
       clonedState.teamPlayers[signedPlayer.playerAssignment] = signedPlayer;
-      if (getPlayerPositon(prevAssignment) === PlayerPositions.BENCH) {
-        clonedState.teamPlayers[prevAssignment] = null;
-      }
 
       const team = [
         ...Object.keys(clonedState.teamPlayers).map(
@@ -267,11 +262,8 @@ const playersReducer = (state = initialState, action) => {
         }
       }
 
-      // if a bench player was signed, remove them from the scout cache
-      if (
-        getPlayerPositon(signedPlayer.playerAssignment) ===
-        PlayerPositions.BENCH
-      ) {
+      // if a scout player was signed, remove them from the scout cache
+      if (signedPlayer.playerAssignment === PlayerAssignments.OFFERED_SCOUT) {
         let levelCache;
         if (+signedPlayer.playerCost === moneyLevels[0].num) {
           levelCache = clonedState.scoutingState.scoutPlayers.levelOne;

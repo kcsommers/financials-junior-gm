@@ -5,6 +5,7 @@ import { PlayerRankPie, PlayerRankGraph } from '@components';
 import sharksLogo from '@images/icons/sharks-logo.svg';
 import { getPlayerStatMax } from '@data/players/players-utils';
 import '@css/components/PlayerCard.css';
+import { toTitleCase } from '../utils';
 
 const styles = {
   small: {
@@ -108,6 +109,7 @@ export const PlayerCard = ({
   animationStates,
   size = 'small',
   onClick,
+  slotPosition,
 }) => {
   const playerTemplateSmall = player ? (
     <motion.div
@@ -132,11 +134,11 @@ export const PlayerCard = ({
           }
         }}
       >
-        <p className='position-text' style={styles[size].position}>
+        <p className="position-text" style={styles[size].position}>
           {capitalize(player.playerPosition)}
         </p>
-        <div className='player-card-header'>
-          <div className='player-card-header-inner' style={styles[size].header}>
+        <div className="player-card-header">
+          <div className="player-card-header-inner" style={styles[size].header}>
             <span>{player.overallRank}</span>
             {player.playerCost && (
               <span>{getDollarString(player.playerCost)}</span>
@@ -145,7 +147,7 @@ export const PlayerCard = ({
         </div>
         <div
           className={
-            player.sharkPlayer == 'TRUE'
+            player.sharkPlayer === 'TRUE'
               ? 'box-shadow player-card-body player-card-color-shark'
               : 'box-shadow player-card-body player-card-color-reg'
           }
@@ -164,7 +166,7 @@ export const PlayerCard = ({
             {player.playerName.split(' ')[1]}
           </span>
           <div
-            className='player-card-img-wrap'
+            className="player-card-img-wrap"
             style={{
               ...styles[size].image,
               backgroundImage: `url(${player.playerPicture || playerImage})`,
@@ -173,31 +175,31 @@ export const PlayerCard = ({
             }}
           ></div>
           {player.playerPosition === 'goalie' ? (
-            <div className='player-ranks'>
+            <div className="player-ranks">
               <PlayerRankPie
-                label='Saves'
-                sliceColor='#002f6c'
+                label="Saves"
+                sliceColor="#002f6c"
                 rank={+player.overallRank}
                 max={getPlayerStatMax(+player.playerLevel)}
               />
             </div>
           ) : (
-            <div className='player-ranks'>
+            <div className="player-ranks">
               <PlayerRankPie
-                label='Off'
-                sliceColor='#DC2D2D'
+                label="Off"
+                sliceColor="#DC2D2D"
                 rank={+player.offensiveRank}
                 max={getPlayerStatMax(+player.playerLevel)}
               />
               <PlayerRankPie
-                label='Pass'
-                sliceColor='#00788a'
+                label="Pass"
+                sliceColor="#00788a"
                 rank={+player.passRank}
                 max={getPlayerStatMax(+player.playerLevel)}
               />
               <PlayerRankPie
-                label='Def'
-                sliceColor='#002f6c'
+                label="Def"
+                sliceColor="#002f6c"
                 rank={+player.defensiveRank}
                 max={getPlayerStatMax(+player.playerLevel)}
               />
@@ -227,11 +229,11 @@ export const PlayerCard = ({
           }
         }}
       >
-        <p className='position-text' style={styles[size].position}>
+        <p className="position-text" style={styles[size].position}>
           {capitalize(player.playerPosition)}
         </p>
-        <div className='player-card-header'>
-          <div className='player-card-header-inner' style={styles[size].header}>
+        <div className="player-card-header">
+          <div className="player-card-header-inner" style={styles[size].header}>
             <span style={{ display: 'inline-flex', flexDirection: 'column' }}>
               <span style={{ fontSize: '1rem', marginBottom: '-0.5rem' }}>
                 Rank
@@ -246,6 +248,7 @@ export const PlayerCard = ({
                 <img
                   src={sharksLogo}
                   style={{ display: 'inline-block', width: '100%' }}
+                  alt="S.J. Sharks Logo"
                 />
               </span>
             )}
@@ -265,13 +268,13 @@ export const PlayerCard = ({
           }}
         >
           <p
-            className='player-card-player-name outline-black'
+            className="player-card-player-name outline-black"
             style={styles[size].name}
           >
             {player.playerName}
           </p>
           <div
-            className='player-card-img-wrap'
+            className="player-card-img-wrap"
             style={{
               ...styles[size].image,
               backgroundImage: `url(${player.playerPicture || playerImage})`,
@@ -281,11 +284,11 @@ export const PlayerCard = ({
           ></div>
           {player.playerPosition === 'goalie' ? (
             <div
-              className='player-rank-graphs-container'
+              className="player-rank-graphs-container"
               style={styles[size].graphsWrap}
             >
               <PlayerRankGraph
-                label='Saves'
+                label="Saves"
                 rgb={[0, 47, 108]}
                 rank={+player.overallRank}
                 isSmall={size === 'medium'}
@@ -294,25 +297,25 @@ export const PlayerCard = ({
             </div>
           ) : (
             <div
-              className='player-rank-graphs-container'
+              className="player-rank-graphs-container"
               style={styles[size].graphsWrap}
             >
               <PlayerRankGraph
-                label='Offense'
+                label="Offense"
                 rgb={[220, 45, 45]}
                 rank={+player.offensiveRank}
                 isSmall={size === 'medium'}
                 max={getPlayerStatMax(+player.playerLevel)}
               />
               <PlayerRankGraph
-                label='Passing'
+                label="Passing"
                 rank={+player.passRank}
                 rgb={[0, 120, 138]}
                 isSmall={size === 'medium'}
                 max={getPlayerStatMax(+player.playerLevel)}
               />
               <PlayerRankGraph
-                label='Defense'
+                label="Defense"
                 rank={+player.defensiveRank}
                 rgb={[0, 47, 108]}
                 isSmall={size === 'medium'}
@@ -332,16 +335,23 @@ export const PlayerCard = ({
       }`}
     >
       <motion.div
-        className='box-shadow player-card-empty-inner border-accent'
-        animate={animationStates ? animationStates.playerCardEmpty : null}
+        className="box-shadow player-card-empty-inner border-accent"
+        animate={
+          animationStates && slotPosition ? animationStates[slotPosition] : null
+        }
+        transition={{
+          default: {
+            duration: 1,
+          },
+        }}
         onClick={() => {
           if (onClick) {
             onClick(player);
           }
         }}
       >
-        <p className='add-player-text color-primary outline-accent'>
-          Add Player
+        <p className="add-player-text color-primary outline-accent">
+          Add {slotPosition ? toTitleCase(slotPosition) : 'Player'}
         </p>
       </motion.div>
     </div>

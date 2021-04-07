@@ -19,20 +19,22 @@ export const HeaderComponent = ({
   inTransition,
   stickBtnLink = '/home',
   tutorialActive,
+  beforeNav,
 }) => {
   const stick = (
     <StickButton
-      key='s'
+      key="s"
       link={stickBtnLink}
-      image={stickBtn}
+      stick={stickBtn}
       inverse={inverse}
       large={largeStick}
       isDisabled={inTransition || tutorialActive}
+      beforeNav={beforeNav}
     />
   );
 
   const board = (
-    <div key='ob' style={{ maxWidth: '350px' }}>
+    <div key="ob" style={{ maxWidth: '350px' }}>
       <ObjectivesBoard
         visibleObjectives={1}
         level={level}
@@ -45,9 +47,9 @@ export const HeaderComponent = ({
   const inner = inverse ? [board, stick] : [stick, board];
   return (
     <div style={styles}>
-      <img src={financialsLogo} alt='Financials Junior GM Program logo' />
+      <img src={financialsLogo} alt="Financials Junior GM Program logo" />
       <div
-        className='header-inner'
+        className="header-inner"
         style={{
           position: 'absolute',
           left: 0,

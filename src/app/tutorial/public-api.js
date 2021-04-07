@@ -6,7 +6,7 @@ export {
   transitionSlidesTeam,
   transitionSlidesSeason,
 } from './lessons/home/home-slides';
-export { teamSlides } from './lessons/team/team-slides';
+export { teamSlides, finishedScoutingSlides } from './lessons/team/team-slides';
 export { scoutSlides } from './lessons/scout/scout-slides';
 export { seasonSlides } from './lessons/season/season-slides';
 export { Tutorial } from './components/Tutorial';

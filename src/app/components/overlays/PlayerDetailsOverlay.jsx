@@ -4,7 +4,6 @@ import {
   setStudent,
   releasePlayer,
   signPlayer,
-  gameBlockEnded,
   removeObjective,
   setObjectiveComplete,
 } from '@redux/actions';
@@ -17,9 +16,7 @@ import {
   Button,
   ConfirmOverlay,
 } from '@components';
-import { PlayerPositions } from '@data/players/players';
 import {
-  getPlayerPositon,
   getAssignmentsByPosition,
   handleSignPlayer,
   getOpenAssignment,
@@ -36,9 +33,6 @@ export const PlayerDetailsOverlay = ({
   includeActions = true,
 }) => {
   const dispatch = useDispatch();
-
-  const isBenchPlayer =
-    getPlayerPositon(player.playerAssignment) === PlayerPositions.BENCH;
 
   const onCancel = () => {
     dispatch(
@@ -130,7 +124,7 @@ export const PlayerDetailsOverlay = ({
 
           const objectiveComplete = startingLineupFull(updatedStudent);
           if (seasonState && seasonState.currentScenario && objectiveComplete) {
-            dispatch(gameBlockEnded(student));
+            // @TODO
             dispatch(removeObjective(Objectives.SEASON_SCENARIO));
           } else {
             dispatch(
@@ -196,17 +190,13 @@ export const PlayerDetailsOverlay = ({
               width: '100%',
             }}
           >
-            {isBenchPlayer ? (
-              <Button
-                text='Add to Starting Lineup'
-                onClick={confirmMoveToStartingLineup}
-                isDisabled={!positionOpen(player.playerPosition)}
-              />
-            ) : seasonState && seasonState.seasonActive ? (
+            {seasonState && seasonState.seasonActive ? (
               <Button text='Trade' onClick={confirmTrade} />
             ) : null}
 
-            <Button text='Release' onClick={confirmRelease} />
+            {seasonState && !seasonState.seasonActive && (
+              <Button text='Release' onClick={confirmRelease} />
+            )}
           </div>
         )}
       </div>

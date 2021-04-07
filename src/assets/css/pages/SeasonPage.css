@@ -14,37 +14,36 @@ div.season-page-board-bottom {
   padding: 0 1rem 0.5rem 1rem;
 }
 
-.play-btn-wrap {
-  position: relative;
-}
-
-.play-btn-wrap > span {
-  position: absolute;
-  left: -10px;
-  right: -10px;
-  top: 0;
-  transform: translateY(calc(-100% - 0.5rem));
-  text-align: center;
-  font-size: 1rem;
-}
-
-div.play-btn-container {
+div.game-btn-container {
   position: absolute;
   left: 0;
   top: 0;
   bottom: 0;
   right: 0;
+}
+
+div.game-btn-container-inner {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 }
 
-div.game-count {
-  position: absolute;
-  left: 50%;
-  bottom: 0;
-  transform: translate(-50%, calc(-100% - 0.25rem));
+div.game-btn-label-wrap {
+  height: 37.5px;
+  margin-bottom: 0.25rem;
+}
+
+div.game-btn-label-wrap > span {
+  font-size: 1rem;
+  width: 150px;
+  text-align: center;
+  display: inline-block;
+}
+
+div.game-count-wrap {
+  font-size: 1.1rem;
+  margin-top: -0.2rem;
 }
 
 div.jumbotron-container {
@@ -72,10 +71,14 @@ div.opposing-team-rank-container {
   right: -53px;
 }
 
-div.standings-board-wrap-inner,
-div.game-block-board-wrap-inner {
+div.standings-board-container > h6 {
+  font-weight: 700;
+  font-size: 1.5rem;
+}
+
+div.standings-board-wrap-inner {
   width: 320px;
-  height: 200px;
+  height: 150px;
   border-radius: 10px;
   background-color: #fff;
   padding: 0.5rem 1rem;
@@ -87,60 +90,6 @@ div.standings-board-wrap-inner {
   display: flex;
   flex-direction: column;
   justify-content: center;
-}
-
-div.game-block-board-wrap-inner > div {
-  display: inline-flex;
-  flex-direction: column;
-  justify-content: center;
-  height: 100%;
-  width: auto;
-}
-
-div.game-block-board-container {
-  position: relative;
-}
-
-div.game-block-board-row {
-  position: relative;
-  flex: 1;
-  width: 100%;
-  color: #121210;
-  font-size: 1.1rem;
-}
-
-.game-block-board-teams-wrap > div {
-  flex: 1;
-  display: inline-block;
-}
-
-.game-block-board-teams-wrap > div:first-child {
-  text-align: right;
-  margin-right: 1rem;
-  position: relative;
-}
-
-.game-block-board-score {
-  text-align: center;
-  position: absolute;
-  right: 0;
-  transform: translateX(70%);
-}
-
-.game-block-board-score > span {
-  display: inline-block;
-}
-
-.game-block-board-score > span:first-child {
-  margin-right: 0.25rem;
-}
-
-.game-block-board-score > span:last-child {
-  margin-left: 0.25rem;
-}
-
-div.game-block-board-right {
-  white-space: nowrap;
 }
 
 div.standings-board-wrap-inner {
@@ -181,6 +130,10 @@ div.standings-board-row > span:last-child {
   align-self: stretch;
 }
 
+div.cheermeter-container {
+  padding-left: 1.5rem;
+}
+
 svg.game-button-warming-up {
   animation: spin 5s cubic-bezier(0.75, 1.65, 0.7, -0.65);
   -webkit-animation: spin 5s cubic-bezier(0.75, 1.65, 0.7, -0.65);
@@ -199,7 +152,13 @@ svg.game-button-game-on g.active-puck-border {
 }
 
 @keyframes fillShift {
+  0% {
+    opacity: 0;
+  }
   50% {
-    fill: #00788a;
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
   }
 }

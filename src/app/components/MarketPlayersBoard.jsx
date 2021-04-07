@@ -3,7 +3,9 @@ import { PlayerPositions } from '@data/players/players';
 import { PlayerCard, InsufficientFundsOverlay } from '@components';
 import { useSelector, useDispatch } from 'react-redux';
 import { toggleOverlay } from '@redux/actions';
+import { Objectives } from '@data/objectives/objectives';
 import '@css/components/MarketPlayersBoard.css';
+import { getOpenAssignment } from '../data/players/players-utils';
 
 const getPlayerCardStyles = (arrLength, playerIndex) => {
   let scale = 1.15;
@@ -35,7 +37,6 @@ const getPlayerCardStyles = (arrLength, playerIndex) => {
 const getViewConfig = (position, marketPlayers) => {
   switch (position) {
     case PlayerPositions.FORWARD:
-    case PlayerPositions.BENCH:
       return {
         players: marketPlayers.forward,
         title: 'Forwards you can sign',
@@ -64,18 +65,28 @@ export const MarketPlayersBoard = ({
   onPlayerCardClick,
   student,
   releasingPlayer,
+  signAssignment,
 }) => {
   const dispatch = useDispatch();
+
+  const { currentScenario } = useSelector((state) => state.season);
+
+  const scenarioAssignment =
+    student.objectives &&
+    student.objectives[Objectives.SEASON_SCENARIO] === false
+      ? getOpenAssignment(null, student)
+      : '';
+
+  // if there is an active season scenario, only the scouted players
+  // should be available to sign
   const marketPlayers = useSelector((state) =>
-    initialPosition === PlayerPositions.BENCH
+    scenarioAssignment && scenarioAssignment === signAssignment
       ? state.players.scoutingState.offeredScoutPlayers
       : state.players.marketPlayers
   );
+
   const { moneySpent } = useSelector((state) => state.players);
-
   const [activePosition, setActivePosition] = useState(initialPosition);
-
-  const currentView = getViewConfig(activePosition, marketPlayers);
 
   const checkBudget = (signingPlayer) => {
     let budget = +student.totalBudget - +student.savingsBudget - moneySpent;
@@ -97,16 +108,11 @@ export const MarketPlayersBoard = ({
     onPlayerCardClick(signingPlayer);
   };
 
-  const forwardsActive =
-    activePosition === PlayerPositions.FORWARD ||
-    initialPosition === PlayerPositions.BENCH;
-  const goaliesActive =
-    activePosition === PlayerPositions.GOALIE ||
-    initialPosition === PlayerPositions.BENCH;
-  const defenseActive =
-    activePosition === PlayerPositions.DEFENSE ||
-    activePosition === 'defender' ||
-    initialPosition === PlayerPositions.BENCH;
+  const forwardsActive = activePosition === PlayerPositions.FORWARD;
+  const goaliesActive = activePosition === PlayerPositions.GOALIE;
+  const defenseActive = activePosition === PlayerPositions.DEFENSE;
+
+  const currentView = getViewConfig(activePosition, marketPlayers);
 
   return (
     <div>

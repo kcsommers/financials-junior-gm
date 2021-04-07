@@ -1,18 +1,14 @@
 import { TeamCard } from './TeamCard';
-import { GamePhases, getStanding } from '@data/season/season';
+import { GamePhases } from '@data/season/season';
+import { getStanding } from '@data/season/season-utils';
 import { Indicator, PlayerCard } from '@components';
 import { motion } from 'framer-motion';
 import '@css/components/season-page/Jumbotron.css';
 import { useSelector } from 'react-redux';
 import { startingLineupFull } from '@data/players/players-utils';
 
-export const Jumbotron = ({
-  gameBlockState,
-  seasonState,
-  currentOpponentIndex,
-  team,
-}) => {
-  const { currentOpponent, currentScore, currentPhase } = gameBlockState;
+export const Jumbotron = ({ gameState, seasonState, team }) => {
+  const { opponent, score, phase } = gameState;
   const tutorialActive = useSelector((state) => state.tutorial.isActive);
   const animationStates = {
     stats: useSelector((state) => state.tutorial.season.stats),
@@ -21,24 +17,18 @@ export const Jumbotron = ({
   };
   const seasonDisabled = !startingLineupFull(team);
 
-  // if its the first game, the next opponent is the current opponent
-  const nextIndex =
-    (currentOpponentIndex === 0
-      ? currentOpponentIndex
-      : currentOpponentIndex + 1) +
-    seasonState.currentBlockIndex * 4;
-
-  const nextOpponent = seasonState.allOpponents[nextIndex];
+  const nextOpponent =
+    seasonState.allOpponents[seasonState.currentOpponentIndex];
   const upcomingGames = seasonState.allOpponents.slice(
-    nextIndex + 1,
-    nextIndex + 3
+    seasonState.currentOpponentIndex + 1,
+    seasonState.currentOpponentIndex + 3
   );
 
   const scoreView = (
     <div className='jumbotron-score-container'>
       <div className='jumbotron-score-title'>Score</div>
-      <div className='box-shadow jumbotron-score-wrap'>{currentScore[0]}</div>
-      <div className='box-shadow jumbotron-score-wrap'>{currentScore[1]}</div>
+      <div className='box-shadow jumbotron-score-wrap'>{score[0]}</div>
+      <div className='box-shadow jumbotron-score-wrap'>{score[1]}</div>
     </div>
   );
 
@@ -235,8 +225,8 @@ export const Jumbotron = ({
           }}
         >
           <TeamCard
-            team={currentOpponent}
-            standing={getStanding(currentOpponent, seasonState.standings)}
+            team={opponent}
+            standing={getStanding(opponent, seasonState.standings)}
           />
         </motion.div>
       </div>
@@ -254,7 +244,10 @@ export const Jumbotron = ({
   const scenarioView = seasonState.currentScenario ? (
     <div className='transition-view-container'>
       {sharksTransitionView}
-      <div className='transition-view-right'>
+      <div
+        className='transition-view-right'
+        style={{ transform: 'scale(0.94)', transformOrigin: 'top' }}
+      >
         <motion.div
           initial={{ scale: 0.75 }}
           animate={{ scale: 1, position: 'relative', top: '-0.35rem' }}
@@ -279,7 +272,7 @@ export const Jumbotron = ({
       return scenarioView;
     }
 
-    switch (currentPhase.phase) {
+    switch (phase.phase) {
       case GamePhases.READY:
       case GamePhases.TRANSITION: {
         return transitionView;
@@ -310,7 +303,7 @@ export const Jumbotron = ({
     }
     return seasonState.currentScenario
       ? seasonState.currentScenario.message
-      : gameBlockState.message;
+      : gameState.message;
   };
 
   const message = getMessage();

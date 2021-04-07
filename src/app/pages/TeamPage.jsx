@@ -11,9 +11,8 @@ import {
   NextSeasonOverlay,
   FaqOverlay,
   ScoutingCompleteOverlay,
+  FooterComponent,
 } from '@components';
-import scoutStick from '@images/scout-stick.svg';
-import teamStick from '@images/team-stick.svg';
 import iceBgSmall from '@images/ice-bg-small.svg';
 import { useSelector, useDispatch, batch } from 'react-redux';
 import {
@@ -21,11 +20,14 @@ import {
   SharkieButton,
   Tutorial,
   getConfirmSlides,
+  finishedScoutingSlides,
 } from '@tutorial';
 import { setTutorialState, toggleOverlay, setStudent } from '@redux/actions';
 import { updateStudentById } from './../api-helper';
 import { faqs } from '@data/faqs/faqs';
 import { cloneDeep } from 'lodash';
+import { PlayerPositions } from '@data/players/players';
+import { motion } from 'framer-motion';
 import '@css/pages/TeamPage.css';
 
 export const TeamPage = ({ history, location }) => {
@@ -36,12 +38,19 @@ export const TeamPage = ({ history, location }) => {
   const seasonState = useSelector((state) => state.season);
   const studentTeam = seasonState.seasonTeam;
   const scoutingState = useSelector((state) => state.players.scoutingState);
-  const playerCardAnimationStates = {
+  const animationStates = {
     playerCard: useSelector((state) => state.tutorial.team.playerCard),
-    playerCardEmpty: useSelector(
-      (state) => state.tutorial.team.playerCardEmpty
+    [PlayerPositions.FORWARD]: useSelector(
+      (state) => state.tutorial.team[PlayerPositions.FORWARD]
+    ),
+    [PlayerPositions.DEFENSE]: useSelector(
+      (state) => state.tutorial.team[PlayerPositions.DEFENSE]
+    ),
+    [PlayerPositions.GOALIE]: useSelector(
+      (state) => state.tutorial.team[PlayerPositions.GOALIE]
     ),
     scoutStick: useSelector((state) => state.tutorial.team.scoutStick),
+    teamBoard: useSelector((state) => state.tutorial.team.teamBoard),
   };
 
   const [tutorialSlides, setTutorialSlides] = useState([teamSlides]);
@@ -88,7 +97,7 @@ export const TeamPage = ({ history, location }) => {
         template: (
           <FaqOverlay
             questions={faqs.team}
-            title='Team Page FAQs'
+            title="Team Page FAQs"
             level={+student.level}
             onStartTutorial={() => {
               dispatch(
@@ -129,8 +138,8 @@ export const TeamPage = ({ history, location }) => {
           <SignPlayerOverlay
             team={team}
             assignment={assignment}
-            student={student}
             isDisabled={tutorialActive}
+            currentScenario={seasonState.currentScenario}
           />
         ),
       })
@@ -158,6 +167,11 @@ export const TeamPage = ({ history, location }) => {
         toggleOverlay({
           isOpen: true,
           template: <ScoutingCompleteOverlay />,
+          onClose: () => {
+            if (!student.tutorials || !student.tutorials.season) {
+              startTutorial([finishedScoutingSlides]);
+            }
+          },
         })
       );
 
@@ -165,7 +179,7 @@ export const TeamPage = ({ history, location }) => {
       delete stateCopy.showScoutingOverlay;
       history.replace({ state: stateCopy });
     }
-  }, [dispatch, history, location.state]);
+  }, [dispatch, history, location.state, startTutorial, student.tutorials]);
 
   if (seasonState.inTransition && !seasonState.inSession) {
     window.setTimeout(() => {
@@ -179,6 +193,9 @@ export const TeamPage = ({ history, location }) => {
               next={(levelChange) => {
                 history.push({ pathname: '/home', state: { levelChange } });
               }}
+              finished={(gameFinished) => {
+                history.push({ pathname: '/home', state: { gameFinished } });
+              }}
             />
           ),
           canClose: false,
@@ -188,16 +205,16 @@ export const TeamPage = ({ history, location }) => {
   }
 
   return (
-    <div className='page-container'>
+    <div className="page-container">
       <HeaderComponent
-        stickBtn={teamStick}
+        stickBtn="team"
         level={+student.level}
         tutorialActive={tutorialActive}
       />
 
       <PageBoard>
-        <div className='team-page-board-header'>
-          <div className='team-page-board-header-inner'>
+        <div className="team-page-board-header">
+          <div className="team-page-board-header-inner">
             <img
               src={studentTeam.logo}
               alt={studentTeam.name + ' logo'}
@@ -206,33 +223,41 @@ export const TeamPage = ({ history, location }) => {
                 width: '85px',
               }}
             />
-            <SharkieButton textPosition='left' onCallSharkie={onCallSharkie} />
+            <SharkieButton textPosition="left" onCallSharkie={onCallSharkie} />
           </div>
-          <h2 className='color-primary'>{studentTeam.nameFull}</h2>
+          <h2 className="color-primary">{studentTeam.nameFull}</h2>
         </div>
 
-        <div className='team-page-board-inner'>
-          <div className='team-page-board-left'>
-            <TeamBudgetState />
+        <div className="team-page-board-inner">
+          <div className="team-page-board-left">
+            <TeamBudgetState
+              tutorialState={
+                tutorialActive ? { teamRank: 0, budget: 15 } : null
+              }
+            />
             <div
               style={{
                 position: 'absolute',
                 left: '-41px',
-                bottom: '3rem',
+                bottom: '1rem',
               }}
             >
               <StickButton
                 small={true}
-                image={scoutStick}
-                animationState={playerCardAnimationStates.scoutStick}
-                link='/scout'
+                stick="scout"
+                animationState={animationStates.scoutStick}
+                link="/scout"
                 isDisabled={scoutingState.isComplete}
               />
             </div>
           </div>
 
-          <div className='team-page-board-right'>
-            <div className='team-players-card'>
+          <div className="team-page-board-right">
+            <motion.div
+              className="team-players-card"
+              animate={animationStates.teamBoard}
+              transition={{ default: { duration: 1 } }}
+            >
               <img
                 style={{
                   display: 'inline-block',
@@ -244,123 +269,66 @@ export const TeamPage = ({ history, location }) => {
                   zIndex: 0,
                 }}
                 src={iceBgSmall}
-                alt='Ice Background'
+                alt="Ice Background"
               />
-              <div className='team-players-row'>
-                <PlayerCard
-                  animationStates={playerCardAnimationStates}
-                  player={team.fOne}
-                  onClick={
-                    team.fOne
-                      ? openPlayerDetailsOverlay
-                      : openSignPlayerOverlay.bind(this, 'fOne')
-                  }
-                />
-                <div style={{ position: 'relative', top: '15px' }}>
-                  <PlayerCard
-                    animationStates={playerCardAnimationStates}
-                    player={team.fTwo}
-                    onClick={
-                      team.fTwo
-                        ? openPlayerDetailsOverlay
-                        : openSignPlayerOverlay.bind(this, 'fTwo')
-                    }
-                  />
-                </div>
-                <PlayerCard
-                  animationStates={playerCardAnimationStates}
-                  player={team.fThree}
-                  onClick={
-                    team.fThree
-                      ? openPlayerDetailsOverlay
-                      : openSignPlayerOverlay.bind(this, 'fThree')
-                  }
-                />
+              <div className="team-players-row">
+                {['fOne', 'fTwo', 'fThree'].map((assignment, i) => (
+                  <div
+                    key={assignment}
+                    style={{
+                      position: 'relative',
+                      top: i === 1 ? '15px' : '0px',
+                    }}
+                  >
+                    <PlayerCard
+                      animationStates={animationStates}
+                      player={!tutorialActive ? team[assignment] : null}
+                      slotPosition={PlayerPositions.FORWARD}
+                      onClick={
+                        team[assignment]
+                          ? openPlayerDetailsOverlay
+                          : openSignPlayerOverlay.bind(this, assignment)
+                      }
+                    />
+                  </div>
+                ))}
               </div>
-              <div className='team-players-row team-players-row-2'>
-                <PlayerCard
-                  animationStates={playerCardAnimationStates}
-                  player={team.dOne}
-                  onClick={
-                    team.dOne
-                      ? openPlayerDetailsOverlay
-                      : openSignPlayerOverlay.bind(this, 'dOne')
-                  }
-                />
-                <div
-                  style={{
-                    position: 'relative',
-                    top: team.gOne ? '15px' : '30px',
-                  }}
-                >
-                  <PlayerCard
-                    animationStates={playerCardAnimationStates}
-                    player={team.gOne}
-                    onClick={
-                      team.gOne
-                        ? openPlayerDetailsOverlay
-                        : openSignPlayerOverlay.bind(this, 'gOne')
-                    }
-                  />
-                </div>
-                <PlayerCard
-                  animationStates={playerCardAnimationStates}
-                  player={team.dTwo}
-                  onClick={
-                    team.dTwo
-                      ? openPlayerDetailsOverlay
-                      : openSignPlayerOverlay.bind(this, 'dTwo')
-                  }
-                />
+              <div className="team-players-row team-players-row-2">
+                {['dOne', 'gOne', 'dTwo'].map((assignment, i) => (
+                  <div
+                    key={assignment}
+                    style={{
+                      position: 'relative',
+                      top: i === 1 ? '15px' : '0px',
+                    }}
+                  >
+                    <PlayerCard
+                      animationStates={animationStates}
+                      player={!tutorialActive ? team[assignment] : null}
+                      slotPosition={
+                        assignment === 'gOne'
+                          ? PlayerPositions.GOALIE
+                          : PlayerPositions.DEFENSE
+                      }
+                      onClick={
+                        team[assignment]
+                          ? openPlayerDetailsOverlay
+                          : openSignPlayerOverlay.bind(this, assignment)
+                      }
+                    />
+                  </div>
+                ))}
               </div>
-            </div>
-
-            <div
-              className={`bench-players-card${
-                !scoutingState.isComplete ? ' disabled' : ''
-              }`}
-            >
-              <p className='color-primary on-the-bench-text'>On the Bench</p>
-              {!scoutingState.isComplete ? (
-                <p
-                  className='color-primary on-the-bench-text'
-                  style={{ marginTop: '35px' }}
-                >
-                  Scout players to activate the bench!
-                </p>
-              ) : null}
-              {scoutingState.isComplete && (
-                <div className='team-players-row team-bench-row'>
-                  <PlayerCard
-                    player={team.benchOne}
-                    onClick={
-                      team.benchOne
-                        ? openPlayerDetailsOverlay
-                        : openSignPlayerOverlay.bind(this, 'benchOne')
-                    }
-                  />
-                  <PlayerCard
-                    player={team.benchTwo}
-                    onClick={
-                      team.benchTwo
-                        ? openPlayerDetailsOverlay
-                        : openSignPlayerOverlay.bind(this, 'benchTwo')
-                    }
-                  />
-                  <PlayerCard
-                    player={team.benchThree}
-                    onClick={
-                      team.benchThree
-                        ? openPlayerDetailsOverlay
-                        : openSignPlayerOverlay.bind(this, 'benchThree')
-                    }
-                  />
-                </div>
-              )}
-            </div>
+            </motion.div>
           </div>
         </div>
       </PageBoard>
+      <FooterComponent
+        links={['season', 'budget', 'trophies']}
+        history={history}
+        tutorialActive={tutorialActive}
+        student={student}
+      />
       <Overlay />
       {tutorialActive && (
         <Tutorial slides={tutorialSlides} onComplete={onTutorialComplete} />

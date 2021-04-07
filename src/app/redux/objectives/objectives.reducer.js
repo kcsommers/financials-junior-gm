@@ -22,7 +22,7 @@ const initialState = {
 const objectivesReducer = (state = initialState, action) => {
   switch (action.type) {
     case INITIALIZE_OBJECTIVES: {
-      const student = action.payload;
+      const { student, reset } = action.payload;
       const clonedState = cloneDeep(state);
 
       clonedState.currentObjectives = initialState.currentObjectives;
@@ -36,6 +36,27 @@ const objectivesReducer = (state = initialState, action) => {
       clonedState.currentObjectives[1].setIsComplete(
         startingLineupFull(student)
       );
+
+      if (reset) {
+        clonedState.currentObjectives = clonedState.currentObjectives.filter(
+          (o) => o.type !== Objectives.SEASON_SCENARIO
+        );
+      }
+
+      // check for a season scenario
+      if (
+        student.objectives &&
+        student.objectives[Objectives.SEASON_SCENARIO] === false
+      ) {
+        clonedState.currentObjectives.unshift(
+          new Objective(
+            'Replace the injured player', // @TODO hard coding this is gross
+            Objectives.SEASON_SCENARIO,
+            true
+          )
+        );
+      }
+
       return clonedState;
     }
     case ADD_OBJECTIVE: {
@@ -56,22 +77,23 @@ const objectivesReducer = (state = initialState, action) => {
       }
 
       objective.setIsComplete(isComplete);
+
       return clonedState;
     }
 
     case REMOVE_OBJECTIVE: {
       const objectiveType = action.payload;
-      const clonedState = cloneDeep(state);
-      clonedState.currentObjectives.splice(
-        clonedState.currentObjectives.findIndex(
-          (o) => o.type === objectiveType
-        ),
-        1
+      const objectiveIndex = state.currentObjectives.findIndex(
+        (o) => o.type === objectiveType
       );
 
-      console.log('REMOVEOBJ:L:::: ', clonedState);
+      if (objectiveIndex > -1) {
+        const clonedState = cloneDeep(state);
+        clonedState.currentObjectives.splice(objectiveIndex, 1);
+        return clonedState;
+      }
 
-      return clonedState;
+      return state;
     }
 
     default:

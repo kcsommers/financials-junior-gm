@@ -1,8 +1,4 @@
-import {
-  LOGIN_STORAGE_KEY,
-  USER_ROLE_STORAGE_KEY,
-  TEACHER_ID_STORAGE_KEY,
-} from '@data/auth/auth';
+import { TEACHER_ID_STORAGE_KEY, clearSessionStorage } from '@data/auth/auth';
 import { setLoginState } from '@redux/actions';
 import { connect } from 'react-redux';
 
@@ -17,30 +13,6 @@ import CRUDTable, {
   DeleteForm,
 } from 'react-crud-table';
 
-const SORTERS = {
-  NUMBER_ASCENDING: (mapper) => (a, b) => mapper(a) - mapper(b),
-  NUMBER_DESCENDING: (mapper) => (a, b) => mapper(b) - mapper(a),
-  STRING_ASCENDING: (mapper) => (a, b) => mapper(a).localeCompare(mapper(b)),
-  STRING_DESCENDING: (mapper) => (a, b) => mapper(b).localeCompare(mapper(a)),
-};
-
-const getSorter = (data) => {
-  const mapper = (x) => x[data.field];
-  let sorter = SORTERS.STRING_ASCENDING(mapper);
-  if (data.field === 'id') {
-    sorter =
-      data.direction === 'ascending'
-        ? SORTERS.NUMBER_ASCENDING(mapper)
-        : SORTERS.NUMBER_DESCENDING(mapper);
-  } else {
-    sorter =
-      data.direction === 'ascending'
-        ? SORTERS.STRING_ASCENDING(mapper)
-        : SORTERS.STRING_DESCENDING(mapper);
-  }
-  return sorter;
-};
-
 class TeacherDashboard extends React.Component {
   constructor(props) {
     super(props);
@@ -49,7 +21,6 @@ class TeacherDashboard extends React.Component {
       selectedFile: null,
       showCSVForm: false,
     };
-    //this.logoutSession = this.logoutSession.bind(this);
   }
 
   componentDidMount() {
@@ -178,9 +149,7 @@ class TeacherDashboard extends React.Component {
     api
       .logout()
       .then(() => {
-        sessionStorage.setItem(LOGIN_STORAGE_KEY, false);
-        sessionStorage.setItem(USER_ROLE_STORAGE_KEY, '');
-        sessionStorage.setItem(TEACHER_ID_STORAGE_KEY, '');
+        clearSessionStorage();
         this.props.setLoginState();
         this.props.history.push('/dashboard');
       })

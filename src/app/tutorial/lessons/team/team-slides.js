@@ -1,8 +1,11 @@
 import Slide from '../../Slide';
-import { SET_ANIMATION_STATE } from '../../../redux/tutorials/tutorials.actions';
-import { TOGGLE_OVERLAY } from '../../../redux/overlay/overlay.actions';
-import { SignPlayerOverlay, PlayerDetailsOverlay } from '@components';
-import { ConfirmSignOverlay } from '../../../components/overlays/ConfirmSignOverlay';
+import {
+  SignPlayerOverlay,
+  PlayerDetailsOverlay,
+  ConfirmSignOverlay,
+} from '@components';
+import { TOGGLE_OVERLAY, SET_ANIMATION_STATE } from '@redux/actions';
+import { PlayerPositions } from '@data/players/players';
 
 const player = {
   defensiveRank: '16',
@@ -22,39 +25,12 @@ const player = {
 const slideConfigs = [
   {
     message: 'Welcome to your team!',
-    sharkie: 'lean',
+    sharkie: 'speak',
     hasButtons: true,
-    timer: 0,
     slideAnimate: {
-      y: '63%',
-      x: '-63%',
+      y: '0%',
+      x: '0%',
     },
-    small: true,
-    transparentBg: true,
-  },
-  {
-    message: 'There are six players on your team.',
-    sharkie: 'lean',
-    hasButtons: true,
-    timer: 0,
-    small: true,
-    slideAnimate: {
-      y: '63%',
-      x: '-63%',
-    },
-    transparentBg: true,
-  },
-  {
-    message: '3 forwards, 2 defense and a goalie.',
-    sharkie: 'lean',
-    hasButtons: true,
-    timer: 0,
-    small: true,
-    slideAnimate: {
-      y: '63%',
-      x: '-63%',
-    },
-    transparentBg: true,
     exitActions: [
       {
         type: SET_ANIMATION_STATE,
@@ -62,10 +38,15 @@ const slideConfigs = [
           page: 'team',
           animationStates: [
             {
-              component: 'playerCardEmpty',
+              component: PlayerPositions.FORWARD,
               state: {
-                borderColor: '#ffd782',
-                borderWidth: '4px',
+                borderColor: '#006272',
+              },
+            },
+            {
+              component: 'teamBoard',
+              state: {
+                zIndex: 1,
                 scale: 1.1,
               },
             },
@@ -75,17 +56,14 @@ const slideConfigs = [
     ],
   },
   {
-    message: 'You can add a player by clicking on an empty player slot.',
+    message: 'Sign three forwards to help your team score goals.',
     sharkie: 'lean',
     hasButtons: true,
-    timer: 0,
-    small: true,
     slideAnimate: {
       y: '63%',
       x: '-63%',
-      zIndex: 1000,
     },
-    transparentBg: true,
+    small: true,
     exitActions: [
       {
         type: SET_ANIMATION_STATE,
@@ -93,10 +71,204 @@ const slideConfigs = [
           page: 'team',
           animationStates: [
             {
-              component: 'playerCardEmpty',
+              component: PlayerPositions.FORWARD,
               state: {
                 borderColor: '#f3901d',
-                borderWidth: '3px',
+              },
+            },
+            {
+              component: PlayerPositions.DEFENSE,
+              state: {
+                borderColor: '#006272',
+              },
+            },
+          ],
+        },
+      },
+    ],
+    previousActions: [
+      {
+        type: SET_ANIMATION_STATE,
+        payload: {
+          page: 'team',
+          animationStates: [
+            {
+              component: PlayerPositions.FORWARD,
+              state: {
+                borderColor: '#f3901d',
+              },
+            },
+            {
+              component: 'teamBoard',
+              state: {
+                zIndex: 0,
+                scale: 1,
+              },
+            },
+          ],
+        },
+      },
+    ],
+  },
+  {
+    message:
+      'Sign two defenses to help your team stop the other team from scoring goals.',
+    sharkie: 'lean',
+    hasButtons: true,
+    small: true,
+    slideAnimate: {
+      y: '63%',
+      x: '-63%',
+    },
+    exitActions: [
+      {
+        type: SET_ANIMATION_STATE,
+        payload: {
+          page: 'team',
+          animationStates: [
+            {
+              component: PlayerPositions.DEFENSE,
+              state: {
+                borderColor: '#f3901d',
+              },
+            },
+            {
+              component: PlayerPositions.GOALIE,
+              state: {
+                borderColor: '#006272',
+              },
+            },
+          ],
+        },
+      },
+    ],
+    previousActions: [
+      {
+        type: SET_ANIMATION_STATE,
+        payload: {
+          page: 'team',
+          animationStates: [
+            {
+              component: PlayerPositions.FORWARD,
+              state: {
+                borderColor: '#006272',
+              },
+            },
+            {
+              component: PlayerPositions.DEFENSE,
+              state: {
+                borderColor: '#f3901d',
+              },
+            },
+          ],
+        },
+      },
+    ],
+  },
+  {
+    message:
+      'Sign one goalie to help your team save the puck from going in your goal.',
+    sharkie: 'lean',
+    hasButtons: true,
+    small: true,
+    slideAnimate: {
+      y: '63%',
+      x: '-63%',
+    },
+    exitActions: [
+      {
+        type: SET_ANIMATION_STATE,
+        payload: {
+          page: 'team',
+          animationStates: [
+            {
+              component: PlayerPositions.FORWARD,
+              state: {
+                borderColor: '#006272',
+                scale: 1.1,
+              },
+            },
+            {
+              component: PlayerPositions.DEFENSE,
+              state: {
+                borderColor: '#006272',
+                scale: 1.1,
+              },
+            },
+            {
+              component: PlayerPositions.GOALIE,
+              state: {
+                scale: 1.1,
+              },
+            },
+          ],
+        },
+      },
+    ],
+    previousActions: [
+      {
+        type: SET_ANIMATION_STATE,
+        payload: {
+          page: 'team',
+          animationStates: [
+            {
+              component: PlayerPositions.DEFENSE,
+              state: {
+                borderColor: '#006272',
+              },
+            },
+            {
+              component: PlayerPositions.GOALIE,
+              state: {
+                borderColor: '#f3901d',
+              },
+            },
+          ],
+        },
+      },
+    ],
+  },
+  {
+    message: 'You can add a player by clicking on an empty player space.',
+    sharkie: 'lean',
+    hasButtons: true,
+    small: true,
+    slideAnimate: {
+      y: '63%',
+      x: '-63%',
+      zIndex: 1000,
+    },
+    exitActions: [
+      {
+        type: SET_ANIMATION_STATE,
+        payload: {
+          page: 'team',
+          animationStates: [
+            {
+              component: PlayerPositions.FORWARD,
+              state: {
+                borderColor: '#f3901d',
+                scale: 1,
+              },
+            },
+            {
+              component: PlayerPositions.DEFENSE,
+              state: {
+                borderColor: '#f3901d',
+                scale: 1,
+              },
+            },
+            {
+              component: PlayerPositions.GOALIE,
+              state: {
+                borderColor: '#f3901d',
+                scale: 1,
+              },
+            },
+            {
+              component: 'teamBoard',
+              state: {
+                zIndex: 0,
                 scale: 1,
               },
             },
@@ -109,7 +281,147 @@ const slideConfigs = [
           isOpen: true,
           template: (
             <SignPlayerOverlay
-              assignment='fOne'
+              assignment="fOne"
+              isDisabled={true}
+            ></SignPlayerOverlay>
+          ),
+          canClose: false,
+        },
+      },
+    ],
+    previousActions: [
+      {
+        type: SET_ANIMATION_STATE,
+        payload: {
+          page: 'team',
+          animationStates: [
+            {
+              component: PlayerPositions.FORWARD,
+              state: {
+                borderColor: '#f3901d',
+                scale: 1,
+              },
+            },
+            {
+              component: PlayerPositions.DEFENSE,
+              state: {
+                borderColor: '#f3901d',
+                scale: 1,
+              },
+            },
+            {
+              component: PlayerPositions.GOALIE,
+              state: {
+                scale: 1,
+                borderColor: '#f3901d',
+              },
+            },
+          ],
+        },
+      },
+    ],
+  },
+  {
+    message:
+      'When you click on a space, you can see all the players you can sign to that space.',
+    sharkie: 'speak',
+    hasButtons: true,
+    small: true,
+    slideAnimate: {
+      y: '-40%',
+      x: '63%',
+      zIndex: 1000,
+    },
+    exitActions: [
+      {
+        type: TOGGLE_OVERLAY,
+        payload: {
+          isOpen: true,
+          template: <PlayerDetailsOverlay player={player} isDisabled={true} />,
+          canClose: false,
+        },
+      },
+    ],
+    previousActions: [
+      {
+        type: TOGGLE_OVERLAY,
+        payload: {
+          isOpen: false,
+          template: null,
+        },
+      },
+      {
+        type: SET_ANIMATION_STATE,
+        payload: {
+          page: 'team',
+          animationStates: [
+            {
+              component: PlayerPositions.FORWARD,
+              state: {
+                borderColor: '#006272',
+                scale: 1.1,
+              },
+            },
+            {
+              component: PlayerPositions.DEFENSE,
+              state: {
+                borderColor: '#006272',
+                scale: 1.1,
+              },
+            },
+            {
+              component: PlayerPositions.GOALIE,
+              state: {
+                scale: 1.1,
+                borderColor: '#006272',
+              },
+            },
+            {
+              component: 'teamBoard',
+              state: {
+                zIndex: 1,
+                scale: 1.1,
+              },
+            },
+          ],
+        },
+      },
+    ],
+  },
+  {
+    message: 'When you click on a player, you will learn more about them.',
+    sharkie: 'speak',
+    hasButtons: true,
+    small: true,
+    slideAnimate: {
+      y: '-40%',
+      x: '63%',
+      zIndex: 1000,
+    },
+    exitActions: [
+      {
+        type: TOGGLE_OVERLAY,
+        payload: {
+          isOpen: true,
+          template: (
+            <ConfirmSignOverlay
+              player={player}
+              isDisabled={true}
+              tutorialState={{ teamRank: 0, budget: 15, changes: [2, 20] }}
+            />
+          ),
+          canClose: false,
+        },
+      },
+    ],
+    previousActions: [
+      {
+        type: TOGGLE_OVERLAY,
+        payload: {
+          isOpen: true,
+          template: (
+            <SignPlayerOverlay
+              assignment="fOne"
               isDisabled={true}
             ></SignPlayerOverlay>
           ),
@@ -119,235 +431,26 @@ const slideConfigs = [
     ],
   },
   {
-    message: 'These are the players you can sign to this slot!',
+    message:
+      'When you sign a player, their rank is added to your team rank and their contract value is subtracted from your spending budget.',
     sharkie: 'speak',
     hasButtons: true,
-    timer: 0,
     small: true,
     slideAnimate: {
       y: '-40%',
       x: '63%',
       zIndex: 1000,
     },
-    transparentBg: true,
-  },
-  {
-    message: 'When you click on a player, you will learn more about them.',
-    sharkie: 'speak',
-    hasButtons: true,
-    timer: 0,
-    small: true,
-    slideAnimate: {
-      y: '-40%',
-      x: '63%',
-      zIndex: 1000,
-    },
-    transparentBg: true,
-    exitActions: [
-      {
-        type: TOGGLE_OVERLAY,
-        payload: {
-          isOpen: true,
-          template: <ConfirmSignOverlay player={player} isDisabled={true} />,
-          canClose: false,
-        },
-      },
-    ],
-  },
-  {
-    message: 'Each player has a rank which tells you how good the player is.',
-    sharkie: 'lean',
-    hasButtons: true,
-    timer: 0,
-    small: true,
-    slideAnimate: {
-      y: '21%',
-      x: '-63%',
-      zIndex: 1000,
-    },
-    transparentBg: true,
-  },
-  {
-    message: 'For defense and forwards, the rank depends on three things...',
-    sharkie: 'lean',
-    hasButtons: true,
-    timer: 0,
-    small: true,
-    slideAnimate: {
-      y: '21%',
-      x: '-63%',
-      zIndex: 1000,
-    },
-    transparentBg: true,
-  },
-  {
-    message: 'Their offense score, which is how good they are at scoring.',
-    sharkie: 'lean',
-    hasButtons: true,
-    timer: 0,
-    small: true,
-    slideAnimate: {
-      y: '21%',
-      x: '-63%',
-      zIndex: 1000,
-    },
-    transparentBg: true,
-  },
-  {
-    message:
-      'Their passing score, which is how good they are at helping others score.',
-    sharkie: 'lean',
-    hasButtons: true,
-    timer: 0,
-    small: true,
-    slideAnimate: {
-      y: '21%',
-      x: '-63%',
-      zIndex: 1000,
-    },
-    transparentBg: true,
-  },
-  {
-    message:
-      'Finally their defensive score, which is how good they are at stopping the puck.',
-    sharkie: 'lean',
-    hasButtons: true,
-    timer: 0,
-    small: true,
-    slideAnimate: {
-      y: '21%',
-      x: '-63%',
-      zIndex: 1000,
-    },
-    transparentBg: true,
-  },
-  {
-    message:
-      "A goalie's rank depends on how they stop the puck from going into the goal. This is called a save.",
-    sharkie: 'lean',
-    hasButtons: true,
-    timer: 0,
-    small: true,
-    transparentBg: true,
-  },
-  {
-    message: 'Each player also has a contract value.',
-    sharkie: 'lean',
-    hasButtons: true,
-    timer: 0,
-    small: true,
-    slideAnimate: {
-      y: '21%',
-      x: '-63%',
-      zIndex: 1000,
-    },
-    transparentBg: true,
-  },
-  {
-    message:
-      'The contract value is the money they are paid to play for your team.',
-    sharkie: 'lean',
-    hasButtons: true,
-    timer: 0,
-    small: true,
-    slideAnimate: {
-      y: '21%',
-      x: '-63%',
-      zIndex: 1000,
-    },
-    transparentBg: true,
-  },
-  {
-    message:
-      'Players with a higher rank will usually have a higher contract value.',
-    sharkie: 'lean',
-    hasButtons: true,
-    timer: 0,
-    small: true,
-    slideAnimate: {
-      y: '21%',
-      x: '-63%',
-      zIndex: 1000,
-    },
-    transparentBg: true,
-  },
-  {
-    message: 'You can choose to sign this player for their contract value.',
-    sharkie: 'lean',
-    hasButtons: true,
-    timer: 0,
-    small: true,
-    slideAnimate: {
-      y: '21%',
-      x: '-63%',
-      zIndex: 1000,
-    },
-    transparentBg: true,
-  },
-  {
-    message:
-      'This will remove the money of their contract value from your budget.',
-    sharkie: 'lean',
-    hasButtons: true,
-    timer: 0,
-    small: true,
-    slideAnimate: {
-      y: '21%',
-      x: '-63%',
-      zIndex: 1000,
-    },
-    transparentBg: true,
-  },
-  {
-    message: 'Their rank will then be added to your team rank.',
-    sharkie: 'lean',
-    hasButtons: true,
-    timer: 0,
-    small: true,
-    slideAnimate: {
-      y: '21%',
-      x: '-63%',
-      zIndex: 1000,
-    },
-    transparentBg: true,
-  },
-  {
-    message: 'You can see these changes above!',
-    sharkie: 'lean',
-    hasButtons: true,
-    timer: 0,
-    small: true,
-    slideAnimate: {
-      y: '61%',
-      x: '-63%',
-      zIndex: 1000,
-    },
-    transparentBg: true,
     exitActions: [
       {
         type: TOGGLE_OVERLAY,
         payload: {
           isOpen: false,
-          template: <ConfirmSignOverlay player={player} isDisabled={true} />,
-          canClose: false,
+          template: null,
         },
       },
     ],
-  },
-  {
-    message:
-      "Once you've signed a player, clicking on them gives you two choices.",
-    sharkie: 'lean',
-    hasButtons: true,
-    timer: 0,
-    small: true,
-    slideAnimate: {
-      y: '21%',
-      x: '-63%',
-      zIndex: 1000,
-    },
-    transparentBg: true,
-    exitActions: [
+    previousActions: [
       {
         type: TOGGLE_OVERLAY,
         payload: {
@@ -359,166 +462,44 @@ const slideConfigs = [
     ],
   },
   {
-    message: 'You can decide to release the player from the team.',
-    sharkie: 'lean',
-    hasButtons: true,
-    timer: 0,
-    small: true,
-    slideAnimate: {
-      y: '91%',
-      x: '-63%',
-      zIndex: 1000,
-    },
-    transparentBg: true,
-  },
-  {
-    message: 'This will add the money of their contract back to your budget.',
-    sharkie: 'lean',
-    hasButtons: true,
-    timer: 0,
-    small: true,
-    slideAnimate: {
-      y: '81%',
-      x: '-63%',
-      zIndex: 1000,
-    },
-    transparentBg: true,
-  },
-  {
-    message: 'Or you can trade a player for other available players.',
+    message:
+      'When you are finished filling out your team, click on the scout hockey stick to add some replacement players. ',
     sharkie: 'speak',
     hasButtons: true,
-    timer: 0,
-    small: true,
     slideAnimate: {
-      y: '81%',
-      x: '50%',
+      y: '0',
+      x: '0',
       zIndex: 1000,
     },
-    transparentBg: true,
-    exitActions: [
+    previousActions: [
       {
         type: TOGGLE_OVERLAY,
         payload: {
-          isOpen: false,
-          template: null,
-          canClose: true,
+          isOpen: true,
+          template: (
+            <ConfirmSignOverlay
+              player={player}
+              isDisabled={true}
+              tutorialState={{ teamRank: 0, budget: 15, changes: [2, 20] }}
+            />
+          ),
+          canClose: false,
         },
       },
     ],
   },
+];
+
+const finishedScoutingSlideConnfigs = [
   {
     message:
-      'Your team also has a bench where you can add up to three extra players.',
-    sharkie: 'lean',
-    hasButtons: true,
-    timer: 0,
-    small: true,
-    slideAnimate: {
-      y: '21%',
-      x: '-63%',
-      zIndex: 1000,
-    },
-    transparentBg: true,
-  },
-  {
-    message: 'You can add players of any position to the bench.',
-    sharkie: 'lean',
-    hasButtons: true,
-    timer: 0,
-    small: true,
-    slideAnimate: {
-      y: '21%',
-      x: '-63%',
-      zIndex: 1000,
-    },
-    transparentBg: true,
-  },
-  {
-    message: 'In order to use your bench, you need to scout players.',
-    sharkie: 'lean',
-    hasButtons: true,
-    timer: 0,
-    small: true,
-    slideAnimate: {
-      y: '21%',
-      x: '-63%',
-      zIndex: 1000,
-    },
-    transparentBg: true,
-  },
-  {
-    message: 'Try filling out your team by signing players.',
+      'If you are done making changes to your team, click on the orange team hockey stick.',
     sharkie: 'speak',
     hasButtons: true,
-    timer: 0,
-    small: true,
-    slideAnimate: {
-      y: '21%',
-      x: '63%',
-      zIndex: 1000,
-    },
-    transparentBg: true,
-    exitActions: [
-      {
-        type: SET_ANIMATION_STATE,
-        payload: {
-          page: 'team',
-          animationStates: [
-            {
-              component: 'scoutStick',
-              state: {
-                scale: 1.1,
-              },
-            },
-          ],
-        },
-      },
-    ],
-  },
-  {
-    message: 'Then click the scout button to learn about scouting.',
-    sharkie: 'speak',
-    hasButtons: true,
-    timer: 0,
-    small: true,
-    slideAnimate: {
-      y: '91%',
-      x: '63%',
-      zIndex: 1000,
-    },
-    transparentBg: true,
-    exitActions: [
-      {
-        type: SET_ANIMATION_STATE,
-        payload: {
-          page: 'team',
-          animationStates: [
-            {
-              component: 'scoutStick',
-              state: {
-                scale: 1,
-              },
-            },
-          ],
-        },
-      },
-    ],
-  },
-  {
-    message:
-      'If you ever need help with building your team, click the ask S.J. Sharkie button and choose the questions you need answered.',
-    sharkie: 'speak',
-    hasButtons: true,
-    timer: 0,
-    small: true,
-    slideAnimate: {
-      y: '91%',
-      x: '63%',
-      zIndex: 1000,
-    },
-    transparentBg: true,
   },
 ];
 
 export const teamSlides = slideConfigs.map((c) => new Slide(c));
+export const finishedScoutingSlides = finishedScoutingSlideConnfigs.map(
+  (c) => new Slide(c)
+);

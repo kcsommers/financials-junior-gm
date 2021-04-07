@@ -6,8 +6,20 @@ import {
 } from './players';
 import { cloneDeep } from 'lodash';
 import { updateStudentById } from './../../api-helper';
+import { Objectives } from '@data/objectives/objectives';
 
 export const getOpenAssignment = (position, student) => {
+  if (!position) {
+    return [
+      PlayerAssignments.F_ONE,
+      PlayerAssignments.F_TWO,
+      PlayerAssignments.F_THREE,
+      PlayerAssignments.D_ONE,
+      PlayerAssignments.D_TWO,
+      PlayerAssignments.G_ONE,
+    ].find((a) => !student[a]);
+  }
+
   switch (position) {
     case PlayerPositions.FORWARD: {
       return [
@@ -23,13 +35,6 @@ export const getOpenAssignment = (position, student) => {
     }
     case PlayerPositions.GOALIE: {
       return PlayerAssignments.G_ONE;
-    }
-    case PlayerPositions.BENCH: {
-      return [
-        PlayerAssignments.BENCH_ONE,
-        PlayerAssignments.BENCH_TWO,
-        PlayerAssignments.BENCH_THREE,
-      ].find((a) => !student[a]);
     }
     default: {
       return [];
@@ -51,13 +56,6 @@ export const getAssignmentsByPosition = (position) => {
     }
     case PlayerPositions.GOALIE: {
       return [PlayerAssignments.G_ONE];
-    }
-    case PlayerPositions.BENCH: {
-      return [
-        PlayerAssignments.BENCH_ONE,
-        PlayerAssignments.BENCH_TWO,
-        PlayerAssignments.BENCH_THREE,
-      ];
     }
     default: {
       return [];
@@ -102,9 +100,6 @@ export const isTeamPlayer = (player) => {
     PlayerAssignments.D_ONE,
     PlayerAssignments.D_TWO,
     PlayerAssignments.G_ONE,
-    PlayerAssignments.BENCH_ONE,
-    PlayerAssignments.BENCH_TWO,
-    PlayerAssignments.BENCH_THREE,
   ].includes(player.playerAssignment);
 };
 
@@ -136,11 +131,6 @@ export const getPlayerPositon = (assignment) => {
     case PlayerAssignments.G_ONE: {
       return PlayerPositions.GOALIE;
     }
-    case PlayerAssignments.BENCH_ONE:
-    case PlayerAssignments.BENCH_TWO:
-    case PlayerAssignments.BENCH_THREE: {
-      return PlayerPositions.BENCH;
-    }
     default: {
       return null;
     }
@@ -150,11 +140,7 @@ export const getPlayerPositon = (assignment) => {
 export const handleReleasePlayer = (releasedPlayer, student) => {
   return new Promise((resolve, reject) => {
     const prevAssignment = releasedPlayer.playerAssignment;
-    const prevPosition = getPlayerPositon(prevAssignment);
-    releasedPlayer.playerAssignment =
-      prevPosition === PlayerPositions.BENCH
-        ? PlayerAssignments.OFFERED_SCOUT
-        : PlayerAssignments.MARKET;
+    releasedPlayer.playerAssignment = PlayerAssignments.MARKET;
 
     const playersCopy = cloneDeep(student.players);
 
@@ -179,44 +165,37 @@ export const handleReleasePlayer = (releasedPlayer, student) => {
   });
 };
 
-export const handleSignPlayer = (
-  signedPlayer,
-  assignment,
-  student,
-  seasonState
-) => {
+export const handleSignPlayer = (signedPlayer, assignment, student) => {
   return new Promise((resolve, reject) => {
     signedPlayer.playerAssignment = assignment;
+
     const clonedStudent = cloneDeep(student);
+    clonedStudent[assignment] = signedPlayer;
     clonedStudent.players.splice(
       clonedStudent.players.findIndex((p) => p._id === signedPlayer._id),
       1,
       signedPlayer
     );
 
+    const teamFull = startingLineupFull(clonedStudent);
+
     const studentUpdates = {
       [assignment]: signedPlayer._id,
       players: clonedStudent.players,
     };
 
-    // if theres an active season scenario, check that the team is full
-    // and end the current game block if so
-    if (seasonState && seasonState.currentScenario) {
-      clonedStudent[assignment] = signedPlayer._id;
-      if (startingLineupFull(clonedStudent)) {
-        const studentSeasons = clonedStudent.seasons;
-        if (studentSeasons[(+student.level || 1) - 1]) {
-          studentSeasons[(+student.level || 1) - 1].push(
-            seasonState.completedGames
-          );
-        } else {
-          studentSeasons[(+student.level || 1) - 1] = [
-            seasonState.completedGames,
-          ];
-        }
-
-        studentUpdates.seasons = studentSeasons;
-      }
+    // check for a season scenario objective on the student
+    // if its false (incomplete), check that the team is full
+    if (
+      student.objectives &&
+      student.objectives[Objectives.SEASON_SCENARIO] === false &&
+      teamFull
+    ) {
+      // if so set the objective to complete (true)
+      studentUpdates.objectives = {
+        ...student.objectives,
+        [Objectives.SEASON_SCENARIO]: true,
+      };
     }
 
     updateStudentById(student._id, studentUpdates)
@@ -224,6 +203,7 @@ export const handleSignPlayer = (
         resolve({
           updatedStudent: res.updatedStudent,
           updatedPlayer: signedPlayer,
+          startingLineupFull: teamFull,
         })
       )
       .catch((err) => reject(err));
@@ -235,10 +215,7 @@ export const handleTradePlayers = (signedPlayer, releasedPlayer, student) => {
     const prevAssignment = releasedPlayer.playerAssignment;
     const prevPosition = getPlayerPositon(prevAssignment);
 
-    releasedPlayer.playerAssignment =
-      prevPosition === PlayerPositions.BENCH
-        ? PlayerAssignments.OFFERED_SCOUT
-        : PlayerAssignments.UNAVAILABLE;
+    releasedPlayer.playerAssignment = PlayerAssignments.UNAVAILABLE;
     signedPlayer.playerAssignment = prevAssignment;
 
     const playersCopy = cloneDeep(student.players).reduce((arr, p) => {
@@ -258,10 +235,7 @@ export const handleTradePlayers = (signedPlayer, releasedPlayer, student) => {
 
     const studentUpdates = {
       [signedPlayer.playerAssignment]: signedPlayer._id,
-      [releasedPlayer.playerAssignment]:
-        prevPosition === PlayerPositions.BENCH
-          ? PlayerAssignments.OFFERED_SCOUT
-          : PlayerAssignments.UNAVAILABLE,
+      [releasedPlayer.playerAssignment]: PlayerAssignments.UNAVAILABLE,
       players: playersCopy,
     };
 

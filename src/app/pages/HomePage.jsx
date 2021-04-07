@@ -17,10 +17,6 @@ import {
   Tutorial,
   getConfirmSlides,
 } from '@tutorial';
-import teamStick from '@images/team-stick.svg';
-import budgetStick from '@images/budget-stick.svg';
-import seasonStick from '@images/season-stick.svg';
-import trophiesStick from '@images/trophies-stick.svg';
 import {
   setTutorialState,
   toggleOverlay,
@@ -35,7 +31,6 @@ import {
   getMaxTeamRank,
   startingLineupFull,
 } from '@data/players/players-utils';
-import { getStudentTeam } from '@data/season/season';
 import '@css/pages/HomePage.css';
 
 const getDisabledStickBtns = (student) => {
@@ -165,13 +160,13 @@ export const HomePage = ({ location, history }) => {
           setInitialPlayersState(updatedStudent.players, updatedStudent)
         );
         dispatch(initializeSeason(updatedStudent));
-        dispatch(initializeObjectives(updatedStudent));
+        dispatch(initializeObjectives(updatedStudent, true));
         window.setTimeout(() => {
           dispatch(
             toggleOverlay({
               isOpen: isPromoted,
               template: isPromoted ? (
-                <NewLevelOverlay team={getStudentTeam(+updatedStudent.level)} />
+                <NewLevelOverlay completedLevel={+updatedStudent.level - 1} />
               ) : null,
             })
           );
@@ -181,15 +176,49 @@ export const HomePage = ({ location, history }) => {
     [dispatch]
   );
 
+  const gameFinished = useCallback(
+    (updatedStudent) => {
+      batch(() => {
+        dispatch(setStudent(updatedStudent));
+        dispatch(
+          setInitialPlayersState(updatedStudent.players, updatedStudent)
+        );
+        dispatch(initializeSeason(updatedStudent));
+        dispatch(initializeObjectives(updatedStudent, true));
+        window.setTimeout(() => {
+          dispatch(
+            toggleOverlay({
+              isOpen: true,
+              template: <NewLevelOverlay completedLevel={3} />,
+            })
+          );
+        });
+      });
+    },
+    [dispatch]
+  );
+
   useEffect(() => {
-    if (location.state && location.state.levelChange) {
+    if (!location.state) {
+      return;
+    }
+
+    if (location.state.levelChange) {
       nextSeason(location.state.levelChange);
 
       const stateCopy = cloneDeep(location.state);
       delete stateCopy.levelChange;
       history.replace({ state: stateCopy });
     }
-  }, [nextSeason, history, location.state]);
+
+    if (location.state.gameFinished) {
+      gameFinished(location.state.gameFinished.updatedStudent);
+
+      const stateCopy = cloneDeep(location.state);
+      delete stateCopy.gameFinished;
+      history.replace({ state: stateCopy });
+    }
+  }, [nextSeason, history, location.state, gameFinished]);
 
   if (inTransition && !inSession) {
     window.setTimeout(() => {
@@ -201,6 +230,9 @@ export const HomePage = ({ location, history }) => {
               student={student}
               awards={awards}
               next={nextSeason}
+              finished={(_gameFinished) =>
+                gameFinished(_gameFinished.updatedStudent)
+              }
             />
           ),
           canClose: false,
@@ -210,16 +242,16 @@ export const HomePage = ({ location, history }) => {
   }
 
   return (
-    <div className='home-page-container'>
+    <div className="home-page-container">
       <Navigation tutorialActive={tutorialActive} student={student} />
-      <div className='home-cards-row'>
-        <div className='level-stick-card'>
+      <div className="home-cards-row">
+        <div className="level-stick-card">
           <LevelStick
-            type='teamRank'
+            type="teamRank"
             amount={teamRank}
             denom={getMaxTeamRank(+student.level)}
-            color='#e06d00'
-            indicatorDirection='right'
+            color="#e06d00"
+            indicatorDirection="right"
             textJsx={
               <span>
                 Team <br />
@@ -229,23 +261,23 @@ export const HomePage = ({ location, history }) => {
           />
         </div>
 
-        <div className='objectives-board-container'>{objectivesBoard}</div>
+        <div className="objectives-board-container">{objectivesBoard}</div>
 
-        <div className='sharkie-btn-container'>
-          <SharkieButton textPosition='bottom' onCallSharkie={onCallSharkie} />
+        <div className="sharkie-btn-container">
+          <SharkieButton textPosition="bottom" onCallSharkie={onCallSharkie} />
         </div>
 
-        <div className='level-stick-card card'>
+        <div className="level-stick-card card">
           <LevelStick
-            type='budget'
-            levelDirection='topToBottom'
+            type="budget"
+            levelDirection="topToBottom"
             amount={Math.max(
               +student.totalBudget - moneySpent - +student.savingsBudget,
               0
             )}
             denom={student.totalBudget}
-            color='#002f6c'
-            indicatorDirection='left'
+            color="#002f6c"
+            indicatorDirection="left"
             inverse={true}
             textJsx={
               <span>
@@ -257,13 +289,13 @@ export const HomePage = ({ location, history }) => {
         </div>
       </div>
 
-      <div className='hockey-sticks-container'>
-        <div className='hockey-sticks-row'>
-          <div className='stick-btn-container'>
+      <div className="hockey-sticks-container">
+        <div className="hockey-sticks-row">
+          <div className="stick-btn-container">
             <StickButton
               tutorialActive={tutorialActive}
-              link='/team'
-              image={teamStick}
+              link="/team"
+              stick="team"
               isDisabled={disabledStickBtns.team}
             />
             <p
@@ -274,12 +306,12 @@ export const HomePage = ({ location, history }) => {
               Build your team by signing players!
             </p>
           </div>
-          <div className='stick-btn-container'>
+          <div className="stick-btn-container">
             <StickButton
               tutorialActive={tutorialActive}
-              link='/budget'
+              link="/budget"
               inverse={true}
-              image={budgetStick}
+              stick="budget"
               isDisabled={disabledStickBtns.budget}
             />
             <p
@@ -291,12 +323,12 @@ export const HomePage = ({ location, history }) => {
             </p>
           </div>
         </div>
-        <div className='hockey-sticks-row hockey-sticks-row-2'>
-          <div className='stick-btn-container'>
+        <div className="hockey-sticks-row hockey-sticks-row-2">
+          <div className="stick-btn-container">
             <StickButton
               tutorialActive={tutorialActive}
-              link='/season'
-              image={seasonStick}
+              link="/season"
+              stick="season"
               isDisabled={disabledStickBtns.season}
             />
             <p
@@ -307,12 +339,8 @@ export const HomePage = ({ location, history }) => {
               Play games and win the championship!
             </p>
           </div>
-          <div className='stick-btn-container'>
-            <StickButton
-              inverse={true}
-              link='/trophies'
-              image={trophiesStick}
-            />
+          <div className="stick-btn-container">
+            <StickButton inverse={true} link="/trophies" stick="trophies" />
             <p
               className={`stick-btn-text stick-btn-text-right${
                 tutorialActive ? ' transparent' : ''

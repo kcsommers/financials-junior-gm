@@ -1,9 +1,9 @@
 import { OverlayBoard, Button } from '@components';
-import { resetSeason } from '@data/season/season';
+import { resetSeason } from '@data/season/season-utils';
 import { useDispatch } from 'react-redux';
 import { setInTransition } from '@redux/season/season.actions';
 
-export const NextSeasonOverlay = ({ student, next }) => {
+export const NextSeasonOverlay = ({ student, next, finished }) => {
   const dispatch = useDispatch();
 
   const repeatSeason = () => {
@@ -20,6 +20,15 @@ export const NextSeasonOverlay = ({ student, next }) => {
     resetSeason(+student.level + 1, +student.level, student)
       .then((updatedStudent) => {
         next({ updatedStudent, isPromoted: true });
+      })
+      .catch((err) => console.error(err));
+  };
+
+  const finishGame = () => {
+    dispatch(setInTransition(false));
+    resetSeason(+student.level, +student.level, student)
+      .then((updatedStudent) => {
+        finished({ updatedStudent });
       })
       .catch((err) => console.error(err));
   };
@@ -66,12 +75,11 @@ export const NextSeasonOverlay = ({ student, next }) => {
             width: '100%',
           }}
         >
-          <Button text='Repeat Season' onClick={repeatSeason} />
+          <Button text="Repeat Season" onClick={repeatSeason} />
           {isPromoted && (
             <Button
-              text='Accept Promotion'
-              isDisabled={+student.level === 3}
-              onClick={nextSeason}
+              text={+student.level === 3 ? 'Finish Game' : 'Accept Promotion'}
+              onClick={+student.level === 3 ? finishGame : nextSeason}
             />
           )}
         </div>

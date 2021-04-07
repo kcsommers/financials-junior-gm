@@ -1,19 +1,32 @@
-import { SET_ANIMATION_STATE, SET_TUTORIAL_STATE } from './tutorials.actions';
+import {
+  SET_ANIMATION_STATE,
+  SET_TUTORIAL_STATE,
+  SET_ADVANCE_LISTENER,
+} from './tutorials.actions';
+import { PlayerPositions } from '@data/players/players';
 
 const initialState = {
   isActive: false,
+  advanceListener: null,
   home: {},
   team: {
-    playerCard: {
-      borderColor: 'rgba(0,0,0,0)',
-      borderWidth: '0px',
-      borderStyle: 'solid',
+    teamBoard: {
+      zIndex: 0,
       scale: 1,
     },
-    playerCardEmpty: {
+    playerCard: {
+      scale: 1,
+    },
+    [PlayerPositions.FORWARD]: {
       borderColor: '#f3901d',
-      borderWidth: '3px',
-      borderStyle: 'solid',
+      scale: 1,
+    },
+    [PlayerPositions.DEFENSE]: {
+      borderColor: '#f3901d',
+      scale: 1,
+    },
+    [PlayerPositions.GOALIE]: {
+      borderColor: '#f3901d',
       scale: 1,
     },
     scoutStick: {
@@ -61,6 +74,14 @@ const initialState = {
     },
     savings: {
       scale: 1,
+      opacity: 1,
+    },
+    slider: {
+      scale: 1,
+      opacity: 1,
+      zIndex: 0,
+    },
+    savingsIndicator: {
       opacity: 1,
     },
   },
@@ -120,6 +141,13 @@ const tutorialsReducer = (state = initialState, action) => {
           ...state[payload.page],
           ...componentStates,
         },
+      };
+    }
+    case SET_ADVANCE_LISTENER: {
+      const listener = action.payload;
+      return {
+        ...state,
+        advanceListener: listener,
       };
     }
     default:

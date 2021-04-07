@@ -1,6 +1,15 @@
 import { OverlayBoard } from '@components';
+import lvl1Video from '../../../assets/videos/FINancials_Junior_GM_LVL_01.mp4';
+import lvl2Video from '../../../assets/videos/FINancials_Junior_GM_LVL_02.mp4';
+import lvl3Video from '../../../assets/videos/FINancials_Junior_GM_LVL_03.mp4';
 
-export const NewLevelOverlay = ({ team }) => {
+const videos = {
+  1: lvl1Video,
+  2: lvl2Video,
+  3: lvl3Video,
+};
+
+export const NewLevelOverlay = ({ completedLevel }) => {
   return (
     <OverlayBoard>
       <div
@@ -8,129 +17,35 @@ export const NewLevelOverlay = ({ team }) => {
           width: '100%',
           height: '100%',
           display: 'flex',
-          alignItems: 'flex-start',
+          alignItems: 'center',
+          justifyContent: 'center',
           flexDirection: 'column',
           textAlign: 'center',
+          padding: '4rem 0rem',
         }}
       >
-        <p
+        <div
           style={{
-            textAlign: 'center',
-            fontSize: '2rem',
-            fontWeight: 'bold',
-            color: '#F3901D',
+            width: '100%',
+            height: '100%',
             position: 'relative',
-            transform: '',
-            marginTop: '3.5rem',
-            marginLeft: 'auto',
-            marginRight: 'auto',
-            padding: '0 3rem',
-            lineHeight: '3.5rem',
+            paddingBottom: '56.25%',
           }}
         >
-          Congratulations! You've been promoted!
-        </p>
-        <p
-          style={{
-            textAlign: 'center',
-            fontSize: '2rem',
-            fontWeight: 'bold',
-            color: '#F3901D',
-            position: 'relative',
-            transform: '',
-            marginLeft: 'auto',
-            marginRight: 'auto',
-            marginTop: '1.5rem',
-            padding: '0 3rem',
-            lineHeight: '3.5rem',
-          }}
-        >
-          You are now the General Manager of the
-        </p>
-        <p
-          style={{
-            textAlign: 'center',
-            fontSize: '2.75rem',
-            fontWeight: '900',
-            color: '#F3901D',
-            textShadow: '1px 1px #000000',
-            position: 'relative',
-            marginTop: '1.5rem',
-            marginLeft: 'auto',
-            marginRight: 'auto',
-            padding: '0 3rem',
-            lineHeight: '3.5rem',
-          }}
-        >
-          {team.nameFull}
-        </p>
-        <br></br>
-        <br></br>
-        <img
-          src={team.logo}
-          alt={team.name + ' logo'}
-          style={{
-            marginLeft: 'auto',
-            marginRight: 'auto',
-            width: '212px',
-          }}
-        />
-        <br></br>
-        <p
-          style={{
-            textAlign: 'center',
-            fontSize: '1.5rem',
-            fontWeight: 'bold',
-            color: '#F3901D',
-            position: 'relative',
-            transform: '',
-            marginTop: '1.5rem',
-            marginRight: 'auto',
-            marginLeft: 'auto',
-            padding: '0 3rem',
-            lineHeight: '3.5rem',
-          }}
-        >
-          You now have a larger budget and higher ranked players to sign!
-        </p>
-        {team.name == 'Barracuda' && (
-          <p
+          <video
             style={{
-              textAlign: 'center',
-              fontSize: '1.5rem',
-              fontWeight: 'bold',
-              color: '#F3901D',
-              position: 'relative',
-              transform: '',
-              marginRight: 'auto',
-              marginLeft: 'auto',
-              marginTop: 'rem',
-              padding: '0 3rem',
-              lineHeight: '3.5rem',
+              position: 'absolute',
+              left: 0,
+              top: 0,
+              width: '100%',
+              height: '100%',
             }}
+            autoPlay
+            loop
           >
-            Remember to try and save between $20-30 of your total budget!
-          </p>
-        )}
-        {team.name == 'Sharks' && (
-          <p
-            style={{
-              textAlign: 'center',
-              fontSize: '1.5rem',
-              fontWeight: 'bold',
-              color: '#F3901D',
-              position: 'relative',
-              transform: '',
-              marginRight: 'auto',
-              marginLeft: 'auto',
-              marginTop: 'rem',
-              padding: '0 3rem',
-              lineHeight: '3.5rem',
-            }}
-          >
-            Remember to try and save between $200-300 of your total budget!
-          </p>
-        )}
+            <source src={videos[completedLevel]} type="video/mp4"></source>
+          </video>
+        </div>
       </div>
     </OverlayBoard>
   );

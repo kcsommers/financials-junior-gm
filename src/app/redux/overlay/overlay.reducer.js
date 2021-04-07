@@ -5,6 +5,7 @@ const initialState = {
   template: null,
   sign: null,
   canClose: true,
+  onClose: null,
 };
 
 const overlayReducer = (state = initialState, action) => {
@@ -13,6 +14,7 @@ const overlayReducer = (state = initialState, action) => {
       return {
         isOpen: action.payload.isOpen,
         template: action.payload.template,
+        onClose: action.payload.onClose,
         canClose:
           action.payload.canClose === undefined
             ? true

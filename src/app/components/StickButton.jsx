@@ -1,23 +1,53 @@
-import { Link } from 'react-router-dom';
+import {
+  TeamStickSvg,
+  BudgetStickSvg,
+  SeasonStickSvg,
+  ScoutStickSvg,
+  TrophiesStickSvg,
+} from '@components';
+import { useHistory } from 'react-router-dom';
 import '@css/components/StickButton.css';
 
-export const StickButton = ({ link, image, inverse, small, isDisabled }) => {
+const sticks = {
+  team: <TeamStickSvg />,
+  budget: <BudgetStickSvg />,
+  season: <SeasonStickSvg />,
+  scout: <ScoutStickSvg />,
+  trophies: <TrophiesStickSvg />,
+};
+
+export const StickButton = ({
+  link,
+  stick,
+  inverse,
+  small,
+  isDisabled,
+  beforeNav,
+}) => {
+  const history = useHistory();
+
   return (
     <div
       className={`stick-btn-wrap${small ? ' stick-btn-small' : ''}${
         isDisabled ? ' disabled' : ''
       }`}
     >
-      <img
+      <span
         className={`stick-btn-img${inverse ? ' stick-btn-img-inverse' : ''}`}
-        src={image}
-      />
-      <Link
+      >
+        {sticks[stick]}
+      </span>
+      <span
         className={`text-link stick-btn-link${
           isDisabled ? ' stick-btn-link-disabled' : ''
         }`}
-        to={link}
-      ></Link>
+        onClick={() => {
+          const shouldNav = !beforeNav || beforeNav();
+          if (shouldNav) {
+            history.push(link);
+          }
+        }}
+      ></span>
     </div>
   );
 };

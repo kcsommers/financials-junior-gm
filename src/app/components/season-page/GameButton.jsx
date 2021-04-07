@@ -6,27 +6,34 @@ import { motion } from 'framer-motion';
 import { startingLineupFull } from '@data/players/players-utils';
 
 export const GameButton = ({
-  onClick,
-  gameBlockState,
+  onStartGame,
+  onCheer,
+  gameState,
   team,
-  currentScenario,
   animationState,
   student,
+  cheerLevel,
+  seasonState,
 }) => {
-  const history = useHistory(';');
-  const { currentPhase } = gameBlockState;
+  const history = useHistory();
+  const { phase } = gameState;
+
+  const currentScenario = seasonState.currentScenario;
 
   const seasonDisabled = !!(
     !student.objectives ||
     !student.objectives[Objectives.LEARN_BUDGET] ||
-    !startingLineupFull(team)
+    !startingLineupFull(team) ||
+    seasonState.currentOpponentIndex >= seasonState.allOpponents.length
   );
 
-  const btnDisabled =
+  const btnDisabled = !!(
     (seasonDisabled &&
       (!currentScenario || !currentScenario.gameButtonAction)) ||
-    (currentPhase.phase !== GamePhases.READY &&
-      (!currentScenario || !currentScenario.gameButtonAction));
+    (phase.phase !== GamePhases.READY &&
+      phase.phase !== GamePhases.GAME_ON &&
+      (!currentScenario || !currentScenario.gameButtonAction))
+  );
 
   const gameButtonClicked = () => {
     if (seasonDisabled && !currentScenario) {
@@ -38,7 +45,11 @@ export const GameButton = ({
       return;
     }
 
-    onClick();
+    if (phase.phase === GamePhases.GAME_ON) {
+      onCheer();
+    } else {
+      onStartGame();
+    }
   };
 
   return (
@@ -60,8 +71,9 @@ export const GameButton = ({
       >
         <GameButtonSvg
           animationState={animationState}
-          phase={currentPhase.phase}
+          phase={phase.phase}
           currentScenario={currentScenario}
+          cheerLevel={cheerLevel}
         />
       </motion.span>
     </div>
