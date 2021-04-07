@@ -1,14 +1,29 @@
-import { BackButton } from '@components';
+import { useState } from 'react';
+import {
+  BackButton,
+  LoadingSpinner,
+  OverlayBoard,
+  Button,
+  Overlay,
+} from '@components';
 import { useForm } from 'react-hook-form';
-import '@css/pages/TeacherRegistrationPage.css';
 import { registerTeacher } from '../../api-helper';
+import { useDispatch } from 'react-redux';
+import { toggleOverlay } from '@redux/actions';
+import '@css/pages/TeacherRegistrationPage.css';
 
-export const TeacherRegsitrationPage = () => {
+export const TeacherRegsitrationPage = ({ history }) => {
   const { register, handleSubmit, errors, watch } = useForm();
 
+  const [isRegistering, setIsRegistering] = useState(false);
+
+  const dispatch = useDispatch();
+
+  const [isRegistered, setIsRegistered] = useState(false);
+
   const onSubmit = async (data, e) => {
-    let fs = document.getElementById('subp');
-    fs.classList.remove('hidden');
+    setIsRegistering(true);
+
     let params = {
       userName: data.username,
       email: data.email,
@@ -29,34 +44,65 @@ export const TeacherRegsitrationPage = () => {
       .then((res) => {
         console.log('RES:::: ', res);
         e.target.reset();
-      })
-      .catch((err) => {});
+        setIsRegistering(false);
+        setIsRegistered(true);
 
-    try {
-      const fetchResult = await fetch(
-        'https://www.finjuniorgmapi.com/api/v1/auth/register',
-        requestOptions
-      );
-      const result = await fetchResult.json();
-      if (fetchResult.ok) {
-        alert(
-          'Thank you for signing up! Instructions and a curriculum guide will be emailed to you shortly.'
+        dispatch(
+          toggleOverlay({
+            isOpen: true,
+            canClose: false,
+            template: (
+              <OverlayBoard>
+                <div
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    padding: '6rem 0 3rem 0',
+                    display: 'flex',
+                    flexDirection: 'column',
+                  }}
+                >
+                  <div style={{ textAlign: 'center', padding: '3rem' }}>
+                    <h3
+                      className="color-primary"
+                      style={{ marginBottom: '2rem', fontSize: '2.15rem' }}
+                    >
+                      Thank you for registering for the FINancials Junior GM
+                      program presented by Comerica.
+                    </h3>
+                    <p
+                      className="color-primary"
+                      style={{ fontSize: '1.75rem', lineHeight: '3rem' }}
+                    >
+                      Click here to sign in and register your class.
+                    </p>
+                  </div>
+                  <div
+                    style={{
+                      marginTop: '3rem',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-around',
+                      width: '100%',
+                    }}
+                  >
+                    <Button
+                      text="Sign In"
+                      onClick={() => {
+                        history.push('/login/teacher');
+                      }}
+                    />
+                  </div>
+                </div>
+              </OverlayBoard>
+            ),
+          })
         );
-        fs.classList.add('hidden');
-
-        e.target.reset();
-      } else {
-        const message = result.message;
-        fs.classList.add('hidden');
-        if (message) {
-          alert('Server Error. Could not register. ' + message);
-        } else {
-          alert('Server Error. Could not register. Try again');
-        }
-      }
-    } catch (e) {
-      alert('Server Error. Could not register.' + e);
-    }
+      })
+      .catch((err) => {
+        alert('Server Error. Could not register.' + err);
+        setIsRegistering(false);
+      });
   };
 
   return (
@@ -77,7 +123,7 @@ export const TeacherRegsitrationPage = () => {
 
           <form onSubmit={handleSubmit(onSubmit)}>
             <label htmlFor="name" className="form-label">
-              Your Name
+              Full Name
             </label>
             {errors.name && errors.name.type === 'required' && (
               <p className="error">*Required.</p>
@@ -272,7 +318,7 @@ export const TeacherRegsitrationPage = () => {
               <p className="error">*Required.</p>
             )}
             {errors.conf && errors.conf.type === 'minLength' && (
-              <p className="error">Password must be atleast 7 characters.</p>
+              <p className="error">Password must be at least 7 characters.</p>
             )}
             <input
               name="conf"
@@ -298,12 +344,26 @@ export const TeacherRegsitrationPage = () => {
                 required: true, // value is from password2 and watch will return value from password1
               })}
             />
-            <p id="subp" className="hidden" style={{ margin: 'auto' }}>
-              Processing...
-            </p>
-            <input id="formsubmit" type="submit" className="btn-accent" />
+            <div className="form-submit-wrap btn-accent btn-small">
+              {isRegistering ? (
+                <span className="reg-form-spinner-wrap">
+                  <LoadingSpinner size="small" />
+                </span>
+              ) : (
+                <input id="formsubmit" type="submit" />
+              )}
+            </div>
           </form>
         </div>
+      </div>
+      <div
+        className="fixed-overlay-wrap"
+        style={{
+          opacity: isRegistered ? 1 : 0,
+          zIndex: isRegistered ? 1 : -1,
+        }}
+      >
+        <Overlay />
       </div>
     </div>
   );

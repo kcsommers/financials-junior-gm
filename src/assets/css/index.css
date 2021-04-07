@@ -71,6 +71,7 @@ button.btn-primary {
   cursor: pointer;
 }
 
+div.btn-accent,
 input[type='submit'],
 button.btn-accent {
   background-color: #f3901d;

@@ -37,7 +37,7 @@ div.teacher-registration-page-form-wrap {
   width: 85%;
   margin: 0 auto;
   border-radius: 3px;
-  padding: 2rem 5rem;
+  padding: 2rem 7rem;
 }
 
 div.teacher-registration-page-form-wrap > h4 {
@@ -105,7 +105,31 @@ div.form-columns-wrap > div {
   align-items: center;
 }
 
+div.form-submit-wrap.btn-accent {
+  padding: 0;
+  text-align: center;
+}
+
+span.reg-form-spinner-wrap {
+  display: inline-block;
+  padding: 0.15rem;
+}
+
 input[type='submit'] {
+  padding: 0.75rem !important;
   border: none !important;
-  border-top: 1rem;
+  box-shadow: none;
+  margin-bottom: 0 !important;
+  font-weight: bold;
+}
+
+div.fixed-overlay-wrap {
+  position: fixed;
+  margin: 0 auto;
+  width: 1024px;
+  height: 768px;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
