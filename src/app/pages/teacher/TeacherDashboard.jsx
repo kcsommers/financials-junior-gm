@@ -1,10 +1,12 @@
 import { TEACHER_ID_STORAGE_KEY, clearSessionStorage } from '@data/auth/auth';
 import { setLoginState } from '@redux/actions';
 import { connect } from 'react-redux';
+import curriculumGuid from '../../../assets/pdf/curriculum_guide.pdf';
+import teacherTutorial from '../../../assets/pdf/teacher_tutorial.pdf';
 
 import React from 'react';
 import '@css/pages/TeacherDashboard.css';
-import * as api from '../api-helper';
+import * as api from '../../api-helper';
 import CRUDTable, {
   Fields,
   Field,
@@ -39,9 +41,7 @@ class TeacherDashboard extends React.Component {
           res.data[i].name = res.data[i].firstName + ' ' + res.data[i].lastName;
         }
 
-        this.state.dataList = res.data;
-        this.setState({ dataList: this.state.dataList });
-        console.log(this.state.dataList);
+        this.setState({ dataList: res.data });
       })
       .catch((error) => {
         console.log('catch---->>>>', error.response);
@@ -49,7 +49,6 @@ class TeacherDashboard extends React.Component {
   };
 
   addStudent = (task) => {
-    console.log('task', task);
     var body = {
       firstName: task.firstName,
       lastName: task.lastName,
@@ -57,14 +56,13 @@ class TeacherDashboard extends React.Component {
     api
       .addStudent(body)
       .then((res) => {
-        console.log(res);
         alert(res.Message);
         this.getStudentList();
         return task;
       })
       .catch((error) => {
         console.log('catch---->>>>', error.response);
-        if (error && error.response && error.response.status == 400) {
+        if (error && error.response && error.response.status === 400) {
           alert(error.response?.data?.message);
         }
         return { firstName: '', lastName: '' };
@@ -115,19 +113,14 @@ class TeacherDashboard extends React.Component {
       api
         .addStudentInBulk(file)
         .then((res) => {
-          this.state.selectedFile = null;
-          console.log('res upload csv', res);
           this.getStudentList();
-          this.state.showCSVForm = false;
-          this.setState({ showCSVForm: false });
+          this.setState({ showCSVForm: false, selectedFile: null });
         })
         .catch((error) => {
-          this.state.selectedFile = null;
           console.log('catch---->>>>', error.response);
-          if (error && error.response && error.response.status == 400) {
+          if (error && error.response && error.response.status === 400) {
             alert(error.response?.data?.message);
-            this.state.showCSVForm = false;
-            this.setState({ showCSVForm: false });
+            this.setState({ showCSVForm: false, selectedFile: null });
           }
         });
     } else {
@@ -137,12 +130,13 @@ class TeacherDashboard extends React.Component {
   handleSelectFile = (e) => {
     e.preventDefault();
     var file = e.target.files[0];
-    this.state.selectedFile = file;
+    this.setState({
+      selectedFile: file,
+    });
   };
 
   uploadCSVFile = () => {
-    this.state.showCSVForm = true;
-    this.setState({ showCSVForm: this.state.showCSVForm });
+    this.setState({ showCSVForm: true });
   };
 
   logoutSession = () => {
@@ -154,18 +148,6 @@ class TeacherDashboard extends React.Component {
         this.props.history.push('/dashboard');
       })
       .catch((err) => console.error(err));
-    // api
-    //   .logout()
-    //   .then((res) => {
-    //     this.props.history.push('/login/teacher');
-    //     // alert(res.Message);
-    //   })
-    //   .catch((error) => {
-    //     this.state.selectedFile = null;
-    //     console.log('catch---->>>>', error.response);
-    //     this.props.history.push('/login/teacher');
-    //     // alert(error?.response?.message);
-    //   });
   };
 
   renderStudentBulkAdd() {
@@ -175,25 +157,24 @@ class TeacherDashboard extends React.Component {
           this.state.showCSVForm ? 'show' : 'hide'
         }`}
       >
-        <div className='crud-modal-wrapper__background'></div>
-        <div className='crud-modal-wrapper__modal'>
-          <h3 className='crud-modal-wrapper__title'>Add Student in Bulk</h3>
+        <div className="crud-modal-wrapper__background"></div>
+        <div className="crud-modal-wrapper__modal">
+          <h3 className="crud-modal-wrapper__title">Add Student in Bulk</h3>
           <div>
-            <form className='crud-modal-form'>
-              <div className='crud-modal-form__field-container'>
-                <label for='inputFile' className='crud-modal-form__label'>
+            <form className="crud-modal-form">
+              <div className="crud-modal-form__field-container">
+                <label htmlFor="inputFile" className="crud-modal-form__label">
                   Select file
                 </label>
                 <input
-                  name='inputFile'
-                  type='file'
+                  name="inputFile"
+                  type="file"
                   onChange={this.handleSelectFile}
-                  accept='.csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'
+                  accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
                 />
               </div>
-              {/* <button type="submit" onClick={this.addStudentInBulk} className="crud-button crud-button--positive">Add</button> */}
               <div
-                className='crud-button crud-button--positive'
+                className="crud-button crud-button--positive"
                 style={{ display: 'inline-block' }}
                 onClick={this.addStudentInBulk}
               >
@@ -207,7 +188,6 @@ class TeacherDashboard extends React.Component {
   }
 
   renderTable() {
-    let count = this.state.dataList.length;
     const service = {
       create: (task) => {
         let newlyAdded = this.addStudent(task);
@@ -228,54 +208,103 @@ class TeacherDashboard extends React.Component {
 
     return (
       <div style={{ maxHeight: '768px', overflow: 'auto' }}>
-        <button
-          className='crud-button crud-button--positive'
-          onClick={this.uploadCSVFile}
-        >
-          Upload CSV
-        </button>
-        <button
-          style={{ marginLeft: '10px' }}
-          className='crud-button crud-button--positive'
-          onClick={this.logoutSession}
-        >
-          Logout
-        </button>
-        <CRUDTable caption='List of Students' items={this.state.dataList}>
-          <Fields>
-            <Field name='name' label='Name' hideInCreateForm hideInUpdateForm />
-            <Field
-              name='firstName'
-              label='First Name'
-              placeholder='Please enter first name'
-              hideFromTable
-            />
-            <Field
-              name='lastName'
-              label='Last Name'
-              placeholder='Please enter last name'
-              hideFromTable
-            />
-            <Field
-              name='userName'
-              label='User Name'
-              hideInCreateForm
-              hideInUpdateForm
-            />
-            <Field
-              name='password'
-              label='Password'
-              sortable={false}
-              hideInCreateForm
-              hideInUpdateForm
-            />
-          </Fields>
-
+        <div className="teacher-dashboard-header">
+          <div className="header-buttons-container-1">
+            <a
+              href={curriculumGuid}
+              download="curriculum_guide.pdf"
+              style={{ marginLeft: '10px' }}
+              className="btn-primary btn-small"
+            >
+              Curriculum Guide
+            </a>
+            <a
+              href={teacherTutorial}
+              download="teacher_tutorial.pdf"
+              style={{ marginLeft: '10px' }}
+              className="btn-primary btn-small"
+            >
+              Tutorial PDF
+            </a>
+            <a
+              href="https://youtu.be/dsS-Zm20bnE"
+              target="_blank"
+              rel="noreferrer"
+              style={{ marginLeft: '10px' }}
+              className="btn-primary btn-small"
+            >
+              Getting Started
+            </a>
+            <a
+              href="https://youtu.be/8uNFa2oQ6hk"
+              target="_blank"
+              rel="noreferrer"
+              style={{ marginLeft: '10px' }}
+              className="btn-primary btn-small"
+            >
+              Home Page Tutorial
+            </a>
+            <a
+              href="https://youtu.be/Aoj5gMzzwCs"
+              target="_blank"
+              rel="noreferrer"
+              style={{ marginLeft: '10px' }}
+              className="btn-primary btn-small"
+            >
+              Budget Page Tutorial
+            </a>
+            <a
+              href="https://youtu.be/6ORfGmXSZxM"
+              target="_blank"
+              rel="noreferrer"
+              style={{ marginLeft: '10px' }}
+              className="btn-primary btn-small"
+            >
+              Team Page Tutorial
+            </a>
+            <a
+              href="https://youtu.be/46pCAu6DXQg"
+              target="_blank"
+              rel="noreferrer"
+              style={{ marginLeft: '10px' }}
+              className="btn-primary btn-small"
+              onClick={this.logoutSession}
+            >
+              Scout Page Tutorial
+            </a>
+            <a
+              href="https://youtu.be/aG5UfofjRhQ"
+              target="_blank"
+              rel="noreferrer"
+              style={{ marginLeft: '10px' }}
+              className="btn-primary btn-small"
+              onClick={this.logoutSession}
+            >
+              Season Page Tutorial
+            </a>
+          </div>
+          <div className="header-buttons-container-2">
+            <button
+              className="btn-accent btn-small"
+              onClick={this.logoutSession}
+            >
+              Logout
+            </button>
+            <button
+              style={{ marginLeft: '10px' }}
+              className="btn-accent btn-small"
+              onClick={this.uploadCSVFile}
+            >
+              Upload CSV
+            </button>
+          </div>
+        </div>
+        <CRUDTable caption="List of Students" items={this.state.dataList}>
           <CreateForm
-            title='Add Student'
-            trigger='Add Student'
+            title="Add Student"
+            trigger="Add Student"
             onSubmit={(task) => service.create(task)}
-            submitText='Create'
+            submitText="Create"
             validate={(values) => {
               const errors = {};
               if (!values.firstName) {
@@ -289,11 +318,39 @@ class TeacherDashboard extends React.Component {
               return errors;
             }}
           />
+          <Fields>
+            <Field name="name" label="Name" hideInCreateForm hideInUpdateForm />
+            <Field
+              name="firstName"
+              label="First Name"
+              placeholder="Please enter first name"
+              hideFromTable
+            />
+            <Field
+              name="lastName"
+              label="Last Name"
+              placeholder="Please enter last name"
+              hideFromTable
+            />
+            <Field
+              name="userName"
+              label="User Name"
+              hideInCreateForm
+              hideInUpdateForm
+            />
+            <Field
+              name="password"
+              label="Password"
+              sortable={false}
+              hideInCreateForm
+              hideInUpdateForm
+            />
+          </Fields>
           <UpdateForm
-            title='Update Student'
-            trigger='Update'
+            title="Update Student"
+            trigger="Update"
             onSubmit={(task) => service.update(task)}
-            submitText='Update'
+            submitText="Update"
             validate={(values) => {
               const errors = {};
               if (!values.firstName) {
@@ -307,14 +364,14 @@ class TeacherDashboard extends React.Component {
           />
 
           <DeleteForm
-            title='Delete Student'
-            message='Are you sure you want to delete this student?'
-            trigger='Delete'
+            title="Delete Student"
+            message="Are you sure you want to delete this student?"
+            trigger="Delete"
             onSubmit={(task) => service.delete(task)}
-            submitText='Delete'
+            submitText="Delete"
           />
         </CRUDTable>
-        {this.state.dataList.length == 0 ? (
+        {this.state.dataList.length === 0 ? (
           <div style={{ textAlign: 'center', margin: '20px' }}>
             {' '}
             No data found{' '}
@@ -328,7 +385,7 @@ class TeacherDashboard extends React.Component {
 
   render() {
     return (
-      <div className='teacher-dash-div'>
+      <div className="teacher-dash-div">
         {this.renderStudentBulkAdd()}
 
         {this.renderTable()}

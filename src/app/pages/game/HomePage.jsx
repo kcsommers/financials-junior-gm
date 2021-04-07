@@ -8,6 +8,7 @@ import {
   NextSeasonOverlay,
   NewLevelOverlay,
   Overlay,
+  FaqOverlay,
 } from '@components';
 import {
   introSlides,
@@ -25,8 +26,9 @@ import {
   initializeSeason,
   initializeObjectives,
 } from '@redux/actions';
-import { updateStudentById } from './../api-helper';
+import { updateStudentById } from '../../api-helper';
 import { cloneDeep } from 'lodash';
+import { faqs } from '@data/faqs/faqs';
 import {
   getMaxTeamRank,
   startingLineupFull,
@@ -116,7 +118,27 @@ export const HomePage = ({ location, history }) => {
   );
 
   const onCallSharkie = () => {
-    startTutorial([getConfirmSlides('home'), introSlides]);
+    dispatch(
+      toggleOverlay({
+        isOpen: true,
+        template: (
+          <FaqOverlay
+            questions={faqs.home}
+            title="Home Page FAQs"
+            level={+student.level}
+            onStartTutorial={() => {
+              dispatch(
+                toggleOverlay({
+                  isOpen: false,
+                  template: null,
+                })
+              );
+              startTutorial([getConfirmSlides('home'), introSlides]);
+            }}
+          />
+        ),
+      })
+    );
   };
 
   const objectivesBoard = (

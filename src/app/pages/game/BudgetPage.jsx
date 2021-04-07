@@ -26,7 +26,7 @@ import {
   setObjectiveComplete,
   setSeasonActive,
 } from '@redux/actions';
-import { updateStudentById } from '../api-helper';
+import { updateStudentById } from '../../api-helper';
 import { Objectives } from '@data/objectives/objectives';
 import { faqs } from '@data/faqs/faqs';
 import { cloneDeep } from 'lodash';
