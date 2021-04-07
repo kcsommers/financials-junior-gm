@@ -1,5 +1,6 @@
 div.teacher-registration-page-container {
   overflow-y: auto;
+  padding-bottom: 2rem;
 }
 
 div.teacher-registration-page-header {

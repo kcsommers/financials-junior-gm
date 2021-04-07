@@ -159,13 +159,8 @@
 }
 
 .crud-button--positive {
-  background-color: #40c846;
+  background-color: #f3901d;
   margin: 0.8rem 0;
-}
-
-.crud-button--positive:hover {
-  background-color: #33a538;
-  transition: all 1s;
 }
 
 .crud-button--negative {
@@ -635,3 +630,17 @@ td.rdtYear:hover {
 }
 
 /* CRUD TABLE END */
+
+div.header-buttons-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 0.5rem 1rem 1rem 1rem;
+}
+
+div.header-buttons-container > button,
+div.header-buttons-container > a {
+  margin-top: 1rem;
+  display: inline-block;
+}
