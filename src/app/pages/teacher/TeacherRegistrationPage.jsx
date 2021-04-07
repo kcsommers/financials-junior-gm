@@ -90,6 +90,10 @@ export const TeacherRegsitrationPage = ({ history }) => {
                       text="Sign In"
                       onClick={() => {
                         history.push('/login/teacher');
+                        toggleOverlay({
+                          isOpen: false,
+                          template: null,
+                        });
                       }}
                     />
                   </div>
