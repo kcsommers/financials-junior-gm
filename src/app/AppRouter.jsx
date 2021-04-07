@@ -22,6 +22,7 @@ import { StudentPortal } from './pages/portal/StudentPortal';
 import { AdminPage } from './pages/admin/AdminPage';
 import { AdminLogin } from './pages/login/AdminLogin';
 import { AdminPortal } from './pages/portal/AdminPortal';
+import { TeacherRegsitrationPage } from './pages/teacher/TeacherRegistrationPage';
 
 const protectedRoutes = [
   '/home',
@@ -157,6 +158,11 @@ export const AppRouter = ({ isLoggedIn, userRole }) => {
           render={(props) => <AdminLogin {...props} isLoggedIn={isLoggedIn} />}
         />
         <Route exact path="/signup" component={Signup} />
+        <Route
+          exact
+          path="/register/teacher"
+          component={TeacherRegsitrationPage}
+        />
         <Route exact path="/dashboard" component={Dashboard} />
         <Redirect from="/" to="/home" />
         <Route component={PageNotFound} />
@@ -184,6 +190,11 @@ export const AppRouter = ({ isLoggedIn, userRole }) => {
           render={(props) => <AdminLogin {...props} isLoggedIn={isLoggedIn} />}
         />
         <Route exact path="/signup" component={Signup} />
+        <Route
+          exact
+          path="/register/teacher"
+          component={TeacherRegsitrationPage}
+        />
         <Route exact path="/dashboard" component={Dashboard} />
         {protectedRoutes.includes(window.location.pathname) && (
           <Redirect to="/dashboard" />

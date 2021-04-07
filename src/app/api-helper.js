@@ -73,6 +73,11 @@ export const teacherLogin = (body) => {
   return axios.post(`${getBaseUrl()}/api/v1/auth/login`, body);
 };
 
+//Teacher Register
+export const registerTeacher = (body) => {
+  return axios.post(`${getBaseUrl()}/api/v1/auth/register`, body);
+};
+
 //Student Login
 export const studentLogin = (body) => {
   return axios.post(`${getBaseUrl()}/api/v1/auth/student/login`, body);
