@@ -161,7 +161,7 @@ export const AppRouter = ({ isLoggedIn, userRole }) => {
         <Route
           exact
           path="/register/teacher"
-          component={TeacherRegsitrationPage}
+          render={(props) => <TeacherRegsitrationPage {...props} />}
         />
         <Route exact path="/dashboard" component={Dashboard} />
         <Redirect from="/" to="/home" />
@@ -193,7 +193,7 @@ export const AppRouter = ({ isLoggedIn, userRole }) => {
         <Route
           exact
           path="/register/teacher"
-          component={TeacherRegsitrationPage}
+          render={(props) => <TeacherRegsitrationPage {...props} />}
         />
         <Route exact path="/dashboard" component={Dashboard} />
         {protectedRoutes.includes(window.location.pathname) && (
