@@ -1,6 +1,8 @@
 import { TEACHER_ID_STORAGE_KEY, clearSessionStorage } from '@data/auth/auth';
 import { setLoginState } from '@redux/actions';
 import { connect } from 'react-redux';
+import curriculumGuid from '../../../assets/pdf/curriculum_guide.pdf';
+import teacherTutorial from '../../../assets/pdf/teacher_tutorial.pdf';
 
 import React from 'react';
 import '@css/pages/TeacherDashboard.css';
@@ -218,16 +220,16 @@ class TeacherDashboard extends React.Component {
             Upload CSV
           </button>
           <a
-            href="../../../assets/pdf/curriculum_guide.pdf"
-            download
+            href={curriculumGuid}
+            download="curriculum_guide.pdf"
             style={{ marginLeft: '10px' }}
             className="btn-primary btn-small"
           >
             Curriculum Guide
           </a>
           <a
-            href="../../../assets/pdf/teacher_tutorial.pdf"
-            download
+            href={teacherTutorial}
+            download="teacher_tutorial.pdf"
             style={{ marginLeft: '10px' }}
             className="btn-primary btn-small"
           >
