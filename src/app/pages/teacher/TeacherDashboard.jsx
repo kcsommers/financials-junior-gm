@@ -208,91 +208,116 @@ class TeacherDashboard extends React.Component {
 
     return (
       <div style={{ maxHeight: '768px', overflow: 'auto' }}>
-        <div className="header-buttons-container">
-          <button className="btn-accent btn-small" onClick={this.logoutSession}>
-            Logout
-          </button>
-          <button
-            style={{ marginLeft: '10px' }}
-            className="btn-primary btn-small"
-            onClick={this.uploadCSVFile}
-          >
-            Upload CSV
-          </button>
-          <a
-            href={curriculumGuid}
-            download="curriculum_guide.pdf"
-            style={{ marginLeft: '10px' }}
-            className="btn-primary btn-small"
-          >
-            Curriculum Guide
-          </a>
-          <a
-            href={teacherTutorial}
-            download="teacher_tutorial.pdf"
-            style={{ marginLeft: '10px' }}
-            className="btn-primary btn-small"
-          >
-            Tutorial PDF
-          </a>
-          <a
-            href="https://youtu.be/dsS-Zm20bnE"
-            target="_blank"
-            rel="noreferrer"
-            style={{ marginLeft: '10px' }}
-            className="btn-primary btn-small"
-          >
-            Getting Started
-          </a>
-          <a
-            href="https://youtu.be/8uNFa2oQ6hk"
-            target="_blank"
-            rel="noreferrer"
-            style={{ marginLeft: '10px' }}
-            className="btn-primary btn-small"
-          >
-            Home Page Tutorial
-          </a>
-          <a
-            href="https://youtu.be/Aoj5gMzzwCs"
-            target="_blank"
-            rel="noreferrer"
-            style={{ marginLeft: '10px' }}
-            className="btn-primary btn-small"
-          >
-            Budget Page Tutorial
-          </a>
-          <a
-            href="https://youtu.be/6ORfGmXSZxM"
-            target="_blank"
-            rel="noreferrer"
-            style={{ marginLeft: '10px' }}
-            className="btn-primary btn-small"
-          >
-            Team Page Tutorial
-          </a>
-          <a
-            href="https://youtu.be/46pCAu6DXQg"
-            target="_blank"
-            rel="noreferrer"
-            style={{ marginLeft: '10px' }}
-            className="btn-primary btn-small"
-            onClick={this.logoutSession}
-          >
-            Scout Page Tutorial
-          </a>
-          <a
-            href="https://youtu.be/aG5UfofjRhQ"
-            target="_blank"
-            rel="noreferrer"
-            style={{ marginLeft: '10px' }}
-            className="btn-primary btn-small"
-            onClick={this.logoutSession}
-          >
-            Season Page Tutorial
-          </a>
+        <div className="teacher-dashboard-header">
+          <div className="header-buttons-container-1">
+            <a
+              href={curriculumGuid}
+              download="curriculum_guide.pdf"
+              style={{ marginLeft: '10px' }}
+              className="btn-primary btn-small"
+            >
+              Curriculum Guide
+            </a>
+            <a
+              href={teacherTutorial}
+              download="teacher_tutorial.pdf"
+              style={{ marginLeft: '10px' }}
+              className="btn-primary btn-small"
+            >
+              Tutorial PDF
+            </a>
+            <a
+              href="https://youtu.be/dsS-Zm20bnE"
+              target="_blank"
+              rel="noreferrer"
+              style={{ marginLeft: '10px' }}
+              className="btn-primary btn-small"
+            >
+              Getting Started
+            </a>
+            <a
+              href="https://youtu.be/8uNFa2oQ6hk"
+              target="_blank"
+              rel="noreferrer"
+              style={{ marginLeft: '10px' }}
+              className="btn-primary btn-small"
+            >
+              Home Page Tutorial
+            </a>
+            <a
+              href="https://youtu.be/Aoj5gMzzwCs"
+              target="_blank"
+              rel="noreferrer"
+              style={{ marginLeft: '10px' }}
+              className="btn-primary btn-small"
+            >
+              Budget Page Tutorial
+            </a>
+            <a
+              href="https://youtu.be/6ORfGmXSZxM"
+              target="_blank"
+              rel="noreferrer"
+              style={{ marginLeft: '10px' }}
+              className="btn-primary btn-small"
+            >
+              Team Page Tutorial
+            </a>
+            <a
+              href="https://youtu.be/46pCAu6DXQg"
+              target="_blank"
+              rel="noreferrer"
+              style={{ marginLeft: '10px' }}
+              className="btn-primary btn-small"
+              onClick={this.logoutSession}
+            >
+              Scout Page Tutorial
+            </a>
+            <a
+              href="https://youtu.be/aG5UfofjRhQ"
+              target="_blank"
+              rel="noreferrer"
+              style={{ marginLeft: '10px' }}
+              className="btn-primary btn-small"
+              onClick={this.logoutSession}
+            >
+              Season Page Tutorial
+            </a>
+          </div>
+          <div className="header-buttons-container-2">
+            <button
+              className="btn-accent btn-small"
+              onClick={this.logoutSession}
+            >
+              Logout
+            </button>
+            <button
+              style={{ marginLeft: '10px' }}
+              className="btn-accent btn-small"
+              onClick={this.uploadCSVFile}
+            >
+              Upload CSV
+            </button>
+          </div>
         </div>
         <CRUDTable caption="List of Students" items={this.state.dataList}>
+          <CreateForm
+            title="Add Student"
+            trigger="Add Student"
+            onSubmit={(task) => service.create(task)}
+            submitText="Create"
+            validate={(values) => {
+              const errors = {};
+              if (!values.firstName) {
+                errors.firstName = 'Please enter first name.';
+              }
+
+              if (!values.lastName) {
+                errors.lastName = 'Please enter last name.';
+              }
+
+              return errors;
+            }}
+          />
           <Fields>
             <Field name="name" label="Name" hideInCreateForm hideInUpdateForm />
             <Field
@@ -321,25 +346,6 @@ class TeacherDashboard extends React.Component {
               hideInUpdateForm
             />
           </Fields>
-
-          <CreateForm
-            title="Add Student"
-            trigger="Add Student"
-            onSubmit={(task) => service.create(task)}
-            submitText="Create"
-            validate={(values) => {
-              const errors = {};
-              if (!values.firstName) {
-                errors.firstName = 'Please enter first name.';
-              }
-
-              if (!values.lastName) {
-                errors.lastName = 'Please enter last name.';
-              }
-
-              return errors;
-            }}
-          />
           <UpdateForm
             title="Update Student"
             trigger="Update"
