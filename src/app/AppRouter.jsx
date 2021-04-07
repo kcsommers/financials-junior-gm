@@ -16,7 +16,6 @@ import { StudentLogin } from './pages/login/StudentLogin.jsx';
 import TeacherDashboard from './pages/teacher/TeacherDashboard';
 import PageNotFound from './components/page-not-found';
 import { TeacherPortal } from './pages/portal/TeacherPortal';
-import Signup from './pages/teacher/Signup';
 import { IceBackground } from '@components';
 import { StudentPortal } from './pages/portal/StudentPortal';
 import { AdminPage } from './pages/admin/AdminPage';
@@ -157,7 +156,6 @@ export const AppRouter = ({ isLoggedIn, userRole }) => {
           path="/admin/login"
           render={(props) => <AdminLogin {...props} isLoggedIn={isLoggedIn} />}
         />
-        <Route exact path="/signup" component={Signup} />
         <Route
           exact
           path="/register/teacher"
@@ -189,7 +187,6 @@ export const AppRouter = ({ isLoggedIn, userRole }) => {
           path="/admin/login"
           render={(props) => <AdminLogin {...props} isLoggedIn={isLoggedIn} />}
         />
-        <Route exact path="/signup" component={Signup} />
         <Route
           exact
           path="/register/teacher"
