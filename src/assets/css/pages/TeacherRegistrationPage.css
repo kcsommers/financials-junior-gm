@@ -44,6 +44,7 @@ div.teacher-registration-page-form-wrap {
 div.teacher-registration-page-form-wrap > h4 {
   text-align: center;
   font-weight: bold;
+  margin-bottom: 3rem;
 }
 
 div.teacher-registration-page-form-wrap label {

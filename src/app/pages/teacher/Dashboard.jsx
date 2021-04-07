@@ -6,7 +6,7 @@ export const Dashboard = () => {
   const history = useHistory();
   return (
     <div
-      className='dashboard-container'
+      className="dashboard-container"
       style={{
         textAlign: 'center',
         position: 'relative',
@@ -18,11 +18,11 @@ export const Dashboard = () => {
       }}
     >
       <div style={{ width: '100%' }}>
-        <img src={financialsLogo} alt='Financials Junior GM Program logo' />
+        <img src={financialsLogo} alt="Financials Junior GM Program logo" />
       </div>
 
       <div
-        className='dash-btn-list'
+        className="dash-btn-list"
         style={{
           flex: 1,
           width: '100%',
@@ -34,7 +34,7 @@ export const Dashboard = () => {
       >
         <div>
           <Button
-            text='Student'
+            text="Student"
             onClick={() => {
               history.push('/login/student');
             }}
@@ -42,8 +42,8 @@ export const Dashboard = () => {
         </div>
         <div style={{ margin: '2rem 0' }}>
           <Button
-            text='Teachers'
-            background='#002f6c'
+            text="Teachers"
+            background="#002f6c"
             onClick={() => {
               history.push('/login/teacher');
             }}
@@ -51,10 +51,10 @@ export const Dashboard = () => {
         </div>
         <div>
           <Button
-            text='Registration'
-            background='#070707'
+            text="Registration"
+            background="#070707"
             onClick={() => {
-              history.push('/signup');
+              history.push('/register/teacher');
             }}
           />
         </div>
