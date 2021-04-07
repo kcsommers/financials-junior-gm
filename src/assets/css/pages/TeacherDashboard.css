@@ -631,16 +631,45 @@ td.rdtYear:hover {
 
 /* CRUD TABLE END */
 
-div.header-buttons-container {
+div.teacher-dashboard-header {
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+div.teacher-dashboard-header + div > div:first-child > button.crud-button {
+  position: relative;
+  z-index: 1;
+}
+
+div.header-buttons-container-1,
+div.header-buttons-container-2 {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
-  padding: 0.5rem 1rem 1rem 1rem;
+  margin-top: 0.5rem;
 }
 
-div.header-buttons-container > button,
-div.header-buttons-container > a {
+div.header-buttons-container-2 > button {
+  box-shadow: none;
+  padding: 0.53rem 1.5rem;
+  font-size: 0.9rem;
+}
+
+div.header-buttons-container-1 > button,
+div.header-buttons-container-1 > a,
+div.header-buttons-container-2 > button,
+div.header-buttons-container-2 > a {
   margin-top: 1rem;
   display: inline-block;
+}
+
+div.header-buttons-container-2 {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-45.5%, 128%);
+  justify-content: space-between;
+  width: 360px;
+  z-index: 0;
 }
