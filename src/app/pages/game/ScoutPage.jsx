@@ -12,6 +12,7 @@ import {
   NextSeasonOverlay,
   OverlayBoard,
   Button,
+  PageBoard,
 } from '@components';
 import { useSelector, useDispatch, batch } from 'react-redux';
 import { motion } from 'framer-motion';
@@ -21,7 +22,6 @@ import {
   Tutorial,
   getConfirmSlides,
 } from '@tutorial';
-import { PageBoard } from './../components/PageBoard';
 import {
   setTutorialState,
   updateScoutPlayer,
@@ -34,7 +34,7 @@ import { getMoneyLevels } from '@utils';
 import { cloneDeep } from 'lodash';
 import { PlayerAssignments } from '@data/players/players';
 import { faqs } from '@data/faqs/faqs';
-import { updateStudentById } from './../api-helper';
+import { updateStudentById } from '../../api-helper';
 import '@css/pages/ScoutPage.css';
 
 const boardMap = {

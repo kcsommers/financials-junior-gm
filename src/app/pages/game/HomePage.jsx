@@ -25,7 +25,7 @@ import {
   initializeSeason,
   initializeObjectives,
 } from '@redux/actions';
-import { updateStudentById } from './../api-helper';
+import { updateStudentById } from '../../api-helper';
 import { cloneDeep } from 'lodash';
 import {
   getMaxTeamRank,
