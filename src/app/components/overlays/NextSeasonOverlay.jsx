@@ -78,7 +78,7 @@ export const NextSeasonOverlay = ({ student, next, finished }) => {
           <Button text="Repeat Season" onClick={repeatSeason} />
           {isPromoted && (
             <Button
-              text={+student.level === 3 ? 'Finish Game' : 'Accept Promotion'}
+              text={+student.level === 3 ? 'Accept Award' : 'Accept Promotion'}
               onClick={+student.level === 3 ? finishGame : nextSeason}
             />
           )}
