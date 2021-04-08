@@ -225,7 +225,7 @@ export const TrophiesPage = ({ history }) => {
                   )}
                   onClick={+student.level === 3 ? finishGame : nextSeason}
                 >
-                  {+student.level === 3 ? 'Finish Game' : 'Accept Promotion'}
+                  {+student.level === 3 ? 'Accept Award' : 'Accept Promotion'}
                 </span>
               )}
             </>
