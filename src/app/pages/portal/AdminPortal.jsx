@@ -42,10 +42,10 @@ export const AdminPortal = ({
         console.error('Unexpected error fetching current user', err);
         setShouldRedirectToLogin(true);
       });
-  }, [isLoggedIn, userRole, pageName, history]);
+  }, [isLoggedIn, userRole, pageName, history, dispatch]);
 
   if (shouldRedirectToLogin) {
-    return <Redirect to='admin/login' />;
+    return <Redirect to="admin/login" />;
   }
 
   return admin ? (
