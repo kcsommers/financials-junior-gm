@@ -69,8 +69,6 @@ export const MarketPlayersBoard = ({
 }) => {
   const dispatch = useDispatch();
 
-  const { currentScenario } = useSelector((state) => state.season);
-
   const scenarioAssignment =
     student.objectives &&
     student.objectives[Objectives.SEASON_SCENARIO] === false
@@ -116,7 +114,7 @@ export const MarketPlayersBoard = ({
 
   return (
     <div>
-      <div className='market-players-board-btns-container'>
+      <div className="market-players-board-btns-container">
         <div
           className={`box-shadow market-players-board-tab-btn${
             forwardsActive ? '' : ' disabled'
@@ -127,8 +125,8 @@ export const MarketPlayersBoard = ({
             }
           }}
         >
-          <div className='market-players-board-tab-btn-inner'>
-            <span className='outline-black'>Forwards</span>
+          <div className="market-players-board-tab-btn-inner">
+            <span className="outline-black">Forwards</span>
           </div>
         </div>
         <div
@@ -141,8 +139,8 @@ export const MarketPlayersBoard = ({
             }
           }}
         >
-          <div className='market-players-board-tab-btn-inner'>
-            <span className='outline-black'>Defense</span>
+          <div className="market-players-board-tab-btn-inner">
+            <span className="outline-black">Defense</span>
           </div>
         </div>
         <div
@@ -155,17 +153,17 @@ export const MarketPlayersBoard = ({
             }
           }}
         >
-          <div className='market-players-board-tab-btn-inner'>
-            <span className='outline-black'>Goalies</span>
+          <div className="market-players-board-tab-btn-inner">
+            <span className="outline-black">Goalies</span>
           </div>
         </div>
       </div>
-      <div className='market-players-board-inner'>
-        <h3 className='color-primary market-players-board-title'>
+      <div className="market-players-board-inner">
+        <h3 className="color-primary market-players-board-title">
           {currentView.title}
         </h3>
         <div
-          className='market-players-board-players-wrap'
+          className="market-players-board-players-wrap"
           style={
             currentView.players.length > 1
               ? {
