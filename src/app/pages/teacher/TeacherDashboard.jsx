@@ -31,6 +31,9 @@ class TeacherDashboard extends React.Component {
   }
 
   getStudentList = () => {
+    if (!navigator.cookieEnabled) {
+      return;
+    }
     let id = null;
     if (sessionStorage.getItem(TEACHER_ID_STORAGE_KEY)) {
       id = sessionStorage.getItem(TEACHER_ID_STORAGE_KEY);
