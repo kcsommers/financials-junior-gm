@@ -30,10 +30,41 @@ export const Indicator = ({
   rotate,
   color = '#00788a',
   borderColor = '#4b4b4b',
+  isComericaBtn = false,
 }) => {
   const validAmount = Math.max(amount, 0);
 
-  return (
+  const comericaBtn = (
+    <div
+      style={{
+        width: '75px',
+        height: '75px',
+        borderRadius: '100%',
+        border: '5px solid #002f6d',
+        display: 'inline-flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '2px',
+      }}
+    >
+      <div
+        style={{
+          width: '100%',
+          height: '100%',
+          borderRadius: '100%',
+          backgroundColor: '#002f6d',
+          display: 'inline-flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          color: '#fff',
+        }}
+      >
+        {getDollarString(validAmount, true)}
+      </div>
+    </div>
+  );
+
+  return !isComericaBtn ? (
     <div
       className={`amount-indicator-wrap${
         direction ? ` amount-indicator-${direction}` : ''
@@ -47,11 +78,11 @@ export const Indicator = ({
     >
       {direction && (
         <div
-          className='amount-indicator-pointer'
+          className="amount-indicator-pointer"
           style={{ backgroundColor: borderColor }}
         ></div>
       )}
-      <div className='amount-indicator' style={{ borderColor }}>
+      <div className="amount-indicator" style={{ borderColor }}>
         <p
           className={`amount-indicator-amount color-primary${
             isMoney ? ' amount-indicator-amount-money' : ''
@@ -70,5 +101,7 @@ export const Indicator = ({
         </p>
       </div>
     </div>
+  ) : (
+    comericaBtn
   );
 };
