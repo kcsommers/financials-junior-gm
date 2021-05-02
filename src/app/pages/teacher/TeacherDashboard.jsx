@@ -3,7 +3,8 @@ import { setLoginState } from '@redux/actions';
 import { connect } from 'react-redux';
 import curriculumGuid from '../../../assets/pdf/curriculum_guide.pdf';
 import teacherTutorial from '../../../assets/pdf/teacher_tutorial.pdf';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
 import '@css/pages/TeacherDashboard.css';
 import * as api from '../../api-helper';
@@ -159,6 +160,20 @@ class TeacherDashboard extends React.Component {
       >
         <div className="crud-modal-wrapper__background"></div>
         <div className="crud-modal-wrapper__modal">
+          <FontAwesomeIcon
+            icon={faTimes}
+            color="#fff"
+            onClick={() => {
+              this.setState({ showCSVForm: false });
+            }}
+            style={{
+              cursor: 'pointer',
+              position: 'absolute',
+              right: '1rem',
+              top: '1rem',
+              color: '#000',
+            }}
+          />
           <h3 className="crud-modal-wrapper__title">Add Student in Bulk</h3>
           <div>
             <form className="crud-modal-form">
@@ -175,7 +190,16 @@ class TeacherDashboard extends React.Component {
               </div>
               <div
                 className="crud-button crud-button--positive"
-                style={{ display: 'inline-block' }}
+                style={{ display: 'inline-block', marginRight: '0.5rem' }}
+                onClick={() => {
+                  this.setState({ showCSVForm: false });
+                }}
+              >
+                Cancel
+              </div>
+              <div
+                className="crud-button"
+                style={{ display: 'inline-block', backgroundColor: '#00788A' }}
                 onClick={this.addStudentInBulk}
               >
                 Upload
@@ -389,8 +413,6 @@ class TeacherDashboard extends React.Component {
         {this.renderStudentBulkAdd()}
 
         {this.renderTable()}
-        {/* 
-                } */}
       </div>
     );
   }

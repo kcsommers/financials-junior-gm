@@ -14,7 +14,7 @@ div.admin-page-header > a {
 }
 
 div.admin-page-body-container {
-  padding: 3rem;
+  padding: 2rem 3rem 3rem 3rem;
   background-color: rgba(238, 238, 238, 0.5);
   flex: 1;
   min-height: calc(100% - 125px);
