@@ -10,11 +10,9 @@ export const ConfirmOverlay = ({
   cancel,
   confirm,
   isDisabled,
-  position,
-  top
 }) => {
   return (
-    <OverlayBoard  position={position} top={top}>
+    <OverlayBoard>
       <div
         style={{
           width: '100%',
