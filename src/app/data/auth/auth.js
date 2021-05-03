@@ -14,9 +14,6 @@ export const UserRoles = {
 };
 
 export const getIsLoggedIn = () => {
-  if (!navigator.cookieEnabled) {
-    return false;
-  }
   return !!(
     sessionStorage.getItem(LOGIN_STORAGE_KEY) === 'true' ||
     sessionStorage.getItem(LOGIN_STORAGE_KEY) === true
@@ -24,16 +21,10 @@ export const getIsLoggedIn = () => {
 };
 
 export const getUserRole = () => {
-  if (!navigator.cookieEnabled) {
-    return '';
-  }
   return sessionStorage.getItem(USER_ROLE_STORAGE_KEY);
 };
 
 export const clearSessionStorage = () => {
-  if (!navigator.cookieEnabled) {
-    return;
-  }
   sessionStorage.setItem(LOGIN_STORAGE_KEY, false);
   sessionStorage.setItem(USER_ROLE_STORAGE_KEY, '');
   sessionStorage.setItem(STUDENT_ID_STORAGE_KEY, '');

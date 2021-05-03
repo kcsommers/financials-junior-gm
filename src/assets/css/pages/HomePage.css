@@ -66,11 +66,4 @@ div.hockey-sticks-row-2 {
 
 div.stick-btn-container:first-child {
   text-align: right;
-  right: 30px;
-  position: relative;
-}
-
-div.stick-btn-container:last-child {
-  left: 30px;
-  position: relative;
 }
