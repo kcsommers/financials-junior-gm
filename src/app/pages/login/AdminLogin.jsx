@@ -20,9 +20,6 @@ export const AdminLogin = ({ history, isLoggedIn }) => {
   const [loginError, setLoginError] = useState('');
 
   const onLoginSuccess = (admin) => {
-    if (!navigator.cookieEnabled) {
-      return;
-    }
     setIsLoggingIn(false);
     sessionStorage.setItem(LOGIN_STORAGE_KEY, true);
     sessionStorage.setItem(USER_ROLE_STORAGE_KEY, UserRoles.ADMIN);
@@ -81,9 +78,9 @@ export const AdminLogin = ({ history, isLoggedIn }) => {
   };
 
   return (
-    <div className="login-page-container">
+    <div className='login-page-container'>
       <div>
-        <img src={financialsLogo} alt="Financials Junior GM Program logo" />
+        <img src={financialsLogo} alt='Financials Junior GM Program logo' />
       </div>
 
       <LoginForm
