@@ -26,6 +26,7 @@ import {
   setObjectiveComplete,
   setSeasonActive,
 } from '@redux/actions';
+import comericaLogo from '@images/comerica-logo.svg';
 import { updateStudentById } from '../../api-helper';
 import { Objectives } from '@data/objectives/objectives';
 import { faqs } from '@data/faqs/faqs';
@@ -255,20 +256,36 @@ export const BudgetPage = ({ history }) => {
       <PageBoard height="100%">
         <div className="budget-page-board-inner">
           {+student.rollOverBudget > 0 && (
-            <div className="rollover-budget-wrap">
+            <div
+              style={{ textAlign: 'center' }}
+              className="rollover-budget-wrap"
+            >
               <span
                 className="rollover-budget-indicator-wrap"
                 onClick={openRolloverBudgetOverlay}
               >
+                <img
+                  style={{
+                    width: '150px',
+                    margin: '0.25rem 0',
+                  }}
+                  src={comericaLogo}
+                  alt="Comerica Savings Button"
+                />
                 <Indicator
                   amount={+student.rollOverBudget}
                   isMoney={true}
                   borderColor="#00788a"
+                  isComericaBtn={true}
                 />
               </span>
-
-              <p className="color-primary">
-                Click the circle above to use last season's savings
+              <p
+                style={{
+                  color: '#002f6d',
+                  fontSize: '0.85rem',
+                }}
+              >
+                Click the Comerica Savings Button to use last season's savings
               </p>
             </div>
           )}
