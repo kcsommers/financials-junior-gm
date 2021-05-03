@@ -131,16 +131,6 @@ export function deleteStudent(id) {
   return axios.delete(`${getBaseUrl()}/api/v1/student/${id}`);
 }
 
-//Delete Students By Teacher /api/v1/admin/students/:teacherId
-export function deleteStudentsByTeacher(id) {
-  return axios.delete(`${getBaseUrl()}/api/v1/admin/students/${id}`);
-}
-
-//Delete Teacher By Id /api/v1/admin/students/:teacherId
-export function deleteTeacherById(id) {
-  return axios.delete(`${getBaseUrl()}/api/v1/admin/teacher/${id}`);
-}
-
 //Logout
 export function logout() {
   Cookie.remove('token'); //

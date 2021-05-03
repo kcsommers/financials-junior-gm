@@ -1,4 +1,4 @@
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import financialsLogo from '@images/financials-logo-big.svg';
 import { Button } from '@components';
 
@@ -58,6 +58,16 @@ export const Dashboard = () => {
             }}
           />
         </div>
+        <Link
+          style={{
+            fontSize: '1.1rem',
+            marginTop: '2rem',
+            color: '#00788A',
+          }}
+          to="/admin/login"
+        >
+          Admin Login
+        </Link>
       </div>
     </div>
   );

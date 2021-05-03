@@ -14,7 +14,7 @@ div.admin-page-header > a {
 }
 
 div.admin-page-body-container {
-  padding: 3rem;
+  padding: 2rem 3rem 3rem 3rem;
   background-color: rgba(238, 238, 238, 0.5);
   flex: 1;
   min-height: calc(100% - 125px);
@@ -81,22 +81,6 @@ div.admin-teacher-detail-wrap {
   margin-bottom: 1rem;
   font-size: 1rem;
 }
-
-div.admin-teacher-details-inner {
-  position: relative;
-}
-
-div.admin-teacher-detail-action {
-  position: absolute;
-  bottom: 32px;
-  right: 32px;
-  display: flex;
- flex-direction: column;
-}
-div.admin-teacher-detail-action-item {
-  margin:12px;
-}
-
 
 span.admin-teacher-detail-label {
   display: inline-block;
