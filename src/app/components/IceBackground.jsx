@@ -6,7 +6,7 @@ export const IceBackground = () => {
   const location = useLocation().pathname;
   return (
     <div
-      className="ice-background"
+      className='ice-background'
       style={{
         background: `url(${ice})`,
         backgroundPosition:
@@ -26,12 +26,11 @@ export const IceBackground = () => {
       {location !== '/dashboard' && (
         <img
           src={financialsLogo}
-          alt="Financials Junior GM Program logo"
+          alt='Financials Junior GM Program logo'
           style={{
             position: 'relative',
             top: location === '/home' ? '200px' : '125px',
             display: 'inline-block',
-            transform: location === '/home' ? `scale(${1.6})` : 'scale(1)',
           }}
         />
       )}

@@ -20,9 +20,6 @@ export const TeacherLogin = ({ history, isLoggedIn }) => {
   const [loginError, setLoginError] = useState('');
 
   const onLoginSuccess = (teacher) => {
-    if (!navigator.cookieEnabled) {
-      return;
-    }
     setIsLoggingIn(false);
     sessionStorage.setItem(LOGIN_STORAGE_KEY, true);
     sessionStorage.setItem(USER_ROLE_STORAGE_KEY, UserRoles.TEACHER);
