@@ -8,6 +8,8 @@ import { logout } from './../../api-helper';
 import { clearSessionStorage } from '@data/auth/auth';
 import { setLoginState } from '@redux/actions';
 import { formatNumber } from '@utils';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import '@css/pages/AdminPage.css';
 
 export const AdminPage = ({ history }) => {
@@ -53,6 +55,30 @@ export const AdminPage = ({ history }) => {
         </button>
       </div>
       <div className="admin-page-body-container">
+        <div
+          style={{
+            display: 'inline-flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            fontSize: '0.95rem',
+            color: '#F3901D',
+            marginBottom: '1rem',
+            cursor: 'pointer',
+          }}
+          onClick={() => {
+            history.goBack();
+          }}
+        >
+          <FontAwesomeIcon icon={faArrowLeft} />
+          <span
+            style={{
+              display: 'inline-block',
+              marginLeft: '0.5rem',
+            }}
+          >
+            Go Back
+          </span>
+        </div>
         <Switch>
           <Route
             path="/admin/teachers"

@@ -15,6 +15,7 @@ import {
   startingLineupFull,
 } from '@data/players/players-utils';
 import { playerProps } from '@data/players/players';
+import { useMemo } from 'react';
 
 export const StudentPortal = ({
   screen,
@@ -25,7 +26,17 @@ export const StudentPortal = ({
 }) => {
   const dispatch = useDispatch();
 
-  const student = useSelector((state) => state.studentState.student);
+  const { student, startTime } = useSelector((state) => state.studentState);
+
+  useEffect(() => {
+    const beforeUnloadLister = window.addEventListener('beforeunload', (e) => {
+      console.log('EVENT::: ', e);
+      e.preventDefault();
+      return 'WHAIt';
+    });
+
+    return () => window.removeEventListener('beforeunload', beforeUnloadLister);
+  }, []);
 
   const [shouldRedirectToDashboard, setShouldRedirectToDashboard] = useState(
     false
@@ -102,7 +113,7 @@ export const StudentPortal = ({
   }, [isLoggedIn, initializeStudent, student, userRole, pageName, history]);
 
   if (shouldRedirectToDashboard) {
-    return <Redirect to='dashboard' />;
+    return <Redirect to="dashboard" />;
   }
 
   return student ? (

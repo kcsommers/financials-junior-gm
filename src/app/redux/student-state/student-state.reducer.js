@@ -2,11 +2,13 @@ import {
   SET_STUDENT,
   SET_SAVINGS,
   UPDATE_STUDENT,
+  SET_START_TIME,
 } from './student-state.actions';
 import { cloneDeep } from 'lodash';
 
 const initialState = {
   student: null,
+  startTime: null,
 };
 
 const studentStateReducer = (state = initialState, action) => {
@@ -35,6 +37,12 @@ const studentStateReducer = (state = initialState, action) => {
       const amount = action.payload;
       const clonedState = cloneDeep(state);
       clonedState.student.savingsBudget = amount;
+
+      return clonedState;
+    }
+    case SET_START_TIME: {
+      const clonedState = cloneDeep(state);
+      clonedState.startTime = Date.now();
 
       return clonedState;
     }
