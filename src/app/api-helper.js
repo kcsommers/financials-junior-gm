@@ -175,3 +175,11 @@ export const setInitialTeam = (student) => {
 
   return updateStudentById(student._id, { players: student.players });
 };
+
+// get time spent
+export const getTimeSpent = (teacherId) => {
+  const teacherQuery = teacherId ? `?user=${teacherId}` : '';
+  return axios.get(
+    `${getBaseUrl()}/api/v1/admin/students/timespent${teacherQuery}`
+  );
+};
