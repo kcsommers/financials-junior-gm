@@ -42,7 +42,6 @@ export const TeacherRegsitrationPage = ({ history }) => {
 
     registerTeacher(params)
       .then((res) => {
-        console.log('RES:::: ', res);
         e.target.reset();
         setIsRegistering(false);
         setIsRegistered(true);

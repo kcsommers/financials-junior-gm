@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { SharkieComponent } from './Sharkie';
 import backBtn from '@images/back-btn.svg';
 import backBtnRvrsd from '@images/back-btn-reversed.svg';
@@ -198,30 +198,30 @@ export const Tutorial = ({ slides, onComplete }) => {
     <AnimatePresence>
       <motion.div
         key={currentSlide.id}
-        className='btns-wrap'
+        className="btns-wrap"
         variants={buttonVariants}
-        initial='enter'
+        initial="enter"
         animate={
           state.inPreTransition || state.inTransition
             ? 'inTransition'
             : 'center'
         }
-        exit='exit'
+        exit="exit"
         transition={{
           duration: 0.5,
         }}
       >
-        <button className='slide-btn' onClick={onCancelClick}>
-          <img className='action-btn' src={backBtn} alt='Back' />
+        <button className="slide-btn" onClick={onCancelClick}>
+          <img className="action-btn" src={backBtn} alt="Back" />
           <span style={{ color: '#121210' }}>
             {currentSlide.canCancel ? 'Cancel' : 'Back'}
           </span>
         </button>
         <button
-          className='slide-btn'
+          className="slide-btn"
           onClick={onButtonClick.bind(this, state.slideIndex + 1)}
         >
-          <img className='action-btn' src={backBtnRvrsd} alt='Next!' />
+          <img className="action-btn" src={backBtnRvrsd} alt="Next!" />
           <span style={{ color: '#121210' }}>
             {currentSlide.canCancel ? 'Yes' : 'Next'}
           </span>
@@ -238,7 +238,7 @@ export const Tutorial = ({ slides, onComplete }) => {
       animate={state.isComplete ? 'hidden' : 'visible'}
       variants={containerVariants}
     >
-      <div className='tutorial-container-inner'>
+      <div className="tutorial-container-inner">
         <motion.div
           className={`slide-wrap${
             currentSlide.small ? ' slide-wrap-small' : ''
