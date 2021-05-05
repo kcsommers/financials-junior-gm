@@ -260,7 +260,7 @@ class TeacherDashboard extends React.Component {
               style={{ marginLeft: '10px' }}
               className="btn-primary btn-small"
             >
-              Getting Started
+              Getting Started Tutorial
             </a>
             <a
               href="https://youtu.be/8uNFa2oQ6hk"
