@@ -3,7 +3,6 @@ import { OverlayBoard, BudgetSlider, Button } from '@components';
 import { updateStudentById } from './../../api-helper';
 import { batch, useDispatch } from 'react-redux';
 import { toggleOverlay, setStudent } from '@redux/actions';
-import comericaLogo from '@images/comerica-logo.svg';
 
 export const RolloverBudgetOverlay = ({ student }) => {
   const dispatch = useDispatch();
@@ -40,46 +39,17 @@ export const RolloverBudgetOverlay = ({ student }) => {
           display: 'flex',
           alignItems: 'center',
           flexDirection: 'column',
-          padding: '2rem 0',
+          padding: '3rem 0 2rem 0',
         }}
       >
-        <div
-          className="rollover-budget-overlay-header-wrap"
-          style={{
-            textAlign: 'center',
-            fontSize: '0.95rem',
-            lineHeight: '1.4rem',
-          }}
-        >
-          <p
-            style={{
-              color: '#002f6d',
-            }}
-          >
-            Presented by
-          </p>
-          <img
-            style={{
-              width: '300px',
-              margin: '0.25rem 0 1rem 0',
-            }}
-            src={comericaLogo}
-            alt="Comerica Savings Button"
-          />
-          <p
-            style={{
-              color: '#002f6d',
-            }}
-          >
+        <div className='rollover-budget-overlay-header-wrap'>
+          <p>
             Move the yellow puck to the left to choose how much of your season's
             savings you want to add to you total budget. Then press the add to
             budget button. This money will be added to your total budget.
           </p>
         </div>
-        <div
-          style={{ marginTop: '-2rem' }}
-          className="rollover-budget-slider-wrap"
-        >
+        <div className='rollover-budget-slider-wrap'>
           <BudgetSlider
             budget={{
               total: +student.rollOverBudget,
@@ -88,12 +58,12 @@ export const RolloverBudgetOverlay = ({ student }) => {
             }}
             setValue={setRollOverToAdd}
             student={student}
-            spendingLabel="Total Budget"
+            spendingLabel='Total Budget'
             totalDisplay={+student.totalBudget + +rollOverToAdd}
           />
         </div>
         <div>
-          <Button onClick={addToSavings} text="Add to Total Budget" />
+          <Button onClick={addToSavings} text='Add to Total Budget' />
         </div>
       </div>
     </OverlayBoard>
