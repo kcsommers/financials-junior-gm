@@ -1,10 +1,11 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, useRef, useMemo } from 'react';
 import { useSelector, useDispatch, batch } from 'react-redux';
 import {
   setStudent,
   initializeSeason,
   setInitialPlayersState,
   initializeObjectives,
+  setStartTime,
 } from '@redux/actions';
 import { UserRoles } from '@data/auth/auth';
 import { Redirect } from 'react-router-dom';
@@ -15,6 +16,7 @@ import {
   startingLineupFull,
 } from '@data/players/players-utils';
 import { playerProps } from '@data/players/players';
+import { updateStudentTimeSpent } from '../../data/student/student-utils';
 
 export const StudentPortal = ({
   screen,
@@ -27,26 +29,39 @@ export const StudentPortal = ({
 
   const { student, startTime } = useSelector((state) => state.studentState);
 
+  const [shouldRedirectToDashboard, setShouldRedirectToDashboard] = useState(
+    false
+  );
+
+  const isLoggedInRef = useRef(false);
   useEffect(() => {
+    if (
+      isLoggedInRef.current === isLoggedIn ||
+      !isLoggedIn ||
+      userRole !== UserRoles.STUDENT
+    ) {
+      return;
+    }
+
+    isLoggedInRef.current = isLoggedIn;
+    dispatch(setStartTime());
     const beforeUnloadListener = window.addEventListener(
       'beforeunload',
       (e) => {
-        console.log('EVENT::: ', e);
         e.preventDefault();
         e.returnValue = false;
+        updateStudentTimeSpent(student, startTime)
+          .then((res) => {
+            console.log('SUCESS:: ', res);
+          })
+          .catch((err) => console.error(err));
         return false;
       }
     );
 
-    console.log('STUDENT:::: ', student);
-
     return () =>
       window.removeEventListener('beforeunload', beforeUnloadListener);
-  }, []);
-
-  const [shouldRedirectToDashboard, setShouldRedirectToDashboard] = useState(
-    false
-  );
+  }, [isLoggedIn, userRole, dispatch, student]);
 
   const initializeStudent = useCallback(
     (student) => {

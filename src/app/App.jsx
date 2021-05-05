@@ -1,12 +1,17 @@
 import { AppRouter } from './AppRouter';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCookie, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
+import { UserRoles } from '@data/auth/auth';
+import { setStartTime } from '@redux/actions';
 import '@css/App.css';
+import { updateStudentTimeSpent } from './data/student/student-utils';
 
 const App = () => {
+  const dispatch = useDispatch();
   const { isLoggedIn, userRole } = useSelector((state) => state.loginState);
+  const { student } = useSelector((state) => state.studentState);
   const [showCookieSnackbar, setShowCookieSnackbar] = useState(
     !navigator.cookieEnabled
   );

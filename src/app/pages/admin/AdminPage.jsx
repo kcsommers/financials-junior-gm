@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { getAllTeachers, getAllStudents } from '../../api-helper';
+import { getAllTeachers, getAllStudents, getTimeSpent } from '../../api-helper';
 import { LoadingSpinner } from '@components';
 import { Link, Route, Switch } from 'react-router-dom';
 import { TeacherBrowser } from './TeacherBrowser';
@@ -40,6 +40,12 @@ export const AdminPage = ({ history }) => {
     getAllStudents()
       .then((res) => {
         setAllStudents(res.data);
+      })
+      .catch((err) => console.error(err));
+
+    getTimeSpent()
+      .then((res) => {
+        console.log('TIME SPENT:::: ', res);
       })
       .catch((err) => console.error(err));
   }, []);
