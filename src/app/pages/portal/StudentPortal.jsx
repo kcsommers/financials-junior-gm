@@ -51,9 +51,7 @@ export const StudentPortal = ({
         e.preventDefault();
         e.returnValue = false;
         updateStudentTimeSpent(student, startTime)
-          .then((res) => {
-            console.log('SUCESS:: ', res);
-          })
+          .then(() => {})
           .catch((err) => console.error(err));
         return false;
       }

@@ -6,6 +6,7 @@ import {
   faChevronRight,
   faChevronLeft,
   faDownload,
+  faClock,
 } from '@fortawesome/free-solid-svg-icons';
 import { ConfirmOverlay } from '../../components/overlays/ConfirmOverlay';
 import { Button } from '../../components/Button';
@@ -13,7 +14,10 @@ import {
   deleteStudentsByTeacher,
   deleteTeacherById,
   getAllTeachers,
+  getTimeSpent,
 } from './../../api-helper';
+import { cloneDeep } from 'lodash';
+import * as moment from 'moment';
 
 const teacherDetails = [
   ['userName', 'Username'],
@@ -58,6 +62,8 @@ export const TeacherBrowser = ({ allTeachers, onRowAction }) => {
   const [detailsStates, setDetailsStates] = useState({});
 
   const [isLoading, setIsLoading] = useState(!allTeachers);
+
+  const [timeSpentMap, setTimeSpentMap] = useState({});
 
   const [initialized, setInitialized] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
@@ -322,7 +328,6 @@ export const TeacherBrowser = ({ allTeachers, onRowAction }) => {
 
   const showAlert = (event, type, details) => {
     event.stopPropagation();
-    console.log('hit');
     setSelectedDetails({ ...details, type });
     setShowConfirm(true);
   };
@@ -338,7 +343,20 @@ export const TeacherBrowser = ({ allTeachers, onRowAction }) => {
     onRowAction();
   };
 
-  console.log(showConfirm);
+  const getClassTimeSpent = (teacher) => {
+    getTimeSpent(teacher._id)
+      .then((res) => {
+        const clonedtimeSpentMap = cloneDeep(timeSpentMap);
+        clonedtimeSpentMap[teacher.name] = moment
+          .duration(res.totalTimeSpent)
+          .asHours()
+          .toFixed(2);
+
+        setTimeSpentMap(clonedtimeSpentMap);
+      })
+      .catch((err) => console.error(err));
+  };
+
   return !isLoading ? (
     <div className="teacher-browser-wrap">
       {showConfirm === true && (
@@ -513,6 +531,30 @@ export const TeacherBrowser = ({ allTeachers, onRowAction }) => {
                 className="admin-teacher-details-inner"
                 ref={(el) => (detailsRefs.current[i] = el)}
               >
+                <div className="get-time-spent-wrap">
+                  <button
+                    className={`btn-primary btn-small`}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      getClassTimeSpent(t);
+                    }}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      marginRight: '1rem',
+                    }}
+                  >
+                    <FontAwesomeIcon
+                      icon={faClock}
+                      color="#fff"
+                      style={{ marginRight: '0.5rem' }}
+                    />
+                    Get Time Spent
+                  </button>
+                  {timeSpentMap[t.name] && (
+                    <span>{timeSpentMap[t.name]} Hours</span>
+                  )}
+                </div>
                 {teacherDetails.map((d) => (
                   <div key={d[0]} className="admin-teacher-detail-wrap">
                     <span className="admin-teacher-detail-label">{d[1]}</span>
