@@ -32,7 +32,7 @@ div.admin-total-wrap {
   justify-content: space-between;
 }
 
-div.admin-total-wrap:first-child {
+div.admin-total-wrap {
   margin-bottom: 2rem;
 }
 
@@ -80,6 +80,16 @@ div.admin-teacher-detail-wrap {
   align-items: center;
   margin-bottom: 1rem;
   font-size: 1rem;
+}
+
+div.get-time-spent-wrap {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+div.get-time-spent-wrap > span {
+  color: #002f6c;
 }
 
 div.admin-teacher-details-inner {
@@ -236,20 +246,4 @@ div.time-spent-wrap > div {
   font-size: 1.5rem;
   color: #00788a;
   margin: 0.5rem 0;
-}
-
-div.teacher-search-wrap {
-  margin-bottom: 1rem;
-}
-
-div.teacher-search-wrap > input {
-  font-size: 1.1rem;
-  width: 350px;
-  padding: 0.25rem 0.5rem;
-}
-
-div.teacher-name-wrap {
-  color: #002f6c;
-  font-size: 1.2rem;
-  margin: 1rem 0 0.5rem 0;
 }
