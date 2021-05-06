@@ -28,7 +28,6 @@ export const Overlay = () => {
     },
   };
 
-  console.log('CONFIGL ', overlayConfig.canClose);
   return (
     <AnimatePresence>
       {overlayConfig.isOpen && (
