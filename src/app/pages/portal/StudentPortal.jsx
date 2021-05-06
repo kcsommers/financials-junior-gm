@@ -1,10 +1,11 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, useRef, useMemo } from 'react';
 import { useSelector, useDispatch, batch } from 'react-redux';
 import {
   setStudent,
   initializeSeason,
   setInitialPlayersState,
   initializeObjectives,
+  setStartTime,
 } from '@redux/actions';
 import { UserRoles } from '@data/auth/auth';
 import { Redirect } from 'react-router-dom';
@@ -15,7 +16,7 @@ import {
   startingLineupFull,
 } from '@data/players/players-utils';
 import { playerProps } from '@data/players/players';
-import { useMemo } from 'react';
+import { updateStudentTimeSpent } from '../../data/student/student-utils';
 
 export const StudentPortal = ({
   screen,
@@ -28,19 +29,37 @@ export const StudentPortal = ({
 
   const { student, startTime } = useSelector((state) => state.studentState);
 
-  useEffect(() => {
-    const beforeUnloadLister = window.addEventListener('beforeunload', (e) => {
-      console.log('EVENT::: ', e);
-      e.preventDefault();
-      return 'WHAIt';
-    });
-
-    return () => window.removeEventListener('beforeunload', beforeUnloadLister);
-  }, []);
-
   const [shouldRedirectToDashboard, setShouldRedirectToDashboard] = useState(
     false
   );
+
+  const isLoggedInRef = useRef(false);
+  useEffect(() => {
+    if (
+      isLoggedInRef.current === isLoggedIn ||
+      !isLoggedIn ||
+      userRole !== UserRoles.STUDENT
+    ) {
+      return;
+    }
+
+    isLoggedInRef.current = isLoggedIn;
+    dispatch(setStartTime());
+    const beforeUnloadListener = window.addEventListener(
+      'beforeunload',
+      (e) => {
+        e.preventDefault();
+        e.returnValue = false;
+        updateStudentTimeSpent(student, startTime)
+          .then(() => {})
+          .catch((err) => console.error(err));
+        return false;
+      }
+    );
+
+    return () =>
+      window.removeEventListener('beforeunload', beforeUnloadListener);
+  }, [isLoggedIn, userRole, dispatch, student]);
 
   const initializeStudent = useCallback(
     (student) => {

@@ -131,6 +131,16 @@ export function deleteStudent(id) {
   return axios.delete(`${getBaseUrl()}/api/v1/student/${id}`);
 }
 
+//Delete Students By Teacher /api/v1/admin/students/:teacherId
+export function deleteStudentsByTeacher(id) {
+  return axios.delete(`${getBaseUrl()}/api/v1/admin/students/${id}`);
+}
+
+//Delete Teacher By Id /api/v1/admin/students/:teacherId
+export function deleteTeacherById(id) {
+  return axios.delete(`${getBaseUrl()}/api/v1/admin/teacher/${id}`);
+}
+
 //Logout
 export function logout() {
   Cookie.remove('token'); //
@@ -174,4 +184,12 @@ export const setInitialTeam = (student) => {
   });
 
   return updateStudentById(student._id, { players: student.players });
+};
+
+// get time spent
+export const getTimeSpent = (teacherId) => {
+  const teacherQuery = teacherId ? `?user=${teacherId}` : '';
+  return axios.get(
+    `${getBaseUrl()}/api/v1/admin/students/timespent${teacherQuery}`
+  );
 };

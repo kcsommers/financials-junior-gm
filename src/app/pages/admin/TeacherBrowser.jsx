@@ -6,13 +6,25 @@ import {
   faChevronRight,
   faChevronLeft,
   faDownload,
+  faClock,
 } from '@fortawesome/free-solid-svg-icons';
+import { ConfirmOverlay } from '../../components/overlays/ConfirmOverlay';
+import { Button } from '../../components/Button';
+import {
+  deleteStudentsByTeacher,
+  deleteTeacherById,
+  getAllTeachers,
+  getTimeSpent,
+} from './../../api-helper';
+import { cloneDeep } from 'lodash';
+import * as moment from 'moment';
 
 const teacherDetails = [
   ['userName', 'Username'],
   ['email', 'Email Address'],
   ['gradeTaught', 'Grade Taught'],
   ['classSize', 'Class Size'],
+  ['studentCount', 'No. Of Students'],
   ['school', 'School'],
   ['schoolDistrict', 'School District'],
   ['schoolAddress', 'School Address'],
@@ -42,7 +54,7 @@ const searchByOptions = [
 
 const TEACHERS_PER_PAGE = 50;
 
-export const TeacherBrowser = ({ allTeachers }) => {
+export const TeacherBrowser = ({ allTeachers, onRowAction }) => {
   const detailsRefs = useRef([]);
 
   const downloadTag = useRef(document.createElement('a'));
@@ -51,7 +63,11 @@ export const TeacherBrowser = ({ allTeachers }) => {
 
   const [isLoading, setIsLoading] = useState(!allTeachers);
 
+  const [timeSpentMap, setTimeSpentMap] = useState({});
+
   const [initialized, setInitialized] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
+  const [selectedDetails, setSelectedDetails] = useState(null);
 
   const [currentPage, setCurrentPage] = useState('1');
   const [skipDebounce, setSkipDebounce] = useState(false);
@@ -275,6 +291,7 @@ export const TeacherBrowser = ({ allTeachers }) => {
     debouncedCurrentPage,
     getDisplayedTeachers,
     filteredTeachers,
+    allTeachers,
   ]);
 
   // initialization
@@ -309,8 +326,57 @@ export const TeacherBrowser = ({ allTeachers }) => {
     detailsRefs.current = detailsRefs.current.slice(0, allTeachers.length);
   }, [allTeachers]);
 
+  const showAlert = (event, type, details) => {
+    event.stopPropagation();
+    setSelectedDetails({ ...details, type });
+    setShowConfirm(true);
+  };
+
+  const deleteSelectedItem = async () => {
+    setIsLoading(true);
+    selectedDetails.type === 'teacher'
+      ? await deleteTeacherById(selectedDetails._id)
+      : await deleteStudentsByTeacher(selectedDetails._id);
+    setShowConfirm(false);
+    const teachers = await getAllTeachers();
+    setDisplayedTeachers(teachers.data);
+    onRowAction();
+  };
+
+  const getClassTimeSpent = (teacher) => {
+    getTimeSpent(teacher._id)
+      .then((res) => {
+        const clonedtimeSpentMap = cloneDeep(timeSpentMap);
+        clonedtimeSpentMap[teacher.name] = moment
+          .duration(res.totalTimeSpent)
+          .asHours()
+          .toFixed(2);
+
+        setTimeSpentMap(clonedtimeSpentMap);
+      })
+      .catch((err) => console.error(err));
+  };
+
   return !isLoading ? (
     <div className="teacher-browser-wrap">
+      {showConfirm === true && (
+        <ConfirmOverlay
+          message={`Are you sure you want to remove ${
+            selectedDetails.type === 'teacher'
+              ? selectedDetails.name
+              : `${selectedDetails.name}'s Class`
+          } ?`}
+          subMessage={
+            selectedDetails.type === 'teacher'
+              ? 'Removing a teacher will remove the entire class as well.'
+              : ''
+          }
+          confirm={deleteSelectedItem}
+          cancel={() => setShowConfirm(false)}
+          position="absolute"
+          top="10%"
+        />
+      )}
       <div className="teacher-browser-header-wrap">
         <h3>Teachers</h3>
         <button
@@ -418,6 +484,7 @@ export const TeacherBrowser = ({ allTeachers }) => {
           <span className="teacher-table-arrow-wrap"></span>
           <div>Name</div>
           <div className="grade-taught-column">Grade Taught</div>
+          <div>No. Of Students</div>
           <div>School</div>
           <div>School District</div>
         </div>
@@ -444,6 +511,7 @@ export const TeacherBrowser = ({ allTeachers }) => {
               </span>
               <div>{t.name || '--'}</div>
               <div className="grade-taught-column">{t.gradeTaught || '--'}</div>
+              <div>{t.studentCount || '--'}</div>
               <div>{t.school || '--'}</div>
               <div>{t.schoolDistrict || '--'}</div>
             </div>
@@ -463,6 +531,30 @@ export const TeacherBrowser = ({ allTeachers }) => {
                 className="admin-teacher-details-inner"
                 ref={(el) => (detailsRefs.current[i] = el)}
               >
+                <div className="get-time-spent-wrap">
+                  <button
+                    className={`btn-primary btn-small`}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      getClassTimeSpent(t);
+                    }}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      marginRight: '1rem',
+                    }}
+                  >
+                    <FontAwesomeIcon
+                      icon={faClock}
+                      color="#fff"
+                      style={{ marginRight: '0.5rem' }}
+                    />
+                    Get Time Spent
+                  </button>
+                  {timeSpentMap[t.name] && (
+                    <span>{timeSpentMap[t.name]} Hours</span>
+                  )}
+                </div>
                 {teacherDetails.map((d) => (
                   <div key={d[0]} className="admin-teacher-detail-wrap">
                     <span className="admin-teacher-detail-label">{d[1]}</span>
@@ -471,6 +563,28 @@ export const TeacherBrowser = ({ allTeachers }) => {
                     </span>
                   </div>
                 ))}
+                <div className="admin-teacher-detail-action">
+                  <div className="admin-teacher-detail-action-item">
+                    <Button
+                      background="#dc3545"
+                      text="Delete Teacher"
+                      size="small"
+                      onClick={(event) => {
+                        showAlert(event, 'teacher', t);
+                      }}
+                    />
+                  </div>
+                  <div className="admin-teacher-detail-action-item">
+                    <Button
+                      background="#dc3545"
+                      text="Delete Class"
+                      size="small"
+                      onClick={(event) => {
+                        showAlert(event, 'class', t);
+                      }}
+                    />
+                  </div>
+                </div>
               </div>
             </div>
           </div>

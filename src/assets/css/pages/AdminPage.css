@@ -14,7 +14,7 @@ div.admin-page-header > a {
 }
 
 div.admin-page-body-container {
-  padding: 2rem 3rem 3rem 3rem;
+  padding: 3rem;
   background-color: rgba(238, 238, 238, 0.5);
   flex: 1;
   min-height: calc(100% - 125px);
@@ -32,7 +32,7 @@ div.admin-total-wrap {
   justify-content: space-between;
 }
 
-div.admin-total-wrap:first-child {
+div.admin-total-wrap {
   margin-bottom: 2rem;
 }
 
@@ -80,6 +80,31 @@ div.admin-teacher-detail-wrap {
   align-items: center;
   margin-bottom: 1rem;
   font-size: 1rem;
+}
+
+div.get-time-spent-wrap {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+div.get-time-spent-wrap > span {
+  color: #002f6c;
+}
+
+div.admin-teacher-details-inner {
+  position: relative;
+}
+
+div.admin-teacher-detail-action {
+  position: absolute;
+  bottom: 32px;
+  right: 32px;
+  display: flex;
+  flex-direction: column;
+}
+div.admin-teacher-detail-action-item {
+  margin: 12px;
 }
 
 span.admin-teacher-detail-label {
@@ -206,4 +231,19 @@ span.teacher-table-arrow-wrap {
 span.teacher-table-arrow {
   display: inline-block;
   transition: transform 0.3s ease;
+}
+
+div.time-spent-container {
+  color: #002f6c;
+  padding: 1rem;
+}
+
+div.time-spent-wrap {
+  margin-top: 2rem;
+}
+
+div.time-spent-wrap > div {
+  font-size: 1.5rem;
+  color: #00788a;
+  margin: 0.5rem 0;
 }

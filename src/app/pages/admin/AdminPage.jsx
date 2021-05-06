@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { getAllTeachers, getAllStudents } from '../../api-helper';
+import { getAllTeachers, getAllStudents, getTimeSpent } from '../../api-helper';
 import { LoadingSpinner } from '@components';
 import { Link, Route, Switch } from 'react-router-dom';
 import { TeacherBrowser } from './TeacherBrowser';
@@ -10,6 +10,7 @@ import { setLoginState } from '@redux/actions';
 import { formatNumber } from '@utils';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import * as moment from 'moment';
 import '@css/pages/AdminPage.css';
 
 export const AdminPage = ({ history }) => {
@@ -18,6 +19,8 @@ export const AdminPage = ({ history }) => {
   const [allTeachers, setAllTeachers] = useState(null);
 
   const [allStudents, setAllStudents] = useState(null);
+
+  const [totalTimeSpent, setTotalTimeSpent] = useState(0);
 
   const doLogout = () => {
     logout()
@@ -40,6 +43,14 @@ export const AdminPage = ({ history }) => {
     getAllStudents()
       .then((res) => {
         setAllStudents(res.data);
+      })
+      .catch((err) => console.error(err));
+
+    getTimeSpent()
+      .then((res) => {
+        setTotalTimeSpent(
+          moment.duration(res.totalTimeSpent).asHours().toFixed(2)
+        );
       })
       .catch((err) => console.error(err));
   }, []);
@@ -119,6 +130,17 @@ export const AdminPage = ({ history }) => {
                       <LoadingSpinner size="small" />
                     )}{' '}
                     Total Students
+                  </div>
+                </div>
+
+                <div className="admin-total-wrap box-shadow">
+                  <div className="admin-total-left">
+                    {totalTimeSpent ? (
+                      <span>{totalTimeSpent} Hours</span>
+                    ) : (
+                      <LoadingSpinner size="small" />
+                    )}{' '}
+                    Total Time Spent
                   </div>
                 </div>
               </div>
