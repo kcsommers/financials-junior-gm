@@ -91,12 +91,11 @@ div.admin-teacher-detail-action {
   bottom: 32px;
   right: 32px;
   display: flex;
- flex-direction: column;
+  flex-direction: column;
 }
 div.admin-teacher-detail-action-item {
-  margin:12px;
+  margin: 12px;
 }
-
 
 span.admin-teacher-detail-label {
   display: inline-block;
@@ -222,4 +221,35 @@ span.teacher-table-arrow-wrap {
 span.teacher-table-arrow {
   display: inline-block;
   transition: transform 0.3s ease;
+}
+
+div.time-spent-container {
+  color: #002f6c;
+  padding: 1rem;
+}
+
+div.time-spent-wrap {
+  margin-top: 2rem;
+}
+
+div.time-spent-wrap > div {
+  font-size: 1.5rem;
+  color: #00788a;
+  margin: 0.5rem 0;
+}
+
+div.teacher-search-wrap {
+  margin-bottom: 1rem;
+}
+
+div.teacher-search-wrap > input {
+  font-size: 1.1rem;
+  width: 350px;
+  padding: 0.25rem 0.5rem;
+}
+
+div.teacher-name-wrap {
+  color: #002f6c;
+  font-size: 1.2rem;
+  margin: 1rem 0 0.5rem 0;
 }

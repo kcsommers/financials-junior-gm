@@ -9,7 +9,11 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { ConfirmOverlay } from '../../components/overlays/ConfirmOverlay';
 import { Button } from '../../components/Button';
-import { deleteStudentsByTeacher, deleteTeacherById,getAllTeachers, getAllStudents } from './../../api-helper';
+import {
+  deleteStudentsByTeacher,
+  deleteTeacherById,
+  getAllTeachers,
+} from './../../api-helper';
 
 const teacherDetails = [
   ['userName', 'Username'],
@@ -48,7 +52,7 @@ const TEACHERS_PER_PAGE = 50;
 
 export const TeacherBrowser = ({ allTeachers, onRowAction }) => {
   const detailsRefs = useRef([]);
-   
+
   const downloadTag = useRef(document.createElement('a'));
 
   const [detailsStates, setDetailsStates] = useState({});
@@ -92,7 +96,7 @@ export const TeacherBrowser = ({ allTeachers, onRowAction }) => {
     },
     [debouncedCurrentPage]
   );
-  
+
   const [displayedTeachers, setDisplayedTeachers] = useState([]);
 
   const downloadCsv = () => {
@@ -281,7 +285,7 @@ export const TeacherBrowser = ({ allTeachers, onRowAction }) => {
     debouncedCurrentPage,
     getDisplayedTeachers,
     filteredTeachers,
-    allTeachers
+    allTeachers,
   ]);
 
   // initialization
@@ -324,14 +328,14 @@ export const TeacherBrowser = ({ allTeachers, onRowAction }) => {
   };
 
   const deleteSelectedItem = async () => {
-    setIsLoading(true)
+    setIsLoading(true);
     selectedDetails.type === 'teacher'
       ? await deleteTeacherById(selectedDetails._id)
       : await deleteStudentsByTeacher(selectedDetails._id);
-      setShowConfirm(false);
-     const teachers  = await getAllTeachers()
+    setShowConfirm(false);
+    const teachers = await getAllTeachers();
     setDisplayedTeachers(teachers.data);
-    onRowAction()
+    onRowAction();
   };
 
   console.log(showConfirm);
@@ -339,12 +343,20 @@ export const TeacherBrowser = ({ allTeachers, onRowAction }) => {
     <div className="teacher-browser-wrap">
       {showConfirm === true && (
         <ConfirmOverlay
-          message={`Are you sure you want to remove ${selectedDetails.type === 'teacher'? selectedDetails.name : `${selectedDetails.name}'s Class`} ?`}
-          subMessage={selectedDetails.type === 'teacher'?  'Removing a teacher will remove the entire class as well.': ''}
+          message={`Are you sure you want to remove ${
+            selectedDetails.type === 'teacher'
+              ? selectedDetails.name
+              : `${selectedDetails.name}'s Class`
+          } ?`}
+          subMessage={
+            selectedDetails.type === 'teacher'
+              ? 'Removing a teacher will remove the entire class as well.'
+              : ''
+          }
           confirm={deleteSelectedItem}
           cancel={() => setShowConfirm(false)}
           position="absolute"
-          top= '10%'
+          top="10%"
         />
       )}
       <div className="teacher-browser-header-wrap">
