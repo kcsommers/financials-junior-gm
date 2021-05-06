@@ -28,22 +28,24 @@ export const Overlay = () => {
     },
   };
 
+  console.log('CONFIGL ', overlayConfig.canClose);
   return (
     <AnimatePresence>
       {overlayConfig.isOpen && (
         <motion.div
-          initial='enter'
-          animate='center'
-          exit='exit'
+          initial="enter"
+          animate="center"
+          exit="exit"
           variants={variants}
-          className='overlay-container'
+          className="overlay-container"
         >
           {overlayConfig.template}
           {overlayConfig.canClose && (
             <img
-              className='close-btn'
+              style={{ zIndex: 1000 }}
+              className="close-btn"
               src={cancelBtn}
-              alt='Close'
+              alt="Close"
               onClick={closeOverlay.bind(this)}
             />
           )}
