@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { getAllTeachers, getAllStudents, getTimeSpent } from '../../api-helper';
 import { LoadingSpinner } from '@components';
@@ -10,7 +10,9 @@ import { setLoginState } from '@redux/actions';
 import { formatNumber } from '@utils';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import * as moment from 'moment';
 import '@css/pages/AdminPage.css';
+import { useDebounce } from './../../hooks/use-debounce';
 
 export const AdminPage = ({ history }) => {
   const dispatch = useDispatch();
@@ -18,6 +20,53 @@ export const AdminPage = ({ history }) => {
   const [allTeachers, setAllTeachers] = useState(null);
 
   const [allStudents, setAllStudents] = useState(null);
+
+  const [totalTimeSpent, setTotalTimeSpent] = useState(0);
+
+  const [classTimeSpent, setClassTimeSpent] = useState(null);
+
+  const [currentTeacher, setCurrentTeacher] = useState(null);
+
+  const [fetchingClassTimeSpent, setFetchingClassTimeSpent] = useState(false);
+
+  const [teacherSearch, setTeacherSearch] = useState('');
+  const debouncedTeacherSearch = useDebounce(teacherSearch, 1000);
+  const prevTeacherSearchRef = useRef(teacherSearch);
+
+  useEffect(() => {
+    if (
+      prevTeacherSearchRef.current === debouncedTeacherSearch ||
+      !debouncedTeacherSearch
+    ) {
+      return;
+    }
+
+    prevTeacherSearchRef.current = debouncedTeacherSearch;
+    const teacher =
+      allTeachers &&
+      allTeachers.find((t) =>
+        String(t.name || '')
+          .toLowerCase()
+          .includes(debouncedTeacherSearch)
+      );
+
+    console.log(teacher);
+    if (!teacher) {
+      return;
+    }
+
+    setClassTimeSpent(null);
+    setCurrentTeacher(null);
+    setFetchingClassTimeSpent(true);
+
+    getTimeSpent(teacher._id)
+      .then((res) => {
+        setFetchingClassTimeSpent(false);
+        setCurrentTeacher(teacher);
+        setClassTimeSpent(moment.duration(1000000000).asHours().toFixed(2));
+      })
+      .catch((err) => console.error(err));
+  }, [debouncedTeacherSearch]);
 
   const doLogout = () => {
     logout()
@@ -46,6 +95,7 @@ export const AdminPage = ({ history }) => {
     getTimeSpent()
       .then((res) => {
         console.log('TIME SPENT:::: ', res);
+        setTotalTimeSpent(moment.duration(1000000000).asHours().toFixed(2));
       })
       .catch((err) => console.error(err));
   }, []);
@@ -125,6 +175,44 @@ export const AdminPage = ({ history }) => {
                       <LoadingSpinner size="small" />
                     )}{' '}
                     Total Students
+                  </div>
+                </div>
+
+                <div className="time-spent-container">
+                  <div className="time-spent-wrap">
+                    Total Time Spent
+                    {totalTimeSpent ? (
+                      <div>{totalTimeSpent} Hours</div>
+                    ) : (
+                      <div>
+                        <LoadingSpinner size="small" />
+                      </div>
+                    )}
+                  </div>
+                  <div className="time-spent-wrap">
+                    Time Spent Per Classroom
+                    <div className="teacher-search-wrap">
+                      <input
+                        type="text"
+                        placeholder="Search Teachers..."
+                        onChange={(e) => {
+                          setTeacherSearch(e.target.value);
+                        }}
+                      />
+                    </div>
+                    <div>
+                      {fetchingClassTimeSpent && (
+                        <div>
+                          <LoadingSpinner size="small" />
+                        </div>
+                      )}
+                      {currentTeacher && (
+                        <div className="teacher-name-wrap">
+                          {currentTeacher.name}
+                        </div>
+                      )}
+                      {classTimeSpent && <div>{classTimeSpent} Hours</div>}
+                    </div>
                   </div>
                 </div>
               </div>
