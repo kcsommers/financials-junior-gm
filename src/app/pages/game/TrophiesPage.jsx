@@ -63,7 +63,7 @@ export const TrophiesPage = ({ history }) => {
   };
 
   const finishGame = () => {
-    resetSeason(+student.level, +student.level, student)
+    resetSeason(+student.level, +student.level, student, true)
       .then((updatedStudent) => {
         history.push({
           pathname: '/home',

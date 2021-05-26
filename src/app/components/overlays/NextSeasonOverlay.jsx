@@ -26,7 +26,7 @@ export const NextSeasonOverlay = ({ student, next, finished }) => {
 
   const finishGame = () => {
     dispatch(setInTransition(false));
-    resetSeason(+student.level, +student.level, student)
+    resetSeason(+student.level, +student.level, student, true)
       .then((updatedStudent) => {
         finished({ updatedStudent });
       })
