@@ -10,7 +10,7 @@ import {
 import { cloneDeep } from 'lodash';
 import { scenarioConfigs, SeasonScenario } from './scenarios';
 
-export const resetSeason = (newLevel, prevLevel, student) => {
+export const resetSeason = (newLevel, prevLevel, student, wonGame) => {
   return new Promise((resolve, reject) => {
     const clonedSeasons = cloneDeep(student.seasons);
     clonedSeasons[newLevel - 1] = [];
@@ -24,6 +24,10 @@ export const resetSeason = (newLevel, prevLevel, student) => {
 
     if (newLevel > prevLevel) {
       studentUpdates.rollOverBudget = 0;
+    }
+
+    if (wonGame) {
+      studentUpdates.wonGame = true;
     }
 
     updateStudentById(student._id, studentUpdates)

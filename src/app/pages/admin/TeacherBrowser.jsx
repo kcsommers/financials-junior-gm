@@ -1,23 +1,23 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
 import { LoadingSpinner } from '@components';
-import { useDebounce } from './../../hooks/use-debounce';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  faChevronRight,
   faChevronLeft,
+  faChevronRight,
   faDownload,
-  faClock,
+  faTrash,
 } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { cloneDeep } from 'lodash';
+import * as moment from 'moment';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { ConfirmOverlay } from '../../components/overlays/ConfirmOverlay';
-import { Button } from '../../components/Button';
 import {
   deleteStudentsByTeacher,
   deleteTeacherById,
   getAllTeachers,
   getTimeSpent,
+  getStudentList,
 } from './../../api-helper';
-import { cloneDeep } from 'lodash';
-import * as moment from 'moment';
+import { useDebounce } from './../../hooks/use-debounce';
 
 const teacherDetails = [
   ['userName', 'Username'],
@@ -63,7 +63,7 @@ export const TeacherBrowser = ({ allTeachers, onRowAction }) => {
 
   const [isLoading, setIsLoading] = useState(!allTeachers);
 
-  const [timeSpentMap, setTimeSpentMap] = useState({});
+  const [studentStatsMap, setStudentStatsMap] = useState({});
 
   const [initialized, setInitialized] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
@@ -143,7 +143,63 @@ export const TeacherBrowser = ({ allTeachers, onRowAction }) => {
 
   const [totalPages, setTotalPages] = useState(0);
 
-  const toggleTeacher = (index) => {
+  const getStudentStats = (teacher) => {
+    if (studentStatsMap && studentStatsMap[teacher.name]) {
+      // already fetched stats
+      return;
+    }
+
+    Promise.all([getTimeSpent(teacher._id), getStudentList(teacher._id)])
+      .then((res) => {
+        if (!res || !res.length || !res[1]) {
+          console.error('Unexpected error fetching student stats');
+          return;
+        }
+
+        const timeSpent = moment
+          .duration(res[0].totalTimeSpent)
+          .asHours()
+          .toFixed(2);
+
+        let startedTutorial = 0;
+        let completedLevel1 = 0;
+        let completedLevel2 = 0;
+        let wonGame = 0;
+
+        if (res[1].data && res[1].data.length) {
+          res[1].data.forEach((student) => {
+            if (student.tutorials) {
+              startedTutorial++;
+            }
+            if (+student.level > 1) {
+              completedLevel1++;
+            }
+            if (+student.level > 2) {
+              completedLevel2++;
+            }
+            if (student.wonGame) {
+              wonGame++;
+            }
+          });
+        }
+
+        const clonedStatsMap = cloneDeep(studentStatsMap);
+        clonedStatsMap[teacher.name] = {
+          timeSpent,
+          startedTutorial,
+          completedLevel1,
+          completedLevel2,
+          wonGame,
+        };
+
+        setStudentStatsMap(clonedStatsMap);
+      })
+      .catch((err) => console.error(err));
+  };
+
+  const toggleTeacher = (index, teacher) => {
+    getStudentStats(teacher);
+
     const detailsRef = detailsRefs.current[index];
     const detailsState = detailsStates[index];
     const shouldExpand = !detailsState || !detailsState.isExpanded;
@@ -343,20 +399,6 @@ export const TeacherBrowser = ({ allTeachers, onRowAction }) => {
     onRowAction();
   };
 
-  const getClassTimeSpent = (teacher) => {
-    getTimeSpent(teacher._id)
-      .then((res) => {
-        const clonedtimeSpentMap = cloneDeep(timeSpentMap);
-        clonedtimeSpentMap[teacher.name] = moment
-          .duration(res.totalTimeSpent)
-          .asHours()
-          .toFixed(2);
-
-        setTimeSpentMap(clonedtimeSpentMap);
-      })
-      .catch((err) => console.error(err));
-  };
-
   return !isLoading ? (
     <div className="teacher-browser-wrap">
       {showConfirm === true && (
@@ -493,7 +535,7 @@ export const TeacherBrowser = ({ allTeachers, onRowAction }) => {
           <div
             className="teacher-table-row-wrap"
             key={`${t.name}_${i}`}
-            onClick={toggleTeacher.bind(this, i)}
+            onClick={toggleTeacher.bind(this, i, t)}
           >
             <div className="teacher-table-row">
               <span className="teacher-table-arrow-wrap">
@@ -521,68 +563,102 @@ export const TeacherBrowser = ({ allTeachers, onRowAction }) => {
                 height: detailsStates[i]
                   ? `${detailsStates[i].detailsHeight}px`
                   : '0px',
-                padding:
-                  detailsStates[i] && detailsStates[i].isExpanded
-                    ? '1rem 3rem'
-                    : '0px 3rem',
               }}
             >
               <div
                 className="admin-teacher-details-inner"
                 ref={(el) => (detailsRefs.current[i] = el)}
               >
-                <div className="get-time-spent-wrap">
-                  <button
-                    className={`btn-primary btn-small`}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      getClassTimeSpent(t);
-                    }}
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      marginRight: '1rem',
-                    }}
-                  >
-                    <FontAwesomeIcon
-                      icon={faClock}
-                      color="#fff"
-                      style={{ marginRight: '0.5rem' }}
-                    />
-                    Get Time Spent
-                  </button>
-                  {timeSpentMap[t.name] && (
-                    <span>{timeSpentMap[t.name]} Hours</span>
-                  )}
+                <div className="admin-teacher-details-left">
+                  {teacherDetails.map((d) => (
+                    <div key={d[0]} className="admin-teacher-detail-wrap">
+                      <span className="admin-teacher-detail-label">{d[1]}</span>
+                      <span className="admin-teacher-detail">
+                        {t[d[0]] || '--'}
+                      </span>
+                    </div>
+                  ))}
                 </div>
-                {teacherDetails.map((d) => (
-                  <div key={d[0]} className="admin-teacher-detail-wrap">
-                    <span className="admin-teacher-detail-label">{d[1]}</span>
-                    <span className="admin-teacher-detail">
-                      {t[d[0]] || '--'}
-                    </span>
+                <div className="admin-teacher-details-right">
+                  <div className="student-stats-wrap">
+                    <p style={{ marginBottom: '1rem' }}>Student Stats</p>
+                    {studentStatsMap[t.name] ? (
+                      <>
+                        <div className="admin-teacher-detail-wrap">
+                          <span className="admin-teacher-detail-label">
+                            Total Time Spent
+                          </span>
+                          <span className="admin-teacher-detail">
+                            {studentStatsMap[t.name].timeSpent} Hours
+                          </span>
+                        </div>
+                        <div className="admin-teacher-detail-wrap">
+                          <span className="admin-teacher-detail-label">
+                            Started Tutorial
+                          </span>
+                          <span className="admin-teacher-detail">
+                            {studentStatsMap[t.name].startedTutorial}
+                          </span>
+                        </div>
+                        <div className="admin-teacher-detail-wrap">
+                          <span className="admin-teacher-detail-label">
+                            Completed Level 1
+                          </span>
+                          <span className="admin-teacher-detail">
+                            {studentStatsMap[t.name].completedLevel1}
+                          </span>
+                        </div>
+                        <div className="admin-teacher-detail-wrap">
+                          <span className="admin-teacher-detail-label">
+                            Completed Level 2
+                          </span>
+                          <span className="admin-teacher-detail">
+                            {studentStatsMap[t.name].completedLevel2}
+                          </span>
+                        </div>
+                        <div className="admin-teacher-detail-wrap">
+                          <span className="admin-teacher-detail-label">
+                            Won Game
+                          </span>
+                          <span className="admin-teacher-detail">
+                            {studentStatsMap[t.name].wonGame}
+                          </span>
+                        </div>
+                      </>
+                    ) : (
+                      <LoadingSpinner size="small" />
+                    )}
                   </div>
-                ))}
-                <div className="admin-teacher-detail-action">
-                  <div className="admin-teacher-detail-action-item">
-                    <Button
-                      background="#dc3545"
-                      text="Delete Teacher"
-                      size="small"
-                      onClick={(event) => {
-                        showAlert(event, 'teacher', t);
+                  <div style={{ position: 'relative', top: '-1rem' }}>
+                    <button
+                      className={`btn-danger btn-small`}
+                      style={{ marginRight: '0.5rem' }}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        showAlert(e, 'teacher', t);
                       }}
-                    />
-                  </div>
-                  <div className="admin-teacher-detail-action-item">
-                    <Button
-                      background="#dc3545"
-                      text="Delete Class"
-                      size="small"
-                      onClick={(event) => {
-                        showAlert(event, 'class', t);
+                    >
+                      <FontAwesomeIcon
+                        icon={faTrash}
+                        color="#fff"
+                        style={{ marginRight: '0.5rem' }}
+                      />
+                      Delete Teacher
+                    </button>
+                    <button
+                      className={`btn-danger btn-small`}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        showAlert(e, 'class', t);
                       }}
-                    />
+                    >
+                      <FontAwesomeIcon
+                        icon={faTrash}
+                        color="#fff"
+                        style={{ marginRight: '0.5rem' }}
+                      />
+                      Delete Class
+                    </button>
                   </div>
                 </div>
               </div>

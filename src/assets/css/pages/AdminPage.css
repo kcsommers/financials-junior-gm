@@ -93,7 +93,20 @@ div.get-time-spent-wrap > span {
 }
 
 div.admin-teacher-details-inner {
-  position: relative;
+  display: flex;
+  padding: 1rem 3rem;
+}
+
+div.admin-teacher-details-left,
+div.admin-teacher-details-right {
+  flex: 1;
+}
+
+div.admin-teacher-details-right {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  padding-left: 1rem;
 }
 
 div.admin-teacher-detail-action {
@@ -109,7 +122,7 @@ div.admin-teacher-detail-action-item {
 
 span.admin-teacher-detail-label {
   display: inline-block;
-  flex: 0.25;
+  flex: 1;
   font-weight: bold;
   color: #00788a;
 }
