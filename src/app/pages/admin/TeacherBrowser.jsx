@@ -177,6 +177,9 @@ export const TeacherBrowser = ({ allTeachers, onRowAction }) => {
             if (+student.level > 2) {
               completedLevel2++;
             }
+            if (student.wonGame) {
+              wonGame++;
+            }
           });
         }
 
