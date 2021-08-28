@@ -44,7 +44,13 @@
   transform: translateX(-50%);
 }
 
-.login-back-to-dashboard {
+.login-back-to-dashboard,
+.login-forgot-password {
   cursor: pointer;
   color: #00788a;
+}
+
+.login-forgot-password {
+  font-size: 1rem;
+  margin-top: 0.5rem;
 }
