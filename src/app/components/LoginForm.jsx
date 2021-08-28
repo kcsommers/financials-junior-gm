@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Button } from '@components';
+import { UserRoles } from '@data/auth/auth';
 import '@css/pages/Login.css';
 
 export const LoginForm = ({
@@ -7,7 +8,7 @@ export const LoginForm = ({
   isLoggingIn,
   loginError,
   history,
-  userField = 'Username',
+  userRole,
 }) => {
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
@@ -22,47 +23,50 @@ export const LoginForm = ({
     onLogin(userName, password);
   };
 
+  const userField =
+    userRole === UserRoles.TEACHER ? 'Username or Email' : 'Username';
+
   return (
     <>
-      <div className='login-form-container'>
-        <div className='login-form-field'>
-          <p className='login-form-label'>{userField}</p>
+      <div className="login-form-container">
+        <div className="login-form-field">
+          <p className="login-form-label">{userField}</p>
           <input
             onChange={(e) => setUserName(e.target.value)}
-            autoComplete='off'
-            className='login-form-ip'
-            type='text'
+            autoComplete="off"
+            className="login-form-ip"
+            type="text"
             placeholder={userField}
-            name='username'
-            maxLength='100'
+            name="username"
+            maxLength="100"
           />
         </div>
-        <div className='login-form-field'>
-          <p className='login-form-label'>Password</p>
+        <div className="login-form-field">
+          <p className="login-form-label">Password</p>
           <input
             onChange={(e) => setPassword(e.target.value)}
-            autoComplete='off'
-            className='login-form-ip'
-            type='password'
-            placeholder='Password'
-            name='password'
-            maxLength='100'
+            autoComplete="off"
+            className="login-form-ip"
+            type="password"
+            placeholder="Password"
+            name="password"
+            maxLength="100"
           />
         </div>
-        <p className='login-error-text'>{loginError || validationError}</p>
+        <p className="login-error-text">{loginError || validationError}</p>
       </div>
 
-      <div className='login-button-container'>
+      <div className="login-button-container">
         <div style={{ margin: '1rem 0' }}>
           <Button
             onClick={validateLogin}
             isLoading={isLoggingIn}
-            text='Log In'
+            text="Log In"
           />
         </div>
         <span
           onClick={() => history.push('/dashboard')}
-          className='login-back-to-dashboard'
+          className="login-back-to-dashboard"
         >
           Back To Dashboard
         </span>
