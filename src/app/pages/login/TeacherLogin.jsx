@@ -89,7 +89,7 @@ export const TeacherLogin = ({ history, isLoggedIn }) => {
         isLoggingIn={isLoggingIn}
         loginError={loginError}
         history={history}
-        userField="Username or Email"
+        userRole={UserRoles.TEACHER}
       />
     </div>
   );

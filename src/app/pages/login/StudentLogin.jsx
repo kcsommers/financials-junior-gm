@@ -114,6 +114,7 @@ export const StudentLogin = ({ history, isLoggedIn }) => {
         isLoggingIn={isLoggingIn}
         loginError={loginError}
         history={history}
+        userRole={UserRoles.STUDENT}
       />
     </div>
   );

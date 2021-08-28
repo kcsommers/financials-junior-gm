@@ -91,6 +91,7 @@ export const AdminLogin = ({ history, isLoggedIn }) => {
         isLoggingIn={isLoggingIn}
         loginError={loginError}
         history={history}
+        userRole={UserRoles.ADMIN}
       />
     </div>
   );

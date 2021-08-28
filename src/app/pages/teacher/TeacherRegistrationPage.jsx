@@ -138,7 +138,7 @@ export const TeacherRegsitrationPage = ({ history }) => {
               name="name"
               ref={register({
                 required: true,
-                maxLength: 20,
+                maxLength: 99,
                 pattern: /^[a-zA-Z].*[\s]*$/,
               })}
             />
@@ -154,7 +154,7 @@ export const TeacherRegsitrationPage = ({ history }) => {
               type="email"
               ref={register({
                 required: true,
-                maxLength: 20,
+                maxLength: 99,
                 pattern: /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/,
               })}
             />
@@ -169,7 +169,7 @@ export const TeacherRegsitrationPage = ({ history }) => {
               name="school"
               ref={register({
                 required: true,
-                maxLength: 30,
+                maxLength: 99,
                 pattern: /^[a-zA-Z].*[\s]*$/,
               })}
             />
@@ -182,7 +182,7 @@ export const TeacherRegsitrationPage = ({ history }) => {
               name="schoolDistrict"
               ref={register({
                 required: true,
-                maxLength: 30,
+                maxLength: 99,
                 pattern: /^[a-zA-Z].*[\s]*$/,
               })}
             />
@@ -200,7 +200,7 @@ export const TeacherRegsitrationPage = ({ history }) => {
               name="city"
               ref={register({
                 required: true,
-                maxLength: 30,
+                maxLength: 99,
                 pattern: /^[a-zA-Z].*[\s]*$/,
               })}
             />
@@ -314,7 +314,7 @@ export const TeacherRegsitrationPage = ({ history }) => {
             )}
             <input
               name="username"
-              ref={register({ required: true, maxLength: 30 })}
+              ref={register({ required: true, maxLength: 99 })}
             />
             <label htmlFor="password">Create a Password</label>
             {errors.conf && errors.conf.type === 'required' && (
