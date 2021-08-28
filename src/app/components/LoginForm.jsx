@@ -70,6 +70,14 @@ export const LoginForm = ({
         >
           Back To Dashboard
         </span>
+        {userRole === UserRoles.TEACHER && (
+          <div
+            onClick={() => history.push('/reset-password')}
+            className="login-forgot-password"
+          >
+            Forgot Password
+          </div>
+        )}
       </div>
     </>
   );

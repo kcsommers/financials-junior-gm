@@ -22,6 +22,7 @@ import { AdminPage } from './pages/admin/AdminPage';
 import { AdminLogin } from './pages/login/AdminLogin';
 import { AdminPortal } from './pages/portal/AdminPortal';
 import { TeacherRegsitrationPage } from './pages/teacher/TeacherRegistrationPage';
+import { ForgotPasswordPage } from './pages/login/ForgotPasswordPage';
 
 const protectedRoutes = [
   '/home',
@@ -161,6 +162,11 @@ export const AppRouter = ({ isLoggedIn, userRole }) => {
           path="/register/teacher"
           render={(props) => <TeacherRegsitrationPage {...props} />}
         />
+        <Route
+          exact
+          path="/reset-password"
+          render={(props) => <ForgotPasswordPage {...props} />}
+        />
         <Route exact path="/dashboard" component={Dashboard} />
         <Redirect from="/" to="/home" />
         <Route component={PageNotFound} />
@@ -191,6 +197,11 @@ export const AppRouter = ({ isLoggedIn, userRole }) => {
           exact
           path="/register/teacher"
           render={(props) => <TeacherRegsitrationPage {...props} />}
+        />
+        <Route
+          exact
+          path="/reset-password"
+          render={(props) => <ForgotPasswordPage {...props} />}
         />
         <Route exact path="/dashboard" component={Dashboard} />
         {protectedRoutes.includes(window.location.pathname) && (
