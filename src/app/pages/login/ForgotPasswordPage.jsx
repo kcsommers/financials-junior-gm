@@ -4,7 +4,7 @@ import financialsLogo from '@images/financials-logo-big.svg';
 import '@css/pages/ResetPasswordPage.css';
 import { resetTeacherPassword } from '../../api-helper';
 
-export const ResetPasswordPage = ({ history }) => {
+export const ForgotPasswordPage = ({ history }) => {
   const [email, setEmail] = useState('');
 
   const [error, setError] = useState('');
@@ -15,7 +15,6 @@ export const ResetPasswordPage = ({ history }) => {
     setIsLoading(true);
     resetTeacherPassword({ email })
       .then((res) => {
-        console.log('reset response:::: ', res);
         setIsLoading(false);
       })
       .catch(() => {

@@ -164,7 +164,7 @@ export const AppRouter = ({ isLoggedIn, userRole }) => {
         />
         <Route
           exact
-          path="/reset-password"
+          path="/forgot-password"
           render={(props) => <ResetPasswordPage {...props} />}
         />
         <Route exact path="/dashboard" component={Dashboard} />
@@ -200,7 +200,7 @@ export const AppRouter = ({ isLoggedIn, userRole }) => {
         />
         <Route
           exact
-          path="/reset-password"
+          path="/forgot-password"
           render={(props) => <ResetPasswordPage {...props} />}
         />
         <Route exact path="/dashboard" component={Dashboard} />
