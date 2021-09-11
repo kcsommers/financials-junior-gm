@@ -174,7 +174,7 @@ export const AppRouter = ({ isLoggedIn, userRole }) => {
           render={(props) => <ResetPasswordPage {...props} />}
         />
         <Route exact path="/dashboard" component={Dashboard} />
-        <Redirect from="/" to="/home" />
+        {/* <Redirect from="/" to="/home" /> */}
         <Route component={PageNotFound} />
       </Switch>
       <IceBackground />
@@ -215,13 +215,13 @@ export const AppRouter = ({ isLoggedIn, userRole }) => {
           render={(props) => <ResetPasswordPage {...props} />}
         />
         <Route exact path="/dashboard" component={Dashboard} />
-        {protectedRoutes.includes(window.location.pathname) && (
+        {/* {protectedRoutes.includes(window.location.pathname) && (
           <Redirect to="/dashboard" />
         )}
         {window.location.pathname === '/admin' && (
           <Redirect to="/admin/login" />
         )}
-        <Redirect from="/" to="/dashboard" />
+        <Redirect from="/" to="/dashboard" /> */}
         <Route component={PageNotFound} />
       </Switch>
       <IceBackground />
