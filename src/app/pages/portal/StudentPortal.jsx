@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect, useRef, useMemo } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import { useSelector, useDispatch, batch } from 'react-redux';
 import {
   setStudent,
@@ -29,9 +29,8 @@ export const StudentPortal = ({
 
   const { student, startTime } = useSelector((state) => state.studentState);
 
-  const [shouldRedirectToDashboard, setShouldRedirectToDashboard] = useState(
-    false
-  );
+  const [shouldRedirectToDashboard, setShouldRedirectToDashboard] =
+    useState(false);
 
   const isLoggedInRef = useRef(false);
   useEffect(() => {
