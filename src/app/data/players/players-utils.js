@@ -213,7 +213,6 @@ export const handleSignPlayer = (signedPlayer, assignment, student) => {
 export const handleTradePlayers = (signedPlayer, releasedPlayer, student) => {
   return new Promise((resolve, reject) => {
     const prevAssignment = releasedPlayer.playerAssignment;
-    const prevPosition = getPlayerPositon(prevAssignment);
 
     releasedPlayer.playerAssignment = PlayerAssignments.UNAVAILABLE;
     signedPlayer.playerAssignment = prevAssignment;

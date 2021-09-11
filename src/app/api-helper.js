@@ -73,6 +73,16 @@ export const teacherLogin = (body) => {
   return axios.post(`${getBaseUrl()}/api/v1/auth/login`, body);
 };
 
+// Teacher reset password
+export const resetTeacherPassword = (body) => {
+  return axios.post(`${getBaseUrl()}/api/v1/auth/reset`, body);
+};
+
+// Teacher reset password
+export const updateTeacherPassword = (body) => {
+  return axios.put(`${getBaseUrl()}/api/v1/auth/change/password`, body);
+};
+
 //Teacher Register
 export const registerTeacher = (body) => {
   return axios.post(`${getBaseUrl()}/api/v1/auth/register`, body);
