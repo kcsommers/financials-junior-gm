@@ -80,7 +80,7 @@ export const resetTeacherPassword = (body) => {
 
 // Teacher reset password
 export const updateTeacherPassword = (body) => {
-  return axios.put(`${getBaseUrl()}/api/v1/auth/change/password`, body);
+  return axios.put(`${getBaseUrl()}/api/v1/auth/password`, body);
 };
 
 //Teacher Register
