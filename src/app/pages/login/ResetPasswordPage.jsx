@@ -10,6 +10,8 @@ import {
 import '@css/pages/ResetPasswordPage.css';
 
 export const ResetPasswordPage = ({ history, match }) => {
+  const [email, setEmail] = useState('');
+
   const [password, setPassword] = useState('');
 
   const [resetToken, setResetToken] = useState('');
@@ -35,11 +37,11 @@ export const ResetPasswordPage = ({ history, match }) => {
   const resetPassword = () => {
     setIsLoading(true);
     updateTeacherPassword({
+      email,
       password,
       resetToken,
     })
       .then((res) => {
-        console.log('update response:::: ', res);
         setIsLoading(false);
         if (res.success) {
           setResetSuccessMsg(res.message);
@@ -56,8 +58,8 @@ export const ResetPasswordPage = ({ history, match }) => {
   };
 
   const validate = () => {
-    if (!password || !passwordVerify) {
-      setError('Please enter new password');
+    if (!email || !password || !passwordVerify) {
+      setError('Please enter email and new password');
       return;
     }
     if (password !== passwordVerify) {
@@ -105,6 +107,17 @@ export const ResetPasswordPage = ({ history, match }) => {
       <div className="forgot-password-form-wrap">
         <p className="form-title">Please enter your new password</p>
         <div className="forgot-password-form-inner">
+          <div className="form-field">
+            <input
+              onChange={(e) => setEmail(e.target.value)}
+              autoComplete="off"
+              className="form-ip"
+              type="text"
+              placeholder="Email Address"
+              name="username"
+              maxLength="100"
+            />
+          </div>
           <div className="form-field">
             <input
               onChange={(e) => setPassword(e.target.value)}
