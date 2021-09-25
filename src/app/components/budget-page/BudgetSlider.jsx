@@ -55,10 +55,10 @@ export const BudgetSlider = ({
   );
   let counter = 0;
   for (let i = budget.total; i >= 0; i = desc(i)) {
-    ticks.push(<span key={`tick-${i}`} className='tick'></span>);
+    ticks.push(<span key={`tick-${i}`} className="tick"></span>);
     tickLabels.push(
-      <span key={`tick-label-${i}`} className='tick-label'>
-        <span className='tick-label-inner'>
+      <span key={`tick-label-${i}`} className="tick-label">
+        <span className="tick-label-inner">
           {!everyOtherLabel || counter % 2 === 0 ? i : ''}
         </span>
       </span>
@@ -68,20 +68,20 @@ export const BudgetSlider = ({
 
   return (
     <motion.div
-      className='budget-slider-wrap'
+      className="budget-slider-wrap"
       transition={{ default: { duration: 1 } }}
       animate={sliderAnimationState}
     >
-      <div className='top-indicators-container'>
+      <div className="top-indicators-container">
         {budget.spent > 0 && (
-          <div className='spent-indicator-wrap'>
-            <p className='color-primary'>
+          <div className="spent-indicator-wrap">
+            <p className="color-primary">
               {getDollarString(budget.spent, true)} <br /> Spent
             </p>
           </div>
         )}
-        <div className='spending-indicator-wrap'>
-          <p className='color-primary'>
+        <div className="spending-indicator-wrap">
+          <p className="color-primary">
             {getDollarString(
               totalDisplay
                 ? totalDisplay
@@ -92,40 +92,40 @@ export const BudgetSlider = ({
           </p>
         </div>
       </div>
-      <div className='budget-slider-stick-wrap'>
+      <div className="budget-slider-stick-wrap">
         <BudgetSliderSvg budget={budget} />
       </div>
 
-      <div className='slider-outer'>
-        <div className='slider-wrap'>
-          <div className='slider-scale-wrap'>
-            <div className='ticks-container'>{ticks}</div>
-            <div className='tick-labels-container'>{tickLabels}</div>
+      <div className="slider-outer">
+        <div className="slider-wrap">
+          <div className="slider-scale-wrap">
+            <div className="ticks-container">{ticks}</div>
+            <div className="tick-labels-container">{tickLabels}</div>
           </div>
 
           <div
-            className='slider-input-wrap'
+            className="slider-input-wrap"
             style={{
               width: getSliderWidth(),
             }}
           >
-            <div className='slider-input-wrap-inner'>
+            <div className="slider-input-wrap-inner">
               <motion.div
-                className='savings-indicator-wrap'
+                className="savings-indicator-wrap"
                 style={getSavingsIndicatorPosition()}
                 animate={indicatorAnimationState}
               >
                 <Indicator
                   amount={budget.savings}
-                  direction='top'
-                  borderColor='#ffd782'
+                  direction="top"
+                  borderColor="#ffd782"
                   isMoney={true}
                 />
-                <p className='color-primary'>Savings</p>
+                <p className="color-primary">Savings</p>
               </motion.div>
               <input
-                type='range'
-                min='0'
+                type="range"
+                min="0"
                 max={budget.total - budget.spent}
                 value={budget.savings}
                 step={

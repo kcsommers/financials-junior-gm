@@ -152,7 +152,7 @@ export const BudgetPage = ({ history }) => {
   };
 
   const updateSavings = (value) => {
-    if (tutorialPaused) {
+    if (tutorialPaused || (tutorialState.isActive && value >= 13)) {
       return;
     }
 
