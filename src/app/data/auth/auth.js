@@ -27,7 +27,7 @@ export const getUserRole = () => {
   if (!navigator.cookieEnabled) {
     return '';
   }
-  return sessionStorage.getItem(USER_ROLE_STORAGE_KEY);
+  return sessionStorage.getItem(USER_ROLE_STORAGE_KEY) || '';
 };
 
 export const clearSessionStorage = () => {

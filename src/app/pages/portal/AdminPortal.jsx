@@ -10,8 +10,8 @@ export const AdminPortal = ({
   screen,
   isLoggedIn,
   userRole,
-  pageName,
-  history,
+  pageName = '',
+  history = null,
 }) => {
   const dispatch = useDispatch();
 

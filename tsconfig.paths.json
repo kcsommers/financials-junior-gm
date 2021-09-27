@@ -2,13 +2,13 @@
   "compilerOptions": {
     "baseUrl": "src/",
     "paths": {
-      "@components": ["app/components/public-api.js"]
-      // "@css": "path.resolve(__dirname, "src/assets/css")",
-      // "@images": "path.resolve(__dirname, "src/assets/images")",
-      // "@tutorial": "path.resolve(__dirname, "src/app/tutorial/public-api.js")",
-      // "@redux": "path.resolve(__dirname, "src/app/redux")",
-      // "@utils": "path.resolve(__dirname, "src/app/utils")",
-      // "@data": "path.resolve(__dirname, "src/app/data")",
+      "@components": ["app/components/public-api.js"],
+      "@data/*": ["app/data/*"],
+      "@css/*": ["assets/css/*"],
+      "@images/*": ["assets/images/*"],
+      "@tutorial": ["app/tutorial/public-api.js"],
+      "@redux/*": ["app/redux/*"],
+      "@utils": ["app/utils"]
     }
   }
 }

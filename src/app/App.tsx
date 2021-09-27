@@ -2,11 +2,11 @@ import '@css/App.css';
 import { faCookie, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
 import { AppRouter } from './AppRouter';
+import { useAppSelector } from './redux/hooks';
 
 const App = () => {
-  const { isLoggedIn, userRole } = useSelector((state) => state.loginState);
+  const { isLoggedIn, userRole } = useAppSelector((state) => state.loginState);
   const [showCookieSnackbar, setShowCookieSnackbar] = useState(
     !navigator.cookieEnabled
   );

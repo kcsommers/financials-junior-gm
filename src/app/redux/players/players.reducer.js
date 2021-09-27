@@ -46,10 +46,7 @@ const initialState = {
   moneySpent: 0,
 };
 
-export const playersReducer: Reducer<typeof initialState, AnyAction> = (
-  state = initialState,
-  action
-) => {
+export const playersReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_INITIAL_PLAYERS_STATE: {
       const { players, student } = action.payload;

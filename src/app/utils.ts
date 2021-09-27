@@ -2,21 +2,19 @@ export const capitalize = (str) => {
   return str.charAt(0).toUpperCase() + str.slice(1);
 };
 
-export const getDollarString = (num, showZero = false) => {
+export const getDollarString = (num: number | string, showZero = false) => {
   if (!num || num === 'null') {
     return showZero ? '$0' : '';
   }
 
-  const safeNum = Math.max(0, +num);
-
-  if (safeNum % 1 === 0) {
-    return `$${safeNum}`;
+  const _safeNum = Math.max(0, +num);
+  if (_safeNum % 1 === 0) {
+    return `$${_safeNum}`;
   }
-
-  return `$${parseFloat(safeNum).toFixed(2)}`;
+  return `$${parseFloat(String(_safeNum)).toFixed(2)}`;
 };
 
-export const getMoneyLevels = (level) => {
+export const getMoneyLevels = (level: number | string): any => {
   switch (level) {
     case 1:
     case '1':
