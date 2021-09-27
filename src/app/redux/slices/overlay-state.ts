@@ -20,12 +20,12 @@ const overlayStateSlice = createSlice({
   name: 'OVERLAY_STATE',
   initialState,
   reducers: {
-    toggleOverlay: (state, action: PayloadAction<IOverlayState>) => {
+    toggleOverlay: (state, action: PayloadAction<Partial<IOverlayState>>) => {
       state.sign = action.payload.sign;
-      state.isOpen = action.payload.isOpen;
+      state.isOpen = action.payload.isOpen || false;
       state.template = action.payload.template;
       state.onClose = action.payload.onClose;
-      state.canClose = action.payload.canClose;
+      state.canClose = action.payload.canClose || false;
     },
   },
 });

@@ -1,7 +1,7 @@
 import { OverlayBoard, Button } from '@components';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { toggleOverlay } from '@redux/actions';
+import { toggleOverlay } from '@redux';
 
 export const InsufficientFundsOverlay = () => {
   const history = useHistory();
@@ -39,12 +39,12 @@ export const InsufficientFundsOverlay = () => {
       >
         <div style={{ textAlign: 'center', padding: '3rem' }}>
           <h3
-            className='color-primary'
+            className="color-primary"
             style={{ marginBottom: '2rem', fontSize: '2.15rem' }}
           >
             You don't have enough money in your budget for this player!
           </h3>
-          <p className='color-primary' style={{ fontSize: '1.75rem' }}>
+          <p className="color-primary" style={{ fontSize: '1.75rem' }}>
             You'll have to find a way to increase your budget.
           </p>
         </div>
@@ -57,8 +57,8 @@ export const InsufficientFundsOverlay = () => {
             width: '100%',
           }}
         >
-          <Button text='Back to Team' onClick={backToTeam} />
-          <Button text='Go to Budget' onClick={goToBudget} />
+          <Button text="Back to Team" onClick={backToTeam} />
+          <Button text="Go to Budget" onClick={goToBudget} />
         </div>
       </div>
     </OverlayBoard>

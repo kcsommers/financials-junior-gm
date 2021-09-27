@@ -5,7 +5,7 @@ import {
   MarketPlayersBoard,
 } from '@components';
 import { useDispatch } from 'react-redux';
-import { toggleOverlay, tradePlayer, setStudent } from '@redux/actions';
+import { toggleOverlay, tradePlayer, setStudent } from '@redux';
 import { ConfirmTradeOverlay } from './ConfirmTradeOverlay';
 import { PlayerDetailsOverlay } from './PlayerDetailsOverlay';
 import {
@@ -97,11 +97,11 @@ export const TradePlayerOverlay = ({
             <TeamBudgetState />
           </div>
           <div style={{ flex: 1 }}>
-            <PlayerCard size='medium' player={releasingPlayer} />
+            <PlayerCard size="medium" player={releasingPlayer} />
           </div>
         </div>
         <div
-          className='market-players-board-container'
+          className="market-players-board-container"
           style={{
             width: '100%',
             flex: 1,

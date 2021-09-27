@@ -9,7 +9,7 @@ import {
   initializeSeason,
   setInitialPlayersState,
   initializeObjectives,
-} from '@redux/actions';
+} from '@redux';
 import { useDispatch, batch, useSelector } from 'react-redux';
 import { clearSessionStorage } from '@data/auth/auth';
 import { ConfirmOverlay } from '@components';

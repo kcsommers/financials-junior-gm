@@ -1,7 +1,7 @@
 import { OverlayBoard, Button } from '@components';
 import { resetSeason } from '@data/season/season-utils';
 import { useDispatch } from 'react-redux';
-import { setInTransition } from '@redux/season/season.actions';
+import { setInTransition } from '@redux'
 
 export const NextSeasonOverlay = ({ student, next, finished }) => {
   const dispatch = useDispatch();

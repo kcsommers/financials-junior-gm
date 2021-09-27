@@ -1,4 +1,3 @@
-import { INJURE_PLAYER } from '@redux/actions';
 import { PlayerAssignments } from '@data/players/players';
 
 export class SeasonScenario {
@@ -53,7 +52,7 @@ export const scenarioConfigs = {
     {
       message: 'OH NO! One of your players was injured',
       objective: 'Replace the injured player',
-      action: INJURE_PLAYER,
+      action: 'INJURE_PLAYER',
       selectPlayer: getSecondHighestPlayer,
       playerAssignment: PlayerAssignments.UNAVAILABLE,
       player: null,
@@ -63,7 +62,7 @@ export const scenarioConfigs = {
     {
       message: 'OH NO! One of your players was injured',
       objective: 'Replace the injured player',
-      action: INJURE_PLAYER,
+      action: 'INJURE_PLAYER',
       selectPlayer: getStartingPlayer,
       playerAssignment: PlayerAssignments.UNAVAILABLE,
       player: null,
@@ -75,7 +74,7 @@ export const scenarioConfigs = {
     {
       message: 'OH NO! One of your players was injured',
       objective: 'Replace the injured player',
-      action: INJURE_PLAYER,
+      action: 'INJURE_PLAYER',
       selectPlayer: getSecondHighestPlayer,
       playerAssignment: PlayerAssignments.UNAVAILABLE,
       player: null,
@@ -85,7 +84,7 @@ export const scenarioConfigs = {
     {
       message: 'OH NO! One of your players was injured',
       objective: 'Replace the injured player',
-      action: INJURE_PLAYER,
+      action: 'INJURE_PLAYER',
       selectPlayer: getStartingPlayer,
       playerAssignment: PlayerAssignments.UNAVAILABLE,
       player: null,
@@ -97,7 +96,7 @@ export const scenarioConfigs = {
     {
       message: 'OH NO! One of your players was injured',
       objective: 'Replace the injured player',
-      action: INJURE_PLAYER,
+      action: 'INJURE_PLAYER',
       selectPlayer: getSecondHighestPlayer,
       playerAssignment: PlayerAssignments.UNAVAILABLE,
       player: null,
@@ -107,7 +106,7 @@ export const scenarioConfigs = {
     {
       message: 'OH NO! One of your players was injured',
       objective: 'Replace the injured player',
-      action: INJURE_PLAYER,
+      action: 'INJURE_PLAYER',
       selectPlayer: getStartingPlayer,
       playerAssignment: PlayerAssignments.UNAVAILABLE,
       player: null,

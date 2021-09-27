@@ -1,4 +1,4 @@
-import { cloneDeep } from 'lodash';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
   getRandomTeamRank,
   getRandomStat,
@@ -6,7 +6,6 @@ import {
   getAllOpponents,
   getStudentTeam,
 } from '@data/season/season-utils';
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface ISeasonState {
   allOpponents: any;

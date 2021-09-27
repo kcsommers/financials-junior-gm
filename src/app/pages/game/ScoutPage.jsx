@@ -23,12 +23,12 @@ import {
   getConfirmSlides,
 } from '@tutorial';
 import {
-  setTutorialState,
+  setTutorialIsActive,
   updateScoutPlayer,
   toggleOverlay,
   setStudent,
   scoutingComplete,
-} from '@redux/actions';
+} from '@redux';
 import { isEqual } from 'lodash';
 import { getMoneyLevels } from '@utils';
 import { cloneDeep } from 'lodash';
@@ -80,7 +80,7 @@ export const ScoutPage = ({ history }) => {
   const onTutorialComplete = (canceled) => {
     if (canceled) {
       setTimeout(() => {
-        dispatch(setTutorialState({ isActive: false }));
+        dispatch(setTutorialIsActive(false));
       }, 1000);
       return;
     }
@@ -92,24 +92,20 @@ export const ScoutPage = ({ history }) => {
       updateStudentById(student._id, { tutorials })
         .then(({ updatedStudent }) => {
           batch(() => {
-            dispatch(setTutorialState({ isActive: false }));
+            dispatch(setTutorialIsActive(false));
             dispatch(setStudent(updatedStudent));
           });
         })
         .catch((err) => console.error(err));
     } else {
-      dispatch(setTutorialState({ isActive: false }));
+      dispatch(setTutorialIsActive(false));
     }
   };
 
   const startTutorial = useCallback(
     (slides) => {
       setTutorialSlides(slides);
-      dispatch(
-        setTutorialState({
-          isActive: true,
-        })
-      );
+      dispatch(setTutorialIsActive(true));
     },
     [dispatch]
   );

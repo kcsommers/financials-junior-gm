@@ -27,13 +27,12 @@ import {
   injurePlayer,
   setStudent,
   gameEnded,
-  setTutorialState,
+  setTutorialIsActive,
   toggleOverlay,
   setSeasonComplete,
   addObjective,
-  INJURE_PLAYER,
   setSeasonActive,
-} from '@redux/actions';
+} from '@redux';
 import {
   seasonSlides,
   SharkieButton,
@@ -47,7 +46,7 @@ import { useInterval } from '../../hooks/use-interval';
 import '@css/pages/SeasonPage.css';
 
 const allActions = {
-  [INJURE_PLAYER]: injurePlayer,
+  INJURE_PLAYER: injurePlayer,
 };
 
 export const SeasonPage = ({ history }) => {
@@ -351,7 +350,7 @@ export const SeasonPage = ({ history }) => {
 
   const onTutorialComplete = (canceled) => {
     if (canceled) {
-      dispatch(setTutorialState({ isActive: false }));
+      dispatch(setTutorialIsActive(false));
       return;
     }
 
@@ -362,34 +361,27 @@ export const SeasonPage = ({ history }) => {
       updateStudentById(student._id, { tutorials })
         .then(({ updatedStudent }) => {
           batch(() => {
-            dispatch(setTutorialState({ isActive: false }));
+            dispatch(setTutorialIsActive(false));
             dispatch(setStudent(updatedStudent));
           });
         })
         .catch((err) => console.error(err));
     } else {
-      dispatch(setTutorialState({ isActive: false }));
+      dispatch(setTutorialIsActive(false));
     }
   };
 
   const startTutorial = useCallback(
     (slides) => {
       setTutorialSlides(slides);
-      dispatch(
-        setTutorialState({
-          isActive: true,
-        })
-      );
+      dispatch(setTutorialIsActive(true));
     },
     [dispatch]
   );
 
   // phase interval effect
-  const [
-    resetPhaseInterval,
-    togglePhaseInterval,
-    phaseIntervalRunning,
-  ] = useInterval(() => nextPhase(), gameState.phase.timer, false);
+  const [resetPhaseInterval, togglePhaseInterval, phaseIntervalRunning] =
+    useInterval(() => nextPhase(), gameState.phase.timer, false);
 
   const nextPhase = useCallback(() => {
     const currentPhase = gameState.phase.phase;
@@ -455,11 +447,8 @@ export const SeasonPage = ({ history }) => {
   ]);
 
   // message interval effect
-  const [
-    resetMessageInterval,
-    toggleMessageInterval,
-    messageIntervalRunning,
-  ] = useInterval(nextMessage, gameState.phase.messageTimer, false);
+  const [resetMessageInterval, toggleMessageInterval, messageIntervalRunning] =
+    useInterval(nextMessage, gameState.phase.messageTimer, false);
   const prevMessageIndex = useRef(0);
   useEffect(() => {
     if (!gameState.phase.messageTimer || !gameState.phase.messages.length) {

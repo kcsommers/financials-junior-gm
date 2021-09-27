@@ -9,7 +9,7 @@ import {
 import { useForm } from 'react-hook-form';
 import { registerTeacher } from '../../api-helper';
 import { useDispatch } from 'react-redux';
-import { toggleOverlay } from '@redux/actions';
+import { toggleOverlay } from '@redux';
 import '@css/pages/TeacherRegistrationPage.css';
 
 export const TeacherRegsitrationPage = ({ history }) => {

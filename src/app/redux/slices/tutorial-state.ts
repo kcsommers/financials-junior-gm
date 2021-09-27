@@ -241,7 +241,7 @@ const tutorialStateSlice = createSlice({
       };
     },
 
-    setIsActive: (state, action: PayloadAction<any>) => {
+    setTutorialIsActive: (state, action: PayloadAction<any>) => {
       state.isActive = action.payload;
     },
 
@@ -252,5 +252,5 @@ const tutorialStateSlice = createSlice({
 });
 
 export const tutorialStateReducer = tutorialStateSlice.reducer;
-export const { setAnimationState, setAdvanceListener, setIsActive } =
+export const { setAnimationState, setAdvanceListener, setTutorialIsActive } =
   tutorialStateSlice.actions;

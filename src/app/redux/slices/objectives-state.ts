@@ -1,6 +1,6 @@
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Objective, Objectives } from '@data/objectives/objectives';
 import { startingLineupFull } from '@data/players/players-utils';
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface IObjectivesState {
   currentObjectives: any[];

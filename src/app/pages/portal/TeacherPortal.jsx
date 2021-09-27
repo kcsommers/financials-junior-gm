@@ -1,7 +1,7 @@
 import { useEffect, useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect } from 'react-router';
-import { setTeacher } from '@redux/actions';
+import { setTeacher } from '@redux';
 import { UserRoles } from '@data/auth/auth';
 import { LoadingSpinner } from '@components';
 import { getCurrentUser } from './../../api-helper';
@@ -48,7 +48,7 @@ export const TeacherPortal = ({ screen, isLoggedIn, userRole }) => {
   }, [isLoggedIn, initializeTeacher, teacher, userRole]);
 
   if (shouldRedirect) {
-    return <Redirect to='dashboard' />;
+    return <Redirect to="dashboard" />;
   }
 
   return teacher ? (

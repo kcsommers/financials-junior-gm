@@ -4,7 +4,6 @@ import {
   PlayerDetailsOverlay,
   ConfirmSignOverlay,
 } from '@components';
-import { TOGGLE_OVERLAY, SET_ANIMATION_STATE } from '@redux/actions';
 import { PlayerPositions } from '@data/players/players';
 
 const player = {
@@ -33,7 +32,7 @@ const slideConfigs = [
     },
     exitActions: [
       {
-        type: SET_ANIMATION_STATE,
+        type: 'SET_ANIMATION_STATE',
         payload: {
           page: 'team',
           animationStates: [
@@ -66,7 +65,7 @@ const slideConfigs = [
     small: true,
     exitActions: [
       {
-        type: SET_ANIMATION_STATE,
+        type: 'SET_ANIMATION_STATE',
         payload: {
           page: 'team',
           animationStates: [
@@ -88,7 +87,7 @@ const slideConfigs = [
     ],
     previousActions: [
       {
-        type: SET_ANIMATION_STATE,
+        type: 'SET_ANIMATION_STATE',
         payload: {
           page: 'team',
           animationStates: [
@@ -122,7 +121,7 @@ const slideConfigs = [
     },
     exitActions: [
       {
-        type: SET_ANIMATION_STATE,
+        type: 'SET_ANIMATION_STATE',
         payload: {
           page: 'team',
           animationStates: [
@@ -144,7 +143,7 @@ const slideConfigs = [
     ],
     previousActions: [
       {
-        type: SET_ANIMATION_STATE,
+        type: 'SET_ANIMATION_STATE',
         payload: {
           page: 'team',
           animationStates: [
@@ -177,7 +176,7 @@ const slideConfigs = [
     },
     exitActions: [
       {
-        type: SET_ANIMATION_STATE,
+        type: 'SET_ANIMATION_STATE',
         payload: {
           page: 'team',
           animationStates: [
@@ -207,7 +206,7 @@ const slideConfigs = [
     ],
     previousActions: [
       {
-        type: SET_ANIMATION_STATE,
+        type: 'SET_ANIMATION_STATE',
         payload: {
           page: 'team',
           animationStates: [
@@ -240,7 +239,7 @@ const slideConfigs = [
     },
     exitActions: [
       {
-        type: SET_ANIMATION_STATE,
+        type: 'SET_ANIMATION_STATE',
         payload: {
           page: 'team',
           animationStates: [
@@ -276,7 +275,7 @@ const slideConfigs = [
         },
       },
       {
-        type: TOGGLE_OVERLAY,
+        type: 'TOGGLE_OVERLAY',
         payload: {
           isOpen: true,
           template: (
@@ -291,7 +290,7 @@ const slideConfigs = [
     ],
     previousActions: [
       {
-        type: SET_ANIMATION_STATE,
+        type: 'SET_ANIMATION_STATE',
         payload: {
           page: 'team',
           animationStates: [
@@ -334,7 +333,7 @@ const slideConfigs = [
     },
     exitActions: [
       {
-        type: TOGGLE_OVERLAY,
+        type: 'TOGGLE_OVERLAY',
         payload: {
           isOpen: true,
           template: <PlayerDetailsOverlay player={player} isDisabled={true} />,
@@ -344,14 +343,14 @@ const slideConfigs = [
     ],
     previousActions: [
       {
-        type: TOGGLE_OVERLAY,
+        type: 'TOGGLE_OVERLAY',
         payload: {
           isOpen: false,
           template: null,
         },
       },
       {
-        type: SET_ANIMATION_STATE,
+        type: 'SET_ANIMATION_STATE',
         payload: {
           page: 'team',
           animationStates: [
@@ -400,7 +399,7 @@ const slideConfigs = [
     },
     exitActions: [
       {
-        type: TOGGLE_OVERLAY,
+        type: 'TOGGLE_OVERLAY',
         payload: {
           isOpen: true,
           template: (
@@ -416,7 +415,7 @@ const slideConfigs = [
     ],
     previousActions: [
       {
-        type: TOGGLE_OVERLAY,
+        type: 'TOGGLE_OVERLAY',
         payload: {
           isOpen: true,
           template: (
@@ -443,7 +442,7 @@ const slideConfigs = [
     },
     exitActions: [
       {
-        type: TOGGLE_OVERLAY,
+        type: 'TOGGLE_OVERLAY',
         payload: {
           isOpen: false,
           template: null,
@@ -452,7 +451,7 @@ const slideConfigs = [
     ],
     previousActions: [
       {
-        type: TOGGLE_OVERLAY,
+        type: 'TOGGLE_OVERLAY',
         payload: {
           isOpen: true,
           template: <PlayerDetailsOverlay player={player} isDisabled={true} />,
@@ -473,7 +472,7 @@ const slideConfigs = [
     },
     previousActions: [
       {
-        type: TOGGLE_OVERLAY,
+        type: 'TOGGLE_OVERLAY',
         payload: {
           isOpen: true,
           template: (

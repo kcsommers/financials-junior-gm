@@ -1,5 +1,4 @@
 import Slide from '../../Slide';
-import { SET_ANIMATION_STATE } from '@redux/actions';
 
 const slideConfigs = [
   {
@@ -36,7 +35,7 @@ const slideConfigs = [
     },
     exitActions: [
       {
-        type: SET_ANIMATION_STATE,
+        type: 'SET_ANIMATION_STATE',
         payload: {
           page: 'season',
           animationStates: [
@@ -67,7 +66,7 @@ const slideConfigs = [
     transparentBg: true,
     exitActions: [
       {
-        type: SET_ANIMATION_STATE,
+        type: 'SET_ANIMATION_STATE',
         payload: {
           page: 'season',
           animationStates: [
@@ -101,7 +100,7 @@ const slideConfigs = [
     ],
     previousActions: [
       {
-        type: SET_ANIMATION_STATE,
+        type: 'SET_ANIMATION_STATE',
         payload: {
           page: 'season',
           animationStates: [
@@ -131,7 +130,7 @@ const slideConfigs = [
     },
     exitActions: [
       {
-        type: SET_ANIMATION_STATE,
+        type: 'SET_ANIMATION_STATE',
         payload: {
           page: 'season',
           animationStates: [
@@ -154,7 +153,7 @@ const slideConfigs = [
     ],
     previousActions: [
       {
-        type: SET_ANIMATION_STATE,
+        type: 'SET_ANIMATION_STATE',
         payload: {
           page: 'season',
           animationStates: [
@@ -191,7 +190,7 @@ const slideConfigs = [
     },
     exitActions: [
       {
-        type: SET_ANIMATION_STATE,
+        type: 'SET_ANIMATION_STATE',
         payload: {
           page: 'season',
           animationStates: [
@@ -207,7 +206,7 @@ const slideConfigs = [
     ],
     previousActions: [
       {
-        type: SET_ANIMATION_STATE,
+        type: 'SET_ANIMATION_STATE',
         payload: {
           page: 'season',
           animationStates: [
@@ -240,7 +239,7 @@ const slideConfigs = [
     },
     previousActions: [
       {
-        type: SET_ANIMATION_STATE,
+        type: 'SET_ANIMATION_STATE',
         payload: {
           page: 'season',
           animationStates: [

@@ -19,13 +19,13 @@ import {
   getConfirmSlides,
 } from '@tutorial';
 import {
-  setTutorialState,
+  setTutorialIsActive,
   setSavings,
   setStudent,
   toggleOverlay,
   setObjectiveComplete,
   setSeasonActive,
-} from '@redux/actions';
+} from '@redux';
 import comericaLogo from '@images/comerica-logo.svg';
 import { updateStudentById } from '../../api-helper';
 import { Objectives } from '@data/objectives/objectives';
@@ -61,7 +61,7 @@ export const BudgetPage = ({ history }) => {
 
   const onTutorialComplete = (canceled) => {
     if (canceled) {
-      dispatch(setTutorialState({ isActive: false }));
+      dispatch(setTutorialIsActive(false));
       return;
     }
 
@@ -77,7 +77,7 @@ export const BudgetPage = ({ history }) => {
       updateStudentById(student._id, { tutorials, objectives })
         .then(({ updatedStudent }) => {
           batch(() => {
-            dispatch(setTutorialState({ isActive: false }));
+            dispatch(setTutorialIsActive(false));
             dispatch(setStudent(updatedStudent));
             dispatch(setObjectiveComplete(Objectives.LEARN_BUDGET, true));
             _setSeasonActive();
@@ -86,7 +86,7 @@ export const BudgetPage = ({ history }) => {
         .catch((err) => console.error(err));
     } else {
       batch(() => {
-        dispatch(setTutorialState({ isActive: false }));
+        dispatch(setTutorialIsActive(false));
         dispatch(setObjectiveComplete(Objectives.LEARN_BUDGET, true));
         _setSeasonActive();
       });
@@ -96,11 +96,7 @@ export const BudgetPage = ({ history }) => {
   const startTutorial = useCallback(
     (slides) => {
       setTutorialSlides(slides);
-      dispatch(
-        setTutorialState({
-          isActive: true,
-        })
-      );
+      dispatch(setTutorialIsActive(true));
     },
     [dispatch]
   );

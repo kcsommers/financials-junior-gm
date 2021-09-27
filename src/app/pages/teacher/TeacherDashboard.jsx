@@ -1,5 +1,5 @@
 import { TEACHER_ID_STORAGE_KEY, clearSessionStorage } from '@data/auth/auth';
-import { setLoginState } from '@redux/actions';
+import { setLoginState } from '@redux';
 import { connect } from 'react-redux';
 import curriculumGuid from '../../../assets/pdf/curriculum_guide.pdf';
 import teacherTutorial from '../../../assets/pdf/teacher_tutorial.pdf';

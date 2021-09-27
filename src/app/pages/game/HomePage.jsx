@@ -19,13 +19,13 @@ import {
   getConfirmSlides,
 } from '@tutorial';
 import {
-  setTutorialState,
+  setTutorialIsActive,
   toggleOverlay,
   setStudent,
   setInitialPlayersState,
   initializeSeason,
   initializeObjectives,
-} from '@redux/actions';
+} from '@redux';
 import { updateStudentById } from '../../api-helper';
 import { cloneDeep } from 'lodash';
 import { faqs } from '@data/faqs/faqs';
@@ -67,7 +67,7 @@ export const HomePage = ({ location, history }) => {
 
   const onTutorialComplete = (canceled) => {
     if (canceled) {
-      dispatch(setTutorialState({ isActive: false }));
+      dispatch(setTutorialIsActive(false));
       return;
     }
 
@@ -83,36 +83,32 @@ export const HomePage = ({ location, history }) => {
           });
 
           batch(() => {
-            dispatch(setTutorialState({ isActive: false }));
+            dispatch(setTutorialIsActive(false));
             dispatch(setStudent(updatedStudent));
           });
         })
         .catch((err) => console.error(err));
     } else if (!student.tutorials.team) {
-      dispatch(setTutorialState({ isActive: false }));
+      dispatch(setTutorialIsActive(false));
       setDisabledStickBtns({
         ...disabledStickBtns,
         team: !student.tutorials.budget,
       });
     } else if (!student.tutorials.season) {
-      dispatch(setTutorialState({ isActive: false }));
+      dispatch(setTutorialIsActive(false));
       setDisabledStickBtns({
         ...disabledStickBtns,
         season: !startingLineupFull(student),
       });
     } else {
-      dispatch(setTutorialState({ isActive: false }));
+      dispatch(setTutorialIsActive(false));
     }
   };
 
   const startTutorial = useCallback(
     (slides) => {
       setTutorialSlides(slides);
-      dispatch(
-        setTutorialState({
-          isActive: true,
-        })
-      );
+      dispatch(setTutorialIsActive(true));
     },
     [dispatch]
   );

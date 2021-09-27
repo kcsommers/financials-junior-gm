@@ -8,7 +8,7 @@ import {
 } from '@components';
 import trophyIcon from '@images/icons/trophy.svg';
 import { awardsByLevel } from '@data/season/awards';
-import { toggleOverlay } from '@redux/actions';
+import { toggleOverlay } from '@redux';
 import { resetSeason } from '@data/season/season-utils';
 
 const styles = {

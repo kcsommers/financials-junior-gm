@@ -10,7 +10,7 @@ module.exports = {
       '@css': path.resolve(__dirname, 'src/assets/css'),
       '@images': path.resolve(__dirname, 'src/assets/images'),
       '@tutorial': path.resolve(__dirname, 'src/app/tutorial/public-api.js'),
-      '@redux': path.resolve(__dirname, 'src/app/redux'),
+      '@redux': path.resolve(__dirname, 'src/app/redux/public-api.ts'),
       '@utils': path.resolve(__dirname, 'src/app/utils'),
       '@data': path.resolve(__dirname, 'src/app/data'),
     },

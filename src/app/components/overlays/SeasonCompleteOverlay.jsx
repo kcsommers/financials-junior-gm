@@ -2,15 +2,15 @@ import { useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import { getStanding } from '@data/season/season-utils';
 import { OverlayBoard, Button } from '@components';
-import { toggleOverlay } from '@redux/actions';
+import { toggleOverlay } from '@redux';
 import trophyIcon from '@images/icons/trophy.svg';
 
 export const SeasonCompleteOverlay = ({ team, standings }) => {
   const dispatch = useDispatch();
-  const standing = useMemo(() => getStanding(team, standings), [
-    team,
-    standings,
-  ]);
+  const standing = useMemo(
+    () => getStanding(team, standings),
+    [team, standings]
+  );
 
   return (
     <OverlayBoard>
@@ -26,12 +26,12 @@ export const SeasonCompleteOverlay = ({ team, standings }) => {
           padding: '4rem 0rem',
         }}
       >
-        <h2 className='color-primary' style={{ marginBottom: '2rem' }}>
+        <h2 className="color-primary" style={{ marginBottom: '2rem' }}>
           Great Job! You came in <br />
-          <span className='color-accent'>{standing} place</span>
+          <span className="color-accent">{standing} place</span>
         </h2>
         <div
-          className='season-complete-trophy-wrap'
+          className="season-complete-trophy-wrap"
           style={{ height: '200px', marginBottom: '2rem' }}
         >
           <span
@@ -41,10 +41,10 @@ export const SeasonCompleteOverlay = ({ team, standings }) => {
               transformOrigin: 'top center',
             }}
           >
-            <img src={trophyIcon} alt='Trophy' />
+            <img src={trophyIcon} alt="Trophy" />
           </span>
         </div>
-        <p className='color-primary' style={{ fontSize: '1.75rem' }}>
+        <p className="color-primary" style={{ fontSize: '1.75rem' }}>
           Check out your awards in the trophy room!
         </p>
         <div
@@ -57,7 +57,7 @@ export const SeasonCompleteOverlay = ({ team, standings }) => {
           }}
         >
           <Button
-            text='See Trophies'
+            text="See Trophies"
             onClick={() => {
               dispatch(toggleOverlay({ isOpen: false, template: null }));
             }}

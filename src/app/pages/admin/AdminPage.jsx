@@ -6,7 +6,7 @@ import { Link, Route, Switch } from 'react-router-dom';
 import { TeacherBrowser } from './TeacherBrowser';
 import { logout } from './../../api-helper';
 import { clearSessionStorage } from '@data/auth/auth';
-import { setLoginState } from '@redux/actions';
+import { setLoginState } from '@redux';
 import { formatNumber } from '@utils';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';

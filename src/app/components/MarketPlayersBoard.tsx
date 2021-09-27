@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { PlayerPositions } from '@data/players/players';
 import { PlayerCard, InsufficientFundsOverlay } from '@components';
-import { useSelector, useDispatch } from 'react-redux';
-import { toggleOverlay } from '@redux/actions';
+import { useDispatch } from 'react-redux';
+import { toggleOverlay } from '@redux';
 import { Objectives } from '@data/objectives/objectives';
 import '@css/components/MarketPlayersBoard.css';
 import { getOpenAssignment } from '../data/players/players-utils';
+import { useAppSelector } from '@redux';
 
 const getPlayerCardStyles = (arrLength, playerIndex) => {
   let scale = 1.15;
@@ -77,13 +78,13 @@ export const MarketPlayersBoard = ({
 
   // if there is an active season scenario, only the scouted players
   // should be available to sign
-  const marketPlayers = useSelector((state) =>
+  const marketPlayers = useAppSelector((state) =>
     scenarioAssignment && scenarioAssignment === signAssignment
       ? state.players.scoutingState.offeredScoutPlayers
       : state.players.marketPlayers
   );
 
-  const { moneySpent } = useSelector((state) => state.players);
+  const { moneySpent } = useAppSelector((state) => state.players);
   const [activePosition, setActivePosition] = useState(initialPosition);
 
   const checkBudget = (signingPlayer) => {

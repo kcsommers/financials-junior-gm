@@ -1,24 +1,17 @@
-import React, { useState, useRef } from 'react';
+import { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useDispatch } from 'react-redux';
 import { SharkieComponent } from './Sharkie';
 import backBtn from '@images/back-btn.svg';
 import backBtnRvrsd from '@images/back-btn-reversed.svg';
-import {
-  setAnimationState,
-  toggleOverlay,
-  SET_ANIMATION_STATE,
-  TOGGLE_OVERLAY,
-  SET_ADVANCE_LISTENER,
-  setAdvanceListener,
-} from '@redux/actions';
+import { setAnimationState, toggleOverlay, setAdvanceListener } from '@redux';
 import '@css/tutorial/tutorials.css';
 import { useAdvanceSlideListener } from './../../hooks/use-advance-slide-listener';
 
 const allActions = {
-  [SET_ANIMATION_STATE]: setAnimationState,
-  [TOGGLE_OVERLAY]: toggleOverlay,
-  [SET_ADVANCE_LISTENER]: setAdvanceListener,
+  SET_ANIMATION_STATE: setAnimationState,
+  TOGGLE_OVERLAY: toggleOverlay,
+  SET_ADVANCE_LISTENER: setAdvanceListener,
 };
 
 let timer = 0;
@@ -132,7 +125,7 @@ export const Tutorial = ({ slides, onComplete }) => {
         // set the method returned from the hook in redux store
         // to be used across the app
         // also need to update listener locally in order to update the hook
-        if (a.type === SET_ADVANCE_LISTENER) {
+        if (a.type === 'SET_ADVANCE_LISTENER') {
           setShouldAdvance(() => a.payload);
           payload = onAdvanceEvent;
         }

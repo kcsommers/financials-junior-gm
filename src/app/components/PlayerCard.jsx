@@ -106,10 +106,10 @@ const styles = {
 
 export const PlayerCard = ({
   player,
-  animationStates,
+  animationStates = null,
   size = 'small',
   onClick,
-  slotPosition,
+  slotPosition = null,
 }) => {
   const playerTemplateSmall = player ? (
     <motion.div

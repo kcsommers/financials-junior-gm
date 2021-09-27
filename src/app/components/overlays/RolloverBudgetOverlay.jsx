@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { OverlayBoard, BudgetSlider, Button } from '@components';
 import { updateStudentById } from './../../api-helper';
 import { batch, useDispatch } from 'react-redux';
-import { toggleOverlay, setStudent } from '@redux/actions';
+import { toggleOverlay, setStudent } from '@redux';
 import comericaLogo from '@images/comerica-logo.svg';
 
 export const RolloverBudgetOverlay = ({ student }) => {

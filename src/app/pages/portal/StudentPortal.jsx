@@ -6,7 +6,7 @@ import {
   setInitialPlayersState,
   initializeObjectives,
   setStartTime,
-} from '@redux/actions';
+} from '@redux';
 import { UserRoles } from '@data/auth/auth';
 import { Redirect } from 'react-router-dom';
 import { getCurrentUser } from './../../api-helper';

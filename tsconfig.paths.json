@@ -7,7 +7,7 @@
       "@css/*": ["assets/css/*"],
       "@images/*": ["assets/images/*"],
       "@tutorial": ["app/tutorial/public-api.js"],
-      "@redux/*": ["app/redux/*"],
+      "@redux": ["app/redux/public-api.js"],
       "@utils": ["app/utils"]
     }
   }

@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { motion, AnimatePresence } from 'framer-motion';
 import cancelBtn from '@images/icons/cancel-big.svg';
-import { toggleOverlay } from '@redux/actions';
+import { toggleOverlay } from '@redux';
 import '@css/components/Overlay.css';
 
 export const Overlay = () => {

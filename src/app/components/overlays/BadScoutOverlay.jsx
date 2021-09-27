@@ -1,5 +1,5 @@
 import { OverlayBoard, Button } from '@components';
-import { toggleOverlay } from '@redux/actions';
+import { toggleOverlay } from '@redux';
 import { useDispatch } from 'react-redux';
 
 export const BadScoutOverlay = ({
@@ -35,13 +35,13 @@ export const BadScoutOverlay = ({
       >
         <div style={{ textAlign: 'center', padding: '3rem' }}>
           <h3
-            className='color-primary'
+            className="color-primary"
             style={{ marginBottom: '2rem', fontSize: '2.15rem' }}
           >
             {message1}
           </h3>
           <p
-            className='color-primary'
+            className="color-primary"
             style={{ fontSize: '1.75rem', lineHeight: '3rem' }}
           >
             {message2}

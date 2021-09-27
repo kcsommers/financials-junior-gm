@@ -1,5 +1,5 @@
-import { getIsLoggedIn, getUserRole } from '@data/auth/auth';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { getIsLoggedIn, getUserRole } from '@data/auth/auth';
 
 interface ILoginState {
   isLoggedIn: boolean;

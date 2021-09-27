@@ -22,7 +22,7 @@ import {
   getConfirmSlides,
   finishedScoutingSlides,
 } from '@tutorial';
-import { setTutorialState, toggleOverlay, setStudent } from '@redux/actions';
+import { setTutorialIsActive, toggleOverlay, setStudent } from '@redux';
 import { updateStudentById } from '../../api-helper';
 import { faqs } from '@data/faqs/faqs';
 import { cloneDeep } from 'lodash';
@@ -57,7 +57,7 @@ export const TeamPage = ({ history, location }) => {
 
   const onTutorialComplete = (canceled) => {
     if (canceled) {
-      dispatch(setTutorialState({ isActive: false }));
+      dispatch(setTutorialIsActive(false));
       return;
     }
 
@@ -68,24 +68,20 @@ export const TeamPage = ({ history, location }) => {
       updateStudentById(student._id, { tutorials })
         .then(({ updatedStudent }) => {
           batch(() => {
-            dispatch(setTutorialState({ isActive: false }));
+            dispatch(setTutorialIsActive(false));
             dispatch(setStudent(updatedStudent));
           });
         })
         .catch((err) => console.error(err));
     } else {
-      dispatch(setTutorialState({ isActive: false }));
+      dispatch(setTutorialIsActive(false));
     }
   };
 
   const startTutorial = useCallback(
     (slides) => {
       setTutorialSlides(slides);
-      dispatch(
-        setTutorialState({
-          isActive: true,
-        })
-      );
+      dispatch(setTutorialIsActive(true));
     },
     [dispatch]
   );

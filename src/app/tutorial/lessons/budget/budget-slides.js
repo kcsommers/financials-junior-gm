@@ -1,5 +1,4 @@
 import Slide from '../../Slide';
-import { SET_ADVANCE_LISTENER, SET_ANIMATION_STATE } from '@redux/actions';
 
 const slideConfigs = [
   {
@@ -24,7 +23,7 @@ const slideConfigs = [
     },
     exitActions: [
       {
-        type: SET_ANIMATION_STATE,
+        type: 'SET_ANIMATION_STATE',
         payload: {
           page: 'budget',
           animationStates: [
@@ -58,7 +57,7 @@ const slideConfigs = [
     },
     previousActions: [
       {
-        type: SET_ANIMATION_STATE,
+        type: 'SET_ANIMATION_STATE',
         payload: {
           page: 'budget',
           animationStates: [
@@ -87,7 +86,7 @@ const slideConfigs = [
     hasButtons: true,
     exitActions: [
       {
-        type: SET_ANIMATION_STATE,
+        type: 'SET_ANIMATION_STATE',
         payload: {
           page: 'budget',
           animationStates: [
@@ -117,7 +116,7 @@ const slideConfigs = [
     hasButtons: true,
     previousActions: [
       {
-        type: SET_ANIMATION_STATE,
+        type: 'SET_ANIMATION_STATE',
         payload: {
           page: 'budget',
           animationStates: [
@@ -148,7 +147,7 @@ const slideConfigs = [
     hasButtons: true,
     exitActions: [
       {
-        type: SET_ANIMATION_STATE,
+        type: 'SET_ANIMATION_STATE',
         payload: {
           page: 'budget',
           animationStates: [
@@ -183,7 +182,7 @@ const slideConfigs = [
     },
     exitActions: [
       {
-        type: SET_ANIMATION_STATE,
+        type: 'SET_ANIMATION_STATE',
         payload: {
           page: 'budget',
           animationStates: [
@@ -211,7 +210,7 @@ const slideConfigs = [
         },
       },
       {
-        type: SET_ADVANCE_LISTENER,
+        type: 'SET_ADVANCE_LISTENER',
         payload: (sliderValue) => {
           return sliderValue === 1;
         },
@@ -219,7 +218,7 @@ const slideConfigs = [
     ],
     previousActions: [
       {
-        type: SET_ANIMATION_STATE,
+        type: 'SET_ANIMATION_STATE',
         payload: {
           page: 'budget',
           animationStates: [
@@ -253,7 +252,7 @@ const slideConfigs = [
     },
     exitActions: [
       {
-        type: SET_ANIMATION_STATE,
+        type: 'SET_ANIMATION_STATE',
         payload: {
           page: 'budget',
           animationStates: [
@@ -271,7 +270,7 @@ const slideConfigs = [
         },
       },
       {
-        type: SET_ADVANCE_LISTENER,
+        type: 'SET_ADVANCE_LISTENER',
         payload: (sliderValue) => {
           return sliderValue === 3;
         },
@@ -289,7 +288,7 @@ const slideConfigs = [
     },
     exitActions: [
       {
-        type: SET_ANIMATION_STATE,
+        type: 'SET_ANIMATION_STATE',
         payload: {
           page: 'budget',
           animationStates: [
@@ -307,7 +306,7 @@ const slideConfigs = [
         },
       },
       {
-        type: SET_ADVANCE_LISTENER,
+        type: 'SET_ADVANCE_LISTENER',
         payload: (sliderValue) => {
           return sliderValue === 4;
         },
@@ -325,7 +324,7 @@ const slideConfigs = [
     },
     exitActions: [
       {
-        type: SET_ANIMATION_STATE,
+        type: 'SET_ANIMATION_STATE',
         payload: {
           page: 'budget',
           animationStates: [
@@ -358,7 +357,7 @@ const slideConfigs = [
     },
     previousActions: [
       {
-        type: SET_ANIMATION_STATE,
+        type: 'SET_ANIMATION_STATE',
         payload: {
           page: 'budget',
           animationStates: [
@@ -379,7 +378,7 @@ const slideConfigs = [
         },
       },
       {
-        type: SET_ADVANCE_LISTENER,
+        type: 'SET_ADVANCE_LISTENER',
         payload: (sliderValue) => {
           return sliderValue === 4;
         },
@@ -393,7 +392,7 @@ const slideConfigs = [
     hasButtons: true,
     exitActions: [
       {
-        type: SET_ANIMATION_STATE,
+        type: 'SET_ANIMATION_STATE',
         payload: {
           page: 'budget',
           animationStates: [

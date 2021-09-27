@@ -10,7 +10,7 @@ import {
   ADMIN_ID_STORAGE_KEY,
   clearSessionStorage,
 } from '@data/auth/auth';
-import { setLoginState } from '@redux/actions';
+import { setLoginState } from '@redux';
 import Cookie from 'js-cookie'; /// JS-Cookie lib to store cookie on the browser
 import '@css/pages/Login.css';
 

@@ -12,7 +12,7 @@ import {
   removeObjective,
   setObjectiveComplete,
   removeScenario,
-} from '@redux/actions';
+} from '@redux';
 import { ConfirmSignOverlay } from './ConfirmSignOverlay';
 import { TeamAssignments } from '@data/players/players';
 import {
@@ -104,41 +104,41 @@ export const SignPlayerOverlay = ({ assignment, isDisabled }) => {
           pointerEvents: isDisabled ? 'none' : 'auto',
         }}
       >
-        <div className='sign-player-overlay-top' style={{ display: 'flex' }}>
+        <div className="sign-player-overlay-top" style={{ display: 'flex' }}>
           <div style={{ flex: 1 }}>
             <TeamBudgetState />
           </div>
           {
             <div style={{ flex: 1 }}>
               <h3
-                className='color-primary'
+                className="color-primary"
                 style={{
                   fontSize: '1.5rem',
                 }}
               >
                 Spaces On Your Team
               </h3>
-              <div className='team-slots-board'>
-                <div className='team-slots-board-row'>
-                  <span className='color-primary'>Forwards:</span>
-                  <span className='color-accent'>
+              <div className="team-slots-board">
+                <div className="team-slots-board-row">
+                  <span className="color-primary">Forwards:</span>
+                  <span className="color-accent">
                     {availableSlots.forwards}
                   </span>
                 </div>
-                <div className='team-slots-board-row'>
-                  <span className='color-primary'>Defense:</span>
-                  <span className='color-accent'>{availableSlots.defense}</span>
+                <div className="team-slots-board-row">
+                  <span className="color-primary">Defense:</span>
+                  <span className="color-accent">{availableSlots.defense}</span>
                 </div>
-                <div className='team-slots-board-row'>
-                  <span className='color-primary'>Goalie:</span>
-                  <span className='color-accent'>{availableSlots.goalie}</span>
+                <div className="team-slots-board-row">
+                  <span className="color-primary">Goalie:</span>
+                  <span className="color-accent">{availableSlots.goalie}</span>
                 </div>
               </div>
             </div>
           }
         </div>
 
-        <div className='market-players-board-container'>
+        <div className="market-players-board-container">
           <MarketPlayersBoard
             initialPosition={getPlayerPositon(assignment)}
             onPlayerCardClick={confirmSign}

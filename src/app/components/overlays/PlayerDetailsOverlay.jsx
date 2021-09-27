@@ -4,7 +4,7 @@ import {
   setStudent,
   releasePlayer,
   setObjectiveComplete,
-} from '@redux/actions';
+} from '@redux';
 import {
   PlayerCard,
   OverlayBoard,
