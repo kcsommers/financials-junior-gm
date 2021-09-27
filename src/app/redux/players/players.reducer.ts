@@ -16,6 +16,8 @@ import {
   isStarter,
 } from '@data/players/players-utils';
 import { getMoneyLevels } from '@utils';
+import { Reducer } from 'react';
+import { AnyAction } from 'redux';
 
 const initialState = {
   marketPlayers: {
@@ -44,7 +46,10 @@ const initialState = {
   moneySpent: 0,
 };
 
-const playersReducer = (state = initialState, action) => {
+export const playersReducer: Reducer<typeof initialState, AnyAction> = (
+  state = initialState,
+  action
+) => {
   switch (action.type) {
     case SET_INITIAL_PLAYERS_STATE: {
       const { players, student } = action.payload;
@@ -237,11 +242,10 @@ const playersReducer = (state = initialState, action) => {
       const clonedState = cloneDeep(state);
 
       // remove the signed player from the market
-      clonedState.marketPlayers[
-        signedPlayer.playerPosition
-      ] = clonedState.marketPlayers[signedPlayer.playerPosition].filter(
-        (p) => p._id !== signedPlayer._id
-      );
+      clonedState.marketPlayers[signedPlayer.playerPosition] =
+        clonedState.marketPlayers[signedPlayer.playerPosition].filter(
+          (p) => p._id !== signedPlayer._id
+        );
 
       // if released player is a scout player, put them back in the scout cache
       if (releasedPlayer.playerAssignment === PlayerAssignments.OFFERED_SCOUT) {
@@ -358,5 +362,3 @@ const playersReducer = (state = initialState, action) => {
       return state;
   }
 };
-
-export default playersReducer;

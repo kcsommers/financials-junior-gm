@@ -1,11 +1,16 @@
 import { SET_TEACHER } from './teacher-state.actions';
 import { cloneDeep } from 'lodash';
+import { Reducer } from 'react';
+import { AnyAction } from 'redux';
 
 const initialState = {
   teacher: null,
 };
 
-const teacherStateReducer = (state = initialState, action) => {
+export const teacherStateReducer: Reducer<typeof initialState, AnyAction> = (
+  state = initialState,
+  action
+) => {
   switch (action.type) {
     case SET_TEACHER: {
       const clonedState = cloneDeep(state);
@@ -17,5 +22,3 @@ const teacherStateReducer = (state = initialState, action) => {
     }
   }
 };
-
-export default teacherStateReducer;

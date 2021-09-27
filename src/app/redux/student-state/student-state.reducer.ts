@@ -5,13 +5,18 @@ import {
   SET_START_TIME,
 } from './student-state.actions';
 import { cloneDeep } from 'lodash';
+import { Reducer } from 'react';
+import { AnyAction } from 'redux';
 
 const initialState = {
   student: null,
   startTime: null,
 };
 
-const studentStateReducer = (state = initialState, action) => {
+export const studentStateReducer: Reducer<typeof initialState, AnyAction> = (
+  state = initialState,
+  action
+) => {
   switch (action.type) {
     case SET_STUDENT: {
       const student = action.payload;
@@ -50,5 +55,3 @@ const studentStateReducer = (state = initialState, action) => {
       return state;
   }
 };
-
-export default studentStateReducer;

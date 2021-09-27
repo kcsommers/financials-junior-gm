@@ -4,6 +4,8 @@ import {
   SET_ADVANCE_LISTENER,
 } from './tutorials.actions';
 import { PlayerPositions } from '@data/players/players';
+import { Reducer } from 'react';
+import { AnyAction } from 'redux';
 
 const initialState = {
   isActive: false,
@@ -114,7 +116,10 @@ const initialState = {
   },
 };
 
-const tutorialsReducer = (state = initialState, action) => {
+export const tutorialsReducer: Reducer<typeof initialState, AnyAction> = (
+  state = initialState,
+  action
+) => {
   switch (action.type) {
     case SET_TUTORIAL_STATE: {
       return {
@@ -154,5 +159,3 @@ const tutorialsReducer = (state = initialState, action) => {
       return state;
   }
 };
-
-export default tutorialsReducer;

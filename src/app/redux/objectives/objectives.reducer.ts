@@ -7,6 +7,8 @@ import {
 } from './objectives.actions';
 import { cloneDeep } from 'lodash';
 import { startingLineupFull } from '@data/players/players-utils';
+import { Reducer } from 'react';
+import { AnyAction } from 'redux';
 
 const initialState = {
   currentObjectives: [
@@ -19,7 +21,10 @@ const initialState = {
   ],
 };
 
-const objectivesReducer = (state = initialState, action) => {
+export const objectivesReducer: Reducer<typeof initialState, AnyAction> = (
+  state = initialState,
+  action
+) => {
   switch (action.type) {
     case INITIALIZE_OBJECTIVES: {
       const { student, reset } = action.payload;
@@ -100,5 +105,3 @@ const objectivesReducer = (state = initialState, action) => {
       return state;
   }
 };
-
-export default objectivesReducer;

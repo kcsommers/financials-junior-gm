@@ -1,11 +1,16 @@
 import { SET_ADMIN } from './admin-state.actions';
 import { cloneDeep } from 'lodash';
+import { Reducer } from 'react';
+import { AnyAction } from 'redux';
 
 const initialState = {
   admin: null,
 };
 
-const adminStateReducer = (state = initialState, action) => {
+export const adminStateReducer: Reducer<typeof initialState, AnyAction> = (
+  state = initialState,
+  action
+) => {
   switch (action.type) {
     case SET_ADMIN: {
       const clonedState = cloneDeep(state);
@@ -17,5 +22,3 @@ const adminStateReducer = (state = initialState, action) => {
     }
   }
 };
-
-export default adminStateReducer;

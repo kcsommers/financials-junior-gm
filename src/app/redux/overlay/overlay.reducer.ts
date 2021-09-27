@@ -1,6 +1,16 @@
 import { TOGGLE_OVERLAY } from './overlay.actions';
+import { Reducer } from 'react';
+import { AnyAction } from 'redux';
 
-const initialState = {
+type OverlayState = {
+  isOpen: boolean;
+  template: any;
+  sign: any;
+  canClose: boolean;
+  onClose: any;
+};
+
+const initialState: OverlayState = {
   isOpen: false,
   template: null,
   sign: null,
@@ -8,10 +18,14 @@ const initialState = {
   onClose: null,
 };
 
-const overlayReducer = (state = initialState, action) => {
+export const overlayReducer: Reducer<OverlayState, AnyAction> = (
+  state = initialState,
+  action
+) => {
   switch (action.type) {
     case TOGGLE_OVERLAY: {
       return {
+        sign: action.payload.sign,
         isOpen: action.payload.isOpen,
         template: action.payload.template,
         onClose: action.payload.onClose,
@@ -25,5 +39,3 @@ const overlayReducer = (state = initialState, action) => {
       return state;
   }
 };
-
-export default overlayReducer;

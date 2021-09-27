@@ -15,6 +15,8 @@ import {
   SET_SEASON_ACTIVE,
   REMOVE_SCENARIO,
 } from './season.actions';
+import { AnyAction } from 'redux';
+import { Reducer } from 'react';
 
 const allOpponents = getAllOpponents(1);
 
@@ -31,7 +33,10 @@ const initialState = {
   seasonActive: false,
 };
 
-const seasonReducer = (state = initialState, action) => {
+export const seasonReducer: Reducer<typeof initialState, AnyAction> = (
+  state = initialState,
+  action
+) => {
   switch (action.type) {
     case INITIALIZE_SEASON: {
       const student = action.payload;
@@ -194,5 +199,3 @@ const seasonReducer = (state = initialState, action) => {
       return state;
   }
 };
-
-export default seasonReducer;
