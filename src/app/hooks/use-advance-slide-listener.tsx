@@ -5,7 +5,7 @@ import { setAdvanceListener } from '@redux';
 export const useAdvanceSlideListener = (callback, slideIndex, updateSlide) => {
   const dispatch = useDispatch();
 
-  const callbackRef = useRef();
+  const callbackRef = useRef<any>();
 
   const slideIndexRef = useRef(slideIndex);
 
