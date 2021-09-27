@@ -19,10 +19,10 @@ const sticks = {
 export const StickButton = ({
   link,
   stick,
-  inverse,
-  small,
-  isDisabled,
-  beforeNav,
+  inverse = false,
+  small = false,
+  isDisabled = false,
+  beforeNav = false,
 }) => {
   const history = useHistory();
 

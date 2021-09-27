@@ -115,7 +115,7 @@ export const ResetPasswordPage = ({ history, match }) => {
               type="text"
               placeholder="Email Address"
               name="username"
-              maxLength="100"
+              maxLength={100}
             />
           </div>
           <div className="form-field">
@@ -126,7 +126,7 @@ export const ResetPasswordPage = ({ history, match }) => {
               type="password"
               placeholder="New Password"
               name="password"
-              maxLength="100"
+              maxLength={100}
             />
           </div>
           <div className="form-field">
@@ -137,7 +137,7 @@ export const ResetPasswordPage = ({ history, match }) => {
               type="password"
               placeholder="Verify Password"
               name="passwordVerfiy"
-              maxLength="100"
+              maxLength={100}
             />
           </div>
           <p className="error-text">{error}</p>

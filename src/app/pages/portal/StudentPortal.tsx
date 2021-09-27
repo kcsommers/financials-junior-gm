@@ -6,10 +6,11 @@ import {
   setInitialPlayersState,
   initializeObjectives,
   setStartTime,
+  useAppSelector,
 } from '@redux';
 import { UserRoles } from '@data/auth/auth';
 import { Redirect } from 'react-router-dom';
-import { getCurrentUser } from './../../api-helper';
+import { getCurrentUser } from '../../api-helper';
 import { LoadingSpinner } from '@components';
 import {
   getAvailableSlots,
@@ -27,7 +28,7 @@ export const StudentPortal = ({
 }) => {
   const dispatch = useDispatch();
 
-  const { student, startTime } = useSelector((state) => state.studentState);
+  const { student, startTime } = useAppSelector((state) => state.studentState);
 
   const [shouldRedirectToDashboard, setShouldRedirectToDashboard] =
     useState(false);
@@ -44,18 +45,15 @@ export const StudentPortal = ({
 
     isLoggedInRef.current = isLoggedIn;
     dispatch(setStartTime());
-    const beforeUnloadListener = window.addEventListener(
-      'beforeunload',
-      (e) => {
-        e.preventDefault();
-        e.returnValue = false;
-        updateStudentTimeSpent(student, startTime)
-          .then(() => {})
-          .catch((err) => console.error(err));
-        return false;
-      }
-    );
-
+    const beforeUnloadListener = (e) => {
+      e.preventDefault();
+      e.returnValue = false;
+      updateStudentTimeSpent(student, startTime)
+        .then(() => {})
+        .catch((err) => console.error(err));
+      return false;
+    };
+    window.addEventListener('beforeunload', beforeUnloadListener);
     return () =>
       window.removeEventListener('beforeunload', beforeUnloadListener);
   }, [isLoggedIn, userRole, dispatch, student]);
@@ -64,9 +62,9 @@ export const StudentPortal = ({
     (student) => {
       batch(() => {
         dispatch(setStudent(student));
-        dispatch(setInitialPlayersState(student.players, student));
+        dispatch(setInitialPlayersState({ players: student.players, student }));
         dispatch(initializeSeason(student));
-        dispatch(initializeObjectives(student, false));
+        dispatch(initializeObjectives({ student, reset: false }));
       });
     },
     [dispatch]

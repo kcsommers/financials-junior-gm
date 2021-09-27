@@ -21,11 +21,11 @@ import { Objectives } from '@data/objectives/objectives';
 
 export const PlayerDetailsOverlay = ({
   player,
-  student = null,
-  seasonState = null,
-  isDisabled,
+  student,
+  seasonState,
+  isDisabled = false,
   includeActions = true,
-}) => {
+}: any) => {
   const dispatch = useDispatch();
 
   const onCancel = () => {
@@ -41,7 +41,9 @@ export const PlayerDetailsOverlay = ({
     handleReleasePlayer(player, student)
       .then(({ updatedStudent, updatedPlayer, prevAssignment }) => {
         batch(() => {
-          dispatch(releasePlayer(updatedPlayer, prevAssignment, student));
+          dispatch(
+            releasePlayer({ player: updatedPlayer, prevAssignment, student })
+          );
           dispatch(setStudent(updatedStudent));
           dispatch(
             toggleOverlay({
@@ -57,7 +59,10 @@ export const PlayerDetailsOverlay = ({
           );
           const objectiveComplete = startingLineupFull(updatedStudent);
           dispatch(
-            setObjectiveComplete(Objectives.FILL_TEAM, objectiveComplete)
+            setObjectiveComplete({
+              objectiveType: Objectives.FILL_TEAM,
+              isComplete: objectiveComplete,
+            })
           );
         });
       })

@@ -46,7 +46,7 @@ const btnConfigs = {
 export const FooterComponent = ({
   links,
   history,
-  inTransition,
+  inTransition = false,
   tutorialActive,
   student,
 }) => {

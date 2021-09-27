@@ -1,15 +1,15 @@
 import { useEffect, useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect } from 'react-router';
-import { setTeacher } from '@redux';
+import { setTeacher, useAppDispatch, useAppSelector } from '@redux';
 import { UserRoles } from '@data/auth/auth';
 import { LoadingSpinner } from '@components';
-import { getCurrentUser } from './../../api-helper';
+import { getCurrentUser } from '../../api-helper';
 
 export const TeacherPortal = ({ screen, isLoggedIn, userRole }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const teacher = useSelector((state) => state.teacherState.teacher);
+  const teacher = useAppSelector((state) => state.teacherState.teacher);
 
   const [shouldRedirect, setShouldRedirect] = useState(false);
 

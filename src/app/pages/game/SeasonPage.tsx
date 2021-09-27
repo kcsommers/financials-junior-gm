@@ -32,6 +32,8 @@ import {
   setSeasonComplete,
   addObjective,
   setSeasonActive,
+  useAppSelector,
+  useAppDispatch,
 } from '@redux';
 import {
   seasonSlides,
@@ -50,21 +52,21 @@ const allActions = {
 };
 
 export const SeasonPage = ({ history }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const student = useSelector((state) => state.studentState.student);
-  const { teamPlayers, teamRank } = useSelector((state) => state.players);
+  const student = useAppSelector((state) => state.studentState.student);
+  const { teamPlayers, teamRank } = useAppSelector((state) => state.players);
 
-  const tutorialActive = useSelector((state) => state.tutorial.isActive);
+  const tutorialActive = useAppSelector((state) => state.tutorial.isActive);
   const [tutorialSlides, setTutorialSlides] = useState([seasonSlides]);
   const animationStates = {
-    standings: useSelector((state) => state.tutorial.season.standings),
-    playButton: useSelector((state) => state.tutorial.season.playButton),
-    studentRank: useSelector((state) => state.tutorial.season.studentRank),
+    standings: useAppSelector((state) => state.tutorial.season.standings),
+    playButton: useAppSelector((state) => state.tutorial.season.playButton),
+    studentRank: useAppSelector((state) => state.tutorial.season.studentRank),
   };
 
   const gamePhases = getGamePhases(+student.level);
-  const seasonState = useSelector((state) => state.season);
+  const seasonState = useAppSelector((state) => state.season);
 
   const [localGameState, setLocalGameState] = useState({
     currentPhaseIndex: 0,
@@ -136,9 +138,7 @@ export const SeasonPage = ({ history }) => {
                 template: (
                   <SeasonCompleteOverlay
                     standings={seasonState.standings}
-                    level={+res.updatedStudent.level}
                     team={seasonState.seasonTeam}
-                    student={res.updatedStudent}
                   />
                 ),
                 canClose: false,
@@ -243,7 +243,7 @@ export const SeasonPage = ({ history }) => {
     }
     clonedSeasons[+student.level - 1].push(localGameState.results);
 
-    const studentUpdates = {
+    const studentUpdates: any = {
       seasons: clonedSeasons,
     };
 
@@ -264,11 +264,11 @@ export const SeasonPage = ({ history }) => {
         batch(() => {
           // set game results in redux store
           dispatch(
-            gameEnded(
-              localGameState.results,
-              gameState.opponent,
-              nextOpponentIndex
-            )
+            gameEnded({
+              gameResult: localGameState.results,
+              opponent: gameState.opponent,
+              newOpponentIndex: nextOpponentIndex,
+            })
           );
 
           dispatch(setStudent(res.updatedStudent));
@@ -394,7 +394,7 @@ export const SeasonPage = ({ history }) => {
     }
 
     let messageIndex = 0;
-    let results = null;
+    let results: any = null;
     if (currentPhase === GamePhases.GAME_ON) {
       // time to get game results
       results = getGameResult(teamRank + cheerPoints, gameState.opponent);
@@ -571,7 +571,6 @@ export const SeasonPage = ({ history }) => {
           template: (
             <NextSeasonOverlay
               student={student}
-              awards={seasonState.awards}
               next={(levelChange) => {
                 history.push({ pathname: '/home', state: { levelChange } });
               }}
@@ -635,7 +634,6 @@ export const SeasonPage = ({ history }) => {
               <Jumbotron
                 gameState={gameState}
                 seasonState={seasonState}
-                currentOpponentIndex={localGameState.currentOpponentIndex}
                 team={teamPlayers}
               />
             </div>

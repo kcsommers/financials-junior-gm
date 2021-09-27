@@ -34,9 +34,9 @@ class TeacherDashboard extends React.Component {
     if (!navigator.cookieEnabled) {
       return;
     }
-    let id = null;
+    let id = '';
     if (sessionStorage.getItem(TEACHER_ID_STORAGE_KEY)) {
-      id = sessionStorage.getItem(TEACHER_ID_STORAGE_KEY);
+      id = sessionStorage.getItem(TEACHER_ID_STORAGE_KEY) as string;
     }
     api
       .getStudentList(id)
@@ -112,7 +112,8 @@ class TeacherDashboard extends React.Component {
   }
 
   addStudentInBulk = () => {
-    let file = this.state.selectedFile;
+    // @TODO
+    let file = (this.state as any).selectedFile;
     if (file) {
       api
         .addStudentInBulk(file)
@@ -148,8 +149,8 @@ class TeacherDashboard extends React.Component {
       .logout()
       .then(() => {
         clearSessionStorage();
-        this.props.setLoginState();
-        this.props.history.push('/dashboard');
+        (this.props as any).setLoginState();
+        (this.props as any).history.push('/dashboard');
       })
       .catch((err) => console.error(err));
   };
@@ -158,7 +159,7 @@ class TeacherDashboard extends React.Component {
     return (
       <div
         className={`crud-modal-wrapper ${
-          this.state.showCSVForm ? 'show' : 'hide'
+          (this.state as any).showCSVForm ? 'show' : 'hide'
         }`}
       >
         <div className="crud-modal-wrapper__background"></div>
@@ -221,7 +222,9 @@ class TeacherDashboard extends React.Component {
         return Promise.resolve(newlyAdded);
       },
       update: (data) => {
-        const task = this.state.dataList.find((t) => t._id === data._id);
+        const task = (this.state as any).dataList.find(
+          (t) => t._id === data._id
+        );
         task.firstName = data.firstName;
         task.lastName = data.lastName;
         let updated = this.updateStudent(data, task);
@@ -326,14 +329,17 @@ class TeacherDashboard extends React.Component {
             </button>
           </div>
         </div>
-        <CRUDTable caption="List of Students" items={this.state.dataList}>
+        <CRUDTable
+          caption="List of Students"
+          items={(this.state as any).dataList}
+        >
           <CreateForm
             title="Add Student"
             trigger="Add Student"
             onSubmit={(task) => service.create(task)}
             submitText="Create"
             validate={(values) => {
-              const errors = {};
+              const errors: any = {};
               if (!values.firstName) {
                 errors.firstName = 'Please enter first name.';
               }
@@ -379,7 +385,7 @@ class TeacherDashboard extends React.Component {
             onSubmit={(task) => service.update(task)}
             submitText="Update"
             validate={(values) => {
-              const errors = {};
+              const errors: any = {};
               if (!values.firstName) {
                 errors.firstName = 'Please enter first name.';
               }
@@ -398,7 +404,7 @@ class TeacherDashboard extends React.Component {
             submitText="Delete"
           />
         </CRUDTable>
-        {this.state.dataList.length === 0 ? (
+        {(this.state as any).dataList.length === 0 ? (
           <div style={{ textAlign: 'center', margin: '20px' }}>
             {' '}
             No data found{' '}

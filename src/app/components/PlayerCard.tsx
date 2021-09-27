@@ -106,11 +106,11 @@ const styles = {
 
 export const PlayerCard = ({
   player,
-  animationStates = null,
+  animationStates,
   size = 'small',
   onClick,
-  slotPosition = null,
-}) => {
+  slotPosition,
+}: any) => {
   const playerTemplateSmall = player ? (
     <motion.div
       className={`player-card-wrap${!!onClick ? ' player-card-clickable' : ''}`}

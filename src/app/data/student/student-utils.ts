@@ -1,8 +1,8 @@
 import { updateStudentById } from '../../api-helper';
 
-export const updateStudentTimeSpent = (student, startTime) => {
+export const updateStudentTimeSpent = (student, startTime): Promise<any> => {
   if (!student || !startTime) {
-    return;
+    Promise.reject('No Student or start time');
   }
 
   const timeSpent = Date.now() - startTime;

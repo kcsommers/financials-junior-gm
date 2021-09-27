@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setAdmin } from '@redux';
+import { setAdmin, useAppSelector } from '@redux';
 import { UserRoles } from '@data/auth/auth';
 import { Redirect } from 'react-router-dom';
-import { getCurrentUser } from './../../api-helper';
+import { getCurrentUser } from '../../api-helper';
 import { LoadingSpinner } from '@components';
 
 export const AdminPortal = ({
@@ -15,7 +15,7 @@ export const AdminPortal = ({
 }) => {
   const dispatch = useDispatch();
 
-  const { admin } = useSelector((state) => state.adminState);
+  const { admin } = useAppSelector((state) => state.adminState);
 
   const [shouldRedirectToLogin, setShouldRedirectToLogin] = useState(false);
 

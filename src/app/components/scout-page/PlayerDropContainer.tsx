@@ -1,7 +1,7 @@
 import { memo } from 'react';
 
 export const PlayerDropContainer = memo(
-  ({ provided, innerRef, children, player, isDraggingOver }) => {
+  ({ provided, innerRef, children, player, isDraggingOver }: any) => {
     return (
       <div
         {...provided.droppableProps}

@@ -11,7 +11,7 @@ import {
   RolloverBudgetOverlay,
   FooterComponent,
 } from '@components';
-import { useSelector, useDispatch, batch } from 'react-redux';
+import { batch } from 'react-redux';
 import {
   budgetSlides,
   SharkieButton,
@@ -25,6 +25,8 @@ import {
   toggleOverlay,
   setObjectiveComplete,
   setSeasonActive,
+  useAppSelector,
+  useAppDispatch,
 } from '@redux';
 import comericaLogo from '@images/comerica-logo.svg';
 import { updateStudentById } from '../../api-helper';
@@ -37,14 +39,14 @@ import '@css/pages/BudgetPage.css';
 let debounceTimeout = 0;
 
 export const BudgetPage = ({ history }) => {
-  const dispatch = useDispatch();
-  const student = useSelector((state) => state.studentState.student);
-  const { moneySpent } = useSelector((state) => state.players);
-  const { inTransition, awards, inSession } = useSelector(
+  const dispatch = useAppDispatch();
+  const student = useAppSelector((state) => state.studentState.student);
+  const { moneySpent } = useAppSelector((state) => state.players);
+  const { inTransition, awards, inSession } = useAppSelector(
     (state) => state.season
   );
 
-  const tutorialState = useSelector((state) => state.tutorial);
+  const tutorialState = useAppSelector((state) => state.tutorial);
   const [tutorialSlides, setTutorialSlides] = useState([budgetSlides]);
   const [tutorialPaused, setTutorialPaused] = useState(false);
   const [tutorialBudget, setTutorialBudget] = useState({
@@ -79,7 +81,12 @@ export const BudgetPage = ({ history }) => {
           batch(() => {
             dispatch(setTutorialIsActive(false));
             dispatch(setStudent(updatedStudent));
-            dispatch(setObjectiveComplete(Objectives.LEARN_BUDGET, true));
+            dispatch(
+              setObjectiveComplete({
+                objectiveType: Objectives.LEARN_BUDGET,
+                isComplete: true,
+              })
+            );
             _setSeasonActive();
           });
         })
@@ -87,7 +94,12 @@ export const BudgetPage = ({ history }) => {
     } else {
       batch(() => {
         dispatch(setTutorialIsActive(false));
-        dispatch(setObjectiveComplete(Objectives.LEARN_BUDGET, true));
+        dispatch(
+          setObjectiveComplete({
+            objectiveType: Objectives.LEARN_BUDGET,
+            isComplete: true,
+          })
+        );
         _setSeasonActive();
       });
     }
@@ -135,10 +147,10 @@ export const BudgetPage = ({ history }) => {
   };
 
   const budgetEquationStates = {
-    board: useSelector((state) => state.tutorial.budget.equationBoard),
-    total: useSelector((state) => state.tutorial.budget.total),
-    savings: useSelector((state) => state.tutorial.budget.savings),
-    spending: useSelector((state) => state.tutorial.budget.spending),
+    board: useAppSelector((state) => state.tutorial.budget.equationBoard),
+    total: useAppSelector((state) => state.tutorial.budget.total),
+    savings: useAppSelector((state) => state.tutorial.budget.savings),
+    spending: useAppSelector((state) => state.tutorial.budget.spending),
   };
 
   const updateSavingsOnServer = (value) => {
@@ -194,7 +206,12 @@ export const BudgetPage = ({ history }) => {
         .then((res) => {
           batch(() => {
             dispatch(setStudent(res.updatedStudent));
-            dispatch(setObjectiveComplete(Objectives.LEARN_BUDGET, true));
+            dispatch(
+              setObjectiveComplete({
+                objectiveType: Objectives.LEARN_BUDGET,
+                isComplete: true,
+              })
+            );
             _setSeasonActive();
           });
         })
@@ -225,7 +242,6 @@ export const BudgetPage = ({ history }) => {
           template: (
             <NextSeasonOverlay
               student={student}
-              awards={awards}
               next={(levelChange) => {
                 history.push({ pathname: '/home', state: { levelChange } });
               }}

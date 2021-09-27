@@ -18,14 +18,14 @@ export const Button = ({
   isDisabled = false,
   size = 'large',
   image,
-}) => {
+}: any) => {
   const inner = image ? (
     <>
-      <img className='btn-img' src={image} alt={text} />
-      <span className='outline-black'>{text}</span>
+      <img className="btn-img" src={image} alt={text} />
+      <span className="outline-black">{text}</span>
     </>
   ) : (
-    <span className='outline-black'>{text}</span>
+    <span className="outline-black">{text}</span>
   );
 
   return (
@@ -38,8 +38,8 @@ export const Button = ({
       }}
       onClick={onClick}
     >
-      <div className='btn-inner'>
-        {!isLoading ? inner : <LoadingSpinner size='small' />}
+      <div className="btn-inner">
+        {!isLoading ? inner : <LoadingSpinner size="small" />}
       </div>
     </div>
   );

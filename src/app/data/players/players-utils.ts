@@ -137,7 +137,7 @@ export const getPlayerPositon = (assignment) => {
   }
 };
 
-export const handleReleasePlayer = (releasedPlayer, student) => {
+export const handleReleasePlayer = (releasedPlayer, student): Promise<any> => {
   return new Promise((resolve, reject) => {
     const prevAssignment = releasedPlayer.playerAssignment;
     releasedPlayer.playerAssignment = PlayerAssignments.MARKET;

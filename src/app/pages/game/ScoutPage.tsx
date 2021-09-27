@@ -28,6 +28,7 @@ import {
   toggleOverlay,
   setStudent,
   scoutingComplete,
+  useAppSelector,
 } from '@redux';
 import { isEqual } from 'lodash';
 import { getMoneyLevels } from '@utils';
@@ -46,35 +47,35 @@ const boardMap = {
 
 export const ScoutPage = ({ history }) => {
   const dispatch = useDispatch();
-  const tutorialActive = useSelector((state) => state.tutorial.isActive);
-  const student = useSelector((state) => state.studentState.student);
-  const { inTransition, awards, inSession } = useSelector(
+  const tutorialActive = useAppSelector((state) => state.tutorial.isActive);
+  const student = useAppSelector((state) => state.studentState.student);
+  const { inTransition, awards, inSession } = useAppSelector(
     (state) => state.season
   );
-  const { scoutingState } = useSelector((state) => state.players);
+  const { scoutingState } = useAppSelector((state) => state.players);
   const { scoutPlayers } = scoutingState;
-  const availablePlayersAnimationState = useSelector(
+  const availablePlayersAnimationState = useAppSelector(
     (state) => state.tutorial.scout.availablePlayersBoard
   );
-  const offeredPlayersAnimationState = useSelector(
+  const offeredPlayersAnimationState = useAppSelector(
     (state) => state.tutorial.scout.offeredPlayersBoard
   );
-  const finishedBtnAnimationState = useSelector(
+  const finishedBtnAnimationState = useAppSelector(
     (state) => state.tutorial.scout.finishedBtn
   );
 
-  const moneyLevelOneState = useSelector(
+  const moneyLevelOneState = useAppSelector(
     (state) => state.tutorial.scout.moneyLevel1
   );
-  const moneyLevelTwoState = useSelector(
+  const moneyLevelTwoState = useAppSelector(
     (state) => state.tutorial.scout.moneyLevel2
   );
-  const moneyLevelThreeState = useSelector(
+  const moneyLevelThreeState = useAppSelector(
     (state) => state.tutorial.scout.moneyLevel3
   );
 
   const [availablePlayersBoard, setAvailablePlayersBoard] = useState([]);
-  const [offeredPlayersBoard, setOfferedPlayersBoard] = useState([]);
+  const [offeredPlayersBoard, setOfferedPlayersBoard] = useState<any[]>([]);
   const [tutorialSlides, setTutorialSlides] = useState([scoutSlides]);
 
   const onTutorialComplete = (canceled) => {
@@ -153,11 +154,9 @@ export const ScoutPage = ({ history }) => {
                 }
               >
                 <PlayerDragItem
-                  small={small}
                   provided={dragProvided}
                   innerRef={dragProvided.innerRef}
                   player={player}
-                  isDragging={dragSnapshot.isDragging}
                   onClick={showPlayerDetails.bind(this, player)}
                 ></PlayerDragItem>
               </div>
@@ -217,7 +216,7 @@ export const ScoutPage = ({ history }) => {
         return;
       }
 
-      const availablePlayers = [];
+      const availablePlayers: any[] = [];
       for (let i = 0; i < Math.max(9, scoutPlayers.available.length); i++) {
         availablePlayers.push(getDroppableItem(_players[i], `available-${i}`));
       }
@@ -259,9 +258,9 @@ export const ScoutPage = ({ history }) => {
         return;
       }
 
-      const levelOnePlayers = [];
-      const levelTwoPlayers = [];
-      const levelThreePlayers = [];
+      const levelOnePlayers: any[] = [];
+      const levelTwoPlayers: any[] = [];
+      const levelThreePlayers: any[] = [];
 
       for (let i = 0; i < Math.max(1, scoutPlayers.levelOne.length); i++) {
         levelOnePlayers.push(getDroppableItem(_levelOne[i], `levelOne-${i}`));
@@ -389,10 +388,10 @@ export const ScoutPage = ({ history }) => {
   const handleScoutingComplete = () => {
     const moneyLevels = getMoneyLevels(+student.level || 1);
 
-    const levelOneCloned = cloneDeep(scoutPlayers.levelOne);
-    const levelTwoCloned = cloneDeep(scoutPlayers.levelTwo);
-    const levelThreeCloned = cloneDeep(scoutPlayers.levelThree);
-    const offeredScoutPlayers = [];
+    const levelOneCloned: any[] = cloneDeep(scoutPlayers.levelOne);
+    const levelTwoCloned: any[] = cloneDeep(scoutPlayers.levelTwo);
+    const levelThreeCloned: any[] = cloneDeep(scoutPlayers.levelThree);
+    const offeredScoutPlayers: any[] = [];
 
     levelOneCloned.forEach((p) => {
       p.playerCost = moneyLevels[0].num;
@@ -429,7 +428,11 @@ export const ScoutPage = ({ history }) => {
         batch(() => {
           dispatch(setStudent(res.updatedStudent));
           dispatch(
-            scoutingComplete(levelOneCloned, levelTwoCloned, levelThreeCloned)
+            scoutingComplete({
+              levelOne: levelOneCloned,
+              levelTwo: levelTwoCloned,
+              levelThree: levelThreeCloned,
+            })
           );
         });
       })
@@ -478,7 +481,7 @@ export const ScoutPage = ({ history }) => {
             scoutPlayers.levelThree,
             getMoneyLevels(+student.level || 1),
             moneyLevelAnimationStates
-          )
+          ) as any
         );
       }
     },
@@ -572,7 +575,6 @@ export const ScoutPage = ({ history }) => {
           template: (
             <NextSeasonOverlay
               student={student}
-              awards={awards}
               next={(levelChange) => {
                 history.push({ pathname: '/home', state: { levelChange } });
               }}

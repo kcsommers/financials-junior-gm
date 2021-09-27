@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { PlayerAssignments } from '@data/players/players';
 import { environments } from './environment';
 import Cookie from 'js-cookie';
@@ -69,58 +69,58 @@ const getBaseUrl = () => {
 };
 
 //Teacher Login
-export const teacherLogin = (body) => {
+export const teacherLogin = (body): Promise<any> => {
   return axios.post(`${getBaseUrl()}/api/v1/auth/login`, body);
 };
 
 // Teacher reset password
-export const resetTeacherPassword = (body) => {
+export const resetTeacherPassword = (body): Promise<any> => {
   return axios.post(`${getBaseUrl()}/api/v1/auth/reset`, body);
 };
 
 // Teacher reset password
-export const updateTeacherPassword = (body) => {
+export const updateTeacherPassword = (body): Promise<any> => {
   return axios.put(`${getBaseUrl()}/api/v1/auth/password`, body);
 };
 
 //Teacher Register
-export const registerTeacher = (body) => {
+export const registerTeacher = (body): Promise<any> => {
   return axios.post(`${getBaseUrl()}/api/v1/auth/register`, body);
 };
 
 //Student Login
-export const studentLogin = (body) => {
+export const studentLogin = (body): Promise<any> => {
   return axios.post(`${getBaseUrl()}/api/v1/auth/student/login`, body);
 };
 
 //Admin Login
-export const adminLogin = (body) => {
+export const adminLogin = (body): Promise<any> => {
   return axios.post(`${getBaseUrl()}/api/v1/auth/admin/login`, body);
 };
 
-export const getAllTeachers = () => {
+export const getAllTeachers = (): Promise<any> => {
   return axios.get(`${getBaseUrl()}/api/v1/admin/teachers `);
 };
 
 //Get Students
 
-export const getAllStudents = () => {
+export const getAllStudents = (): Promise<any> => {
   return axios.get(`${getBaseUrl()}/api/v1/student`);
 };
 
-export function getStudentList(id) {
+export function getStudentList(id): Promise<any> {
   return axios.get(
     `${getBaseUrl()}/api/v1/student?user=${id}&sort=firstName,lastName`
   );
 }
 
 //Add a Student
-export function addStudent(body) {
+export function addStudent(body): Promise<any> {
   return axios.post(`${getBaseUrl()}/api/v1/student`, body);
 }
 
 //Add a Student in bulk
-export function addStudentInBulk(file) {
+export function addStudentInBulk(file): Promise<any> {
   const formData = new FormData();
   formData.append('file', file);
   const config = {
@@ -132,22 +132,22 @@ export function addStudentInBulk(file) {
 }
 
 //Update a Student
-export function updateStudent(id, body) {
+export function updateStudent(id, body): Promise<any> {
   return axios.put(`${getBaseUrl()}/api/v1/student/${id}`, body);
 }
 
 //Delete a Student /api/v1/student
-export function deleteStudent(id) {
+export function deleteStudent(id): Promise<any> {
   return axios.delete(`${getBaseUrl()}/api/v1/student/${id}`);
 }
 
 //Delete Students By Teacher /api/v1/admin/students/:teacherId
-export function deleteStudentsByTeacher(id) {
+export function deleteStudentsByTeacher(id): Promise<any> {
   return axios.delete(`${getBaseUrl()}/api/v1/admin/students/${id}`);
 }
 
 //Delete Teacher By Id /api/v1/admin/students/:teacherId
-export function deleteTeacherById(id) {
+export function deleteTeacherById(id): Promise<any> {
   return axios.delete(`${getBaseUrl()}/api/v1/admin/teacher/${id}`);
 }
 
@@ -158,19 +158,19 @@ export function logout() {
 }
 
 // get current student
-export const getCurrentUser = () => {
+export const getCurrentUser = (): Promise<any> => {
   return axios.get(`${getBaseUrl()}/api/v1/auth/user`);
 };
 
 // init players
-export const initPlayersByLevel = (level) => {
+export const initPlayersByLevel = (level): Promise<any> => {
   return axios.get(
     `${getBaseUrl()}/api/v1/student/init/players/level/${level}`
   );
 };
 
 // update student
-export const updateStudentById = (id, data) => {
+export const updateStudentById = (id, data): Promise<any> => {
   return axios.put(`${getBaseUrl()}/api/v1/student/${id}`, data);
 };
 
@@ -197,7 +197,8 @@ export const setInitialTeam = (student) => {
 };
 
 // get time spent
-export const getTimeSpent = (teacherId) => {
+// @TODO
+export const getTimeSpent = (teacherId?: number): Promise<any> => {
   const teacherQuery = teacherId ? `?user=${teacherId}` : '';
   return axios.get(
     `${getBaseUrl()}/api/v1/admin/students/timespent${teacherQuery}`

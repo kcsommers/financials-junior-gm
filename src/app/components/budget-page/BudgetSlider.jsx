@@ -10,7 +10,7 @@ export const BudgetSlider = ({
   setValue,
   student,
   spendingLabel = 'Spending Budget',
-  totalDisplay,
+  totalDisplay = '',
 }) => {
   const sliderAnimationState = useSelector(
     (state) => state.tutorial.budget.slider

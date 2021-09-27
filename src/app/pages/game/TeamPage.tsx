@@ -14,7 +14,7 @@ import {
   FooterComponent,
 } from '@components';
 import iceBgSmall from '@images/ice-bg-small.svg';
-import { useSelector, useDispatch, batch } from 'react-redux';
+import { batch } from 'react-redux';
 import {
   teamSlides,
   SharkieButton,
@@ -22,7 +22,13 @@ import {
   getConfirmSlides,
   finishedScoutingSlides,
 } from '@tutorial';
-import { setTutorialIsActive, toggleOverlay, setStudent } from '@redux';
+import {
+  setTutorialIsActive,
+  toggleOverlay,
+  setStudent,
+  useAppDispatch,
+  useAppSelector,
+} from '@redux';
 import { updateStudentById } from '../../api-helper';
 import { faqs } from '@data/faqs/faqs';
 import { cloneDeep } from 'lodash';
@@ -31,26 +37,26 @@ import { motion } from 'framer-motion';
 import '@css/pages/TeamPage.css';
 
 export const TeamPage = ({ history, location }) => {
-  const dispatch = useDispatch();
-  const tutorialActive = useSelector((state) => state.tutorial.isActive);
-  const student = useSelector((state) => state.studentState.student);
-  const team = useSelector((state) => state.players.teamPlayers);
-  const seasonState = useSelector((state) => state.season);
+  const dispatch = useAppDispatch();
+  const tutorialActive = useAppSelector((state) => state.tutorial.isActive);
+  const student = useAppSelector((state) => state.studentState.student);
+  const team = useAppSelector((state) => state.players.teamPlayers);
+  const seasonState = useAppSelector((state) => state.season);
   const studentTeam = seasonState.seasonTeam;
-  const scoutingState = useSelector((state) => state.players.scoutingState);
+  const scoutingState = useAppSelector((state) => state.players.scoutingState);
   const animationStates = {
-    playerCard: useSelector((state) => state.tutorial.team.playerCard),
-    [PlayerPositions.FORWARD]: useSelector(
+    playerCard: useAppSelector((state) => state.tutorial.team.playerCard),
+    [PlayerPositions.FORWARD]: useAppSelector(
       (state) => state.tutorial.team[PlayerPositions.FORWARD]
     ),
-    [PlayerPositions.DEFENSE]: useSelector(
+    [PlayerPositions.DEFENSE]: useAppSelector(
       (state) => state.tutorial.team[PlayerPositions.DEFENSE]
     ),
-    [PlayerPositions.GOALIE]: useSelector(
+    [PlayerPositions.GOALIE]: useAppSelector(
       (state) => state.tutorial.team[PlayerPositions.GOALIE]
     ),
-    scoutStick: useSelector((state) => state.tutorial.team.scoutStick),
-    teamBoard: useSelector((state) => state.tutorial.team.teamBoard),
+    scoutStick: useAppSelector((state) => state.tutorial.team.scoutStick),
+    teamBoard: useAppSelector((state) => state.tutorial.team.teamBoard),
   };
 
   const [tutorialSlides, setTutorialSlides] = useState([teamSlides]);
@@ -132,10 +138,8 @@ export const TeamPage = ({ history, location }) => {
         isOpen: true,
         template: (
           <SignPlayerOverlay
-            team={team}
             assignment={assignment}
             isDisabled={tutorialActive}
-            currentScenario={seasonState.currentScenario}
           />
         ),
       })
@@ -185,7 +189,6 @@ export const TeamPage = ({ history, location }) => {
           template: (
             <NextSeasonOverlay
               student={student}
-              awards={seasonState.awards}
               next={(levelChange) => {
                 history.push({ pathname: '/home', state: { levelChange } });
               }}
@@ -241,7 +244,6 @@ export const TeamPage = ({ history, location }) => {
               <StickButton
                 small={true}
                 stick="scout"
-                animationState={animationStates.scoutStick}
                 link="/scout"
                 isDisabled={scoutingState.isComplete}
               />

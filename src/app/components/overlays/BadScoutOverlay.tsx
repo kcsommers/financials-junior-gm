@@ -7,7 +7,7 @@ export const BadScoutOverlay = ({
   message2,
   buttonText,
   onButtonClick,
-}) => {
+}: any) => {
   const dispatch = useDispatch();
 
   const closeOverlay = () => {

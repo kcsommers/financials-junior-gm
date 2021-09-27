@@ -4,7 +4,7 @@ import { getAllTeachers, getAllStudents, getTimeSpent } from '../../api-helper';
 import { LoadingSpinner } from '@components';
 import { Link, Route, Switch } from 'react-router-dom';
 import { TeacherBrowser } from './TeacherBrowser';
-import { logout } from './../../api-helper';
+import { logout } from '../../api-helper';
 import { clearSessionStorage } from '@data/auth/auth';
 import { setLoginState } from '@redux';
 import { formatNumber } from '@utils';
@@ -16,18 +16,18 @@ import '@css/pages/AdminPage.css';
 export const AdminPage = ({ history }) => {
   const dispatch = useDispatch();
 
-  const [allTeachers, setAllTeachers] = useState(null);
+  const [allTeachers, setAllTeachers] = useState<any[]>();
 
-  const [allStudents, setAllStudents] = useState(null);
+  const [allStudents, setAllStudents] = useState<any[]>();
 
-  const [totalTimeSpent, setTotalTimeSpent] = useState(0);
+  const [totalTimeSpent, setTotalTimeSpent] = useState<string>();
 
   const doLogout = () => {
     logout()
       .then(() => {
         clearSessionStorage();
 
-        dispatch(setLoginState(false, ''));
+        dispatch(setLoginState({ isLoggedIn: false, userRole: '' }));
         history.push('/dashboard');
       })
       .catch((err) => console.error(err));

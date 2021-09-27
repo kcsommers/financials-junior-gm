@@ -8,10 +8,10 @@ import {
 } from '@components';
 import trophyIcon from '@images/icons/trophy.svg';
 import { awardsByLevel } from '@data/season/awards';
-import { toggleOverlay } from '@redux';
+import { toggleOverlay, useAppDispatch, useAppSelector } from '@redux';
 import { resetSeason } from '@data/season/season-utils';
 
-const styles = {
+const styles: any = {
   levelLabel: {
     flex: 1,
     display: 'flex',
@@ -33,10 +33,10 @@ const styles = {
 };
 
 export const TrophiesPage = ({ history }) => {
-  const dispatch = useDispatch();
-  const student = useSelector((state) => state.studentState.student);
-  const tutorialActive = useSelector((state) => state.tutorial.isActive);
-  const { inTransition, awards, seasonTeam } = useSelector(
+  const dispatch = useAppDispatch();
+  const student = useAppSelector((state) => state.studentState.student);
+  const tutorialActive = useAppSelector((state) => state.tutorial.isActive);
+  const { inTransition, awards, seasonTeam } = useAppSelector(
     (state) => state.season
   );
 

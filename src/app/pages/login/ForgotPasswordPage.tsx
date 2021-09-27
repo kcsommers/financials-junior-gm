@@ -92,7 +92,7 @@ export const ForgotPasswordPage = ({ history }) => {
               type="text"
               placeholder="Email Address"
               name="username"
-              maxLength="100"
+              maxLength={100}
             />
           </div>
           <p className="error-text">{error}</p>

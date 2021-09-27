@@ -1,4 +1,4 @@
-const styles = (height) => ({
+const styles = (height): any => ({
   container: {
     flex: 1,
     position: 'relative',
@@ -14,7 +14,7 @@ const styles = (height) => ({
   },
 });
 
-export const PageBoard = ({ children, height }) => {
+export const PageBoard = ({ children, height }: any) => {
   return (
     <div style={styles(height).container}>
       <div style={styles(height).board}>{children}</div>

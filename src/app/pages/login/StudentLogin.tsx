@@ -1,35 +1,40 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { adminLogin, getCurrentUser, logout } from '../../api-helper';
+import {
+  studentLogin,
+  getCurrentUser,
+  initPlayersByLevel,
+  logout,
+} from '../../api-helper';
 import financialsLogo from '@images/financials-logo-big.svg';
 import { LoginForm } from '@components';
 import {
   LOGIN_STORAGE_KEY,
   UserRoles,
   USER_ROLE_STORAGE_KEY,
-  ADMIN_ID_STORAGE_KEY,
+  STUDENT_ID_STORAGE_KEY,
   clearSessionStorage,
 } from '@data/auth/auth';
-import { setLoginState } from '@redux';
-import Cookie from 'js-cookie'; /// JS-Cookie lib to store cookie on the browser
 import '@css/pages/Login.css';
+import { setLoginState, useAppDispatch } from '@redux';
+import Cookie from 'js-cookie'; /// JS-Cookie lib to store cookie on the browser
 
-export const AdminLogin = ({ history, isLoggedIn }) => {
-  const dispatch = useDispatch();
+export const StudentLogin = ({ history, isLoggedIn }) => {
+  const dispatch = useAppDispatch();
   const [isLoggingIn, setIsLoggingIn] = useState(false);
   const [loginError, setLoginError] = useState('');
 
-  const onLoginSuccess = (admin) => {
+  const onLoginSuccess = (student) => {
     if (!navigator.cookieEnabled) {
       return;
     }
     setIsLoggingIn(false);
-    sessionStorage.setItem(LOGIN_STORAGE_KEY, true);
-    sessionStorage.setItem(USER_ROLE_STORAGE_KEY, UserRoles.ADMIN);
-    sessionStorage.setItem(ADMIN_ID_STORAGE_KEY, admin._id);
+    sessionStorage.setItem(LOGIN_STORAGE_KEY, 'true');
+    sessionStorage.setItem(USER_ROLE_STORAGE_KEY, UserRoles.STUDENT);
+    sessionStorage.setItem(STUDENT_ID_STORAGE_KEY, student._id);
 
-    dispatch(setLoginState(true, UserRoles.ADMIN));
-    history.push('/admin');
+    dispatch(setLoginState({ isLoggedIn: true, userRole: UserRoles.STUDENT }));
+    history.push('/home');
   };
 
   const onLoginError = (error) => {
@@ -40,7 +45,7 @@ export const AdminLogin = ({ history, isLoggedIn }) => {
 
     console.error(msg, error);
 
-    dispatch(setLoginState(false, ''));
+    dispatch(setLoginState({ isLoggedIn: false, userRole: '' }));
     if (isLoggedIn) {
       logout();
     }
@@ -50,7 +55,7 @@ export const AdminLogin = ({ history, isLoggedIn }) => {
     setIsLoggingIn(true);
 
     const doLogin = () => {
-      adminLogin({ userName, password })
+      studentLogin({ userName, password })
         .then((res) => {
           if (!res || !res.success) {
             throw res;
@@ -59,13 +64,31 @@ export const AdminLogin = ({ history, isLoggedIn }) => {
           Cookie.set('token', res.token); // Setting cookie on the browser
 
           getCurrentUser()
-            .then((adminRes) => {
-              const admin = adminRes.data;
-              if (!adminRes.success || !admin) {
-                throw adminRes;
+            .then((studentRes) => {
+              const student = studentRes.data;
+              if (!studentRes.success || !student) {
+                throw studentRes;
               }
 
-              onLoginSuccess(admin);
+              // check for initialized players
+              if (student.players && student.players.length) {
+                onLoginSuccess(student);
+                return;
+              }
+
+              // initialize players on student
+              initPlayersByLevel(+student.level || 1)
+                .then((initializedStudentRes) => {
+                  if (
+                    !initializedStudentRes.success ||
+                    !initializedStudentRes.data
+                  ) {
+                    throw initializedStudentRes;
+                  }
+
+                  onLoginSuccess(student);
+                })
+                .catch(onLoginError);
             })
             .catch(onLoginError);
         })
@@ -91,7 +114,7 @@ export const AdminLogin = ({ history, isLoggedIn }) => {
         isLoggingIn={isLoggingIn}
         loginError={loginError}
         history={history}
-        userRole={UserRoles.ADMIN}
+        userRole={UserRoles.STUDENT}
       />
     </div>
   );

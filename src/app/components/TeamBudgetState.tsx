@@ -1,21 +1,26 @@
 import React from 'react';
 import { LevelStick, LoadingSpinner } from '@components';
-import { useSelector } from 'react-redux';
 import { getMaxTeamRank } from '@data/players/players-utils';
+import { useAppSelector } from '@redux';
 
-export const TeamBudgetState = ({ title, isLarge, changes, tutorialState }) => {
-  const student = useSelector((state) => state.studentState.student);
-  const { moneySpent, teamRank } = useSelector((state) => state.players);
+export const TeamBudgetState = ({
+  title,
+  isLarge,
+  changes,
+  tutorialState,
+}: any) => {
+  const student = useAppSelector((state) => state.studentState.student);
+  const { moneySpent, teamRank } = useAppSelector((state) => state.players);
 
   return student ? (
     <>
       {title && (
-        <p className='rank-budget-title' style={{ width: '370px' }}>
+        <p className="rank-budget-title" style={{ width: '370px' }}>
           {title}
         </p>
       )}
       <div
-        className='rank-budget-state-container'
+        className="rank-budget-state-container"
         style={{
           border: '5px solid #4b4b4b',
           borderRadius: '5px',
@@ -27,7 +32,7 @@ export const TeamBudgetState = ({ title, isLarge, changes, tutorialState }) => {
         }}
       >
         <div
-          className='team-budget-state-inner'
+          className="team-budget-state-inner"
           style={{
             position: 'relative',
             left: isLarge ? '-28px' : '-25px',
@@ -39,11 +44,11 @@ export const TeamBudgetState = ({ title, isLarge, changes, tutorialState }) => {
         >
           <div style={{ position: 'relative' }}>
             <LevelStick
-              type='teamRank'
+              type="teamRank"
               amount={tutorialState ? tutorialState.teamRank : teamRank}
               denom={getMaxTeamRank(tutorialState ? 1 : +student.level)}
-              color='#e06d00'
-              indicatorDirection='right'
+              color="#e06d00"
+              indicatorDirection="right"
               isLarge={isLarge}
               textJsx={
                 <span>
@@ -68,7 +73,7 @@ export const TeamBudgetState = ({ title, isLarge, changes, tutorialState }) => {
           </div>
           <div style={{ position: 'relative' }}>
             <LevelStick
-              type='budget'
+              type="budget"
               amount={
                 tutorialState
                   ? tutorialState.budget
@@ -80,8 +85,8 @@ export const TeamBudgetState = ({ title, isLarge, changes, tutorialState }) => {
                     )
               }
               denom={student.totalBudget}
-              color='#002f6c'
-              indicatorDirection='left'
+              color="#002f6c"
+              indicatorDirection="left"
               inverse={true}
               isLarge={isLarge}
               textJsx={

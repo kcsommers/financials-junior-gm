@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import '@css/components/ObjectivesBoard.css';
 
 export const ObjectivesBoard = ({
-  smallText,
+  smallText = false,
   level,
   visibleObjectives,
   filterComplete,
@@ -37,11 +37,11 @@ export const ObjectivesBoard = ({
         currentObjectives[0].isUrgent ? ' is-urgent' : ''
       }`}
     >
-      <div className='objective-level-box'>
+      <div className="objective-level-box">
         <div>Objectives</div>
         <div>Level {level}</div>
       </div>
-      <ol className='ordered-list'>{objectivesView}</ol>
+      <ol className="ordered-list">{objectivesView}</ol>
     </div>
   );
 };

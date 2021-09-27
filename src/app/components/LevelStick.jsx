@@ -88,13 +88,13 @@ const getIndicatorTransformsLarge = (num, denom) => {
 
 export const LevelStick = ({
   type,
-  isLarge,
+  isLarge = false,
   amount,
   denom = 100,
   indicatorDirection,
   color,
   textJsx,
-  inverse,
+  inverse = false,
 }) => {
   const transforms = !isLarge
     ? getIndicatorTransforms(amount, denom)

@@ -50,5 +50,5 @@ export const useInterval = (callback, delay, immediate) => {
     };
   }, []);
 
-  return [resetInterval, toggleInterval, isRunning];
+  return [resetInterval, toggleInterval as any, isRunning];
 };

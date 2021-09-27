@@ -2,7 +2,7 @@ import financialsLogo from '@images/financials-logo.svg';
 import { StickButton } from './StickButton';
 import { ObjectivesBoard } from './ObjectivesBoard';
 
-const styles = {
+const styles: any = {
   height: '125px',
   width: '100%',
   position: 'relative',
@@ -14,20 +14,19 @@ const styles = {
 export const HeaderComponent = ({
   stickBtn,
   inverse,
-  largeStick,
+  largeStick = false,
   level,
-  inTransition,
+  inTransition = false,
   stickBtnLink = '/home',
   tutorialActive,
   beforeNav,
-}) => {
+}: any) => {
   const stick = (
     <StickButton
       key="s"
       link={stickBtnLink}
       stick={stickBtn}
       inverse={inverse}
-      large={largeStick}
       isDisabled={inTransition || tutorialActive}
       beforeNav={beforeNav}
     />

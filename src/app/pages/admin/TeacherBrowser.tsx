@@ -16,8 +16,8 @@ import {
   getAllTeachers,
   getTimeSpent,
   getStudentList,
-} from './../../api-helper';
-import { useDebounce } from './../../hooks/use-debounce';
+} from '../../api-helper';
+import { useDebounce } from '../../hooks/use-debounce';
 
 const teacherDetails = [
   ['userName', 'Username'],
@@ -55,7 +55,7 @@ const searchByOptions = [
 const TEACHERS_PER_PAGE = 50;
 
 export const TeacherBrowser = ({ allTeachers, onRowAction }) => {
-  const detailsRefs = useRef([]);
+  const detailsRefs = useRef<any[]>([]);
 
   const downloadTag = useRef(document.createElement('a'));
 
@@ -67,7 +67,7 @@ export const TeacherBrowser = ({ allTeachers, onRowAction }) => {
 
   const [initialized, setInitialized] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
-  const [selectedDetails, setSelectedDetails] = useState(null);
+  const [selectedDetails, setSelectedDetails] = useState<any>();
 
   const [currentPage, setCurrentPage] = useState('1');
   const [skipDebounce, setSkipDebounce] = useState(false);
@@ -93,7 +93,7 @@ export const TeacherBrowser = ({ allTeachers, onRowAction }) => {
   const [filteredTeachers, setFilteredTeachers] = useState(allTeachers);
 
   const getDisplayedTeachers = useCallback(
-    (teachers, page) => {
+    (teachers, page?: string) => {
       const start =
         TEACHERS_PER_PAGE * (page || debouncedCurrentPage) - TEACHERS_PER_PAGE;
       const end = TEACHERS_PER_PAGE * (page || debouncedCurrentPage);
@@ -111,7 +111,7 @@ export const TeacherBrowser = ({ allTeachers, onRowAction }) => {
 
     filteredTeachers
       .map((teacher) => {
-        const row = [];
+        const row: any[] = [];
         row.push(`"${teacher.name || '--'}"`);
         teacherDetails.forEach((d) => row.push(`"${teacher[d[0]] || '--'}"`));
         return row;
@@ -403,6 +403,8 @@ export const TeacherBrowser = ({ allTeachers, onRowAction }) => {
     <div className="teacher-browser-wrap">
       {showConfirm === true && (
         <ConfirmOverlay
+          isDisabled={false}
+          children={null}
           message={`Are you sure you want to remove ${
             selectedDetails.type === 'teacher'
               ? selectedDetails.name
@@ -471,7 +473,7 @@ export const TeacherBrowser = ({ allTeachers, onRowAction }) => {
       <div className="teacher-browser-pagination-wrap">
         <div className="current-page-wrap">
           <span
-            className={`${currentPage <= 1 ? 'disabled' : ''}`}
+            className={`${currentPage <= '1' ? 'disabled' : ''}`}
             onClick={() => {
               setCurrentPage(String(+debouncedCurrentPage - 1));
               setSkipDebounce(true);
@@ -503,7 +505,7 @@ export const TeacherBrowser = ({ allTeachers, onRowAction }) => {
           />
           of {totalPages}
           <span
-            className={`${currentPage >= totalPages ? 'disabled' : ''}`}
+            className={`${currentPage >= String(totalPages) ? 'disabled' : ''}`}
             onClick={() => {
               setCurrentPage(String(+debouncedCurrentPage + 1));
               setSkipDebounce(true);
@@ -531,7 +533,7 @@ export const TeacherBrowser = ({ allTeachers, onRowAction }) => {
           <div>School District</div>
         </div>
 
-        {displayedTeachers.map((t, i) => (
+        {displayedTeachers.map((t: any, i) => (
           <div
             className="teacher-table-row-wrap"
             key={`${t.name}_${i}`}

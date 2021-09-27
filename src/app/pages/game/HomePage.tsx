@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
-import { useSelector, useDispatch, batch } from 'react-redux';
+import { batch } from 'react-redux';
 import {
   ObjectivesBoard,
   StickButton,
@@ -25,6 +25,8 @@ import {
   setInitialPlayersState,
   initializeSeason,
   initializeObjectives,
+  useAppSelector,
+  useAppDispatch,
 } from '@redux';
 import { updateStudentById } from '../../api-helper';
 import { cloneDeep } from 'lodash';
@@ -36,7 +38,7 @@ import {
 import '@css/pages/HomePage.css';
 
 const getDisabledStickBtns = (student) => {
-  const states = {};
+  const states: any = {};
   states.budget = !student || !student.tutorials || !student.tutorials.home;
   states.team = !student || !student.tutorials || !student.tutorials.budget;
   states.season =
@@ -47,17 +49,17 @@ const getDisabledStickBtns = (student) => {
 };
 
 export const HomePage = ({ location, history }) => {
-  const tutorialActive = useSelector((state) => state.tutorial.isActive);
+  const tutorialActive = useAppSelector((state) => state.tutorial.isActive);
 
-  const student = useSelector((state) => state.studentState.student);
+  const student = useAppSelector((state) => state.studentState.student);
 
-  const { moneySpent, teamRank } = useSelector((state) => state.players);
+  const { moneySpent, teamRank } = useAppSelector((state) => state.players);
 
-  const { inTransition, awards, inSession } = useSelector(
+  const { inTransition, awards, inSession } = useAppSelector(
     (state) => state.season
   );
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const [tutorialSlides, setTutorialSlides] = useState([introSlides]);
 
@@ -175,10 +177,15 @@ export const HomePage = ({ location, history }) => {
       batch(() => {
         dispatch(setStudent(updatedStudent));
         dispatch(
-          setInitialPlayersState(updatedStudent.players, updatedStudent)
+          setInitialPlayersState({
+            players: updatedStudent.players,
+            student: updatedStudent,
+          })
         );
         dispatch(initializeSeason(updatedStudent));
-        dispatch(initializeObjectives(updatedStudent, true));
+        dispatch(
+          initializeObjectives({ student: updatedStudent, reset: true })
+        );
         window.setTimeout(() => {
           dispatch(
             toggleOverlay({
@@ -199,10 +206,15 @@ export const HomePage = ({ location, history }) => {
       batch(() => {
         dispatch(setStudent(updatedStudent));
         dispatch(
-          setInitialPlayersState(updatedStudent.players, updatedStudent)
+          setInitialPlayersState({
+            players: updatedStudent.players,
+            student: updatedStudent,
+          })
         );
         dispatch(initializeSeason(updatedStudent));
-        dispatch(initializeObjectives(updatedStudent, true));
+        dispatch(
+          initializeObjectives({ student: updatedStudent, reset: true })
+        );
         window.setTimeout(() => {
           dispatch(
             toggleOverlay({
@@ -246,7 +258,6 @@ export const HomePage = ({ location, history }) => {
           template: (
             <NextSeasonOverlay
               student={student}
-              awards={awards}
               next={nextSeason}
               finished={(_gameFinished) =>
                 gameFinished(_gameFinished.updatedStudent)
@@ -288,7 +299,6 @@ export const HomePage = ({ location, history }) => {
         <div className="level-stick-card card">
           <LevelStick
             type="budget"
-            levelDirection="topToBottom"
             amount={Math.max(
               +student.totalBudget - moneySpent - +student.savingsBudget,
               0
@@ -311,7 +321,6 @@ export const HomePage = ({ location, history }) => {
         <div className="hockey-sticks-row">
           <div className="stick-btn-container">
             <StickButton
-              tutorialActive={tutorialActive}
               link="/team"
               stick="team"
               isDisabled={disabledStickBtns.team}
@@ -326,7 +335,6 @@ export const HomePage = ({ location, history }) => {
           </div>
           <div className="stick-btn-container">
             <StickButton
-              tutorialActive={tutorialActive}
               link="/budget"
               inverse={true}
               stick="budget"
@@ -344,7 +352,6 @@ export const HomePage = ({ location, history }) => {
         <div className="hockey-sticks-row hockey-sticks-row-2">
           <div className="stick-btn-container">
             <StickButton
-              tutorialActive={tutorialActive}
               link="/season"
               stick="season"
               isDisabled={disabledStickBtns.season}

@@ -10,12 +10,12 @@ import {
   TEACHER_ID_STORAGE_KEY,
   clearSessionStorage,
 } from '@data/auth/auth';
-import { setLoginState } from '@redux';
+import { setLoginState, useAppDispatch } from '@redux';
 import Cookie from 'js-cookie'; /// JS-Cookie lib to store cookie on the browser
 import '@css/pages/Login.css';
 
 export const TeacherLogin = ({ history, isLoggedIn }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [isLoggingIn, setIsLoggingIn] = useState(false);
   const [loginError, setLoginError] = useState('');
 
@@ -24,11 +24,11 @@ export const TeacherLogin = ({ history, isLoggedIn }) => {
       return;
     }
     setIsLoggingIn(false);
-    sessionStorage.setItem(LOGIN_STORAGE_KEY, true);
+    sessionStorage.setItem(LOGIN_STORAGE_KEY, 'true');
     sessionStorage.setItem(USER_ROLE_STORAGE_KEY, UserRoles.TEACHER);
     sessionStorage.setItem(TEACHER_ID_STORAGE_KEY, teacher._id);
 
-    dispatch(setLoginState(true, UserRoles.TEACHER));
+    dispatch(setLoginState({ isLoggedIn: true, userRole: UserRoles.TEACHER }));
     history.push('/teacher/home');
   };
 
@@ -40,7 +40,7 @@ export const TeacherLogin = ({ history, isLoggedIn }) => {
 
     console.error(msg, error);
 
-    dispatch(setLoginState(false, ''));
+    dispatch(setLoginState({ isLoggedIn: false, userRole: '' }));
     if (isLoggedIn) {
       logout();
     }
