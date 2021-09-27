@@ -1,7 +1,15 @@
 import { PlayerAssignments } from '@data/players/players';
 
 export class SeasonScenario {
-  constructor(config, team) {
+  message;
+  objective;
+  action;
+  playerAssignment;
+  player;
+  gameButtonLabel;
+  gameButtonAction;
+  playerPrevAssignment;
+  constructor(public config, public team) {
     this.message = config.message;
     this.objective = config.objective;
     this.action = config.action;

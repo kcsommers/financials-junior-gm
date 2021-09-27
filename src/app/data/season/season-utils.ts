@@ -1,4 +1,4 @@
-import { initPlayersByLevel, updateStudentById } from './../../api-helper';
+import { initPlayersByLevel, updateStudentById } from '../../api-helper';
 import {
   possibleScores,
   levelOneOpponents,
@@ -15,7 +15,7 @@ export const resetSeason = (newLevel, prevLevel, student, wonGame) => {
     const clonedSeasons = cloneDeep(student.seasons);
     clonedSeasons[newLevel - 1] = [];
 
-    const studentUpdates = {
+    const studentUpdates: any = {
       seasons: clonedSeasons,
       level: newLevel,
       objectives: {},
@@ -31,14 +31,14 @@ export const resetSeason = (newLevel, prevLevel, student, wonGame) => {
     }
 
     updateStudentById(student._id, studentUpdates)
-      .then((res) => {
+      .then((res: any) => {
         if (!res.success || !res.updatedStudent) {
           console.error(new Error('Unexpected error updating student season'));
           return;
         }
 
         initPlayersByLevel(newLevel)
-          .then((initializedStudentRes) => {
+          .then((initializedStudentRes: any) => {
             const initializedStudent = initializedStudentRes.data;
             if (!initializedStudentRes.success || !initializedStudent) {
               console.error(new Error('Unexpected error initializing players'));

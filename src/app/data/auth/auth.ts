@@ -1,3 +1,5 @@
+import { UserRole } from '@core';
+
 export const LOGIN_STORAGE_KEY = '__fin__is_logged_in__';
 export const USER_ROLE_STORAGE_KEY = '__fin__user_role__';
 export const TEACHER_ID_STORAGE_KEY = '__fin_teacher_id__';
@@ -13,28 +15,25 @@ export const UserRoles = {
   ADMIN: 'admin',
 };
 
-export const getIsLoggedIn = () => {
-  if (!navigator.cookieEnabled) {
-    return false;
-  }
-  return !!(
-    sessionStorage.getItem(LOGIN_STORAGE_KEY) === 'true' ||
-    sessionStorage.getItem(LOGIN_STORAGE_KEY) === true
+export const getIsLoggedIn = (): boolean => {
+  return (
+    navigator.cookieEnabled &&
+    sessionStorage.getItem(LOGIN_STORAGE_KEY) === 'true'
   );
 };
 
-export const getUserRole = () => {
+export const getUserRole = (): UserRole | '' => {
   if (!navigator.cookieEnabled) {
     return '';
   }
-  return sessionStorage.getItem(USER_ROLE_STORAGE_KEY) || '';
+  return (sessionStorage.getItem(USER_ROLE_STORAGE_KEY) as UserRole) || '';
 };
 
-export const clearSessionStorage = () => {
+export const clearSessionStorage = (): void => {
   if (!navigator.cookieEnabled) {
     return;
   }
-  sessionStorage.setItem(LOGIN_STORAGE_KEY, false);
+  sessionStorage.setItem(LOGIN_STORAGE_KEY, 'false');
   sessionStorage.setItem(USER_ROLE_STORAGE_KEY, '');
   sessionStorage.setItem(STUDENT_ID_STORAGE_KEY, '');
   sessionStorage.setItem(TEACHER_ID_STORAGE_KEY, '');

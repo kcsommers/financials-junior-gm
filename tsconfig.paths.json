@@ -3,6 +3,7 @@
     "baseUrl": "src/",
     "paths": {
       "@components": ["app/components/public-api.js"],
+      "@core": ["app/core/public-api.js"],
       "@data/*": ["app/data/*"],
       "@css/*": ["assets/css/*"],
       "@images/*": ["assets/images/*"],

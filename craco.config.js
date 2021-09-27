@@ -7,6 +7,7 @@ module.exports = {
         __dirname,
         'src/app/components/public-api.js'
       ),
+      '@core': path.resolve(__dirname, 'src/app/core'),
       '@css': path.resolve(__dirname, 'src/assets/css'),
       '@images': path.resolve(__dirname, 'src/assets/images'),
       '@tutorial': path.resolve(__dirname, 'src/app/tutorial/public-api.js'),

@@ -5,10 +5,10 @@ import {
   playerProps,
 } from './players';
 import { cloneDeep } from 'lodash';
-import { updateStudentById } from './../../api-helper';
+import { updateStudentById } from '../../api-helper';
 import { Objectives } from '@data/objectives/objectives';
 
-export const getOpenAssignment = (position, student) => {
+export const getOpenAssignment = (position: any, student: any): string => {
   if (!position) {
     return [
       PlayerAssignments.F_ONE,
@@ -17,7 +17,7 @@ export const getOpenAssignment = (position, student) => {
       PlayerAssignments.D_ONE,
       PlayerAssignments.D_TWO,
       PlayerAssignments.G_ONE,
-    ].find((a) => !student[a]);
+    ].find((a) => !student[a]) as string;
   }
 
   switch (position) {
@@ -26,18 +26,18 @@ export const getOpenAssignment = (position, student) => {
         PlayerAssignments.F_ONE,
         PlayerAssignments.F_TWO,
         PlayerAssignments.F_THREE,
-      ].find((a) => !student[a]);
+      ].find((a) => !student[a]) as string;
     }
     case PlayerPositions.DEFENSE: {
       return [PlayerAssignments.D_ONE, PlayerAssignments.D_TWO].find(
         (a) => !student[a]
-      );
+      ) as string;
     }
     case PlayerPositions.GOALIE: {
       return PlayerAssignments.G_ONE;
     }
     default: {
-      return [];
+      return '';
     }
   }
 };
@@ -156,7 +156,8 @@ export const handleReleasePlayer = (releasedPlayer, student) => {
     })
       .then((res) =>
         resolve({
-          updatedStudent: res.updatedStudent,
+          // @TODO
+          updatedStudent: (res as any).updatedStudent,
           updatedPlayer: releasedPlayer,
           prevAssignment,
         })
@@ -179,7 +180,8 @@ export const handleSignPlayer = (signedPlayer, assignment, student) => {
 
     const teamFull = startingLineupFull(clonedStudent);
 
-    const studentUpdates = {
+    // @TODO
+    const studentUpdates: any = {
       [assignment]: signedPlayer._id,
       players: clonedStudent.players,
     };
@@ -201,7 +203,8 @@ export const handleSignPlayer = (signedPlayer, assignment, student) => {
     updateStudentById(student._id, studentUpdates)
       .then((res) =>
         resolve({
-          updatedStudent: res.updatedStudent,
+          // @TODO
+          updatedStudent: (res as any).updatedStudent,
           updatedPlayer: signedPlayer,
           startingLineupFull: teamFull,
         })
@@ -241,7 +244,8 @@ export const handleTradePlayers = (signedPlayer, releasedPlayer, student) => {
     updateStudentById(student._id, studentUpdates)
       .then((res) =>
         resolve({
-          updatedStudent: res.updatedStudent,
+          // @TODO
+          updatedStudent: (res as any).updatedStudent,
           updatedSignedPlayer: signedPlayer,
           updatedReleasedPlayer: releasedPlayer,
         })
@@ -250,18 +254,17 @@ export const handleTradePlayers = (signedPlayer, releasedPlayer, student) => {
   });
 };
 
-export const getMaxTeamRank = (level) => {
+export const getMaxTeamRank = (level: number): number => {
   if (level === 1) {
     return 160;
   }
-
   if (level === 2) {
     return 330;
   }
-
   if (level === 3) {
     return 515;
   }
+  return 0;
 };
 
 export const getMoneySpent = (players, totalBudget) => {

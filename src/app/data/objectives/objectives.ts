@@ -9,20 +9,21 @@ export const Objectives = {
 };
 
 export class Objective {
-  isComplete = false;
+  public isComplete = false;
 
-  constructor(objective, type, isUrgent = false) {
-    this.id = Math.floor(Math.random() * 1000000);
+  public id = Math.floor(Math.random() * 1000000);
+
+  constructor(public objective, public type, public isUrgent = false) {
     this.objective = objective;
     this.isUrgent = isUrgent;
     this.type = type;
   }
 
-  setIsComplete(isComplete) {
+  public setIsComplete(isComplete: boolean): void {
     this.isComplete = isComplete;
   }
 
-  setIsUrgent(isUrgent) {
+  public setIsUrgent(isUrgent: boolean): void {
     this.isUrgent = isUrgent;
   }
 }
