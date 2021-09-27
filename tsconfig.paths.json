@@ -2,13 +2,13 @@
   "compilerOptions": {
     "baseUrl": "src/",
     "paths": {
-      "@components": ["app/components/public-api.js"],
-      "@core": ["app/core/public-api.js"],
+      "@components": ["app/components/public-api.ts"],
+      "@core": ["app/core/public-api.ts"],
       "@data/*": ["app/data/*"],
       "@css/*": ["assets/css/*"],
       "@images/*": ["assets/images/*"],
-      "@tutorial": ["app/tutorial/public-api.js"],
-      "@redux": ["app/redux/public-api.js"],
+      "@tutorial": ["app/tutorial/public-api.ts"],
+      "@redux": ["app/redux/public-api.ts"],
       "@utils": ["app/utils"]
     }
   }

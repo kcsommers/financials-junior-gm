@@ -6,7 +6,7 @@ import backBtn from '@images/back-btn.svg';
 import backBtnRvrsd from '@images/back-btn-reversed.svg';
 import { setAnimationState, toggleOverlay, setAdvanceListener } from '@redux';
 import '@css/tutorial/tutorials.css';
-import { useAdvanceSlideListener } from './../../hooks/use-advance-slide-listener';
+import { useAdvanceSlideListener } from '../../hooks/use-advance-slide-listener';
 
 const allActions = {
   SET_ANIMATION_STATE: setAnimationState,
@@ -76,7 +76,8 @@ export const Tutorial = ({ slides, onComplete }) => {
     }, currentSlide.timer);
   }
 
-  const tutorialComplete = (canceled) => {
+  // @TODO
+  const tutorialComplete = (canceled = false) => {
     setState({
       ...state,
       isComplete: true,

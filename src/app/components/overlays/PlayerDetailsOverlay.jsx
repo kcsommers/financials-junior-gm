@@ -21,8 +21,8 @@ import { Objectives } from '@data/objectives/objectives';
 
 export const PlayerDetailsOverlay = ({
   player,
-  student,
-  seasonState,
+  student = null,
+  seasonState = null,
   isDisabled,
   includeActions = true,
 }) => {

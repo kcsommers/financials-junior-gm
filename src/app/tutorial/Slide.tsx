@@ -2,8 +2,26 @@ export default class Slide {
   static SLIDE_DURATION = 3000;
   static SLIDE_DURATION_LONG = 5000;
 
+  public id = Math.floor(Math.random() * 1000000);
+  public message: any;
+  public sharkie: any;
+  public hasButtons: any;
+  public timer: any;
+  public accentText: any;
+  public x: any;
+  public y: any;
+  public repeatIndex: any;
+  public bubbleDelay: any;
+  public eventListener: any;
+  public exitActions: any;
+  public previousActions: any;
+  public small: any;
+  public transparentBg: any;
+  public slideAnimate: any;
+  public canCancel: any;
+  public fontSizes: any;
+
   constructor(config) {
-    this.id = Math.floor(Math.random() * 1000000);
     this.message = config.message;
     this.sharkie = config.sharkie;
     this.hasButtons = config.hasButtons;
@@ -49,7 +67,7 @@ export default class Slide {
     if (!this.accentText) {
       return (
         <p
-          className='slide-msg color-primary'
+          className="slide-msg color-primary"
           style={{ fontSize: this.fontSizes.base }}
         >
           {this.message}
@@ -60,12 +78,12 @@ export default class Slide {
     const messageSplit = this.message.split(this.accentText);
     return (
       <p
-        className='slide-msg color-primary'
+        className="slide-msg color-primary"
         style={{ fontSize: this.fontSizes.base }}
       >
         {messageSplit[0]}
         <span
-          className='color-accent'
+          className="color-accent"
           style={{ fontSize: this.fontSizes.accent }}
         >
           {this.accentText}

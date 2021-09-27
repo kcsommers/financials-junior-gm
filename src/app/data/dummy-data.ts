@@ -360,7 +360,7 @@ export const getScoutState = () => {};
 export const getScoutablePlayers = () => {
   return new Promise((resolve) => {
     setTimeout(() => {
-      const _players = [];
+      const _players: any[] = [];
 
       while (_players.length < 9) {
         const index = Math.floor(Math.random() * players.length);
