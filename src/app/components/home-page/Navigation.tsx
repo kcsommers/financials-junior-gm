@@ -9,8 +9,10 @@ import {
   initializeSeason,
   setInitialPlayersState,
   initializeObjectives,
+  useAppSelector,
+  useAppDispatch,
 } from '@redux';
-import { useDispatch, batch, useSelector } from 'react-redux';
+import { batch } from 'react-redux';
 import { clearSessionStorage } from '@data/auth/auth';
 import { ConfirmOverlay } from '@components';
 import { resetSeason } from '@data/season/season-utils';
@@ -18,10 +20,10 @@ import '@css/components/home-page/Navigation.css';
 import { updateStudentTimeSpent } from '../../data/student/student-utils';
 
 export const Navigation = ({ tutorialActive, student }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const history = useHistory();
 
-  const { startTime } = useSelector((state) => state.studentState);
+  const { startTime } = useAppSelector((state) => state.studentState);
 
   const resetSeasonConfirmed = () => {
     resetSeason(+student.level, +student.level, student)
@@ -29,7 +31,10 @@ export const Navigation = ({ tutorialActive, student }) => {
         batch(() => {
           dispatch(setStudent(updatedStudent));
           dispatch(
-            setInitialPlayersState(updatedStudent.players, updatedStudent)
+            setInitialPlayersState({
+              players: updatedStudent.players,
+              student: updatedStudent,
+            })
           );
           dispatch(initializeSeason(updatedStudent));
           dispatch(
@@ -38,7 +43,9 @@ export const Navigation = ({ tutorialActive, student }) => {
               template: null,
             })
           );
-          dispatch(initializeObjectives(updatedStudent, true));
+          dispatch(
+            initializeObjectives({ student: updatedStudent, reset: true })
+          );
         });
       })
       .catch((err) => console.error(err));
@@ -72,7 +79,7 @@ export const Navigation = ({ tutorialActive, student }) => {
         .then(() => {
           clearSessionStorage();
 
-          dispatch(setLoginState(false, ''));
+          dispatch(setLoginState({ isLoggedIn: false, userRole: '' }));
           history.push('/dashboard');
         })
         .catch((err) => console.error(err));
@@ -136,13 +143,15 @@ export const Navigation = ({ tutorialActive, student }) => {
         <img
           src={refreshBtn}
           alt="Reset"
-          style={{
-            width: '65px',
-            cursor: 'pointer',
-            display: 'inline-block',
-            zIndex: tutorialActive ? '0' : '1',
-            position: 'relative',
-          }}
+          style={
+            {
+              width: '65px',
+              cursor: 'pointer',
+              display: 'inline-block',
+              zIndex: tutorialActive ? '0' : '1',
+              position: 'relative',
+            } as any
+          }
           title="Reset Season"
           onClick={confirmResetSeason}
         />

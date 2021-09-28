@@ -4,8 +4,7 @@ import {
   PlayerCard,
   MarketPlayersBoard,
 } from '@components';
-import { useDispatch } from 'react-redux';
-import { toggleOverlay, tradePlayer, setStudent } from '@redux';
+import { toggleOverlay, tradePlayer, setStudent, useAppDispatch } from '@redux';
 import { ConfirmTradeOverlay } from './ConfirmTradeOverlay';
 import { PlayerDetailsOverlay } from './PlayerDetailsOverlay';
 import {
@@ -19,7 +18,7 @@ export const TradePlayerOverlay = ({
   student,
   isDisabled,
 }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const tradeCancelled = () => {
     dispatch(
@@ -37,11 +36,11 @@ export const TradePlayerOverlay = ({
       .then(
         ({ updatedSignedPlayer, updatedReleasedPlayer, updatedStudent }) => {
           dispatch(
-            tradePlayer(
-              updatedReleasedPlayer,
-              updatedSignedPlayer,
-              updatedStudent
-            )
+            tradePlayer({
+              releasedPlayer: updatedReleasedPlayer,
+              signedPlayer: updatedSignedPlayer,
+              student: updatedStudent,
+            })
           );
           dispatch(setStudent(updatedStudent));
           dispatch(

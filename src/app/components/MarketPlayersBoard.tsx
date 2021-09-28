@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import { PlayerPositions } from '@data/players/players';
 import { PlayerCard, InsufficientFundsOverlay } from '@components';
-import { useDispatch } from 'react-redux';
-import { toggleOverlay } from '@redux';
+import { toggleOverlay, useAppDispatch } from '@redux';
 import { Objectives } from '@data/objectives/objectives';
 import '@css/components/MarketPlayersBoard.css';
 import { getOpenAssignment } from '../data/players/players-utils';
@@ -67,8 +66,8 @@ export const MarketPlayersBoard = ({
   student,
   releasingPlayer,
   signAssignment,
-}) => {
-  const dispatch = useDispatch();
+}: any) => {
+  const dispatch = useAppDispatch();
 
   const scenarioAssignment =
     student.objectives &&

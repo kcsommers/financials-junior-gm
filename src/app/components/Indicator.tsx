@@ -25,13 +25,13 @@ const getFontSize = (amount) => {
 
 export const Indicator = ({
   amount,
-  direction = '',
+  direction,
   isMoney,
-  rotate = '',
+  rotate,
   color = '#00788a',
   borderColor = '#4b4b4b',
   isComericaBtn = false,
-}) => {
+}: any) => {
   const validAmount = Math.max(amount, 0);
 
   const comericaBtn = (

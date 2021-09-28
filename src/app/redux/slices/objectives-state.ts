@@ -49,13 +49,14 @@ const objectivesStateSlice = createSlice({
       action: PayloadAction<{ student: any; reset: boolean }>
     ) => {
       const { student, reset } = action.payload;
-      state.currentObjectives = initialState.currentObjectives;
       // check if theyve watched the budget tutorial
-      state.currentObjectives[0].setIsComplete(
-        !!(student.objectives && student.objectives[Objectives.LEARN_BUDGET])
-      );
+      // @TODO
+      // state.currentObjectives[0].isComplete = !!(
+      //   student.objectives && student.objectives[Objectives.LEARN_BUDGET]
+      // );
       // check if they have players
-      state.currentObjectives[1].setIsComplete(startingLineupFull(student));
+
+      state.currentObjectives[1].isComplete = startingLineupFull(student);
       if (reset) {
         state.currentObjectives = state.currentObjectives.filter(
           (o) => o.type !== Objectives.SEASON_SCENARIO
@@ -74,6 +75,7 @@ const objectivesStateSlice = createSlice({
           )
         );
       }
+      console.log('state:::: ', JSON.parse(JSON.stringify(state)));
     },
   },
 });

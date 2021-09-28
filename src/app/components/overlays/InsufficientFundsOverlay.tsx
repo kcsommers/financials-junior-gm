@@ -1,11 +1,10 @@
 import { OverlayBoard, Button } from '@components';
 import { useHistory } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { toggleOverlay } from '@redux';
+import { toggleOverlay, useAppDispatch } from '@redux';
 
 export const InsufficientFundsOverlay = () => {
   const history = useHistory();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const goToBudget = () => {
     dispatch(

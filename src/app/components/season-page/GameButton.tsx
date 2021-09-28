@@ -70,7 +70,6 @@ export const GameButton = ({
         transition={{ default: { duration: 1 } }}
       >
         <GameButtonSvg
-          animationState={animationState}
           phase={phase.phase}
           currentScenario={currentScenario}
           cheerLevel={cheerLevel}

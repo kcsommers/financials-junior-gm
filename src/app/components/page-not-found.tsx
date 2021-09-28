@@ -5,20 +5,22 @@ class PageNotFound extends React.Component {
   render() {
     return (
       <div
-        style={{
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%,-50%)',
-          position: 'relative',
-          zIndex: '100',
-        }}
+        style={
+          {
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%,-50%)',
+            position: 'relative',
+            zIndex: '100',
+          } as any
+        }
       >
-        <div className='home-title-box'>
-          <h1 className='page-title'>404 - Page Not Found!!</h1>
+        <div className="home-title-box">
+          <h1 className="page-title">404 - Page Not Found!!</h1>
         </div>
-        <div className='home-title-box page-title'>
+        <div className="home-title-box page-title">
           <Link
-            to='/home'
+            to="/home"
             style={{
               color: '#00788a',
               textShadow:

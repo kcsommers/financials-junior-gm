@@ -1,6 +1,5 @@
 import { OverlayBoard, Button } from '@components';
-import { toggleOverlay } from '@redux';
-import { useDispatch } from 'react-redux';
+import { toggleOverlay, useAppDispatch } from '@redux';
 
 export const BadScoutOverlay = ({
   message1,
@@ -8,7 +7,7 @@ export const BadScoutOverlay = ({
   buttonText,
   onButtonClick,
 }: any) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const closeOverlay = () => {
     if (onButtonClick) {

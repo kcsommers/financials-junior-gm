@@ -1,6 +1,6 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import '@css/components/ObjectivesBoard.css';
+import { useAppSelector } from '@redux';
 
 export const ObjectivesBoard = ({
   smallText = false,
@@ -8,9 +8,9 @@ export const ObjectivesBoard = ({
   visibleObjectives,
   filterComplete,
 }) => {
-  const { currentObjectives } = useSelector((state) => state.objectives);
+  const { currentObjectives } = useAppSelector((state) => state.objectives);
 
-  const objectivesView = [];
+  const objectivesView: any[] = [];
   let i = 0;
   while (
     objectivesView.length < visibleObjectives &&

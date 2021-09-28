@@ -8,8 +8,7 @@ import {
 } from '@components';
 import { useForm } from 'react-hook-form';
 import { registerTeacher } from '../../api-helper';
-import { useDispatch } from 'react-redux';
-import { toggleOverlay } from '@redux';
+import { toggleOverlay, useAppDispatch } from '@redux';
 import '@css/pages/TeacherRegistrationPage.css';
 
 export const TeacherRegsitrationPage = ({ history }) => {
@@ -17,7 +16,7 @@ export const TeacherRegsitrationPage = ({ history }) => {
 
   const [isRegistering, setIsRegistering] = useState(false);
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const [isRegistered, setIsRegistered] = useState(false);
 

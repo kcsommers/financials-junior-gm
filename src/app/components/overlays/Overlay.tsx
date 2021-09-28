@@ -1,11 +1,11 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { motion, AnimatePresence } from 'framer-motion';
 import cancelBtn from '@images/icons/cancel-big.svg';
-import { toggleOverlay } from '@redux';
+import { toggleOverlay, useAppSelector } from '@redux';
 import '@css/components/Overlay.css';
 
 export const Overlay = () => {
-  const overlayConfig = useSelector((state) => state.overlay);
+  const overlayConfig = useAppSelector((state) => state.overlay);
 
   const dispatch = useDispatch();
 

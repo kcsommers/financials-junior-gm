@@ -66,7 +66,7 @@ const speechBubbleVariants = {
   exit: { opacity: 0, scale: 1.2 },
 };
 
-export const SharkieComponent = ({ slide, inTransition }) => {
+export const SharkieComponent = ({ slide, inTransition }: any) => {
   const [showBubble, setShowBubble] = useState(!slide.bubbleDelay);
 
   const sharkieInverse = slide.sharkie.endsWith('Inverse');
@@ -87,18 +87,16 @@ export const SharkieComponent = ({ slide, inTransition }) => {
       <AnimatePresence>
         <motion.div
           key={slide.sharkie}
-          className={`sharkie-img-wrap${
-            sharkieInverse ? '' : ''
-          }`}
+          className={`sharkie-img-wrap${sharkieInverse ? '' : ''}`}
           variants={
             slide.sharkieVariants || defaultSharkieVariants[slide.sharkie]
           }
-          initial='enter'
-          animate='center'
-          exit='exit'
+          initial="enter"
+          animate="center"
+          exit="exit"
         >
           <img
-            className='sharkie-img'
+            className="sharkie-img"
             src={sharkieImgs[slide.sharkie]}
             alt={`Sharkie ${slide.sharkie}`}
           />
@@ -110,9 +108,9 @@ export const SharkieComponent = ({ slide, inTransition }) => {
             key={slide.id}
             className={`bubble-wrap${bubbleInverse ? ' bubble-inverse' : ''}`}
             variants={speechBubbleVariants}
-            initial='enter'
-            animate='center'
-            exit='exit'
+            initial="enter"
+            animate="center"
+            exit="exit"
             transition={{
               scale: {
                 type: 'spring',
@@ -121,7 +119,7 @@ export const SharkieComponent = ({ slide, inTransition }) => {
             }}
           >
             <img
-              className='bubble-img'
+              className="bubble-img"
               src={speechBubble}
               alt={slide.message}
             />

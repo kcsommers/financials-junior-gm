@@ -11,10 +11,10 @@ export const ConfirmOverlay = ({
   confirm,
   isDisabled,
   position,
-  top
-}) => {
+  top,
+}: any) => {
   return (
-    <OverlayBoard  position={position} top={top}>
+    <OverlayBoard position={position} top={top}>
       <div
         style={{
           width: '100%',
@@ -28,12 +28,16 @@ export const ConfirmOverlay = ({
           pointerEvents: isDisabled ? 'none' : 'auto',
         }}
       >
-        {children && <div className='confirm-overlay-top'>{children}</div>}
-        <div className='confirm-overlay-bottom'>
-          <p className='confirm-message'>{message}</p>
-          {subMessage && <p className='confirm-message' style={{fontSize: '1rem'}}>{subMessage}</p>}
+        {children && <div className="confirm-overlay-top">{children}</div>}
+        <div className="confirm-overlay-bottom">
+          <p className="confirm-message">{message}</p>
+          {subMessage && (
+            <p className="confirm-message" style={{ fontSize: '1rem' }}>
+              {subMessage}
+            </p>
+          )}
           <div
-            className='confirm-options'
+            className="confirm-options"
             style={{
               display: 'flex',
               alignItems: 'center',
@@ -50,7 +54,7 @@ export const ConfirmOverlay = ({
                   marginTop: '0.25rem',
                   cursor: 'pointer',
                 }}
-                alt='Cancel'
+                alt="Cancel"
               />
             </div>
             <div>
@@ -63,7 +67,7 @@ export const ConfirmOverlay = ({
                   marginTop: '0.25rem',
                   cursor: 'pointer',
                 }}
-                alt='Confirm'
+                alt="Confirm"
               />
             </div>
           </div>

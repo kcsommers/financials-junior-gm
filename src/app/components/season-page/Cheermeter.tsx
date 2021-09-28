@@ -9,7 +9,7 @@ export const Cheermeter = ({ cheerLevel = 0 }) => {
     return rotate - 25;
   };
 
-  const prevCheerLevel = useRef(cheerLevel);
+  const prevCheerLevel = useRef<number>(cheerLevel);
   useEffect(() => {
     if (prevCheerLevel.current !== cheerLevel) {
       prevCheerLevel.current = cheerLevel;
@@ -18,13 +18,12 @@ export const Cheermeter = ({ cheerLevel = 0 }) => {
 
   return (
     <div
-      className='cheermeter-wrap'
+      className="cheermeter-wrap"
       style={{
         position: 'relative',
       }}
     >
-      {prevCheerLevel < cheerLevel}
-      <img src={cheermeter} alt='Cheermeter' />
+      <img src={cheermeter} alt="Cheermeter" />
       <motion.span
         initial={{
           x: '-58%',
@@ -56,7 +55,7 @@ export const Cheermeter = ({ cheerLevel = 0 }) => {
       >
         <img
           src={cheermeterNeedle}
-          alt='Cheermeter Needle'
+          alt="Cheermeter Needle"
           style={{
             transform: 'translate(-39%, -14%)',
           }}

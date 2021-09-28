@@ -1,9 +1,9 @@
-import { useSelector } from 'react-redux';
 import { cloneDeep } from 'lodash';
 import { motion } from 'framer-motion';
+import { useAppSelector } from '@redux';
 
 export const StandingsBoard = ({ animationState }) => {
-  const { standings, seasonTeam } = useSelector((state) => state.season);
+  const { standings, seasonTeam } = useAppSelector((state) => state.season);
 
   const clonedStandings = cloneDeep(standings);
   const studentTeamIndex = clonedStandings.findIndex(
@@ -16,7 +16,7 @@ export const StandingsBoard = ({ animationState }) => {
   }
 
   const rows = clonedStandings.slice(0, 5).map((team, i) => (
-    <div key={i} className='standings-board-row'>
+    <div key={i} className="standings-board-row">
       <span
         className={`${
           team.name === seasonTeam.name ? 'color-primary font-bold' : ''
@@ -36,9 +36,9 @@ export const StandingsBoard = ({ animationState }) => {
   ));
 
   return (
-    <div className='standings-board-wrap'>
+    <div className="standings-board-wrap">
       <motion.div
-        className='standings-board-wrap-inner'
+        className="standings-board-wrap-inner"
         animate={animationState}
         transition={{
           default: {
@@ -46,7 +46,7 @@ export const StandingsBoard = ({ animationState }) => {
           },
         }}
       >
-        <div className='standings-board-top-row standings-board-row'>
+        <div className="standings-board-top-row standings-board-row">
           <span>Team</span>
           <span>Points</span>
         </div>

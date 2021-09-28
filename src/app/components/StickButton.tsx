@@ -22,8 +22,8 @@ export const StickButton = ({
   inverse = false,
   small = false,
   isDisabled = false,
-  beforeNav = false,
-}) => {
+  beforeNav,
+}: any) => {
   const history = useHistory();
 
   return (

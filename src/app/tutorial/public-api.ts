@@ -1,3 +1,4 @@
+export { SharkieComponent } from './components/Sharkie';
 export { getConfirmSlides } from './lessons/confirm-slides';
 export { SharkieButton } from './components/SharkieButton';
 export { budgetSlides } from './lessons/budget/budget-slides';

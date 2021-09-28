@@ -4,6 +4,7 @@ import { getDollarString } from '@utils';
 import { useSelector } from 'react-redux';
 import { motion } from 'framer-motion';
 import '@css/components/budget-page/BudgetSlider.css';
+import { useAppSelector } from '@redux';
 
 export const BudgetSlider = ({
   budget,
@@ -12,10 +13,10 @@ export const BudgetSlider = ({
   spendingLabel = 'Spending Budget',
   totalDisplay = '',
 }) => {
-  const sliderAnimationState = useSelector(
+  const sliderAnimationState = useAppSelector(
     (state) => state.tutorial.budget.slider
   );
-  const indicatorAnimationState = useSelector(
+  const indicatorAnimationState = useAppSelector(
     (state) => state.tutorial.budget.savingsIndicator
   );
 
@@ -46,8 +47,8 @@ export const BudgetSlider = ({
     return i - 1;
   };
 
-  const ticks = [];
-  const tickLabels = [];
+  const ticks: any[] = [];
+  const tickLabels: any[] = [];
   const everyOtherLabel = !!(
     (+student.level === 1 && budget.total > 15) ||
     (+student.level === 2 && budget.total > 150) ||

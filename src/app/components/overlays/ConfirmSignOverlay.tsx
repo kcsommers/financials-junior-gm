@@ -2,12 +2,12 @@ import { PlayerCard, ConfirmOverlay, TeamBudgetState } from '@components';
 import '@css/components/team-page/SignPlayerOverlay.css';
 
 export const ConfirmSignOverlay = ({
-  cancel = undefined,
-  confirm = undefined,
+  cancel,
+  confirm,
   player,
   isDisabled,
   tutorialState,
-}) => {
+}: any) => {
   return (
     <ConfirmOverlay
       message="Are you sure you want to sign this player?"

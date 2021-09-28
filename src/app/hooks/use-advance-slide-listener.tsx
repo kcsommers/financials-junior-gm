@@ -1,9 +1,8 @@
 import { useEffect, useRef } from 'react';
-import { useDispatch } from 'react-redux';
-import { setAdvanceListener } from '@redux';
+import { setAdvanceListener, useAppDispatch } from '@redux';
 
 export const useAdvanceSlideListener = (callback, slideIndex, updateSlide) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const callbackRef = useRef<any>();
 

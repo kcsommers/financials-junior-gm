@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect, useRef } from 'react';
-import { useSelector, useDispatch, batch } from 'react-redux';
+import { batch } from 'react-redux';
 import {
   setStudent,
   initializeSeason,
@@ -7,6 +7,7 @@ import {
   initializeObjectives,
   setStartTime,
   useAppSelector,
+  useAppDispatch,
 } from '@redux';
 import { UserRoles } from '@data/auth/auth';
 import { Redirect } from 'react-router-dom';
@@ -26,7 +27,7 @@ export const StudentPortal = ({
   pageName,
   history,
 }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const { student, startTime } = useAppSelector((state) => state.studentState);
 

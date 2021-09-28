@@ -4,7 +4,7 @@ import {
   MarketPlayersBoard,
   PlayerChangeSuccessOverlay,
 } from '@components';
-import { useDispatch, useSelector, batch } from 'react-redux';
+import { batch } from 'react-redux';
 import {
   toggleOverlay,
   signPlayer,
@@ -12,6 +12,8 @@ import {
   removeObjective,
   setObjectiveComplete,
   removeScenario,
+  useAppSelector,
+  useAppDispatch,
 } from '@redux';
 import { ConfirmSignOverlay } from './ConfirmSignOverlay';
 import { TeamAssignments } from '@data/players/players';
@@ -23,10 +25,10 @@ import {
 import { Objectives } from '@data/objectives/objectives';
 import '@css/components/team-page/SignPlayerOverlay.css';
 
-export const SignPlayerOverlay = ({ assignment, isDisabled }) => {
-  const dispatch = useDispatch();
-  const student = useSelector((state) => state.studentState.student);
-  const team = useSelector((state) => state.players.teamPlayers);
+export const SignPlayerOverlay = ({ assignment, isDisabled }: any) => {
+  const dispatch = useAppDispatch();
+  const student = useAppSelector((state) => state.studentState.student);
+  const team = useAppSelector((state) => state.players.teamPlayers);
 
   const availableSlots = {
     forwards: getAvailableSlots(TeamAssignments.offense, team),
@@ -38,7 +40,7 @@ export const SignPlayerOverlay = ({ assignment, isDisabled }) => {
     dispatch(
       toggleOverlay({
         isOpen: true,
-        template: <SignPlayerOverlay team={team} assignment={assignment} />,
+        template: <SignPlayerOverlay assignment={assignment} />,
       })
     );
   };
@@ -49,7 +51,13 @@ export const SignPlayerOverlay = ({ assignment, isDisabled }) => {
     handleSignPlayer(signedPlayer, assignment, student).then(
       ({ updatedStudent, updatedPlayer, startingLineupFull }) => {
         batch(() => {
-          dispatch(signPlayer(updatedPlayer, prevAssignment, updatedStudent));
+          dispatch(
+            signPlayer({
+              player: updatedPlayer,
+              prevAssignment,
+              student: updatedStudent,
+            })
+          );
           dispatch(setStudent(updatedStudent));
           dispatch(
             toggleOverlay({
@@ -66,7 +74,12 @@ export const SignPlayerOverlay = ({ assignment, isDisabled }) => {
           // if the starting lineup is full the fill team
           // and (if applicable) season scenario objectives are complete
           if (startingLineupFull) {
-            dispatch(setObjectiveComplete(Objectives.FILL_TEAM, true));
+            dispatch(
+              setObjectiveComplete({
+                objectiveType: Objectives.FILL_TEAM,
+                isComplete: true,
+              })
+            );
             dispatch(removeObjective(Objectives.SEASON_SCENARIO));
             dispatch(removeScenario());
           }

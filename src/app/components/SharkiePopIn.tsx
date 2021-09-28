@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { SharkieComponent } from '@tutorial';
 
 export const SharkiePopIn = ({ slides }) => {
-  const [currentSlideIndex, setCurrentSlideIndex] = useState();
+  const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
 
   const currentSlide = slides[currentSlideIndex];
 
@@ -13,16 +13,20 @@ export const SharkiePopIn = ({ slides }) => {
         initial={{
           opacity: 0,
         }}
-        animate={{
-          opactiy: 1,
-        }}
-        exit={{
-          opactiy: 0,
-        }}
+        animate={
+          {
+            opactiy: 1,
+          } as any
+        }
+        exit={
+          {
+            opactiy: 0,
+          } as any
+        }
         transition={{
           default: { duration: 1 },
         }}
-        className='sharkie-pop-in-container'
+        className="sharkie-pop-in-container"
         style={{
           position: 'absolute',
           top: 0,
@@ -32,7 +36,7 @@ export const SharkiePopIn = ({ slides }) => {
           backgroundColor: 'rgba(255, 255, 255, 0.35)',
         }}
       >
-        <SharkieComponent slide={currentSlide} inTransition={inTransition} />
+        <SharkieComponent slide={currentSlide} />
       </motion.div>
     </AnimatePresence>
   );

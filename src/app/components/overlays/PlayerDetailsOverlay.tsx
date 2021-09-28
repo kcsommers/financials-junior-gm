@@ -1,9 +1,10 @@
-import { useDispatch, batch } from 'react-redux';
+import { batch } from 'react-redux';
 import {
   toggleOverlay,
   setStudent,
   releasePlayer,
   setObjectiveComplete,
+  useAppDispatch,
 } from '@redux';
 import {
   PlayerCard,
@@ -26,7 +27,7 @@ export const PlayerDetailsOverlay = ({
   isDisabled = false,
   includeActions = true,
 }: any) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const onCancel = () => {
     dispatch(

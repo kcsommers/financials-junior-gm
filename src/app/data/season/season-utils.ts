@@ -10,7 +10,12 @@ import {
 import { cloneDeep } from 'lodash';
 import { scenarioConfigs, SeasonScenario } from './scenarios';
 
-export const resetSeason = (newLevel, prevLevel, student, wonGame?) => {
+export const resetSeason = (
+  newLevel,
+  prevLevel,
+  student,
+  wonGame?
+): Promise<any> => {
   return new Promise((resolve, reject) => {
     const clonedSeasons = cloneDeep(student.seasons);
     clonedSeasons[newLevel - 1] = [];

@@ -1,19 +1,20 @@
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@redux';
 
 export const GameBlockBoard = () => {
-  const seasonState = useSelector((state) => state.season);
+  const seasonState = useAppSelector((state) => state.season);
 
-  const currentBlock = seasonState.gameBlocks[seasonState.currentBlockIndex];
+  // const currentBlock = seasonState.gameBlocks[seasonState.currentBlockIndex];
   const completedGames = seasonState.completedGames;
 
-  const games = currentBlock
-    ? [
-        ...completedGames,
-        ...currentBlock
-          .slice(completedGames.length)
-          .map((team) => ({ opponent: team.name, score: [0, 0] })),
-      ]
-    : [];
+  // const games = currentBlock
+  //   ? [
+  //       ...completedGames,
+  //       ...currentBlock
+  //         .slice(completedGames.length)
+  //         .map((team) => ({ opponent: team.name, score: [0, 0] })),
+  //     ]
+  //   : [];
+  const games: any[] = [...completedGames];
 
   const getFontSize = (teamName) => {
     if (!teamName) {
@@ -33,8 +34,8 @@ export const GameBlockBoard = () => {
 
   const rows = games.map((g, i) =>
     i < 4 ? (
-      <div key={`game-row-${i}`} className='game-block-board-row'>
-        <div className='game-block-board-teams-wrap'>
+      <div key={`game-row-${i}`} className="game-block-board-row">
+        <div className="game-block-board-teams-wrap">
           <div
             className={`game-block-board-left ${
               g.score[0] > g.score[1] ? ` color-primary font-bold` : ''
@@ -48,7 +49,7 @@ export const GameBlockBoard = () => {
               S.J. {seasonState.seasonTeam.name}
             </span>
 
-            <div className='game-block-board-score'>
+            <div className="game-block-board-score">
               <span
                 className={`${
                   g.score[0] > g.score[1] ? ` color-primary font-bold` : ''
@@ -56,7 +57,7 @@ export const GameBlockBoard = () => {
               >
                 {g.score[0]}
               </span>
-              <span className='game-block-board-dash'>-</span>
+              <span className="game-block-board-dash">-</span>
               <span
                 className={`${
                   g.score[0] < g.score[1] ? ` color-primary font-bold` : ''
@@ -81,8 +82,8 @@ export const GameBlockBoard = () => {
   );
 
   return (
-    <div className='game-block-board-wrap'>
-      <div className='game-block-board-wrap-inner'>
+    <div className="game-block-board-wrap">
+      <div className="game-block-board-wrap-inner">
         <div>{rows}</div>
       </div>
     </div>

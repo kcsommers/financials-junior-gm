@@ -1,5 +1,4 @@
 import { useEffect, useCallback, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { Redirect } from 'react-router';
 import { setTeacher, useAppDispatch, useAppSelector } from '@redux';
 import { UserRoles } from '@data/auth/auth';

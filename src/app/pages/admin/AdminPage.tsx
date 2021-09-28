@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { getAllTeachers, getAllStudents, getTimeSpent } from '../../api-helper';
 import { LoadingSpinner } from '@components';
 import { Link, Route, Switch } from 'react-router-dom';
 import { TeacherBrowser } from './TeacherBrowser';
 import { logout } from '../../api-helper';
 import { clearSessionStorage } from '@data/auth/auth';
-import { setLoginState } from '@redux';
+import { setLoginState, useAppDispatch } from '@redux';
 import { formatNumber } from '@utils';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
@@ -14,7 +13,7 @@ import * as moment from 'moment';
 import '@css/pages/AdminPage.css';
 
 export const AdminPage = ({ history }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const [allTeachers, setAllTeachers] = useState<any[]>();
 

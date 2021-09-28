@@ -2,7 +2,7 @@ import { OverlayBoard } from './OverlayBoard';
 import { useEffect, useRef, useState } from 'react';
 
 export const FaqOverlay = ({ questions, title, onStartTutorial, level }) => {
-  const answerRefs = useRef([]);
+  const answerRefs = useRef<any[]>([]);
 
   const [questionStates, setQuestionStates] = useState({});
 
@@ -27,7 +27,7 @@ export const FaqOverlay = ({ questions, title, onStartTutorial, level }) => {
   const questionsView = questions.map((q, i) => (
     <div
       key={i}
-      className='question-container box-shadow'
+      className="question-container box-shadow"
       style={{
         padding: '1rem 1rem 1rem 0',
         borderRadius: '5px',
@@ -36,7 +36,7 @@ export const FaqOverlay = ({ questions, title, onStartTutorial, level }) => {
       }}
       onClick={toggleQuestion.bind(this, i)}
     >
-      <div className='faq-question-wrap' style={{ display: 'flex' }}>
+      <div className="faq-question-wrap" style={{ display: 'flex' }}>
         <span
           style={{
             width: '3rem',
@@ -59,12 +59,12 @@ export const FaqOverlay = ({ questions, title, onStartTutorial, level }) => {
             +
           </span>
         </span>
-        <p className='faq-question' style={{ flex: 1 }}>
+        <p className="faq-question" style={{ flex: 1 }}>
           {q.question}
         </p>
       </div>
       <p
-        className='faq-answer'
+        className="faq-answer"
         style={{
           transition: 'height 0.3s ease',
           height: questionStates[i]
@@ -101,13 +101,13 @@ export const FaqOverlay = ({ questions, title, onStartTutorial, level }) => {
         }}
       >
         <h3
-          className='color-primary'
+          className="color-primary"
           style={{ marginBottom: '2rem', fontSize: '2rem' }}
         >
           {title}
         </h3>
         <div
-          className='faq-wrap'
+          className="faq-wrap"
           style={{
             flex: 1,
             overflowY: 'auto',
@@ -118,7 +118,7 @@ export const FaqOverlay = ({ questions, title, onStartTutorial, level }) => {
         </div>
         {level === 1 && (
           <div
-            className='box-shadow'
+            className="box-shadow"
             style={{
               width: '100%',
               borderRadius: '5px',

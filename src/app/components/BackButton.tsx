@@ -21,14 +21,16 @@ export const BackButton = ({ path }) => {
         justifyContent: 'center',
       }}
     >
-      <img src={backBtn} alt='Back' />
+      <img src={backBtn} alt="Back" />
       <span
-        style={{
-          color: '#121210',
-          fontSize: '0.8rem',
-          maginTop: '-10px',
-          fontWeight: 'bold',
-        }}
+        style={
+          {
+            color: '#121210',
+            fontSize: '0.8rem',
+            maginTop: '-10px',
+            fontWeight: 'bold',
+          } as any
+        }
       >
         Back
       </span>

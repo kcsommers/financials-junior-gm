@@ -1,10 +1,14 @@
 import { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useDispatch } from 'react-redux';
 import { SharkieComponent } from './Sharkie';
 import backBtn from '@images/back-btn.svg';
 import backBtnRvrsd from '@images/back-btn-reversed.svg';
-import { setAnimationState, toggleOverlay, setAdvanceListener } from '@redux';
+import {
+  setAnimationState,
+  toggleOverlay,
+  setAdvanceListener,
+  useAppDispatch,
+} from '@redux';
 import '@css/tutorial/tutorials.css';
 import { useAdvanceSlideListener } from '../../hooks/use-advance-slide-listener';
 
@@ -58,7 +62,7 @@ export const Tutorial = ({ slides, onComplete }) => {
 
   const [buttonsAnimating, setButtonsAnimating] = useState(false);
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const slideIndexRef = useRef(state.slideIndex);
 

@@ -14,7 +14,7 @@ import {
   Button,
   PageBoard,
 } from '@components';
-import { useSelector, useDispatch, batch } from 'react-redux';
+import { batch } from 'react-redux';
 import { motion } from 'framer-motion';
 import {
   scoutSlides,
@@ -29,6 +29,7 @@ import {
   setStudent,
   scoutingComplete,
   useAppSelector,
+  useAppDispatch,
 } from '@redux';
 import { isEqual } from 'lodash';
 import { getMoneyLevels } from '@utils';
@@ -46,7 +47,7 @@ const boardMap = {
 };
 
 export const ScoutPage = ({ history }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const tutorialActive = useAppSelector((state) => state.tutorial.isActive);
   const student = useAppSelector((state) => state.studentState.student);
   const { inTransition, awards, inSession } = useAppSelector(

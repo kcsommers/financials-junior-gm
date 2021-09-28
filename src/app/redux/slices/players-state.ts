@@ -1,4 +1,3 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { PlayerAssignments, PlayerPositions } from '@data/players/players';
 import { getMoneyLevels } from '@utils';
 import {
@@ -7,6 +6,7 @@ import {
   getMoneySpent,
   isStarter,
 } from '@data/players/players-utils';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface IPlayersState {
   marketPlayers: {
@@ -81,6 +81,19 @@ const playersStateSlice = createSlice({
       // make sure the players are for this level
       players.filter((p) => +p.playerLevel === +student.level);
       // loop players and place them in the appropriate cache
+      console.log('players:::: ', players, JSON.parse(JSON.stringify(state)));
+      if (!state.scoutingState.scoutPlayers.available) {
+        state.scoutingState.scoutPlayers.available = [];
+      }
+      if (!state.scoutingState.scoutPlayers.levelOne) {
+        state.scoutingState.scoutPlayers.levelOne = [];
+      }
+      if (!state.scoutingState.scoutPlayers.levelTwo) {
+        state.scoutingState.scoutPlayers.levelTwo = [];
+      }
+      if (!state.scoutingState.scoutPlayers.levelThree) {
+        state.scoutingState.scoutPlayers.levelThree = [];
+      }
       players.forEach((p) => {
         if (p.playerAssignment === PlayerAssignments.MARKET) {
           if (p.playerPosition === PlayerPositions.FORWARD) {

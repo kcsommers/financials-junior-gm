@@ -1,12 +1,11 @@
 import { useMemo } from 'react';
-import { useDispatch } from 'react-redux';
 import { getStanding } from '@data/season/season-utils';
 import { OverlayBoard, Button } from '@components';
-import { toggleOverlay } from '@redux';
+import { toggleOverlay, useAppDispatch } from '@redux';
 import trophyIcon from '@images/icons/trophy.svg';
 
 export const SeasonCompleteOverlay = ({ team, standings }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const standing = useMemo(
     () => getStanding(team, standings),
     [team, standings]

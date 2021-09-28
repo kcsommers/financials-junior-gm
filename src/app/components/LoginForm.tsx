@@ -38,7 +38,7 @@ export const LoginForm = ({
             type="text"
             placeholder={userField}
             name="username"
-            maxLength="100"
+            maxLength={100}
           />
         </div>
         <div className="login-form-field">
@@ -50,7 +50,7 @@ export const LoginForm = ({
             type="password"
             placeholder="Password"
             name="password"
-            maxLength="100"
+            maxLength={100}
           />
         </div>
         <p className="login-error-text">{loginError || validationError}</p>

@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { setAdmin, useAppSelector } from '@redux';
+import { setAdmin, useAppDispatch, useAppSelector } from '@redux';
 import { UserRoles } from '@data/auth/auth';
 import { Redirect } from 'react-router-dom';
 import { getCurrentUser } from '../../api-helper';
@@ -13,7 +12,7 @@ export const AdminPortal = ({
   pageName = '',
   history = null,
 }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const { admin } = useAppSelector((state) => state.adminState);
 

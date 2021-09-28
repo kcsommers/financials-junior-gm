@@ -21,6 +21,10 @@ export const store = configureStore({
     objectives: objectivesStateReducer,
     adminState: adminStateReducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }),
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
