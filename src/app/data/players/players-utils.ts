@@ -167,9 +167,9 @@ export const handleReleasePlayer = (releasedPlayer, student): Promise<any> => {
 };
 
 export const handleSignPlayer = (
-  signedPlayer,
-  assignment,
-  student
+  signedPlayer: any,
+  assignment: any,
+  student: any
 ): Promise<any> => {
   return new Promise((resolve, reject) => {
     signedPlayer.playerAssignment = assignment;
@@ -218,9 +218,9 @@ export const handleSignPlayer = (
 };
 
 export const handleTradePlayers = (
-  signedPlayer,
-  releasedPlayer,
-  student
+  signedPlayer: any,
+  releasedPlayer: any,
+  student: any
 ): Promise<any> => {
   return new Promise((resolve, reject) => {
     const prevAssignment = releasedPlayer.playerAssignment;

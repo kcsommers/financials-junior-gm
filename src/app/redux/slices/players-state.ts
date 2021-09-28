@@ -81,7 +81,6 @@ const playersStateSlice = createSlice({
       // make sure the players are for this level
       players.filter((p) => +p.playerLevel === +student.level);
       // loop players and place them in the appropriate cache
-      console.log('players:::: ', players, JSON.parse(JSON.stringify(state)));
       if (!state.scoutingState.scoutPlayers.available) {
         state.scoutingState.scoutPlayers.available = [];
       }
@@ -144,6 +143,7 @@ const playersStateSlice = createSlice({
         _team.filter((p) => isStarter(p)),
         +student.level
       );
+      state.teamPlayers = teamPlayers;
     },
     scoutingComplete: (
       state,
