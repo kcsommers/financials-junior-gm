@@ -172,7 +172,10 @@ export const handleSignPlayer = (
   student: any
 ): Promise<any> => {
   return new Promise((resolve, reject) => {
-    signedPlayer.playerAssignment = assignment;
+    console.log('signed player:::: ', signedPlayer);
+    // @TODO
+    const _clonedSignedPlayer = cloneDeep(signedPlayer);
+    _clonedSignedPlayer.playerAssignment = assignment;
 
     const clonedStudent = cloneDeep(student);
     clonedStudent[assignment] = signedPlayer;
