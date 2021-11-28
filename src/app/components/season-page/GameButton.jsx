@@ -4,6 +4,8 @@ import { useHistory } from 'react-router-dom';
 import { GamePhases } from '@data/season/season';
 import { motion } from 'framer-motion';
 import { startingLineupFull } from '@data/players/players-utils';
+import { useCallback, useEffect } from 'react';
+import { useKeydown } from '../../hooks/use-keydown';
 
 export const GameButton = ({
   onStartGame,
@@ -51,6 +53,17 @@ export const GameButton = ({
       onStartGame();
     }
   };
+
+  useKeydown(
+    'Space',
+    () => {
+      if (btnDisabled) {
+        return;
+      }
+      gameButtonClicked();
+    },
+    [btnDisabled, gameButtonClicked]
+  );
 
   return (
     <div
