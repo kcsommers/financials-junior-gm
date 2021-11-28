@@ -3,6 +3,8 @@ export { BudgetStickSvg } from './svg/BudgetStickSvg';
 export { SeasonStickSvg } from './svg/SeasonStickSvg';
 export { ScoutStickSvg } from './svg/ScoutStickSvg';
 export { TrophiesStickSvg } from './svg/TrophiesStickSvg';
+export { HomeStickLeftSvg } from './svg/HomeStickLeftSvg';
+export { HomeStickRightSvg } from './svg/HomeStickRightSvg';
 export { AwardDetailsOverlay } from './overlays/AwardDetailsOverlay';
 export { ConfirmSignOverlay } from './overlays/ConfirmSignOverlay';
 export { Cheermeter } from './season-page/Cheermeter';

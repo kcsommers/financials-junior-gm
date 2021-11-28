@@ -207,7 +207,7 @@ export const TeamPage = ({ history, location }) => {
   return (
     <div className="page-container">
       <HeaderComponent
-        stickBtn="team"
+        stickBtn="homeLeft"
         level={+student.level}
         tutorialActive={tutorialActive}
       />
