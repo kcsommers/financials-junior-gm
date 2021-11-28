@@ -318,6 +318,7 @@ export const SeasonPage = ({ history }) => {
   };
 
   const onCheer = () => {
+    console.log('oncheer');
     // initial cheer
     if (cheerLevel === 0 && cheerCounter === 0) {
       toggleCheerInterval();
@@ -385,11 +386,8 @@ export const SeasonPage = ({ history }) => {
   );
 
   // phase interval effect
-  const [
-    resetPhaseInterval,
-    togglePhaseInterval,
-    phaseIntervalRunning,
-  ] = useInterval(() => nextPhase(), gameState.phase.timer, false);
+  const [resetPhaseInterval, togglePhaseInterval, phaseIntervalRunning] =
+    useInterval(() => nextPhase(), gameState.phase.timer, false);
 
   const nextPhase = useCallback(() => {
     const currentPhase = gameState.phase.phase;
@@ -455,11 +453,8 @@ export const SeasonPage = ({ history }) => {
   ]);
 
   // message interval effect
-  const [
-    resetMessageInterval,
-    toggleMessageInterval,
-    messageIntervalRunning,
-  ] = useInterval(nextMessage, gameState.phase.messageTimer, false);
+  const [resetMessageInterval, toggleMessageInterval, messageIntervalRunning] =
+    useInterval(nextMessage, gameState.phase.messageTimer, false);
   const prevMessageIndex = useRef(0);
   useEffect(() => {
     if (!gameState.phase.messageTimer || !gameState.phase.messages.length) {
@@ -600,7 +595,7 @@ export const SeasonPage = ({ history }) => {
   return (
     <div className="page-container">
       <HeaderComponent
-        stickBtn="season"
+        stickBtn="homeLeft"
         level={+student.level}
         tutorialActive={tutorialActive}
       />
