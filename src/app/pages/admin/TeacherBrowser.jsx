@@ -396,7 +396,9 @@ export const TeacherBrowser = ({ allTeachers, onRowAction }) => {
     setShowConfirm(false);
     const teachers = await getAllTeachers();
     setDisplayedTeachers(teachers.data);
-    onRowAction();
+    if (onRowAction) {
+      onRowAction();
+    }
   };
 
   return !isLoading ? (
