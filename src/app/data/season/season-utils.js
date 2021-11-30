@@ -20,6 +20,7 @@ export const resetSeason = (newLevel, prevLevel, student, wonGame) => {
       level: newLevel,
       objectives: {},
       savingsBudget: 0,
+      pagesVisited: [],
     };
 
     if (newLevel > prevLevel) {
