@@ -73,28 +73,39 @@ export const StudentPortal = ({
   );
 
   useEffect(() => {
+    const _pageVisited = student.pagesVisited.indexOf(pageName) > -1;
+    if (_pageVisited) {
+      return;
+    }
+  }, []);
+
+  useEffect(() => {
     if (!isLoggedIn || userRole !== UserRoles.STUDENT) {
       setShouldRedirectToDashboard(true);
       return;
     }
 
-    if (student) {
-      // make sure pages can be visited
+    const _handleRedirects = (_student) => {
       if (
-        (pageName !== 'home' && !student.tutorials) ||
-        (pageName === 'budget' && !student.tutorials.home) ||
-        (pageName === 'team' && !student.tutorials.budget) ||
+        (pageName !== 'home' && !_student.tutorials) ||
+        (pageName === 'budget' && !_student.tutorials.home) ||
+        (pageName === 'team' && !_student.tutorials.budget) ||
         (pageName === 'season' &&
-          !student.tutorials.season &&
-          !startingLineupFull(student))
+          !_student.tutorials.season &&
+          !startingLineupFull(_student))
       ) {
         history.push('/home');
-        return;
+        return true;
       }
-      if (pageName === 'scout' && !student.tutorials.team) {
+      if (pageName === 'scout' && !_student.tutorials.team) {
         history.push('/team');
-        return;
+        return true;
       }
+      return false;
+    };
+
+    if (student) {
+      _handleRedirects(student);
       return;
     }
     getCurrentUser()
@@ -103,26 +114,12 @@ export const StudentPortal = ({
           throw res;
         }
         const user = res.data;
-        if (user.role === UserRoles.STUDENT) {
-          initializeStudent(user);
-          if (
-            (pageName !== 'home' && !user.tutorials) ||
-            (pageName === 'budget' && !user.tutorials.home) ||
-            (pageName === 'team' && !user.tutorials.budget) ||
-            (pageName === 'season' &&
-              !res.data.season &&
-              getAvailableSlots(playerProps, user) > 0)
-          ) {
-            history.push('/home');
-            return;
-          }
-          if (pageName === 'scout' && !user.tutorials.team) {
-            history.push('/team');
-            return;
-          }
-        } else {
+        if (user.role !== UserRoles.STUDENT) {
           setShouldRedirectToDashboard(true);
+          return;
         }
+        initializeStudent(user);
+        _handleRedirects(user);
       })
       .catch((err) => {
         console.error('Unexpected error fetching current user', err);
