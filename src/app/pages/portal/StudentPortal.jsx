@@ -1,22 +1,18 @@
-import { useState, useCallback, useEffect, useRef } from 'react';
-import { useSelector, useDispatch, batch } from 'react-redux';
+import { LoadingSpinner } from '@components';
+import { UserRoles } from '@data/auth/auth';
+import { startingLineupFull } from '@data/players/players-utils';
 import {
-  setStudent,
+  initializeObjectives,
   initializeSeason,
   setInitialPlayersState,
-  initializeObjectives,
   setStartTime,
+  setStudent,
 } from '@redux/actions';
-import { UserRoles } from '@data/auth/auth';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { batch, useDispatch, useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import { getCurrentUser } from './../../api-helper';
-import { LoadingSpinner } from '@components';
-import {
-  getAvailableSlots,
-  startingLineupFull,
-} from '@data/players/players-utils';
-import { playerProps } from '@data/players/players';
 import { updateStudentTimeSpent } from '../../data/student/student-utils';
+import { getCurrentUser, updateStudentById } from './../../api-helper';
 
 export const StudentPortal = ({
   screen,
@@ -73,35 +69,48 @@ export const StudentPortal = ({
   );
 
   useEffect(() => {
-    const _pageVisited = student.pagesVisited.indexOf(pageName) > -1;
-    if (_pageVisited) {
-      return;
-    }
-  }, []);
-
-  useEffect(() => {
     if (!isLoggedIn || userRole !== UserRoles.STUDENT) {
       setShouldRedirectToDashboard(true);
       return;
     }
 
     const _handleRedirects = (_student) => {
-      if (
-        (pageName !== 'home' && !_student.tutorials) ||
-        (pageName === 'budget' && !_student.tutorials.home) ||
-        (pageName === 'team' && !_student.tutorials.budget) ||
-        (pageName === 'season' &&
-          !_student.tutorials.season &&
-          !startingLineupFull(_student))
-      ) {
-        history.push('/home');
-        return true;
+      const _pagesVisited = _student.pagesVisited || [];
+      if (_student.level === 1) {
+        if (
+          (pageName !== 'home' && !_student.tutorials) ||
+          (pageName === 'budget' && !_student.tutorials.home) ||
+          (pageName === 'team' && !_student.tutorials.budget) ||
+          (pageName === 'season' &&
+            !_student.tutorials.season &&
+            !startingLineupFull(_student))
+        ) {
+          history.push('/home');
+          return;
+        }
+        if (pageName === 'scout' && !_student.tutorials.team) {
+          history.push('/team');
+          return;
+        }
+      } else {
+        console.log('pages visited:::: ', _pagesVisited);
+        if (
+          (pageName !== 'home' && !_pagesVisited.includes('home')) ||
+          (pageName === 'team' && !_pagesVisited.includes('budget'))
+        ) {
+          history.push('/home');
+          return;
+        }
       }
-      if (pageName === 'scout' && !_student.tutorials.team) {
-        history.push('/team');
-        return true;
+      if (_pagesVisited.includes(pageName)) {
+        return;
       }
-      return false;
+      _pagesVisited.push(pageName);
+      updateStudentById(_student._id, { pagesVisited: _pagesVisited })
+        .then((res) => {
+          dispatch(setStudent(res.updatedStudent));
+        })
+        .catch((err) => console.error(err));
     };
 
     if (student) {
