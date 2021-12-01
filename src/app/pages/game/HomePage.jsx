@@ -35,14 +35,37 @@ import {
 } from '@data/players/players-utils';
 import '@css/pages/HomePage.css';
 
+const shouldDisable = (_pageName, _student) => {
+  if (+_student.level === 1) {
+    if (_pageName === 'budget') {
+      return !_student || !_student.tutorials || !_student.tutorials.home;
+    }
+    if (_pageName === 'team') {
+      return !_student || !_student.tutorials || !_student.tutorials.budget;
+    }
+    if (_pageName === 'season') {
+      return (
+        !_student ||
+        !_student.tutorials ||
+        (!_student.tutorials.season && !startingLineupFull(_student))
+      );
+    }
+  } else {
+    const _pagesVisited = _student ? _student.pagesVisited || [] : [];
+    if (_pageName === 'team') {
+      return !_pagesVisited.includes('budget');
+    }
+    if (_pageName === 'season') {
+      return !startingLineupFull(_student);
+    }
+  }
+};
+
 const getDisabledStickBtns = (student) => {
   const states = {};
-  states.budget = !student || !student.tutorials || !student.tutorials.home;
-  states.team = !student || !student.tutorials || !student.tutorials.budget;
-  states.season =
-    !student ||
-    !student.tutorials ||
-    (!student.tutorials.season && !startingLineupFull(student));
+  states.budget = shouldDisable('budget', student);
+  states.team = shouldDisable('team', student);
+  states.season = shouldDisable('season', student);
   return states;
 };
 
@@ -194,6 +217,7 @@ export const HomePage = ({ location, history }) => {
           );
         });
       });
+      setDisabledStickBtns(getDisabledStickBtns(updatedStudent));
     },
     [dispatch]
   );
