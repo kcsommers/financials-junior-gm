@@ -93,7 +93,6 @@ export const StudentPortal = ({
           return;
         }
       } else {
-        console.log('pages visited:::: ', _pagesVisited);
         if (
           (pageName !== 'home' && !_pagesVisited.includes('home')) ||
           (pageName === 'team' && !_pagesVisited.includes('budget'))

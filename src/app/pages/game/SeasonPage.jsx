@@ -318,7 +318,6 @@ export const SeasonPage = ({ history }) => {
   };
 
   const onCheer = () => {
-    console.log('oncheer');
     // initial cheer
     if (cheerLevel === 0 && cheerCounter === 0) {
       toggleCheerInterval();

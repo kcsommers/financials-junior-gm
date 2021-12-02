@@ -87,9 +87,6 @@ export const FooterComponent = ({
     tutorialActive,
     allTutorialsViewed
   );
-
-  console.log('bnt::: ', btnConfigs);
-
   return (
     <div style={styles(tutorialActive).container}>
       <div className="footer-inner" style={styles(tutorialActive).inner}>
