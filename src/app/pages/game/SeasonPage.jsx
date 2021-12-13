@@ -88,6 +88,7 @@ export const SeasonPage = ({ history }) => {
   };
 
   const [gameCount, setGameCount] = useState(1);
+  const prevPhaseIndex = useRef(0);
 
   const [cheerLevel, setCheerLevel] = useState(0);
   const [cheerCounter, setCheerCounter] = useState(0);
@@ -240,6 +241,7 @@ export const SeasonPage = ({ history }) => {
     setCheerCounter(0);
     setCheerPoints(0);
     toggleCheerInterval();
+    prevPhaseIndex.current = 0;
 
     const nextOpponentIndex = seasonState.currentOpponentIndex + 1;
 
@@ -464,7 +466,6 @@ export const SeasonPage = ({ history }) => {
     togglePhaseInterval,
   ]);
 
-  const prevPhaseIndex = useRef(0);
   useEffect(() => {
     // exit if message timer exists
     if (gameState.phase.messageTimer || !gameState.phase.timer) {
@@ -477,7 +478,6 @@ export const SeasonPage = ({ history }) => {
     if (prevPhaseIndex.current === localGameState.currentPhaseIndex) {
       return;
     }
-
     prevPhaseIndex.current = localGameState.currentPhaseIndex;
     phaseIntervalRunning ? resetPhaseInterval() : togglePhaseInterval();
 

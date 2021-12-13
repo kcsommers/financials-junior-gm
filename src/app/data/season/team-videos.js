@@ -22,12 +22,12 @@ export const SharksVideos = {
     goal: `${BASE_URL}1SaKMEvxj7UTnQSXUMp4uCz9bYYt4LGM-`,
   },
   'Vancouver Canucks': {
-    save: `${BASE_URL}16qHCeq_NyQ2hK94k9JyDL_Py4IyjaWw1`,
-    goal: `${BASE_URL}1F2mjDyzKbln95tQaevV1PlnLFEiRFIXf`,
+    goal: `${BASE_URL}16qHCeq_NyQ2hK94k9JyDL_Py4IyjaWw1`,
+    save: `${BASE_URL}1F2mjDyzKbln95tQaevV1PlnLFEiRFIXf`,
   },
   'Vegas Golden Knights': {
-    save: `${BASE_URL}1G8dOcYotW73_akjM16hxhQ0Q-4Gd8opO`,
-    goal: `${BASE_URL}1JcZz5ghEu117qPwtpQNax4QBOgNf8OQ0`,
+    goal: `${BASE_URL}1G8dOcYotW73_akjM16hxhQ0Q-4Gd8opO`,
+    save: `${BASE_URL}1JcZz5ghEu117qPwtpQNax4QBOgNf8OQ0`,
   },
   'Dallas Stars': {
     goal: `${BASE_URL}1ClF4BaO7oquZc5OFMN1Nxc0Ey--esNID`,
@@ -54,8 +54,6 @@ export const SharksVideos = {
 export const getGameOverVideo = (level, team, score) => {
   if (+level === 3 || +level === 2 || +level === 1) {
     const _videos = SharksVideos[team] || SharksVideos['St. Louis Blues'];
-    console.log('getGameOverVideo score:::: ', score);
-    console.log('getGameOverVideo:::: ', score[0] > score[1] ? 'goal' : 'save');
     return _videos[score[0] > score[1] ? 'goal' : 'save'];
   }
   return null;

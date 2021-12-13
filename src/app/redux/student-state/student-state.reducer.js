@@ -42,7 +42,7 @@ const studentStateReducer = (state = initialState, action) => {
     }
     case SET_START_TIME: {
       const clonedState = cloneDeep(state);
-      clonedState.startTime = Date.now();
+      clonedState.startTime = action.payload;
 
       return clonedState;
     }

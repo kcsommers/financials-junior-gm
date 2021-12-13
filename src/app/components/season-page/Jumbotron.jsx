@@ -1,16 +1,18 @@
-import { TeamCard } from './TeamCard';
+import { Indicator, PlayerCard } from '@components';
+import '@css/components/season-page/Jumbotron.css';
+import { startingLineupFull } from '@data/players/players-utils';
 import { GamePhases } from '@data/season/season';
 import { getStanding } from '@data/season/season-utils';
-import { Indicator, PlayerCard } from '@components';
+import gameOnBg from '@images/game-on-bg.png';
 import { motion } from 'framer-motion';
-import '@css/components/season-page/Jumbotron.css';
+import { useEffect, useState, useRef } from 'react';
 import { useSelector } from 'react-redux';
-import { startingLineupFull } from '@data/players/players-utils';
 import {
   getGameOnVideo,
   getGameOverVideo,
 } from '../../data/season/team-videos';
-import gameOnBg from '@images/game-on-bg.png';
+import { useInterval } from '../../hooks/use-interval';
+import { TeamCard } from './TeamCard';
 
 export const Jumbotron = ({
   gameState,
@@ -35,12 +37,26 @@ export const Jumbotron = ({
     seasonState.currentOpponentIndex + 3
   );
 
-  const scoreView = (
-    <div className="jumbotron-score-container">
-      <div className="jumbotron-score-title">Score</div>
-      <div className="box-shadow jumbotron-score-wrap">{score[0]}</div>
-      <div className="box-shadow jumbotron-score-wrap">{score[1]}</div>
-    </div>
+  const gameOverVideoRef = useRef(null);
+  const [gameOverVideoLoaded, setGameOverVideoLoaded] = useState(false);
+  const [showGameOverVideo, setShowGameOverVideo] = useState(false);
+  const [gameOverIntervalComplete, setGameOverIntervalComplete] =
+    useState(false);
+
+  const [
+    resetGameOverInterval,
+    toggleGameOverInterval,
+    gameOverIntervalRunning,
+  ] = useInterval(
+    () => {
+      setGameOverIntervalComplete(true);
+      toggleGameOverInterval();
+      if (gameOverVideoLoaded) {
+        setShowGameOverVideo(true);
+      }
+    },
+    3000,
+    false
   );
 
   const statsView = (
@@ -195,7 +211,7 @@ export const Jumbotron = ({
     </div>
   );
 
-  const warmingUpView = (
+  const scoreView = (shouldAnimate) => (
     <>
       <div className="game-on-top">
         <div className="game-on-top-left">
@@ -226,7 +242,7 @@ export const Jumbotron = ({
         </span>
         <motion.div
           className="game-on-top-right"
-          initial={{ transform: 'scale(0.5)' }}
+          initial={{ transform: shouldAnimate ? 'scale(0.5)' : 'scale(1)' }}
           animate={{ transform: 'scale(1)' }}
           transition={{
             default: {
@@ -241,7 +257,13 @@ export const Jumbotron = ({
           />
         </motion.div>
       </div>
-      <div className="game-on-bottom">{scoreView}</div>
+      <div className="game-on-bottom">
+        <div className="jumbotron-score-container">
+          <div className="jumbotron-score-title">Score</div>
+          <div className="box-shadow jumbotron-score-wrap">{score[0]}</div>
+          <div className="box-shadow jumbotron-score-wrap">{score[1]}</div>
+        </div>
+      </div>
     </>
   );
 
@@ -294,17 +316,46 @@ export const Jumbotron = ({
 
   const gameOverView = (_video) => (
     <>
+      <div
+        style={{
+          display: showGameOverVideo ? 'none' : 'block',
+        }}
+      >
+        {scoreView(false)}
+      </div>
       <video
         key="game-over-video"
         className="jumbotron-video"
-        autoPlay
         poster={gameOnBg}
-        onEnded={nextPhase}
+        ref={(el) => (gameOverVideoRef.current = el)}
+        style={{
+          visibility: showGameOverVideo ? 'visible' : 'hidden',
+          opacity: showGameOverVideo ? '1' : '0',
+          transition: 'opacity 2s ease',
+        }}
+        onLoadedData={() => {
+          setGameOverVideoLoaded(true);
+          if (gameOverIntervalComplete) {
+            setShowGameOverVideo(true);
+          }
+        }}
+        onEnded={() => {
+          setGameOverVideoLoaded(false);
+          setShowGameOverVideo(false);
+          setGameOverIntervalComplete(false);
+          nextPhase();
+        }}
       >
         <source src={_video} type="video/mp4" />
       </video>
     </>
   );
+
+  useEffect(() => {
+    if (showGameOverVideo && gameOverVideoRef.current) {
+      gameOverVideoRef.current.play();
+    }
+  }, [showGameOverVideo]);
 
   const getJumbotronView = () => {
     if (seasonState.currentScenario) {
@@ -318,12 +369,15 @@ export const Jumbotron = ({
       }
       case GamePhases.UP_NEXT:
       case GamePhases.WARMING_UP: {
-        return warmingUpView;
+        return scoreView(true);
       }
       case GamePhases.GAME_ON: {
         return gameOnView;
       }
       case GamePhases.GAME_OVER: {
+        if (!gameOverIntervalRunning) {
+          toggleGameOverInterval();
+        }
         return gameOverView(
           getGameOverVideo(student.level, opponent && opponent.name, score)
         );
