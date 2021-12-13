@@ -5,7 +5,7 @@ import { GamePhases } from '@data/season/season';
 import { getStanding } from '@data/season/season-utils';
 import gameOnBg from '@images/game-on-bg.png';
 import { motion } from 'framer-motion';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import {
   getGameOnVideo,
@@ -43,21 +43,19 @@ export const Jumbotron = ({
   const [gameOverIntervalComplete, setGameOverIntervalComplete] =
     useState(false);
 
+  const gameOverIntervalCallback = () => {
+    setGameOverIntervalComplete(true);
+    toggleGameOverInterval();
+    if (gameOverVideoLoaded && !showGameOverVideo) {
+      setShowGameOverVideo(true);
+    }
+  };
+
   const [
     resetGameOverInterval,
     toggleGameOverInterval,
     gameOverIntervalRunning,
-  ] = useInterval(
-    () => {
-      setGameOverIntervalComplete(true);
-      toggleGameOverInterval();
-      if (gameOverVideoLoaded) {
-        setShowGameOverVideo(true);
-      }
-    },
-    3000,
-    false
-  );
+  ] = useInterval(gameOverIntervalCallback, 3000, false);
 
   const statsView = (
     <motion.div
@@ -314,6 +312,13 @@ export const Jumbotron = ({
     </div>
   ) : null;
 
+  const gameOverVideoLoadedListener = () => {
+    setGameOverVideoLoaded(true);
+    if (gameOverIntervalComplete && !showGameOverVideo) {
+      setShowGameOverVideo(true);
+    }
+  };
+
   const gameOverView = (_video) => (
     <>
       <div
@@ -333,12 +338,7 @@ export const Jumbotron = ({
           opacity: showGameOverVideo ? '1' : '0',
           transition: 'opacity 2s ease',
         }}
-        onLoadedData={() => {
-          setGameOverVideoLoaded(true);
-          if (gameOverIntervalComplete) {
-            setShowGameOverVideo(true);
-          }
-        }}
+        onLoadedData={gameOverVideoLoadedListener}
         onEnded={() => {
           setGameOverVideoLoaded(false);
           setShowGameOverVideo(false);

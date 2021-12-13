@@ -87,7 +87,7 @@ export const SeasonPage = ({ history }) => {
       ],
   };
 
-  const [gameCount, setGameCount] = useState(1);
+  const [gameCount, setGameCount] = useState(0);
   const prevPhaseIndex = useRef(0);
 
   const [cheerLevel, setCheerLevel] = useState(0);
@@ -243,8 +243,6 @@ export const SeasonPage = ({ history }) => {
     toggleCheerInterval();
     prevPhaseIndex.current = 0;
 
-    const nextOpponentIndex = seasonState.currentOpponentIndex + 1;
-
     // add the game results to student season
     // and update student
     const clonedSeasons = cloneDeep(student.seasons || []);
@@ -252,24 +250,10 @@ export const SeasonPage = ({ history }) => {
       clonedSeasons[+student.level - 1] = [];
     }
     clonedSeasons[+student.level - 1].push(localGameState.results);
-
-    const studentUpdates = {
+    const nextOpponentIndex = seasonState.currentOpponentIndex + 1;
+    updateStudentById(student._id, {
       seasons: clonedSeasons,
-    };
-
-    // throw scenario every 4 games
-    // (setting objective to false indicates the scenario is incomplete)
-    if (
-      nextOpponentIndex % 4 === 0 &&
-      nextOpponentIndex < seasonState.allOpponents.length
-    ) {
-      studentUpdates.objectives = {
-        ...student.objectives,
-        [Objectives.SEASON_SCENARIO]: false,
-      };
-    }
-
-    updateStudentById(student._id, studentUpdates)
+    })
       .then((res) => {
         batch(() => {
           // set game results in redux store
@@ -280,8 +264,14 @@ export const SeasonPage = ({ history }) => {
               nextOpponentIndex
             )
           );
-
           dispatch(setStudent(res.updatedStudent));
+        });
+
+        // update local state
+        setLocalGameState({
+          ...localGameState,
+          currentMessageIndex: 0,
+          currentPhaseIndex: 0,
         });
 
         // end of season when all teams are played
@@ -289,65 +279,80 @@ export const SeasonPage = ({ history }) => {
           endSeason(clonedSeasons[+student.level - 1]);
           return;
         }
-
-        const _continue = () => {
-          if (
-            res.updatedStudent.objectives &&
-            res.updatedStudent.objectives[Objectives.SEASON_SCENARIO] === false
-          ) {
-            newScenario(nextOpponentIndex / 4 - 1);
-          } else {
-            // update local state
-            setLocalGameState({
-              ...localGameState,
-              currentMessageIndex: 0,
-              currentPhaseIndex: 0,
-            });
-          }
-        };
-
-        if (gameCount === 2) {
-          setGameCount(1);
-          dispatch(
-            toggleOverlay({
-              isOpen: true,
-              template: (
-                <SeasonStatsOverlay
-                  student={student}
-                  seasonState={seasonState}
-                  onContinue={_continue}
-                  onExit={() => {
-                    logout()
-                      .then(() => {
-                        clearSessionStorage();
-                        dispatch(setLoginState(false, ''));
-                        history.push('/dashboard');
-                      })
-                      .catch((err) => console.error(err));
-                  }}
-                />
-              ),
-              canClose: false,
-            })
-          );
-        } else {
-          setGameCount(gameCount + 1);
-          _continue();
-        }
       })
       .catch((err) => console.error(err));
-  }, [
-    seasonState,
-    student,
-    setLocalGameState,
-    dispatch,
-    endSeason,
-    gameState.opponent,
-    localGameState,
-    newScenario,
-    toggleCheerInterval,
-    gameCount,
-  ]);
+  }, [seasonState, student, gameState.opponent, localGameState]);
+
+  const showStatsOverlay = useCallback(() => {
+    dispatch(
+      toggleOverlay({
+        isOpen: true,
+        template: (
+          <SeasonStatsOverlay
+            student={student}
+            seasonState={seasonState}
+            onExit={() => {
+              logout()
+                .then(() => {
+                  clearSessionStorage();
+                  dispatch(setLoginState(false, ''));
+                  history.push('/dashboard');
+                })
+                .catch((err) => console.error(err));
+            }}
+          />
+        ),
+        canClose: false,
+      })
+    );
+  }, [student, seasonState]);
+
+  const _initialOpponentIndexCheck = useRef(true);
+  useEffect(() => {
+    if (_initialOpponentIndexCheck.current) {
+      _initialOpponentIndexCheck.current = false;
+      return;
+    }
+    if (
+      seasonState.currentOpponentIndex &&
+      seasonState.currentOpponentIndex % 4 === 0 &&
+      seasonState.currentOpponentIndex < seasonState.allOpponents.length
+    ) {
+      updateStudentById(student._id, {
+        objectives: {
+          ...student.objectives,
+          [Objectives.SEASON_SCENARIO]: false,
+        },
+      })
+        .then(() => {
+          newScenario(seasonState.currentOpponentIndex / 4 - 1);
+        })
+        .catch((err) => console.error(err));
+    }
+  }, [seasonState.currentOpponentIndex]);
+
+  const opponentRef = useRef(gameState.opponent);
+  const updateGameCount = useCallback(() => {
+    setGameCount(gameCount + 1);
+  }, [gameCount]);
+
+  useEffect(() => {
+    if (
+      !gameState ||
+      !gameState.opponent ||
+      opponentRef.current === gameState.opponent
+    ) {
+      return;
+    }
+    opponentRef.current = gameState.opponent;
+    updateGameCount();
+  }, [gameState.opponent.name]);
+
+  useEffect(() => {
+    if (gameCount && gameCount % 2 === 0) {
+      showStatsOverlay();
+    }
+  }, [gameCount]);
 
   const nextMessage = () => {
     // go to next message
@@ -567,15 +572,6 @@ export const SeasonPage = ({ history }) => {
 
     return null;
   };
-
-  useEffect(() => {
-    if (
-      startingLineupFull(student) &&
-      student.objectives[Objectives.SEASON_SCENARIO] === false
-    ) {
-      newScenario(seasonState.currentOpponentIndex / 4 - 1);
-    }
-  }, []);
 
   const onCallSharkie = () => {
     dispatch(

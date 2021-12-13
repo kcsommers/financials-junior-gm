@@ -77,14 +77,18 @@ export const SeasonStatsOverlay = ({
             text="Continue Season"
             onClick={() => {
               dispatch(toggleOverlay({ isOpen: false, template: null }));
-              onContinue();
+              if (onContinue) {
+                onContinue();
+              }
             }}
           />
           <Button
             text="Save and Exit"
             onClick={() => {
               dispatch(toggleOverlay({ isOpen: false, template: null }));
-              onExit();
+              if (onExit) {
+                onExit();
+              }
             }}
           />
         </div>
