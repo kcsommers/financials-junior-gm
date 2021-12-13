@@ -70,3 +70,11 @@ export const getGameOnVideo = () => {
   ];
   return _gameOnVideos[Math.floor(Math.random() * _gameOnVideos.length)];
 };
+
+export const getAllTeamVideos = () => {
+  return Object.keys(SharksVideos).reduce((links, team) => {
+    links.push(SharksVideos[team].goal);
+    links.push(SharksVideos[team].save);
+    return links;
+  }, []);
+};
