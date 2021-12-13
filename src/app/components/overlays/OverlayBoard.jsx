@@ -1,17 +1,21 @@
-export const OverlayBoard = ({ children,position="relative",top='0%'   }) => {
+export const OverlayBoard = ({
+  children,
+  position = 'relative',
+  top = '0%',
+}) => {
   return (
     <div
       style={{
-        height: position==='absolute' ? '50%' : '100%',
+        height: position === 'absolute' ? '50%' : '100%',
         width: '100%',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        position:position,
-        top: position==='absolute' ? '50%' : 0,
-        left: position==='absolute' ? '50%' : 0,
-        transform:position==='absolute' ? 'translate(-50%,-50%)' : "none",
-        zIndex: 1000
+        position: position,
+        top: position === 'absolute' ? '50%' : 0,
+        left: position === 'absolute' ? '50%' : 0,
+        transform: position === 'absolute' ? 'translate(-50%,-50%)' : 'none',
+        zIndex: 1000,
       }}
     >
       <div
