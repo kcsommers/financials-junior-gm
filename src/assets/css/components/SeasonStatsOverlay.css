@@ -1,0 +1,12 @@
+div.stat-wrap {
+  font-size: 1rem;
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+div.stats-container {
+  margin-top: 2rem;
+  width: 50%;
+}

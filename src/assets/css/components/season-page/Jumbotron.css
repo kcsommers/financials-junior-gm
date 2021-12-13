@@ -248,3 +248,8 @@ div.upcoming-games-row:last-child > div:first-child {
 div.upcoming-games-row:last-child > div:last-child {
   transform-origin: left 10%;
 }
+
+video.jumbotron-video {
+  object-fit: fill;
+  height: 100%;
+}

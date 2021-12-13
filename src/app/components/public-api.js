@@ -39,6 +39,7 @@ export { PlayerDetailsOverlay } from './overlays/PlayerDetailsOverlay';
 export { SignPlayerOverlay } from './overlays/SignPlayerOverlay';
 export { PageBoard } from './PageBoard';
 export { OverlayBoard } from './overlays/OverlayBoard';
+export { SeasonStatsOverlay } from './overlays/SeasonStatsOverlay';
 export { ScoutingCompleteOverlay } from './overlays/ScoutingCompleteOverlay';
 export { LevelStick } from './LevelStick';
 export { StickButton } from './StickButton';

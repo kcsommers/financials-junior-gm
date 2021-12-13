@@ -1,50 +1,55 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
-import { useSelector, useDispatch, batch } from 'react-redux';
 import {
-  HeaderComponent,
-  PageBoard,
-  Jumbotron,
-  LevelStick,
-  StandingsBoard,
-  GameButton,
-  Overlay,
-  SeasonCompleteOverlay,
-  NextSeasonOverlay,
+  Cheermeter,
   FaqOverlay,
   FooterComponent,
-  Cheermeter,
+  GameButton,
+  HeaderComponent,
+  Jumbotron,
+  LevelStick,
+  NextSeasonOverlay,
+  Overlay,
+  PageBoard,
+  SeasonCompleteOverlay,
+  StandingsBoard,
 } from '@components';
+import '@css/pages/SeasonPage.css';
+import { clearSessionStorage } from '@data/auth/auth';
+import { faqs } from '@data/faqs/faqs';
+import { Objective, Objectives } from '@data/objectives/objectives';
+import { getMaxTeamRank } from '@data/players/players-utils';
 import { GamePhases } from '@data/season/season';
 import {
-  getGameResult,
   getGamePhases,
+  getGameResult,
   getNewScenario,
 } from '@data/season/season-utils';
-import { cloneDeep } from 'lodash';
-import { updateStudentById } from '../../api-helper';
 import {
-  throwScenario,
-  injurePlayer,
-  setStudent,
-  gameEnded,
-  setTutorialState,
-  toggleOverlay,
-  setSeasonComplete,
   addObjective,
+  gameEnded,
+  injurePlayer,
   INJURE_PLAYER,
+  setLoginState,
   setSeasonActive,
+  setSeasonComplete,
+  setStudent,
+  setTutorialState,
+  throwScenario,
+  toggleOverlay,
 } from '@redux/actions';
 import {
+  getConfirmSlides,
   seasonSlides,
   SharkieButton,
   Tutorial,
-  getConfirmSlides,
 } from '@tutorial';
-import { Objective, Objectives } from '@data/objectives/objectives';
-import { faqs } from '@data/faqs/faqs';
-import { getMaxTeamRank } from '@data/players/players-utils';
+import { cloneDeep } from 'lodash';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { batch, useDispatch, useSelector } from 'react-redux';
+import { updateStudentById } from '../../api-helper';
+import { SeasonStatsOverlay } from '../../components/public-api';
+import { startingLineupFull } from '../../data/players/players-utils';
 import { useInterval } from '../../hooks/use-interval';
-import '@css/pages/SeasonPage.css';
+import { logout } from './../../api-helper';
 
 const allActions = {
   [INJURE_PLAYER]: injurePlayer,
@@ -81,6 +86,8 @@ export const SeasonPage = ({ history }) => {
         localGameState.currentMessageIndex
       ],
   };
+
+  const [gameCount, setGameCount] = useState(1);
 
   const [cheerLevel, setCheerLevel] = useState(0);
   const [cheerCounter, setCheerCounter] = useState(0);
@@ -281,18 +288,49 @@ export const SeasonPage = ({ history }) => {
           return;
         }
 
-        if (
-          res.updatedStudent.objectives &&
-          res.updatedStudent.objectives[Objectives.SEASON_SCENARIO] === false
-        ) {
-          newScenario(nextOpponentIndex / 4 - 1);
+        const _continue = () => {
+          if (
+            res.updatedStudent.objectives &&
+            res.updatedStudent.objectives[Objectives.SEASON_SCENARIO] === false
+          ) {
+            newScenario(nextOpponentIndex / 4 - 1);
+          } else {
+            // update local state
+            setLocalGameState({
+              ...localGameState,
+              currentMessageIndex: 0,
+              currentPhaseIndex: 0,
+            });
+          }
+        };
+
+        if (gameCount === 2) {
+          setGameCount(1);
+          dispatch(
+            toggleOverlay({
+              isOpen: true,
+              template: (
+                <SeasonStatsOverlay
+                  student={student}
+                  seasonState={seasonState}
+                  onContinue={_continue}
+                  onExit={() => {
+                    logout()
+                      .then(() => {
+                        clearSessionStorage();
+                        dispatch(setLoginState(false, ''));
+                        history.push('/dashboard');
+                      })
+                      .catch((err) => console.error(err));
+                  }}
+                />
+              ),
+              canClose: false,
+            })
+          );
         } else {
-          // update local state
-          setLocalGameState({
-            ...localGameState,
-            currentMessageIndex: 0,
-            currentPhaseIndex: 0,
-          });
+          setGameCount(gameCount + 1);
+          _continue();
         }
       })
       .catch((err) => console.error(err));
@@ -306,6 +344,7 @@ export const SeasonPage = ({ history }) => {
     localGameState,
     newScenario,
     toggleCheerInterval,
+    gameCount,
   ]);
 
   const nextMessage = () => {
@@ -529,6 +568,15 @@ export const SeasonPage = ({ history }) => {
     return null;
   };
 
+  useEffect(() => {
+    if (
+      startingLineupFull(student) &&
+      student.objectives[Objectives.SEASON_SCENARIO] === false
+    ) {
+      newScenario(seasonState.currentOpponentIndex / 4 - 1);
+    }
+  }, []);
+
   const onCallSharkie = () => {
     dispatch(
       toggleOverlay({
@@ -642,6 +690,8 @@ export const SeasonPage = ({ history }) => {
                 seasonState={seasonState}
                 currentOpponentIndex={localGameState.currentOpponentIndex}
                 team={teamPlayers}
+                student={student}
+                nextPhase={nextPhase}
               />
             </div>
             <div className="opposing-team-rank-container">

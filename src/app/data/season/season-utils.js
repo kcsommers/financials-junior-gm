@@ -121,7 +121,6 @@ export const getGamePhases = (level) => [
   },
   {
     phase: GamePhases.GAME_OVER,
-    timer: 5000,
     messages: [
       `GET LOUD! The ${studentTeams[level - 1].name} Won!`,
       `CLOSE! The ${studentTeams[level - 1].name} won in overtime!`,
