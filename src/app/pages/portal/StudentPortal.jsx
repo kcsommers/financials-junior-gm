@@ -22,39 +22,39 @@ export const StudentPortal = ({
   history,
 }) => {
   const dispatch = useDispatch();
-
   const { student, startTime } = useSelector((state) => state.studentState);
-
   const [shouldRedirectToDashboard, setShouldRedirectToDashboard] =
     useState(false);
 
   const isLoggedInRef = useRef(false);
+
   useEffect(() => {
-    if (
-      isLoggedInRef.current === isLoggedIn ||
-      !isLoggedIn ||
-      userRole !== UserRoles.STUDENT
-    ) {
+    const _beforeUnloadListener = (e) => {
+      e.preventDefault();
+      e.returnValue = false;
+      updateStudentTimeSpent(student, startTime)
+        .then(() => {})
+        .catch((err) => console.error(err));
+      return false;
+    };
+    window.addEventListener('beforeunload', _beforeUnloadListener);
+    return () =>
+      window.removeEventListener('beforeunload', _beforeUnloadListener);
+  }, [student, startTime]);
+
+  const startTimeRef = useRef(0);
+  useEffect(() => {
+    if (startTime === startTimeRef.current) {
       return;
     }
+    const _start = Date.now();
+    startTimeRef.current = _start;
+    dispatch(setStartTime(_start));
+  }, [startTime]);
 
+  useEffect(() => {
     isLoggedInRef.current = isLoggedIn;
-    dispatch(setStartTime());
-    const beforeUnloadListener = window.addEventListener(
-      'beforeunload',
-      (e) => {
-        e.preventDefault();
-        e.returnValue = false;
-        updateStudentTimeSpent(student, startTime)
-          .then(() => {})
-          .catch((err) => console.error(err));
-        return false;
-      }
-    );
-
-    return () =>
-      window.removeEventListener('beforeunload', beforeUnloadListener);
-  }, [isLoggedIn, userRole, dispatch, student]);
+  }, [isLoggedIn]);
 
   const initializeStudent = useCallback(
     (student) => {

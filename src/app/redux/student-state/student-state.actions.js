@@ -21,6 +21,7 @@ export const setSavings = (amount) => ({
   payload: amount,
 });
 
-export const setStartTime = () => ({
+export const setStartTime = (startTime) => ({
   type: SET_START_TIME,
+  payload: startTime,
 });
