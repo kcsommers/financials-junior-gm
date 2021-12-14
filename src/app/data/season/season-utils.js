@@ -117,7 +117,7 @@ export const getGamePhases = (level) => [
   {
     phase: GamePhases.GAME_ON,
     messages: ['1st Period', '2nd Period', '3rd Period'],
-    messageTimer: 1000,
+    messageTimer: 5000,
   },
   {
     phase: GamePhases.GAME_OVER,
