@@ -1,5 +1,3 @@
-const BASE_URL = 'https://drive.google.com/uc?export=download&id=';
-
 import bluebearsLogo from '@images/icons/team-logos/bluebearsLg.svg';
 import redrabbitsLogo from '@images/icons/team-logos/redrabbitsLg.svg';
 import pinkpanthersLogo from '@images/icons/team-logos/pinkpanthersLg.svg';
@@ -39,6 +37,8 @@ import bluesLogo from '@images/icons/team-logos/nhl/stlouisbluesLG.png';
 import canucksLogo from '@images/icons/team-logos/nhl/vancouvercanucksLG.png';
 import goldenKnightsLogo from '@images/icons/team-logos/nhl/vegasgoldenknightsLG.png';
 import jetsLogo from '@images/icons/team-logos/nhl/winnipegjetsLG.png';
+
+const BASE_URL = 'https://drive.google.com/uc?export=download&id=';
 
 export const possibleScores = [
   [
@@ -447,10 +447,10 @@ export const levelThreeOpponents = [
     color: '#900028',
     videos: {
       gameOn: `${BASE_URL}1dd2pjPatwHz4mIwFetxeF56rKZ02Axt_`,
-      gameOver: {
-        win: `${BASE_URL}1frVTBwuhDPEpRKd9gK2WF0xFMAWEdlDS`,
-        loss: `${BASE_URL}1nv6s08mnibCkMOGHQyG-zxZT-R5vFc_E`,
-      },
+      // gameOver: {
+      //   win: `${BASE_URL}1frVTBwuhDPEpRKd9gK2WF0xFMAWEdlDS`,
+      //   loss: `${BASE_URL}1nv6s08mnibCkMOGHQyG-zxZT-R5vFc_E`,
+      // },
     },
   },
   {
@@ -604,3 +604,23 @@ export const levelThreeOpponents = [
     },
   },
 ];
+
+export const getAllTeamVideos = () => {
+  return [
+    ...levelOneOpponents,
+    ...levelTwoOpponents,
+    ...levelThreeOpponents,
+  ].reduce((links, team) => {
+    if (!team.videos) {
+      return links;
+    }
+    if (team.videos.gameOn) {
+      links.push(team.videos.gameOn);
+    }
+    if (team.videos.gameOver) {
+      links.push(team.videos.gameOver.win);
+      links.push(team.videos.gameOver.loss);
+    }
+    return links;
+  }, []);
+};

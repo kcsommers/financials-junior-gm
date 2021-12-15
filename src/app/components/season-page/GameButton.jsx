@@ -71,9 +71,7 @@ export const GameButton = ({
   );
 
   useEffect(() => {
-    console.log('phase::::', phase);
     if (phase.phase === GamePhases.GAME_ON) {
-      console.log('play audio::::');
       cheerAudioRef.current.volumn = 0.0;
       cheerAudioRef.current.play();
     } else {

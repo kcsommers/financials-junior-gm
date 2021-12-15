@@ -7,10 +7,6 @@ import gameOnBg from '@images/game-on-bg.png';
 import { motion } from 'framer-motion';
 import { useEffect, useState, useRef, useCallback } from 'react';
 import { useSelector } from 'react-redux';
-import {
-  getGameOnVideo,
-  getGameOverVideo,
-} from '../../data/season/team-videos';
 import { useInterval } from '../../hooks/use-interval';
 import { TeamCard } from './TeamCard';
 
@@ -274,7 +270,7 @@ export const Jumbotron = ({
         loop
         poster={gameOnBg}
       >
-        <source src={getGameOnVideo()} type="video/mp4" />
+        <source src={opponent.videos.gameOn} type="video/mp4" />
       </video>
     </>
   );
@@ -382,7 +378,7 @@ export const Jumbotron = ({
           toggleGameOverInterval();
         }
         const _videoKey = score[0] >= score[1] ? 'win' : 'loss';
-        return gameOverView(_gameOverVideos[_videoKey]);
+        return gameOverView(_gameOverVideos && _gameOverVideos[_videoKey]);
       }
       default: {
         return null;

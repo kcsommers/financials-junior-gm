@@ -87,6 +87,13 @@ export const SeasonPage = ({ history }) => {
       ],
   };
 
+  if (
+    gameState.phase.phase === GamePhases.GAME_OVER &&
+    (!gameState.opponent.videos || !gameState.opponent.videos.gameOver)
+  ) {
+    gameState.phase.timer = 5000;
+  }
+
   const [gameCount, setGameCount] = useState(0);
   const prevPhaseIndex = useRef(0);
 
@@ -487,13 +494,7 @@ export const SeasonPage = ({ history }) => {
     phaseIntervalRunning ? resetPhaseInterval() : togglePhaseInterval();
 
     return;
-  }, [
-    localGameState.currentPhaseIndex,
-    gameState.phase,
-    togglePhaseInterval,
-    resetPhaseInterval,
-    phaseIntervalRunning,
-  ]);
+  }, [localGameState.currentPhaseIndex, gameState.phase, phaseIntervalRunning]);
 
   // message interval effect
   const [resetMessageInterval, toggleMessageInterval, messageIntervalRunning] =
