@@ -328,26 +328,28 @@ export const Jumbotron = ({
       >
         {scoreView(false)}
       </div>
-      <video
-        key="game-over-video"
-        className="jumbotron-video"
-        poster={gameOnBg}
-        ref={(el) => (gameOverVideoRef.current = el)}
-        style={{
-          visibility: showGameOverVideo ? 'visible' : 'hidden',
-          opacity: showGameOverVideo ? '1' : '0',
-          transition: 'opacity 2s ease',
-        }}
-        onLoadedData={gameOverVideoLoadedListener}
-        onEnded={() => {
-          setGameOverVideoLoaded(false);
-          setShowGameOverVideo(false);
-          setGameOverIntervalComplete(false);
-          nextPhase();
-        }}
-      >
-        <source src={_video} type="video/mp4" />
-      </video>
+      {_video && (
+        <video
+          key="game-over-video"
+          className="jumbotron-video"
+          poster={gameOnBg}
+          ref={(el) => (gameOverVideoRef.current = el)}
+          style={{
+            visibility: showGameOverVideo ? 'visible' : 'hidden',
+            opacity: showGameOverVideo ? '1' : '0',
+            transition: 'opacity 2s ease',
+          }}
+          onLoadedData={gameOverVideoLoadedListener}
+          onEnded={() => {
+            setGameOverVideoLoaded(false);
+            setShowGameOverVideo(false);
+            setGameOverIntervalComplete(false);
+            nextPhase();
+          }}
+        >
+          <source src={_video} type="video/mp4" />
+        </video>
+      )}
     </>
   );
 
@@ -375,12 +377,12 @@ export const Jumbotron = ({
         return gameOnView;
       }
       case GamePhases.GAME_OVER: {
-        if (!gameOverIntervalRunning) {
+        const _gameOverVideos = opponent.videos && opponent.videos.gameOver;
+        if (!gameOverIntervalRunning && _gameOverVideos) {
           toggleGameOverInterval();
         }
-        return gameOverView(
-          getGameOverVideo(student.level, opponent && opponent.name, score)
-        );
+        const _videoKey = score[0] >= score[1] ? 'win' : 'loss';
+        return gameOverView(_gameOverVideos[_videoKey]);
       }
       default: {
         return null;
