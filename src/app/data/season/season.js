@@ -447,10 +447,10 @@ export const levelThreeOpponents = [
     color: '#900028',
     videos: {
       gameOn: `${BASE_URL}1dd2pjPatwHz4mIwFetxeF56rKZ02Axt_`,
-      // gameOver: {
-      //   win: `${BASE_URL}1frVTBwuhDPEpRKd9gK2WF0xFMAWEdlDS`,
-      //   loss: `${BASE_URL}1nv6s08mnibCkMOGHQyG-zxZT-R5vFc_E`,
-      // },
+      gameOver: {
+        win: `${BASE_URL}1frVTBwuhDPEpRKd9gK2WF0xFMAWEdlDS`,
+        loss: `${BASE_URL}1nv6s08mnibCkMOGHQyG-zxZT-R5vFc_E`,
+      },
     },
   },
   {
@@ -538,8 +538,8 @@ export const levelThreeOpponents = [
     videos: {
       gameOn: `${BASE_URL}1wPBJ2lZJo5K6Ywba7FoudL9Ey188BnBL`,
       gameOver: {
-        loss: `${BASE_URL}1ClF4BaO7oquZc5OFMN1Nxc0Ey--esNID`,
-        win: `${BASE_URL}1hHfMzIaVIgJ6D1j-AVYqcLK0jZ_LqwZK`,
+        win: `${BASE_URL}1ClF4BaO7oquZc5OFMN1Nxc0Ey--esNID`,
+        loss: `${BASE_URL}1hHfMzIaVIgJ6D1j-AVYqcLK0jZ_LqwZK`,
       },
     },
   },

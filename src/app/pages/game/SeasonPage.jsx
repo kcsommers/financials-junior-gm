@@ -89,6 +89,7 @@ export const SeasonPage = ({ history }) => {
 
   if (
     gameState.phase.phase === GamePhases.GAME_OVER &&
+    gameState.opponent &&
     (!gameState.opponent.videos || !gameState.opponent.videos.gameOver)
   ) {
     gameState.phase.timer = 5000;
@@ -347,13 +348,14 @@ export const SeasonPage = ({ history }) => {
     if (
       !gameState ||
       !gameState.opponent ||
-      opponentRef.current === gameState.opponent
+      !opponentRef.current ||
+      opponentRef.current.name === gameState.opponent.name
     ) {
       return;
     }
     opponentRef.current = gameState.opponent;
     updateGameCount();
-  }, [gameState.opponent.name]);
+  }, [gameState.opponent]);
 
   useEffect(() => {
     if (gameCount && gameCount % 2 === 0) {

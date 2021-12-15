@@ -313,7 +313,11 @@ export const getPlayerStatMax = (level) => {
 export const getTopPlayer = (players) => {
   let _topPlayer;
   (players || []).forEach((_player) => {
-    if (!_topPlayer || _player.overallRank > _topPlayer.overallRank) {
+    if (
+      _player &&
+      isStarter(_player) &&
+      (!_topPlayer || _player.overallRank > _topPlayer.overallRank)
+    ) {
       _topPlayer = _player;
     }
   });

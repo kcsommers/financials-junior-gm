@@ -261,7 +261,7 @@ export const Jumbotron = ({
     </>
   );
 
-  const gameOnView = (
+  const gameOnView = opponent && (
     <>
       <video
         key="game-on-video"
@@ -373,7 +373,8 @@ export const Jumbotron = ({
         return gameOnView;
       }
       case GamePhases.GAME_OVER: {
-        const _gameOverVideos = opponent.videos && opponent.videos.gameOver;
+        const _gameOverVideos =
+          opponent && opponent.videos && opponent.videos.gameOver;
         if (!gameOverIntervalRunning && _gameOverVideos) {
           toggleGameOverInterval();
         }
