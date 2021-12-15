@@ -532,12 +532,10 @@ export const SeasonPage = ({ history }) => {
 
     return;
   }, [
-    gameState.phase,
+    gameState.phase.messages.length,
+    gameState.phase.messageTimer,
     localGameState.currentMessageIndex,
-    toggleMessageInterval,
-    resetMessageInterval,
     messageIntervalRunning,
-    nextPhase,
   ]);
 
   // in UP_NEXT phase, need to add the team names to the gameState message
