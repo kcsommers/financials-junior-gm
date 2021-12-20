@@ -127,6 +127,16 @@ export const getGamePhases = (level) => [
       `CLOSE! The ${studentTeams[level - 1].name} lost in overtime!`,
       `OH NO! The ${studentTeams[level - 1].name} lost :(`,
     ],
+    timer: 5000,
+  },
+  {
+    phase: GamePhases.GAME_HIGHLIGHT,
+    messages: [
+      `GET LOUD! The ${studentTeams[level - 1].name} Won!`,
+      `CLOSE! The ${studentTeams[level - 1].name} won in overtime!`,
+      `CLOSE! The ${studentTeams[level - 1].name} lost in overtime!`,
+      `OH NO! The ${studentTeams[level - 1].name} lost :(`,
+    ],
   },
 ];
 

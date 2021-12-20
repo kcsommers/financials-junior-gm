@@ -87,14 +87,6 @@ export const SeasonPage = ({ history }) => {
       ],
   };
 
-  if (
-    gameState.phase.phase === GamePhases.GAME_OVER &&
-    gameState.opponent &&
-    (!gameState.opponent.videos || !gameState.opponent.videos.gameOver)
-  ) {
-    gameState.phase.timer = 5000;
-  }
-
   const [gameCount, setGameCount] = useState(0);
   const prevPhaseIndex = useRef(0);
 
@@ -447,8 +439,8 @@ export const SeasonPage = ({ history }) => {
     const currentPhase = gameState.phase.phase;
 
     // end of phases, clear interval
-    if (currentPhase === GamePhases.GAME_OVER) {
-      togglePhaseInterval();
+    if (currentPhase === GamePhases.GAME_HIGHLIGHT) {
+      // togglePhaseInterval();
       endGame();
       return;
     }
@@ -459,6 +451,12 @@ export const SeasonPage = ({ history }) => {
       // time to get game results
       results = getGameResult(teamRank + cheerPoints, gameState.opponent);
       messageIndex = results.messageIndex;
+    }
+
+    // game highlight phase message index is same as game over phase
+    if (currentPhase === GamePhases.GAME_OVER) {
+      results = localGameState.results;
+      messageIndex = localGameState.currentMessageIndex;
     }
 
     // go to next phase
@@ -555,7 +553,7 @@ export const SeasonPage = ({ history }) => {
     if (gameState.phase.phase === GamePhases.GAME_ON) {
       return (
         <span className="color-primary">
-          Click the puck to cheer for your team!
+          Click the puck or tap the spacebar to cheer for your team!
         </span>
       );
     }

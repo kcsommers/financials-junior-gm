@@ -72,7 +72,6 @@ const seasonReducer = (state = initialState, action) => {
             points += 1;
           }
         }
-
         // loop all teams and assign random scores/team ranks
         clonedState.allOpponents.forEach((team) => {
           team.teamRank = getRandomTeamRank(level);

@@ -34,24 +34,6 @@ export const Jumbotron = ({
   );
 
   const gameOverVideoRef = useRef(null);
-  const [gameOverVideoLoaded, setGameOverVideoLoaded] = useState(false);
-  const [showGameOverVideo, setShowGameOverVideo] = useState(false);
-  const [gameOverIntervalComplete, setGameOverIntervalComplete] =
-    useState(false);
-
-  const gameOverIntervalCallback = () => {
-    setGameOverIntervalComplete(true);
-    toggleGameOverInterval();
-    if (gameOverVideoLoaded && !showGameOverVideo) {
-      setShowGameOverVideo(true);
-    }
-  };
-
-  const [
-    resetGameOverInterval,
-    toggleGameOverInterval,
-    gameOverIntervalRunning,
-  ] = useInterval(gameOverIntervalCallback, 3000, false);
 
   const statsView = (
     <motion.div
@@ -308,52 +290,18 @@ export const Jumbotron = ({
     </div>
   ) : null;
 
-  const gameOverVideoLoadedListener = () => {
-    setGameOverVideoLoaded(true);
-    if (gameOverIntervalComplete && !showGameOverVideo) {
-      setShowGameOverVideo(true);
-    }
-  };
-
   const gameOverView = (_video) => (
-    <>
-      <div
-        style={{
-          display: showGameOverVideo ? 'none' : 'block',
-        }}
-      >
-        {scoreView(false)}
-      </div>
-      {_video && (
-        <video
-          key="game-over-video"
-          className="jumbotron-video"
-          poster={gameOnBg}
-          ref={(el) => (gameOverVideoRef.current = el)}
-          style={{
-            visibility: showGameOverVideo ? 'visible' : 'hidden',
-            opacity: showGameOverVideo ? '1' : '0',
-            transition: 'opacity 2s ease',
-          }}
-          onLoadedData={gameOverVideoLoadedListener}
-          onEnded={() => {
-            setGameOverVideoLoaded(false);
-            setShowGameOverVideo(false);
-            setGameOverIntervalComplete(false);
-            nextPhase();
-          }}
-        >
-          <source src={_video} type="video/mp4" />
-        </video>
-      )}
-    </>
+    <video
+      key="game-over-video"
+      className="jumbotron-video"
+      autoPlay={true}
+      poster={gameOnBg}
+      ref={(el) => (gameOverVideoRef.current = el)}
+      onEnded={nextPhase}
+    >
+      <source src={_video} type="video/mp4" />
+    </video>
   );
-
-  useEffect(() => {
-    if (showGameOverVideo && gameOverVideoRef.current) {
-      gameOverVideoRef.current.play();
-    }
-  }, [showGameOverVideo]);
 
   const getJumbotronView = () => {
     if (seasonState.currentScenario) {
@@ -373,13 +321,17 @@ export const Jumbotron = ({
         return gameOnView;
       }
       case GamePhases.GAME_OVER: {
+        return scoreView(false);
+      }
+      case GamePhases.GAME_HIGHLIGHT: {
         const _gameOverVideos =
           opponent && opponent.videos && opponent.videos.gameOver;
-        if (!gameOverIntervalRunning && _gameOverVideos) {
-          toggleGameOverInterval();
+        if (!_gameOverVideos) {
+          nextPhase();
+          return scoreView(false);
         }
         const _videoKey = score[0] >= score[1] ? 'win' : 'loss';
-        return gameOverView(_gameOverVideos && _gameOverVideos[_videoKey]);
+        return gameOverView(_gameOverVideos[_videoKey]);
       }
       default: {
         return null;
