@@ -366,7 +366,16 @@ export const Jumbotron = ({
       </div>
       {tutorialActive ? (
         <motion.h2
-          className="jumbotron-message box-shadow"
+          className={`jumbotron-message box-shadow ${
+            message
+              ? message
+                  .toLowerCase()
+                  .replace('1st', 'first')
+                  .replace('2nd', 'second')
+                  .replace('3rd', 'third')
+                  .replace(/\s/g, '-')
+              : ''
+          }`}
           style={{ fontSize: getFontSize(message) }}
           animate={animationStates.jumboText}
           transition={{
@@ -379,7 +388,16 @@ export const Jumbotron = ({
         </motion.h2>
       ) : (
         <h2
-          className="jumbotron-message box-shadow"
+          className={`jumbotron-message box-shadow ${
+            message
+              ? message
+                  .toLowerCase()
+                  .replace('1st', 'first')
+                  .replace('2nd', 'second')
+                  .replace('3rd', 'third')
+                  .replace(/\s/g, '-')
+              : ''
+          }`}
           style={{ fontSize: getFontSize(message) }}
         >
           {message}
