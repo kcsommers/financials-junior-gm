@@ -1,13 +1,12 @@
 import { Objectives } from '@data/objectives/objectives';
-import { GameButtonSvg } from './GameButtonSvg';
-import { useHistory } from 'react-router-dom';
+import { startingLineupFull } from '@data/players/players-utils';
 import { GamePhases } from '@data/season/season';
 import { motion } from 'framer-motion';
-import { startingLineupFull } from '@data/players/players-utils';
-import { useKeydown } from '../../hooks/use-keydown';
-import cheeringAudio from '../../../assets/audio/cheering.mp3';
 import { useEffect, useRef } from 'react';
-import { useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import cheeringAudio from '../../../assets/audio/cheering.mp3';
+import { useKeydown } from '../../hooks/use-keydown';
+import { GameButtonSvg } from './GameButtonSvg';
 
 export const GameButton = ({
   onStartGame,
@@ -21,10 +20,7 @@ export const GameButton = ({
 }) => {
   const history = useHistory();
   const { phase } = gameState;
-
   const cheerAudioRef = useRef(null);
-  const cheerAudioVolumn = useState(0.2);
-
   const currentScenario = seasonState.currentScenario;
 
   const seasonDisabled = !!(
@@ -71,6 +67,9 @@ export const GameButton = ({
   );
 
   useEffect(() => {
+    if (phase.phase === GamePhases.GAME_HIGHLIGHT) {
+      return;
+    }
     if (phase.phase === GamePhases.GAME_ON) {
       cheerAudioRef.current.currentTime = 0;
       cheerAudioRef.current.play();

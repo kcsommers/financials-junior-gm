@@ -47,7 +47,6 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { batch, useDispatch, useSelector } from 'react-redux';
 import { updateStudentById } from '../../api-helper';
 import { SeasonStatsOverlay } from '../../components/public-api';
-import { startingLineupFull } from '../../data/players/players-utils';
 import { useInterval } from '../../hooks/use-interval';
 import { logout } from './../../api-helper';
 
@@ -439,8 +438,8 @@ export const SeasonPage = ({ history }) => {
     const currentPhase = gameState.phase.phase;
 
     // end of phases, clear interval
-    if (currentPhase === GamePhases.GAME_HIGHLIGHT) {
-      // togglePhaseInterval();
+    if (currentPhase === GamePhases.GAME_OVER) {
+      togglePhaseInterval();
       endGame();
       return;
     }
@@ -454,7 +453,7 @@ export const SeasonPage = ({ history }) => {
     }
 
     // game highlight phase message index is same as game over phase
-    if (currentPhase === GamePhases.GAME_OVER) {
+    if (currentPhase === GamePhases.GAME_HIGHLIGHT) {
       results = localGameState.results;
       messageIndex = localGameState.currentMessageIndex;
     }

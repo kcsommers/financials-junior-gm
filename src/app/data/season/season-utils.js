@@ -120,6 +120,10 @@ export const getGamePhases = (level) => [
     messageTimer: 5000,
   },
   {
+    phase: GamePhases.GAME_HIGHLIGHT,
+    messages: ['3rd Period'],
+  },
+  {
     phase: GamePhases.GAME_OVER,
     messages: [
       `GET LOUD! The ${studentTeams[level - 1].name} Won!`,
@@ -128,15 +132,6 @@ export const getGamePhases = (level) => [
       `OH NO! The ${studentTeams[level - 1].name} lost :(`,
     ],
     timer: 5000,
-  },
-  {
-    phase: GamePhases.GAME_HIGHLIGHT,
-    messages: [
-      `GET LOUD! The ${studentTeams[level - 1].name} Won!`,
-      `CLOSE! The ${studentTeams[level - 1].name} won in overtime!`,
-      `CLOSE! The ${studentTeams[level - 1].name} lost in overtime!`,
-      `OH NO! The ${studentTeams[level - 1].name} lost :(`,
-    ],
   },
 ];
 

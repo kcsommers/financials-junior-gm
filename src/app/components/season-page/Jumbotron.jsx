@@ -5,9 +5,8 @@ import { GamePhases } from '@data/season/season';
 import { getStanding } from '@data/season/season-utils';
 import gameOnBg from '@images/game-on-bg.png';
 import { motion } from 'framer-motion';
-import { useEffect, useState, useRef, useCallback } from 'react';
+import { useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useInterval } from '../../hooks/use-interval';
 import { TeamCard } from './TeamCard';
 
 export const Jumbotron = ({
@@ -33,7 +32,10 @@ export const Jumbotron = ({
     seasonState.currentOpponentIndex + 3
   );
 
-  const gameOverVideoRef = useRef(null);
+  const gameHighlightVideoRef = useRef(null);
+
+  const [gameHighlightVideoLoaded, setGameHighlightVideoLoaded] =
+    useState(false);
 
   const statsView = (
     <motion.div
@@ -243,19 +245,48 @@ export const Jumbotron = ({
     </>
   );
 
-  const gameOnView = opponent && (
-    <>
-      <video
-        key="game-on-video"
-        className="jumbotron-video"
-        autoPlay
-        loop
-        poster={gameOnBg}
-      >
-        <source src={opponent.videos.gameOn} type="video/mp4" />
-      </video>
-    </>
-  );
+  const gameOnView = (_video) =>
+    opponent && (
+      <>
+        <video
+          key="game-on-video"
+          className="jumbotron-video"
+          autoPlay
+          loop
+          poster={gameOnBg}
+          style={{
+            display: gameHighlightVideoLoaded ? 'none' : 'block',
+          }}
+        >
+          <source src={_video} type="video/mp4" />
+        </video>
+        {phase.phase === GamePhases.GAME_HIGHLIGHT && (
+          <video
+            key="game-over-video"
+            className="jumbotron-video"
+            autoPlay={true}
+            poster={gameOnBg}
+            ref={(el) => (gameHighlightVideoRef.current = el)}
+            onLoadedData={() => {
+              console.log('vid loaded', _video);
+              setGameHighlightVideoLoaded(true);
+              gameHighlightVideoRef.current.play();
+            }}
+            onEnded={() => {
+              setGameHighlightVideoLoaded(false);
+              nextPhase();
+            }}
+            style={{
+              visibility: gameHighlightVideoLoaded ? 'visible' : 'hidden',
+              opacity: gameHighlightVideoLoaded ? 1 : 0,
+              transition: 'opacity 0.5s ease',
+            }}
+          >
+            <source src={_video} type="video/mp4" />
+          </video>
+        )}
+      </>
+    );
 
   const transitionView = (
     <div className="transition-view-container">
@@ -296,7 +327,7 @@ export const Jumbotron = ({
       className="jumbotron-video"
       autoPlay={true}
       poster={gameOnBg}
-      ref={(el) => (gameOverVideoRef.current = el)}
+      ref={(el) => (gameHighlightVideoRef.current = el)}
       onEnded={nextPhase}
     >
       <source src={_video} type="video/mp4" />
@@ -318,10 +349,7 @@ export const Jumbotron = ({
         return scoreView(true);
       }
       case GamePhases.GAME_ON: {
-        return gameOnView;
-      }
-      case GamePhases.GAME_OVER: {
-        return scoreView(false);
+        return gameOnView(opponent.videos.gameOn);
       }
       case GamePhases.GAME_HIGHLIGHT: {
         const _gameOverVideos =
@@ -332,6 +360,9 @@ export const Jumbotron = ({
         }
         const _videoKey = score[0] >= score[1] ? 'win' : 'loss';
         return gameOverView(_gameOverVideos[_videoKey]);
+      }
+      case GamePhases.GAME_OVER: {
+        return scoreView(false);
       }
       default: {
         return null;
@@ -353,7 +384,7 @@ export const Jumbotron = ({
     }
     return seasonState.currentScenario
       ? seasonState.currentScenario.message
-      : gameState.message;
+      : gameState.message || phase.messages[0];
   };
 
   const message = getMessage();
