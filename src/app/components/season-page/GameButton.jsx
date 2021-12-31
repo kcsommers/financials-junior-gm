@@ -67,9 +67,6 @@ export const GameButton = ({
   );
 
   useEffect(() => {
-    if (phase.phase === GamePhases.GAME_HIGHLIGHT) {
-      return;
-    }
     if (phase.phase === GamePhases.GAME_ON) {
       cheerAudioRef.current.currentTime = 0;
       cheerAudioRef.current.play();

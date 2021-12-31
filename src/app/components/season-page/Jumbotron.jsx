@@ -268,7 +268,6 @@ export const Jumbotron = ({
             poster={gameOnBg}
             ref={(el) => (gameHighlightVideoRef.current = el)}
             onLoadedData={() => {
-              console.log('vid loaded', _video);
               setGameHighlightVideoLoaded(true);
               gameHighlightVideoRef.current.play();
             }}
