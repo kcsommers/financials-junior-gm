@@ -76,20 +76,23 @@ export const getGameResult = (studentTeamRank, opponent) => {
   let messageIndex;
   let win;
   let points;
+  let oppScore;
+  let studentScore;
   if (studentTeamRank >= opponent.teamRank) {
     win = true;
     points = 2;
     messageIndex = scoresIndex === 3 ? 1 : 0;
+    oppScore = Math.min(score[0], score[1]);
+    studentScore = Math.max(score[0], score[1]);
   } else {
     win = false;
     points = scoresIndex === 3 ? 1 : 0;
     messageIndex = scoresIndex === 3 ? 2 : 3;
-    const oppScore = score[0];
-    const studentScore = score[1];
-    score[0] = studentScore;
-    score[1] = oppScore;
+    oppScore = Math.max(score[0], score[1]);
+    studentScore = Math.min(score[0], score[1]);
   }
-
+  score[0] = studentScore;
+  score[1] = oppScore;
   return {
     score,
     messageIndex,

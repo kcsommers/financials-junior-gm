@@ -214,7 +214,7 @@ export const levelOneOpponents = [
     name: 'Orange Owls',
     stats: { wins: 0, losses: 0, points: 0 },
     standings: '6th',
-    color: 'FFBC4F',
+    color: '#FFBC4F',
     videos: {
       gameOn: `${BASE_URL}1G_Ioyiet_9cbi5Rpds4hnNkhwyxp7-5y`,
     },
@@ -509,8 +509,8 @@ export const levelThreeOpponents = [
     videos: {
       gameOn: `${BASE_URL}1dd2pjPatwHz4mIwFetxeF56rKZ02Axt_`,
       gameOver: {
-        loss: `${BASE_URL}16qHCeq_NyQ2hK94k9JyDL_Py4IyjaWw1`,
-        win: `${BASE_URL}1F2mjDyzKbln95tQaevV1PlnLFEiRFIXf`,
+        win: `${BASE_URL}16qHCeq_NyQ2hK94k9JyDL_Py4IyjaWw1`,
+        loss: `${BASE_URL}1F2mjDyzKbln95tQaevV1PlnLFEiRFIXf`,
       },
     },
   },
