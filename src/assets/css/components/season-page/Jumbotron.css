@@ -66,6 +66,20 @@ h2.jumbotron-message {
   border: 5px solid rgba(0, 0, 0, 0);
 }
 
+h2.jumbotron-message.first-period {
+  background-color: #e5e5e5;
+  color: #00788a;
+}
+
+h2.jumbotron-message.second-period {
+  color: #ffd782;
+}
+
+h2.jumbotron-message.third-period {
+  background-color: #e5e5e5;
+  color: #dc2d2d;
+}
+
 div.jumbotron-score-container {
   flex: 1;
   display: flex;
@@ -247,4 +261,9 @@ div.upcoming-games-row:last-child > div:first-child {
 
 div.upcoming-games-row:last-child > div:last-child {
   transform-origin: left 10%;
+}
+
+video.jumbotron-video {
+  object-fit: fill;
+  height: 100%;
 }

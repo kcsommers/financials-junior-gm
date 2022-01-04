@@ -49,6 +49,7 @@ import bluesLogo from '@images/icons/team-logos/nhl/stlouisbluesLG.png';
 import canucksLogo from '@images/icons/team-logos/nhl/vancouvercanucksLG.png';
 import goldenKnightsLogo from '@images/icons/team-logos/nhl/vegasgoldenknightsLG.png';
 import jetsLogo from '@images/icons/team-logos/nhl/winnipegjetsLG.png';
+import { getAllTeamVideos } from './data/season/season';
 
 const images = [
   backBtn,
@@ -108,5 +109,12 @@ export const loadImages = () => {
   images.forEach((img) => {
     const imgEl = new Image();
     imgEl.src = img;
+  });
+};
+
+export const loadVideos = () => {
+  getAllTeamVideos().forEach((_vidLink) => {
+    const _videoEl = document.createElement('video');
+    _videoEl.setAttribute('src', _vidLink);
   });
 };

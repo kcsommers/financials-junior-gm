@@ -1,13 +1,21 @@
-import { TeamCard } from './TeamCard';
-import { GamePhases } from '@data/season/season';
-import { getStanding } from '@data/season/season-utils';
 import { Indicator, PlayerCard } from '@components';
-import { motion } from 'framer-motion';
 import '@css/components/season-page/Jumbotron.css';
 import { startingLineupFull } from '@data/players/players-utils';
-import { useAppSelector } from '@redux';
+import { GamePhases } from '@data/season/season';
+import { getStanding } from '@data/season/season-utils';
+import gameOnBg from '@images/game-on-bg.png';
+import { motion } from 'framer-motion';
+import { useRef, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { TeamCard } from './TeamCard';
 
-export const Jumbotron = ({ gameState, seasonState, team }) => {
+export const Jumbotron = ({
+  gameState,
+  seasonState,
+  team,
+  student,
+  nextPhase,
+}) => {
   const { opponent, score, phase } = gameState;
   const tutorialActive = useAppSelector((state) => state.tutorial.isActive);
   const animationStates = {
@@ -26,13 +34,10 @@ export const Jumbotron = ({ gameState, seasonState, team }) => {
     seasonState.currentOpponentIndex + 3
   );
 
-  const scoreView = (
-    <div className="jumbotron-score-container">
-      <div className="jumbotron-score-title">Score</div>
-      <div className="box-shadow jumbotron-score-wrap">{score[0]}</div>
-      <div className="box-shadow jumbotron-score-wrap">{score[1]}</div>
-    </div>
-  );
+  const gameHighlightVideoRef = useRef(null);
+
+  const [gameHighlightVideoLoaded, setGameHighlightVideoLoaded] =
+    useState(false);
 
   const statsView = (
     <motion.div
@@ -186,7 +191,7 @@ export const Jumbotron = ({ gameState, seasonState, team }) => {
     </div>
   );
 
-  const gameOnView = (
+  const scoreView = (shouldAnimate) => (
     <>
       <div className="game-on-top">
         <div className="game-on-top-left">
@@ -217,7 +222,7 @@ export const Jumbotron = ({ gameState, seasonState, team }) => {
         </span>
         <motion.div
           className="game-on-top-right"
-          initial={{ transform: 'scale(0.5)' }}
+          initial={{ transform: shouldAnimate ? 'scale(0.5)' : 'scale(1)' }}
           animate={{ transform: 'scale(1)' }}
           transition={{
             default: {
@@ -232,9 +237,57 @@ export const Jumbotron = ({ gameState, seasonState, team }) => {
           />
         </motion.div>
       </div>
-      <div className="game-on-bottom">{scoreView}</div>
+      <div className="game-on-bottom">
+        <div className="jumbotron-score-container">
+          <div className="jumbotron-score-title">Score</div>
+          <div className="box-shadow jumbotron-score-wrap">{score[0]}</div>
+          <div className="box-shadow jumbotron-score-wrap">{score[1]}</div>
+        </div>
+      </div>
     </>
   );
+
+  const gameOnView = (_video) =>
+    opponent && (
+      <>
+        <video
+          key="game-on-video"
+          className="jumbotron-video"
+          autoPlay
+          loop
+          poster={gameOnBg}
+          style={{
+            display: gameHighlightVideoLoaded ? 'none' : 'block',
+          }}
+        >
+          <source src={_video} type="video/mp4" />
+        </video>
+        {phase.phase === GamePhases.GAME_HIGHLIGHT && (
+          <video
+            key="game-over-video"
+            className="jumbotron-video"
+            autoPlay={true}
+            poster={gameOnBg}
+            ref={(el) => (gameHighlightVideoRef.current = el)}
+            onLoadedData={() => {
+              setGameHighlightVideoLoaded(true);
+              gameHighlightVideoRef.current.play();
+            }}
+            onEnded={() => {
+              setGameHighlightVideoLoaded(false);
+              nextPhase();
+            }}
+            style={{
+              visibility: gameHighlightVideoLoaded ? 'visible' : 'hidden',
+              opacity: gameHighlightVideoLoaded ? 1 : 0,
+              transition: 'opacity 0.5s ease',
+            }}
+          >
+            <source src={_video} type="video/mp4" />
+          </video>
+        )}
+      </>
+    );
 
   const transitionView = (
     <div className="transition-view-container">
@@ -269,6 +322,19 @@ export const Jumbotron = ({ gameState, seasonState, team }) => {
     </div>
   ) : null;
 
+  const gameOverView = (_video) => (
+    <video
+      key="game-over-video"
+      className="jumbotron-video"
+      autoPlay={true}
+      poster={gameOnBg}
+      ref={(el) => (gameHighlightVideoRef.current = el)}
+      onEnded={nextPhase}
+    >
+      <source src={_video} type="video/mp4" />
+    </video>
+  );
+
   const getJumbotronView = () => {
     if (seasonState.currentScenario) {
       return scenarioView;
@@ -280,10 +346,24 @@ export const Jumbotron = ({ gameState, seasonState, team }) => {
         return transitionView;
       }
       case GamePhases.UP_NEXT:
-      case GamePhases.WARMING_UP:
-      case GamePhases.GAME_ON:
+      case GamePhases.WARMING_UP: {
+        return scoreView(true);
+      }
+      case GamePhases.GAME_ON: {
+        return gameOnView(opponent.videos.gameOn);
+      }
+      case GamePhases.GAME_HIGHLIGHT: {
+        const _gameOverVideos =
+          opponent && opponent.videos && opponent.videos.gameOver;
+        if (!_gameOverVideos) {
+          nextPhase();
+          return scoreView(false);
+        }
+        const _videoKey = score[0] >= score[1] ? 'win' : 'loss';
+        return gameOverView(_gameOverVideos[_videoKey]);
+      }
       case GamePhases.GAME_OVER: {
-        return gameOnView;
+        return scoreView(false);
       }
       default: {
         return null;
@@ -305,7 +385,7 @@ export const Jumbotron = ({ gameState, seasonState, team }) => {
     }
     return seasonState.currentScenario
       ? seasonState.currentScenario.message
-      : gameState.message;
+      : gameState.message || phase.messages[0];
   };
 
   const message = getMessage();
@@ -318,7 +398,16 @@ export const Jumbotron = ({ gameState, seasonState, team }) => {
       </div>
       {tutorialActive ? (
         <motion.h2
-          className="jumbotron-message box-shadow"
+          className={`jumbotron-message box-shadow ${
+            message
+              ? message
+                  .toLowerCase()
+                  .replace('1st', 'first')
+                  .replace('2nd', 'second')
+                  .replace('3rd', 'third')
+                  .replace(/\s/g, '-')
+              : ''
+          }`}
           style={{ fontSize: getFontSize(message) }}
           animate={animationStates.jumboText}
           transition={{
@@ -331,7 +420,16 @@ export const Jumbotron = ({ gameState, seasonState, team }) => {
         </motion.h2>
       ) : (
         <h2
-          className="jumbotron-message box-shadow"
+          className={`jumbotron-message box-shadow ${
+            message
+              ? message
+                  .toLowerCase()
+                  .replace('1st', 'first')
+                  .replace('2nd', 'second')
+                  .replace('3rd', 'third')
+                  .replace(/\s/g, '-')
+              : ''
+          }`}
           style={{ fontSize: getFontSize(message) }}
         >
           {message}

@@ -9,7 +9,7 @@ const getFontSize = (amount) => {
   }
 
   if (_amount.length >= 4) {
-    return '1rem';
+    return '0.9rem';
   }
 
   if (_amount.length >= 3) {

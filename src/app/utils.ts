@@ -2,16 +2,40 @@ export const capitalize = (str) => {
   return str.charAt(0).toUpperCase() + str.slice(1);
 };
 
-export const getDollarString = (num: number | string, showZero = false) => {
+export const commafyNumber = (num) => {
+  if (!num) {
+    return num;
+  }
+  let counter = 0;
+  let intString = typeof num === 'number' ? num.toString() : num;
+  let decString = '';
+  if (intString.includes('.')) {
+    const decIndex = intString.indexOf('.');
+    decString = intString.substring(decIndex);
+    intString = intString.substring(0, decIndex);
+  }
+  for (let i = intString.length; i > 0; i--) {
+    if (counter === 3) {
+      intString = intString.substring(0, i) + ',' + intString.substring(i);
+      counter = 0;
+    }
+    counter++;
+  }
+  return intString + decString;
+};
+
+export const getDollarString = (num, showZero = false) => {
   if (!num || num === 'null') {
     return showZero ? '$0' : '';
   }
 
-  const _safeNum = Math.max(0, +num);
-  if (_safeNum % 1 === 0) {
-    return `$${_safeNum}`;
+  let safeNum = Math.max(0, +num);
+
+  if (safeNum % 1 === 0) {
+    return `$${commafyNumber(safeNum)}`;
   }
-  return `$${parseFloat(String(_safeNum)).toFixed(2)}`;
+
+  return `$${commafyNumber(parseFloat(safeNum).toFixed(2))}`;
 };
 
 export const getMoneyLevels = (level: number | string): any => {

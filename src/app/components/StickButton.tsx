@@ -4,6 +4,8 @@ import {
   SeasonStickSvg,
   ScoutStickSvg,
   TrophiesStickSvg,
+  HomeStickLeftSvg,
+  HomeStickRightSvg,
 } from '@components';
 import { useHistory } from 'react-router-dom';
 import '@css/components/StickButton.css';
@@ -14,6 +16,8 @@ const sticks = {
   season: <SeasonStickSvg />,
   scout: <ScoutStickSvg />,
   trophies: <TrophiesStickSvg />,
+  homeLeft: <HomeStickLeftSvg />,
+  homeRight: <HomeStickRightSvg />,
 };
 
 export const StickButton = ({

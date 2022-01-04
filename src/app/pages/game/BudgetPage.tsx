@@ -259,7 +259,7 @@ export const BudgetPage = ({ history }) => {
   return (
     <div className="page-container budget-page-container">
       <HeaderComponent
-        stickBtn="budget"
+        stickBtn="homeRight"
         level={student.level}
         inverse={true}
         tutorialActive={tutorialState.isActive}

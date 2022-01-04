@@ -1,51 +1,54 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
-import { batch } from 'react-redux';
 import {
-  HeaderComponent,
-  PageBoard,
-  Jumbotron,
-  LevelStick,
-  StandingsBoard,
-  GameButton,
-  Overlay,
-  SeasonCompleteOverlay,
-  NextSeasonOverlay,
+  Cheermeter,
   FaqOverlay,
   FooterComponent,
-  Cheermeter,
+  GameButton,
+  HeaderComponent,
+  Jumbotron,
+  LevelStick,
+  NextSeasonOverlay,
+  Overlay,
+  PageBoard,
+  SeasonCompleteOverlay,
+  StandingsBoard,
 } from '@components';
+import '@css/pages/SeasonPage.css';
+import { clearSessionStorage } from '@data/auth/auth';
+import { faqs } from '@data/faqs/faqs';
+import { Objective, Objectives } from '@data/objectives/objectives';
+import { getMaxTeamRank } from '@data/players/players-utils';
 import { GamePhases } from '@data/season/season';
 import {
-  getGameResult,
   getGamePhases,
+  getGameResult,
   getNewScenario,
 } from '@data/season/season-utils';
-import { cloneDeep } from 'lodash';
-import { updateStudentById } from '../../api-helper';
 import {
-  throwScenario,
-  injurePlayer,
-  setStudent,
-  gameEnded,
-  setTutorialIsActive,
-  toggleOverlay,
-  setSeasonComplete,
   addObjective,
+  gameEnded,
+  injurePlayer,
+  INJURE_PLAYER,
+  setLoginState,
   setSeasonActive,
-  useAppSelector,
-  useAppDispatch,
-} from '@redux';
+  setSeasonComplete,
+  setStudent,
+  setTutorialState,
+  throwScenario,
+  toggleOverlay,
+} from '@redux/actions';
 import {
+  getConfirmSlides,
   seasonSlides,
   SharkieButton,
   Tutorial,
-  getConfirmSlides,
 } from '@tutorial';
-import { Objective, Objectives } from '@data/objectives/objectives';
-import { faqs } from '@data/faqs/faqs';
-import { getMaxTeamRank } from '@data/players/players-utils';
+import { cloneDeep } from 'lodash';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { batch, useDispatch, useSelector } from 'react-redux';
+import { updateStudentById } from '../../api-helper';
+import { SeasonStatsOverlay } from '../../components/public-api';
 import { useInterval } from '../../hooks/use-interval';
-import '@css/pages/SeasonPage.css';
+import { logout } from './../../api-helper';
 
 const allActions = {
   INJURE_PLAYER: injurePlayer,
@@ -82,6 +85,9 @@ export const SeasonPage = ({ history }) => {
         localGameState.currentMessageIndex
       ],
   };
+
+  const [gameCount, setGameCount] = useState(0);
+  const prevPhaseIndex = useRef(0);
 
   const [cheerLevel, setCheerLevel] = useState(0);
   const [cheerCounter, setCheerCounter] = useState(0);
@@ -232,8 +238,7 @@ export const SeasonPage = ({ history }) => {
     setCheerCounter(0);
     setCheerPoints(0);
     toggleCheerInterval();
-
-    const nextOpponentIndex = seasonState.currentOpponentIndex + 1;
+    prevPhaseIndex.current = 0;
 
     // add the game results to student season
     // and update student
@@ -242,24 +247,10 @@ export const SeasonPage = ({ history }) => {
       clonedSeasons[+student.level - 1] = [];
     }
     clonedSeasons[+student.level - 1].push(localGameState.results);
-
-    const studentUpdates: any = {
+    const nextOpponentIndex = seasonState.currentOpponentIndex + 1;
+    updateStudentById(student._id, {
       seasons: clonedSeasons,
-    };
-
-    // throw scenario every 4 games
-    // (setting objective to false indicates the scenario is incomplete)
-    if (
-      nextOpponentIndex % 4 === 0 &&
-      nextOpponentIndex < seasonState.allOpponents.length
-    ) {
-      studentUpdates.objectives = {
-        ...student.objectives,
-        [Objectives.SEASON_SCENARIO]: false,
-      };
-    }
-
-    updateStudentById(student._id, studentUpdates)
+    })
       .then((res) => {
         batch(() => {
           // set game results in redux store
@@ -270,8 +261,14 @@ export const SeasonPage = ({ history }) => {
               newOpponentIndex: nextOpponentIndex,
             })
           );
-
           dispatch(setStudent(res.updatedStudent));
+        });
+
+        // update local state
+        setLocalGameState({
+          ...localGameState,
+          currentMessageIndex: 0,
+          currentPhaseIndex: 0,
         });
 
         // end of season when all teams are played
@@ -279,33 +276,81 @@ export const SeasonPage = ({ history }) => {
           endSeason(clonedSeasons[+student.level - 1]);
           return;
         }
-
-        if (
-          res.updatedStudent.objectives &&
-          res.updatedStudent.objectives[Objectives.SEASON_SCENARIO] === false
-        ) {
-          newScenario(nextOpponentIndex / 4 - 1);
-        } else {
-          // update local state
-          setLocalGameState({
-            ...localGameState,
-            currentMessageIndex: 0,
-            currentPhaseIndex: 0,
-          });
-        }
       })
       .catch((err) => console.error(err));
-  }, [
-    seasonState,
-    student,
-    setLocalGameState,
-    dispatch,
-    endSeason,
-    gameState.opponent,
-    localGameState,
-    newScenario,
-    toggleCheerInterval,
-  ]);
+  }, [seasonState, student, gameState.opponent, localGameState]);
+
+  const showStatsOverlay = useCallback(() => {
+    dispatch(
+      toggleOverlay({
+        isOpen: true,
+        template: (
+          <SeasonStatsOverlay
+            student={student}
+            seasonState={seasonState}
+            onExit={() => {
+              logout()
+                .then(() => {
+                  clearSessionStorage();
+                  dispatch(setLoginState(false, ''));
+                  history.push('/dashboard');
+                })
+                .catch((err) => console.error(err));
+            }}
+          />
+        ),
+        canClose: false,
+      })
+    );
+  }, [student, seasonState]);
+
+  const _initialOpponentIndexCheck = useRef(true);
+  useEffect(() => {
+    if (_initialOpponentIndexCheck.current) {
+      _initialOpponentIndexCheck.current = false;
+      return;
+    }
+    if (
+      seasonState.currentOpponentIndex &&
+      seasonState.currentOpponentIndex % 4 === 0 &&
+      seasonState.currentOpponentIndex < seasonState.allOpponents.length
+    ) {
+      updateStudentById(student._id, {
+        objectives: {
+          ...student.objectives,
+          [Objectives.SEASON_SCENARIO]: false,
+        },
+      })
+        .then(() => {
+          newScenario(seasonState.currentOpponentIndex / 4 - 1);
+        })
+        .catch((err) => console.error(err));
+    }
+  }, [seasonState.currentOpponentIndex]);
+
+  const opponentRef = useRef(gameState.opponent);
+  const updateGameCount = useCallback(() => {
+    setGameCount(gameCount + 1);
+  }, [gameCount]);
+
+  useEffect(() => {
+    if (
+      !gameState ||
+      !gameState.opponent ||
+      !opponentRef.current ||
+      opponentRef.current.name === gameState.opponent.name
+    ) {
+      return;
+    }
+    opponentRef.current = gameState.opponent;
+    updateGameCount();
+  }, [gameState.opponent]);
+
+  useEffect(() => {
+    if (gameCount && gameCount % 2 === 0) {
+      showStatsOverlay();
+    }
+  }, [gameCount]);
 
   const nextMessage = () => {
     // go to next message
@@ -401,6 +446,12 @@ export const SeasonPage = ({ history }) => {
       messageIndex = results.messageIndex;
     }
 
+    // game highlight phase message index is same as game over phase
+    if (currentPhase === GamePhases.GAME_HIGHLIGHT) {
+      results = localGameState.results;
+      messageIndex = localGameState.currentMessageIndex;
+    }
+
     // go to next phase
     const nextPhaseIndex = localGameState.currentPhaseIndex + 1;
     setLocalGameState({
@@ -420,7 +471,6 @@ export const SeasonPage = ({ history }) => {
     togglePhaseInterval,
   ]);
 
-  const prevPhaseIndex = useRef(0);
   useEffect(() => {
     // exit if message timer exists
     if (gameState.phase.messageTimer || !gameState.phase.timer) {
@@ -433,18 +483,11 @@ export const SeasonPage = ({ history }) => {
     if (prevPhaseIndex.current === localGameState.currentPhaseIndex) {
       return;
     }
-
     prevPhaseIndex.current = localGameState.currentPhaseIndex;
     phaseIntervalRunning ? resetPhaseInterval() : togglePhaseInterval();
 
     return;
-  }, [
-    localGameState.currentPhaseIndex,
-    gameState.phase,
-    togglePhaseInterval,
-    resetPhaseInterval,
-    phaseIntervalRunning,
-  ]);
+  }, [localGameState.currentPhaseIndex, gameState.phase, phaseIntervalRunning]);
 
   // message interval effect
   const [resetMessageInterval, toggleMessageInterval, messageIntervalRunning] =
@@ -482,12 +525,10 @@ export const SeasonPage = ({ history }) => {
 
     return;
   }, [
-    gameState.phase,
+    gameState.phase.messages.length,
+    gameState.phase.messageTimer,
     localGameState.currentMessageIndex,
-    toggleMessageInterval,
-    resetMessageInterval,
     messageIntervalRunning,
-    nextPhase,
   ]);
 
   // in UP_NEXT phase, need to add the team names to the gameState message
@@ -505,7 +546,7 @@ export const SeasonPage = ({ history }) => {
     if (gameState.phase.phase === GamePhases.GAME_ON) {
       return (
         <span className="color-primary">
-          Click the puck to cheer for your team!
+          Click the puck or tap the spacebar to cheer for your team!
         </span>
       );
     }
@@ -588,7 +629,7 @@ export const SeasonPage = ({ history }) => {
   return (
     <div className="page-container">
       <HeaderComponent
-        stickBtn="season"
+        stickBtn="homeLeft"
         level={+student.level}
         tutorialActive={tutorialActive}
       />
@@ -635,6 +676,8 @@ export const SeasonPage = ({ history }) => {
                 gameState={gameState}
                 seasonState={seasonState}
                 team={teamPlayers}
+                student={student}
+                nextPhase={nextPhase}
               />
             </div>
             <div className="opposing-team-rank-container">

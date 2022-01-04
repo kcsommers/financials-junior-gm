@@ -25,6 +25,7 @@ export const resetSeason = (
       level: newLevel,
       objectives: {},
       savingsBudget: 0,
+      pagesVisited: [],
     };
 
     if (newLevel > prevLevel) {
@@ -80,20 +81,23 @@ export const getGameResult = (studentTeamRank, opponent) => {
   let messageIndex;
   let win;
   let points;
+  let oppScore;
+  let studentScore;
   if (studentTeamRank >= opponent.teamRank) {
     win = true;
     points = 2;
     messageIndex = scoresIndex === 3 ? 1 : 0;
+    oppScore = Math.min(score[0], score[1]);
+    studentScore = Math.max(score[0], score[1]);
   } else {
     win = false;
     points = scoresIndex === 3 ? 1 : 0;
     messageIndex = scoresIndex === 3 ? 2 : 3;
-    const oppScore = score[0];
-    const studentScore = score[1];
-    score[0] = studentScore;
-    score[1] = oppScore;
+    oppScore = Math.max(score[0], score[1]);
+    studentScore = Math.min(score[0], score[1]);
   }
-
+  score[0] = studentScore;
+  score[1] = oppScore;
   return {
     score,
     messageIndex,
@@ -120,18 +124,22 @@ export const getGamePhases = (level) => [
   },
   {
     phase: GamePhases.GAME_ON,
-    messages: ['The game is being played'],
-    timer: 15000,
+    messages: ['1st Period', '2nd Period', '3rd Period'],
+    messageTimer: 5000,
+  },
+  {
+    phase: GamePhases.GAME_HIGHLIGHT,
+    messages: ['3rd Period'],
   },
   {
     phase: GamePhases.GAME_OVER,
-    timer: 5000,
     messages: [
       `GET LOUD! The ${studentTeams[level - 1].name} Won!`,
       `CLOSE! The ${studentTeams[level - 1].name} won in overtime!`,
       `CLOSE! The ${studentTeams[level - 1].name} lost in overtime!`,
       `OH NO! The ${studentTeams[level - 1].name} lost :(`,
     ],
+    timer: 5000,
   },
 ];
 

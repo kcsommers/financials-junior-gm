@@ -169,7 +169,7 @@ export const TrophiesPage = ({ history }) => {
   return (
     <div className="page-container">
       <HeaderComponent
-        stickBtn="trophies"
+        stickBtn="homeRight"
         level={+student.level}
         inverse={true}
         tutorialActive={tutorialActive}

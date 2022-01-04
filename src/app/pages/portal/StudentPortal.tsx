@@ -1,24 +1,18 @@
-import { useState, useCallback, useEffect, useRef } from 'react';
-import { batch } from 'react-redux';
+import { LoadingSpinner } from '@components';
+import { UserRoles } from '@data/auth/auth';
+import { startingLineupFull } from '@data/players/players-utils';
 import {
-  setStudent,
+  initializeObjectives,
   initializeSeason,
   setInitialPlayersState,
-  initializeObjectives,
   setStartTime,
-  useAppSelector,
-  useAppDispatch,
-} from '@redux';
-import { UserRoles } from '@data/auth/auth';
+  setStudent,
+} from '@redux/actions';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { batch, useDispatch, useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import { getCurrentUser } from '../../api-helper';
-import { LoadingSpinner } from '@components';
-import {
-  getAvailableSlots,
-  startingLineupFull,
-} from '@data/players/players-utils';
-import { playerProps } from '@data/players/players';
 import { updateStudentTimeSpent } from '../../data/student/student-utils';
+import { getCurrentUser, updateStudentById } from './../../api-helper';
 
 export const StudentPortal = ({
   screen,
@@ -27,26 +21,15 @@ export const StudentPortal = ({
   pageName,
   history,
 }) => {
-  const dispatch = useAppDispatch();
-
-  const { student, startTime } = useAppSelector((state) => state.studentState);
-
+  const dispatch = useDispatch();
+  const { student, startTime } = useSelector((state) => state.studentState);
   const [shouldRedirectToDashboard, setShouldRedirectToDashboard] =
     useState(false);
 
   const isLoggedInRef = useRef(false);
-  useEffect(() => {
-    if (
-      isLoggedInRef.current === isLoggedIn ||
-      !isLoggedIn ||
-      userRole !== UserRoles.STUDENT
-    ) {
-      return;
-    }
 
-    isLoggedInRef.current = isLoggedIn;
-    dispatch(setStartTime());
-    const beforeUnloadListener = (e) => {
+  useEffect(() => {
+    const _beforeUnloadListener = (e) => {
       e.preventDefault();
       e.returnValue = false;
       updateStudentTimeSpent(student, startTime)
@@ -54,10 +37,24 @@ export const StudentPortal = ({
         .catch((err) => console.error(err));
       return false;
     };
-    window.addEventListener('beforeunload', beforeUnloadListener);
+    window.addEventListener('beforeunload', _beforeUnloadListener);
     return () =>
-      window.removeEventListener('beforeunload', beforeUnloadListener);
-  }, [isLoggedIn, userRole, dispatch, student]);
+      window.removeEventListener('beforeunload', _beforeUnloadListener);
+  }, [student, startTime]);
+
+  const startTimeRef = useRef(0);
+  useEffect(() => {
+    if (startTime === startTimeRef.current) {
+      return;
+    }
+    const _start = Date.now();
+    startTimeRef.current = _start;
+    dispatch(setStartTime(_start));
+  }, [startTime]);
+
+  useEffect(() => {
+    isLoggedInRef.current = isLoggedIn;
+  }, [isLoggedIn]);
 
   const initializeStudent = useCallback(
     (student) => {
@@ -77,23 +74,46 @@ export const StudentPortal = ({
       return;
     }
 
+    const _handleRedirects = (_student) => {
+      const _pagesVisited = _student.pagesVisited || [];
+      if (_student.level === 1) {
+        if (
+          (pageName !== 'home' && !_student.tutorials) ||
+          (pageName === 'budget' && !_student.tutorials.home) ||
+          (pageName === 'team' && !_student.tutorials.budget) ||
+          (pageName === 'season' &&
+            !_student.tutorials.season &&
+            !startingLineupFull(_student))
+        ) {
+          history.push('/home');
+          return;
+        }
+        if (pageName === 'scout' && !_student.tutorials.team) {
+          history.push('/team');
+          return;
+        }
+      } else {
+        if (
+          (pageName !== 'home' && !_pagesVisited.includes('home')) ||
+          (pageName === 'team' && !_pagesVisited.includes('budget'))
+        ) {
+          history.push('/home');
+          return;
+        }
+      }
+      if (_pagesVisited.includes(pageName)) {
+        return;
+      }
+      _pagesVisited.push(pageName);
+      updateStudentById(_student._id, { pagesVisited: _pagesVisited })
+        .then((res) => {
+          dispatch(setStudent(res.updatedStudent));
+        })
+        .catch((err) => console.error(err));
+    };
+
     if (student) {
-      // make sure pages can be visited
-      if (
-        (pageName !== 'home' && !student.tutorials) ||
-        (pageName === 'budget' && !student.tutorials.home) ||
-        (pageName === 'team' && !student.tutorials.budget) ||
-        (pageName === 'season' &&
-          !student.tutorials.season &&
-          !startingLineupFull(student))
-      ) {
-        history.push('/home');
-        return;
-      }
-      if (pageName === 'scout' && !student.tutorials.team) {
-        history.push('/team');
-        return;
-      }
+      _handleRedirects(student);
       return;
     }
     getCurrentUser()
@@ -102,26 +122,12 @@ export const StudentPortal = ({
           throw res;
         }
         const user = res.data;
-        if (user.role === UserRoles.STUDENT) {
-          initializeStudent(user);
-          if (
-            (pageName !== 'home' && !user.tutorials) ||
-            (pageName === 'budget' && !user.tutorials.home) ||
-            (pageName === 'team' && !user.tutorials.budget) ||
-            (pageName === 'season' &&
-              !res.data.season &&
-              getAvailableSlots(playerProps, user) > 0)
-          ) {
-            history.push('/home');
-            return;
-          }
-          if (pageName === 'scout' && !user.tutorials.team) {
-            history.push('/team');
-            return;
-          }
-        } else {
+        if (user.role !== UserRoles.STUDENT) {
           setShouldRedirectToDashboard(true);
+          return;
         }
+        initializeStudent(user);
+        _handleRedirects(user);
       })
       .catch((err) => {
         console.error('Unexpected error fetching current user', err);
