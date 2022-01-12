@@ -1,7 +1,7 @@
 import { Button, OverlayBoard } from '@components';
 import '@css/components/SeasonStatsOverlay.css';
 import { getStanding } from '@data/season/season-utils';
-import { toggleOverlay } from '@redux/actions';
+import { toggleOverlay } from '@redux';
 import { useDispatch, useSelector } from 'react-redux';
 import { getTopPlayer } from '../../data/players/players-utils';
 import { getDollarString } from '../../utils';
@@ -9,7 +9,7 @@ import { getDollarString } from '../../utils';
 export const SeasonStatsOverlay = ({
   student,
   seasonState,
-  onContinue,
+  onContinue = null,
   onExit,
 }) => {
   const dispatch = useDispatch();

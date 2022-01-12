@@ -1,3 +1,5 @@
+import '@css/pages/SeasonPage.css';
+
 import {
   Cheermeter,
   FaqOverlay,
@@ -12,7 +14,6 @@ import {
   SeasonCompleteOverlay,
   StandingsBoard,
 } from '@components';
-import '@css/pages/SeasonPage.css';
 import { clearSessionStorage } from '@data/auth/auth';
 import { faqs } from '@data/faqs/faqs';
 import { Objective, Objectives } from '@data/objectives/objectives';
@@ -27,15 +28,16 @@ import {
   addObjective,
   gameEnded,
   injurePlayer,
-  INJURE_PLAYER,
   setLoginState,
   setSeasonActive,
   setSeasonComplete,
   setStudent,
-  setTutorialState,
+  setTutorialIsActive,
   throwScenario,
   toggleOverlay,
-} from '@redux/actions';
+  useAppDispatch,
+  useAppSelector,
+} from '@redux';
 import {
   getConfirmSlides,
   seasonSlides,
@@ -44,7 +46,8 @@ import {
 } from '@tutorial';
 import { cloneDeep } from 'lodash';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { batch, useDispatch, useSelector } from 'react-redux';
+import { batch } from 'react-redux';
+
 import { updateStudentById } from '../../api-helper';
 import { SeasonStatsOverlay } from '../../components/public-api';
 import { useInterval } from '../../hooks/use-interval';
@@ -292,7 +295,12 @@ export const SeasonPage = ({ history }) => {
               logout()
                 .then(() => {
                   clearSessionStorage();
-                  dispatch(setLoginState(false, ''));
+                  dispatch(
+                    setLoginState({
+                      isLoggedIn: false,
+                      userRole: '',
+                    })
+                  );
                   history.push('/dashboard');
                 })
                 .catch((err) => console.error(err));

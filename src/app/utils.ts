@@ -35,7 +35,7 @@ export const getDollarString = (num, showZero = false) => {
     return `$${commafyNumber(safeNum)}`;
   }
 
-  return `$${commafyNumber(parseFloat(safeNum).toFixed(2))}`;
+  return `$${commafyNumber(parseFloat(String(safeNum)).toFixed(2))}`;
 };
 
 export const getMoneyLevels = (level: number | string): any => {

@@ -65,9 +65,9 @@ const shouldDisable = (_pageName, _student) => {
 
 const getDisabledStickBtns = (student) => {
   const states = {};
-  states.budget = shouldDisable('budget', student);
-  states.team = shouldDisable('team', student);
-  states.season = shouldDisable('season', student);
+  (states as any).budget = shouldDisable('budget', student);
+  (states as any).team = shouldDisable('team', student);
+  (states as any).season = shouldDisable('season', student);
   return states;
 };
 
@@ -347,7 +347,7 @@ export const HomePage = ({ location, history }) => {
             <StickButton
               link="/team"
               stick="team"
-              isDisabled={disabledStickBtns.team}
+              isDisabled={(disabledStickBtns as any).team}
             />
             <p
               className={`stick-btn-text${
@@ -362,7 +362,7 @@ export const HomePage = ({ location, history }) => {
               link="/budget"
               inverse={true}
               stick="budget"
-              isDisabled={disabledStickBtns.budget}
+              isDisabled={(disabledStickBtns as any).budget}
             />
             <p
               className={`stick-btn-text stick-btn-text-right${
@@ -378,7 +378,7 @@ export const HomePage = ({ location, history }) => {
             <StickButton
               link="/season"
               stick="season"
-              isDisabled={disabledStickBtns.season}
+              isDisabled={(disabledStickBtns as any).season}
             />
             <p
               className={`stick-btn-text${

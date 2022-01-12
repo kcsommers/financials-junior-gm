@@ -7,7 +7,7 @@ import {
   setInitialPlayersState,
   setStartTime,
   setStudent,
-} from '@redux/actions';
+} from '@redux';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { batch, useDispatch, useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
@@ -22,7 +22,9 @@ export const StudentPortal = ({
   history,
 }) => {
   const dispatch = useDispatch();
-  const { student, startTime } = useSelector((state) => state.studentState);
+  const { student, startTime } = useSelector(
+    (state) => (state as any).studentState
+  );
   const [shouldRedirectToDashboard, setShouldRedirectToDashboard] =
     useState(false);
 
@@ -49,7 +51,7 @@ export const StudentPortal = ({
     }
     const _start = Date.now();
     startTimeRef.current = _start;
-    dispatch(setStartTime(_start));
+    dispatch(setStartTime());
   }, [startTime]);
 
   useEffect(() => {

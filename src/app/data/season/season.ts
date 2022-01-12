@@ -618,9 +618,9 @@ export const getAllTeamVideos = () => {
     if (team.videos.gameOn) {
       links.push(team.videos.gameOn);
     }
-    if (team.videos.gameOver) {
-      links.push(team.videos.gameOver.win);
-      links.push(team.videos.gameOver.loss);
+    if (team.videos['gameOver']) {
+      links.push(team.videos['gameOver'].win);
+      links.push(team.videos['gameOver'].loss);
     }
     return links;
   }, []);
