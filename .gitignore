@@ -25,3 +25,14 @@ yarn-debug.log*
 yarn-error.log*
 
 .eslintcache
+
+lerna-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# All packages
+packages/*/build
+packages/*/coverage
+packages/*/node_modules
+
+packages/*/.eslintcache

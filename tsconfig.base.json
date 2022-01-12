@@ -1,0 +1,34 @@
+{
+  "compilerOptions": {
+    "baseUrl": "src/",
+    "outDir": "./dist/",
+    "sourceMap": true,
+    "strictNullChecks": false,
+    "module": "esnext",
+    "jsx": "react-jsx",
+    "target": "es5",
+    "allowJs": true,
+    "moduleResolution": "node",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "noImplicitAny": false,
+    "paths": {
+      "@components": ["app/components/public-api.ts"],
+      "@core": ["app/core/public-api.ts"],
+      "@data/*": ["app/data/*"],
+      "@css/*": ["assets/css/*"],
+      "@images/*": ["assets/images/*"],
+      "@tutorial": ["app/tutorial/public-api.ts"],
+      "@redux": ["app/redux/public-api.ts"],
+      "@utils": ["app/utils"]
+    }
+  }
+}
