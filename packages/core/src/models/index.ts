@@ -1,3 +1,3 @@
 export const ITest = {
-  name: 'TESTTTTTT',
+  name: 'TEST',
 };

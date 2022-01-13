@@ -1,6 +1,6 @@
 const path = require('path');
 const { getLoader, loaderByName } = require('@craco/craco');
-const absolutePath = path.join(__dirname, '../core');
+const corePath = path.join(__dirname, '../core');
 
 module.exports = {
   webpack: {
@@ -17,18 +17,18 @@ module.exports = {
       '@data': path.resolve(__dirname, 'src/app/data'),
     },
     plugins: [],
-    // configure: (webpackConfig) => {
-    //   const { isFound, match } = getLoader(
-    //     webpackConfig,
-    //     loaderByName('babel-loader')
-    //   );
-    //   if (isFound) {
-    //     const include = Array.isArray(match.loader.include)
-    //       ? match.loader.include
-    //       : [match.loader.include];
-    //     match.loader.include = include.concat[absolutePath];
-    //   }
-    //   return webpackConfig;
-    // },
+    configure: (webpackConfig) => {
+      const { isFound, match } = getLoader(
+        webpackConfig,
+        loaderByName('babel-loader')
+      );
+      if (isFound) {
+        const include = Array.isArray(match.loader.include)
+          ? match.loader.include
+          : [match.loader.include];
+        match.loader.include = include.concat[corePath];
+      }
+      return webpackConfig;
+    },
   },
 };
