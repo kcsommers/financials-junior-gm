@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { getIsLoggedIn, getUserRole } from '@data/auth/auth';
+import { isLoggedIn, getUserRole } from '@statrookie/core';
 
 interface ILoginState {
   isLoggedIn: boolean;
@@ -7,7 +7,7 @@ interface ILoginState {
 }
 
 const initialState: ILoginState = {
-  isLoggedIn: getIsLoggedIn(),
+  isLoggedIn: isLoggedIn(),
   userRole: getUserRole(),
 };
 
