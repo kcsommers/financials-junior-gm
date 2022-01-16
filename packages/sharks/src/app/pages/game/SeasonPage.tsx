@@ -14,7 +14,7 @@ import {
   SeasonCompleteOverlay,
   StandingsBoard,
 } from '@components';
-import { clearSessionStorage } from '@data/auth/auth';
+import { clearAuthStorage } from '@statrookie/core';
 import { faqs } from '@data/faqs/faqs';
 import { Objective, Objectives } from '@data/objectives/objectives';
 import { getMaxTeamRank } from '@data/players/players-utils';
@@ -294,7 +294,7 @@ export const SeasonPage = ({ history }) => {
             onExit={() => {
               logout()
                 .then(() => {
-                  clearSessionStorage();
+                  clearAuthStorage();
                   dispatch(
                     setLoginState({
                       isLoggedIn: false,

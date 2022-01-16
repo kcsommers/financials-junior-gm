@@ -1,5 +1,5 @@
 import { LoadingSpinner } from '@components';
-import { UserRoles } from '@data/auth/auth';
+import { UserRoles } from '@statrookie/core';
 import { startingLineupFull } from '@data/players/players-utils';
 import {
   initializeObjectives,

@@ -13,7 +13,7 @@ import {
   useAppDispatch,
 } from '@redux';
 import { batch } from 'react-redux';
-import { clearSessionStorage } from '@data/auth/auth';
+import { clearAuthStorage } from '@statrookie/core';
 import { ConfirmOverlay } from '@components';
 import { resetSeason } from '@data/season/season-utils';
 import '@css/components/home-page/Navigation.css';
@@ -77,7 +77,7 @@ export const Navigation = ({ tutorialActive, student }) => {
     const _logout = () => {
       logout()
         .then(() => {
-          clearSessionStorage();
+          clearAuthStorage();
 
           dispatch(setLoginState({ isLoggedIn: false, userRole: '' }));
           history.push('/dashboard');

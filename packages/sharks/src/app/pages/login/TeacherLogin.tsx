@@ -2,13 +2,7 @@ import { useState } from 'react';
 import { teacherLogin, getCurrentUser, logout } from '../../api-helper';
 import financialsLogo from '@images/financials-logo-big.svg';
 import { LoginForm } from '@components';
-import {
-  LOGIN_STORAGE_KEY,
-  UserRoles,
-  USER_ROLE_STORAGE_KEY,
-  TEACHER_ID_STORAGE_KEY,
-  clearSessionStorage,
-} from '@data/auth/auth';
+import { UserRoles, StorageKeys, clearAuthStorage } from '@statrookie/core';
 import { setLoginState, useAppDispatch } from '@redux';
 import Cookie from 'js-cookie'; /// JS-Cookie lib to store cookie on the browser
 import '@css/pages/Login.css';
@@ -23,9 +17,12 @@ export const TeacherLogin = ({ history, isLoggedIn }) => {
       return;
     }
     setIsLoggingIn(false);
-    sessionStorage.setItem(LOGIN_STORAGE_KEY, 'true');
-    sessionStorage.setItem(USER_ROLE_STORAGE_KEY, UserRoles.TEACHER);
-    sessionStorage.setItem(TEACHER_ID_STORAGE_KEY, teacher._id);
+    sessionStorage.setItem(StorageKeys.LOGIN_STORAGE_KEY, 'true');
+    sessionStorage.setItem(
+      StorageKeys.USER_ROLE_STORAGE_KEY,
+      UserRoles.TEACHER
+    );
+    sessionStorage.setItem(StorageKeys.TEACHER_ID_STORAGE_KEY, teacher._id);
 
     dispatch(setLoginState({ isLoggedIn: true, userRole: UserRoles.TEACHER }));
     history.push('/teacher/home');
@@ -35,7 +32,7 @@ export const TeacherLogin = ({ history, isLoggedIn }) => {
     const msg = 'Unexpected login error. Please try again';
     setIsLoggingIn(false);
     setLoginError(msg);
-    clearSessionStorage();
+    clearAuthStorage();
 
     console.error(msg, error);
 

@@ -1,4 +1,4 @@
-import { StorageKeys } from '../../auth';
+import { StorageKeys } from '../constants';
 
 export const clearAuthStorage = (): void => {
   if (!navigator.cookieEnabled) {

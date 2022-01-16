@@ -4,7 +4,7 @@ import { LoadingSpinner } from '@components';
 import { Link, Route, Switch } from 'react-router-dom';
 import { TeacherBrowser } from './TeacherBrowser';
 import { logout } from '../../api-helper';
-import { clearSessionStorage } from '@data/auth/auth';
+import { clearAuthStorage } from '@statrookie/core';
 import { setLoginState, useAppDispatch } from '@redux';
 import { formatNumber } from '@utils';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -24,7 +24,7 @@ export const AdminPage = ({ history }) => {
   const doLogout = () => {
     logout()
       .then(() => {
-        clearSessionStorage();
+        clearAuthStorage();
 
         dispatch(setLoginState({ isLoggedIn: false, userRole: '' }));
         history.push('/dashboard');

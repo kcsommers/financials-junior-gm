@@ -7,13 +7,7 @@ import {
 } from '../../api-helper';
 import financialsLogo from '@images/financials-logo-big.svg';
 import { LoginForm } from '@components';
-import {
-  LOGIN_STORAGE_KEY,
-  UserRoles,
-  USER_ROLE_STORAGE_KEY,
-  STUDENT_ID_STORAGE_KEY,
-  clearSessionStorage,
-} from '@data/auth/auth';
+import { StorageKeys, UserRoles, clearAuthStorage } from '@statrookie/core';
 import '@css/pages/Login.css';
 import { setLoginState, useAppDispatch } from '@redux';
 import Cookie from 'js-cookie'; /// JS-Cookie lib to store cookie on the browser
@@ -28,9 +22,12 @@ export const StudentLogin = ({ history, isLoggedIn }) => {
       return;
     }
     setIsLoggingIn(false);
-    sessionStorage.setItem(LOGIN_STORAGE_KEY, 'true');
-    sessionStorage.setItem(USER_ROLE_STORAGE_KEY, UserRoles.STUDENT);
-    sessionStorage.setItem(STUDENT_ID_STORAGE_KEY, student._id);
+    sessionStorage.setItem(StorageKeys.LOGIN_STORAGE_KEY, 'true');
+    sessionStorage.setItem(
+      StorageKeys.USER_ROLE_STORAGE_KEY,
+      UserRoles.STUDENT
+    );
+    sessionStorage.setItem(StorageKeys.STUDENT_ID_STORAGE_KEY, student._id);
 
     dispatch(setLoginState({ isLoggedIn: true, userRole: UserRoles.STUDENT }));
     history.push('/home');
@@ -40,7 +37,7 @@ export const StudentLogin = ({ history, isLoggedIn }) => {
     const msg = 'Unexpected login error. Please try again';
     setIsLoggingIn(false);
     setLoginError(msg);
-    clearSessionStorage();
+    clearAuthStorage();
 
     console.error(msg, error);
 

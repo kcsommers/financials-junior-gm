@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { setAdmin, useAppDispatch, useAppSelector } from '@redux';
-import { UserRoles } from '@data/auth/auth';
+import { UserRoles } from '@statrookie/core';
 import { Redirect } from 'react-router-dom';
 import { getCurrentUser } from '../../api-helper';
 import { LoadingSpinner } from '@components';

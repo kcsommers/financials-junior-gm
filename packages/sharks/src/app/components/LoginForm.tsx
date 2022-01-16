@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Button } from '@components';
-import { UserRoles } from '@data/auth/auth';
+import { UserRoles } from '@statrookie/core';
 import '@css/pages/Login.css';
 
 export const LoginForm = ({

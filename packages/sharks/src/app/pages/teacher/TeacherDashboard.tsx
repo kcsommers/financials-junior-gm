@@ -1,4 +1,4 @@
-import { TEACHER_ID_STORAGE_KEY, clearSessionStorage } from '@data/auth/auth';
+import { StorageKeys, clearAuthStorage } from '@statrookie/core';
 import { setLoginState } from '@redux';
 import { connect } from 'react-redux';
 import curriculumGuid from '../../../assets/pdf/curriculum_guide.pdf';
@@ -35,8 +35,8 @@ class TeacherDashboard extends React.Component {
       return;
     }
     let id = '';
-    if (sessionStorage.getItem(TEACHER_ID_STORAGE_KEY)) {
-      id = sessionStorage.getItem(TEACHER_ID_STORAGE_KEY) as string;
+    if (sessionStorage.getItem(StorageKeys.TEACHER_ID_STORAGE_KEY)) {
+      id = sessionStorage.getItem(StorageKeys.TEACHER_ID_STORAGE_KEY) as string;
     }
     api
       .getStudentList(id)
@@ -148,7 +148,7 @@ class TeacherDashboard extends React.Component {
     api
       .logout()
       .then(() => {
-        clearSessionStorage();
+        clearAuthStorage();
         (this.props as any).setLoginState();
         (this.props as any).history.push('/dashboard');
       })

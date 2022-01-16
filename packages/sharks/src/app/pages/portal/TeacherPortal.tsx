@@ -1,7 +1,7 @@
 import { useEffect, useCallback, useState } from 'react';
 import { Redirect } from 'react-router';
 import { setTeacher, useAppDispatch, useAppSelector } from '@redux';
-import { UserRoles } from '@data/auth/auth';
+import { UserRoles } from '@statrookie/core';
 import { LoadingSpinner } from '@components';
 import { getCurrentUser } from '../../api-helper';
 
