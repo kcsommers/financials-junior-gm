@@ -6,6 +6,7 @@ import {
   UserRoles,
   clearAuthStorage,
   ApiHelper,
+  IStudent,
 } from '@statrookie/core';
 import '@css/pages/Login.css';
 import { setLoginState, useAppDispatch } from '@redux';
@@ -59,7 +60,7 @@ export const StudentLogin = ({ history, isLoggedIn }) => {
 
           Cookie.set('token', res.token); // Setting cookie on the browser
 
-          ApiHelper.getCurrentUser(BASE_URL)
+          ApiHelper.getCurrentUser<IStudent>(BASE_URL)
             .then((studentRes) => {
               const student = studentRes.data;
               if (!studentRes.success || !student) {

@@ -1,6 +1,10 @@
-import { IUser } from '../models';
+import { IStudent, IStudentLoginCredentials, IUser } from '../models';
 
 export interface IAuthContext {
-  authorizedUser: IUser;
-  setAuthorizedUser: (user: IUser) => void;
+  authorizedUser?: IUser;
+  loading: boolean;
+  error?: any;
+  loginStudent: (credentials: IStudentLoginCredentials) => Promise<IStudent>;
+  getCurrentUser: () => Promise<IUser>;
+  logout: () => Promise<void>;
 }

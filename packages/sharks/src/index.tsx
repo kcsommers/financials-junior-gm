@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import '@css/reset.css';
 import '@css/index.css';
-import App from './app/App';
+import App2 from './app/App2';
 import { store } from './app/redux/store';
 import { Provider } from 'react-redux';
 import * as serviceWorker from './serviceWorker';
@@ -15,7 +15,7 @@ loadVideos();
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <App2 />
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')

@@ -89,12 +89,12 @@ export const AdminPage = ({ history }) => {
           </span>
         </div>
         <Switch>
-          <Route
+          {/* <Route
             path="/admin/teachers"
             render={(props) => (
               <TeacherBrowser {...props} allTeachers={allTeachers} />
             )}
-          />
+          /> */}
           <Route
             exact
             path="/admin"

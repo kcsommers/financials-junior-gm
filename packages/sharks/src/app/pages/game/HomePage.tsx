@@ -73,6 +73,7 @@ const getDisabledStickBtns = (student) => {
 };
 
 export const HomePage = ({ location, history }) => {
+  console.log('home::::');
   const tutorialActive = useAppSelector((state) => state.tutorial.isActive);
 
   const student = useAppSelector((state) => state.studentState.student);

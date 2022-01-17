@@ -1,6 +1,6 @@
 import axios from 'axios';
 import Cookie from 'js-cookie';
-import { IStudent } from '../../auth';
+import { IGetUserResponse, IStudent, IUser } from '../../auth';
 import { IPlayer } from '../../players';
 
 const https = require('https');
@@ -161,7 +161,9 @@ export namespace ApiHelper {
   }
 
   // get current student
-  export const getCurrentUser = (_baseUrl: string): Promise<any> => {
+  export const getCurrentUser = <T extends IUser = IUser>(
+    _baseUrl: string
+  ): Promise<IGetUserResponse<T>> => {
     return axios.get(`${_baseUrl}/api/v1/auth/user`);
   };
 

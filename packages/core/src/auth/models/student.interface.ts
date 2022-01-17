@@ -22,9 +22,7 @@ export interface IStudent extends IUser {
   // seasons: {
   //   type: Array;
   // };
-  // players: {
-  //   type: [Schema];
-  // };
+  players: IPlayer[];
   // tutorials: {
   //   home: Boolean;
   //   budget: Boolean;

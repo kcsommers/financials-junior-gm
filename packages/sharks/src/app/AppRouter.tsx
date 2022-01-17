@@ -120,13 +120,13 @@ export const AppRouter = ({ isLoggedIn, userRole }) => {
         <Route
           exact
           path="/teacher/home"
-          render={(props) => (
-            <TeacherPortal
-              isLoggedIn={isLoggedIn}
-              userRole={userRole}
-              screen={<TeacherDashboard {...props} />}
-            />
-          )}
+          // render={(props) => (
+          //   <TeacherPortal
+          //     isLoggedIn={isLoggedIn}
+          //     userRole={userRole}
+          //     screen={<TeacherDashboard {...props} />}
+          //   />
+          // )}
         />
         <Route
           exact
@@ -182,11 +182,11 @@ export const AppRouter = ({ isLoggedIn, userRole }) => {
   ) : (
     <Router>
       <Switch>
-        <Route
+        {/* <Route
           exact
           path="/login/teacher"
           render={(props) => <TeacherLogin {...props} />}
-        />
+        /> */}
         <Route
           exact
           path="/login/student"
