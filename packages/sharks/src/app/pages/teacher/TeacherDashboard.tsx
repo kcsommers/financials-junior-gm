@@ -1,4 +1,4 @@
-import { StorageKeys, clearAuthStorage } from '@statrookie/core';
+import { StorageKeys, clearAuthStorage, ApiHelper } from '@statrookie/core';
 import { setLoginState } from '@redux';
 import { connect } from 'react-redux';
 import curriculumGuid from '../../../assets/pdf/curriculum_guide.pdf';
@@ -7,7 +7,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
 import '@css/pages/TeacherDashboard.css';
-import * as api from '../../api-helper';
 import CRUDTable, {
   Fields,
   Field,
@@ -15,6 +14,7 @@ import CRUDTable, {
   UpdateForm,
   DeleteForm,
 } from 'react-crud-table';
+import { BASE_URL } from 'app/api';
 
 class TeacherDashboard extends React.Component {
   constructor(props) {
@@ -38,8 +38,7 @@ class TeacherDashboard extends React.Component {
     if (sessionStorage.getItem(StorageKeys.TEACHER_ID_STORAGE_KEY)) {
       id = sessionStorage.getItem(StorageKeys.TEACHER_ID_STORAGE_KEY) as string;
     }
-    api
-      .getStudentList(id)
+    ApiHelper.getStudentList(BASE_URL, id)
       .then((res) => {
         for (let i = 0; i < res.data.length; i++) {
           res.data[i].name = res.data[i].firstName + ' ' + res.data[i].lastName;
@@ -57,8 +56,7 @@ class TeacherDashboard extends React.Component {
       firstName: task.firstName,
       lastName: task.lastName,
     };
-    api
-      .addStudent(body)
+    ApiHelper.addStudent(BASE_URL, body)
       .then((res) => {
         alert(res.Message);
         this.getStudentList();
@@ -78,8 +76,7 @@ class TeacherDashboard extends React.Component {
       firstName: data.firstName,
       lastName: data.lastName,
     };
-    api
-      .updateStudent(data._id, body)
+    ApiHelper.updateStudent(BASE_URL, data._id, body)
       .then((res) => {
         console.log(res);
         alert(res.message);
@@ -94,8 +91,7 @@ class TeacherDashboard extends React.Component {
 
   deleteStudent(data) {
     if (data._id) {
-      api
-        .deleteStudent(data?._id)
+      ApiHelper.deleteStudent(BASE_URL, data?._id)
         .then((res) => {
           console.log(res);
           this.getStudentList();
@@ -115,8 +111,7 @@ class TeacherDashboard extends React.Component {
     // @TODO
     let file = (this.state as any).selectedFile;
     if (file) {
-      api
-        .addStudentInBulk(file)
+      ApiHelper.addStudentInBulk(BASE_URL, file)
         .then((res) => {
           this.getStudentList();
           this.setState({ showCSVForm: false, selectedFile: null });
@@ -145,8 +140,7 @@ class TeacherDashboard extends React.Component {
   };
 
   logoutSession = () => {
-    api
-      .logout()
+    ApiHelper.logout()
       .then(() => {
         clearAuthStorage();
         (this.props as any).setLoginState();

@@ -1,16 +1,15 @@
 import { useEffect, useState } from 'react';
-import { getAllTeachers, getAllStudents, getTimeSpent } from '../../api-helper';
 import { LoadingSpinner } from '@components';
 import { Link, Route, Switch } from 'react-router-dom';
 import { TeacherBrowser } from './TeacherBrowser';
-import { logout } from '../../api-helper';
-import { clearAuthStorage } from '@statrookie/core';
+import { ApiHelper, clearAuthStorage } from '@statrookie/core';
 import { setLoginState, useAppDispatch } from '@redux';
 import { formatNumber } from '@utils';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import * as moment from 'moment';
 import '@css/pages/AdminPage.css';
+import { BASE_URL } from 'app/api';
 
 export const AdminPage = ({ history }) => {
   const dispatch = useAppDispatch();
@@ -22,7 +21,7 @@ export const AdminPage = ({ history }) => {
   const [totalTimeSpent, setTotalTimeSpent] = useState<string>();
 
   const doLogout = () => {
-    logout()
+    ApiHelper.logout()
       .then(() => {
         clearAuthStorage();
 
@@ -33,19 +32,19 @@ export const AdminPage = ({ history }) => {
   };
 
   useEffect(() => {
-    getAllTeachers()
+    ApiHelper.getAllTeachers(BASE_URL)
       .then((res) => {
         setAllTeachers(res.data);
       })
       .catch((err) => console.error(err));
 
-    getAllStudents()
+    ApiHelper.getAllStudents(BASE_URL)
       .then((res) => {
         setAllStudents(res.data);
       })
       .catch((err) => console.error(err));
 
-    getTimeSpent()
+    ApiHelper.getTimeSpent(BASE_URL)
       .then((res) => {
         setTotalTimeSpent(
           moment.duration(res.totalTimeSpent).asHours().toFixed(2)

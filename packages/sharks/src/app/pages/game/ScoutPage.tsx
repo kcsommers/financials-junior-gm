@@ -36,8 +36,9 @@ import { getMoneyLevels } from '@utils';
 import { cloneDeep } from 'lodash';
 import { PlayerAssignments } from '@data/players/players';
 import { faqs } from '@data/faqs/faqs';
-import { updateStudentById } from '../../api-helper';
 import '@css/pages/ScoutPage.css';
+import { BASE_URL } from 'app/api';
+import { ApiHelper } from '@statrookie/core';
 
 const boardMap = {
   available: {},
@@ -91,7 +92,7 @@ export const ScoutPage = ({ history }) => {
     if (!student.tutorials || !student.tutorials.scout) {
       // if so, update the student object and enable budget button
       const tutorials = { ...(student.tutorials || {}), scout: true };
-      updateStudentById(student._id, { tutorials })
+      ApiHelper.updateStudentById(BASE_URL, student._id, { tutorials })
         .then(({ updatedStudent }) => {
           batch(() => {
             dispatch(setTutorialIsActive(false));
@@ -420,7 +421,9 @@ export const ScoutPage = ({ history }) => {
       return p;
     });
 
-    updateStudentById(student._id, { players: playersUpdated })
+    ApiHelper.updateStudentById(BASE_URL, student._id, {
+      players: playersUpdated,
+    })
       .then((res) => {
         history.push({
           pathname: '/team',

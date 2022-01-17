@@ -5,8 +5,9 @@ import {
   playerProps,
 } from './players';
 import { cloneDeep } from 'lodash';
-import { updateStudentById } from '../../api-helper';
 import { Objectives } from '@data/objectives/objectives';
+import { ApiHelper } from '@statrookie/core';
+import { BASE_URL } from 'app/api';
 
 export const getOpenAssignment = (position: any, student: any): string => {
   if (!position) {
@@ -150,7 +151,7 @@ export const handleReleasePlayer = (releasedPlayer, student): Promise<any> => {
       releasedPlayer
     );
 
-    updateStudentById(student._id, {
+    ApiHelper.updateStudentById(BASE_URL, student._id, {
       [prevAssignment]: null,
       players: playersCopy,
     })
@@ -207,7 +208,7 @@ export const handleSignPlayer = (
       };
     }
 
-    updateStudentById(student._id, studentUpdates)
+    ApiHelper.updateStudentById(BASE_URL, student._id, studentUpdates)
       .then((res) =>
         resolve({
           // @TODO
@@ -252,7 +253,7 @@ export const handleTradePlayers = (
       players: playersCopy,
     };
 
-    updateStudentById(student._id, studentUpdates)
+    ApiHelper.updateStudentById(BASE_URL, student._id, studentUpdates)
       .then((res) =>
         resolve({
           // @TODO

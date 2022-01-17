@@ -1,4 +1,3 @@
-import { initPlayersByLevel, updateStudentById } from '../../api-helper';
 import {
   possibleScores,
   levelOneOpponents,
@@ -9,6 +8,8 @@ import {
 } from './season';
 import { cloneDeep } from 'lodash';
 import { scenarioConfigs, SeasonScenario } from './scenarios';
+import { ApiHelper } from '@statrookie/core';
+import { BASE_URL } from 'app/api';
 
 export const resetSeason = (
   newLevel,
@@ -36,14 +37,14 @@ export const resetSeason = (
       studentUpdates.wonGame = true;
     }
 
-    updateStudentById(student._id, studentUpdates)
+    ApiHelper.updateStudentById(BASE_URL, student._id, studentUpdates)
       .then((res: any) => {
         if (!res.success || !res.updatedStudent) {
           console.error(new Error('Unexpected error updating student season'));
           return;
         }
 
-        initPlayersByLevel(newLevel)
+        ApiHelper.initPlayersByLevel(BASE_URL, newLevel)
           .then((initializedStudentRes: any) => {
             const initializedStudent = initializedStudentRes.data;
             if (!initializedStudentRes.success || !initializedStudent) {

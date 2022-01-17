@@ -1,4 +1,5 @@
-import { updateStudentById } from '../../api-helper';
+import { ApiHelper } from '@statrookie/core';
+import { BASE_URL } from 'app/api';
 
 export const updateStudentTimeSpent = (student, startTime): Promise<any> => {
   if (!student || !startTime) {
@@ -6,7 +7,7 @@ export const updateStudentTimeSpent = (student, startTime): Promise<any> => {
   }
 
   const timeSpent = Date.now() - startTime;
-  return updateStudentById(student._id, {
+  return ApiHelper.updateStudentById(BASE_URL, student._id, {
     timeSpent: student.timeSpent + timeSpent,
   });
 };

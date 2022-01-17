@@ -2,12 +2,13 @@ import { useState } from 'react';
 import { Button } from '@components';
 import financialsLogo from '@images/financials-logo-big.svg';
 import '@css/pages/ResetPasswordPage.css';
-import { resetTeacherPassword } from '../../api-helper';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faCheckCircle,
   faExclamationCircle,
 } from '@fortawesome/free-solid-svg-icons';
+import { ApiHelper } from '@statrookie/core';
+import { BASE_URL } from 'app/api';
 
 export const ForgotPasswordPage = ({ history }) => {
   const [email, setEmail] = useState('');
@@ -22,7 +23,7 @@ export const ForgotPasswordPage = ({ history }) => {
 
   const resetPassword = () => {
     setIsLoading(true);
-    resetTeacherPassword({ email })
+    ApiHelper.resetTeacherPassword(BASE_URL, { email })
       .then((res) => {
         setIsLoading(false);
         if (res.success) {

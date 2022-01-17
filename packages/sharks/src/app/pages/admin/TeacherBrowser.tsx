@@ -6,17 +6,12 @@ import {
   faTrash,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ApiHelper } from '@statrookie/core';
+import { BASE_URL } from 'app/api';
 import { cloneDeep } from 'lodash';
 import * as moment from 'moment';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { ConfirmOverlay } from '../../components/overlays/ConfirmOverlay';
-import {
-  deleteStudentsByTeacher,
-  deleteTeacherById,
-  getAllTeachers,
-  getTimeSpent,
-  getStudentList,
-} from '../../api-helper';
 import { useDebounce } from '../../hooks/use-debounce';
 
 const teacherDetails = [
@@ -149,7 +144,10 @@ export const TeacherBrowser = ({ allTeachers, onRowAction }) => {
       return;
     }
 
-    Promise.all([getTimeSpent(teacher._id), getStudentList(teacher._id)])
+    Promise.all([
+      ApiHelper.getTimeSpent(BASE_URL, teacher._id),
+      ApiHelper.getStudentList(BASE_URL, teacher._id),
+    ])
       .then((res) => {
         if (!res || !res.length || !res[1]) {
           console.error('Unexpected error fetching student stats');
@@ -391,10 +389,10 @@ export const TeacherBrowser = ({ allTeachers, onRowAction }) => {
   const deleteSelectedItem = async () => {
     setIsLoading(true);
     selectedDetails.type === 'teacher'
-      ? await deleteTeacherById(selectedDetails._id)
-      : await deleteStudentsByTeacher(selectedDetails._id);
+      ? await ApiHelper.deleteTeacherById(BASE_URL, selectedDetails._id)
+      : await ApiHelper.deleteStudentsByTeacher(BASE_URL, selectedDetails._id);
     setShowConfirm(false);
-    const teachers = await getAllTeachers();
+    const teachers = await ApiHelper.getAllTeachers(BASE_URL);
     setDisplayedTeachers(teachers.data);
     if (onRowAction) {
       onRowAction();

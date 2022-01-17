@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { setAdmin, useAppDispatch, useAppSelector } from '@redux';
-import { UserRoles } from '@statrookie/core';
+import { ApiHelper, UserRoles } from '@statrookie/core';
 import { Redirect } from 'react-router-dom';
-import { getCurrentUser } from '../../api-helper';
 import { LoadingSpinner } from '@components';
+import { BASE_URL } from 'app/api';
 
 export const AdminPortal = ({
   screen,
@@ -24,7 +24,7 @@ export const AdminPortal = ({
       return;
     }
 
-    getCurrentUser()
+    ApiHelper.getCurrentUser(BASE_URL)
       .then((res) => {
         if (!res || !res.data) {
           throw res;

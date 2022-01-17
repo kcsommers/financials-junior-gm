@@ -7,9 +7,10 @@ import {
   Overlay,
 } from '@components';
 import { useForm } from 'react-hook-form';
-import { registerTeacher } from '../../api-helper';
 import { toggleOverlay, useAppDispatch } from '@redux';
 import '@css/pages/TeacherRegistrationPage.css';
+import { ApiHelper } from '@statrookie/core';
+import { BASE_URL } from 'app/api';
 
 export const TeacherRegsitrationPage = ({ history }) => {
   const { register, handleSubmit, errors, watch } = useForm();
@@ -39,7 +40,7 @@ export const TeacherRegsitrationPage = ({ history }) => {
       state: data.state,
     };
 
-    registerTeacher(params)
+    ApiHelper.registerTeacher(BASE_URL, params)
       .then((res) => {
         e.target.reset();
         setIsRegistering(false);

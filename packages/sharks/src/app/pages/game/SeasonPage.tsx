@@ -14,7 +14,7 @@ import {
   SeasonCompleteOverlay,
   StandingsBoard,
 } from '@components';
-import { clearAuthStorage } from '@statrookie/core';
+import { ApiHelper, clearAuthStorage } from '@statrookie/core';
 import { faqs } from '@data/faqs/faqs';
 import { Objective, Objectives } from '@data/objectives/objectives';
 import { getMaxTeamRank } from '@data/players/players-utils';
@@ -47,11 +47,9 @@ import {
 import { cloneDeep } from 'lodash';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { batch } from 'react-redux';
-
-import { updateStudentById } from '../../api-helper';
 import { SeasonStatsOverlay } from '../../components/public-api';
 import { useInterval } from '../../hooks/use-interval';
-import { logout } from './../../api-helper';
+import { BASE_URL } from 'app/api';
 
 const allActions = {
   INJURE_PLAYER: injurePlayer,
@@ -131,7 +129,7 @@ export const SeasonPage = ({ history }) => {
       // set completed games in student seasons array
       clonedStudent.seasons[+student.level - 1] = completedGames;
 
-      updateStudentById(student._id, {
+      ApiHelper.updateStudentById(BASE_URL, student._id, {
         seasons: clonedStudent.seasons,
         awards: clonedStudent.awards,
         rollOverBudget: (+student.rollOverBudget || 0) + +student.savingsBudget,
@@ -186,7 +184,7 @@ export const SeasonPage = ({ history }) => {
       );
 
       // update student with new players array and player assignment
-      updateStudentById(student._id, {
+      ApiHelper.updateStudentById(BASE_URL, student._id, {
         [prevAssignment]: null,
         players: playersCopy,
       })
@@ -251,7 +249,7 @@ export const SeasonPage = ({ history }) => {
     }
     clonedSeasons[+student.level - 1].push(localGameState.results);
     const nextOpponentIndex = seasonState.currentOpponentIndex + 1;
-    updateStudentById(student._id, {
+    ApiHelper.updateStudentById(BASE_URL, student._id, {
       seasons: clonedSeasons,
     })
       .then((res) => {
@@ -292,7 +290,7 @@ export const SeasonPage = ({ history }) => {
             student={student}
             seasonState={seasonState}
             onExit={() => {
-              logout()
+              ApiHelper.logout()
                 .then(() => {
                   clearAuthStorage();
                   dispatch(
@@ -323,7 +321,7 @@ export const SeasonPage = ({ history }) => {
       seasonState.currentOpponentIndex % 4 === 0 &&
       seasonState.currentOpponentIndex < seasonState.allOpponents.length
     ) {
-      updateStudentById(student._id, {
+      ApiHelper.updateStudentById(BASE_URL, student._id, {
         objectives: {
           ...student.objectives,
           [Objectives.SEASON_SCENARIO]: false,
@@ -411,7 +409,7 @@ export const SeasonPage = ({ history }) => {
     if (!student.tutorials.season) {
       // if so, update the student object and enable budget button
       const tutorials = { ...student.tutorials, season: true };
-      updateStudentById(student._id, { tutorials })
+      ApiHelper.updateStudentById(BASE_URL, student._id, { tutorials })
         .then(({ updatedStudent }) => {
           batch(() => {
             dispatch(setTutorialIsActive(false));

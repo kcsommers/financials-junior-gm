@@ -29,12 +29,13 @@ import {
   useAppDispatch,
   useAppSelector,
 } from '@redux';
-import { updateStudentById } from '../../api-helper';
 import { faqs } from '@data/faqs/faqs';
 import { cloneDeep } from 'lodash';
 import { PlayerPositions } from '@data/players/players';
 import { motion } from 'framer-motion';
 import '@css/pages/TeamPage.css';
+import { ApiHelper } from '@statrookie/core';
+import { BASE_URL } from 'app/api';
 
 export const TeamPage = ({ history, location }) => {
   const dispatch = useAppDispatch();
@@ -71,7 +72,7 @@ export const TeamPage = ({ history, location }) => {
     if (!student.tutorials || !student.tutorials.team) {
       // if so, update the student object and enable budget button
       const tutorials = { home: true, budget: true, team: true };
-      updateStudentById(student._id, { tutorials })
+      ApiHelper.updateStudentById(BASE_URL, student._id, { tutorials })
         .then(({ updatedStudent }) => {
           batch(() => {
             dispatch(setTutorialIsActive(false));

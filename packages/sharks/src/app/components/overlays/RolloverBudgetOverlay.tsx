@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { OverlayBoard, BudgetSlider, Button } from '@components';
-import { updateStudentById } from '../../api-helper';
 import { batch, useDispatch } from 'react-redux';
 import { toggleOverlay, setStudent } from '@redux';
 import comericaLogo from '@images/comerica-logo.svg';
+import { ApiHelper } from '@statrookie/core';
+import { BASE_URL } from 'app/api';
 
 export const RolloverBudgetOverlay = ({ student }) => {
   const dispatch = useDispatch();
@@ -13,7 +14,7 @@ export const RolloverBudgetOverlay = ({ student }) => {
     const newTotalBudget = +student.totalBudget + +rollOverToAdd;
     const newRollOverBudget = +student.rollOverBudget - +rollOverToAdd;
 
-    updateStudentById(student._id, {
+    ApiHelper.updateStudentById(BASE_URL, student._id, {
       totalBudget: newTotalBudget,
       rollOverBudget: newRollOverBudget,
     })

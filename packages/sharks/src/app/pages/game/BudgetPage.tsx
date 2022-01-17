@@ -29,12 +29,13 @@ import {
   useAppDispatch,
 } from '@redux';
 import comericaLogo from '@images/comerica-logo.svg';
-import { updateStudentById } from '../../api-helper';
 import { Objectives } from '@data/objectives/objectives';
 import { faqs } from '@data/faqs/faqs';
 import { cloneDeep } from 'lodash';
 import { startingLineupFull } from '@data/players/players-utils';
 import '@css/pages/BudgetPage.css';
+import { ApiHelper } from '@statrookie/core';
+import { BASE_URL } from 'app/api';
 
 let debounceTimeout = 0;
 
@@ -76,7 +77,10 @@ export const BudgetPage = ({ history }) => {
         : {};
       objectives[Objectives.LEARN_BUDGET] = true;
 
-      updateStudentById(student._id, { tutorials, objectives })
+      ApiHelper.updateStudentById(BASE_URL, student._id, {
+        tutorials,
+        objectives,
+      })
         .then(({ updatedStudent }) => {
           batch(() => {
             dispatch(setTutorialIsActive(false));
@@ -154,7 +158,7 @@ export const BudgetPage = ({ history }) => {
   };
 
   const updateSavingsOnServer = (value) => {
-    updateStudentById(student._id, { savingsBudget: value })
+    ApiHelper.updateStudentById(BASE_URL, student._id, { savingsBudget: value })
       .then(() => {})
       .catch((err) => console.error(err));
   };
@@ -202,7 +206,7 @@ export const BudgetPage = ({ history }) => {
         : {};
       objectives[Objectives.LEARN_BUDGET] = true;
 
-      updateStudentById(student._id, { objectives })
+      ApiHelper.updateStudentById(BASE_URL, student._id, { objectives })
         .then((res) => {
           batch(() => {
             dispatch(setStudent(res.updatedStudent));

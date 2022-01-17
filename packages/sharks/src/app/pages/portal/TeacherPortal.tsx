@@ -1,9 +1,9 @@
 import { useEffect, useCallback, useState } from 'react';
 import { Redirect } from 'react-router';
 import { setTeacher, useAppDispatch, useAppSelector } from '@redux';
-import { UserRoles } from '@statrookie/core';
+import { ApiHelper, UserRoles } from '@statrookie/core';
 import { LoadingSpinner } from '@components';
-import { getCurrentUser } from '../../api-helper';
+import { BASE_URL } from 'app/api';
 
 export const TeacherPortal = ({ screen, isLoggedIn, userRole }) => {
   const dispatch = useAppDispatch();
@@ -28,7 +28,7 @@ export const TeacherPortal = ({ screen, isLoggedIn, userRole }) => {
     if (teacher) {
       return;
     }
-    getCurrentUser()
+    ApiHelper.getCurrentUser(BASE_URL)
       .then((res) => {
         if (!res || !res.data) {
           throw res;

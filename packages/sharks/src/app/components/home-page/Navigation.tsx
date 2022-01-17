@@ -1,6 +1,5 @@
 import exitBtn from '@images/exit-btn.svg';
 import refreshBtn from '@images/refresh-btn.svg';
-import { logout } from '../../api-helper';
 import { useHistory } from 'react-router-dom';
 import {
   setLoginState,
@@ -13,7 +12,7 @@ import {
   useAppDispatch,
 } from '@redux';
 import { batch } from 'react-redux';
-import { clearAuthStorage } from '@statrookie/core';
+import { clearAuthStorage, ApiHelper } from '@statrookie/core';
 import { ConfirmOverlay } from '@components';
 import { resetSeason } from '@data/season/season-utils';
 import '@css/components/home-page/Navigation.css';
@@ -75,7 +74,7 @@ export const Navigation = ({ tutorialActive, student }) => {
 
   const doLogout = () => {
     const _logout = () => {
-      logout()
+      ApiHelper.logout()
         .then(() => {
           clearAuthStorage();
 

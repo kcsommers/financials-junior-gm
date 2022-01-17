@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react';
 import { Button } from '@components';
 import financialsLogo from '@images/financials-logo-big.svg';
-import { updateTeacherPassword } from '../../api-helper';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faCheckCircle,
   faExclamationCircle,
 } from '@fortawesome/free-solid-svg-icons';
 import '@css/pages/ResetPasswordPage.css';
+import { ApiHelper } from '@statrookie/core';
+import { BASE_URL } from 'app/api';
 
 export const ResetPasswordPage = ({ history, match }) => {
   const [email, setEmail] = useState('');
@@ -36,7 +37,7 @@ export const ResetPasswordPage = ({ history, match }) => {
 
   const resetPassword = () => {
     setIsLoading(true);
-    updateTeacherPassword({
+    ApiHelper.updateTeacherPassword(BASE_URL, {
       email,
       password,
       resetToken,

@@ -1,11 +1,16 @@
 import { useState } from 'react';
-import { adminLogin, getCurrentUser, logout } from '../../api-helper';
 import financialsLogo from '@images/financials-logo-big.svg';
 import { LoginForm } from '@components';
-import { UserRoles, StorageKeys, clearAuthStorage } from '@statrookie/core';
+import {
+  UserRoles,
+  StorageKeys,
+  clearAuthStorage,
+  ApiHelper,
+} from '@statrookie/core';
 import { setLoginState, useAppDispatch } from '@redux';
 import Cookie from 'js-cookie'; /// JS-Cookie lib to store cookie on the browser
 import '@css/pages/Login.css';
+import { BASE_URL } from 'app/api';
 
 export const AdminLogin = ({ history, isLoggedIn }) => {
   const dispatch = useAppDispatch();
@@ -35,7 +40,7 @@ export const AdminLogin = ({ history, isLoggedIn }) => {
 
     dispatch(setLoginState({ isLoggedIn: false, userRole: '' }));
     if (isLoggedIn) {
-      logout();
+      ApiHelper.logout();
     }
   };
 
@@ -43,7 +48,7 @@ export const AdminLogin = ({ history, isLoggedIn }) => {
     setIsLoggingIn(true);
 
     const doLogin = () => {
-      adminLogin({ userName, password })
+      ApiHelper.adminLogin(BASE_URL, { userName, password })
         .then((res) => {
           if (!res || !res.success) {
             throw res;
@@ -51,7 +56,7 @@ export const AdminLogin = ({ history, isLoggedIn }) => {
 
           Cookie.set('token', res.token); // Setting cookie on the browser
 
-          getCurrentUser()
+          ApiHelper.getCurrentUser(BASE_URL)
             .then((adminRes) => {
               const admin = adminRes.data;
               if (!adminRes.success || !admin) {
@@ -67,7 +72,7 @@ export const AdminLogin = ({ history, isLoggedIn }) => {
 
     // if someone is currently logged in, log them out to expire their cookie
     if (isLoggedIn) {
-      logout().then(doLogin).catch(onLoginError);
+      ApiHelper.logout().then(doLogin).catch(onLoginError);
     } else {
       doLogin();
     }

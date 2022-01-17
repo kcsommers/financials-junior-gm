@@ -1,16 +1,16 @@
 import { useState } from 'react';
-import {
-  studentLogin,
-  getCurrentUser,
-  initPlayersByLevel,
-  logout,
-} from '../../api-helper';
 import financialsLogo from '@images/financials-logo-big.svg';
 import { LoginForm } from '@components';
-import { StorageKeys, UserRoles, clearAuthStorage } from '@statrookie/core';
+import {
+  StorageKeys,
+  UserRoles,
+  clearAuthStorage,
+  ApiHelper,
+} from '@statrookie/core';
 import '@css/pages/Login.css';
 import { setLoginState, useAppDispatch } from '@redux';
 import Cookie from 'js-cookie'; /// JS-Cookie lib to store cookie on the browser
+import { BASE_URL } from 'app/api';
 
 export const StudentLogin = ({ history, isLoggedIn }) => {
   const dispatch = useAppDispatch();
@@ -43,7 +43,7 @@ export const StudentLogin = ({ history, isLoggedIn }) => {
 
     dispatch(setLoginState({ isLoggedIn: false, userRole: '' }));
     if (isLoggedIn) {
-      logout();
+      ApiHelper.logout();
     }
   };
 
@@ -51,7 +51,7 @@ export const StudentLogin = ({ history, isLoggedIn }) => {
     setIsLoggingIn(true);
 
     const doLogin = () => {
-      studentLogin({ userName, password })
+      ApiHelper.studentLogin(BASE_URL, { userName, password })
         .then((res) => {
           if (!res || !res.success) {
             throw res;
@@ -59,7 +59,7 @@ export const StudentLogin = ({ history, isLoggedIn }) => {
 
           Cookie.set('token', res.token); // Setting cookie on the browser
 
-          getCurrentUser()
+          ApiHelper.getCurrentUser(BASE_URL)
             .then((studentRes) => {
               const student = studentRes.data;
               if (!studentRes.success || !student) {
@@ -73,7 +73,7 @@ export const StudentLogin = ({ history, isLoggedIn }) => {
               }
 
               // initialize players on student
-              initPlayersByLevel(+student.level || 1)
+              ApiHelper.initPlayersByLevel(BASE_URL, +student.level || 1)
                 .then((initializedStudentRes) => {
                   if (
                     !initializedStudentRes.success ||
@@ -93,7 +93,7 @@ export const StudentLogin = ({ history, isLoggedIn }) => {
 
     // if someone is currently logged in, log them out to expire their cookie
     if (isLoggedIn) {
-      logout().then(doLogin).catch(onLoginError);
+      ApiHelper.logout().then(doLogin).catch(onLoginError);
     } else {
       doLogin();
     }

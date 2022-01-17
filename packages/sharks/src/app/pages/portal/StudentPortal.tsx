@@ -1,5 +1,5 @@
 import { LoadingSpinner } from '@components';
-import { UserRoles } from '@statrookie/core';
+import { ApiHelper, UserRoles } from '@statrookie/core';
 import { startingLineupFull } from '@data/players/players-utils';
 import {
   initializeObjectives,
@@ -12,7 +12,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { batch, useDispatch, useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { updateStudentTimeSpent } from '../../data/student/student-utils';
-import { getCurrentUser, updateStudentById } from './../../api-helper';
+import { BASE_URL } from 'app/api';
 
 export const StudentPortal = ({
   screen,
@@ -107,7 +107,9 @@ export const StudentPortal = ({
         return;
       }
       _pagesVisited.push(pageName);
-      updateStudentById(_student._id, { pagesVisited: _pagesVisited })
+      ApiHelper.updateStudentById(BASE_URL, _student._id, {
+        pagesVisited: _pagesVisited,
+      })
         .then((res) => {
           dispatch(setStudent(res.updatedStudent));
         })
@@ -118,7 +120,7 @@ export const StudentPortal = ({
       _handleRedirects(student);
       return;
     }
-    getCurrentUser()
+    ApiHelper.getCurrentUser(BASE_URL)
       .then((res) => {
         if (!res || !res.data) {
           throw res;

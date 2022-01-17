@@ -1,4 +1,6 @@
-export interface ITeacher {
+import { IUser } from './user.interface';
+
+export interface ITeacher extends IUser {
   email: string;
   name: string;
   school: string;

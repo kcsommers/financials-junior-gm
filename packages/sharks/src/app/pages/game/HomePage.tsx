@@ -28,7 +28,6 @@ import {
   useAppSelector,
   useAppDispatch,
 } from '@redux';
-import { updateStudentById } from '../../api-helper';
 import { cloneDeep } from 'lodash';
 import { faqs } from '@data/faqs/faqs';
 import {
@@ -36,6 +35,8 @@ import {
   startingLineupFull,
 } from '@data/players/players-utils';
 import '@css/pages/HomePage.css';
+import { ApiHelper } from '@statrookie/core';
+import { BASE_URL } from 'app/api';
 
 const shouldDisable = (_pageName, _student) => {
   if (+_student.level === 1) {
@@ -100,7 +101,7 @@ export const HomePage = ({ location, history }) => {
     if (!student.tutorials || !student.tutorials.home) {
       // if so, update the student object and enable budget button
       const tutorials = { home: true };
-      updateStudentById(student._id, { tutorials })
+      ApiHelper.updateStudentById(BASE_URL, student._id, { tutorials })
         .then(({ updatedStudent }) => {
           setDisabledStickBtns({
             ...disabledStickBtns,
