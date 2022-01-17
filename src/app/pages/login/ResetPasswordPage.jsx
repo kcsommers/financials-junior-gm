@@ -8,6 +8,7 @@ import {
   faExclamationCircle,
 } from '@fortawesome/free-solid-svg-icons';
 import '@css/pages/ResetPasswordPage.css';
+import statrookieLogo from '@images/statrookie-logo.png';
 
 export const ResetPasswordPage = ({ history, match }) => {
   const [email, setEmail] = useState('');
@@ -166,6 +167,32 @@ export const ResetPasswordPage = ({ history, match }) => {
         >
           Back To Dashboard
         </span>
+      </div>
+      <div
+        style={{
+          position: 'absolute',
+          bottom: 0,
+          right: 0,
+          display: 'flex',
+          alignItems: 'baseline',
+        }}
+      >
+        <span
+          style={{
+            fontSize: '0.8rem',
+            transform: 'translate(10px, -100%)',
+            opacity: 0.75,
+          }}
+        >
+          designed by
+        </span>
+        <img
+          style={{
+            width: '100px',
+          }}
+          src={statrookieLogo}
+          alt="Stat Rookie"
+        />
       </div>
     </div>
   );

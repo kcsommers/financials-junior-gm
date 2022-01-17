@@ -18,6 +18,7 @@ import {
 import '@css/pages/Login.css';
 import { setLoginState } from '@redux/actions';
 import Cookie from 'js-cookie'; /// JS-Cookie lib to store cookie on the browser
+import statrookieLogo from '@images/statrookie-logo.png';
 
 export const StudentLogin = ({ history, isLoggedIn }) => {
   const dispatch = useDispatch();
@@ -116,6 +117,32 @@ export const StudentLogin = ({ history, isLoggedIn }) => {
         history={history}
         userRole={UserRoles.STUDENT}
       />
+      <div
+        style={{
+          position: 'absolute',
+          bottom: 0,
+          right: 0,
+          display: 'flex',
+          alignItems: 'baseline',
+        }}
+      >
+        <span
+          style={{
+            fontSize: '0.8rem',
+            transform: 'translate(10px, -100%)',
+            opacity: 0.75,
+          }}
+        >
+          designed by
+        </span>
+        <img
+          style={{
+            width: '100px',
+          }}
+          src={statrookieLogo}
+          alt="Stat Rookie"
+        />
+      </div>
     </div>
   );
 };

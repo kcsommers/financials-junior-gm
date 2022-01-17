@@ -1,6 +1,7 @@
 import { Link, useHistory } from 'react-router-dom';
 import financialsLogo from '@images/financials-logo-big.svg';
 import { Button } from '@components';
+import statrookieLogo from '@images/statrookie-logo.png';
 
 export const Dashboard = () => {
   const history = useHistory();
@@ -68,6 +69,32 @@ export const Dashboard = () => {
         >
           Admin Login
         </Link>
+      </div>
+      <div
+        style={{
+          position: 'absolute',
+          bottom: 0,
+          right: 0,
+          display: 'flex',
+          alignItems: 'baseline',
+        }}
+      >
+        <span
+          style={{
+            fontSize: '0.8rem',
+            transform: 'translate(10px, -100%)',
+            opacity: 0.75,
+          }}
+        >
+          designed by
+        </span>
+        <img
+          style={{
+            width: '100px',
+          }}
+          src={statrookieLogo}
+          alt="Stat Rookie"
+        />
       </div>
     </div>
   );
