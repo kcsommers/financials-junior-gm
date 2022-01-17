@@ -236,7 +236,7 @@ class TeacherDashboard extends React.Component {
     return (
       <div style={{ maxHeight: '768px', overflow: 'auto' }}>
         <div className="teacher-dashboard-header">
-          <div className="header-buttons-container-1">
+          {/* <div className="header-buttons-container-1">
             <a
               href={curriculumGuid}
               download="curriculum_guide.pdf"
@@ -309,7 +309,7 @@ class TeacherDashboard extends React.Component {
             >
               Season Page Tutorial
             </a>
-          </div>
+          </div> */}
           <div className="header-buttons-container-2">
             <button
               className="btn-accent btn-small"
