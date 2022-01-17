@@ -388,7 +388,7 @@ const slideConfigs = [
   },
   {
     message:
-      'Click on the blue budget hockey stick when you are done exploring the budget page.',
+      'Click on the blue hockey stick when you are done exploring the budget page.',
     sharkie: 'speak',
     hasButtons: true,
     exitActions: [
