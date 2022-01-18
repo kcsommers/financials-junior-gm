@@ -13,6 +13,7 @@ import { StudentLogin } from './pages/login/StudentLogin';
 import { Dashboard } from './pages/teacher/Dashboard';
 import { ProtectedRoute } from './ProtectedRoute';
 import { Location, History } from 'history';
+import PageNotFound from './components/page-not-found';
 
 export const AppRouter2 = () => {
   const location: Location = useLocation();
@@ -23,9 +24,8 @@ export const AppRouter2 = () => {
       <Switch>
         <ProtectedRoute
           exact
-          path="/"
-          component={HomePage}
-          // render={(_props: RouteComponentProps) => <HomePage {..._props} />}
+          path="/home"
+          render={(_props: RouteComponentProps) => <HomePage {..._props} />}
         />
         <Route
           exact
@@ -33,6 +33,7 @@ export const AppRouter2 = () => {
           render={(props) => <StudentLogin {...props} isLoggedIn={false} />}
         />
         <Route exact path="/dashboard" component={Dashboard} />
+        <Route component={PageNotFound} />
       </Switch>
     </AuthProvider>
   );
