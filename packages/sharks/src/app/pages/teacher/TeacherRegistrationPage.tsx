@@ -1,15 +1,9 @@
 import { useState } from 'react';
-import {
-  BackButton,
-  LoadingSpinner,
-  OverlayBoard,
-  Button,
-  Overlay,
-} from '@components';
+import { BackButton, OverlayBoard, Button, Overlay } from '@components';
 import { useForm } from 'react-hook-form';
 import { toggleOverlay, useAppDispatch } from '@redux';
 import '@css/pages/TeacherRegistrationPage.css';
-import { ApiHelper } from '@statrookie/core';
+import { ApiHelper, LoadingSpinner } from '@statrookie/core';
 import { BASE_URL } from 'app/api';
 
 export const TeacherRegsitrationPage = ({ history }) => {

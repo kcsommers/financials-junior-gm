@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
 import { setAdmin, useAppDispatch, useAppSelector } from '@redux';
-import { ApiHelper, UserRoles } from '@statrookie/core';
+import { ApiHelper, UserRoles, LoadingSpinner } from '@statrookie/core';
 import { Redirect } from 'react-router-dom';
-import { LoadingSpinner } from '@components';
 import { BASE_URL } from 'app/api';
 
 export const AdminPortal = ({

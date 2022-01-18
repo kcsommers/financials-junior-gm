@@ -1,15 +1,13 @@
-import { useEffect, useState } from 'react';
-import { LoadingSpinner } from '@components';
-import { Link, Route, Switch } from 'react-router-dom';
-import { TeacherBrowser } from './TeacherBrowser';
-import { ApiHelper, clearAuthStorage } from '@statrookie/core';
-import { setLoginState, useAppDispatch } from '@redux';
-import { formatNumber } from '@utils';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
-import * as moment from 'moment';
 import '@css/pages/AdminPage.css';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { setLoginState, useAppDispatch } from '@redux';
+import { ApiHelper, clearAuthStorage, LoadingSpinner } from '@statrookie/core';
+import { formatNumber } from '@utils';
 import { BASE_URL } from 'app/api';
+import * as moment from 'moment';
+import { useEffect, useState } from 'react';
+import { Link, Route, Switch } from 'react-router-dom';
 
 export const AdminPage = ({ history }) => {
   const dispatch = useAppDispatch();

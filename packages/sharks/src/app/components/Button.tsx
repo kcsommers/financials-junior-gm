@@ -1,4 +1,4 @@
-import { LoadingSpinner } from '@components';
+import { LoadingSpinner } from '@statrookie/core';
 import '@css/components/Button.css';
 
 const getFontSize = (str, btnSize) => {

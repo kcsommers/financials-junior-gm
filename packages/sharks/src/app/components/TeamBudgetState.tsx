@@ -1,5 +1,6 @@
 import React from 'react';
-import { LevelStick, LoadingSpinner } from '@components';
+import { LoadingSpinner } from '@statrookie/core';
+import { LevelStick } from '@components';
 import { getMaxTeamRank } from '@data/players/players-utils';
 import { useAppSelector } from '@redux';
 

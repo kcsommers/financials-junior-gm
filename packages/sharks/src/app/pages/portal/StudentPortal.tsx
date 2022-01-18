@@ -1,5 +1,4 @@
-import { LoadingSpinner } from '@components';
-import { ApiHelper, UserRoles } from '@statrookie/core';
+import { ApiHelper, UserRoles, LoadingSpinner } from '@statrookie/core';
 import { startingLineupFull } from '@data/players/players-utils';
 import {
   initializeObjectives,

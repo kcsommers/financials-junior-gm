@@ -1,4 +1,3 @@
-import { LoadingSpinner } from '@components';
 import {
   faChevronLeft,
   faChevronRight,
@@ -6,7 +5,7 @@ import {
   faTrash,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ApiHelper } from '@statrookie/core';
+import { ApiHelper, LoadingSpinner } from '@statrookie/core';
 import { BASE_URL } from 'app/api';
 import { cloneDeep } from 'lodash';
 import * as moment from 'moment';

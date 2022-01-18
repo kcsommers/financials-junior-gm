@@ -1,8 +1,7 @@
 import { useEffect, useCallback, useState } from 'react';
 import { Redirect } from 'react-router';
 import { setTeacher, useAppDispatch, useAppSelector } from '@redux';
-import { ApiHelper, UserRoles } from '@statrookie/core';
-import { LoadingSpinner } from '@components';
+import { ApiHelper, UserRoles, LoadingSpinner } from '@statrookie/core';
 import { BASE_URL } from 'app/api';
 
 export const TeacherPortal = ({ screen, isLoggedIn, userRole }) => {
