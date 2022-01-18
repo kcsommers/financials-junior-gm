@@ -1,8 +1,10 @@
 import { nodeResolve } from '@rollup/plugin-node-resolve';
+import autoprefixer from 'autoprefixer';
+import postcss from 'rollup-plugin-postcss';
 import typescript from 'rollup-plugin-typescript2';
 import pkg from './package.json';
 
-const input = './src/index.ts';
+const input = ['./src/index.ts', './src/components/LoadingSpinner/index.ts'];
 
 const external = [
   ...Object.keys(pkg.dependencies || {}),
@@ -19,13 +21,20 @@ const plugins = [
     tsconfig: './tsconfig.build.json',
     typescript: require('typescript'),
   }),
+  postcss({
+    extract: false,
+    modules: true,
+    autoModules: true,
+    use: ['sass'],
+    plugins: [autoprefixer()],
+  }),
 ];
 
 const rollupConfig = [
   {
     input,
     output: {
-      file: pkg.module,
+      dir: pkg.module,
       format: 'esm',
       sourcemap: true,
     },
@@ -35,7 +44,7 @@ const rollupConfig = [
   {
     input,
     output: {
-      file: pkg.main,
+      dir: pkg.main,
       format: 'cjs',
       sourcemap: true,
     },
