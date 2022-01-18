@@ -28,7 +28,7 @@ export const AuthProvider: FC<IAuthProviderProps> = ({
   const [authorizedUser, setAuthorizedUser] = useState<IUser>();
   const [error, setError] = useState<any>();
   const [loading, setLoading] = useState<boolean>(false);
-  const [loadingInitial, setLoadingInitial] = useState<boolean>(true);
+  const [initialized, setInitialized] = useState<boolean>(false);
 
   useEffect(() => {
     if (error) {
@@ -40,10 +40,10 @@ export const AuthProvider: FC<IAuthProviderProps> = ({
     ApiHelper.getCurrentUser(baseUrl)
       .then((_response: IGetUserResponse) => {
         setAuthorizedUser(_response.data);
-        setLoadingInitial(false);
+        setInitialized(true);
       })
       .catch((_error) => {
-        setLoadingInitial(false);
+        setInitialized(true);
         history.push('/dashboard');
       });
   }, []);
@@ -92,18 +92,19 @@ export const AuthProvider: FC<IAuthProviderProps> = ({
       authorizedUser,
       loading,
       error,
+      initialized,
       loginStudent,
       getCurrentUser,
       logout,
     }),
-    [authorizedUser, loading, error]
+    [authorizedUser, loading, error, initialized]
   );
 
-  console.log('user:::: ', loadingInitial, authorizedUser);
+  console.log('user:::: ', initialized, authorizedUser);
 
   return (
     <AuthContext.Provider value={memoedValue}>
-      {!loadingInitial && children}
+      {initialized && children}
     </AuthContext.Provider>
   );
 };
