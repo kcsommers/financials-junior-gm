@@ -26,7 +26,6 @@ export { Jumbotron } from './season-page/Jumbotron';
 export { BadScoutOverlay } from './overlays/BadScoutOverlay';
 export { LevelStickSvg } from './LevelStickSvg';
 export { PlayerRankPie } from './PlayerRankPie';
-export { LoadingSpinner } from './LoadingSpinner';
 export { PlayerRankGraph } from './PlayerRankGraph';
 export { InsufficientFundsOverlay } from './overlays/InsufficientFundsOverlay';
 export { PlayerChangeSuccessOverlay } from './overlays/PlayerChangeSuccessOverlay';
