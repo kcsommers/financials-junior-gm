@@ -49,13 +49,14 @@ class TeacherDashboard extends React.Component {
           const totalTrophies = (student.awards || []).reduce(
             (total, level) => {
               const trophyNames = Object.keys(level);
-              trophyNames.forEach(name => {
+              trophyNames.forEach((name) => {
                 if (level[name]) {
                   total += 1;
                 }
               });
               return total;
-            }, 0
+            },
+            0
           );
           student.totalTrophiesEarned = totalTrophies;
         });
