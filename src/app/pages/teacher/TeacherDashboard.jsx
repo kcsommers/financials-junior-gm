@@ -44,7 +44,21 @@ class TeacherDashboard extends React.Component {
         for (let i = 0; i < res.data.length; i++) {
           res.data[i].name = res.data[i].firstName + ' ' + res.data[i].lastName;
         }
-
+        const students = res.data || [];
+        students.forEach((student) => {
+          const totalTrophies = (student.awards || []).reduce(
+            (total, level) => {
+              const trophyNames = Object.keys(level);
+              trophyNames.forEach(name => {
+                if (level[name]) {
+                  total += 1;
+                }
+              });
+              return total;
+            }, 0
+          );
+          student.totalTrophiesEarned = totalTrophies;
+        });
         this.setState({ dataList: res.data });
       })
       .catch((error) => {
@@ -348,7 +362,6 @@ class TeacherDashboard extends React.Component {
           <Fields>
             <Field name="name" label="Name" hideInCreateForm hideInUpdateForm />
             <Field
-              name="firstName"
               label="First Name"
               placeholder="Please enter first name"
               hideFromTable
@@ -368,6 +381,27 @@ class TeacherDashboard extends React.Component {
             <Field
               name="password"
               label="Password"
+              sortable={false}
+              hideInCreateForm
+              hideInUpdateForm
+            />
+            <Field
+              name="timeSpent"
+              label="Minutes Played"
+              sortable={false}
+              hideInCreateForm
+              hideInUpdateForm
+            />
+            <Field
+              name="level"
+              label="Levels Achieved"
+              sortable={false}
+              hideInCreateForm
+              hideInUpdateForm
+            />
+            <Field
+              name="totalTrophiesEarned"
+              label="Total Tropies Earned"
               sortable={false}
               hideInCreateForm
               hideInUpdateForm
