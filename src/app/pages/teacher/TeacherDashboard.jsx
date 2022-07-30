@@ -1,20 +1,19 @@
-import { TEACHER_ID_STORAGE_KEY, clearSessionStorage } from '@data/auth/auth';
-import { setLoginState } from '@redux/actions';
-import { connect } from 'react-redux';
-import curriculumGuid from '../../../assets/pdf/curriculum_guide.pdf';
-import teacherTutorial from '../../../assets/pdf/teacher_tutorial.pdf';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import React from 'react';
 import '@css/pages/TeacherDashboard.css';
-import * as api from '../../api-helper';
+import { clearSessionStorage, TEACHER_ID_STORAGE_KEY } from '@data/auth/auth';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { setLoginState } from '@redux/actions';
+import React from 'react';
 import CRUDTable, {
-  Fields,
-  Field,
   CreateForm,
-  UpdateForm,
   DeleteForm,
+  Field,
+  Fields,
+  UpdateForm,
 } from 'react-crud-table';
+import { connect } from 'react-redux';
+import * as api from '../../api-helper';
+import { getClassStats } from '../../utils/get-class-stats';
 
 class TeacherDashboard extends React.Component {
   constructor(props) {
@@ -23,6 +22,7 @@ class TeacherDashboard extends React.Component {
       dataList: [],
       selectedFile: null,
       showCSVForm: false,
+      classStats: {},
     };
   }
 
@@ -60,7 +60,10 @@ class TeacherDashboard extends React.Component {
           );
           student.totalTrophiesEarned = totalTrophies;
         });
-        this.setState({ dataList: res.data });
+        this.setState({
+          dataList: res.data,
+          classStats: getClassStats(students),
+        });
       })
       .catch((error) => {
         console.log('catch---->>>>', error.response);
@@ -247,192 +250,151 @@ class TeacherDashboard extends React.Component {
         return Promise.resolve(deleted);
       },
     };
-
     return (
       <div style={{ maxHeight: '768px', overflow: 'auto' }}>
         <div className="teacher-dashboard-header">
-          {/* <div className="header-buttons-container-1">
-            <a
-              href={curriculumGuid}
-              download="curriculum_guide.pdf"
-              style={{ marginLeft: '10px' }}
-              className="btn-primary btn-small"
-            >
-              Curriculum Guide
-            </a>
-            <a
-              href={teacherTutorial}
-              download="teacher_tutorial.pdf"
-              style={{ marginLeft: '10px' }}
-              className="btn-primary btn-small"
-            >
-              Tutorial PDF
-            </a>
-            <a
-              href="https://youtu.be/dsS-Zm20bnE"
-              target="_blank"
-              rel="noreferrer"
-              style={{ marginLeft: '10px' }}
-              className="btn-primary btn-small"
-            >
-              Getting Started Tutorial
-            </a>
-            <a
-              href="https://youtu.be/8uNFa2oQ6hk"
-              target="_blank"
-              rel="noreferrer"
-              style={{ marginLeft: '10px' }}
-              className="btn-primary btn-small"
-            >
-              Home Page Tutorial
-            </a>
-            <a
-              href="https://youtu.be/Aoj5gMzzwCs"
-              target="_blank"
-              rel="noreferrer"
-              style={{ marginLeft: '10px' }}
-              className="btn-primary btn-small"
-            >
-              Budget Page Tutorial
-            </a>
-            <a
-              href="https://youtu.be/6ORfGmXSZxM"
-              target="_blank"
-              rel="noreferrer"
-              style={{ marginLeft: '10px' }}
-              className="btn-primary btn-small"
-            >
-              Team Page Tutorial
-            </a>
-            <a
-              href="https://youtu.be/46pCAu6DXQg"
-              target="_blank"
-              rel="noreferrer"
-              style={{ marginLeft: '10px' }}
-              className="btn-primary btn-small"
-              onClick={this.logoutSession}
-            >
-              Scout Page Tutorial
-            </a>
-            <a
-              href="https://youtu.be/aG5UfofjRhQ"
-              target="_blank"
-              rel="noreferrer"
-              style={{ marginLeft: '10px' }}
-              className="btn-primary btn-small"
-              onClick={this.logoutSession}
-            >
-              Season Page Tutorial
-            </a>
-          </div> */}
-          <div className="header-buttons-container-2">
-            <button
-              className="btn-accent btn-small"
-              onClick={this.logoutSession}
-            >
-              Logout
-            </button>
-            <button
-              style={{ marginLeft: '10px' }}
-              className="btn-accent btn-small"
-              onClick={this.uploadCSVFile}
-            >
-              Upload CSV
-            </button>
+          <h1>Teacher Dashboard</h1>
+          <button className="btn-accent" onClick={this.logoutSession}>
+            Logout
+          </button>
+        </div>
+        <div className="class-stats-wrap">
+          <h4 className="color-primary">Classroom Stats</h4>
+          <div className="class-stat">
+            <p className="class-stat-title">Total Minutes Played:</p>
+            <p className="class-stat-value">
+              {this.state.classStats.totalTime}
+            </p>
+          </div>
+          <div className="class-stat">
+            <p className="class-stat-title">Completed Tutorial:</p>
+            <p className="class-stat-value">
+              {this.state.classStats.completedTutorial}
+            </p>
+          </div>
+          <div className="class-stat">
+            <p className="class-stat-title">Completed Level 1:</p>
+            <p className="class-stat-value">
+              {this.state.classStats.completedLevel1}
+            </p>
+          </div>
+          <div className="class-stat">
+            <p className="class-stat-title">Completed Level 2:</p>
+            <p className="class-stat-value">
+              {this.state.classStats.completedLevel2}
+            </p>
+          </div>
+          <div className="class-stat">
+            <p className="class-stat-title">Completed Game:</p>
+            <p className="class-stat-value">
+              {this.state.classStats.completedGame}
+            </p>
           </div>
         </div>
-        <CRUDTable caption="List of Students" items={this.state.dataList}>
-          <CreateForm
-            title="Add Student"
-            trigger="Add Student"
-            onSubmit={(task) => service.create(task)}
-            submitText="Create"
-            validate={(values) => {
-              const errors = {};
-              if (!values.firstName) {
-                errors.firstName = 'Please enter first name.';
-              }
+        <div className="crud-table-wrap">
+          <button
+            className="btn-accent btn-small csv-btn"
+            onClick={this.uploadCSVFile}
+          >
+            Upload CSV
+          </button>
+          <CRUDTable items={this.state.dataList}>
+            <CreateForm
+              title="Add Student"
+              trigger="Add Student"
+              onSubmit={(task) => service.create(task)}
+              submitText="Create"
+              validate={(values) => {
+                const errors = {};
+                if (!values.firstName) {
+                  errors.firstName = 'Please enter first name.';
+                }
 
-              if (!values.lastName) {
-                errors.lastName = 'Please enter last name.';
-              }
+                if (!values.lastName) {
+                  errors.lastName = 'Please enter last name.';
+                }
 
-              return errors;
-            }}
-          />
-          <Fields>
-            <Field name="name" label="Name" hideInCreateForm hideInUpdateForm />
-            <Field
-              label="First Name"
-              placeholder="Please enter first name"
-              hideFromTable
+                return errors;
+              }}
             />
-            <Field
-              name="lastName"
-              label="Last Name"
-              placeholder="Please enter last name"
-              hideFromTable
+            <Fields>
+              <Field
+                name="name"
+                label="Name"
+                hideInCreateForm
+                hideInUpdateForm
+              />
+              <Field
+                label="First Name"
+                placeholder="Please enter first name"
+                hideFromTable
+              />
+              <Field
+                name="lastName"
+                label="Last Name"
+                placeholder="Please enter last name"
+                hideFromTable
+              />
+              <Field
+                name="userName"
+                label="User Name"
+                hideInCreateForm
+                hideInUpdateForm
+              />
+              <Field
+                name="password"
+                label="Password"
+                sortable={false}
+                hideInCreateForm
+                hideInUpdateForm
+              />
+              <Field
+                name="timeSpent"
+                label="Minutes Played"
+                sortable={false}
+                hideInCreateForm
+                hideInUpdateForm
+              />
+              <Field
+                name="level"
+                label="Levels Achieved"
+                sortable={false}
+                hideInCreateForm
+                hideInUpdateForm
+              />
+              <Field
+                name="totalTrophiesEarned"
+                label="Total Tropies Earned"
+                sortable={false}
+                hideInCreateForm
+                hideInUpdateForm
+              />
+            </Fields>
+            <UpdateForm
+              title="Update Student"
+              trigger="Update"
+              onSubmit={(task) => service.update(task)}
+              submitText="Update"
+              validate={(values) => {
+                const errors = {};
+                if (!values.firstName) {
+                  errors.firstName = 'Please enter first name.';
+                }
+                if (!values.lastName) {
+                  errors.lastName = 'Please enter last name.';
+                }
+                return errors;
+              }}
             />
-            <Field
-              name="userName"
-              label="User Name"
-              hideInCreateForm
-              hideInUpdateForm
+            <DeleteForm
+              title="Delete Student"
+              message="Are you sure you want to delete this student?"
+              trigger="Delete"
+              onSubmit={(task) => service.delete(task)}
+              submitText="Delete"
             />
-            <Field
-              name="password"
-              label="Password"
-              sortable={false}
-              hideInCreateForm
-              hideInUpdateForm
-            />
-            <Field
-              name="timeSpent"
-              label="Minutes Played"
-              sortable={false}
-              hideInCreateForm
-              hideInUpdateForm
-            />
-            <Field
-              name="level"
-              label="Levels Achieved"
-              sortable={false}
-              hideInCreateForm
-              hideInUpdateForm
-            />
-            <Field
-              name="totalTrophiesEarned"
-              label="Total Tropies Earned"
-              sortable={false}
-              hideInCreateForm
-              hideInUpdateForm
-            />
-          </Fields>
-          <UpdateForm
-            title="Update Student"
-            trigger="Update"
-            onSubmit={(task) => service.update(task)}
-            submitText="Update"
-            validate={(values) => {
-              const errors = {};
-              if (!values.firstName) {
-                errors.firstName = 'Please enter first name.';
-              }
-              if (!values.lastName) {
-                errors.lastName = 'Please enter last name.';
-              }
-              return errors;
-            }}
-          />
-
-          <DeleteForm
-            title="Delete Student"
-            message="Are you sure you want to delete this student?"
-            trigger="Delete"
-            onSubmit={(task) => service.delete(task)}
-            submitText="Delete"
-          />
-        </CRUDTable>
+          </CRUDTable>
+        </div>
         {this.state.dataList.length === 0 ? (
           <div style={{ textAlign: 'center', margin: '20px' }}>
             {' '}
@@ -449,7 +411,6 @@ class TeacherDashboard extends React.Component {
     return (
       <div className="teacher-dash-div">
         {this.renderStudentBulkAdd()}
-
         {this.renderTable()}
       </div>
     );

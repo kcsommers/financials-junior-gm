@@ -2,7 +2,7 @@
   position: relative;
   z-index: 100;
   margin-bottom: 50px;
-  text-align: center;
+  /* text-align: center; */
 }
 
 /* CRUD TABLE START */
@@ -160,7 +160,7 @@
 
 .crud-button--positive {
   background-color: #f3901d;
-  margin: 0.8rem 0;
+  margin: 0.8rem;
 }
 
 .crud-button--negative {
@@ -178,7 +178,6 @@
   border-collapse: collapse;
   box-shadow: 2px 2px 5px 0 #c7c7c7;
   font-size: 0.9rem;
-
   margin: 0px auto;
 }
 
@@ -194,6 +193,7 @@
 
 .crud-table__row {
   background: #fff;
+  text-align: center;
 }
 
 .crud-table__header-cell {
@@ -631,45 +631,57 @@ td.rdtYear:hover {
 
 /* CRUD TABLE END */
 
+.crud-table__caption {
+  display: none;
+}
+
 div.teacher-dashboard-header {
+  min-height: 125px;
+  max-height: 125px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1rem;
+}
+
+div.teacher-dashboard-header > h1 {
+  font-size: 1.75rem;
+  color: #002f6c;
+  font-weight: bold;
+}
+
+div.crud-table-wrap {
   position: relative;
+}
+
+button.csv-btn {
+  box-shadow: none;
+  padding: 0.6rem 1.5rem;
+  font-size: 0.9rem;
+  position: absolute;
+  top: 0.8rem;
+  left: 140px;
+}
+
+div.class-stats-wrap {
+  padding: 3rem;
+}
+
+div.class-stats-wrap > h4 {
   margin-bottom: 1rem;
 }
 
-div.teacher-dashboard-header + div > div:first-child > button.crud-button {
-  position: relative;
-  z-index: 1;
-}
-
-div.header-buttons-container-1,
-div.header-buttons-container-2 {
+div.class-stat {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  margin-top: 0.5rem;
+  margin: 0.5rem 0;
 }
 
-div.header-buttons-container-2 > button {
-  box-shadow: none;
-  padding: 0.53rem 1.5rem;
-  font-size: 0.9rem;
+div.class-stat > p {
+  color: #002f6c;
+  font-size: 1.1rem;
 }
 
-div.header-buttons-container-1 > button,
-div.header-buttons-container-1 > a,
-div.header-buttons-container-2 > button,
-div.header-buttons-container-2 > a {
-  margin-top: 1rem;
-  display: inline-block;
-}
-
-div.header-buttons-container-2 {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translate(-45.5%, 128%);
-  justify-content: space-between;
-  width: 360px;
-  z-index: 0;
+p.class-stat-value {
+  margin-left: 1rem;
+  font-weight: bold;
 }
