@@ -104,6 +104,14 @@ button.btn-small {
   color: #f3901d;
 }
 
+.color-danger {
+  color: #dc3545;
+}
+
+.color-dark {
+  color: #002f6c;
+}
+
 .font-xl {
   font-size: 2.95rem;
 }
