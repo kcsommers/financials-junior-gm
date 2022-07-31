@@ -96,6 +96,12 @@ button.btn-small {
   font-size: 1rem;
 }
 
+a.btn-full-width,
+div.btn-full-width,
+button.btn-full-width {
+  width: 100%;
+}
+
 .color-primary {
   color: #00788a;
 }

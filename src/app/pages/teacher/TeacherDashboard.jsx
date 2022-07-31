@@ -17,11 +17,13 @@ import { connect, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import * as api from '../../api-helper';
 import { getClassStats } from '../../utils/get-class-stats';
+import { OverlayBoard } from '@components';
+import { cloneDeep } from 'lodash';
 
 const TeacherDashboard = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const [csvModalOpen, setCsvModalOpen] = useState(false);
+  const [modalOpen, setModalOpen] = useState(null);
   const [selectedFile, setSelectedFile] = useState(false);
   const [studentList, setStudentList] = useState([]);
   const [classStats, setClassStats] = useState({
@@ -32,38 +34,12 @@ const TeacherDashboard = () => {
     completedGame: 0,
   });
 
+  const [firstNameInput, setFirstNameInput] = useState('');
+  const [lastNameInput, setLastNameInput] = useState('');
+  const [selectedStudent, setSelectedStudent] = useState(false);
+  const [isDelete, setIsDelete] = useState(false);
+
   useEffect(() => {
-    const getStudentList = async () => {
-      if (!navigator.cookieEnabled) {
-        return;
-      }
-      let id = null;
-      if (sessionStorage.getItem(TEACHER_ID_STORAGE_KEY)) {
-        id = sessionStorage.getItem(TEACHER_ID_STORAGE_KEY);
-      }
-      try {
-        const response = await api.getStudentList(id);
-        const students = response.data || [];
-        students.forEach((student) => {
-          const totalTrophies = (student.awards || []).reduce(
-            (total, level) => {
-              const trophyNames = Object.keys(level);
-              trophyNames.forEach((name) => {
-                if (level[name]) {
-                  total += 1;
-                }
-              });
-              return total;
-            },
-            0
-          );
-          student.totalTrophiesEarned = totalTrophies;
-        });
-        setStudentList(students);
-      } catch (error) {
-        console.error('TeacherDashboard.getStudentList', error);
-      }
-    };
     getStudentList();
   }, []);
 
@@ -75,17 +51,68 @@ const TeacherDashboard = () => {
     setClassStats(classStats);
   }, [studentList]);
 
-  const addStudent = async (student) => {
+  const getStudentList = async () => {
+    if (!navigator.cookieEnabled) {
+      return;
+    }
+    let id = null;
+    if (sessionStorage.getItem(TEACHER_ID_STORAGE_KEY)) {
+      id = sessionStorage.getItem(TEACHER_ID_STORAGE_KEY);
+    }
     try {
-      var body = {
-        firstName: student.firstName,
-        lastName: student.lastName,
-      };
-      const response = await api.addStudent(body);
-      // @TODO update list
-      // this.getStudentList();
+      const response = await api.getStudentList(id);
+      const students = response.data || [];
+      students.forEach((student) => {
+        const totalTrophies = (student.awards || []).reduce((total, level) => {
+          const trophyNames = Object.keys(level);
+          trophyNames.forEach((name) => {
+            if (level[name]) {
+              total += 1;
+            }
+          });
+          return total;
+        }, 0);
+        student.totalTrophiesEarned = totalTrophies;
+      });
+      setStudentList(students);
+    } catch (error) {
+      console.error('TeacherDashboard.getStudentList', error);
+    }
+  };
+
+  const addStudent = async () => {
+    try {
+      await api.addStudent({
+        firstName: firstNameInput,
+        lastName: lastNameInput,
+      });
+      closeModal();
+      getStudentList();
     } catch (error) {
       console.error('TeacherDashboard.addStudent', error);
+    }
+  };
+
+  const updateStudent = async () => {
+    try {
+      await api.updateStudent(selectedStudent?._id, {
+        firstName: firstNameInput,
+        lastName: lastNameInput,
+      });
+      closeModal();
+      getStudentList();
+    } catch (error) {
+      console.error('TeacherDashboard.updateStudent', error);
+    }
+  };
+
+  const deleteStudent = async () => {
+    try {
+      await api.deleteStudent(selectedStudent?._id);
+      closeModal();
+      getStudentList();
+    } catch (error) {
+      console.error('TeacherDashboard.deleteStudent', error);
     }
   };
 
@@ -100,35 +127,73 @@ const TeacherDashboard = () => {
     }
   };
 
-  const updateStudent = async (data, task) => {
-    try {
-      var body = {
-        firstName: data.firstName,
-        lastName: data.lastName,
-      };
-      const response = api.updateStudent(data._id, body);
-      // @TODO update list
-      // this.getStudentList();
-    } catch (error) {
-      console.error('TeacherDashboard.updateStudent', error);
+  const getModalTemplate = () => {
+    if (isDelete) {
+      return (
+        <div className="modal-template">
+          <div className="color-primary confirm-text">Are You Sure?</div>
+          <div className="color-dark">
+            Deleting this student cannot be undone.
+          </div>
+          <button className="btn-danger btn-full-width" onClick={deleteStudent}>
+            Delete Student
+          </button>
+        </div>
+      );
     }
+    return (
+      <div className="modal-template">
+        <div className="color-dark">
+          {selectedStudent ? 'Update' : 'Add'} Student
+        </div>
+        <label htmlFor="firstName">
+          First Name
+          <input
+            type="text"
+            name="firstName"
+            placeholder="Please enter first name"
+            value={firstNameInput}
+            onChange={(e) => setFirstNameInput(e.target.value)}
+          />
+        </label>
+        <label htmlFor="lastName">
+          Last Name
+          <input
+            type="text"
+            name="lastName"
+            placeholder="Please enter last name"
+            value={lastNameInput}
+            onChange={(e) => setLastNameInput(e.target.value)}
+          />
+        </label>
+        <button
+          className="btn-accent btn-full-width"
+          onClick={() => {
+            if (selectedStudent) {
+              updateStudent();
+            } else {
+              addStudent();
+            }
+          }}
+        >
+          {selectedStudent ? 'Update' : 'Create'} Student
+        </button>
+      </div>
+    );
   };
 
-  const deleteStudent = async (data) => {
-    try {
-      const response = api.deleteStudent(data?._id);
-      // @TODO update list
-      // this.getStudentList();
-    } catch (error) {
-      console.error('TeacherDashboard.deleteStudent', error);
-    }
+  const closeModal = () => {
+    setFirstNameInput('');
+    setLastNameInput('');
+    setSelectedStudent(null);
+    setIsDelete(false);
+    setModalOpen(false);
   };
 
   return (
     <div
       style={{
-        maxHeight: '768px',
-        overflow: 'auto',
+        height: '100%',
         position: 'relative',
         zIndex: 1,
       }}
@@ -141,7 +206,10 @@ const TeacherDashboard = () => {
       </div>
       <div className="teacher-dashboard-body">
         <div className="teacher-dashboard-btns-wrap">
-          <button className="btn-accent btn-small" onClick={logoutSession}>
+          <button
+            className="btn-accent btn-small"
+            onClick={() => setModalOpen(true)}
+          >
             Add Student
           </button>
           <button className="btn-accent btn-small" onClick={logoutSession}>
@@ -182,8 +250,11 @@ const TeacherDashboard = () => {
               <div>Total Trophies</div>
               <div>Actions</div>
             </div>
-            {(studentList || []).map((student) => (
-              <div className="student-table-row">
+            {(studentList || []).map((student, i) => (
+              <div
+                key={`${student.firstName}-${i}`}
+                className="student-table-row"
+              >
                 <div>
                   {student.firstName} {student.lastName}
                 </div>
@@ -193,10 +264,28 @@ const TeacherDashboard = () => {
                 <div>{student.level}</div>
                 <div>{student.totalTrophiesEarned}</div>
                 <div className="actions-column">
-                  <span className="color-dark" role="button">
+                  <span
+                    className="color-dark"
+                    role="button"
+                    onClick={() => {
+                      setFirstNameInput(student.firstName);
+                      setLastNameInput(student.lastName);
+                      setSelectedStudent(student);
+                      setIsDelete(false);
+                      setModalOpen(true);
+                    }}
+                  >
                     Update
                   </span>
-                  <span className="color-danger" role="button">
+                  <span
+                    className="color-danger"
+                    role="button"
+                    onClick={() => {
+                      setIsDelete(true);
+                      setSelectedStudent(student);
+                      setModalOpen(true);
+                    }}
+                  >
                     Delete
                   </span>
                 </div>
@@ -205,6 +294,14 @@ const TeacherDashboard = () => {
           </div>
         </div>
       </div>
+      {modalOpen && (
+        <div className="teacher-dashboard-modal">
+          <div className="modal-bg" onClick={closeModal}></div>
+          <div className="teacher-dashboard-modal-inner box-shadow">
+            {getModalTemplate()}
+          </div>
+        </div>
+      )}
     </div>
   );
 };
