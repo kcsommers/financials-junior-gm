@@ -6,14 +6,16 @@ import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import * as api from '../../api-helper';
 import { Snackbar } from '../../components/snackbar/Snackbar';
+import { convertMs } from '../../utils/convert-ms';
 import { getClassStats } from '../../utils/get-class-stats';
+import { LoadingSpinner } from '@components';
 
 const TeacherDashboard = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const [modalOpen, setModalOpen] = useState(null);
   const [selectedFile, setSelectedFile] = useState(false);
-  const [studentList, setStudentList] = useState([]);
+  const [studentList, setStudentList] = useState(null);
   const [classStats, setClassStats] = useState({
     totalTime: 0,
     completedTutorial: 0,
@@ -38,6 +40,7 @@ const TeacherDashboard = () => {
       return;
     }
     const classStats = getClassStats(studentList);
+    classStats.totalTime = convertMs(classStats.totalTime, 'minutes');
     setClassStats(classStats);
   }, [studentList]);
 
@@ -272,79 +275,99 @@ const TeacherDashboard = () => {
         </div>
         <div className="class-stats-wrap box-shadow">
           <h4 className="color-primary">Classroom Stats</h4>
-          <div className="class-stat">
-            <p className="class-stat-title">Total Minutes Played:</p>
-            <p className="class-stat-value">{classStats.totalTime}</p>
-          </div>
-          <div className="class-stat">
-            <p className="class-stat-title">Completed Tutorial:</p>
-            <p className="class-stat-value">{classStats.completedTutorial}</p>
-          </div>
-          <div className="class-stat">
-            <p className="class-stat-title">Completed Level 1:</p>
-            <p className="class-stat-value">{classStats.completedLevel1}</p>
-          </div>
-          <div className="class-stat">
-            <p className="class-stat-title">Completed Level 2:</p>
-            <p className="class-stat-value">{classStats.completedLevel2}</p>
-          </div>
-          <div className="class-stat">
-            <p className="class-stat-title">Completed Game:</p>
-            <p className="class-stat-value">{classStats.completedGame}</p>
-          </div>
+          {!studentList ? (
+            <LoadingSpinner />
+          ) : (
+            <>
+              <div className="class-stat">
+                <p className="class-stat-title">Total Minutes Played:</p>
+                <p className="class-stat-value">{classStats.totalTime}</p>
+              </div>
+              <div className="class-stat">
+                <p className="class-stat-title">Completed Tutorial:</p>
+                <p className="class-stat-value">
+                  {classStats.completedTutorial}
+                </p>
+              </div>
+              <div className="class-stat">
+                <p className="class-stat-title">Completed Level 1:</p>
+                <p className="class-stat-value">{classStats.completedLevel1}</p>
+              </div>
+              <div className="class-stat">
+                <p className="class-stat-title">Completed Level 2:</p>
+                <p className="class-stat-value">{classStats.completedLevel2}</p>
+              </div>
+              <div className="class-stat">
+                <p className="class-stat-title">Completed Game:</p>
+                <p className="class-stat-value">{classStats.completedGame}</p>
+              </div>
+            </>
+          )}
         </div>
         <div className="student-table-wrap">
           <div className="student-table box-shadow">
-            <div className="student-table-row student-table-header-row">
-              <div>Name</div>
-              <div>Username</div>
-              <div>Password</div>
-              <div>Minutes Played</div>
-              <div>Levels Achieved</div>
-              <div>Total Trophies</div>
-              <div>Actions</div>
-            </div>
-            {(studentList || []).map((student, i) => (
-              <div
-                key={`${student.firstName}-${i}`}
-                className="student-table-row"
-              >
-                <div>
-                  {student.firstName} {student.lastName}
-                </div>
-                <div>{student.userName}</div>
-                <div>{student.password}</div>
-                <div>{student.timeSpent}</div>
-                <div>{student.level}</div>
-                <div>{student.totalTrophiesEarned}</div>
-                <div className="actions-column">
-                  <span
-                    className="color-dark"
-                    role="button"
-                    onClick={() => {
-                      setFirstNameInput(student.firstName);
-                      setLastNameInput(student.lastName);
-                      setSelectedStudent(student);
-                      setIsDelete(false);
-                      setModalOpen(true);
-                    }}
-                  >
-                    Update
-                  </span>
-                  <span
-                    className="color-danger"
-                    role="button"
-                    onClick={() => {
-                      setIsDelete(true);
-                      setSelectedStudent(student);
-                      setModalOpen(true);
-                    }}
-                  >
-                    Delete
-                  </span>
-                </div>
+            {!studentList || !studentList.length ? (
+              <div className="empty-table">
+                {!studentList ? (
+                  <LoadingSpinner />
+                ) : (
+                  <h3>No Students to Display</h3>
+                )}
               </div>
-            ))}
+            ) : (
+              <>
+                <div className="student-table-row student-table-header-row">
+                  <div>Name</div>
+                  <div>Username</div>
+                  <div>Password</div>
+                  <div>Minutes Played</div>
+                  <div>Levels Achieved</div>
+                  <div>Total Trophies</div>
+                  <div>Actions</div>
+                </div>
+                {(studentList || []).map((student, i) => (
+                  <div
+                    key={`${student.firstName}-${i}`}
+                    className="student-table-row"
+                  >
+                    <div>
+                      {student.firstName} {student.lastName}
+                    </div>
+                    <div>{student.userName}</div>
+                    <div>{student.password}</div>
+                    <div>{convertMs(student.timeSpent, 'minutes')}</div>
+                    <div>{student.level}</div>
+                    <div>{student.totalTrophiesEarned}</div>
+                    <div className="actions-column">
+                      <span
+                        className="color-dark"
+                        role="button"
+                        onClick={() => {
+                          setFirstNameInput(student.firstName);
+                          setLastNameInput(student.lastName);
+                          setSelectedStudent(student);
+                          setIsDelete(false);
+                          setModalOpen(true);
+                        }}
+                      >
+                        Update
+                      </span>
+                      <span
+                        className="color-danger"
+                        role="button"
+                        onClick={() => {
+                          setIsDelete(true);
+                          setSelectedStudent(student);
+                          setModalOpen(true);
+                        }}
+                      >
+                        Delete
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </>
+            )}
           </div>
         </div>
       </div>
