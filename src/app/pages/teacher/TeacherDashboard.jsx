@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import * as api from '../../api-helper';
+import { Snackbar } from '../../components/snackbar/Snackbar';
 import { getClassStats } from '../../utils/get-class-stats';
 
 const TeacherDashboard = () => {
@@ -26,6 +27,7 @@ const TeacherDashboard = () => {
   const [selectedStudent, setSelectedStudent] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
   const [isUpload, setIsUpload] = useState(false);
+  const [snackbarConfig, setSnackbarConfig] = useState(null);
 
   useEffect(() => {
     getStudentList();
@@ -68,6 +70,13 @@ const TeacherDashboard = () => {
     }
   };
 
+  const showSnackbar = (config) => {
+    setSnackbarConfig(config);
+    setTimeout(() => {
+      setSnackbarConfig(null);
+    }, 3000);
+  };
+
   const addStudent = async () => {
     try {
       await api.addStudent({
@@ -76,6 +85,7 @@ const TeacherDashboard = () => {
       });
       closeModal();
       getStudentList();
+      showSnackbar({ message: 'Student Added Successfully' });
     } catch (error) {
       console.error('TeacherDashboard.addStudent', error);
     }
@@ -89,6 +99,7 @@ const TeacherDashboard = () => {
       });
       closeModal();
       getStudentList();
+      showSnackbar({ message: 'Student Updated Successfully' });
     } catch (error) {
       console.error('TeacherDashboard.updateStudent', error);
     }
@@ -99,6 +110,7 @@ const TeacherDashboard = () => {
       await api.deleteStudent(selectedStudent?._id);
       closeModal();
       getStudentList();
+      showSnackbar({ message: 'Student Deleted Successfully' });
     } catch (error) {
       console.error('TeacherDashboard.deleteStudent', error);
     }
@@ -117,6 +129,7 @@ const TeacherDashboard = () => {
       setSelectedFile(null);
       closeModal();
       getStudentList();
+      showSnackbar({ message: 'Students Added Successfully' });
     } catch (error) {
       console.error('TeacherDashboard.addStudentsFromCSV: ', error);
     }
@@ -343,6 +356,7 @@ const TeacherDashboard = () => {
           </div>
         </div>
       )}
+      <Snackbar config={snackbarConfig} isVisible={!!snackbarConfig} />
     </div>
   );
 };
