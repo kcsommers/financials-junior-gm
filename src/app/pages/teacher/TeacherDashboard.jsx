@@ -229,6 +229,8 @@ const TeacherDashboard = () => {
       style={{
         position: 'relative',
         zIndex: 1,
+        height: '100%',
+        overflow: 'auto',
       }}
     >
       <div className="teacher-dashboard-header">
