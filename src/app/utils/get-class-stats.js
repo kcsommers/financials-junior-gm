@@ -1,3 +1,5 @@
+import { tutorialCompleted } from '../utils/tutorial-completed';
+
 export const getClassStats = (students) => {
   const stats = {
     totalTime: 0,
@@ -9,7 +11,7 @@ export const getClassStats = (students) => {
 
   (students || []).forEach((student) => {
     stats.totalTime += +student.timeSpent;
-    if (student.tutorials) {
+    if (tutorialCompleted(student)) {
       stats.completedTutorial++;
     }
     if (+student.level > 1) {
