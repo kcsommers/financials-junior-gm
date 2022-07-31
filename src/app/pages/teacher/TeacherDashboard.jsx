@@ -38,6 +38,7 @@ const TeacherDashboard = () => {
   const [lastNameInput, setLastNameInput] = useState('');
   const [selectedStudent, setSelectedStudent] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
+  const [isUpload, setIsUpload] = useState(false);
 
   useEffect(() => {
     getStudentList();
@@ -116,6 +117,24 @@ const TeacherDashboard = () => {
     }
   };
 
+  const addStudentsFromCSV = async () => {
+    if (!selectedFile) {
+      console.error(
+        'TeacherDashboard.addStudentsFromCSV: ',
+        'No File Selected'
+      );
+      return;
+    }
+    try {
+      await api.addStudentInBulk(selectedFile);
+      setSelectedFile(null);
+      closeModal();
+      getStudentList();
+    } catch (error) {
+      console.error('TeacherDashboard.addStudentsFromCSV: ', error);
+    }
+  };
+
   const logoutSession = async () => {
     try {
       await api.logout();
@@ -128,6 +147,33 @@ const TeacherDashboard = () => {
   };
 
   const getModalTemplate = () => {
+    if (isUpload) {
+      return (
+        <div className="modal-template">
+          <div className="color-dark">Add Students in Bulk</div>
+          <input
+            name="inputFile"
+            type="file"
+            onChange={(e) => {
+              e.preventDefault();
+              const file = e.target.files[0];
+              setSelectedFile(file);
+            }}
+            accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+          />
+          <button
+            className="btn-primary btn-small"
+            onClick={addStudentsFromCSV}
+            style={{ marginRight: '0.5rem' }}
+          >
+            Upload
+          </button>
+          <button className="btn-danger btn-small" onClick={closeModal}>
+            Cancel
+          </button>
+        </div>
+      );
+    }
     if (isDelete) {
       return (
         <div className="modal-template">
@@ -187,13 +233,13 @@ const TeacherDashboard = () => {
     setLastNameInput('');
     setSelectedStudent(null);
     setIsDelete(false);
+    setIsUpload(false);
     setModalOpen(false);
   };
 
   return (
     <div
       style={{
-        height: '100%',
         position: 'relative',
         zIndex: 1,
       }}
@@ -212,7 +258,13 @@ const TeacherDashboard = () => {
           >
             Add Student
           </button>
-          <button className="btn-accent btn-small" onClick={logoutSession}>
+          <button
+            className="btn-accent btn-small"
+            onClick={() => {
+              setIsUpload(true);
+              setModalOpen(true);
+            }}
+          >
             Upload CSV
           </button>
         </div>
