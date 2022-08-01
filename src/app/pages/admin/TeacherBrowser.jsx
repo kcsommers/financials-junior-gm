@@ -372,107 +372,108 @@ export const TeacherBrowser = ({ allTeachers, onRowAction }) => {
             propertyName: 'schoolDistrict',
           },
         ]}
-      >
-        {({ rowData, rowIndex }) => (
-          <div
-            className="admin-teacher-details-inner"
-            ref={(el) => (detailsRefs.current[rowIndex] = el)}
-          >
-            <div className="admin-teacher-details-left">
-              {teacherDetails.map((d) => (
-                <div key={d[0]} className="admin-teacher-detail-wrap">
-                  <span className="admin-teacher-detail-label">{d[1]}</span>
-                  <span className="admin-teacher-detail">
-                    {rowData[d[0]] || '--'}
-                  </span>
+        children={{
+          expandableContent: ({ rowData, rowIndex }) => (
+            <div
+              className="admin-teacher-details-inner"
+              ref={(el) => (detailsRefs.current[rowIndex] = el)}
+            >
+              <div className="admin-teacher-details-left">
+                {teacherDetails.map((d) => (
+                  <div key={d[0]} className="admin-teacher-detail-wrap">
+                    <span className="admin-teacher-detail-label">{d[1]}</span>
+                    <span className="admin-teacher-detail">
+                      {rowData[d[0]] || '--'}
+                    </span>
+                  </div>
+                ))}
+              </div>
+              <div className="admin-teacher-details-right">
+                <div className="student-stats-wrap">
+                  <p style={{ marginBottom: '1rem' }}>Student Stats</p>
+                  {studentStatsMap[rowData.name] ? (
+                    <>
+                      <div className="admin-teacher-detail-wrap">
+                        <span className="admin-teacher-detail-label">
+                          Total Time Spent
+                        </span>
+                        <span className="admin-teacher-detail">
+                          {studentStatsMap[rowData.name].timeSpent} Hours
+                        </span>
+                      </div>
+                      <div className="admin-teacher-detail-wrap">
+                        <span className="admin-teacher-detail-label">
+                          Started Tutorial
+                        </span>
+                        <span className="admin-teacher-detail">
+                          {studentStatsMap[rowData.name].startedTutorial}
+                        </span>
+                      </div>
+                      <div className="admin-teacher-detail-wrap">
+                        <span className="admin-teacher-detail-label">
+                          Completed Level 1
+                        </span>
+                        <span className="admin-teacher-detail">
+                          {studentStatsMap[rowData.name].completedLevel1}
+                        </span>
+                      </div>
+                      <div className="admin-teacher-detail-wrap">
+                        <span className="admin-teacher-detail-label">
+                          Completed Level 2
+                        </span>
+                        <span className="admin-teacher-detail">
+                          {studentStatsMap[rowData.name].completedLevel2}
+                        </span>
+                      </div>
+                      <div className="admin-teacher-detail-wrap">
+                        <span className="admin-teacher-detail-label">
+                          Won Game
+                        </span>
+                        <span className="admin-teacher-detail">
+                          {studentStatsMap[rowData.name].wonGame}
+                        </span>
+                      </div>
+                    </>
+                  ) : (
+                    <LoadingSpinner size="small" />
+                  )}
                 </div>
-              ))}
-            </div>
-            <div className="admin-teacher-details-right">
-              <div className="student-stats-wrap">
-                <p style={{ marginBottom: '1rem' }}>Student Stats</p>
-                {studentStatsMap[rowData.name] ? (
-                  <>
-                    <div className="admin-teacher-detail-wrap">
-                      <span className="admin-teacher-detail-label">
-                        Total Time Spent
-                      </span>
-                      <span className="admin-teacher-detail">
-                        {studentStatsMap[rowData.name].timeSpent} Hours
-                      </span>
-                    </div>
-                    <div className="admin-teacher-detail-wrap">
-                      <span className="admin-teacher-detail-label">
-                        Started Tutorial
-                      </span>
-                      <span className="admin-teacher-detail">
-                        {studentStatsMap[rowData.name].startedTutorial}
-                      </span>
-                    </div>
-                    <div className="admin-teacher-detail-wrap">
-                      <span className="admin-teacher-detail-label">
-                        Completed Level 1
-                      </span>
-                      <span className="admin-teacher-detail">
-                        {studentStatsMap[rowData.name].completedLevel1}
-                      </span>
-                    </div>
-                    <div className="admin-teacher-detail-wrap">
-                      <span className="admin-teacher-detail-label">
-                        Completed Level 2
-                      </span>
-                      <span className="admin-teacher-detail">
-                        {studentStatsMap[rowData.name].completedLevel2}
-                      </span>
-                    </div>
-                    <div className="admin-teacher-detail-wrap">
-                      <span className="admin-teacher-detail-label">
-                        Won Game
-                      </span>
-                      <span className="admin-teacher-detail">
-                        {studentStatsMap[rowData.name].wonGame}
-                      </span>
-                    </div>
-                  </>
-                ) : (
-                  <LoadingSpinner size="small" />
-                )}
-              </div>
-              <div style={{ position: 'relative', top: '-1rem' }}>
-                <button
-                  className={`btn-danger btn-small`}
-                  style={{ marginRight: '0.5rem' }}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    showAlert(e, 'teacher', rowData);
-                  }}
-                >
-                  <FontAwesomeIcon
-                    icon={faTrash}
-                    color="#fff"
+                <div style={{ position: 'relative', top: '-1rem' }}>
+                  <button
+                    className={`btn-danger btn-small`}
                     style={{ marginRight: '0.5rem' }}
-                  />
-                  Delete Teacher
-                </button>
-                <button
-                  className={`btn-danger btn-small`}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    showAlert(e, 'class', rowData);
-                  }}
-                >
-                  <FontAwesomeIcon
-                    icon={faTrash}
-                    color="#fff"
-                    style={{ marginRight: '0.5rem' }}
-                  />
-                  Delete Class
-                </button>
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      showAlert(e, 'teacher', rowData);
+                    }}
+                  >
+                    <FontAwesomeIcon
+                      icon={faTrash}
+                      color="#fff"
+                      style={{ marginRight: '0.5rem' }}
+                    />
+                    Delete Teacher
+                  </button>
+                  <button
+                    className={`btn-danger btn-small`}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      showAlert(e, 'class', rowData);
+                    }}
+                  >
+                    <FontAwesomeIcon
+                      icon={faTrash}
+                      color="#fff"
+                      style={{ marginRight: '0.5rem' }}
+                    />
+                    Delete Class
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-        )}
-      </Table>
+          ),
+        }}
+      />
     </div>
   ) : (
     <div className="admin-loading-wrap">

@@ -307,10 +307,19 @@ const TeacherDashboard = () => {
         </div>
         <Table
           data={studentList}
+          rowDataTransformer={(student, propertyName) => {
+            if (propertyName === 'timeSpent') {
+              return convertMs(student[propertyName], 'minutes');
+            }
+            if (propertyName === 'name') {
+              return `${student.firstName} ${student.lastName}`;
+            }
+            return student[propertyName];
+          }}
           columns={[
             {
               display: 'Name',
-              propertyName: 'firstName',
+              propertyName: 'name',
             },
             {
               display: 'Username',
@@ -333,73 +342,37 @@ const TeacherDashboard = () => {
               propertyName: 'totalTrophies',
             },
           ]}
-        />
-        <div className="student-table-wrap">
-          <div className="student-table box-shadow">
-            {!studentList || !studentList.length ? (
-              <div className="empty-table">
-                {!studentList ? (
-                  <LoadingSpinner />
-                ) : (
-                  <h3>No Students to Display</h3>
-                )}
+          children={{
+            actions: ({ rowData }) => (
+              <div>
+                <span
+                  className="color-dark action-btn"
+                  role="button"
+                  onClick={() => {
+                    setFirstNameInput(rowData.firstName);
+                    setLastNameInput(rowData.lastName);
+                    setSelectedStudent(rowData);
+                    setIsDelete(false);
+                    setModalOpen(true);
+                  }}
+                >
+                  Update
+                </span>
+                <span
+                  className="color-danger action-btn"
+                  role="button"
+                  onClick={() => {
+                    setIsDelete(true);
+                    setSelectedStudent(rowData);
+                    setModalOpen(true);
+                  }}
+                >
+                  Delete
+                </span>
               </div>
-            ) : (
-              <>
-                <div className="student-table-row student-table-header-row">
-                  <div>Name</div>
-                  <div>Username</div>
-                  <div>Password</div>
-                  <div>Minutes Played</div>
-                  <div>Levels Achieved</div>
-                  <div>Total Trophies</div>
-                  <div>Actions</div>
-                </div>
-                {(studentList || []).map((student, i) => (
-                  <div
-                    key={`${student.firstName}-${i}`}
-                    className="student-table-row"
-                  >
-                    <div>
-                      {student.firstName} {student.lastName}
-                    </div>
-                    <div>{student.userName}</div>
-                    <div>{student.password}</div>
-                    <div>{convertMs(student.timeSpent, 'minutes')}</div>
-                    <div>{student.level}</div>
-                    <div>{student.totalTrophies}</div>
-                    <div className="actions-column">
-                      <span
-                        className="color-dark"
-                        role="button"
-                        onClick={() => {
-                          setFirstNameInput(student.firstName);
-                          setLastNameInput(student.lastName);
-                          setSelectedStudent(student);
-                          setIsDelete(false);
-                          setModalOpen(true);
-                        }}
-                      >
-                        Update
-                      </span>
-                      <span
-                        className="color-danger"
-                        role="button"
-                        onClick={() => {
-                          setIsDelete(true);
-                          setSelectedStudent(student);
-                          setModalOpen(true);
-                        }}
-                      >
-                        Delete
-                      </span>
-                    </div>
-                  </div>
-                ))}
-              </>
-            )}
-          </div>
-        </div>
+            ),
+          }}
+        />
       </div>
       {modalOpen && (
         <div className="teacher-dashboard-modal">

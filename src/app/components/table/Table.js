@@ -14,6 +14,7 @@ export const Table = ({
   emptyMessage,
   rowsPerPage = 50,
   rowExpanded,
+  rowDataTransformer,
 }) => {
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
@@ -65,7 +66,7 @@ export const Table = ({
     const end = rowsPerPage * currentPage;
     const displayedRows = data?.slice(start, end);
     setDisplayedRows(displayedRows);
-  }, [totalPages, currentPage]);
+  }, [totalPages, currentPage, data]);
 
   const toggleRow = (rowIndex) => {
     const shouldExpand = !expandedRows[rowIndex];
@@ -159,14 +160,17 @@ export const Table = ({
       <div className="table-wrap box-shadow">
         <div
           className="table-header-row table-row"
-          style={!!children ? { paddingLeft: '0px' } : {}}
+          style={!!children?.expandableContent ? { paddingLeft: '0px' } : {}}
         >
-          {children && <span className="table-arrow-wrap"></span>}
+          {children?.expandableContent && (
+            <span className="table-arrow-wrap"></span>
+          )}
           {columns.map((column) => (
             <div key={column.display} style={column.styles || {}}>
               {column.display}
             </div>
           ))}
+          {!!children?.actions && <div>Actions</div>}
         </div>
         {(displayedRows || []).map((row, i) => (
           <div
@@ -176,9 +180,11 @@ export const Table = ({
           >
             <div
               className="table-row"
-              style={!!children ? { paddingLeft: '0px' } : {}}
+              style={
+                !!children?.expandableContent ? { paddingLeft: '0px' } : {}
+              }
             >
-              {children && (
+              {children?.expandableContent && (
                 <span className="table-arrow-wrap">
                   <span
                     className="table-arrow"
@@ -192,11 +198,20 @@ export const Table = ({
               )}
               {columns.map((column) => (
                 <div key={column.display}>
-                  {row[column.propertyName] || '--'}
+                  {(rowDataTransformer
+                    ? rowDataTransformer(row, column.propertyName)
+                    : row[column.propertyName]) || '--'}
                 </div>
               ))}
+              {!!children?.actions && (
+                <div className="actions-column">
+                  {cloneElement(
+                    children?.actions({ rowData: row, rowIndex: i })
+                  )}
+                </div>
+              )}
             </div>
-            {!!children && (
+            {!!children?.expandableContent && (
               <div
                 className="table-expandable-content"
                 style={{
@@ -205,9 +220,12 @@ export const Table = ({
                     : '0px',
                 }}
               >
-                {cloneElement(children({ rowData: row, rowIndex: i }), {
-                  ref: expandableContentRefs[i],
-                })}
+                {cloneElement(
+                  children?.expandableContent({ rowData: row, rowIndex: i }),
+                  {
+                    ref: expandableContentRefs[i],
+                  }
+                )}
               </div>
             )}
           </div>

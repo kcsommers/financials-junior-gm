@@ -78,11 +78,11 @@ div.teacher-dashboard-btns-wrap > button:first-child {
   margin-right: 0.5rem;
 }
 
-div.actions-column > span {
+span.action-btn {
   cursor: pointer;
 }
 
-div.actions-column > span:first-child {
+span.action-btn:first-child {
   margin-right: 0.5rem;
 }
 
