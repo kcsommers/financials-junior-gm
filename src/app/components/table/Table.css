@@ -1,0 +1,89 @@
+div.table-wrap {
+  background-color: #fff;
+  border-radius: 3px;
+}
+
+div.table-header-row,
+div.table-row-wrap:not(:last-child) {
+  border-bottom: 1px solid #00788a;
+}
+
+div.table-row {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+div.table-header-row {
+  padding: 0.5rem 1rem;
+  cursor: initial;
+  color: #00788a;
+  border-bottom: 2.5px solid #00788a;
+}
+
+div.table-header-row > div {
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+div.table-row > div {
+  flex: 1;
+  text-align: left;
+}
+
+span.table-arrow-wrap {
+  min-width: 3rem;
+  max-width: 3rem;
+  text-align: center;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}
+
+span.table-arrow {
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+div.table-pagination-wrap {
+  font-size: 1.1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+div.table-expandable-content {
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+input.current-page-input:focus {
+  border-color: #f3901d;
+}
+
+div.current-page-wrap > span {
+  display: inline-block;
+  cursor: pointer;
+}
+
+div.current-page-wrap > span:first-child {
+  margin-right: 0.75rem;
+}
+
+div.current-page-wrap > span:last-child {
+  margin-left: 0.75rem;
+}
+
+input.current-page-input {
+  background: none;
+  margin: 0 0.5rem;
+  outline: none;
+  border: 1px solid #00788a;
+  border-radius: 3px;
+  width: 50px;
+  text-align: center;
+  padding: 0.25rem 0;
+}

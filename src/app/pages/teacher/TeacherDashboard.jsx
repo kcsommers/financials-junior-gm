@@ -1,36 +1,51 @@
-import { TEACHER_ID_STORAGE_KEY, clearSessionStorage } from '@data/auth/auth';
-import { setLoginState } from '@redux/actions';
-import { connect } from 'react-redux';
-import curriculumGuid from '../../../assets/pdf/curriculum_guide.pdf';
-import teacherTutorial from '../../../assets/pdf/teacher_tutorial.pdf';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import React from 'react';
 import '@css/pages/TeacherDashboard.css';
+import { clearSessionStorage, TEACHER_ID_STORAGE_KEY } from '@data/auth/auth';
+import { setLoginState } from '@redux/actions';
+import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import * as api from '../../api-helper';
-import CRUDTable, {
-  Fields,
-  Field,
-  CreateForm,
-  UpdateForm,
-  DeleteForm,
-} from 'react-crud-table';
+import { Snackbar } from '../../components/snackbar/Snackbar';
+import { convertMs } from '../../utils/convert-ms';
+import { getClassStats } from '../../utils/get-class-stats';
+import { LoadingSpinner } from '@components';
+import { Table } from '../../components/table/Table';
 
-class TeacherDashboard extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      dataList: [],
-      selectedFile: null,
-      showCSVForm: false,
-    };
-  }
+const TeacherDashboard = () => {
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const [modalOpen, setModalOpen] = useState(null);
+  const [selectedFile, setSelectedFile] = useState(false);
+  const [studentList, setStudentList] = useState(null);
+  const [classStats, setClassStats] = useState({
+    totalTime: 0,
+    completedTutorial: 0,
+    completedLevel1: 0,
+    completedLevel2: 0,
+    completedGame: 0,
+  });
 
-  componentDidMount() {
-    this.getStudentList();
-  }
+  const [firstNameInput, setFirstNameInput] = useState('');
+  const [lastNameInput, setLastNameInput] = useState('');
+  const [selectedStudent, setSelectedStudent] = useState(false);
+  const [isDelete, setIsDelete] = useState(false);
+  const [isUpload, setIsUpload] = useState(false);
+  const [snackbarConfig, setSnackbarConfig] = useState(null);
 
-  getStudentList = () => {
+  useEffect(() => {
+    getStudentList();
+  }, []);
+
+  useEffect(() => {
+    if (!studentList || !studentList.length) {
+      return;
+    }
+    const classStats = getClassStats(studentList);
+    classStats.totalTime = convertMs(classStats.totalTime, 'minutes');
+    setClassStats(classStats);
+  }, [studentList]);
+
+  const getStudentList = async () => {
     if (!navigator.cookieEnabled) {
       return;
     }
@@ -38,389 +53,338 @@ class TeacherDashboard extends React.Component {
     if (sessionStorage.getItem(TEACHER_ID_STORAGE_KEY)) {
       id = sessionStorage.getItem(TEACHER_ID_STORAGE_KEY);
     }
-    api
-      .getStudentList(id)
-      .then((res) => {
-        for (let i = 0; i < res.data.length; i++) {
-          res.data[i].name = res.data[i].firstName + ' ' + res.data[i].lastName;
-        }
-
-        this.setState({ dataList: res.data });
-      })
-      .catch((error) => {
-        console.log('catch---->>>>', error.response);
+    try {
+      const response = await api.getStudentList(id);
+      const students = response.data || [];
+      students.forEach((student) => {
+        const totalTrophies = (student.awards || []).reduce((total, level) => {
+          const trophyNames = Object.keys(level);
+          trophyNames.forEach((name) => {
+            if (level[name]) {
+              total += 1;
+            }
+          });
+          return total;
+        }, 0);
+        student.totalTrophies = totalTrophies;
       });
-  };
-
-  addStudent = (task) => {
-    var body = {
-      firstName: task.firstName,
-      lastName: task.lastName,
-    };
-    api
-      .addStudent(body)
-      .then((res) => {
-        alert(res.Message);
-        this.getStudentList();
-        return task;
-      })
-      .catch((error) => {
-        console.log('catch---->>>>', error.response);
-        if (error && error.response && error.response.status === 400) {
-          alert(error.response?.data?.message);
-        }
-        return { firstName: '', lastName: '' };
-      });
-  };
-
-  updateStudent(data, task) {
-    var body = {
-      firstName: data.firstName,
-      lastName: data.lastName,
-    };
-    api
-      .updateStudent(data._id, body)
-      .then((res) => {
-        console.log(res);
-        alert(res.message);
-        this.getStudentList();
-        return task;
-      })
-      .catch((error) => {
-        console.log('catch---->>>>', error.response);
-        return data;
-      });
-  }
-
-  deleteStudent(data) {
-    if (data._id) {
-      api
-        .deleteStudent(data?._id)
-        .then((res) => {
-          console.log(res);
-          this.getStudentList();
-          alert(res.message);
-          return data;
-        })
-        .catch((error) => {
-          console.log('catch---->>>>', error.response);
-          return { firstName: '', lastName: '' };
-        });
-    } else {
-      return { firstName: '', lastName: '' };
-    }
-  }
-
-  addStudentInBulk = () => {
-    let file = this.state.selectedFile;
-    if (file) {
-      api
-        .addStudentInBulk(file)
-        .then((res) => {
-          this.getStudentList();
-          this.setState({ showCSVForm: false, selectedFile: null });
-        })
-        .catch((error) => {
-          console.log('catch---->>>>', error.response);
-          if (error && error.response && error.response.status === 400) {
-            alert(error.response?.data?.message);
-            this.setState({ showCSVForm: false, selectedFile: null });
-          }
-        });
-    } else {
+      setStudentList(students);
+    } catch (error) {
+      console.error('TeacherDashboard.getStudentList', error);
     }
   };
 
-  handleSelectFile = (e) => {
-    e.preventDefault();
-    var file = e.target.files[0];
-    this.setState({
-      selectedFile: file,
-    });
+  const showSnackbar = (config) => {
+    setSnackbarConfig(config);
+    setTimeout(() => {
+      setSnackbarConfig(null);
+    }, 3000);
   };
 
-  uploadCSVFile = () => {
-    this.setState({ showCSVForm: true });
+  const addStudent = async () => {
+    try {
+      await api.addStudent({
+        firstName: firstNameInput,
+        lastName: lastNameInput,
+      });
+      closeModal();
+      getStudentList();
+      showSnackbar({ message: 'Student Added Successfully' });
+    } catch (error) {
+      console.error('TeacherDashboard.addStudent', error);
+    }
   };
 
-  logoutSession = () => {
-    api
-      .logout()
-      .then(() => {
-        clearSessionStorage();
-        this.props.setLoginState();
-        this.props.history.push('/dashboard');
-      })
-      .catch((err) => console.error(err));
+  const updateStudent = async () => {
+    try {
+      await api.updateStudent(selectedStudent?._id, {
+        firstName: firstNameInput,
+        lastName: lastNameInput,
+      });
+      closeModal();
+      getStudentList();
+      showSnackbar({ message: 'Student Updated Successfully' });
+    } catch (error) {
+      console.error('TeacherDashboard.updateStudent', error);
+    }
   };
 
-  renderStudentBulkAdd() {
+  const deleteStudent = async () => {
+    try {
+      await api.deleteStudent(selectedStudent?._id);
+      closeModal();
+      getStudentList();
+      showSnackbar({ message: 'Student Deleted Successfully' });
+    } catch (error) {
+      console.error('TeacherDashboard.deleteStudent', error);
+    }
+  };
+
+  const addStudentsFromCSV = async () => {
+    if (!selectedFile) {
+      console.error(
+        'TeacherDashboard.addStudentsFromCSV: ',
+        'No File Selected'
+      );
+      return;
+    }
+    try {
+      await api.addStudentInBulk(selectedFile);
+      setSelectedFile(null);
+      closeModal();
+      getStudentList();
+      showSnackbar({ message: 'Students Added Successfully' });
+    } catch (error) {
+      console.error('TeacherDashboard.addStudentsFromCSV: ', error);
+    }
+  };
+
+  const logoutSession = async () => {
+    try {
+      await api.logout();
+      clearSessionStorage();
+      history.push('/dashboard');
+      dispatch(setLoginState(false, ''));
+    } catch (error) {
+      console.error('TeacherDashboard.logoutSession', error);
+    }
+  };
+
+  const getModalTemplate = () => {
+    if (isUpload) {
+      return (
+        <div className="modal-template">
+          <div className="color-dark">Add Students in Bulk</div>
+          <input
+            name="inputFile"
+            type="file"
+            onChange={(e) => {
+              e.preventDefault();
+              const file = e.target.files[0];
+              setSelectedFile(file);
+            }}
+            accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+          />
+          <button
+            className="btn-primary btn-small"
+            onClick={addStudentsFromCSV}
+            style={{ marginRight: '0.5rem' }}
+          >
+            Upload
+          </button>
+          <button className="btn-danger btn-small" onClick={closeModal}>
+            Cancel
+          </button>
+        </div>
+      );
+    }
+    if (isDelete) {
+      return (
+        <div className="modal-template">
+          <div className="color-primary confirm-text">Are You Sure?</div>
+          <div className="color-dark">
+            Deleting this student cannot be undone.
+          </div>
+          <button className="btn-danger btn-full-width" onClick={deleteStudent}>
+            Delete Student
+          </button>
+        </div>
+      );
+    }
     return (
-      <div
-        className={`crud-modal-wrapper ${
-          this.state.showCSVForm ? 'show' : 'hide'
-        }`}
-      >
-        <div className="crud-modal-wrapper__background"></div>
-        <div className="crud-modal-wrapper__modal">
-          <FontAwesomeIcon
-            icon={faTimes}
-            color="#fff"
+      <div className="modal-template">
+        <div className="color-dark">
+          {selectedStudent ? 'Update' : 'Add'} Student
+        </div>
+        <label htmlFor="firstName">
+          First Name
+          <input
+            type="text"
+            name="firstName"
+            placeholder="Please enter first name"
+            value={firstNameInput}
+            onChange={(e) => setFirstNameInput(e.target.value)}
+          />
+        </label>
+        <label htmlFor="lastName">
+          Last Name
+          <input
+            type="text"
+            name="lastName"
+            placeholder="Please enter last name"
+            value={lastNameInput}
+            onChange={(e) => setLastNameInput(e.target.value)}
+          />
+        </label>
+        <button
+          className="btn-accent btn-full-width"
+          onClick={() => {
+            if (selectedStudent) {
+              updateStudent();
+            } else {
+              addStudent();
+            }
+          }}
+        >
+          {selectedStudent ? 'Update' : 'Create'} Student
+        </button>
+      </div>
+    );
+  };
+
+  const closeModal = () => {
+    setFirstNameInput('');
+    setLastNameInput('');
+    setSelectedStudent(null);
+    setIsDelete(false);
+    setIsUpload(false);
+    setModalOpen(false);
+  };
+
+  return (
+    <div
+      style={{
+        position: 'relative',
+        zIndex: 1,
+        height: '100%',
+        overflow: 'auto',
+      }}
+    >
+      <div className="teacher-dashboard-header">
+        <h1>Teacher Dashboard</h1>
+        <button className="btn-accent" onClick={logoutSession}>
+          Logout
+        </button>
+      </div>
+      <div className="teacher-dashboard-body">
+        <div className="teacher-dashboard-btns-wrap">
+          <button
+            className="btn-accent btn-small"
+            onClick={() => setModalOpen(true)}
+          >
+            Add Student
+          </button>
+          <button
+            className="btn-accent btn-small"
             onClick={() => {
-              this.setState({ showCSVForm: false });
+              setIsUpload(true);
+              setModalOpen(true);
             }}
-            style={{
-              cursor: 'pointer',
-              position: 'absolute',
-              right: '1rem',
-              top: '1rem',
-              color: '#000',
-            }}
-          />
-          <h3 className="crud-modal-wrapper__title">Add Student in Bulk</h3>
-          <div>
-            <form className="crud-modal-form">
-              <div className="crud-modal-form__field-container">
-                <label htmlFor="inputFile" className="crud-modal-form__label">
-                  Select file
-                </label>
-                <input
-                  name="inputFile"
-                  type="file"
-                  onChange={this.handleSelectFile}
-                  accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
-                />
+          >
+            Upload CSV
+          </button>
+        </div>
+        <div className="class-stats-wrap box-shadow">
+          <h4 className="color-primary">Classroom Stats</h4>
+          {!studentList ? (
+            <LoadingSpinner />
+          ) : (
+            <>
+              <div className="class-stat">
+                <p className="class-stat-title">Total Minutes Played:</p>
+                <p className="class-stat-value">{classStats.totalTime}</p>
               </div>
-              <div
-                className="crud-button crud-button--positive"
-                style={{ display: 'inline-block', marginRight: '0.5rem' }}
-                onClick={() => {
-                  this.setState({ showCSVForm: false });
-                }}
-              >
-                Cancel
+              <div className="class-stat">
+                <p className="class-stat-title">Completed Tutorial:</p>
+                <p className="class-stat-value">
+                  {classStats.completedTutorial}
+                </p>
               </div>
-              <div
-                className="crud-button"
-                style={{ display: 'inline-block', backgroundColor: '#00788A' }}
-                onClick={this.addStudentInBulk}
-              >
-                Upload
+              <div className="class-stat">
+                <p className="class-stat-title">Completed Level 1:</p>
+                <p className="class-stat-value">{classStats.completedLevel1}</p>
               </div>
-            </form>
+              <div className="class-stat">
+                <p className="class-stat-title">Completed Level 2:</p>
+                <p className="class-stat-value">{classStats.completedLevel2}</p>
+              </div>
+              <div className="class-stat">
+                <p className="class-stat-title">Completed Game:</p>
+                <p className="class-stat-value">{classStats.completedGame}</p>
+              </div>
+            </>
+          )}
+        </div>
+        <Table
+          data={studentList}
+          rowDataTransformer={(student, propertyName) => {
+            if (propertyName === 'timeSpent') {
+              return convertMs(student[propertyName], 'minutes');
+            }
+            if (propertyName === 'name') {
+              return `${student.firstName} ${student.lastName}`;
+            }
+            return student[propertyName];
+          }}
+          columns={[
+            {
+              display: 'Name',
+              propertyName: 'name',
+            },
+            {
+              display: 'Username',
+              propertyName: 'userName',
+            },
+            {
+              display: 'Password',
+              propertyName: 'password',
+            },
+            {
+              display: 'Minutes Played',
+              propertyName: 'timeSpent',
+            },
+            {
+              display: 'Levels Achieved',
+              propertyName: 'level',
+            },
+            {
+              display: 'Total Trophies',
+              propertyName: 'totalTrophies',
+            },
+          ]}
+          children={{
+            actions: ({ rowData }) => (
+              <div>
+                <span
+                  className="color-dark action-btn"
+                  role="button"
+                  onClick={() => {
+                    setFirstNameInput(rowData.firstName);
+                    setLastNameInput(rowData.lastName);
+                    setSelectedStudent(rowData);
+                    setIsDelete(false);
+                    setModalOpen(true);
+                  }}
+                >
+                  Update
+                </span>
+                <span
+                  className="color-danger action-btn"
+                  role="button"
+                  onClick={() => {
+                    setIsDelete(true);
+                    setSelectedStudent(rowData);
+                    setModalOpen(true);
+                  }}
+                >
+                  Delete
+                </span>
+              </div>
+            ),
+          }}
+        />
+      </div>
+      {modalOpen && (
+        <div className="teacher-dashboard-modal">
+          <div className="modal-bg" onClick={closeModal}></div>
+          <div className="teacher-dashboard-modal-inner box-shadow">
+            {getModalTemplate()}
           </div>
         </div>
-      </div>
-    );
-  }
+      )}
+      <Snackbar config={snackbarConfig} isVisible={!!snackbarConfig} />
+    </div>
+  );
+};
 
-  renderTable() {
-    const service = {
-      create: (task) => {
-        let newlyAdded = this.addStudent(task);
-        return Promise.resolve(newlyAdded);
-      },
-      update: (data) => {
-        const task = this.state.dataList.find((t) => t._id === data._id);
-        task.firstName = data.firstName;
-        task.lastName = data.lastName;
-        let updated = this.updateStudent(data, task);
-        return Promise.resolve(updated);
-      },
-      delete: (data) => {
-        let deleted = this.deleteStudent(data);
-        return Promise.resolve(deleted);
-      },
-    };
-
-    return (
-      <div style={{ maxHeight: '768px', overflow: 'auto' }}>
-        <div className="teacher-dashboard-header">
-          {/* <div className="header-buttons-container-1">
-            <a
-              href={curriculumGuid}
-              download="curriculum_guide.pdf"
-              style={{ marginLeft: '10px' }}
-              className="btn-primary btn-small"
-            >
-              Curriculum Guide
-            </a>
-            <a
-              href={teacherTutorial}
-              download="teacher_tutorial.pdf"
-              style={{ marginLeft: '10px' }}
-              className="btn-primary btn-small"
-            >
-              Tutorial PDF
-            </a>
-            <a
-              href="https://youtu.be/dsS-Zm20bnE"
-              target="_blank"
-              rel="noreferrer"
-              style={{ marginLeft: '10px' }}
-              className="btn-primary btn-small"
-            >
-              Getting Started Tutorial
-            </a>
-            <a
-              href="https://youtu.be/8uNFa2oQ6hk"
-              target="_blank"
-              rel="noreferrer"
-              style={{ marginLeft: '10px' }}
-              className="btn-primary btn-small"
-            >
-              Home Page Tutorial
-            </a>
-            <a
-              href="https://youtu.be/Aoj5gMzzwCs"
-              target="_blank"
-              rel="noreferrer"
-              style={{ marginLeft: '10px' }}
-              className="btn-primary btn-small"
-            >
-              Budget Page Tutorial
-            </a>
-            <a
-              href="https://youtu.be/6ORfGmXSZxM"
-              target="_blank"
-              rel="noreferrer"
-              style={{ marginLeft: '10px' }}
-              className="btn-primary btn-small"
-            >
-              Team Page Tutorial
-            </a>
-            <a
-              href="https://youtu.be/46pCAu6DXQg"
-              target="_blank"
-              rel="noreferrer"
-              style={{ marginLeft: '10px' }}
-              className="btn-primary btn-small"
-              onClick={this.logoutSession}
-            >
-              Scout Page Tutorial
-            </a>
-            <a
-              href="https://youtu.be/aG5UfofjRhQ"
-              target="_blank"
-              rel="noreferrer"
-              style={{ marginLeft: '10px' }}
-              className="btn-primary btn-small"
-              onClick={this.logoutSession}
-            >
-              Season Page Tutorial
-            </a>
-          </div> */}
-          <div className="header-buttons-container-2">
-            <button
-              className="btn-accent btn-small"
-              onClick={this.logoutSession}
-            >
-              Logout
-            </button>
-            <button
-              style={{ marginLeft: '10px' }}
-              className="btn-accent btn-small"
-              onClick={this.uploadCSVFile}
-            >
-              Upload CSV
-            </button>
-          </div>
-        </div>
-        <CRUDTable caption="List of Students" items={this.state.dataList}>
-          <CreateForm
-            title="Add Student"
-            trigger="Add Student"
-            onSubmit={(task) => service.create(task)}
-            submitText="Create"
-            validate={(values) => {
-              const errors = {};
-              if (!values.firstName) {
-                errors.firstName = 'Please enter first name.';
-              }
-
-              if (!values.lastName) {
-                errors.lastName = 'Please enter last name.';
-              }
-
-              return errors;
-            }}
-          />
-          <Fields>
-            <Field name="name" label="Name" hideInCreateForm hideInUpdateForm />
-            <Field
-              name="firstName"
-              label="First Name"
-              placeholder="Please enter first name"
-              hideFromTable
-            />
-            <Field
-              name="lastName"
-              label="Last Name"
-              placeholder="Please enter last name"
-              hideFromTable
-            />
-            <Field
-              name="userName"
-              label="User Name"
-              hideInCreateForm
-              hideInUpdateForm
-            />
-            <Field
-              name="password"
-              label="Password"
-              sortable={false}
-              hideInCreateForm
-              hideInUpdateForm
-            />
-          </Fields>
-          <UpdateForm
-            title="Update Student"
-            trigger="Update"
-            onSubmit={(task) => service.update(task)}
-            submitText="Update"
-            validate={(values) => {
-              const errors = {};
-              if (!values.firstName) {
-                errors.firstName = 'Please enter first name.';
-              }
-              if (!values.lastName) {
-                errors.lastName = 'Please enter last name.';
-              }
-              return errors;
-            }}
-          />
-
-          <DeleteForm
-            title="Delete Student"
-            message="Are you sure you want to delete this student?"
-            trigger="Delete"
-            onSubmit={(task) => service.delete(task)}
-            submitText="Delete"
-          />
-        </CRUDTable>
-        {this.state.dataList.length === 0 ? (
-          <div style={{ textAlign: 'center', margin: '20px' }}>
-            {' '}
-            No data found{' '}
-          </div>
-        ) : (
-          ''
-        )}
-      </div>
-    );
-  }
-
-  render() {
-    return (
-      <div className="teacher-dash-div">
-        {this.renderStudentBulkAdd()}
-
-        {this.renderTable()}
-      </div>
-    );
-  }
-}
-
-const stateToProps = (state) => ({ teacher: state.teacherState.teacher });
-const dispatchToProps = { setLoginState };
-export default connect(stateToProps, dispatchToProps)(TeacherDashboard);
+export default TeacherDashboard;

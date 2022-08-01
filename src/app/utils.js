@@ -127,10 +127,13 @@ export const formatNumber = (num) => {
   var scale = Math.pow(10, tier * 3);
 
   // scale the number
-  var scaled = num / scale;
-
+  var scaled = (num / scale).toFixed(1);
+  const scaledSplit = scaled.split('.');
+  if (+scaledSplit[1] === 0) {
+    scaled = scaledSplit[0];
+  }
   // format number and add suffix
-  return (isInt(scaled) ? scaled : scaled.toFixed(1)) + suffix;
+  return scaled + suffix;
 };
 
 export const toTitleCase = (str) => {
