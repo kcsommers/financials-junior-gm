@@ -54,3 +54,36 @@ div.table-pagination-wrap {
   align-items: center;
   margin-bottom: 1rem;
 }
+
+div.table-expandable-content {
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+input.current-page-input:focus {
+  border-color: #f3901d;
+}
+
+div.current-page-wrap > span {
+  display: inline-block;
+  cursor: pointer;
+}
+
+div.current-page-wrap > span:first-child {
+  margin-right: 0.75rem;
+}
+
+div.current-page-wrap > span:last-child {
+  margin-left: 0.75rem;
+}
+
+input.current-page-input {
+  background: none;
+  margin: 0 0.5rem;
+  outline: none;
+  border: 1px solid #00788a;
+  border-radius: 3px;
+  width: 50px;
+  text-align: center;
+  padding: 0.25rem 0;
+}

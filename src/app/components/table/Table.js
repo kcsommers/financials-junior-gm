@@ -3,7 +3,7 @@ import {
   faChevronRight,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useEffect, useState } from 'react';
+import React, { cloneElement, createRef, useEffect, useState } from 'react';
 import { LoadingSpinner } from '../LoadingSpinner';
 import './Table.css';
 
@@ -13,10 +13,25 @@ export const Table = ({
   children,
   emptyMessage,
   rowsPerPage = 50,
+  rowExpanded,
 }) => {
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
   const [displayedRows, setDisplayedRows] = useState();
+  const [expandedRows, setExpandedRows] = useState({});
+  const [expandableContentRefs, setExpandableContentRefs] = useState({});
+
+  useEffect(() => {
+    if (!displayedRows || !displayedRows.length) {
+      setExpandableContentRefs({});
+      return;
+    }
+    const refs = {};
+    displayedRows.forEach((row, i) => {
+      refs[i] = createRef();
+    });
+    setExpandableContentRefs(refs);
+  }, [displayedRows]);
 
   useEffect(() => {
     if (!data || !data.length) {
@@ -39,14 +54,29 @@ export const Table = ({
   }, [data]);
 
   useEffect(() => {
+    setExpandedRows({});
+  }, [data, currentPage]);
+
+  useEffect(() => {
     if (!data || !data.length) {
       setDisplayedRows([]);
     }
     const start = rowsPerPage * currentPage - rowsPerPage;
     const end = rowsPerPage * currentPage;
-    const displayedRows = data.slice(start, end);
+    const displayedRows = data?.slice(start, end);
     setDisplayedRows(displayedRows);
   }, [totalPages, currentPage]);
+
+  const toggleRow = (rowIndex) => {
+    const shouldExpand = !expandedRows[rowIndex];
+    if (shouldExpand) {
+      rowExpanded && rowExpanded(displayedRows[rowIndex]);
+    }
+    setExpandedRows((prevExpandedRows) => ({
+      ...prevExpandedRows,
+      [rowIndex]: shouldExpand,
+    }));
+  };
 
   const getRowsRange = () => {
     if (!currentPage) {
@@ -127,7 +157,10 @@ export const Table = ({
         </div>
       </div>
       <div className="table-wrap box-shadow">
-        <div className="table-header-row table-row">
+        <div
+          className="table-header-row table-row"
+          style={!!children && { paddingLeft: '0px' }}
+        >
           {children && <span className="table-arrow-wrap"></span>}
           {columns.map((column) => (
             <div key={column.display} style={column.styles}>
@@ -135,23 +168,23 @@ export const Table = ({
             </div>
           ))}
         </div>
-        {(displayedRows || []).map((item, i) => (
+        {(displayedRows || []).map((row, i) => (
           <div
             className="table-row-wrap"
-            key={`${item.name}_${i}`}
-            // onClick={toggleTeacher.bind(this, i, t)}
+            key={`${row.name}_${i}`}
+            onClick={() => toggleRow(i)}
           >
-            <div className="table-row">
+            <div
+              className="table-row"
+              style={!!children && { paddingLeft: '0px' }}
+            >
               {children && (
                 <span className="table-arrow-wrap">
                   <span
                     className="table-arrow"
-                    // style={{
-                    //   transform:
-                    //     detailsStates[i] && detailsStates[i].isExpanded
-                    //       ? 'rotate(90deg)'
-                    //       : 'none',
-                    // }}
+                    style={{
+                      transform: expandedRows[i] ? 'rotate(90deg)' : 'none',
+                    }}
                   >
                     <FontAwesomeIcon icon={faChevronRight} color="#f3901d" />
                   </span>
@@ -159,9 +192,21 @@ export const Table = ({
               )}
               {columns.map((column) => (
                 <div key={column.display}>
-                  {item[column.propertyName] || '--'}
+                  {row[column.propertyName] || '--'}
                 </div>
               ))}
+            </div>
+            <div
+              className="table-expandable-content"
+              style={{
+                height: expandedRows[i]
+                  ? expandableContentRefs[i].current.offsetHeight + 'px'
+                  : '0px',
+              }}
+            >
+              {cloneElement(children({ rowData: row, rowIndex: i }), {
+                ref: expandableContentRefs[i],
+              })}
             </div>
           </div>
         ))}
