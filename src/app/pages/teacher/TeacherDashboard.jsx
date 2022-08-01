@@ -9,6 +9,7 @@ import { Snackbar } from '../../components/snackbar/Snackbar';
 import { convertMs } from '../../utils/convert-ms';
 import { getClassStats } from '../../utils/get-class-stats';
 import { LoadingSpinner } from '@components';
+import { Table } from '../../components/table/Table';
 
 const TeacherDashboard = () => {
   const dispatch = useDispatch();
@@ -65,7 +66,7 @@ const TeacherDashboard = () => {
           });
           return total;
         }, 0);
-        student.totalTrophiesEarned = totalTrophies;
+        student.totalTrophies = totalTrophies;
       });
       setStudentList(students);
     } catch (error) {
@@ -304,6 +305,35 @@ const TeacherDashboard = () => {
             </>
           )}
         </div>
+        <Table
+          data={studentList}
+          columns={[
+            {
+              display: 'Name',
+              propertyName: 'firstName',
+            },
+            {
+              display: 'Username',
+              propertyName: 'userName',
+            },
+            {
+              display: 'Password',
+              propertyName: 'password',
+            },
+            {
+              display: 'Minutes Played',
+              propertyName: 'timeSpent',
+            },
+            {
+              display: 'Levels Achieved',
+              propertyName: 'level',
+            },
+            {
+              display: 'Total Trophies',
+              propertyName: 'totalTrophies',
+            },
+          ]}
+        />
         <div className="student-table-wrap">
           <div className="student-table box-shadow">
             {!studentList || !studentList.length ? (
@@ -337,7 +367,7 @@ const TeacherDashboard = () => {
                     <div>{student.password}</div>
                     <div>{convertMs(student.timeSpent, 'minutes')}</div>
                     <div>{student.level}</div>
-                    <div>{student.totalTrophiesEarned}</div>
+                    <div>{student.totalTrophies}</div>
                     <div className="actions-column">
                       <span
                         className="color-dark"

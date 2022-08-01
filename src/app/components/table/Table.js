@@ -159,11 +159,11 @@ export const Table = ({
       <div className="table-wrap box-shadow">
         <div
           className="table-header-row table-row"
-          style={!!children && { paddingLeft: '0px' }}
+          style={!!children ? { paddingLeft: '0px' } : {}}
         >
           {children && <span className="table-arrow-wrap"></span>}
           {columns.map((column) => (
-            <div key={column.display} style={column.styles}>
+            <div key={column.display} style={column.styles || {}}>
               {column.display}
             </div>
           ))}
@@ -176,7 +176,7 @@ export const Table = ({
           >
             <div
               className="table-row"
-              style={!!children && { paddingLeft: '0px' }}
+              style={!!children ? { paddingLeft: '0px' } : {}}
             >
               {children && (
                 <span className="table-arrow-wrap">
@@ -196,18 +196,20 @@ export const Table = ({
                 </div>
               ))}
             </div>
-            <div
-              className="table-expandable-content"
-              style={{
-                height: expandedRows[i]
-                  ? expandableContentRefs[i].current.offsetHeight + 'px'
-                  : '0px',
-              }}
-            >
-              {cloneElement(children({ rowData: row, rowIndex: i }), {
-                ref: expandableContentRefs[i],
-              })}
-            </div>
+            {!!children && (
+              <div
+                className="table-expandable-content"
+                style={{
+                  height: expandedRows[i]
+                    ? expandableContentRefs[i].current.offsetHeight + 'px'
+                    : '0px',
+                }}
+              >
+                {cloneElement(children({ rowData: row, rowIndex: i }), {
+                  ref: expandableContentRefs[i],
+                })}
+              </div>
+            )}
           </div>
         ))}
       </div>
