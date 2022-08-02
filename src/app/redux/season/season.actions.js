@@ -12,6 +12,8 @@ export const SET_SEASON_ACTIVE = 'SET_SEASON_ACTIVE';
 
 export const REMOVE_SCENARIO = 'REMOVE_SCENARIO';
 
+export const VIDEOS_LOADED = 'VIDEOS_LOADED';
+
 export const setSeasonComplete = (student) => ({
   type: SET_SEASON_COMPLETE,
   payload: student,
@@ -44,4 +46,9 @@ export const initializeSeason = (student) => ({
 export const setInTransition = (inTransition) => ({
   type: SET_IN_TRANSITION,
   payload: inTransition,
+});
+
+export const videosLoaded = (level) => ({
+  type: VIDEOS_LOADED,
+  payload: level,
 });

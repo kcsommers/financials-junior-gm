@@ -14,6 +14,7 @@ import {
   SET_IN_TRANSITION,
   SET_SEASON_ACTIVE,
   REMOVE_SCENARIO,
+  VIDEOS_LOADED,
 } from './season.actions';
 
 const allOpponents = getAllOpponents(1);
@@ -29,6 +30,11 @@ const initialState = {
   inTransition: false,
   inSession: false,
   seasonActive: false,
+  loadedVideos: {
+    1: false,
+    2: false,
+    3: false
+  }
 };
 
 const seasonReducer = (state = initialState, action) => {
@@ -187,6 +193,15 @@ const seasonReducer = (state = initialState, action) => {
       clonedState.inSession = true;
       clonedState.seasonActive = false;
 
+      return clonedState;
+    }
+    case VIDEOS_LOADED: {
+      const clonedState = cloneDeep(state);
+      const level = action.payload;
+      clonedState.loadedVideos = {
+        ...clonedState.loadedVideos,
+        [level]: true
+      }
       return clonedState;
     }
     default:
