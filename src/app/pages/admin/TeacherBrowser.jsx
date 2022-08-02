@@ -6,6 +6,7 @@ import * as moment from 'moment';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { ConfirmOverlay } from '../../components/overlays/ConfirmOverlay';
 import { Table } from '../../components/table/Table';
+import { convertMs } from '../../utils/convert-ms';
 import {
   deleteStudentsByTeacher,
   deleteTeacherById,
@@ -74,6 +75,9 @@ export const TeacherBrowser = ({ allTeachers, onRowAction }) => {
   const prevSchoolDistrictSearchRef = useRef(schoolDistrictSearch);
 
   const [filteredTeachers, setFilteredTeachers] = useState(allTeachers);
+
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedTeacher, setSelectedTeacher] = useState(null);
 
   const downloadCsv = () => {
     let csvStr =
@@ -146,6 +150,7 @@ export const TeacherBrowser = ({ allTeachers, onRowAction }) => {
           completedLevel1,
           completedLevel2,
           wonGame,
+          studentList: res[1]?.data || [],
         };
 
         setStudentStatsMap(clonedStatsMap);
@@ -273,6 +278,11 @@ export const TeacherBrowser = ({ allTeachers, onRowAction }) => {
     if (onRowAction) {
       onRowAction();
     }
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+    setSelectedTeacher(null);
   };
 
   return !isLoading ? (
@@ -438,7 +448,18 @@ export const TeacherBrowser = ({ allTeachers, onRowAction }) => {
                     <LoadingSpinner size="small" />
                   )}
                 </div>
-                <div style={{ position: 'relative', top: '-1rem' }}>
+                <div style={{ margin: '0.5rem 0' }}>
+                  <button
+                    className="btn-small btn-primary btn-full-width"
+                    onClick={() => {
+                      setModalOpen(true);
+                      setSelectedTeacher(rowData);
+                    }}
+                  >
+                    Individual Stats
+                  </button>
+                </div>
+                <div>
                   <button
                     className={`btn-danger btn-small`}
                     style={{ marginRight: '0.5rem' }}
@@ -474,6 +495,58 @@ export const TeacherBrowser = ({ allTeachers, onRowAction }) => {
           ),
         }}
       />
+      {modalOpen && (
+        <div className="teacher-dashboard-modal">
+          <div className="modal-bg" onClick={closeModal}></div>
+          <div className="teacher-dashboard-modal-inner box-shadow">
+            <div className="color-dark modal-title">Student Stats</div>
+            <Table
+              data={studentStatsMap[selectedTeacher?.name]?.studentList}
+              emptyMessage={'No Students to Display'}
+              rowsPerPage={10}
+              rowDataTransformer={(student, propertyName) => {
+                if (propertyName === 'timeSpent') {
+                  return convertMs(student[propertyName], 'minutes');
+                }
+                if (propertyName === 'name') {
+                  return `${student.firstName} ${student.lastName}`;
+                }
+                if (propertyName === 'totalTrophies') {
+                  let total = 0;
+                  (student.awards || []).forEach((level) => {
+                    const trophyNames = Object.keys(level);
+                    trophyNames.forEach((name) => {
+                      if (level[name]) {
+                        total += 1;
+                      }
+                    });
+                  });
+                  return String(total);
+                }
+                return student[propertyName];
+              }}
+              columns={[
+                {
+                  display: 'Username',
+                  propertyName: 'name',
+                },
+                {
+                  display: 'Minutes Played',
+                  propertyName: 'timeSpent',
+                },
+                {
+                  display: 'Levels Acheived',
+                  propertyName: 'level',
+                },
+                {
+                  display: 'Total Trophies',
+                  propertyName: 'totalTrophies',
+                },
+              ]}
+            />
+          </div>
+        </div>
+      )}
     </div>
   ) : (
     <div className="admin-loading-wrap">
