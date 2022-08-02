@@ -15,6 +15,10 @@ div.teacher-dashboard-header > h1 {
 
 div.teacher-dashboard-body {
   padding: 3rem;
+  background-color: rgba(238, 238, 238, 0.5);
+  flex: 1;
+  min-height: calc(100% - 125px);
+  overflow-y: auto;
 }
 
 div.class-stats-wrap {

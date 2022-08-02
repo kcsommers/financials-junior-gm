@@ -7,6 +7,7 @@ import * as moment from 'moment';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { ConfirmOverlay } from '../../components/overlays/ConfirmOverlay';
 import { Table } from '../../components/table/Table';
+import { formatNumber } from '../../utils';
 import { convertMs } from '../../utils/convert-ms';
 import {
   deleteStudentsByTeacher,
@@ -409,7 +410,7 @@ export const TeacherBrowser = ({ allTeachers, onRowAction }) => {
                           Total Time Spent
                         </span>
                         <span className="admin-teacher-detail">
-                          {studentStatsMap[rowData.name].timeSpent} Hours
+                          {formatNumber(studentStatsMap[rowData.name].timeSpent)} Hours
                         </span>
                       </div>
                       <div className="admin-teacher-detail-wrap">

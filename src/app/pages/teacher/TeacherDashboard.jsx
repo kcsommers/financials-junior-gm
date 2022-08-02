@@ -243,14 +243,7 @@ const TeacherDashboard = () => {
   };
 
   return (
-    <div
-      style={{
-        position: 'relative',
-        zIndex: 1,
-        height: '100%',
-        overflow: 'auto',
-      }}
-    >
+    <div className="page-container">
       <div className="teacher-dashboard-header">
         <h1>Teacher Dashboard</h1>
         <button className="btn-accent" onClick={logoutSession}>
