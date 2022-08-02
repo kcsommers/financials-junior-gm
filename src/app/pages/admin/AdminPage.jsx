@@ -136,7 +136,7 @@ export const AdminPage = ({ history }) => {
                 <div className="admin-total-wrap box-shadow">
                   <div className="admin-total-left">
                     {totalTimeSpent ? (
-                      <span>{totalTimeSpent} Hours</span>
+                      <span>{formatNumber(totalTimeSpent)} Hours</span>
                     ) : (
                       <LoadingSpinner size="small" />
                     )}{' '}
