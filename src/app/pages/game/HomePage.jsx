@@ -34,6 +34,8 @@ import {
   startingLineupFull,
 } from '@data/players/players-utils';
 import '@css/pages/HomePage.css';
+import { videosLoaded } from '../../redux/season/season.actions';
+import { loadVideos } from '../../image-loader';
 
 const shouldDisable = (_pageName, _student) => {
   if (+_student.level === 1) {
@@ -76,7 +78,7 @@ export const HomePage = ({ location, history }) => {
 
   const { moneySpent, teamRank } = useSelector((state) => state.players);
 
-  const { inTransition, awards, inSession } = useSelector(
+  const { inTransition, awards, inSession, loadedVideos } = useSelector(
     (state) => state.season
   );
 
@@ -287,6 +289,19 @@ export const HomePage = ({ location, history }) => {
     });
   }
 
+  useEffect(() => {
+    if (!student) {
+      return;
+    }
+    const videosLoadedForLevel = loadedVideos[student.level];
+    if (videosLoadedForLevel) {
+      return;
+    }
+    console.log('loading videos for level ', student.level);
+    loadVideos(student.level);
+    dispatch(videosLoaded(student.level));
+  }, [student?.level])
+
   return (
     <div className="home-page-container">
       <Navigation tutorialActive={tutorialActive} student={student} />
@@ -312,7 +327,6 @@ export const HomePage = ({ location, history }) => {
         <div className="sharkie-btn-container">
           <SharkieButton textPosition="bottom" onCallSharkie={onCallSharkie} />
         </div>
-
         <div className="level-stick-card card">
           <LevelStick
             type="budget"
