@@ -118,6 +118,13 @@ div.teacher-dashboard-modal-inner {
   padding: 3rem;
   position: relative;
   z-index: 2;
+  max-height: 85vh;
+  overflow: auto;
+}
+
+div.teacher-dashboard-modal-inner > div.modal-title {
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
 }
 
 div.modal-template label {

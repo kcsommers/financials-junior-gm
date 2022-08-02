@@ -99,7 +99,6 @@ div.admin-teacher-details-right {
 
 div.admin-teacher-details-right {
   display: flex;
-  justify-content: space-between;
   flex-direction: column;
   padding-left: 1rem;
 }
