@@ -1,6 +1,7 @@
 import { LoadingSpinner } from '@components';
 import { faDownload, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import cancelBtn from '@images/icons/cancel-big.svg';
 import { cloneDeep } from 'lodash';
 import * as moment from 'moment';
 import { useCallback, useEffect, useRef, useState } from 'react';
@@ -12,7 +13,7 @@ import {
   deleteTeacherById,
   getAllTeachers,
   getStudentList,
-  getTimeSpent,
+  getTimeSpent
 } from './../../api-helper';
 import { useDebounce } from './../../hooks/use-debounce';
 
@@ -496,9 +497,16 @@ export const TeacherBrowser = ({ allTeachers, onRowAction }) => {
         }}
       />
       {modalOpen && (
-        <div className="teacher-dashboard-modal">
+        <div className="teacher-browser-modal">
           <div className="modal-bg" onClick={closeModal}></div>
-          <div className="teacher-dashboard-modal-inner box-shadow">
+          <div className="teacher-browser-modal-inner box-shadow">
+            <img
+              style={{ zIndex: 1000 }}
+              className="close-btn"
+              src={cancelBtn}
+              alt="Close"
+              onClick={closeModal}
+            />
             <div className="color-dark modal-title">Student Stats</div>
             <Table
               data={studentStatsMap[selectedTeacher?.name]?.studentList}

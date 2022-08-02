@@ -122,6 +122,16 @@ div.teacher-dashboard-modal-inner {
   overflow: auto;
 }
 
+.close-btn {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  display: inline-block;
+}
+
 div.teacher-dashboard-modal-inner > div.modal-title {
   margin-bottom: 1rem;
   font-size: 1.5rem;

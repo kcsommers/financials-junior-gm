@@ -297,7 +297,6 @@ export const HomePage = ({ location, history }) => {
     if (videosLoadedForLevel) {
       return;
     }
-    console.log('loading videos for level ', student.level);
     loadVideos(student.level);
     dispatch(videosLoaded(student.level));
   }, [student?.level])
