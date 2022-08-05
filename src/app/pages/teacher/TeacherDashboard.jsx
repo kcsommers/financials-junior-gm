@@ -1,15 +1,16 @@
+import { LoadingSpinner } from '@components';
 import '@css/pages/TeacherDashboard.css';
 import { clearSessionStorage, TEACHER_ID_STORAGE_KEY } from '@data/auth/auth';
+import cancelBtn from '@images/icons/cancel-big.svg';
 import { setLoginState } from '@redux/actions';
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import * as api from '../../api-helper';
 import { Snackbar } from '../../components/snackbar/Snackbar';
+import { Table } from '../../components/table/Table';
 import { convertMs } from '../../utils/convert-ms';
 import { getClassStats } from '../../utils/get-class-stats';
-import { LoadingSpinner } from '@components';
-import { Table } from '../../components/table/Table';
 
 const TeacherDashboard = () => {
   const dispatch = useDispatch();
@@ -242,14 +243,7 @@ const TeacherDashboard = () => {
   };
 
   return (
-    <div
-      style={{
-        position: 'relative',
-        zIndex: 1,
-        height: '100%',
-        overflow: 'auto',
-      }}
-    >
+    <div className="page-container">
       <div className="teacher-dashboard-header">
         <h1>Teacher Dashboard</h1>
         <button className="btn-accent" onClick={logoutSession}>
@@ -378,6 +372,13 @@ const TeacherDashboard = () => {
         <div className="teacher-dashboard-modal">
           <div className="modal-bg" onClick={closeModal}></div>
           <div className="teacher-dashboard-modal-inner box-shadow">
+            <img
+              style={{ zIndex: 1000 }}
+              className="close-btn"
+              src={cancelBtn}
+              alt="Close"
+              onClick={closeModal}
+            />
             {getModalTemplate()}
           </div>
         </div>

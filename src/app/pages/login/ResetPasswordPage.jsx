@@ -154,7 +154,7 @@ export const ResetPasswordPage = ({ history, match }) => {
 
   return (
     <div className="forgot-password-page-container">
-      <div>
+      <div style={{ margin: '-2rem 0 -3rem 0' }}>
         <img src={financialsLogo} alt="Financials Junior GM Program logo" />
       </div>
       {!resetSuccessMsg && !resetErrorMsg && formTemplate}

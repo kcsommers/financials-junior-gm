@@ -439,171 +439,171 @@ export const levelThreeOpponents = [
       },
     },
   },
-  // {
-  //   teamRank: 490,
-  //   logo: coyotesLogo,
-  //   name: 'Arizona Coyotes',
-  //   stats: { wins: 0, losses: 0, points: 0 },
-  //   standings: '6th',
-  //   color: '#900028',
-  //   videos: {
-  //     gameOn: `${BASE_URL}1dd2pjPatwHz4mIwFetxeF56rKZ02Axt_`,
-  //     gameOver: {
-  //       win: `${BASE_URL}1frVTBwuhDPEpRKd9gK2WF0xFMAWEdlDS`,
-  //       loss: `${BASE_URL}1nv6s08mnibCkMOGHQyG-zxZT-R5vFc_E`,
-  //     },
-  //   },
-  // },
-  // {
-  //   teamRank: 455,
-  //   logo: flamesLogo,
-  //   name: 'Calgary Flames',
-  //   stats: { wins: 0, losses: 0, points: 0 },
-  //   standings: '6th',
-  //   color: '#DD0024',
-  //   videos: {
-  //     gameOn: `${BASE_URL}1G_Ioyiet_9cbi5Rpds4hnNkhwyxp7-5y`,
-  //     gameOver: {
-  //       loss: `${BASE_URL}1DdV-IXh_tbDz_JotqQuC7NveLoe2zfnt`,
-  //       win: `${BASE_URL}1iAU9azLhply4wFojyCguhMCdiDrqGw73`,
-  //     },
-  //   },
-  // },
-  // {
-  //   teamRank: 480,
-  //   logo: oilersLogo,
-  //   name: 'Edmonton Oilers',
-  //   stats: { wins: 0, losses: 0, points: 0 },
-  //   standings: '6th',
-  //   color: '#002147',
-  //   videos: {
-  //     gameOn: `${BASE_URL}1wPBJ2lZJo5K6Ywba7FoudL9Ey188BnBL`,
-  //     gameOver: {
-  //       loss: `${BASE_URL}1C40cdlpPEahpTHnJt11AFgjPjKMoyvB4`,
-  //       win: `${BASE_URL}1tbmsIS19EVH9YAUGbF39nJjRcmVl_-Rr`,
-  //     },
-  //   },
-  // },
-  // {
-  //   teamRank: 465,
-  //   logo: kingsLogo,
-  //   name: 'Los Angeles Kings',
-  //   stats: { wins: 0, losses: 0, points: 0 },
-  //   standings: '6th',
-  //   color: '#231F20',
-  //   videos: {
-  //     gameOn: `${BASE_URL}1oPh4X6k_bY5M8rYYFvklzvXwtkQEXmFp`,
-  //     gameOver: {
-  //       loss: `${BASE_URL}154_Yjpz8zr93rJlnfAjuSwXgvAUyM3MX`,
-  //       win: `${BASE_URL}1SaKMEvxj7UTnQSXUMp4uCz9bYYt4LGM-`,
-  //     },
-  //   },
-  // },
-  // {
-  //   teamRank: 475,
-  //   logo: canucksLogo,
-  //   name: 'Vancouver Canucks',
-  //   stats: { wins: 0, losses: 0, points: 0 },
-  //   standings: '6th',
-  //   color: '#002D56',
-  //   videos: {
-  //     gameOn: `${BASE_URL}1dd2pjPatwHz4mIwFetxeF56rKZ02Axt_`,
-  //     gameOver: {
-  //       win: `${BASE_URL}16qHCeq_NyQ2hK94k9JyDL_Py4IyjaWw1`,
-  //       loss: `${BASE_URL}1F2mjDyzKbln95tQaevV1PlnLFEiRFIXf`,
-  //     },
-  //   },
-  // },
-  // {
-  //   teamRank: 465,
-  //   logo: goldenKnightsLogo,
-  //   name: 'Vegas Golden Knights',
-  //   stats: { wins: 0, losses: 0, points: 0 },
-  //   standings: '6th',
-  //   color: '#8D744A',
-  //   videos: {
-  //     gameOn: `${BASE_URL}1G_Ioyiet_9cbi5Rpds4hnNkhwyxp7-5y`,
-  //     gameOver: {
-  //       win: `${BASE_URL}1G8dOcYotW73_akjM16hxhQ0Q-4Gd8opO`,
-  //       loss: `${BASE_URL}1JcZz5ghEu117qPwtpQNax4QBOgNf8OQ0`,
-  //     },
-  //   },
-  // },
-  // {
-  //   teamRank: 470,
-  //   logo: dallasStarsLogo,
-  //   name: 'Dallas Stars',
-  //   stats: { wins: 0, losses: 0, points: 0 },
-  //   standings: '6th',
-  //   color: '#124733',
-  //   videos: {
-  //     gameOn: `${BASE_URL}1wPBJ2lZJo5K6Ywba7FoudL9Ey188BnBL`,
-  //     gameOver: {
-  //       win: `${BASE_URL}1ClF4BaO7oquZc5OFMN1Nxc0Ey--esNID`,
-  //       loss: `${BASE_URL}1hHfMzIaVIgJ6D1j-AVYqcLK0jZ_LqwZK`,
-  //     },
-  //   },
-  // },
-  // {
-  //   teamRank: 455,
-  //   logo: avalancheLogo,
-  //   name: 'Colorado Avalanche',
-  //   stats: { wins: 0, losses: 0, points: 0 },
-  //   standings: '6th',
-  //   color: '#6E263C',
-  //   videos: {
-  //     gameOn: `${BASE_URL}1oPh4X6k_bY5M8rYYFvklzvXwtkQEXmFp`,
-  //     gameOver: {
-  //       loss: `${BASE_URL}1-d1MtoO15oC1kEL71FdnVVpbWD4_tKjV`,
-  //       win: `${BASE_URL}16sLL01blwI6cTJF-HvDrqQB1Tb8Kgayy`,
-  //     },
-  //   },
-  // },
-  // {
-  //   teamRank: 470,
-  //   logo: jetsLogo,
-  //   name: 'Winnipeg Jets',
-  //   stats: { wins: 0, losses: 0, points: 0 },
-  //   standings: '12th',
-  //   color: '#081F3F',
-  //   videos: {
-  //     gameOn: `${BASE_URL}1dd2pjPatwHz4mIwFetxeF56rKZ02Axt_`,
-  //     gameOver: {
-  //       loss: `${BASE_URL}1eSs9a-q_RG0lTwR3RLMLKsub6_NnoOSi`,
-  //       win: `${BASE_URL}1Fqf7zF2gTZrlb00DLZnMnuVuwYOQJicV`,
-  //     },
-  //   },
-  // },
-  // {
-  //   teamRank: 475,
-  //   logo: minnesotaWildLogo,
-  //   name: 'Minnesota Wild',
-  //   stats: { wins: 0, losses: 0, points: 0 },
-  //   standings: '10th',
-  //   color: '#124733',
-  //   videos: {
-  //     gameOn: `${BASE_URL}1G_Ioyiet_9cbi5Rpds4hnNkhwyxp7-5y`,
-  //     gameOver: {
-  //       win: `${BASE_URL}1RX7CmBJb-BL-H-B7BOcpdefAmBSBMIsF`,
-  //       loss: `${BASE_URL}1m2AcFM5tgA94jOKSC4WaMKv0yfd2GVsZ`,
-  //     },
-  //   },
-  // },
-  // {
-  //   teamRank: 470,
-  //   logo: bluesLogo,
-  //   name: 'St. Louis Blues',
-  //   stats: { wins: 0, losses: 0, points: 0 },
-  //   standings: '6th',
-  //   color: '#002F86',
-  //   videos: {
-  //     gameOn: `${BASE_URL}1wPBJ2lZJo5K6Ywba7FoudL9Ey188BnBL`,
-  //     gameOver: {
-  //       win: `${BASE_URL}1b3XZU0gSup21cYiMzaw5SNQuXM_1IJPl`,
-  //       loss: `${BASE_URL}1t1CjEDwZGs4W9_kOcBMHT8fmf9_-7Kbi`,
-  //     },
-  //   },
-  // },
+  {
+    teamRank: 490,
+    logo: coyotesLogo,
+    name: 'Arizona Coyotes',
+    stats: { wins: 0, losses: 0, points: 0 },
+    standings: '6th',
+    color: '#900028',
+    videos: {
+      gameOn: `${BASE_URL}1dd2pjPatwHz4mIwFetxeF56rKZ02Axt_`,
+      gameOver: {
+        win: `${BASE_URL}1frVTBwuhDPEpRKd9gK2WF0xFMAWEdlDS`,
+        loss: `${BASE_URL}1nv6s08mnibCkMOGHQyG-zxZT-R5vFc_E`,
+      },
+    },
+  },
+  {
+    teamRank: 455,
+    logo: flamesLogo,
+    name: 'Calgary Flames',
+    stats: { wins: 0, losses: 0, points: 0 },
+    standings: '6th',
+    color: '#DD0024',
+    videos: {
+      gameOn: `${BASE_URL}1G_Ioyiet_9cbi5Rpds4hnNkhwyxp7-5y`,
+      gameOver: {
+        loss: `${BASE_URL}1DdV-IXh_tbDz_JotqQuC7NveLoe2zfnt`,
+        win: `${BASE_URL}1iAU9azLhply4wFojyCguhMCdiDrqGw73`,
+      },
+    },
+  },
+  {
+    teamRank: 480,
+    logo: oilersLogo,
+    name: 'Edmonton Oilers',
+    stats: { wins: 0, losses: 0, points: 0 },
+    standings: '6th',
+    color: '#002147',
+    videos: {
+      gameOn: `${BASE_URL}1wPBJ2lZJo5K6Ywba7FoudL9Ey188BnBL`,
+      gameOver: {
+        loss: `${BASE_URL}1C40cdlpPEahpTHnJt11AFgjPjKMoyvB4`,
+        win: `${BASE_URL}1tbmsIS19EVH9YAUGbF39nJjRcmVl_-Rr`,
+      },
+    },
+  },
+  {
+    teamRank: 465,
+    logo: kingsLogo,
+    name: 'Los Angeles Kings',
+    stats: { wins: 0, losses: 0, points: 0 },
+    standings: '6th',
+    color: '#231F20',
+    videos: {
+      gameOn: `${BASE_URL}1oPh4X6k_bY5M8rYYFvklzvXwtkQEXmFp`,
+      gameOver: {
+        loss: `${BASE_URL}154_Yjpz8zr93rJlnfAjuSwXgvAUyM3MX`,
+        win: `${BASE_URL}1SaKMEvxj7UTnQSXUMp4uCz9bYYt4LGM-`,
+      },
+    },
+  },
+  {
+    teamRank: 475,
+    logo: canucksLogo,
+    name: 'Vancouver Canucks',
+    stats: { wins: 0, losses: 0, points: 0 },
+    standings: '6th',
+    color: '#002D56',
+    videos: {
+      gameOn: `${BASE_URL}1dd2pjPatwHz4mIwFetxeF56rKZ02Axt_`,
+      gameOver: {
+        win: `${BASE_URL}16qHCeq_NyQ2hK94k9JyDL_Py4IyjaWw1`,
+        loss: `${BASE_URL}1F2mjDyzKbln95tQaevV1PlnLFEiRFIXf`,
+      },
+    },
+  },
+  {
+    teamRank: 465,
+    logo: goldenKnightsLogo,
+    name: 'Vegas Golden Knights',
+    stats: { wins: 0, losses: 0, points: 0 },
+    standings: '6th',
+    color: '#8D744A',
+    videos: {
+      gameOn: `${BASE_URL}1G_Ioyiet_9cbi5Rpds4hnNkhwyxp7-5y`,
+      gameOver: {
+        win: `${BASE_URL}1G8dOcYotW73_akjM16hxhQ0Q-4Gd8opO`,
+        loss: `${BASE_URL}1JcZz5ghEu117qPwtpQNax4QBOgNf8OQ0`,
+      },
+    },
+  },
+  {
+    teamRank: 470,
+    logo: dallasStarsLogo,
+    name: 'Dallas Stars',
+    stats: { wins: 0, losses: 0, points: 0 },
+    standings: '6th',
+    color: '#124733',
+    videos: {
+      gameOn: `${BASE_URL}1wPBJ2lZJo5K6Ywba7FoudL9Ey188BnBL`,
+      gameOver: {
+        win: `${BASE_URL}1ClF4BaO7oquZc5OFMN1Nxc0Ey--esNID`,
+        loss: `${BASE_URL}1hHfMzIaVIgJ6D1j-AVYqcLK0jZ_LqwZK`,
+      },
+    },
+  },
+  {
+    teamRank: 455,
+    logo: avalancheLogo,
+    name: 'Colorado Avalanche',
+    stats: { wins: 0, losses: 0, points: 0 },
+    standings: '6th',
+    color: '#6E263C',
+    videos: {
+      gameOn: `${BASE_URL}1oPh4X6k_bY5M8rYYFvklzvXwtkQEXmFp`,
+      gameOver: {
+        loss: `${BASE_URL}1-d1MtoO15oC1kEL71FdnVVpbWD4_tKjV`,
+        win: `${BASE_URL}16sLL01blwI6cTJF-HvDrqQB1Tb8Kgayy`,
+      },
+    },
+  },
+  {
+    teamRank: 470,
+    logo: jetsLogo,
+    name: 'Winnipeg Jets',
+    stats: { wins: 0, losses: 0, points: 0 },
+    standings: '12th',
+    color: '#081F3F',
+    videos: {
+      gameOn: `${BASE_URL}1dd2pjPatwHz4mIwFetxeF56rKZ02Axt_`,
+      gameOver: {
+        loss: `${BASE_URL}1eSs9a-q_RG0lTwR3RLMLKsub6_NnoOSi`,
+        win: `${BASE_URL}1Fqf7zF2gTZrlb00DLZnMnuVuwYOQJicV`,
+      },
+    },
+  },
+  {
+    teamRank: 475,
+    logo: minnesotaWildLogo,
+    name: 'Minnesota Wild',
+    stats: { wins: 0, losses: 0, points: 0 },
+    standings: '10th',
+    color: '#124733',
+    videos: {
+      gameOn: `${BASE_URL}1G_Ioyiet_9cbi5Rpds4hnNkhwyxp7-5y`,
+      gameOver: {
+        win: `${BASE_URL}1RX7CmBJb-BL-H-B7BOcpdefAmBSBMIsF`,
+        loss: `${BASE_URL}1m2AcFM5tgA94jOKSC4WaMKv0yfd2GVsZ`,
+      },
+    },
+  },
+  {
+    teamRank: 470,
+    logo: bluesLogo,
+    name: 'St. Louis Blues',
+    stats: { wins: 0, losses: 0, points: 0 },
+    standings: '6th',
+    color: '#002F86',
+    videos: {
+      gameOn: `${BASE_URL}1wPBJ2lZJo5K6Ywba7FoudL9Ey188BnBL`,
+      gameOver: {
+        win: `${BASE_URL}1b3XZU0gSup21cYiMzaw5SNQuXM_1IJPl`,
+        loss: `${BASE_URL}1t1CjEDwZGs4W9_kOcBMHT8fmf9_-7Kbi`,
+      },
+    },
+  },
 ];
 
 export const getTeamVideos = (level) => {

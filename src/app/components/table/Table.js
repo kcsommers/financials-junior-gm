@@ -181,7 +181,7 @@ export const Table = ({
             <div
               className="table-row"
               style={
-                !!children?.expandableContent ? { paddingLeft: '0px' } : {}
+                !!children?.expandableContent ? { paddingLeft: '0px', cursor: 'pointer' } : {}
               }
             >
               {children?.expandableContent && (

@@ -116,5 +116,14 @@ export const loadVideos = (level) => {
   getTeamVideos(level).forEach((_vidLink) => {
     const _videoEl = document.createElement('video');
     _videoEl.setAttribute('src', _vidLink);
+    _videoEl.addEventListener('loadstart', (e) => {
+      console.log('on load start:::: ', e.target);
+    });
+    _videoEl.addEventListener('loadeddata', (e) => {
+      console.log('on loaded data:::: ', e.target);
+    });
+    _videoEl.addEventListener('loadend', (e) => {
+      console.log('on loaded end:::: ', e.target);
+    });
   });
 };
