@@ -5,6 +5,7 @@ import { toggleOverlay } from '@redux/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import { getTopPlayer } from '../../data/players/players-utils';
 import { getDollarString } from '../../utils';
+import { convertMs } from '../../utils/convert-ms';
 
 export const SeasonStatsOverlay = ({
   student,
@@ -57,11 +58,15 @@ export const SeasonStatsOverlay = ({
           </div>
           <div className="stat-wrap color-primary">
             <span>Savings</span>
-            <span>{getDollarString(student.savings) || '$0'}</span>
+            <span>{getDollarString(student.savingsBudget) || '$0'}</span>
           </div>
           <div className="stat-wrap color-primary">
             <span>Top Player</span>
             <span>{getTopPlayer(student.players).playerName}</span>
+          </div>
+          <div className="stat-wrap color-primary">
+            <span>Time Spent</span>
+            <span>{convertMs(student.timeSpent, 'minutes')} Minutes</span>
           </div>
         </div>
         <div
