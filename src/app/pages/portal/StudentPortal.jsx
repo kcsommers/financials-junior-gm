@@ -13,6 +13,8 @@ import { batch, useDispatch, useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { updateStudentTimeSpent } from '../../data/student/student-utils';
 import { getCurrentUser, updateStudentById } from './../../api-helper';
+import { videosLoaded } from '../../redux/season/season.actions';
+import { loadVideos } from '../../image-loader';
 
 export const StudentPortal = ({
   screen,
@@ -22,6 +24,7 @@ export const StudentPortal = ({
   history,
 }) => {
   const dispatch = useDispatch();
+  const { loadedVideos } = useSelector((state) => state.season);
   const { student, startTime } = useSelector((state) => state.studentState);
   const [shouldRedirectToDashboard, setShouldRedirectToDashboard] =
     useState(false);
@@ -67,6 +70,19 @@ export const StudentPortal = ({
     },
     [dispatch]
   );
+
+  // load videos when level changes
+  const levelRef = useRef(student?.level);
+  useEffect(() => {
+    if (student?.level !== levelRef.current) {
+      const videosLoadedForLevel = loadedVideos[student.level];
+      if (!videosLoadedForLevel) {
+        loadVideos(student.level);
+        dispatch(videosLoaded(student.level));
+      }
+      levelRef.current = student?.level;
+    }
+  }, [student]);
 
   useEffect(() => {
     if (!isLoggedIn || userRole !== UserRoles.STUDENT) {
