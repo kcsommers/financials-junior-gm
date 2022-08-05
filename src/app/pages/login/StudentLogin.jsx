@@ -106,7 +106,7 @@ export const StudentLogin = ({ history, isLoggedIn }) => {
 
   return (
     <div className="login-page-container">
-      <div>
+      <div style={{ margin: '-2rem 0 -3rem 0' }}>
         <img src={financialsLogo} alt="Financials Junior GM Program logo" />
       </div>
 

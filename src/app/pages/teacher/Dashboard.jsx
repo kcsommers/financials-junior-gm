@@ -18,7 +18,7 @@ export const Dashboard = () => {
         height: '100%',
       }}
     >
-      <div style={{ width: '100%' }}>
+      <div style={{ margin: '-2rem 0 -3rem 0' }}>
         <img src={financialsLogo} alt="Financials Junior GM Program logo" />
       </div>
 

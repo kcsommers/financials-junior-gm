@@ -1,5 +1,5 @@
 import backBtn from '@images/back-btn.svg';
-import financialsLogo from '@images/financials-logo.png';
+import financialsLogo from '@images/financials-logo.svg';
 import ice from '@images/field.png';
 import bluebearsLogo from '@images/icons/team-logos/bluebearsLg.svg';
 import redrabbitsLogo from '@images/icons/team-logos/redrabbitsLg.svg';
