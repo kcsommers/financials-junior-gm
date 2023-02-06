@@ -8,18 +8,12 @@
     ]
   },
   "scripts": {
-    "clean:core": "yarn workspace @statrookie/core clean",
-    "build:core": "yarn workspace @statrookie/core build",
-    "build:sharks": "yarn build:core && yarn workspace @statrookie/sharks build",
-    "test:core": "yarn workspace @statrookie/app-core test",
-    "test:one": "yarn workspace @statrookie/app-one test",
-    "test": "jest",
-    "coverage": "jest --coverage",
-    "start:sharks": "yarn build:core && lerna run --scope '{@statrookie/core,@statrookie/sharks}' watch --parallel",
-    "format:check": "prettier --check \"./**/*.{ts,tsx,js,json,jsx,css,scss,md}\"",
-    "format:fix": "prettier --write \"./**/*.{ts,tsx,js,json,jsx,css,scss,md}\"",
-    "lint:check": "eslint . --ext .js,.jsx,.ts,.tsx --color",
-    "lint:fix": "eslint . --ext .js,.jsx,.ts,.tsx --color --fix"
+    "build": "npx lerna run build",
+    "build:core": "npx lerna run build --scope @statrookie/core",
+    "build:sharks": "npx lerna run build --scope @statrookie/sharks",
+    "start": "npx lerna run start",
+    "start:core": "npx lerna run start --scope @statrookie/core",
+    "start:sharks": "npx lerna run start --scope @statrookie/sharks"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -37,7 +31,7 @@
     ]
   },
   "devDependencies": {
-    "lerna": "^4.0.0",
+    "lerna": "^6.4.1",
     "typescript": "^4.4.3"
   }
 }

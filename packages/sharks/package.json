@@ -33,7 +33,7 @@
     "typescript": "^4.4.3"
   },
   "scripts": {
-    "watch": "craco start",
+    "start": "craco start",
     "build": "craco build",
     "clean": "rimraf build",
     "test": "craco test"

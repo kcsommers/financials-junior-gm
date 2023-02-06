@@ -8,8 +8,7 @@
   "scripts": {
     "build": "npx rollup -c rollup.config.js",
     "clean": "rimraf dist",
-    "test": "jest",
-    "watch": "npx rollup -c -w"
+    "start": "npx rollup -c -w"
   },
   "author": "",
   "license": "ISC",
