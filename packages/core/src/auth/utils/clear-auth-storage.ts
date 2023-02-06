@@ -1,7 +1,8 @@
-import { StorageKeys } from '../constants';
+import { isClientSide } from '../../utils/is-client-side';
+import { StorageKeys } from './storage-keys.constants';
 
 export const clearAuthStorage = (): void => {
-  if (!navigator.cookieEnabled) {
+  if (!isClientSide() || !navigator.cookieEnabled) {
     return;
   }
   sessionStorage.setItem(StorageKeys.LOGIN_STORAGE_KEY, 'false');

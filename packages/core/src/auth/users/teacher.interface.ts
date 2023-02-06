@@ -1,6 +1,6 @@
-import { IUser } from './user.interface';
+import { User } from './user.interface';
 
-export interface ITeacher extends IUser {
+export interface ITeacher extends User {
   email: string;
   name: string;
   school: string;

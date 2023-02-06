@@ -1,7 +1,7 @@
-import { IUser } from './user.interface';
+import { User } from './user.interface';
 import { IPlayer } from '../../players';
 
-export interface IStudent extends IUser {
+export interface Student extends User {
   firstName: string;
   lastName: string;
   totalBudget: string;
