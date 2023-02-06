@@ -4,7 +4,11 @@ import postcss from 'rollup-plugin-postcss';
 import typescript from 'rollup-plugin-typescript2';
 import pkg from './package.json';
 
-const input = ['./src/index.ts', './src/components/LoadingSpinner/index.ts'];
+const input = [
+  './src/index.ts',
+  './src/components/LoadingSpinner/index.ts',
+  './src/components/Button/index.ts',
+];
 
 const external = [
   ...Object.keys(pkg.dependencies || {}),

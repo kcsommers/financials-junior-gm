@@ -1,0 +1,66 @@
+div.btn {
+  cursor: pointer;
+  display: inline-flex;
+  position: relative;
+  font-size: 2rem;
+  color: #fff;
+  align-items: center;
+  justify-content: center;
+  height: 78px;
+  width: 274px;
+  border-radius: 15px;
+  z-index: 1;
+}
+
+div.btn.btn_small {
+  height: 64px;
+  width: 225px;
+}
+
+div.btn.disabled {
+  opacity: 0.5;
+}
+
+div.btn_inner {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+}
+
+div.btn:before,
+div.btn:after {
+  content: '';
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background: inherit;
+  z-index: -1;
+  bottom: 0;
+  border-radius: 15px;
+}
+
+div.btn:after {
+  transform-origin: left top;
+  transform: skewX(-10deg);
+}
+
+div.btn:before {
+  transform-origin: right top;
+  transform: skewX(10deg);
+}
+
+div.buttons_wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 100%;
+}
+
+img.btn_img {
+  max-width: 50%;
+  max-height: 90%;
+  margin-right: 1rem;
+  display: inline-block;
+}

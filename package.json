@@ -14,7 +14,7 @@
     "start": "npx lerna run start",
     "start:core": "npx lerna run start --scope @statrookie/core",
     "start:sharks": "npx lerna run start --scope @statrookie/sharks",
-    "dev:sharks": "npx lerna run dev --scope @statrookie/sharks"
+    "dev:sharks": "npx concurrently \"yarn run start:core\" \"npx lerna run dev --scope @statrookie/sharks\""
   },
   "eslintConfig": {
     "extends": "react-app"
