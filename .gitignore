@@ -37,3 +37,5 @@ packages/*/coverage
 packages/*/node_modules
 
 packages/*/.eslintcache
+
+.next

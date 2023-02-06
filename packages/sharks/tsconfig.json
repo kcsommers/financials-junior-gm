@@ -2,15 +2,15 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "baseUrl": "src",
-    "isolatedModules": true
+    "isolatedModules": true,
+    "incremental": true,
+    "jsx": "preserve"
   },
-  "include": [
-    "src",
-    "./*.config.js"
-  ],
+  "include": ["src", "./*.config.js"],
   "references": [
     {
       "path": "../core"
     }
-  ]
+  ],
+  "exclude": ["node_modules"]
 }
