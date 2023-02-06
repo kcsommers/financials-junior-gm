@@ -57,6 +57,9 @@
     ]
   },
   "devDependencies": {
-    "@types/react-redux": "^7.1.18"
+    "@types/react-redux": "^7.1.18",
+    "autoprefixer": "^10.4.13",
+    "postcss": "^8.4.21",
+    "tailwind": "^4.0.0"
   }
 }
