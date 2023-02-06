@@ -1,11 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-export interface IStudentState {
+export interface StudentState {
   student: any;
   startTime: any;
 }
 
-const initialState: IStudentState = {
+const initialState: StudentState = {
   student: null,
   startTime: null,
 };

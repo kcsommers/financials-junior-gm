@@ -1,6 +1,6 @@
 import axios from 'axios';
 import Cookie from 'js-cookie';
-import { IGetUserResponse, IStudent, IUser } from '../../auth';
+import { GetUserResponse, Student, User } from '../../auth';
 import { IPlayer } from '../../players';
 
 const https = require('https');
@@ -98,7 +98,7 @@ export namespace ApiHelper {
   };
 
   // Admin Login
-  export const adminLogin = (_baseUrl: string, body): Promise<any> => {
+  export const adminLogin = async (_baseUrl: string, body): Promise<any> => {
     return axios.post(`${_baseUrl}/api/v1/auth/admin/login`, body);
   };
 
@@ -161,9 +161,9 @@ export namespace ApiHelper {
   }
 
   // get current student
-  export const getCurrentUser = <T extends IUser = IUser>(
+  export const getCurrentUser = async <T extends User = User>(
     _baseUrl: string
-  ): Promise<IGetUserResponse<T>> => {
+  ): Promise<GetUserResponse<T>> => {
     return axios.get(`${_baseUrl}/api/v1/auth/user`);
   };
 
@@ -184,7 +184,7 @@ export namespace ApiHelper {
   // set initial team
   export const setInitialTeam = (
     _baseUrl: string,
-    _student: IStudent,
+    _student: Student,
     _players: IPlayer[]
   ) => {
     return updateStudentById(_baseUrl, _student._id, { players: _players });
