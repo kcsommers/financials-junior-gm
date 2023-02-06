@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { UserRoles } from '../../auth/users/user-roles';
@@ -62,19 +63,16 @@ export const LoginForm = ({ onLogin, isLoggingIn, loginError, userRole }) => {
             text="Log In"
           />
         </div>
-        <span
-          onClick={() => router.push('/dashboard')}
-          className={styles.login_back_to_dashboard}
-        >
+        <Link href="/" className={styles.login_back_to_dashboard}>
           Back To Dashboard
-        </span>
+        </Link>
         {userRole === UserRoles.TEACHER && (
-          <div
-            onClick={() => router.push('/forgot-password')}
+          <Link
+            href="/forgot-password"
             className={styles.login_forgot_password}
           >
             Forgot Password
-          </div>
+          </Link>
         )}
       </div>
     </>

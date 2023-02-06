@@ -1,10 +1,11 @@
-import financialsLogo from '@images/financials-logo-big.svg';
 import { Button } from '@statrookie/core/src/components/Button';
-import { useRouter } from 'next/router';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+import FinancialsLogo from '../components/svg/financials-logo-big.svg';
 
-export default () => {
+const DashboardPage = () => {
   const router = useRouter();
+
   return (
     <div
       className="dashboard-container"
@@ -18,21 +19,11 @@ export default () => {
         height: '100%',
       }}
     >
-      <div style={{ width: '100%' }}>
-        {/* <img src={financialsLogo} alt="Financials Junior GM Program logo" /> */}
+      <div className="m-auto inline-block">
+        <FinancialsLogo />
       </div>
 
-      <div
-        className="dash-btn-list"
-        style={{
-          flex: 1,
-          width: '100%',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-      >
+      <div className="dash-btn-list flex-1 w-full flex flex-col items-center justify-center">
         <div>
           <Button
             text="Student"
@@ -73,3 +64,5 @@ export default () => {
     </div>
   );
 };
+
+export default DashboardPage;
