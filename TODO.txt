@@ -1,3 +1,7 @@
 TEMP FIX:
   FunctionComponent type remove PropsWithChildren
   - children prop is no longer implicit in react 18
+
+
+PRE next
+  if next doesnt work out, roll back to this commit in develop-refactor: 4f13877
