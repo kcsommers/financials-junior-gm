@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { isLoggedIn, getUserRole } from '@statrookie/core';
 
-interface ILoginState {
+export interface ILoginState {
   isLoggedIn: boolean;
   userRole: string;
 }

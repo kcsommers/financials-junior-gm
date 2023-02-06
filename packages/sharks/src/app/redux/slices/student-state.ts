@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-interface IStudentState {
+export interface IStudentState {
   student: any;
   startTime: any;
 }

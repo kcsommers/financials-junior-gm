@@ -175,7 +175,7 @@ export const AppRouter = ({ isLoggedIn, userRole }) => {
         />
         <Route exact path="/dashboard" component={Dashboard} />
         <Redirect from="/" to="/home" />
-        <Route component={PageNotFound} />
+        <Route component={PageNotFound as any} />
       </Switch>
       <IceBackground />
     </Router>
@@ -222,7 +222,7 @@ export const AppRouter = ({ isLoggedIn, userRole }) => {
           <Redirect to="/admin/login" />
         )}
         <Redirect from="/" to="/dashboard" />
-        <Route component={PageNotFound} />
+        <Route component={PageNotFound as any} />
       </Switch>
       <IceBackground />
     </Router>

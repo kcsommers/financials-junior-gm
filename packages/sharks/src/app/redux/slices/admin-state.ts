@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-interface IAdminState {
+export interface IAdminState {
   admin: any;
 }
 

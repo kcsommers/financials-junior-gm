@@ -8,7 +8,7 @@ import {
 } from '@data/players/players-utils';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-interface IPlayersState {
+export interface IPlayersState {
   marketPlayers: {
     forward: any[];
     defense: any[];

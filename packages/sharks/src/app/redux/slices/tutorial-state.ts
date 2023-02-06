@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-interface ITutorialState {
+export interface ITutorialState {
   isActive: boolean;
   advanceListener: any;
   home: any;

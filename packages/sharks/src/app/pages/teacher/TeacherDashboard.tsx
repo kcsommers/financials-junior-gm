@@ -423,4 +423,4 @@ class TeacherDashboard extends React.Component {
 
 const stateToProps = (state) => ({ teacher: state.teacherState.teacher });
 const dispatchToProps = { setLoginState };
-export default connect(stateToProps, dispatchToProps)(TeacherDashboard);
+export default connect(stateToProps, dispatchToProps)(TeacherDashboard as any);

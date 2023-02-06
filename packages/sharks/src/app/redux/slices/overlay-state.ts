@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-interface IOverlayState {
+export interface IOverlayState {
   isOpen: boolean;
   template: any;
   sign: any;

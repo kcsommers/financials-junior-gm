@@ -7,7 +7,7 @@ import {
   getStudentTeam,
 } from '@data/season/season-utils';
 
-interface ISeasonState {
+export interface ISeasonState {
   allOpponents: any;
   completedGames: any[];
   currentOpponentIndex: number;

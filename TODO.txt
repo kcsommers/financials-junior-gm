@@ -1,0 +1,3 @@
+TEMP FIX:
+  FunctionComponent type remove PropsWithChildren
+  - children prop is no longer implicit in react 18

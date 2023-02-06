@@ -33,7 +33,7 @@ export const AppRouter2 = () => {
           render={(props) => <StudentLogin {...props} isLoggedIn={false} />}
         />
         <Route exact path="/dashboard" component={Dashboard} />
-        <Route component={PageNotFound} />
+        <Route component={PageNotFound as any} />
       </Switch>
     </AuthProvider>
   );
