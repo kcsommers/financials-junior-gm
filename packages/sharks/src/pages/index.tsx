@@ -25,30 +25,19 @@ const DashboardPage = () => {
 
       <div className="dash-btn-list flex-1 w-full flex flex-col items-center justify-center">
         <div>
-          <Button
-            text="Student"
-            onClick={() => {
-              router.push('/login/student');
-            }}
-          />
+          <Link href="'/login/student'">
+            <Button text="Student" />
+          </Link>
         </div>
         <div style={{ margin: '2rem 0' }}>
-          <Button
-            text="Teachers"
-            background="#002f6c"
-            onClick={() => {
-              router.push('/login/teacher');
-            }}
-          />
+          <Link href="/teacher/login">
+            <Button text="Teachers" background="#002f6c" />
+          </Link>
         </div>
         <div>
-          <Button
-            text="Registration"
-            background="#070707"
-            onClick={() => {
-              router.push('/register/teacher');
-            }}
-          />
+          <Link href="/teacher/registration">
+            <Button text="Registration" background="#070707" />
+          </Link>
         </div>
         <Link
           style={{

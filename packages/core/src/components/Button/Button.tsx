@@ -12,7 +12,7 @@ const getFontSize = (str, btnSize) => {
 
 type ButtonProps = {
   text: string;
-  onClick: (e: React.MouseEvent) => void;
+  onClick?: (e: React.MouseEvent) => void;
   background?: string;
   color?: string;
   isLoading?: boolean;

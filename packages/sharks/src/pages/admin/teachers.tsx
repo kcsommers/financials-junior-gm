@@ -1,9 +1,8 @@
-import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { TeacherBrowser } from '@statrookie/core/src/admin/TeacherBrowser';
 import { useAuth } from '@statrookie/core/src/auth/context/auth-context';
 import { Teacher } from '@statrookie/core/src/auth/users/teacher.interface';
 import { ProtectedRoute } from '@statrookie/core/src/components/ProtectedRoute';
+import ArrowLeft from '@statrookie/core/src/components/svg/arrow-left-solid.svg';
 import { ApiHelper } from '@statrookie/core/src/server/api/api-helper';
 import classnames from 'classnames';
 import Link from 'next/link';
@@ -12,7 +11,7 @@ import { useEffect, useState } from 'react';
 import { environments } from '../../environments';
 import styles from '../styles/admin.module.scss';
 
-export const BASE_URL = environments[process.env.NODE_ENV].API_BASE_URL;
+const BASE_URL = environments[process.env.NODE_ENV].API_BASE_URL;
 
 const TeachersPage = () => {
   const { logUserOut } = useAuth();
@@ -59,7 +58,8 @@ const TeachersPage = () => {
             style={{ color: '#F3901D' }}
             href="/admin"
           >
-            <FontAwesomeIcon icon={faArrowLeft} />
+            {/* @ts-ignore */}
+            <ArrowLeft fill="#F3901D" width={15} />
             <span className="inline-block ml-2">Go Back</span>
           </Link>
           <TeacherBrowser

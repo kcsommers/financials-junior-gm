@@ -1,10 +1,3 @@
-import {
-  faChevronLeft,
-  faChevronRight,
-  faDownload,
-  faTrash,
-} from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { LoadingSpinner } from '@statrookie/core/src/components/LoadingSpinner';
 import { ApiHelper } from '@statrookie/core/src/server/api/api-helper';
 import { useDebounce } from '@statrookie/core/src/utils/hooks/use-debounce';
@@ -15,6 +8,10 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { Teacher } from '../../auth/users/teacher.interface';
 import { ConfirmModal } from '../../components/ConfirmModal';
 import { Modal } from '../../components/Modal';
+import ChevronLeft from '../../components/svg/chevron-left-solid.svg';
+import ChevronRight from '../../components/svg/chevron-right-solid.svg';
+import DownloadIcon from '../../components/svg/download-solid.svg';
+import TrashIcon from '../../components/svg/trash-solid.svg';
 import styles from './TeacherBrowser.module.scss';
 
 const teacherDetails = [
@@ -405,16 +402,12 @@ export const TeacherBrowser = ({
       >
         <h3 className="text-3xl mb-4">Teachers</h3>
         <button
-          className={`btn-accent btn-small${
+          className={`btn-accent flex items-center btn-small${
             !filteredTeachers || !filteredTeachers.length ? ' disabled' : ''
           }`}
           onClick={downloadCsv}
         >
-          <FontAwesomeIcon
-            icon={faDownload}
-            color="#fff"
-            style={{ marginRight: '0.5rem' }}
-          />
+          <DownloadIcon className="fill-white mr-2" width={20} />
           Download CSV
         </button>
       </div>
@@ -457,7 +450,9 @@ export const TeacherBrowser = ({
         ))}
       </div>
       <div className="flex items-center justify-between text-lg mb-4">
-        <div className={styles.current_page_wrap}>
+        <div
+          className={classnames(styles.current_page_wrap, 'flex items-center')}
+        >
           <span
             className={`${
               currentPage <= '1' ? 'disabled' : ''
@@ -467,7 +462,7 @@ export const TeacherBrowser = ({
               setSkipDebounce(true);
             }}
           >
-            <FontAwesomeIcon icon={faChevronLeft} color="#00788a" />
+            <ChevronLeft fill="#00788a" />
           </span>
           Page
           <input
@@ -501,11 +496,7 @@ export const TeacherBrowser = ({
               setSkipDebounce(true);
             }}
           >
-            <FontAwesomeIcon
-              icon={faChevronRight}
-              color="#00788a"
-              style={{ marginLeft: '0.5rem' }}
-            />
+            <ChevronRight className="mr-2" fill="#00788a" />
           </span>
         </div>
         <div className="current-rows-wrap">
@@ -545,7 +536,7 @@ export const TeacherBrowser = ({
                         : 'none',
                   }}
                 >
-                  <FontAwesomeIcon icon={faChevronRight} color="#f3901d" />
+                  <ChevronRight fill="#f3901d" />
                 </span>
               </span>
               <div>{t.name || '--'}</div>
@@ -633,34 +624,29 @@ export const TeacherBrowser = ({
                       <LoadingSpinner size="small" />
                     )}
                   </div>
-                  <div style={{ position: 'relative', top: '-1rem' }}>
+                  <div
+                    className="flex items-center"
+                    style={{ position: 'relative', top: '-1rem' }}
+                  >
                     <button
-                      className={`btn-danger btn-small`}
+                      className="flex items-center btn-danger btn-small"
                       style={{ marginRight: '0.5rem' }}
                       onClick={(e) => {
                         e.stopPropagation();
                         showAlert(e, 'teacher', t);
                       }}
                     >
-                      <FontAwesomeIcon
-                        icon={faTrash}
-                        color="#fff"
-                        style={{ marginRight: '0.5rem' }}
-                      />
+                      <TrashIcon className="fill-white mr-2" />
                       Delete Teacher
                     </button>
                     <button
-                      className={`btn-danger btn-small`}
+                      className="flex items-center btn-danger btn-small"
                       onClick={(e) => {
                         e.stopPropagation();
                         showAlert(e, 'class', t);
                       }}
                     >
-                      <FontAwesomeIcon
-                        icon={faTrash}
-                        color="#fff"
-                        style={{ marginRight: '0.5rem' }}
-                      />
+                      <TrashIcon className="fill-white mr-2" />
                       Delete Class
                     </button>
                   </div>
