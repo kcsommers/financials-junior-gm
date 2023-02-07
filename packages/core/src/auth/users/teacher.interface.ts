@@ -1,6 +1,6 @@
 import { User } from './user.interface';
 
-export interface ITeacher extends User {
+export interface Teacher extends User {
   email: string;
   name: string;
   school: string;
