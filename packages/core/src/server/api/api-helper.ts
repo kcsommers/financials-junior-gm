@@ -1,6 +1,6 @@
 import axios from 'axios';
 import Cookie from 'js-cookie';
-import { GetUserResponse, Student, User } from '../../auth';
+import { GetUserResponse, LoginCredentials, Student } from '../../auth';
 import { IPlayer } from '../../players';
 
 const https = require('https');
@@ -30,37 +30,38 @@ if (!myInterceptor) {
     }
   );
 
-  axios.interceptors.response.use(
-    (response) => {
-      if (response && response.data) {
-        return response.data;
-      }
-      return Promise.reject(response);
-    },
-    (error) => {
-      let response = {
-        data: {
-          message: '',
-        },
-      };
-      if (
-        error.message &&
-        error.message.toLowerCase().indexOf('timeout') > -1
-      ) {
-        response.data.message =
-          'Unable to connect with server. Please try again later.';
-      } else if (
-        error.message &&
-        error.message.toLowerCase().indexOf('network') > -1
-      ) {
-        response.data.message = error.message;
-      }
-      if (response.data.message) {
-        error['response'] = response;
-      }
-      return Promise.reject(error);
-    }
-  );
+  // axios.interceptors.response.use(
+  //   (response) => {
+  //     console.log('interceptor response::::', response);
+  //     if (response && response.data) {
+  //       return response.data.data || response.data;
+  //     }
+  //     return Promise.reject(response);
+  //   },
+  //   (error) => {
+  //     let response = {
+  //       data: {
+  //         message: '',
+  //       },
+  //     };
+  //     if (
+  //       error.message &&
+  //       error.message.toLowerCase().indexOf('timeout') > -1
+  //     ) {
+  //       response.data.message =
+  //         'Unable to connect with server. Please try again later.';
+  //     } else if (
+  //       error.message &&
+  //       error.message.toLowerCase().indexOf('network') > -1
+  //     ) {
+  //       response.data.message = error.message;
+  //     }
+  //     if (response.data.message) {
+  //       error['response'] = response;
+  //     }
+  //     return Promise.reject(error);
+  //   }
+  // );
 }
 
 axios.defaults.withCredentials = true;
@@ -98,8 +99,11 @@ export namespace ApiHelper {
   };
 
   // Admin Login
-  export const adminLogin = async (_baseUrl: string, body): Promise<any> => {
-    return axios.post(`${_baseUrl}/api/v1/auth/admin/login`, body);
+  export const adminLogin = async (
+    baseUrl: string,
+    creds: LoginCredentials
+  ): Promise<any> => {
+    return axios.post(`${baseUrl}/api/v1/auth/admin/login`, creds);
   };
 
   export const getAllTeachers = (_baseUrl: string): Promise<any> => {
@@ -154,16 +158,18 @@ export namespace ApiHelper {
     return axios.delete(`${_baseUrl}/api/v1/admin/teacher/${id}`);
   }
 
-  //Logout
-  export function logout() {
-    Cookie.remove('token'); //
-    return Promise.resolve();
+  // Logout
+  export function logout(baseUrl: string) {
+    console.log('logout::::');
+    Cookie.remove('token');
+    return Promise.resolve(true);
+    return axios.get(`${baseUrl}/api/v1/auth/logout`);
   }
 
   // get current student
-  export const getCurrentUser = async <T extends User = User>(
+  export const getCurrentUser = async (
     _baseUrl: string
-  ): Promise<GetUserResponse<T>> => {
+  ): Promise<GetUserResponse> => {
     return axios.get(`${_baseUrl}/api/v1/auth/user`);
   };
 

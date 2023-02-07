@@ -1,14 +1,15 @@
 import { useAuth } from '@statrookie/core/src/auth/context/auth-context';
 import { UserRoles } from '@statrookie/core/src/auth/users/user-roles';
-import { User } from '@statrookie/core/src/auth/users/user.interface';
+import { logger } from '@statrookie/core/src/auth/utils/logger';
 import { LoginForm } from '@statrookie/core/src/components/LoginForm';
 import { ApiHelper } from '@statrookie/core/src/server/api/api-helper';
-import { isClientSide } from '@statrookie/core/src/utils/is-client-side';
-import { BASE_URL } from 'app/api';
 import Cookie from 'js-cookie'; /// JS-Cookie lib to store cookie on the browser
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import FinancialsLogo from '../../components/svg/financials-logo-big.svg';
+import { environments } from '../../environments';
+
+export const BASE_URL = environments[process.env.NODE_ENV].API_BASE_URL;
 
 const AdminLogin = () => {
   const [isLoggingIn, setIsLoggingIn] = useState(false);
@@ -16,25 +17,14 @@ const AdminLogin = () => {
   const { logUserIn, logUserOut, isLoggedIn } = useAuth();
   const router = useRouter();
 
-  const onLoginSuccess = (admin: User) => {
-    if (isClientSide() && !navigator.cookieEnabled) {
-      return;
-    }
+  const onLoginError = (error: Error) => {
     setIsLoggingIn(false);
-    logUserIn(admin);
-    router.push('/admin');
-  };
+    setLoginError('Unexpected login error. Please try again');
 
-  const onLoginError = (error) => {
-    const msg = 'Unexpected login error. Please try again';
-    setIsLoggingIn(false);
-    setLoginError(msg);
-
-    console.error(msg, error);
+    logger.error(error);
     if (isLoggedIn) {
-      ApiHelper.logout();
+      ApiHelper.logout(BASE_URL);
     }
-
     logUserOut();
   };
 
@@ -47,27 +37,26 @@ const AdminLogin = () => {
           userName,
           password,
         });
-        if (!loginRes || !loginRes.success) {
+        if (!loginRes?.data?.token) {
           throw loginRes;
         }
-
-        Cookie.set('token', loginRes.token); // Setting cookie on the browser
-
-        const getAdminRes = await ApiHelper.getCurrentUser(BASE_URL);
-        const admin = getAdminRes.data;
-        if (!getAdminRes.success || !admin) {
-          throw getAdminRes;
+        Cookie.set('token', loginRes.data.token);
+        const getUserRes = await ApiHelper.getCurrentUser(BASE_URL);
+        if (!getUserRes) {
+          throw new Error('Error getting current user');
         }
 
-        onLoginSuccess(admin);
-      } catch (error) {
+        setIsLoggingIn(false);
+        logUserIn(getUserRes.data);
+        router.push('/admin');
+      } catch (error: any) {
         onLoginError(error);
       }
     };
 
     // if someone is currently logged in, log them out to expire their cookie
     if (isLoggedIn) {
-      ApiHelper.logout().then(doLogin).catch(onLoginError);
+      ApiHelper.logout(BASE_URL).then(doLogin).catch(onLoginError);
     } else {
       doLogin();
     }

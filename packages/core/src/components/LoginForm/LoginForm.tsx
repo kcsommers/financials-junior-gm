@@ -24,7 +24,7 @@ export const LoginForm = ({ onLogin, isLoggingIn, loginError, userRole }) => {
     userRole === UserRoles.TEACHER ? 'Username or Email' : 'Username';
 
   return (
-    <>
+    <form>
       <div className={styles.login_form_container}>
         <div className={styles.login_form_field}>
           <p className={styles.login_form_label}>{userField}</p>
@@ -75,6 +75,6 @@ export const LoginForm = ({ onLogin, isLoggingIn, loginError, userRole }) => {
           </Link>
         )}
       </div>
-    </>
+    </form>
   );
 };
