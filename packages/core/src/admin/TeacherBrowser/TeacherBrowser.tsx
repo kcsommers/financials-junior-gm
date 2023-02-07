@@ -8,11 +8,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { LoadingSpinner } from '@statrookie/core/src/components/LoadingSpinner';
 import { ApiHelper } from '@statrookie/core/src/server/api/api-helper';
 import { useDebounce } from '@statrookie/core/src/utils/hooks/use-debounce';
-import { Teacher } from '../../auth/users/teacher.interface';
+import classnames from 'classnames';
 import { cloneDeep } from 'lodash';
 import * as moment from 'moment';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import classnames from 'classnames';
+import { Teacher } from '../../auth/users/teacher.interface';
+import { ConfirmModal } from '../../components/ConfirmModal';
+import { Modal } from '../../components/Modal';
 import styles from './TeacherBrowser.module.scss';
 
 const teacherDetails = [
@@ -413,26 +415,26 @@ export const TeacherBrowser = ({
 
   return (
     <div className="teacher-browser-wrap">
-      {/* {showConfirm === true && (
-        <ConfirmOverlay
-          isDisabled={false}
-          children={null}
-          message={`Are you sure you want to remove ${
-            selectedDetails.type === 'teacher'
-              ? selectedDetails.name
-              : `${selectedDetails.name}'s Class`
-          } ?`}
-          subMessage={
-            selectedDetails.type === 'teacher'
-              ? 'Removing a teacher will remove the entire class as well.'
-              : ''
-          }
-          confirm={deleteSelectedItem}
-          cancel={() => setShowConfirm(false)}
-          position="absolute"
-          top="10%"
-        />
-      )} */}
+      {showConfirm && (
+        <Modal>
+          <ConfirmModal
+            isDisabled={false}
+            children={null}
+            message={`Are you sure you want to remove ${
+              selectedDetails.type === 'teacher'
+                ? selectedDetails.name
+                : `${selectedDetails.name}'s Class`
+            } ?`}
+            subMessage={
+              selectedDetails.type === 'teacher'
+                ? 'Removing a teacher will remove the entire class as well.'
+                : ''
+            }
+            confirm={deleteSelectedItem}
+            cancel={() => setShowConfirm(false)}
+          />
+        </Modal>
+      )}
       <div
         className={classnames(
           'flex items-center justify-between',
