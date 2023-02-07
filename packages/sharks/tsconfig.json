@@ -13,7 +13,7 @@
     "jsx": "preserve"
   },
   "include": ["src"],
-  "exclude": ["node_modules"],
+  "exclude": ["node_modules", "src/app", "src/index.tsx"],
   "references": [
     {
       "path": "../core"

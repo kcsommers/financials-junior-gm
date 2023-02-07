@@ -23,11 +23,11 @@ const AdminPage = () => {
 
   const [allTeachers, setAllTeachers] = useState<{
     success: boolean;
-    data: Student[];
+    data: Teacher[];
   }>();
   const [allStudents, setAllStudents] = useState<{
     success: boolean;
-    data: Teacher[];
+    data: Student[];
   }>();
   const [totalTimeSpent, setTotalTimeSpent] = useState<string>();
 
@@ -74,25 +74,19 @@ const AdminPage = () => {
           <Link href="/admin">
             <h1>Financials Junior GM Admin</h1>
           </Link>
-          <button className="btn-accent" onClick={doLogout}>
+          <button className="btn-accent text-base" onClick={doLogout}>
             Logout
           </button>
         </div>
         <div className={styles.admin_page_body_container}>
-          <div
-            className="justify-center inline-flex items-center mb-4 cursor-pointer"
-            role="button"
-            style={{
-              fontSize: '0.95rem',
-              color: '#F3901D',
-            }}
-            onClick={() => {
-              router.back();
-            }}
+          <Link
+            className="justify-center inline-flex items-center mb-4 cursor-pointer text-sm"
+            style={{ color: '#F3901D' }}
+            href="/admin/login"
           >
             <FontAwesomeIcon icon={faArrowLeft} />
             <span className="inline-block ml-2">Go Back</span>
-          </div>
+          </Link>
           <div className={styles.admin_totals_wrap}>
             <div className={classnames(styles.admin_total_wrap, 'box-shadow')}>
               <div className={styles.admin_total_left}>
@@ -103,16 +97,9 @@ const AdminPage = () => {
                 )}{' '}
                 Total Teachers
               </div>
-              <div className={styles.admin_total_right}>
-                <button
-                  className="btn-primary"
-                  onClick={() => {
-                    router.push('/admin/teachers');
-                  }}
-                >
-                  View Teachers
-                </button>
-              </div>
+              <Link href="/admin/teachers" className="btn-primary text-base">
+                View Teachers
+              </Link>
             </div>
             <div className={classnames(styles.admin_total_wrap, 'box-shadow')}>
               <div className={styles.admin_total_left}>
