@@ -10,7 +10,7 @@ export const ProtectedRoute = ({ children, apiBaseUrl }) => {
 
   useEffect(() => {
     if (authInitialized && !isLoggedIn) {
-      router.push('/login');
+      router.push('/');
       ApiHelper.logout(apiBaseUrl);
     }
   }, [authInitialized, isLoggedIn]);

@@ -69,12 +69,10 @@ export const TeacherBrowser = ({
 
   const [detailsStates, setDetailsStates] = useState({});
 
-  const [isLoading, setIsLoading] = useState(!allTeachers);
-
   const [studentStatsMap, setStudentStatsMap] = useState({});
 
   const [showConfirm, setShowConfirm] = useState(false);
-  const [selectedDetails, setSelectedDetails] = useState<any>();
+  const [selectedDetails, setSelectedDetails] = useState<any>({});
 
   const [currentPage, setCurrentPage] = useState('1');
   const [skipDebounce, setSkipDebounce] = useState(false);
@@ -367,13 +365,6 @@ export const TeacherBrowser = ({
     setFilteredTeachers(allTeachers || []);
   }, [allTeachers]);
 
-  // loading
-  useEffect(() => {
-    if (allTeachers && isLoading) {
-      setIsLoading(false);
-    }
-  }, [allTeachers, isLoading]);
-
   // details refs effect
   useEffect(() => {
     if (!allTeachers) {
@@ -390,7 +381,6 @@ export const TeacherBrowser = ({
   };
 
   const deleteSelectedItem = async () => {
-    setIsLoading(true);
     selectedDetails.type === 'teacher'
       ? await ApiHelper.deleteTeacherById(apiBaseUrl, selectedDetails._id)
       : await ApiHelper.deleteStudentsByTeacher(
@@ -399,42 +389,14 @@ export const TeacherBrowser = ({
         );
     setShowConfirm(false);
     const teachers = await ApiHelper.getAllTeachers(apiBaseUrl);
-    setDisplayedTeachers(teachers.data);
+    setDisplayedTeachers(teachers.data?.data || []);
     if (onRowAction) {
       onRowAction();
     }
   };
 
-  if (isLoading) {
-    return (
-      <div className="h-full flex items-center justify-center">
-        <LoadingSpinner />
-      </div>
-    );
-  }
-
   return (
     <div className="teacher-browser-wrap">
-      {showConfirm && (
-        <Modal>
-          <ConfirmModal
-            isDisabled={false}
-            children={null}
-            message={`Are you sure you want to remove ${
-              selectedDetails.type === 'teacher'
-                ? selectedDetails.name
-                : `${selectedDetails.name}'s Class`
-            } ?`}
-            subMessage={
-              selectedDetails.type === 'teacher'
-                ? 'Removing a teacher will remove the entire class as well.'
-                : ''
-            }
-            confirm={deleteSelectedItem}
-            cancel={() => setShowConfirm(false)}
-          />
-        </Modal>
-      )}
       <div
         className={classnames(
           'flex items-center justify-between',
@@ -708,6 +670,24 @@ export const TeacherBrowser = ({
           </div>
         ))}
       </div>
+      <Modal isVisible={showConfirm}>
+        <ConfirmModal
+          isDisabled={false}
+          children={null}
+          message={`Are you sure you want to remove ${
+            selectedDetails.type === 'teacher'
+              ? selectedDetails.name
+              : `${selectedDetails.name}'s Class`
+          } ?`}
+          subMessage={
+            selectedDetails.type === 'teacher'
+              ? 'Removing a teacher will remove the entire class as well.'
+              : ''
+          }
+          confirm={deleteSelectedItem}
+          cancel={() => setShowConfirm(false)}
+        />
+      </Modal>
     </div>
   );
 };
