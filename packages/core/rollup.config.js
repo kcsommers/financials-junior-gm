@@ -3,6 +3,7 @@ import autoprefixer from 'autoprefixer';
 import postcss from 'rollup-plugin-postcss';
 import typescript from 'rollup-plugin-typescript2';
 import pkg from './package.json';
+import svgr from '@svgr/rollup';
 
 const input = [
   './src/index.ts',
@@ -17,6 +18,7 @@ const external = [
 ];
 
 const plugins = [
+  svgr(),
   nodeResolve({
     browser: true,
     extensions: ['.ts', '.tsx'],
