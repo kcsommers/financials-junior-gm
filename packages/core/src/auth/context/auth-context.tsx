@@ -1,4 +1,3 @@
-import axios, { AxiosResponse } from 'axios';
 import Cookie from 'js-cookie';
 import { useRouter } from 'next/router';
 import {
@@ -23,13 +22,9 @@ type AuthProviderProps = PropsWithChildren<{
 
 interface AuthContext {
   authorizedUser?: User;
-  loading: boolean;
   authInitialized: boolean;
-  error?: any;
   isLoggedIn: boolean;
   userRole: UserRole;
-  getCurrentUser: () => Promise<User>;
-  logout: () => Promise<void>;
   logUserIn: (user: User) => void;
   logUserOut: () => void;
 }
@@ -40,53 +35,34 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children, baseUrl }) => {
   const [authorizedUser, setAuthorizedUser] = useState<User>();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userRole, setUserRole] = useState<UserRole>();
-  const [error, setError] = useState<any>();
-  const [loading, setLoading] = useState<boolean>(false);
   const [authInitialized, setAuthInitialized] = useState<boolean>(false);
   const router = useRouter();
 
   useEffect(() => {
-    if (error) {
-      setError(null);
-    }
-  }, [router.pathname]);
-
-  useEffect(() => {
     (async () => {
       try {
+        const token = Cookie.get('token');
+        if (!token) {
+          setAuthInitialized(true);
+          return;
+        }
+
         const getUserRes = await ApiHelper.getCurrentUser(baseUrl);
         logger.log('AuthContext.getUserRes:::: ', getUserRes);
+        setAuthInitialized(true);
         logUserIn(getUserRes.data);
       } catch (error) {
+        logger.error(error);
+        setAuthInitialized(true);
         logUserOut();
         router.push('/');
       }
     })();
   }, []);
 
-  const getCurrentUser = async function <T extends User = User>(): Promise<T> {
-    try {
-      const _response: AxiosResponse<User> = await axios.get(
-        `${baseUrl}/api/v1/auth/user`
-      );
-      const _user: T = _response.data as T;
-      return _user;
-    } catch (_error: any) {
-      setError(_error);
-    }
-  };
-
-  const logout = () => {
-    Cookie.remove('token');
-    setAuthorizedUser(null);
-    setError(null);
-    return Promise.resolve();
-  };
-
   const logUserIn = (user: User) => {
     setAuthorizedUser(user);
-    setIsLoggedIn(!!user);
-    setAuthInitialized(true);
+    setIsLoggedIn(true);
     setUserRole(user?.role || null);
     sessionStorage.setItem(StorageKeys.LOGIN_STORAGE_KEY, 'true');
     sessionStorage.setItem(StorageKeys.USER_ROLE_STORAGE_KEY, UserRoles.ADMIN);
@@ -97,26 +73,22 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children, baseUrl }) => {
 
   const logUserOut = () => {
     Cookie.remove('token');
-    setAuthInitialized(true);
     setAuthorizedUser(null);
     setUserRole(null);
+    setIsLoggedIn(false);
     clearAuthStorage();
   };
 
   const memoedValue = useMemo(
     () => ({
       authorizedUser,
-      loading,
-      error,
       authInitialized,
       isLoggedIn,
       userRole,
-      getCurrentUser,
-      logout,
       logUserIn,
       logUserOut,
     }),
-    [authorizedUser, loading, error, authInitialized]
+    [authorizedUser, isLoggedIn, userRole, authInitialized]
   );
 
   return (

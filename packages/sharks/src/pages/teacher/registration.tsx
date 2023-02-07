@@ -58,7 +58,7 @@ const TeacherRegsitrationPage = () => {
       >
         <Link
           className="absolute left-3 justify-center inline-flex items-center"
-          href="/admin"
+          href="/"
         >
           {/** @ts-ignore */}
           <ArrowLeft width={15} />
