@@ -9,6 +9,7 @@
   },
   "scripts": {
     "build": "npx lerna run build",
+    "build-next": "npx lerna run build-next",
     "build:core": "npx lerna run build --scope @statrookie/core",
     "build:sharks": "npx lerna run build --scope @statrookie/sharks",
     "start": "npx lerna run start",

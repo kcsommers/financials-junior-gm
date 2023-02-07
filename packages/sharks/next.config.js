@@ -1,6 +1,9 @@
-module.exports = {
+/**
+ * @type {import('next').NextConfig}
+ */
+const nextConfig = {
   images: {
-    domains: ['res.cloudinary.com', 'square-catalog-sandbox.s3.amazonaws.com'],
+    domains: ['res.cloudinary.com'],
   },
   webpack(config, options) {
     config.module.rules.push({
@@ -16,3 +19,5 @@ module.exports = {
     return config;
   },
 };
+
+module.exports = nextConfig;
