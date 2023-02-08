@@ -1,9 +1,9 @@
 import { useRouter } from 'next/router';
-import { PropsWithChildren, useEffect, useMemo, useState } from 'react';
-import { ApiHelper } from '../../server/api/api-helper';
+import { PropsWithChildren, useEffect, useState } from 'react';
 import { useAuth } from '../../auth/context/auth-context';
+import { UserRole } from '../../auth/users/user-roles';
+import { ApiHelper } from '../../server/api/api-helper';
 import { LoadingSpinner } from '../LoadingSpinner';
-import { UserRole } from 'auth';
 
 type ProtectedRouteProps = PropsWithChildren<{
   apiBaseUrl: string;
