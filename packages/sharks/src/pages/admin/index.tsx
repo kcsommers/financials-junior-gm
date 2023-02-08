@@ -12,10 +12,8 @@ import moment from 'moment';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { environments } from '../../environments';
+import { API_BASE_URL } from '../../constants/api-base-url';
 import styles from '../styles/admin.module.scss';
-
-export const BASE_URL = environments[process.env.NODE_ENV].API_BASE_URL;
 
 const AdminPage = () => {
   const { logUserOut } = useAuth();
@@ -32,7 +30,7 @@ const AdminPage = () => {
   const [totalTimeSpent, setTotalTimeSpent] = useState<string>();
 
   const doLogout = () => {
-    ApiHelper.logout(BASE_URL)
+    ApiHelper.logout(API_BASE_URL)
       .then(() => {
         logUserOut();
         router.push('/');
@@ -41,19 +39,19 @@ const AdminPage = () => {
   };
 
   useEffect(() => {
-    ApiHelper.getAllTeachers(BASE_URL)
+    ApiHelper.getAllTeachers(API_BASE_URL)
       .then((res) => {
         setAllTeachers(res.data);
       })
       .catch((err) => console.error(err));
 
-    ApiHelper.getAllStudents(BASE_URL)
+    ApiHelper.getAllStudents(API_BASE_URL)
       .then((res) => {
         setAllStudents(res.data);
       })
       .catch((err) => console.error(err));
 
-    ApiHelper.getTimeSpent(BASE_URL)
+    ApiHelper.getTimeSpent(API_BASE_URL)
       .then((res) => {
         setTotalTimeSpent(
           moment
@@ -66,7 +64,7 @@ const AdminPage = () => {
   }, []);
 
   return (
-    <ProtectedRoute apiBaseUrl={BASE_URL}>
+    <ProtectedRoute apiBaseUrl={API_BASE_URL}>
       <div
         className={classnames('page-container', styles.admin_page_container)}
       >

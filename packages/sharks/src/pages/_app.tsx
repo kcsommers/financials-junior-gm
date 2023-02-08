@@ -1,14 +1,12 @@
 import '@fortawesome/fontawesome-svg-core/styles.css';
 import { AuthProvider } from '@statrookie/core/src/auth/context/auth-context';
 import { IceBackground } from '@statrookie/core/src/components/IceBackground';
-import { environments } from '../environments';
+import { API_BASE_URL } from '../constants/api-base-url';
 import '../styles/globals.scss';
-
-export const BASE_URL = environments[process.env.NODE_ENV].API_BASE_URL;
 
 export default ({ Component }) => {
   return (
-    <AuthProvider baseUrl={BASE_URL}>
+    <AuthProvider baseUrl={API_BASE_URL}>
       <div
         className="relative overflow-hidden bg-white m-auto"
         style={{

@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { UserRoles } from '../../auth/users/user-roles';
 import { Button } from '../Button';
@@ -9,7 +8,6 @@ export const LoginForm = ({ onLogin, isLoggingIn, loginError, userRole }) => {
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
   const [validationError, setValidationError] = useState('');
-  const router = useRouter();
 
   const validateLogin = () => {
     if (!userName || !password) {
@@ -67,12 +65,14 @@ export const LoginForm = ({ onLogin, isLoggingIn, loginError, userRole }) => {
           Back To Dashboard
         </Link>
         {userRole === UserRoles.TEACHER && (
-          <Link
-            href="/forgot-password"
-            className={styles.login_forgot_password}
-          >
-            Forgot Password
-          </Link>
+          <div>
+            <Link
+              href="/forgot-password"
+              className={styles.login_forgot_password}
+            >
+              Forgot Password
+            </Link>
+          </div>
         )}
       </div>
     </form>

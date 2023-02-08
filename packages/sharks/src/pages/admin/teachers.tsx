@@ -8,10 +8,8 @@ import classnames from 'classnames';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { environments } from '../../environments';
+import { API_BASE_URL } from '../../constants/api-base-url';
 import styles from '../styles/admin.module.scss';
-
-const BASE_URL = environments[process.env.NODE_ENV].API_BASE_URL;
 
 const TeachersPage = () => {
   const { logUserOut } = useAuth();
@@ -23,7 +21,7 @@ const TeachersPage = () => {
   }>();
 
   const doLogout = () => {
-    ApiHelper.logout(BASE_URL)
+    ApiHelper.logout(API_BASE_URL)
       .then(() => {
         logUserOut();
         router.push('/');
@@ -32,7 +30,7 @@ const TeachersPage = () => {
   };
 
   useEffect(() => {
-    ApiHelper.getAllTeachers(BASE_URL)
+    ApiHelper.getAllTeachers(API_BASE_URL)
       .then((res) => {
         setAllTeachers(res.data);
       })
@@ -40,7 +38,7 @@ const TeachersPage = () => {
   }, []);
 
   return (
-    <ProtectedRoute apiBaseUrl={BASE_URL}>
+    <ProtectedRoute apiBaseUrl={API_BASE_URL}>
       <div
         className={classnames('page-container', styles.admin_page_container)}
       >
@@ -64,7 +62,7 @@ const TeachersPage = () => {
           </Link>
           <TeacherBrowser
             allTeachers={allTeachers?.data || []}
-            apiBaseUrl={BASE_URL}
+            apiBaseUrl={API_BASE_URL}
           />
         </div>
       </div>

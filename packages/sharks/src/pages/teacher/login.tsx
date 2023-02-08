@@ -1,5 +1,6 @@
 import { useAuth } from '@statrookie/core/src/auth/context/auth-context';
 import { UserRoles } from '@statrookie/core/src/auth/users/user-roles';
+import { clearAuthStorage } from '@statrookie/core/src/auth/utils/clear-auth-storage';
 import { logger } from '@statrookie/core/src/auth/utils/logger';
 import { LoginForm } from '@statrookie/core/src/components/LoginForm';
 import { ApiHelper } from '@statrookie/core/src/server/api/api-helper';
@@ -9,32 +10,32 @@ import { useState } from 'react';
 import FinancialsLogo from '../../components/svg/financials-logo-big.svg';
 import { API_BASE_URL } from '../../constants/api-base-url';
 
-const AdminLogin = () => {
+const TeacherLogin = () => {
   const [isLoggingIn, setIsLoggingIn] = useState(false);
   const [loginError, setLoginError] = useState('');
-  const { logUserIn, logUserOut, isLoggedIn } = useAuth();
   const router = useRouter();
+  const { isLoggedIn, logUserIn } = useAuth();
 
-  const onLoginError = (error: Error) => {
+  const onLoginError = (error) => {
     setIsLoggingIn(false);
     setLoginError('Unexpected login error. Please try again');
-
+    clearAuthStorage();
     logger.error(error);
     if (isLoggedIn) {
       ApiHelper.logout(API_BASE_URL);
     }
-    logUserOut();
   };
 
-  const onLogin = (userName: string, password: string) => {
+  const onLogin = (email: string, password: string) => {
     setIsLoggingIn(true);
 
     const doLogin = async () => {
       try {
-        const loginRes = await ApiHelper.adminLogin(API_BASE_URL, {
-          userName,
+        const loginRes = await ApiHelper.teacherLogin(API_BASE_URL, {
+          email,
           password,
         });
+
         if (!loginRes?.data?.token) {
           throw loginRes;
         }
@@ -43,10 +44,9 @@ const AdminLogin = () => {
         if (!getUserRes) {
           throw new Error('Error getting current user');
         }
-
         setIsLoggingIn(false);
         logUserIn(getUserRes.data);
-        router.push('/admin');
+        router.push('/teacher');
       } catch (error: any) {
         onLoginError(error);
       }
@@ -65,15 +65,14 @@ const AdminLogin = () => {
       <div className="m-auto inline-block">
         <FinancialsLogo />
       </div>
-
       <LoginForm
         onLogin={onLogin}
         isLoggingIn={isLoggingIn}
         loginError={loginError}
-        userRole={UserRoles.ADMIN}
+        userRole={UserRoles.TEACHER}
       />
     </div>
   );
 };
 
-export default AdminLogin;
+export default TeacherLogin;

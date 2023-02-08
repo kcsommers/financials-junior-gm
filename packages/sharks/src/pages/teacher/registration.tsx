@@ -1,18 +1,16 @@
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { environments } from '../../environments';
-import { ModalBoard } from '@statrookie/core/src/components/ModalBoard';
 import { Button } from '@statrookie/core/src/components/Button';
 import { LoadingSpinner } from '@statrookie/core/src/components/LoadingSpinner';
-import Link from 'next/link';
-import classnames from 'classnames';
-import styles from '../styles/teacher-registration.module.scss';
+import { Modal } from '@statrookie/core/src/components/Modal';
+import { ModalBoard } from '@statrookie/core/src/components/ModalBoard';
 import ArrowLeft from '@statrookie/core/src/components/svg/arrow-left-solid.svg';
 import { ApiHelper } from '@statrookie/core/src/server/api/api-helper';
-import { Modal } from '@statrookie/core/src/components/Modal';
+import classnames from 'classnames';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
-
-const BASE_URL = environments[process.env.NODE_ENV].API_BASE_URL;
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { API_BASE_URL } from '../../constants/api-base-url';
+import styles from '../styles/teacher-registration.module.scss';
 
 const TeacherRegsitrationPage = () => {
   const { register, handleSubmit, errors, watch } = useForm();
@@ -39,7 +37,7 @@ const TeacherRegsitrationPage = () => {
       state: data.state,
     };
 
-    ApiHelper.registerTeacher(BASE_URL, params)
+    ApiHelper.registerTeacher(API_BASE_URL, params)
       .then((res) => {
         e.target.reset();
         setIsRegistering(false);

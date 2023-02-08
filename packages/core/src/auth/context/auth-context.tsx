@@ -69,6 +69,9 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children, baseUrl }) => {
     if (user?.role === 'admin') {
       sessionStorage.setItem(StorageKeys.ADMIN_ID_STORAGE_KEY, user._id);
     }
+    if (user?.role === 'teacher') {
+      sessionStorage.setItem(StorageKeys.TEACHER_ID_STORAGE_KEY, user._id);
+    }
   };
 
   const logUserOut = () => {
