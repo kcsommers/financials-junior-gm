@@ -1,17 +1,22 @@
-import {
-  faChevronLeft,
-  faChevronRight,
-  faDownload,
-  faTrash,
-} from '@fortawesome/free-solid-svg-icons';
+import { LoadingSpinner } from '@components';
+import { faDownload, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ApiHelper, LoadingSpinner } from '@statrookie/core';
-import { BASE_URL } from 'app/api';
+import cancelBtn from '@images/icons/cancel-big.svg';
 import { cloneDeep } from 'lodash';
 import * as moment from 'moment';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { ConfirmOverlay } from '../../components/overlays/ConfirmOverlay';
-import { useDebounce } from '../../hooks/use-debounce';
+import { Table } from '../../components/table/Table';
+import { formatNumber } from '../../utils';
+import { convertMs } from '../../utils/convert-ms';
+import {
+  deleteStudentsByTeacher,
+  deleteTeacherById,
+  getAllTeachers,
+  getStudentList,
+  getTimeSpent,
+} from './../../api-helper';
+import { useDebounce } from './../../hooks/use-debounce';
 
 const teacherDetails = [
   ['userName', 'Username'],
@@ -46,27 +51,14 @@ const searchByOptions = [
   },
 ];
 
-const TEACHERS_PER_PAGE = 50;
-
 export const TeacherBrowser = ({ allTeachers, onRowAction }) => {
-  const detailsRefs = useRef<any[]>([]);
-
+  const detailsRefs = useRef([]);
   const downloadTag = useRef(document.createElement('a'));
-
-  const [detailsStates, setDetailsStates] = useState({});
-
   const [isLoading, setIsLoading] = useState(!allTeachers);
-
   const [studentStatsMap, setStudentStatsMap] = useState({});
 
-  const [initialized, setInitialized] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
   const [selectedDetails, setSelectedDetails] = useState<any>();
-
-  const [currentPage, setCurrentPage] = useState('1');
-  const [skipDebounce, setSkipDebounce] = useState(false);
-  const debouncedCurrentPage = useDebounce(currentPage, 1000);
-  const prevCurrentPageRef = useRef(currentPage);
 
   const [nameSearch, setNameSearch] = useState('');
   const debouncedNameSearch = useDebounce(nameSearch, 1000);
@@ -86,18 +78,8 @@ export const TeacherBrowser = ({ allTeachers, onRowAction }) => {
 
   const [filteredTeachers, setFilteredTeachers] = useState(allTeachers);
 
-  const getDisplayedTeachers = useCallback(
-    (teachers, page?: string) => {
-      const start =
-        TEACHERS_PER_PAGE * (page || debouncedCurrentPage) - TEACHERS_PER_PAGE;
-      const end = TEACHERS_PER_PAGE * (page || debouncedCurrentPage);
-      const displayed = teachers.slice(start, end);
-      return displayed;
-    },
-    [debouncedCurrentPage]
-  );
-
-  const [displayedTeachers, setDisplayedTeachers] = useState([]);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedTeacher, setSelectedTeacher] = useState(null);
 
   const downloadCsv = () => {
     let csvStr =
@@ -122,20 +104,6 @@ export const TeacherBrowser = ({ allTeachers, onRowAction }) => {
     downloadTag.current.download = 'teachers.csv';
     downloadTag.current.click();
   };
-
-  const getTotalPages = useCallback(() => {
-    if (!allTeachers) {
-      return 0;
-    }
-
-    if (allTeachers.length <= TEACHERS_PER_PAGE) {
-      return 1;
-    }
-
-    return Math.ceil(allTeachers.length / TEACHERS_PER_PAGE);
-  }, [allTeachers]);
-
-  const [totalPages, setTotalPages] = useState(0);
 
   const getStudentStats = (teacher) => {
     if (studentStatsMap && studentStatsMap[teacher.name]) {
@@ -187,27 +155,12 @@ export const TeacherBrowser = ({ allTeachers, onRowAction }) => {
           completedLevel1,
           completedLevel2,
           wonGame,
+          studentList: res[1]?.data || [],
         };
 
         setStudentStatsMap(clonedStatsMap);
       })
       .catch((err) => console.error(err));
-  };
-
-  const toggleTeacher = (index, teacher) => {
-    getStudentStats(teacher);
-
-    const detailsRef = detailsRefs.current[index];
-    const detailsState = detailsStates[index];
-    const shouldExpand = !detailsState || !detailsState.isExpanded;
-
-    setDetailsStates({
-      ...detailsStates,
-      [index]: {
-        detailsHeight: shouldExpand ? detailsRef.offsetHeight : 0,
-        isExpanded: shouldExpand,
-      },
-    });
   };
 
   const filterTeachers = useCallback(() => {
@@ -236,31 +189,13 @@ export const TeacherBrowser = ({ allTeachers, onRowAction }) => {
     }
 
     setFilteredTeachers(_filteredTeachers);
-    setDisplayedTeachers(getDisplayedTeachers(_filteredTeachers));
-    setCurrentPage('1');
   }, [
     allTeachers,
     debouncedNameSearch,
     debouncedGradeTaughtSearch,
     debouncedSchoolSearch,
     debouncedSchoolDistrictSearch,
-    getDisplayedTeachers,
   ]);
-
-  const rowsRangeRef = useRef('');
-  const getRowsRange = () => {
-    const page = skipDebounce ? +currentPage : +debouncedCurrentPage;
-    if (!page) {
-      return rowsRangeRef.current;
-    }
-    const start = page * TEACHERS_PER_PAGE - TEACHERS_PER_PAGE + 1;
-    const end =
-      page * TEACHERS_PER_PAGE > allTeachers.length
-        ? allTeachers.length
-        : page * TEACHERS_PER_PAGE;
-    rowsRangeRef.current = `${start} - ${end} of ${allTeachers.length}`;
-    return rowsRangeRef.current;
-  };
 
   // debounced search effects
   // Name
@@ -309,59 +244,12 @@ export const TeacherBrowser = ({ allTeachers, onRowAction }) => {
     filterTeachers();
   }, [allTeachers, debouncedSchoolDistrictSearch, filterTeachers]);
 
-  // Current Page
-  useEffect(() => {
-    if (!allTeachers || prevCurrentPageRef.current === debouncedCurrentPage) {
-      return;
-    }
-
-    if (!debouncedCurrentPage) {
-      return;
-    }
-
-    prevCurrentPageRef.current = debouncedCurrentPage;
-    if (!skipDebounce) {
-      setDisplayedTeachers(getDisplayedTeachers(filteredTeachers));
-    } else {
-      setSkipDebounce(false);
-    }
-  }, [
-    allTeachers,
-    debouncedCurrentPage,
-    getDisplayedTeachers,
-    filteredTeachers,
-    skipDebounce,
-  ]);
-
-  // current page skip debounce
-  useEffect(() => {
-    if (currentPage !== debouncedCurrentPage && skipDebounce) {
-      setDisplayedTeachers(getDisplayedTeachers(filteredTeachers, currentPage));
-    }
-  }, [
-    currentPage,
-    skipDebounce,
-    debouncedCurrentPage,
-    getDisplayedTeachers,
-    filteredTeachers,
-    allTeachers,
-  ]);
-
   // initialization
   useEffect(() => {
-    if (allTeachers && !isLoading && !initialized) {
-      setInitialized(true);
-      setDisplayedTeachers(getDisplayedTeachers(allTeachers));
-      setTotalPages(getTotalPages());
+    if (allTeachers && !isLoading) {
       setFilteredTeachers(allTeachers);
     }
-  }, [
-    allTeachers,
-    isLoading,
-    initialized,
-    getDisplayedTeachers,
-    getTotalPages,
-  ]);
+  }, [allTeachers, isLoading]);
 
   // loading
   useEffect(() => {
@@ -391,11 +279,15 @@ export const TeacherBrowser = ({ allTeachers, onRowAction }) => {
       ? await ApiHelper.deleteTeacherById(BASE_URL, selectedDetails._id)
       : await ApiHelper.deleteStudentsByTeacher(BASE_URL, selectedDetails._id);
     setShowConfirm(false);
-    const teachers = await ApiHelper.getAllTeachers(BASE_URL);
-    setDisplayedTeachers(teachers.data);
+    const teachers = await getAllTeachers();
     if (onRowAction) {
       onRowAction();
     }
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+    setSelectedTeacher(null);
   };
 
   return !isLoading ? (
@@ -469,204 +361,209 @@ export const TeacherBrowser = ({ allTeachers, onRowAction }) => {
         ))}
       </div>
 
-      <div className="teacher-browser-pagination-wrap">
-        <div className="current-page-wrap">
-          <span
-            className={`${currentPage <= '1' ? 'disabled' : ''}`}
-            onClick={() => {
-              setCurrentPage(String(+debouncedCurrentPage - 1));
-              setSkipDebounce(true);
-            }}
-          >
-            <FontAwesomeIcon icon={faChevronLeft} color="#00788a" />
-          </span>
-          Page
-          <input
-            className="current-page-input"
-            type="text"
-            value={currentPage}
-            onChange={(e) => {
-              if (!e.target.value) {
-                setCurrentPage('');
-                return;
-              }
-              if (!isNaN(+e.target.value)) {
-                const page =
-                  +e.target.value > totalPages
-                    ? totalPages
-                    : +e.target.value <= 0
-                    ? 1
-                    : Math.round(+e.target.value);
-
-                setCurrentPage(String(page));
-              }
-            }}
-          />
-          of {totalPages}
-          <span
-            className={`${currentPage >= String(totalPages) ? 'disabled' : ''}`}
-            onClick={() => {
-              setCurrentPage(String(+debouncedCurrentPage + 1));
-              setSkipDebounce(true);
-            }}
-          >
-            <FontAwesomeIcon
-              icon={faChevronRight}
-              color="#00788a"
-              style={{ marginLeft: '0.5rem' }}
-            />
-          </span>
-        </div>
-        <div className="current-rows-wrap">
-          <p>{getRowsRange()}</p>
-        </div>
-      </div>
-
-      <div className="teacher-table-wrap box-shadow">
-        <div className="teacher-table-header-row teacher-table-row">
-          <span className="teacher-table-arrow-wrap"></span>
-          <div>Name</div>
-          <div className="grade-taught-column">Grade Taught</div>
-          <div>No. Of Students</div>
-          <div>School</div>
-          <div>School District</div>
-        </div>
-
-        {displayedTeachers.map((t: any, i) => (
-          <div
-            className="teacher-table-row-wrap"
-            key={`${t.name}_${i}`}
-            onClick={toggleTeacher.bind(this, i, t)}
-          >
-            <div className="teacher-table-row">
-              <span className="teacher-table-arrow-wrap">
-                <span
-                  className="teacher-table-arrow"
-                  style={{
-                    transform:
-                      detailsStates[i] && detailsStates[i].isExpanded
-                        ? 'rotate(90deg)'
-                        : 'none',
-                  }}
-                >
-                  <FontAwesomeIcon icon={faChevronRight} color="#f3901d" />
-                </span>
-              </span>
-              <div>{t.name || '--'}</div>
-              <div className="grade-taught-column">{t.gradeTaught || '--'}</div>
-              <div>{t.studentCount || '--'}</div>
-              <div>{t.school || '--'}</div>
-              <div>{t.schoolDistrict || '--'}</div>
-            </div>
+      <Table
+        data={filteredTeachers}
+        rowExpanded={(teacher) => getStudentStats(teacher)}
+        columns={[
+          {
+            display: 'Name',
+            propertyName: 'name',
+          },
+          {
+            display: 'Grade Taught',
+            propertyName: 'gradeTaught',
+            style: {
+              maxWidth: '150px',
+            },
+          },
+          {
+            display: 'No. Of Students',
+            propertyName: 'studentCount',
+          },
+          {
+            display: 'School',
+            propertyName: 'school',
+          },
+          {
+            display: 'School District',
+            propertyName: 'schoolDistrict',
+          },
+        ]}
+        children={{
+          expandableContent: ({ rowData, rowIndex }) => (
             <div
-              className="admin-teacher-details-wrap"
-              style={{
-                height: detailsStates[i]
-                  ? `${detailsStates[i].detailsHeight}px`
-                  : '0px',
-              }}
+              className="admin-teacher-details-inner"
+              ref={(el) => (detailsRefs.current[rowIndex] = el)}
             >
-              <div
-                className="admin-teacher-details-inner"
-                ref={(el) => (detailsRefs.current[i] = el)}
-              >
-                <div className="admin-teacher-details-left">
-                  {teacherDetails.map((d) => (
-                    <div key={d[0]} className="admin-teacher-detail-wrap">
-                      <span className="admin-teacher-detail-label">{d[1]}</span>
-                      <span className="admin-teacher-detail">
-                        {t[d[0]] || '--'}
-                      </span>
-                    </div>
-                  ))}
+              <div className="admin-teacher-details-left">
+                {teacherDetails.map((d) => (
+                  <div key={d[0]} className="admin-teacher-detail-wrap">
+                    <span className="admin-teacher-detail-label">{d[1]}</span>
+                    <span className="admin-teacher-detail">
+                      {rowData[d[0]] || '--'}
+                    </span>
+                  </div>
+                ))}
+              </div>
+              <div className="admin-teacher-details-right">
+                <div className="student-stats-wrap">
+                  <p style={{ marginBottom: '1rem' }}>Student Stats</p>
+                  {studentStatsMap[rowData.name] ? (
+                    <>
+                      <div className="admin-teacher-detail-wrap">
+                        <span className="admin-teacher-detail-label">
+                          Total Time Spent
+                        </span>
+                        <span className="admin-teacher-detail">
+                          {formatNumber(
+                            studentStatsMap[rowData.name].timeSpent
+                          )}{' '}
+                          Hours
+                        </span>
+                      </div>
+                      <div className="admin-teacher-detail-wrap">
+                        <span className="admin-teacher-detail-label">
+                          Started Tutorial
+                        </span>
+                        <span className="admin-teacher-detail">
+                          {studentStatsMap[rowData.name].startedTutorial}
+                        </span>
+                      </div>
+                      <div className="admin-teacher-detail-wrap">
+                        <span className="admin-teacher-detail-label">
+                          Completed Level 1
+                        </span>
+                        <span className="admin-teacher-detail">
+                          {studentStatsMap[rowData.name].completedLevel1}
+                        </span>
+                      </div>
+                      <div className="admin-teacher-detail-wrap">
+                        <span className="admin-teacher-detail-label">
+                          Completed Level 2
+                        </span>
+                        <span className="admin-teacher-detail">
+                          {studentStatsMap[rowData.name].completedLevel2}
+                        </span>
+                      </div>
+                      <div className="admin-teacher-detail-wrap">
+                        <span className="admin-teacher-detail-label">
+                          Won Game
+                        </span>
+                        <span className="admin-teacher-detail">
+                          {studentStatsMap[rowData.name].wonGame}
+                        </span>
+                      </div>
+                    </>
+                  ) : (
+                    <LoadingSpinner size="small" />
+                  )}
                 </div>
-                <div className="admin-teacher-details-right">
-                  <div className="student-stats-wrap">
-                    <p style={{ marginBottom: '1rem' }}>Student Stats</p>
-                    {studentStatsMap[t.name] ? (
-                      <>
-                        <div className="admin-teacher-detail-wrap">
-                          <span className="admin-teacher-detail-label">
-                            Total Time Spent
-                          </span>
-                          <span className="admin-teacher-detail">
-                            {studentStatsMap[t.name].timeSpent} Hours
-                          </span>
-                        </div>
-                        <div className="admin-teacher-detail-wrap">
-                          <span className="admin-teacher-detail-label">
-                            Started Tutorial
-                          </span>
-                          <span className="admin-teacher-detail">
-                            {studentStatsMap[t.name].startedTutorial}
-                          </span>
-                        </div>
-                        <div className="admin-teacher-detail-wrap">
-                          <span className="admin-teacher-detail-label">
-                            Completed Level 1
-                          </span>
-                          <span className="admin-teacher-detail">
-                            {studentStatsMap[t.name].completedLevel1}
-                          </span>
-                        </div>
-                        <div className="admin-teacher-detail-wrap">
-                          <span className="admin-teacher-detail-label">
-                            Completed Level 2
-                          </span>
-                          <span className="admin-teacher-detail">
-                            {studentStatsMap[t.name].completedLevel2}
-                          </span>
-                        </div>
-                        <div className="admin-teacher-detail-wrap">
-                          <span className="admin-teacher-detail-label">
-                            Won Game
-                          </span>
-                          <span className="admin-teacher-detail">
-                            {studentStatsMap[t.name].wonGame}
-                          </span>
-                        </div>
-                      </>
-                    ) : (
-                      <LoadingSpinner size="small" />
-                    )}
-                  </div>
-                  <div style={{ position: 'relative', top: '-1rem' }}>
-                    <button
-                      className={`btn-danger btn-small`}
+                <div style={{ margin: '0.5rem 0' }}>
+                  <button
+                    className="btn-small btn-primary btn-full-width"
+                    onClick={() => {
+                      setModalOpen(true);
+                      setSelectedTeacher(rowData);
+                    }}
+                  >
+                    Individual Stats
+                  </button>
+                </div>
+                <div>
+                  <button
+                    className={`btn-danger btn-small`}
+                    style={{ marginRight: '0.5rem' }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      showAlert(e, 'teacher', rowData);
+                    }}
+                  >
+                    <FontAwesomeIcon
+                      icon={faTrash}
+                      color="#fff"
                       style={{ marginRight: '0.5rem' }}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        showAlert(e, 'teacher', t);
-                      }}
-                    >
-                      <FontAwesomeIcon
-                        icon={faTrash}
-                        color="#fff"
-                        style={{ marginRight: '0.5rem' }}
-                      />
-                      Delete Teacher
-                    </button>
-                    <button
-                      className={`btn-danger btn-small`}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        showAlert(e, 'class', t);
-                      }}
-                    >
-                      <FontAwesomeIcon
-                        icon={faTrash}
-                        color="#fff"
-                        style={{ marginRight: '0.5rem' }}
-                      />
-                      Delete Class
-                    </button>
-                  </div>
+                    />
+                    Delete Teacher
+                  </button>
+                  <button
+                    className={`btn-danger btn-small`}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      showAlert(e, 'class', rowData);
+                    }}
+                  >
+                    <FontAwesomeIcon
+                      icon={faTrash}
+                      color="#fff"
+                      style={{ marginRight: '0.5rem' }}
+                    />
+                    Delete Class
+                  </button>
                 </div>
               </div>
             </div>
+          ),
+        }}
+      />
+      {modalOpen && (
+        <div className="teacher-browser-modal">
+          <div className="modal-bg" onClick={closeModal}></div>
+          <div className="teacher-browser-modal-inner box-shadow">
+            <img
+              style={{ zIndex: 1000 }}
+              className="close-btn"
+              src={cancelBtn}
+              alt="Close"
+              onClick={closeModal}
+            />
+            <div className="color-dark modal-title">Student Stats</div>
+            <Table
+              data={studentStatsMap[selectedTeacher?.name]?.studentList}
+              emptyMessage={'No Students to Display'}
+              rowsPerPage={10}
+              rowDataTransformer={(student, propertyName) => {
+                if (propertyName === 'timeSpent') {
+                  return convertMs(student[propertyName], 'minutes');
+                }
+                if (propertyName === 'name') {
+                  return `${student.firstName} ${student.lastName}`;
+                }
+                if (propertyName === 'totalTrophies') {
+                  let total = 0;
+                  (student.awards || []).forEach((level) => {
+                    const trophyNames = Object.keys(level);
+                    trophyNames.forEach((name) => {
+                      if (level[name]) {
+                        total += 1;
+                      }
+                    });
+                  });
+                  return String(total);
+                }
+                return student[propertyName];
+              }}
+              columns={[
+                {
+                  display: 'Username',
+                  propertyName: 'name',
+                },
+                {
+                  display: 'Minutes Played',
+                  propertyName: 'timeSpent',
+                },
+                {
+                  display: 'Levels Acheived',
+                  propertyName: 'level',
+                },
+                {
+                  display: 'Total Trophies',
+                  propertyName: 'totalTrophies',
+                },
+              ]}
+            />
           </div>
-        ))}
-      </div>
+        </div>
+      )}
     </div>
   ) : (
     <div className="admin-loading-wrap">

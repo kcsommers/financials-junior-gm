@@ -10,7 +10,7 @@ import {
 import { setLoginState, useAppDispatch } from '@redux';
 import Cookie from 'js-cookie'; /// JS-Cookie lib to store cookie on the browser
 import '@css/pages/Login.css';
-import { BASE_URL } from 'app/api';
+import statrookieLogo from '@images/statrookie-logo.png';
 
 export const AdminLogin = ({ history, isLoggedIn }) => {
   const dispatch = useAppDispatch();
@@ -80,7 +80,7 @@ export const AdminLogin = ({ history, isLoggedIn }) => {
 
   return (
     <div className="login-page-container">
-      <div>
+      <div style={{ margin: '-2rem 0 -3rem 0' }}>
         <img src={financialsLogo} alt="Financials Junior GM Program logo" />
       </div>
 
@@ -91,6 +91,32 @@ export const AdminLogin = ({ history, isLoggedIn }) => {
         history={history}
         userRole={UserRoles.ADMIN}
       />
+      <div
+        style={{
+          position: 'absolute',
+          bottom: 0,
+          right: 0,
+          display: 'flex',
+          alignItems: 'baseline',
+        }}
+      >
+        <span
+          style={{
+            fontSize: '0.8rem',
+            transform: 'translate(10px, -100%)',
+            opacity: 0.75,
+          }}
+        >
+          designed by
+        </span>
+        <img
+          style={{
+            width: '100px',
+          }}
+          src={statrookieLogo}
+          alt="Stat Rookie"
+        />
+      </div>
     </div>
   );
 };

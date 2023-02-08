@@ -321,7 +321,6 @@ export const HomePage = ({ location, history }) => {
         <div className="sharkie-btn-container">
           <SharkieButton textPosition="bottom" onCallSharkie={onCallSharkie} />
         </div>
-
         <div className="level-stick-card card">
           <LevelStick
             type="budget"

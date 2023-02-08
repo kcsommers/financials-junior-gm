@@ -7,8 +7,7 @@ import {
   faCheckCircle,
   faExclamationCircle,
 } from '@fortawesome/free-solid-svg-icons';
-import { ApiHelper } from '@statrookie/core';
-import { BASE_URL } from 'app/api';
+import statrookieLogo from '@images/statrookie-logo.png';
 
 export const ForgotPasswordPage = ({ history }) => {
   const [email, setEmail] = useState('');
@@ -109,7 +108,7 @@ export const ForgotPasswordPage = ({ history }) => {
 
   return (
     <div className="forgot-password-page-container">
-      <div>
+      <div style={{ margin: '-2rem 0 -3rem 0' }}>
         <img src={financialsLogo} alt="Financials Junior GM Program logo" />
       </div>
       {!emailSuccessMsg && !emailErrorMsg && formTemplate}
@@ -122,6 +121,32 @@ export const ForgotPasswordPage = ({ history }) => {
         >
           Back To Dashboard
         </span>
+      </div>
+      <div
+        style={{
+          position: 'absolute',
+          bottom: 0,
+          right: 0,
+          display: 'flex',
+          alignItems: 'baseline',
+        }}
+      >
+        <span
+          style={{
+            fontSize: '0.8rem',
+            transform: 'translate(10px, -100%)',
+            opacity: 0.75,
+          }}
+        >
+          designed by
+        </span>
+        <img
+          style={{
+            width: '100px',
+          }}
+          src={statrookieLogo}
+          alt="Stat Rookie"
+        />
       </div>
     </div>
   );

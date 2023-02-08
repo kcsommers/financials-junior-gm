@@ -606,12 +606,22 @@ export const levelThreeOpponents = [
   },
 ];
 
-export const getAllTeamVideos = () => {
-  return [
-    ...levelOneOpponents,
-    ...levelTwoOpponents,
-    ...levelThreeOpponents,
-  ].reduce((links, team) => {
+export const getTeamVideos = (level) => {
+  let videos = [];
+  if (!level) {
+    videos = [
+      ...levelOneOpponents,
+      ...levelTwoOpponents,
+      ...levelThreeOpponents,
+    ];
+  } else if (+level === 1) {
+    videos = [...levelOneOpponents];
+  } else if (+level === 2) {
+    videos = [...levelTwoOpponents];
+  } else if (+level === 3) {
+    videos = [...levelThreeOpponents];
+  }
+  return videos.reduce((links, team) => {
     if (!team.videos) {
       return links;
     }
