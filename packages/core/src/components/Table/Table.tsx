@@ -1,8 +1,6 @@
-import {
-  faChevronLeft,
-  faChevronRight,
-} from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import ChevronLeft from '@statrookie/core/src/components/svg/chevron-left-solid.svg';
+import ChevronRight from '@statrookie/core/src/components/svg/chevron-right-solid.svg';
+import classNames from 'classnames';
 import { cloneElement, createRef, useEffect, useState } from 'react';
 import { LoadingSpinner } from '../LoadingSpinner';
 import styles from './Table.module.scss';
@@ -108,14 +106,16 @@ export const Table = ({
   return (
     <>
       <div className={styles.table_pagination_wrap}>
-        <div className={styles.current_page_wrap}>
+        <div
+          className={classNames(styles.current_page_wrap, 'flex items-center')}
+        >
           <span
             className={`${currentPage <= 1 ? 'disabled' : ''}`}
             onClick={() => {
               setCurrentPage(currentPage - 1);
             }}
           >
-            <FontAwesomeIcon icon={faChevronLeft} color="#00788a" />
+            <ChevronLeft className="fill-primary" />
           </span>
           Page
           <input
@@ -146,11 +146,7 @@ export const Table = ({
               setCurrentPage(currentPage + 1);
             }}
           >
-            <FontAwesomeIcon
-              icon={faChevronRight}
-              color="#00788a"
-              style={{ marginLeft: '0.5rem' }}
-            />
+            <ChevronRight className="fill-primary ml-2" />
           </span>
         </div>
         <div className={styles.current_rows_wrap}>
@@ -194,7 +190,7 @@ export const Table = ({
                       transform: expandedRows[i] ? 'rotate(90deg)' : 'none',
                     }}
                   >
-                    <FontAwesomeIcon icon={faChevronRight} color="#f3901d" />
+                    <ChevronRight className="fill-primary" />
                   </span>
                 </span>
               )}

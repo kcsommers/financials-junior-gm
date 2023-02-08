@@ -1,11 +1,8 @@
 import { Button } from '@statrookie/core/src/components/Button';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import FinancialsLogo from '../components/svg/financials-logo-big.svg';
 
 const DashboardPage = () => {
-  const router = useRouter();
-
   return (
     <div
       className="dashboard-container"
@@ -19,7 +16,7 @@ const DashboardPage = () => {
         height: '100%',
       }}
     >
-      <div className="m-auto inline-block">
+      <div className="m-auto inline-block py-4">
         <FinancialsLogo />
       </div>
 
@@ -39,14 +36,7 @@ const DashboardPage = () => {
             <Button text="Registration" background="#070707" />
           </Link>
         </div>
-        <Link
-          style={{
-            fontSize: '1.1rem',
-            marginTop: '2rem',
-            color: '#00788A',
-          }}
-          href="/admin/login"
-        >
+        <Link className="text-primary text-lg mt-8" href="/admin/login">
           Admin Login
         </Link>
       </div>

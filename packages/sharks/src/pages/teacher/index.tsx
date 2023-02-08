@@ -159,7 +159,7 @@ const TeacherDashboard = () => {
     if (isUpload) {
       return (
         <div className={classnames(styles.modal_template, 'flex-1')}>
-          <div className="color-dark">Add Students in Bulk</div>
+          <div className="text-foreground">Add Students in Bulk</div>
           <input
             name="inputFile"
             type="file"
@@ -185,14 +185,16 @@ const TeacherDashboard = () => {
     }
     if (isDelete) {
       return (
-        <div className={classnames(styles.modal_template, 'flex-1')}>
+        <div
+          className={classnames(styles.modal_template, 'flex-1 text-center')}
+        >
           <div className={`color-primary ${styles.confirm_text}`}>
             Are You Sure?
           </div>
-          <div className="color-dark">
+          <div className="text-foreground">
             Deleting this student cannot be undone.
           </div>
-          <button className="btn-danger btn-full-width" onClick={deleteStudent}>
+          <button className="btn-danger" onClick={deleteStudent}>
             Delete Student
           </button>
         </div>
@@ -200,7 +202,7 @@ const TeacherDashboard = () => {
     }
     return (
       <div className={classnames(styles.modal_template, 'flex-1')}>
-        <div className="color-dark">
+        <div className="text-foreground">
           {selectedStudent ? 'Update' : 'Add'} Student
         </div>
         <label htmlFor="firstName">
@@ -224,7 +226,7 @@ const TeacherDashboard = () => {
           />
         </label>
         <button
-          className="btn-accent btn-full-width"
+          className="btn-secondary"
           onClick={() => {
             if (selectedStudent) {
               updateStudent();
@@ -249,23 +251,23 @@ const TeacherDashboard = () => {
   };
 
   return (
-    <div className="page-container">
+    <div className="h-full w-full relative flex flex-col">
       <div className={styles.teacher_dashboard_header}>
         <h1>Teacher Dashboard</h1>
-        <button className="btn-accent" onClick={logoutSession}>
+        <button className="btn-secondary" onClick={logoutSession}>
           Logout
         </button>
       </div>
       <div className={styles.teacher_dashboard_body}>
         <div className={styles.teacher_btns_wrap}>
           <button
-            className="btn-accent btn-small mr-3"
+            className="btn-secondary btn-small mr-3"
             onClick={() => setModalOpen(true)}
           >
             Add Student
           </button>
           <button
-            className="btn-accent btn-small"
+            className="btn-secondary btn-small"
             onClick={() => {
               setIsUpload(true);
               setModalOpen(true);
@@ -354,7 +356,7 @@ const TeacherDashboard = () => {
             actions: ({ rowData }) => (
               <div>
                 <span
-                  className="color-dark action-btn mr-2"
+                  className="text-foreground action-btn mr-2"
                   role="button"
                   onClick={() => {
                     setFirstNameInput(rowData.firstName);
@@ -367,7 +369,7 @@ const TeacherDashboard = () => {
                   Update
                 </span>
                 <span
-                  className="color-danger action-btn"
+                  className="text-red-700 action-btn"
                   role="button"
                   onClick={() => {
                     setIsDelete(true);

@@ -36,12 +36,17 @@ const TeachersPage = () => {
   }, []);
 
   return (
-    <div className={classnames('page-container', styles.admin_page_container)}>
+    <div
+      className={classnames(
+        'h-full w-full relative flex flex-col',
+        styles.admin_page_container
+      )}
+    >
       <div className={styles.admin_page_header}>
-        <Link href="/admin">
-          <h1>Financials Junior GM Admin</h1>
-        </Link>
-        <button className="btn-accent text-base" onClick={doLogout}>
+        <h2 className="text-3xl text-foreground font-bold">
+          <Link href="/admin">Financials Junior GM Admin</Link>
+        </h2>
+        <button className="btn-secondary text-base" onClick={doLogout}>
           Logout
         </button>
       </div>
@@ -52,7 +57,7 @@ const TeachersPage = () => {
           href="/admin"
         >
           {/* @ts-ignore */}
-          <ArrowLeft fill="#F3901D" width={15} />
+          <ArrowLeft width={15} className="fill-secondary" />
           <span className="inline-block ml-2">Go Back</span>
         </Link>
         <TeacherBrowser

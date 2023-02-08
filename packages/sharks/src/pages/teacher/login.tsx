@@ -58,8 +58,8 @@ const TeacherLogin = () => {
   };
 
   return (
-    <div className="text-center relative top-0">
-      <div className="m-auto inline-block">
+    <div>
+      <div className="m-auto flex justify-center py-4">
         <FinancialsLogo />
       </div>
       <LoginForm

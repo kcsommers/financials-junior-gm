@@ -61,17 +61,17 @@ const StudentLogin = () => {
   };
 
   return (
-    <div className="text-center relative top-0">
-      <div className="m-auto inline-block">
+    <>
+      <div className="m-auto flex justify-center py-4">
         <FinancialsLogo />
       </div>
       <LoginForm
         onLogin={onLogin}
         isLoggingIn={isLoggingIn}
         loginError={loginError}
-        userRole={UserRoles.ADMIN}
+        userRole={UserRoles.STUDENT}
       />
-    </div>
+    </>
   );
 };
 

@@ -400,9 +400,9 @@ export const TeacherBrowser = ({
           styles.teacher_browser_header_wrap
         )}
       >
-        <h3 className="text-3xl mb-4">Teachers</h3>
+        <h3 className="text-3xl mb-4 text-foreground">Teachers</h3>
         <button
-          className={`btn-accent flex items-center btn-small${
+          className={`btn-secondary flex items-center btn-small${
             !filteredTeachers || !filteredTeachers.length ? ' disabled' : ''
           }`}
           onClick={downloadCsv}

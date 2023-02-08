@@ -73,7 +73,7 @@ div.teacher_registration_page_form_wrap input {
   padding: 0.5rem;
   border-radius: 3px;
   border: 1.5px solid #000;
-  transition: all 0.3s ease;
+  background-color: #fff;
   width: 100%;
 }
 
@@ -90,11 +90,11 @@ div.teacher_registration_page_form_wrap select {
 }
 
 div.teacher_registration_page_form_wrap select:focus {
-  border-color: #00788a;
+  border-color: rgb(var(--primary-color));
 }
 
 div.teacher_registration_page_form_wrap select:focus {
-  border-color: #00788a;
+  border-color: rgb(var(--primary-color));
 }
 
 div.teacher_registration_page_form_wrap p.error {

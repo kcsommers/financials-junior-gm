@@ -1,6 +1,20 @@
+@import './reset.scss';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  :root {
+    --color-primary: 0 120 138;
+    --color-secondary: 243 144 29;
+    --color-highlight: 255 215 130;
+    --color-foreground: 0 47 108;
+    --font-primary: made-tommy, sans-serif;
+    --box-shadow-mat: 0 3px 6px rgba(0, 0, 0, 0.16),
+      0 3px 6px rgba(0, 0, 0, 0.23);
+  }
+}
 
 @font-face {
   font-family: 'interstate';
@@ -26,32 +40,8 @@ html {
   background-color: #eee;
 }
 
-* {
-  box-sizing: border-box;
-}
-
-#root {
-  position: relative;
-  min-height: 100vh;
-}
-
-text {
-  font-family: made-tommy-bold;
-  color: white;
-  outline: none;
-}
-
-a {
-  text-decoration: none;
-  color: inherit;
-}
-
-body,
-button {
-  font-family: made-tommy, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  font-size: 1.25rem;
+body {
+  font-family: var(--font-primary);
 }
 
 button {
@@ -63,21 +53,21 @@ button {
 a.btn-primary,
 input[type='submit'],
 button.btn-primary {
-  background-color: #00788a;
+  background-color: rgb(var(--color-primary));
   color: #fff;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  box-shadow: var(--box-shadow-mat);
   padding: 1rem 1.5rem;
   border-radius: 3px;
   cursor: pointer;
 }
 
-a.btn-accent,
-div.btn-accent,
+a.btn-secondary,
+div.btn-secondary,
 input[type='submit'],
-button.btn-accent {
-  background-color: #f3901d;
+button.btn-secondary {
+  background-color: rgb(var(--color-secondary));
   color: #fff;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  box-shadow: var(--box-shadow-mat);
   padding: 1rem 1.5rem;
   border-radius: 3px;
   cursor: pointer;
@@ -88,7 +78,7 @@ div.btn-danger,
 button.btn-danger {
   background-color: #dc3545;
   color: #fff;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  box-shadow: var(--box-shadow-mat);
   padding: 1rem 1.5rem;
   border-radius: 3px;
   cursor: pointer;
@@ -106,98 +96,14 @@ button.btn-full-width {
   width: 100%;
 }
 
-.color-primary {
-  color: #00788a;
-}
-
-.color-accent {
-  color: #f3901d;
-}
-
-.color-danger {
-  color: #dc3545;
-}
-
-.color-dark {
-  color: #002f6c;
-}
-
-.font-xl {
-  font-size: 2.95rem;
-}
-
-*.transparent {
-  position: relative;
-  opacity: 0;
-}
-
-h1.page-title {
-  color: #00788a;
-  text-shadow: 0 0 5px #f3901d, 0 0 5px #f3901d, 0 0 5px #f3901d,
-    0 0 5px #f3901d;
-  font-size: 5.25rem;
-}
-
-h2 {
-  font-size: 3.25rem;
-}
-
-h4 {
-  font-size: 1.5rem;
-}
-
-p {
-  color: #00788a;
-}
-
-.card {
-  color: #006b77;
-  border: 5px solid #4b4b4b;
-  border-radius: 10px;
-  background: white;
-  position: relative;
-  width: 210px;
-  height: 270px;
-}
-
-.auto-card {
-  width: 100%;
-  height: auto;
-}
-
-.font-bold {
-  font-weight: bold;
-}
-
 .outline-black {
   text-shadow: 0 0 5px #000, 0 0 5px #000, 0 0 5px #000, 0 0 5px #000;
 }
 
-.outline-accent {
-  text-shadow: 0 0 5px #f3901d, 0 0 5px #f3901d, 0 0 5px #f3901d,
-    0 0 5px #f3901d;
-}
-
-.border-primary {
-  border: 3px solid #00788a;
-}
-
-.border-accent {
-  border: 3px solid #f3901d;
-}
-
-.border-highlight {
-  border-color: #ffd782;
-  border-width: 5px;
-}
-
-.box-shadow {
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-}
-
-.text-link {
-  color: inherit;
-  text-decoration: none;
+.outline-secondary {
+  text-shadow: 0 0 5px rgb(var(--color-secondary)),
+    0 0 5px rgb(var(--color-secondary)), 0 0 5px rgb(var(--color-secondary)),
+    0 0 5px rgb(var(--color-secondary));
 }
 
 .check-btn {
@@ -256,15 +162,6 @@ p {
   top: 0px;
   position: absolute;
   transform: rotate(45deg);
-}
-
-div.page-container {
-  width: 100%;
-  height: 100%;
-  position: relative;
-  z-index: 100;
-  display: flex;
-  flex-direction: column;
 }
 
 .disabled {

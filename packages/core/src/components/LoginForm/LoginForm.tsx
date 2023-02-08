@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import Link from 'next/link';
 import { useState } from 'react';
 import { UserRoles } from '../../auth/users/user-roles';
@@ -23,13 +24,19 @@ export const LoginForm = ({ onLogin, isLoggingIn, loginError, userRole }) => {
 
   return (
     <form>
-      <div className={styles.login_form_container}>
+      <div className="bg-neutral-200 p-16 w-1/2 mx-auto rounded-lg">
         <div className={styles.login_form_field}>
-          <p className={styles.login_form_label}>{userField}</p>
+          <p className={classNames(styles.login_form_label, 'text-center')}>
+            {userField}
+          </p>
           <input
             onChange={(e) => setUserName(e.target.value)}
             autoComplete="off"
-            className={styles.login_form_ip}
+            className={classNames(
+              styles.login_form_ip,
+              'rounded-md focus:outline focus:outline-2 outline-primary',
+              'bg-white w-full px-4'
+            )}
             type="text"
             placeholder={userField}
             name="username"
@@ -37,11 +44,17 @@ export const LoginForm = ({ onLogin, isLoggingIn, loginError, userRole }) => {
           />
         </div>
         <div className={styles.login_form_field}>
-          <p className={styles.login_form_label}>Password</p>
+          <p className={classNames(styles.login_form_label, 'text-center')}>
+            Password
+          </p>
           <input
             onChange={(e) => setPassword(e.target.value)}
             autoComplete="off"
-            className={styles.login_form_ip}
+            className={classNames(
+              styles.login_form_ip,
+              'rounded-md focus:outline focus:outline-2 outline-primary',
+              'bg-white w-full px-4'
+            )}
             type="password"
             placeholder="Password"
             name="password"
@@ -53,23 +66,20 @@ export const LoginForm = ({ onLogin, isLoggingIn, loginError, userRole }) => {
         </p>
       </div>
 
-      <div className={styles.login_button_container}>
-        <div style={{ margin: '1rem 0' }}>
+      <div className={classNames(styles.login_button_container, 'text-center')}>
+        <div className="my-4">
           <Button
             onClick={validateLogin}
             isLoading={isLoggingIn}
             text="Log In"
           />
         </div>
-        <Link href="/" className={styles.login_back_to_dashboard}>
+        <Link href="/" className="text-lg text-primary">
           Back To Dashboard
         </Link>
         {userRole === UserRoles.TEACHER && (
           <div>
-            <Link
-              href="/forgot-password"
-              className={styles.login_forgot_password}
-            >
+            <Link href="/forgot-password" className="text-primary mt-2">
               Forgot Password
             </Link>
           </div>

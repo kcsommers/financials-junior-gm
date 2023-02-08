@@ -5,7 +5,7 @@ div.table_wrap {
 
 div.table_header_row,
 div.table_row_wrap:not(:last-child) {
-  border-bottom: 1px solid #00788a;
+  border-bottom: 1px solid rgb(var(--color-primary));
 }
 
 div.table_row {
@@ -19,7 +19,7 @@ div.table_header_row {
   padding: 0.75rem 1rem;
   cursor: initial;
   color: #00788a;
-  border-bottom: 2.5px solid #00788a;
+  border-bottom: 2.5px solid rgb(var(--color-primary));
 }
 
 div.table_header_row > div {
@@ -60,7 +60,7 @@ div.table_expandable_content {
 }
 
 input.current_page_input:focus {
-  border-color: #f3901d;
+  border-color: rgb(var(--color-secondary));
 }
 
 div.current_page_wrap > span {
@@ -80,7 +80,7 @@ input.current_page_input {
   background: none;
   margin: 0 0.5rem;
   outline: none;
-  border: 1px solid #00788a;
+  border: 1px solid rgb(var(--color-primary));
   border-radius: 3px;
   width: 50px;
   text-align: center;

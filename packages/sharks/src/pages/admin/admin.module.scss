@@ -7,12 +7,6 @@ div.admin_page_header {
   padding: 0 1rem;
 }
 
-div.admin_page_header > a {
-  font-size: 1.75rem;
-  color: #002f6c;
-  font-weight: bold;
-}
-
 div.admin_page_body_container {
   padding: 3rem;
   background-color: rgba(238, 238, 238, 0.5);
@@ -22,9 +16,7 @@ div.admin_page_body_container {
 }
 
 div.admin_total_wrap {
-  font-size: 2rem;
   background-color: #fff;
-  color: #002f6c;
   border-radius: 3px;
   padding: 1rem 1rem 1rem 2rem;
   display: flex;
@@ -39,16 +31,6 @@ div.admin_total_wrap {
 div.admin_total_left {
   display: flex;
   align-items: center;
-}
-
-div.admin_total_left > div.loading_spinner,
-div.admin_total_left > span {
-  margin-right: 0.65rem;
-}
-
-div.admin_total_left > span {
-  font-size: 2.5rem;
-  color: #00788a;
 }
 
 div.admin_loading_wrap {

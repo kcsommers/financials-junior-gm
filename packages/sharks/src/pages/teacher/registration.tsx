@@ -50,7 +50,12 @@ const TeacherRegsitrationPage = () => {
   };
 
   return (
-    <div className={classnames('page-container', styles.admin_page_container)}>
+    <div
+      className={classnames(
+        'h-full w-full relative flex flex-col',
+        styles.admin_page_container
+      )}
+    >
       <div
         className={classnames('relative text-center', styles.admin_page_header)}
       >
@@ -59,8 +64,10 @@ const TeacherRegsitrationPage = () => {
           href="/"
         >
           {/** @ts-ignore */}
-          <ArrowLeft width={15} />
-          <span className="inline-block ml-2 text-base">Go Back</span>
+          <ArrowLeft width={15} className="fill-secondary" />
+          <span className="inline-block ml-2 text-base text-secondary">
+            Go Back
+          </span>
         </Link>
         <h2 className="mx-auto text-3xl">
           This page is for teacher registration only!
@@ -295,7 +302,9 @@ const TeacherRegsitrationPage = () => {
                   <LoadingSpinner size="small" />
                 </span>
               ) : (
-                <button className="btn-accent text-base w-full">Submit</button>
+                <button className="btn-secondary text-center text-base w-full">
+                  Submit
+                </button>
               )}
             </div>
           </form>

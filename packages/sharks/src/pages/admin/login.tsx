@@ -61,8 +61,8 @@ const AdminLogin = () => {
   };
 
   return (
-    <div className="text-center relative top-0">
-      <div className="m-auto inline-block">
+    <>
+      <div className="m-auto flex justify-center py-4">
         <FinancialsLogo />
       </div>
 
@@ -72,7 +72,7 @@ const AdminLogin = () => {
         loginError={loginError}
         userRole={UserRoles.ADMIN}
       />
-    </div>
+    </>
   );
 };
 

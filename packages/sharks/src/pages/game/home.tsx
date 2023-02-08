@@ -11,7 +11,11 @@ const HomePage = () => {
 
   console.log('game context id:::: ', id);
 
-  return <Link href="/game/budget">HOME PAGE</Link>;
+  return (
+    <Link href="/game/budget" className=" font">
+      HOME PAGE
+    </Link>
+  );
 };
 
 const ProtectedHomePage = () => {

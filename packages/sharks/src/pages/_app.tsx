@@ -22,16 +22,16 @@ export default ({ Component, pageProps }: AppPropsWithLayout) => {
   return (
     <AuthProvider baseUrl={API_BASE_URL}>
       <div
-        className="relative overflow-hidden bg-white m-auto"
+        className="relative overflow-hidden bg-white m-auto shadow-mat"
         style={{
           width: '1024px',
           height: '768px',
-          boxShadow:
-            '0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)',
         }}
       >
         <IceBackground />
-        {getLayout(<Component {...pageProps} />)}
+        <div className="relative h-full">
+          {getLayout(<Component {...pageProps} />)}
+        </div>
       </div>
     </AuthProvider>
   );

@@ -36,7 +36,7 @@ div.class_stat {
 }
 
 div.class_stat > p {
-  color: #002f6c;
+  color: rgb(var(--color-foreground));
   font-size: 1.1rem;
 }
 
@@ -57,11 +57,11 @@ div.student_table_row {
 }
 
 div.student_table_row:not(:first-child):not(:last-child) {
-  border-bottom: 1px solid #00788a;
+  border-bottom: 1px solid rgb(var(--color-primary));
 }
 
 div.student_table_header-row {
-  border-bottom: 2px solid #00788a;
+  border-bottom: 2px solid rgb(var(--color-primary));
 }
 
 div.student_table_row > div {
@@ -75,7 +75,7 @@ div.student_table_row > div {
 div.student_table_header-row > div {
   font-size: 0.9rem;
   font-weight: 700;
-  color: #00788a;
+  color: rgb(var(--color-primary));
 }
 
 div.teacher_dashboard_btns_wrap > button:first-child {

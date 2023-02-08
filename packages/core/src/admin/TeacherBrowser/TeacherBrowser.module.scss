@@ -1,10 +1,3 @@
-div.teacher_browser_header_wrap,
-div.teacher_browser_header_wrap {
-  > h3 {
-    color: #002f6c;
-  }
-}
-
 div.teacher_search_input_wrap {
   > span {
     flex: 0.2;
@@ -14,7 +7,7 @@ div.teacher_search_input_wrap {
     flex: 1;
     background: none;
     border: none;
-    border-bottom: 1px solid #00788a;
+    border-bottom: 1px solid rgb(var(--color-primary));
     transition: all 0.2s ease;
     padding: 0 0.25rem;
   }
@@ -22,15 +15,15 @@ div.teacher_search_input_wrap {
 
 input.current_page_input:focus,
 div.teacher_search_input_wrap > input:focus {
-  border-color: #f3901d;
-  outline: #f3901d;
+  border-color: rgb(var(--color-secondary));
+  outline: rgb(var(--color-secondary));
 }
 
 input.current_page_input {
   background: none;
   margin: 0 0.5rem;
   outline: none;
-  border: 1px solid #00788a;
+  border: 1px solid rgb(var(--color-primary));
   border-radius: 3px;
   width: 50px;
   text-align: center;
@@ -39,7 +32,7 @@ input.current_page_input {
 
 div.teacher_table_header_row,
 div.teacher_table_row_wrap:not(:last-child) {
-  border-bottom: 1px solid #00788a;
+  border-bottom: 1px solid rgb(var(--color-primary));
 }
 
 div.teacher_table_row {
@@ -56,8 +49,8 @@ div.teacher_table_row {
 div.teacher_table_header_row {
   padding: 0.5rem 1rem 0.5rem 0rem;
   cursor: initial;
-  color: #00788a;
-  border-bottom: 2.5px solid #00788a;
+  color: rgb(var(--color-primary));
+  border-bottom: 2.5px solid rgb(var(--color-primary));
 }
 
 div.teacher_table_header_row > div {
@@ -89,7 +82,7 @@ span.teacher_table_arrow {
 }
 
 div.time_spent_container {
-  color: #002f6c;
+  color: rgb(var(--color-foreground));
   padding: 1rem;
 }
 
@@ -99,7 +92,7 @@ div.time_spent_wrap {
 
 div.time_spent_wrap > div {
   font-size: 1.5rem;
-  color: #00788a;
+  color: rgb(var(--color-primary));
   margin: 0.5rem 0;
 }
 
@@ -122,7 +115,7 @@ div.get_time_spent_wrap {
 }
 
 div.get_time_spent_wrap > span {
-  color: #002f6c;
+  color: rgb(var(--color-foreground));
 }
 
 div.admin_teacher_details_inner {
@@ -157,7 +150,7 @@ span.admin_teacher_detail_label {
   display: inline-block;
   flex: 1;
   font-weight: bold;
-  color: #00788a;
+  color: rgb(var(--color-primary));
 }
 
 span.admin_teacher_detail {

@@ -1,5 +1,4 @@
-import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import ArrowLeft from '@statrookie/core/src/components/svg/arrow-left-solid.svg';
 import { useAuth } from '@statrookie/core/src/auth/context/auth-context';
 import { Student } from '@statrookie/core/src/auth/users/student.interface';
 import { Teacher } from '@statrookie/core/src/auth/users/teacher.interface';
@@ -59,57 +58,83 @@ const AdminPage = () => {
   }, []);
 
   return (
-    <div className={classnames('page-container', styles.admin_page_container)}>
+    <div
+      className={classnames(
+        'h-full w-full relative flex flex-col',
+        styles.admin_page_container
+      )}
+    >
       <div className={styles.admin_page_header}>
-        <Link href="/admin">
-          <h1>Financials Junior GM Admin</h1>
-        </Link>
-        <button className="btn-accent text-base" onClick={doLogout}>
+        <h2 className="text-3xl text-foreground font-bold">
+          <Link href="/admin">Financials Junior GM Admin</Link>
+        </h2>
+        <button className="btn-secondary text-base" onClick={doLogout}>
           Logout
         </button>
       </div>
       <div className={styles.admin_page_body_container}>
         <Link
-          className="justify-center inline-flex items-center mb-4 cursor-pointer text-sm"
-          style={{ color: '#F3901D' }}
+          className="justify-center inline-flex items-center mb-4 cursor-pointer text-sm text-secondary"
           href="/admin/login"
         >
-          <FontAwesomeIcon icon={faArrowLeft} />
+          {/* @ts-ignore */}
+          <ArrowLeft width={15} className="fill-secondary" />
           <span className="inline-block ml-2">Go Back</span>
         </Link>
         <div className={styles.admin_totals_wrap}>
-          <div className={classnames(styles.admin_total_wrap, 'box-shadow')}>
+          <div
+            className={classnames(
+              styles.admin_total_wrap,
+              'shadow-mat text-foreground'
+            )}
+          >
             <div className={styles.admin_total_left}>
               {allTeachers ? (
-                <span>{formatNumber(allTeachers.length)}</span>
+                <span className="text-primary text-4xl">
+                  {formatNumber(allTeachers.length)}
+                </span>
               ) : (
                 <LoadingSpinner size="small" />
               )}{' '}
-              Total Teachers
+              <span className="ml-4 text-4xl">Total Teachers</span>
             </div>
             <Link href="/admin/teachers" className="btn-primary text-base">
               View Teachers
             </Link>
           </div>
-          <div className={classnames(styles.admin_total_wrap, 'box-shadow')}>
+          <div
+            className={classnames(
+              styles.admin_total_wrap,
+              'shadow-mat text-foreground'
+            )}
+          >
             <div className={styles.admin_total_left}>
               {allStudents ? (
-                <span>{formatNumber(allStudents.length)}</span>
+                <span className="text-primary text-4xl">
+                  {formatNumber(allStudents.length)}
+                </span>
               ) : (
                 <LoadingSpinner size="small" />
-              )}{' '}
-              Total Students
+              )}
+              <span className="ml-4 text-4xl">Total Students</span>
             </div>
           </div>
 
-          <div className={classnames(styles.admin_total_wrap, 'box-shadow')}>
+          <div
+            className={classnames(
+              styles.admin_total_wrap,
+              'shadow-mat text-foreground'
+            )}
+          >
             <div className={styles.admin_total_left}>
               {totalTimeSpent ? (
-                <span>{totalTimeSpent} Hours</span>
+                <span className="text-primary text-4xl">
+                  {totalTimeSpent} Hours
+                </span>
               ) : (
                 <LoadingSpinner size="small" />
-              )}{' '}
-              Total Time Spent
+              )}
+              <span className="ml-4 text-4xl">Total Time Spent</span>
             </div>
           </div>
         </div>
