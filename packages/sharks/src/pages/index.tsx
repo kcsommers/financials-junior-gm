@@ -25,11 +25,11 @@ const DashboardPage = () => {
 
       <div className="dash-btn-list flex-1 w-full flex flex-col items-center justify-center">
         <div>
-          <Link href="'/login/student'">
+          <Link href="/student/login">
             <Button text="Student" />
           </Link>
         </div>
-        <div style={{ margin: '2rem 0' }}>
+        <div className="my-8">
           <Link href="/teacher/login">
             <Button text="Teachers" background="#002f6c" />
           </Link>

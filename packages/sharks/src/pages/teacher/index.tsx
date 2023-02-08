@@ -13,7 +13,7 @@ import classnames from 'classnames';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { API_BASE_URL } from '../../constants/api-base-url';
-import styles from '../styles/teacher-dashboard.module.scss';
+import styles from './teacher-dashboard.module.scss';
 
 const TeacherDashboard = () => {
   const router = useRouter();

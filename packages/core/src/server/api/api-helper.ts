@@ -101,7 +101,10 @@ export namespace ApiHelper {
   };
 
   // Student Login
-  export const studentLogin = (_baseUrl: string, body): Promise<any> => {
+  export const studentLogin = (
+    _baseUrl: string,
+    body
+  ): Promise<LoginResponse> => {
     return axios.post(`${_baseUrl}/api/v1/auth/student/login`, body);
   };
 

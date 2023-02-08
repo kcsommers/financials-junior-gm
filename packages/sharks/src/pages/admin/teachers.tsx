@@ -9,7 +9,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { API_BASE_URL } from '../../constants/api-base-url';
-import styles from '../styles/admin.module.scss';
+import styles from './admin.module.scss';
 
 const TeachersPage = () => {
   const { logUserOut } = useAuth();

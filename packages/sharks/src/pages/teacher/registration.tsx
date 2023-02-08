@@ -10,7 +10,7 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { API_BASE_URL } from '../../constants/api-base-url';
-import styles from '../styles/teacher-registration.module.scss';
+import styles from './teacher-registration.module.scss';
 
 const TeacherRegsitrationPage = () => {
   const { register, handleSubmit, errors, watch } = useForm();

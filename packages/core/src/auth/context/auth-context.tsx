@@ -9,7 +9,7 @@ import {
   useMemo,
   useState,
 } from 'react';
-import { UserRole, UserRoles } from '../../auth/users/user-roles';
+import { UserRole } from '../../auth/users/user-roles';
 import { User } from '../../auth/users/user.interface';
 import { clearAuthStorage } from '../../auth/utils/clear-auth-storage';
 import { logger } from '../../auth/utils/logger';
@@ -61,18 +61,12 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children, baseUrl }) => {
   }, []);
 
   const logUserIn = (user: User) => {
-    console.log('log user in:::: ', user);
     setAuthorizedUser(user);
     setIsLoggedIn(true);
     setUserRole(user?.role || null);
     sessionStorage.setItem(StorageKeys.LOGIN_STORAGE_KEY, 'true');
-    sessionStorage.setItem(StorageKeys.USER_ROLE_STORAGE_KEY, UserRoles.ADMIN);
-    if (user?.role === 'admin') {
-      sessionStorage.setItem(StorageKeys.ADMIN_ID_STORAGE_KEY, user._id);
-    }
-    if (user?.role === 'teacher') {
-      sessionStorage.setItem(StorageKeys.TEACHER_ID_STORAGE_KEY, user._id);
-    }
+    sessionStorage.setItem(StorageKeys.USER_ROLE_STORAGE_KEY, user.role);
+    sessionStorage.setItem(`__fin_${user.role}_id__`, user._id);
   };
 
   const logUserOut = () => {
