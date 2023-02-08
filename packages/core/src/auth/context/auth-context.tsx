@@ -20,16 +20,16 @@ type AuthProviderProps = PropsWithChildren<{
   baseUrl: string;
 }>;
 
-interface AuthContext {
+type AuthContext = {
   authorizedUser?: User;
   authInitialized: boolean;
   isLoggedIn: boolean;
   userRole: UserRole;
   logUserIn: (user: User) => void;
   logUserOut: () => void;
-}
+};
 
-const authContext = createContext<AuthContext>({} as AuthContext);
+const AUTH_CONTEXT = createContext<AuthContext>({} as AuthContext);
 
 export const AuthProvider: FC<AuthProviderProps> = ({ children, baseUrl }) => {
   const [authorizedUser, setAuthorizedUser] = useState<User>();
@@ -90,14 +90,14 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children, baseUrl }) => {
   );
 
   return (
-    <authContext.Provider value={memoedValue}>
+    <AUTH_CONTEXT.Provider value={memoedValue}>
       {authInitialized && children}
-    </authContext.Provider>
+    </AUTH_CONTEXT.Provider>
   );
 };
 
 export const useAuth = (): AuthContext => {
-  const context: AuthContext = useContext(authContext);
+  const context: AuthContext = useContext(AUTH_CONTEXT);
   if (context === undefined) {
     throw new Error('useAuth must be used within an AuthProvider');
   }
