@@ -58,67 +58,69 @@ const AdminPage = () => {
   }, []);
 
   return (
-    <ProtectedRoute apiBaseUrl={API_BASE_URL}>
-      <div
-        className={classnames('page-container', styles.admin_page_container)}
-      >
-        <div className={styles.admin_page_header}>
-          <Link href="/admin">
-            <h1>Financials Junior GM Admin</h1>
-          </Link>
-          <button className="btn-accent text-base" onClick={doLogout}>
-            Logout
-          </button>
-        </div>
-        <div className={styles.admin_page_body_container}>
-          <Link
-            className="justify-center inline-flex items-center mb-4 cursor-pointer text-sm"
-            style={{ color: '#F3901D' }}
-            href="/admin/login"
-          >
-            <FontAwesomeIcon icon={faArrowLeft} />
-            <span className="inline-block ml-2">Go Back</span>
-          </Link>
-          <div className={styles.admin_totals_wrap}>
-            <div className={classnames(styles.admin_total_wrap, 'box-shadow')}>
-              <div className={styles.admin_total_left}>
-                {allTeachers ? (
-                  <span>{formatNumber(allTeachers.length)}</span>
-                ) : (
-                  <LoadingSpinner size="small" />
-                )}{' '}
-                Total Teachers
-              </div>
-              <Link href="/admin/teachers" className="btn-primary text-base">
-                View Teachers
-              </Link>
+    <div className={classnames('page-container', styles.admin_page_container)}>
+      <div className={styles.admin_page_header}>
+        <Link href="/admin">
+          <h1>Financials Junior GM Admin</h1>
+        </Link>
+        <button className="btn-accent text-base" onClick={doLogout}>
+          Logout
+        </button>
+      </div>
+      <div className={styles.admin_page_body_container}>
+        <Link
+          className="justify-center inline-flex items-center mb-4 cursor-pointer text-sm"
+          style={{ color: '#F3901D' }}
+          href="/admin/login"
+        >
+          <FontAwesomeIcon icon={faArrowLeft} />
+          <span className="inline-block ml-2">Go Back</span>
+        </Link>
+        <div className={styles.admin_totals_wrap}>
+          <div className={classnames(styles.admin_total_wrap, 'box-shadow')}>
+            <div className={styles.admin_total_left}>
+              {allTeachers ? (
+                <span>{formatNumber(allTeachers.length)}</span>
+              ) : (
+                <LoadingSpinner size="small" />
+              )}{' '}
+              Total Teachers
             </div>
-            <div className={classnames(styles.admin_total_wrap, 'box-shadow')}>
-              <div className={styles.admin_total_left}>
-                {allStudents ? (
-                  <span>{formatNumber(allStudents.length)}</span>
-                ) : (
-                  <LoadingSpinner size="small" />
-                )}{' '}
-                Total Students
-              </div>
+            <Link href="/admin/teachers" className="btn-primary text-base">
+              View Teachers
+            </Link>
+          </div>
+          <div className={classnames(styles.admin_total_wrap, 'box-shadow')}>
+            <div className={styles.admin_total_left}>
+              {allStudents ? (
+                <span>{formatNumber(allStudents.length)}</span>
+              ) : (
+                <LoadingSpinner size="small" />
+              )}{' '}
+              Total Students
             </div>
+          </div>
 
-            <div className={classnames(styles.admin_total_wrap, 'box-shadow')}>
-              <div className={styles.admin_total_left}>
-                {totalTimeSpent ? (
-                  <span>{totalTimeSpent} Hours</span>
-                ) : (
-                  <LoadingSpinner size="small" />
-                )}{' '}
-                Total Time Spent
-              </div>
+          <div className={classnames(styles.admin_total_wrap, 'box-shadow')}>
+            <div className={styles.admin_total_left}>
+              {totalTimeSpent ? (
+                <span>{totalTimeSpent} Hours</span>
+              ) : (
+                <LoadingSpinner size="small" />
+              )}{' '}
+              Total Time Spent
             </div>
           </div>
         </div>
       </div>
-    </ProtectedRoute>
+    </div>
   );
 };
 
-export default AdminPage;
+export default () => {
+  return (
+    <ProtectedRoute apiBaseUrl={API_BASE_URL}>
+      <AdminPage />
+    </ProtectedRoute>
+  );
+};

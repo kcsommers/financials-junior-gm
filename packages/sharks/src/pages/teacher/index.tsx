@@ -4,6 +4,7 @@ import { StorageKeys } from '@statrookie/core/src/auth/utils/storage-keys.consta
 import { LoadingSpinner } from '@statrookie/core/src/components/LoadingSpinner';
 import { Modal } from '@statrookie/core/src/components/Modal';
 import { ModalBoard } from '@statrookie/core/src/components/ModalBoard';
+import { ProtectedRoute } from '@statrookie/core/src/components/ProtectedRoute';
 import { Snackbar } from '@statrookie/core/src/components/Snackbar';
 import { Table } from '@statrookie/core/src/components/Table';
 import { ApiHelper } from '@statrookie/core/src/server/api/api-helper';
@@ -392,4 +393,10 @@ const TeacherDashboard = () => {
   );
 };
 
-export default TeacherDashboard;
+export default () => {
+  return (
+    <ProtectedRoute apiBaseUrl={API_BASE_URL}>
+      <TeacherDashboard />
+    </ProtectedRoute>
+  );
+};

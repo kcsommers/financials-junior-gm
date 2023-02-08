@@ -35,36 +35,38 @@ const TeachersPage = () => {
   }, []);
 
   return (
-    <ProtectedRoute apiBaseUrl={API_BASE_URL}>
-      <div
-        className={classnames('page-container', styles.admin_page_container)}
-      >
-        <div className={styles.admin_page_header}>
-          <Link href="/admin">
-            <h1>Financials Junior GM Admin</h1>
-          </Link>
-          <button className="btn-accent text-base" onClick={doLogout}>
-            Logout
-          </button>
-        </div>
-        <div className={styles.admin_page_body_container}>
-          <Link
-            className="justify-center inline-flex items-center mb-4 cursor-pointer text-sm"
-            style={{ color: '#F3901D' }}
-            href="/admin"
-          >
-            {/* @ts-ignore */}
-            <ArrowLeft fill="#F3901D" width={15} />
-            <span className="inline-block ml-2">Go Back</span>
-          </Link>
-          <TeacherBrowser
-            allTeachers={allTeachers || []}
-            apiBaseUrl={API_BASE_URL}
-          />
-        </div>
+    <div className={classnames('page-container', styles.admin_page_container)}>
+      <div className={styles.admin_page_header}>
+        <Link href="/admin">
+          <h1>Financials Junior GM Admin</h1>
+        </Link>
+        <button className="btn-accent text-base" onClick={doLogout}>
+          Logout
+        </button>
       </div>
-    </ProtectedRoute>
+      <div className={styles.admin_page_body_container}>
+        <Link
+          className="justify-center inline-flex items-center mb-4 cursor-pointer text-sm"
+          style={{ color: '#F3901D' }}
+          href="/admin"
+        >
+          {/* @ts-ignore */}
+          <ArrowLeft fill="#F3901D" width={15} />
+          <span className="inline-block ml-2">Go Back</span>
+        </Link>
+        <TeacherBrowser
+          allTeachers={allTeachers || []}
+          apiBaseUrl={API_BASE_URL}
+        />
+      </div>
+    </div>
   );
 };
 
-export default TeachersPage;
+export default () => {
+  return (
+    <ProtectedRoute apiBaseUrl={API_BASE_URL}>
+      <TeachersPage />
+    </ProtectedRoute>
+  );
+};
