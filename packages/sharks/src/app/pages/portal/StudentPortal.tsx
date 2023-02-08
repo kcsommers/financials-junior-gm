@@ -11,13 +11,9 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { batch, useDispatch, useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { updateStudentTimeSpent } from '../../data/student/student-utils';
-<<<<<<< HEAD:packages/sharks/src/app/pages/portal/StudentPortal.tsx
-import { BASE_URL } from 'app/api';
-=======
 import { getCurrentUser, updateStudentById } from './../../api-helper';
 import { videosLoaded } from '../../redux/season/season.actions';
 import { loadVideos } from '../../image-loader';
->>>>>>> develop:src/app/pages/portal/StudentPortal.jsx
 
 export const StudentPortal = ({
   screen,
@@ -27,14 +23,8 @@ export const StudentPortal = ({
   history,
 }) => {
   const dispatch = useDispatch();
-<<<<<<< HEAD:packages/sharks/src/app/pages/portal/StudentPortal.tsx
-  const { student, startTime } = useSelector(
-    (state) => (state as any).studentState
-  );
-=======
   const { loadedVideos } = useSelector((state) => state.season);
   const { student, startTime } = useSelector((state) => state.studentState);
->>>>>>> develop:src/app/pages/portal/StudentPortal.jsx
   const [shouldRedirectToDashboard, setShouldRedirectToDashboard] =
     useState(false);
 

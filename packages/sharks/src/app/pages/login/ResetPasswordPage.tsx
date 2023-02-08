@@ -7,12 +7,7 @@ import {
   faExclamationCircle,
 } from '@fortawesome/free-solid-svg-icons';
 import '@css/pages/ResetPasswordPage.css';
-<<<<<<< HEAD:packages/sharks/src/app/pages/login/ResetPasswordPage.tsx
-import { ApiHelper } from '@statrookie/core';
-import { BASE_URL } from 'app/api';
-=======
 import statrookieLogo from '@images/statrookie-logo.png';
->>>>>>> develop:src/app/pages/login/ResetPasswordPage.jsx
 
 export const ResetPasswordPage = ({ history, match }) => {
   const [email, setEmail] = useState('');

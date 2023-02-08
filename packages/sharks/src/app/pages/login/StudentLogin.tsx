@@ -11,11 +11,7 @@ import {
 import '@css/pages/Login.css';
 import { setLoginState, useAppDispatch } from '@redux';
 import Cookie from 'js-cookie'; /// JS-Cookie lib to store cookie on the browser
-<<<<<<< HEAD:packages/sharks/src/app/pages/login/StudentLogin.tsx
-import { BASE_URL } from 'app/api';
-=======
 import statrookieLogo from '@images/statrookie-logo.png';
->>>>>>> develop:src/app/pages/login/StudentLogin.jsx
 
 export const StudentLogin = ({ history, isLoggedIn }) => {
   const dispatch = useAppDispatch();
