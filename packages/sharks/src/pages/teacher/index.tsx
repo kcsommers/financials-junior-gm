@@ -1,4 +1,5 @@
 import { useAuth } from '@statrookie/core/src/auth/context/auth-context';
+import { UserRoles } from '@statrookie/core/src/auth/users/user-roles';
 import { logger } from '@statrookie/core/src/auth/utils/logger';
 import { StorageKeys } from '@statrookie/core/src/auth/utils/storage-keys.constants';
 import { LoadingSpinner } from '@statrookie/core/src/components/LoadingSpinner';
@@ -395,7 +396,10 @@ const TeacherDashboard = () => {
 
 export default () => {
   return (
-    <ProtectedRoute apiBaseUrl={API_BASE_URL}>
+    <ProtectedRoute
+      apiBaseUrl={API_BASE_URL}
+      permittedRoles={[UserRoles.ADMIN, UserRoles.TEACHER]}
+    >
       <TeacherDashboard />
     </ProtectedRoute>
   );

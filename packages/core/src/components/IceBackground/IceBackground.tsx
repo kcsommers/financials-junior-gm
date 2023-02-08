@@ -1,6 +1,5 @@
-import { useLocation } from 'react-router-dom';
-import { PropsWithChildren } from 'react';
 import Image from 'next/image';
+import { PropsWithChildren } from 'react';
 
 type IceBackgroundProps = PropsWithChildren;
 

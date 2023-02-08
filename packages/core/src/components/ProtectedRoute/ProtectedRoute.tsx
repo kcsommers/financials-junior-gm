@@ -1,18 +1,50 @@
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+import { PropsWithChildren, useEffect, useMemo, useState } from 'react';
 import { ApiHelper } from '../../server/api/api-helper';
 import { useAuth } from '../../auth/context/auth-context';
 import { LoadingSpinner } from '../LoadingSpinner';
+import { UserRole } from 'auth';
 
-export const ProtectedRoute = ({ children, apiBaseUrl }) => {
-  const { isLoggedIn, authInitialized } = useAuth();
+type ProtectedRouteProps = PropsWithChildren<{
+  apiBaseUrl: string;
+  permittedRoles?: '*' | UserRole[];
+}>;
+
+export const ProtectedRoute = ({
+  children,
+  apiBaseUrl,
+  permittedRoles = [],
+}: ProtectedRouteProps) => {
+  const { isLoggedIn, authInitialized, authorizedUser, logUserOut } = useAuth();
   const router = useRouter();
 
+  const [isPermitted, setIsPermitted] = useState(false);
+
+  const checkPermissions = () => {
+    const userRole = authorizedUser?.role;
+    const isPermitted =
+      permittedRoles === '*' || permittedRoles.includes(userRole);
+    return isPermitted;
+  };
+
   useEffect(() => {
-    if (authInitialized && !isLoggedIn) {
-      router.push('/');
-      ApiHelper.logout(apiBaseUrl);
+    if (!authInitialized) {
+      return;
     }
+
+    (async () => {
+      if (!isLoggedIn) {
+        await ApiHelper.logout(apiBaseUrl);
+        logUserOut();
+        router.push('/');
+        return;
+      }
+      if (!checkPermissions()) {
+        router.push('/');
+        return;
+      }
+      setIsPermitted(true);
+    })();
   }, [authInitialized, isLoggedIn]);
 
   if (!authInitialized) {
@@ -23,5 +55,5 @@ export const ProtectedRoute = ({ children, apiBaseUrl }) => {
     );
   }
 
-  return isLoggedIn && children;
+  return isPermitted && <>{children}</>;
 };

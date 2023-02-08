@@ -1,6 +1,7 @@
 import { TeacherBrowser } from '@statrookie/core/src/admin/TeacherBrowser';
 import { useAuth } from '@statrookie/core/src/auth/context/auth-context';
 import { Teacher } from '@statrookie/core/src/auth/users/teacher.interface';
+import { UserRoles } from '@statrookie/core/src/auth/users/user-roles';
 import { ProtectedRoute } from '@statrookie/core/src/components/ProtectedRoute';
 import ArrowLeft from '@statrookie/core/src/components/svg/arrow-left-solid.svg';
 import { ApiHelper } from '@statrookie/core/src/server/api/api-helper';
@@ -65,7 +66,10 @@ const TeachersPage = () => {
 
 export default () => {
   return (
-    <ProtectedRoute apiBaseUrl={API_BASE_URL}>
+    <ProtectedRoute
+      apiBaseUrl={API_BASE_URL}
+      permittedRoles={[UserRoles.ADMIN]}
+    >
       <TeachersPage />
     </ProtectedRoute>
   );

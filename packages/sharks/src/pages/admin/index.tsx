@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useAuth } from '@statrookie/core/src/auth/context/auth-context';
 import { Student } from '@statrookie/core/src/auth/users/student.interface';
 import { Teacher } from '@statrookie/core/src/auth/users/teacher.interface';
+import { UserRoles } from '@statrookie/core/src/auth/users/user-roles';
 import { LoadingSpinner } from '@statrookie/core/src/components/LoadingSpinner';
 import { ProtectedRoute } from '@statrookie/core/src/components/ProtectedRoute';
 import { ApiHelper } from '@statrookie/core/src/server/api/api-helper';
@@ -119,7 +120,10 @@ const AdminPage = () => {
 
 export default () => {
   return (
-    <ProtectedRoute apiBaseUrl={API_BASE_URL}>
+    <ProtectedRoute
+      apiBaseUrl={API_BASE_URL}
+      permittedRoles={[UserRoles.ADMIN]}
+    >
       <AdminPage />
     </ProtectedRoute>
   );
