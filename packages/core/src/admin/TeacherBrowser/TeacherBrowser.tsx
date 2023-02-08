@@ -386,7 +386,7 @@ export const TeacherBrowser = ({
         );
     setShowConfirm(false);
     const teachers = await ApiHelper.getAllTeachers(apiBaseUrl);
-    setDisplayedTeachers(teachers.data?.data || []);
+    setDisplayedTeachers(teachers.data || []);
     if (onRowAction) {
       onRowAction();
     }
@@ -407,6 +407,7 @@ export const TeacherBrowser = ({
           }`}
           onClick={downloadCsv}
         >
+          {/** @ts-ignore */}
           <DownloadIcon className="fill-white mr-2" width={20} />
           Download CSV
         </button>
@@ -462,6 +463,7 @@ export const TeacherBrowser = ({
               setSkipDebounce(true);
             }}
           >
+            {/** @ts-ignore */}
             <ChevronLeft fill="#00788a" />
           </span>
           Page
@@ -496,6 +498,7 @@ export const TeacherBrowser = ({
               setSkipDebounce(true);
             }}
           >
+            {/** @ts-ignore */}
             <ChevronRight className="mr-2" fill="#00788a" />
           </span>
         </div>
@@ -536,6 +539,7 @@ export const TeacherBrowser = ({
                         : 'none',
                   }}
                 >
+                  {/** @ts-ignore */}
                   <ChevronRight fill="#f3901d" />
                 </span>
               </span>
@@ -636,6 +640,7 @@ export const TeacherBrowser = ({
                         showAlert(e, 'teacher', t);
                       }}
                     >
+                      {/** @ts-ignore */}
                       <TrashIcon className="fill-white mr-2" />
                       Delete Teacher
                     </button>
@@ -646,6 +651,7 @@ export const TeacherBrowser = ({
                         showAlert(e, 'class', t);
                       }}
                     >
+                      {/** @ts-ignore */}
                       <TrashIcon className="fill-white mr-2" />
                       Delete Class
                     </button>

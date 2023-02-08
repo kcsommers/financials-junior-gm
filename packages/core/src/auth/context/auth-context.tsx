@@ -61,6 +61,7 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children, baseUrl }) => {
   }, []);
 
   const logUserIn = (user: User) => {
+    console.log('log user in:::: ', user);
     setAuthorizedUser(user);
     setIsLoggedIn(true);
     setUserRole(user?.role || null);

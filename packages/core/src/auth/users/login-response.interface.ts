@@ -5,4 +5,5 @@ export interface LoginResponse {
   message: string;
   role: UserRole;
   token: string;
+  _id?: string;
 }

@@ -35,12 +35,12 @@ const AdminLogin = () => {
           userName,
           password,
         });
-        if (!loginRes?.data?.token) {
+        if (!loginRes?.token) {
           throw loginRes;
         }
-        Cookie.set('token', loginRes.data.token);
+        Cookie.set('token', loginRes.token);
         const getUserRes = await ApiHelper.getCurrentUser(API_BASE_URL);
-        if (!getUserRes) {
+        if (!getUserRes?.data) {
           throw new Error('Error getting current user');
         }
 

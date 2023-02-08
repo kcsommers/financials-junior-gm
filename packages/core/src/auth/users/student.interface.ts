@@ -19,17 +19,18 @@ export interface Student extends User {
   rollOverBudget: number;
   tutorial: boolean;
   level: string;
+  wonGame: boolean;
   // seasons: {
   //   type: Array;
   // };
   players: IPlayer[];
-  // tutorials: {
-  //   home: Boolean;
-  //   budget: Boolean;
-  //   scout: Boolean;
-  //   team: Boolean;
-  //   season: Boolean;
-  // };
+  tutorials: {
+    home: Boolean;
+    budget: Boolean;
+    scout: Boolean;
+    team: Boolean;
+    season: Boolean;
+  };
   // gameBlock: {
   //   type: String;
   //   default: '0';

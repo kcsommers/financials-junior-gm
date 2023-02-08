@@ -1,26 +1,53 @@
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ApiHelper, StorageKeys } from '@statrookie/core';
 import { useAuth } from '@statrookie/core/src/auth/context/auth-context';
 import { logger } from '@statrookie/core/src/auth/utils/logger';
+import { StorageKeys } from '@statrookie/core/src/auth/utils/storage-keys.constants';
+import { LoadingSpinner } from '@statrookie/core/src/components/LoadingSpinner';
+import { Modal } from '@statrookie/core/src/components/Modal';
+import { ModalBoard } from '@statrookie/core/src/components/ModalBoard';
+import { Snackbar } from '@statrookie/core/src/components/Snackbar';
+import { Table } from '@statrookie/core/src/components/Table';
+import { ApiHelper } from '@statrookie/core/src/server/api/api-helper';
+import { convertMs } from '@statrookie/core/src/utils/convert-ms';
+import { getClassStats } from '@statrookie/core/src/utils/get-class-stats';
+import classnames from 'classnames';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import CRUDTable, {
-  CreateForm,
-  DeleteForm,
-  Field,
-  Fields,
-  UpdateForm,
-} from 'react-crud-table';
 import { API_BASE_URL } from '../../constants/api-base-url';
 import styles from '../styles/teacher-dashboard.module.scss';
 
 const TeacherDashboard = () => {
-  const [dataList, setDataList] = useState([]);
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [showCSVForm, setShowCSVForm] = useState(false);
-  const { logUserOut } = useAuth();
   const router = useRouter();
+  const { logUserOut } = useAuth();
+  const [modalOpen, setModalOpen] = useState(null);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [studentList, setStudentList] = useState(null);
+  const [classStats, setClassStats] = useState({
+    totalTime: 0,
+    completedTutorial: 0,
+    completedLevel1: 0,
+    completedLevel2: 0,
+    completedGame: 0,
+  });
+
+  const [firstNameInput, setFirstNameInput] = useState('');
+  const [lastNameInput, setLastNameInput] = useState('');
+  const [selectedStudent, setSelectedStudent] = useState(null);
+  const [isDelete, setIsDelete] = useState(false);
+  const [isUpload, setIsUpload] = useState(false);
+  const [snackbarConfig, setSnackbarConfig] = useState(null);
+
+  useEffect(() => {
+    getStudentList();
+  }, []);
+
+  useEffect(() => {
+    if (!studentList || !studentList.length) {
+      return;
+    }
+    const classStats = getClassStats(studentList);
+    classStats.totalTime = convertMs(classStats.totalTime, 'minutes') as number;
+    setClassStats(classStats);
+  }, [studentList]);
 
   const getStudentList = async () => {
     if (!navigator.cookieEnabled) {
@@ -31,46 +58,88 @@ const TeacherDashboard = () => {
       id = sessionStorage.getItem(StorageKeys.TEACHER_ID_STORAGE_KEY) as string;
     }
     try {
-      const studentListRes = await ApiHelper.getStudentList(API_BASE_URL, id);
-      const studentList =
-        studentListRes?.data?.data || studentListRes?.data || [];
-      for (let i = 0; i < studentList.length; i++) {
-        studentList[i].name =
-          studentList[i].firstName + ' ' + studentList[i].lastName;
-      }
-
-      setDataList(studentList);
-    } catch (error: any) {
-      logger.error(error);
+      const response = await ApiHelper.getStudentList(API_BASE_URL, id);
+      const students = response.data || [];
+      students.forEach((student) => {
+        const totalTrophies = (student.awards || []).reduce((total, level) => {
+          const trophyNames = Object.keys(level);
+          trophyNames.forEach((name) => {
+            if (level[name]) {
+              total += 1;
+            }
+          });
+          return total;
+        }, 0);
+        student.totalTrophies = totalTrophies;
+      });
+      setStudentList(students);
+    } catch (error) {
+      console.error('TeacherDashboard.getStudentList', error);
     }
   };
 
-  useEffect(() => {
-    getStudentList();
-  }, []);
-
-  const handleSelectFile = (e) => {
-    e.preventDefault();
-    var file = e.target.files[0];
-    setSelectedFile(file);
+  const showSnackbar = (config) => {
+    setSnackbarConfig(config);
+    setTimeout(() => {
+      setSnackbarConfig(null);
+    }, 3000);
   };
 
-  const addStudentInBulk = async () => {
+  const addStudent = async () => {
+    try {
+      await ApiHelper.addStudent(API_BASE_URL, {
+        firstName: firstNameInput,
+        lastName: lastNameInput,
+      });
+      closeModal();
+      getStudentList();
+      showSnackbar({ message: 'Student Added Successfully' });
+    } catch (error) {
+      console.error('TeacherDashboard.addStudent', error);
+    }
+  };
+
+  const updateStudent = async () => {
+    try {
+      await ApiHelper.updateStudent(API_BASE_URL, selectedStudent?._id, {
+        firstName: firstNameInput,
+        lastName: lastNameInput,
+      });
+      closeModal();
+      getStudentList();
+      showSnackbar({ message: 'Student Updated Successfully' });
+    } catch (error) {
+      console.error('TeacherDashboard.updateStudent', error);
+    }
+  };
+
+  const deleteStudent = async () => {
+    try {
+      await ApiHelper.deleteStudent(API_BASE_URL, selectedStudent?._id);
+      closeModal();
+      getStudentList();
+      showSnackbar({ message: 'Student Deleted Successfully' });
+    } catch (error) {
+      console.error('TeacherDashboard.deleteStudent', error);
+    }
+  };
+
+  const addStudentsFromCSV = async () => {
     if (!selectedFile) {
+      console.error(
+        'TeacherDashboard.addStudentsFromCSV: ',
+        'No File Selected'
+      );
       return;
     }
     try {
-      await ApiHelper.addStudentInBulk(API_BASE_URL, selectedFile);
+      ApiHelper.addStudentInBulk(API_BASE_URL, selectedFile);
+      setSelectedFile(null);
+      closeModal();
       getStudentList();
-      setShowCSVForm(false);
-      setSelectedFile(null);
-    } catch (error: any) {
-      logger.error(error);
-      alert(
-        error.response?.data?.message || 'Unexpected error adding students'
-      );
-      setShowCSVForm(false);
-      setSelectedFile(null);
+      showSnackbar({ message: 'Students Added Successfully' });
+    } catch (error) {
+      console.error('TeacherDashboard.addStudentsFromCSV: ', error);
     }
   };
 
@@ -79,316 +148,246 @@ const TeacherDashboard = () => {
       await ApiHelper.logout(API_BASE_URL);
       logUserOut();
       router.push('/');
-    } catch (error: any) {
+    } catch (error) {
       logger.error(error);
     }
   };
 
-  const addStudent = async (task) => {
-    var body = {
-      firstName: task.firstName,
-      lastName: task.lastName,
-    };
-
-    try {
-      const addStudentRes = await ApiHelper.addStudent(API_BASE_URL, body);
-      alert(addStudentRes.Message);
-      getStudentList();
-      return task;
-    } catch (error: any) {
-      logger.error(error);
-      if (error?.response?.status === 400) {
-        alert(error.response?.data?.message);
-      }
-      return { firstName: '', lastName: '' };
-    }
-  };
-
-  const updateStudent = async (data, task) => {
-    var body = {
-      firstName: data.firstName,
-      lastName: data.lastName,
-    };
-
-    try {
-      const updateStudentRes = await ApiHelper.updateStudent(
-        API_BASE_URL,
-        data._id,
-        body
+  const getModalTemplate = () => {
+    if (isUpload) {
+      return (
+        <div className={classnames(styles.modal_template, 'flex-1')}>
+          <div className="color-dark">Add Students in Bulk</div>
+          <input
+            name="inputFile"
+            type="file"
+            onChange={(e) => {
+              e.preventDefault();
+              const file = e.target.files[0];
+              setSelectedFile(file);
+            }}
+            accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+          />
+          <button
+            className="btn-primary btn-small"
+            onClick={addStudentsFromCSV}
+            style={{ marginRight: '0.5rem' }}
+          >
+            Upload
+          </button>
+          <button className="btn-danger btn-small" onClick={closeModal}>
+            Cancel
+          </button>
+        </div>
       );
-      alert(updateStudentRes.message);
-      getStudentList();
-      return task;
-    } catch (error: any) {
-      logger.error(error);
-      return data;
     }
+    if (isDelete) {
+      return (
+        <div className={classnames(styles.modal_template, 'flex-1')}>
+          <div className={`color-primary ${styles.confirm_text}`}>
+            Are You Sure?
+          </div>
+          <div className="color-dark">
+            Deleting this student cannot be undone.
+          </div>
+          <button className="btn-danger btn-full-width" onClick={deleteStudent}>
+            Delete Student
+          </button>
+        </div>
+      );
+    }
+    return (
+      <div className={classnames(styles.modal_template, 'flex-1')}>
+        <div className="color-dark">
+          {selectedStudent ? 'Update' : 'Add'} Student
+        </div>
+        <label htmlFor="firstName">
+          First Name
+          <input
+            type="text"
+            name="firstName"
+            placeholder="Please enter first name"
+            value={firstNameInput}
+            onChange={(e) => setFirstNameInput(e.target.value)}
+          />
+        </label>
+        <label htmlFor="lastName">
+          Last Name
+          <input
+            type="text"
+            name="lastName"
+            placeholder="Please enter last name"
+            value={lastNameInput}
+            onChange={(e) => setLastNameInput(e.target.value)}
+          />
+        </label>
+        <button
+          className="btn-accent btn-full-width"
+          onClick={() => {
+            if (selectedStudent) {
+              updateStudent();
+            } else {
+              addStudent();
+            }
+          }}
+        >
+          {selectedStudent ? 'Update' : 'Create'} Student
+        </button>
+      </div>
+    );
   };
 
-  const service = {
-    create: async (task) => {
-      let newlyAdded = await addStudent(task);
-      return newlyAdded;
-    },
-    update: async (data) => {
-      const task = dataList.find((t) => t._id === data._id);
-      task.firstName = data.firstName;
-      task.lastName = data.lastName;
-      let updated = await updateStudent(data, task);
-      return updated;
-    },
-    delete: async (data) => {
-      let deleted = await deleteStudent(data);
-      return deleted;
-    },
-  };
-
-  const deleteStudent = async (data) => {
-    if (data._id) {
-      try {
-        const deleteRes = await ApiHelper.deleteStudent(
-          API_BASE_URL,
-          data?._id
-        );
-        getStudentList();
-        alert(deleteRes.message);
-        return data;
-      } catch (error) {
-        logger.error(error);
-        return { firstName: '', lastName: '' };
-      }
-    } else {
-      return { firstName: '', lastName: '' };
-    }
+  const closeModal = () => {
+    setFirstNameInput('');
+    setLastNameInput('');
+    setSelectedStudent(null);
+    setIsDelete(false);
+    setIsUpload(false);
+    setModalOpen(false);
   };
 
   return (
-    <div className="relative text-center mb-6">
-      <div
-        className={`${styles.crud_modal_wrapper} ${
-          showCSVForm ? styles.show : styles.hide
-        }`}
-      >
-        <div className={styles.crud_modal_wrapper_background}></div>
-        <div className={styles.crud_modal_wrapper_modal}>
-          <FontAwesomeIcon
-            icon={faTimes}
-            color="#fff"
+    <div className="page-container">
+      <div className={styles.teacher_dashboard_header}>
+        <h1>Teacher Dashboard</h1>
+        <button className="btn-accent" onClick={logoutSession}>
+          Logout
+        </button>
+      </div>
+      <div className={styles.teacher_dashboard_body}>
+        <div className={styles.teacher_btns_wrap}>
+          <button
+            className="btn-accent btn-small mr-3"
+            onClick={() => setModalOpen(true)}
+          >
+            Add Student
+          </button>
+          <button
+            className="btn-accent btn-small"
             onClick={() => {
-              setShowCSVForm(false);
+              setIsUpload(true);
+              setModalOpen(true);
             }}
-            style={{
-              cursor: 'pointer',
-              position: 'absolute',
-              right: '1rem',
-              top: '1rem',
-              color: '#000',
-            }}
-          />
-          <h3 className={styles.crud_modal_wrapper_title}>
-            Add Student in Bulk
-          </h3>
-          <div>
-            <form className={styles.crud_modal_form}>
-              <div className={styles.crud_modal_form_field_container}>
-                <label
-                  htmlFor="inputFile"
-                  className={styles.crud_modal_form_label}
+          >
+            Upload CSV
+          </button>
+        </div>
+        <div className={`${styles.class_stats_wrap} box-shadow`}>
+          <h4 className="color-primary">Classroom Stats</h4>
+          {!studentList ? (
+            <LoadingSpinner />
+          ) : (
+            <>
+              <div className={styles.class_stat}>
+                <p className={styles.class_stat_title}>Total Minutes Played:</p>
+                <p className={styles.class_stat_value}>
+                  {classStats.totalTime}
+                </p>
+              </div>
+              <div className={styles.class_stat}>
+                <p className={styles.class_stat_title}>Completed Tutorial:</p>
+                <p className={styles.class_stat_value}>
+                  {classStats.completedTutorial}
+                </p>
+              </div>
+              <div className={styles.class_stat}>
+                <p className={styles.class_stat_title}>Completed Level 1:</p>
+                <p className={styles.class_stat_value}>
+                  {classStats.completedLevel1}
+                </p>
+              </div>
+              <div className={styles.class_stat}>
+                <p className={styles.class_stat_title}>Completed Level 2:</p>
+                <p className={styles.class_stat_value}>
+                  {classStats.completedLevel2}
+                </p>
+              </div>
+              <div className={styles.class_stat}>
+                <p className={styles.class_stat_title}>Completed Game:</p>
+                <p className={styles.class_stat_value}>
+                  {classStats.completedGame}
+                </p>
+              </div>
+            </>
+          )}
+        </div>
+        <Table
+          data={studentList}
+          rowDataTransformer={(student, propertyName) => {
+            if (propertyName === 'timeSpent') {
+              return convertMs(student[propertyName], 'minutes');
+            }
+            if (propertyName === 'name') {
+              return `${student.firstName} ${student.lastName}`;
+            }
+            return student[propertyName];
+          }}
+          columns={[
+            {
+              display: 'Name',
+              propertyName: 'name',
+            },
+            {
+              display: 'Username',
+              propertyName: 'userName',
+            },
+            {
+              display: 'Password',
+              propertyName: 'password',
+            },
+            {
+              display: 'Minutes Played',
+              propertyName: 'timeSpent',
+            },
+            {
+              display: 'Levels Achieved',
+              propertyName: 'level',
+            },
+            {
+              display: 'Total Trophies',
+              propertyName: 'totalTrophies',
+            },
+          ]}
+          children={{
+            actions: ({ rowData }) => (
+              <div>
+                <span
+                  className="color-dark action-btn mr-2"
+                  role="button"
+                  onClick={() => {
+                    setFirstNameInput(rowData.firstName);
+                    setLastNameInput(rowData.lastName);
+                    setSelectedStudent(rowData);
+                    setIsDelete(false);
+                    setModalOpen(true);
+                  }}
                 >
-                  Select file
-                </label>
-                <input
-                  name="inputFile"
-                  type="file"
-                  onChange={handleSelectFile}
-                  accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
-                />
+                  Update
+                </span>
+                <span
+                  className="color-danger action-btn"
+                  role="button"
+                  onClick={() => {
+                    setIsDelete(true);
+                    setSelectedStudent(rowData);
+                    setModalOpen(true);
+                  }}
+                >
+                  Delete
+                </span>
               </div>
-              <div
-                className={`${styles.crud_button} ${styles.crud_button_positive}`}
-                style={{ display: 'inline-block', marginRight: '0.5rem' }}
-                onClick={() => {
-                  setShowCSVForm(false);
-                }}
-              >
-                Cancel
-              </div>
-              <div
-                className={styles.crud_button}
-                style={{ display: 'inline-block', backgroundColor: '#00788A' }}
-                onClick={addStudentInBulk}
-              >
-                Upload
-              </div>
-            </form>
-          </div>
-        </div>
+            ),
+          }}
+        />
       </div>
-      <div style={{ maxHeight: '768px', overflow: 'auto' }}>
-        <div className={styles.teacher_dashboard_header}>
-          <div className={styles.header_buttons_container_1}>
-            <a
-              href="assets/pdf/curriculum_guide.pdf"
-              download="curriculum_guide.pdf"
-              style={{ marginLeft: '10px' }}
-              className="btn-primary btn-small"
-            >
-              Curriculum Guide
-            </a>
-            <a
-              href="assets/pdf/teacher_tutorial.pdf"
-              download="teacher_tutorial.pdf"
-              style={{ marginLeft: '10px' }}
-              className="btn-primary btn-small"
-            >
-              Tutorial PDF
-            </a>
-            <a
-              href="https://youtu.be/dsS-Zm20bnE"
-              target="_blank"
-              rel="noreferrer"
-              style={{ marginLeft: '10px' }}
-              className="btn-primary btn-small"
-            >
-              Getting Started Tutorial
-            </a>
-            <a
-              href="https://youtu.be/8uNFa2oQ6hk"
-              target="_blank"
-              rel="noreferrer"
-              style={{ marginLeft: '10px' }}
-              className="btn-primary btn-small"
-            >
-              Home Page Tutorial
-            </a>
-            <a
-              href="https://youtu.be/Aoj5gMzzwCs"
-              target="_blank"
-              rel="noreferrer"
-              style={{ marginLeft: '10px' }}
-              className="btn-primary btn-small"
-            >
-              Budget Page Tutorial
-            </a>
-            <a
-              href="https://youtu.be/6ORfGmXSZxM"
-              target="_blank"
-              rel="noreferrer"
-              style={{ marginLeft: '10px' }}
-              className="btn-primary btn-small"
-            >
-              Team Page Tutorial
-            </a>
-            <a
-              href="https://youtu.be/46pCAu6DXQg"
-              target="_blank"
-              rel="noreferrer"
-              style={{ marginLeft: '10px' }}
-              className="btn-primary btn-small"
-              onClick={logoutSession}
-            >
-              Scout Page Tutorial
-            </a>
-            <a
-              href="https://youtu.be/aG5UfofjRhQ"
-              target="_blank"
-              rel="noreferrer"
-              style={{ marginLeft: '10px' }}
-              className="btn-primary btn-small"
-              onClick={logoutSession}
-            >
-              Season Page Tutorial
-            </a>
+      <Modal isVisible={modalOpen}>
+        <ModalBoard onClose={closeModal}>
+          <div className="h-full flex items-center justify-center">
+            {getModalTemplate()}
           </div>
-          <div className={styles.header_buttons_container_2}>
-            <button className="btn-accent btn-small" onClick={logoutSession}>
-              Logout
-            </button>
-            <button
-              style={{ marginLeft: '10px' }}
-              className="btn-accent btn-small"
-              onClick={() => setShowCSVForm(true)}
-            >
-              Upload CSV
-            </button>
-          </div>
-        </div>
-        <CRUDTable caption="List of Students" items={dataList}>
-          <CreateForm
-            title="Add Student"
-            trigger="Add Student"
-            onSubmit={(task) => service.create(task)}
-            submitText="Create"
-            validate={(values) => {
-              const errors: any = {};
-              if (!values.firstName) {
-                errors.firstName = 'Please enter first name.';
-              }
-
-              if (!values.lastName) {
-                errors.lastName = 'Please enter last name.';
-              }
-
-              return errors;
-            }}
-          />
-          <Fields>
-            <Field name="name" label="Name" hideInCreateForm hideInUpdateForm />
-            <Field
-              name="firstName"
-              label="First Name"
-              placeholder="Please enter first name"
-              hideFromTable
-            />
-            <Field
-              name="lastName"
-              label="Last Name"
-              placeholder="Please enter last name"
-              hideFromTable
-            />
-            <Field
-              name="userName"
-              label="User Name"
-              hideInCreateForm
-              hideInUpdateForm
-            />
-            <Field
-              name="password"
-              label="Password"
-              sortable={false}
-              hideInCreateForm
-              hideInUpdateForm
-            />
-          </Fields>
-          <UpdateForm
-            title="Update Student"
-            trigger="Update"
-            onSubmit={(task) => service.update(task)}
-            submitText="Update"
-            validate={(values) => {
-              const errors: any = {};
-              if (!values.firstName) {
-                errors.firstName = 'Please enter first name.';
-              }
-              if (!values.lastName) {
-                errors.lastName = 'Please enter last name.';
-              }
-              return errors;
-            }}
-          />
-
-          <DeleteForm
-            title="Delete Student"
-            message="Are you sure you want to delete this student?"
-            trigger="Delete"
-            onSubmit={(task) => service.delete(task)}
-            submitText="Delete"
-          />
-        </CRUDTable>
-        {!dataList?.length && (
-          <div className="text-center m-12">No data found</div>
-        )}
-      </div>
+        </ModalBoard>
+      </Modal>
+      <Snackbar config={snackbarConfig} isVisible={!!snackbarConfig} />
     </div>
   );
 };

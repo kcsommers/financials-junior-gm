@@ -44,12 +44,14 @@ export const ConfirmModal = ({
             <div>
               <p>Cancel</p>
               <button className="mt-1" onClick={cancel}>
+                {/** @ts-ignore */}
                 <CancelIcon width={150} />
               </button>
             </div>
             <div>
               <p>Confirm</p>
               <button className="mt-1" onClick={confirm}>
+                {/** @ts-ignore */}
                 <ConfirmIcon width={150} />
               </button>
             </div>

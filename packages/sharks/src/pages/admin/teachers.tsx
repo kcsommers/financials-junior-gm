@@ -15,10 +15,7 @@ const TeachersPage = () => {
   const { logUserOut } = useAuth();
   const router = useRouter();
 
-  const [allTeachers, setAllTeachers] = useState<{
-    success: boolean;
-    data: Teacher[];
-  }>();
+  const [allTeachers, setAllTeachers] = useState<Teacher[]>();
 
   const doLogout = () => {
     ApiHelper.logout(API_BASE_URL)
@@ -61,7 +58,7 @@ const TeachersPage = () => {
             <span className="inline-block ml-2">Go Back</span>
           </Link>
           <TeacherBrowser
-            allTeachers={allTeachers?.data || []}
+            allTeachers={allTeachers || []}
             apiBaseUrl={API_BASE_URL}
           />
         </div>

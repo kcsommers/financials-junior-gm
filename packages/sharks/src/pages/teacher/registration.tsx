@@ -246,19 +246,6 @@ const TeacherRegsitrationPage = () => {
                   ref={register({ required: true, min: 1, max: 12 })}
                 />
               </div>
-
-              <div>
-                <label htmlFor="class-size">Class Size</label>
-                {errors.classSize && errors.classSize.type === 'required' && (
-                  <p className={styles.error}>Required</p>
-                )}
-                <input
-                  className="col-2-input"
-                  name="classSize"
-                  type="number"
-                  ref={register({ required: true, min: 1, max: 1500 })}
-                />
-              </div>
             </div>
 
             <label>Create a Username</label>

@@ -19,14 +19,8 @@ const AdminPage = () => {
   const { logUserOut } = useAuth();
   const router = useRouter();
 
-  const [allTeachers, setAllTeachers] = useState<{
-    success: boolean;
-    data: Teacher[];
-  }>();
-  const [allStudents, setAllStudents] = useState<{
-    success: boolean;
-    data: Student[];
-  }>();
+  const [allTeachers, setAllTeachers] = useState<Teacher[]>();
+  const [allStudents, setAllStudents] = useState<Student[]>();
   const [totalTimeSpent, setTotalTimeSpent] = useState<string>();
 
   const doLogout = () => {
@@ -88,8 +82,8 @@ const AdminPage = () => {
           <div className={styles.admin_totals_wrap}>
             <div className={classnames(styles.admin_total_wrap, 'box-shadow')}>
               <div className={styles.admin_total_left}>
-                {allTeachers?.data ? (
-                  <span>{formatNumber(allTeachers.data.length)}</span>
+                {allTeachers ? (
+                  <span>{formatNumber(allTeachers.length)}</span>
                 ) : (
                   <LoadingSpinner size="small" />
                 )}{' '}
@@ -101,8 +95,8 @@ const AdminPage = () => {
             </div>
             <div className={classnames(styles.admin_total_wrap, 'box-shadow')}>
               <div className={styles.admin_total_left}>
-                {allStudents?.data ? (
-                  <span>{formatNumber(allStudents.data.length)}</span>
+                {allStudents ? (
+                  <span>{formatNumber(allStudents.length)}</span>
                 ) : (
                   <LoadingSpinner size="small" />
                 )}{' '}

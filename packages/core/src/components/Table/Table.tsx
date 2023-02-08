@@ -3,27 +3,27 @@ import {
   faChevronRight,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { cloneElement, createRef, useEffect, useState } from 'react';
+import { cloneElement, createRef, useEffect, useState } from 'react';
 import { LoadingSpinner } from '../LoadingSpinner';
-import './Table.css';
+import styles from './Table.module.scss';
 
 export const Table = ({
   columns,
   data,
   children,
-  emptyMessage,
+  emptyMessage = '',
   rowsPerPage = 50,
-  rowExpanded,
+  rowExpanded = null,
   rowDataTransformer,
 }) => {
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
-  const [displayedRows, setDisplayedRows] = useState();
+  const [displayedRows, setDisplayedRows] = useState([]);
   const [expandedRows, setExpandedRows] = useState({});
   const [expandableContentRefs, setExpandableContentRefs] = useState({});
 
   useEffect(() => {
-    if (!displayedRows || !displayedRows.length) {
+    if (!displayedRows?.length) {
       setExpandableContentRefs({});
       return;
     }
@@ -93,22 +93,22 @@ export const Table = ({
 
   if (!data) {
     return (
-      <div className="empty-table-wrap">
+      <div className={styles.empty_table_wrap}>
         <LoadingSpinner />
       </div>
     );
   }
   if (!data.length) {
     return (
-      <div className="empty-table-wrap">
+      <div className={styles.empty_table_wrap}>
         {emptyMessage || 'No Data Provided'}
       </div>
     );
   }
   return (
     <>
-      <div className="table-pagination-wrap">
-        <div className="current-page-wrap">
+      <div className={styles.table_pagination_wrap}>
+        <div className={styles.current_page_wrap}>
           <span
             className={`${currentPage <= 1 ? 'disabled' : ''}`}
             onClick={() => {
@@ -119,12 +119,12 @@ export const Table = ({
           </span>
           Page
           <input
-            className="current-page-input"
+            className={styles.current_page_input}
             type="text"
             value={currentPage}
             onChange={(e) => {
               if (!e.target.value) {
-                setCurrentPage('');
+                setCurrentPage(0);
                 return;
               }
               if (!isNaN(+e.target.value)) {
@@ -135,7 +135,7 @@ export const Table = ({
                     ? 1
                     : Math.round(+e.target.value);
 
-                setCurrentPage(String(page));
+                setCurrentPage(page);
               }
             }}
           />
@@ -153,17 +153,17 @@ export const Table = ({
             />
           </span>
         </div>
-        <div className="current-rows-wrap">
+        <div className={styles.current_rows_wrap}>
           <p>{getRowsRange()}</p>
         </div>
       </div>
-      <div className="table-wrap box-shadow">
+      <div className={`${styles.table_wrap} box-shadow`}>
         <div
-          className="table-header-row table-row"
+          className={`${styles.table_header_row} ${styles.table_row}`}
           style={!!children?.expandableContent ? { paddingLeft: '0px' } : {}}
         >
           {children?.expandableContent && (
-            <span className="table-arrow-wrap"></span>
+            <span className={styles.table_arrow_wrap}></span>
           )}
           {columns.map((column) => (
             <div key={column.display} style={column.styles || {}}>
@@ -174,12 +174,12 @@ export const Table = ({
         </div>
         {(displayedRows || []).map((row, i) => (
           <div
-            className="table-row-wrap"
+            className={styles.table_row_wrap}
             key={`${row.name}_${i}`}
             onClick={() => toggleRow(i)}
           >
             <div
-              className="table-row"
+              className={styles.table_row}
               style={
                 !!children?.expandableContent
                   ? { paddingLeft: '0px', cursor: 'pointer' }
@@ -187,9 +187,9 @@ export const Table = ({
               }
             >
               {children?.expandableContent && (
-                <span className="table-arrow-wrap">
+                <span className={styles.table_arrow_wrap}>
                   <span
-                    className="table-arrow"
+                    className={styles.table_arrow}
                     style={{
                       transform: expandedRows[i] ? 'rotate(90deg)' : 'none',
                     }}
@@ -206,7 +206,7 @@ export const Table = ({
                 </div>
               ))}
               {!!children?.actions && (
-                <div className="actions-column">
+                <div className={styles.actions_column}>
                   {cloneElement(
                     children?.actions({ rowData: row, rowIndex: i })
                   )}
@@ -215,7 +215,7 @@ export const Table = ({
             </div>
             {!!children?.expandableContent && (
               <div
-                className="table-expandable-content"
+                className={styles.table_expandable_content}
                 style={{
                   height: expandedRows[i]
                     ? expandableContentRefs[i].current.offsetHeight + 'px'
