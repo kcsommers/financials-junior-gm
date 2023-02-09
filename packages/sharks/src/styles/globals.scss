@@ -44,7 +44,7 @@ body {
   font-family: var(--font-primary);
 }
 
-button {
+.btn {
   background: none;
   outline: none;
   border: none;
@@ -167,4 +167,10 @@ button.btn-full-width {
 .disabled {
   opacity: 0.7;
   pointer-events: none;
+}
+
+.text-shadow-secondary {
+  text-shadow: 0 0 5px rgb(var(--color-secondary)),
+    0 0 5px rgb(var(--color-secondary)), 0 0 5px rgb(var(--color-secondary)),
+    0 0 5px rgb(var(--color-secondary));
 }

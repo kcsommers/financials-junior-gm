@@ -1,3 +1,4 @@
+import { getClassStats } from '@statrookie/core/src/admin/utils/get-class-stats';
 import { useAuth } from '@statrookie/core/src/auth/context/auth-context';
 import { UserRoles } from '@statrookie/core/src/auth/users/user-roles';
 import { logger } from '@statrookie/core/src/auth/utils/logger';
@@ -10,7 +11,6 @@ import { Snackbar } from '@statrookie/core/src/components/Snackbar';
 import { Table } from '@statrookie/core/src/components/Table';
 import { ApiHelper } from '@statrookie/core/src/server/api/api-helper';
 import { convertMs } from '@statrookie/core/src/utils/convert-ms';
-import { getClassStats } from '@statrookie/core/src/utils/get-class-stats';
 import classnames from 'classnames';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';

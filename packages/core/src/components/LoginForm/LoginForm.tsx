@@ -24,7 +24,7 @@ export const LoginForm = ({ onLogin, isLoggingIn, loginError, userRole }) => {
 
   return (
     <form>
-      <div className="bg-neutral-200 p-16 w-1/2 mx-auto rounded-lg">
+      <div className="bg-neutral-200 p-16 w-1/2 mx-auto rounded-lg relative">
         <div className={styles.login_form_field}>
           <p className={classNames(styles.login_form_label, 'text-center')}>
             {userField}

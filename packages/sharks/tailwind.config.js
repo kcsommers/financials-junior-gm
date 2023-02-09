@@ -2,9 +2,6 @@
 module.exports = {
   content: ['./src/**/*.{js,ts,jsx,tsx}', '../core/src/**/*.{js,ts,jsx,tsx}'],
   theme: {
-    fontFamily: {
-      primary: 'var(--font-primary)',
-    },
     extend: {
       colors: {
         primary: 'rgb(var(--color-primary) / <alpha-value>)',
@@ -17,6 +14,19 @@ module.exports = {
       },
       outlineColor: {
         primary: 'rgb(var(--color-primary) / <alpha-value>)',
+      },
+      fontFamily: {
+        primary: 'var(--font-primary)',
+      },
+      fontSize: {
+        h1: '5.25rem',
+      },
+      borderWidth: {
+        5: '5px',
+        6: '6px',
+        7: '7px',
+        9: '9px',
+        10: '10px',
       },
     },
   },

@@ -115,6 +115,7 @@ export const Table = ({
               setCurrentPage(currentPage - 1);
             }}
           >
+            {/* @ts-ignore */}
             <ChevronLeft className="fill-primary" />
           </span>
           Page
@@ -146,6 +147,7 @@ export const Table = ({
               setCurrentPage(currentPage + 1);
             }}
           >
+            {/* @ts-ignore */}
             <ChevronRight className="fill-primary ml-2" />
           </span>
         </div>
@@ -190,6 +192,7 @@ export const Table = ({
                       transform: expandedRows[i] ? 'rotate(90deg)' : 'none',
                     }}
                   >
+                    {/* @ts-ignore */}
                     <ChevronRight className="fill-primary" />
                   </span>
                 </span>

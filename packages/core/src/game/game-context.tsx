@@ -1,34 +1,13 @@
-import {
-  createContext,
-  PropsWithChildren,
-  useContext,
-  useEffect,
-  useMemo,
-} from 'react';
+import { createContext, PropsWithChildren, useContext, useMemo } from 'react';
 
 type GameProviderProps = PropsWithChildren;
 
-type GameContext = {
-  id: number;
-};
+type GameContext = {};
 
 const GAME_CONTEXT = createContext<GameContext>({} as GameContext);
 
 export const GameProvider = ({ children }: GameProviderProps) => {
-  const id = useMemo(() => {
-    return Math.floor(Math.random() * 100000);
-  }, []);
-
-  useEffect(() => {
-    console.log('game provider init:::: ', id);
-  }, []);
-
-  const memoizedValue = useMemo(
-    () => ({
-      id,
-    }),
-    [id]
-  );
+  const memoizedValue = useMemo(() => ({}), []);
 
   return (
     <GAME_CONTEXT.Provider value={memoizedValue}>

@@ -29,7 +29,7 @@ export default ({ Component, pageProps }: AppPropsWithLayout) => {
         }}
       >
         <IceBackground />
-        <div className="relative h-full">
+        <div className="relative h-full z-10">
           {getLayout(<Component {...pageProps} />)}
         </div>
       </div>

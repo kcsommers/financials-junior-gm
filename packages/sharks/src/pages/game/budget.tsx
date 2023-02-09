@@ -1,16 +1,9 @@
 import { ProtectedRoute } from '@statrookie/core/src/components/ProtectedRoute';
-import {
-  GameProvider,
-  useGame,
-} from '@statrookie/core/src/game/context/game-context';
+import { GameProvider, useGame } from '@statrookie/core/src/game/game-context';
 import Link from 'next/link';
 import { API_BASE_URL } from '../../constants/api-base-url';
 
 const BudgetPage = () => {
-  const { id } = useGame();
-
-  console.log('game context id:::: ', id);
-
   return <Link href="/game/home">BUDGET PAGE</Link>;
 };
 

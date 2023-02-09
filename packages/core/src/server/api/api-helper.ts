@@ -6,7 +6,7 @@ import {
   LoginResponse,
   Student,
 } from '../../auth';
-import { IPlayer } from '../../players';
+import { Player } from '../../game/players/players';
 
 const https = require('https');
 
@@ -200,7 +200,7 @@ export namespace ApiHelper {
   export const setInitialTeam = (
     _baseUrl: string,
     _student: Student,
-    _players: IPlayer[]
+    _players: Player[]
   ) => {
     return updateStudentById(_baseUrl, _student._id, { players: _players });
   };

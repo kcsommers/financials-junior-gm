@@ -1,5 +1,5 @@
-import { Student } from '../auth/users/student.interface';
-import { tutorialCompleted } from './tutorial-completed';
+import { Student } from '../../auth/users/student.interface';
+import { tutorialCompleted } from '../../game/utils/tutorial-completed';
 
 export const getClassStats = (students: Student[]) => {
   const stats = {
