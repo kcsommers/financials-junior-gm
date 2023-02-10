@@ -1,4 +1,4 @@
-import { Student } from '../../auth/users/student.interface';
+import { Student } from '../../student/student.interface';
 import {
   PlayerAssignments,
   playerProperties,
@@ -14,7 +14,7 @@ export const getMoneySpent = (student: Student): number => {
       if (
         p &&
         (playerProperties.includes(p.playerAssignment) ||
-          p.playerAssignment === PlayerAssignments.UNAVAILABLE)
+          p.playerAssignment === PlayerAssignments.UNAVAILABLE) // <-- injured
       ) {
         total += +p.playerCost;
       }

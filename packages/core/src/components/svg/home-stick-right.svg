@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="825.482" height="820.904" viewBox="0 0 825.482 820.904">
+<svg xmlns="http://www.w3.org/2000/svg" width="825.482" viewBox="0 0 825.482 820.904">
   <defs>
     <filter id="shadow" x="0" y="670.904" width="356" height="132" filter-units="userSpaceOnUse">
       <feOffset dx="6" dy="12" input="SourceAlpha" />

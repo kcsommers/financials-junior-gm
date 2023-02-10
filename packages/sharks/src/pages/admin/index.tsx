@@ -1,6 +1,6 @@
 import ArrowLeft from '@statrookie/core/src/components/svg/arrow-left-solid.svg';
 import { useAuth } from '@statrookie/core/src/auth/context/auth-context';
-import { Student } from '@statrookie/core/src/auth/users/student.interface';
+import { Student } from '@statrookie/core/src/student/student.interface';
 import { Teacher } from '@statrookie/core/src/auth/users/teacher.interface';
 import { UserRoles } from '@statrookie/core/src/auth/users/user-roles';
 import { LoadingSpinner } from '@statrookie/core/src/components/LoadingSpinner';

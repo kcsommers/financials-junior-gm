@@ -1,9 +1,10 @@
 import classNames from 'classnames';
-import { useMemo } from 'react';
+import { cloneDeep } from 'lodash';
+import { useEffect, useMemo, useState } from 'react';
 import { useAuth } from '../../auth/context/auth-context';
-import { Student } from '../../auth/users/student.interface';
+import { Student } from '../../student/student.interface';
 import { LoadingSpinner } from '../../components/LoadingSpinner';
-import { OBJECTIVES } from '../../game/objectives/objectives';
+import { Objective, OBJECTIVES } from '../../game/objectives/objectives';
 import styles from './ObjectivesBoard.module.scss';
 
 type ObjectsBoardProps = {
@@ -18,15 +19,19 @@ export const ObjectivesBoard = ({
   filterComplete = false,
 }: ObjectsBoardProps) => {
   const student = useAuth().authorizedUser as Student;
+  const [currentObjectives, setCurrentObjectives] = useState<Objective[]>([]);
 
-  // update current objectives whenever studen updates
-  const currentObjectives = useMemo(() => {
-    if (!student) {
-      return [];
+  // update current objectives whenever student updates
+  useEffect(() => {
+    if (!student?.objectives) {
+      return;
     }
-    if (!student.objectives) {
-      return OBJECTIVES.slice(0, OBJECTIVES.length - 1);
-    }
+    const clonedObjectives = OBJECTIVES.map((o) => {
+      const clonedO = cloneDeep(o);
+      clonedO.isComplete = student.objectives[clonedO.name];
+      return clonedO;
+    });
+    setCurrentObjectives(clonedObjectives);
   }, [student]);
 
   const hasUrgent = useMemo(() => {
@@ -65,7 +70,7 @@ export const ObjectivesBoard = ({
         'text-white shadow-mat bg-neutral-700',
         { 'border-highlight': hasUrgent }
       )}
-      style={{ width: '425px' }}
+      style={{ width: size === 'small' ? '350px' : '425px' }}
     >
       <div className="flex justify-between text-2xl font-bold">
         <div>Objectives</div>

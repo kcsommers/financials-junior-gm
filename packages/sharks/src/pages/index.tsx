@@ -28,12 +28,12 @@ const DashboardPage = () => {
         </div>
         <div className="my-8">
           <Link href="/teacher/login">
-            <Button text="Teachers" background="#002f6c" />
+            <Button text="Teachers" bgColorClass="bg-foreground" />
           </Link>
         </div>
         <div>
           <Link href="/teacher/registration">
-            <Button text="Registration" background="#070707" />
+            <Button text="Registration" bgColorClass="bg-neutral-900" />
           </Link>
         </div>
         <Link className="text-primary text-lg mt-8" href="/admin/login">

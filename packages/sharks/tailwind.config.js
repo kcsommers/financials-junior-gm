@@ -28,6 +28,9 @@ module.exports = {
         9: '9px',
         10: '10px',
       },
+      height: {
+        header: '125px',
+      },
     },
   },
   plugins: [],

@@ -1,13 +1,13 @@
-import { User } from './user.interface';
-import { Player } from '../../game/players/players';
-import { ObjectiveNames } from '../../game/objectives/objectives';
-import { GamePage } from '../../game/game-page.type';
+import { User } from '../auth/users/user.interface';
+import { Player } from '../game/players/players';
+import { ObjectiveNames } from '../game/objectives/objectives';
+import { GamePage } from '../game/game-page.type';
 
 export interface Student extends User {
   firstName: string;
   lastName: string;
-  totalBudget: string;
-  savingsBudget: string;
+  totalBudget: string | number;
+  savingsBudget: string | number;
   timeSpent: string;
   fOne: Player;
   fTwo: Player;
@@ -18,7 +18,7 @@ export interface Student extends User {
   benchOne: Player;
   benchTwo: Player;
   benchThree: Player;
-  rollOverBudget: number;
+  rollOverBudget: number | number;
   tutorial: boolean;
   level: string;
   wonGame: boolean;

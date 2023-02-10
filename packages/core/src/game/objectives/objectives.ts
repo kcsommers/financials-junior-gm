@@ -31,10 +31,4 @@ export const OBJECTIVES: Objective[] = [
     isUrgent: false,
     isComplete: false,
   },
-  {
-    name: ObjectiveNames.SEASON_SCENARIO,
-    message: 'Learn about your budget and adjust your savings.',
-    isUrgent: false,
-    isComplete: false,
-  },
 ];

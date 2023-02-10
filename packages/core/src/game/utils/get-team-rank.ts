@@ -1,4 +1,4 @@
-import { Student } from '../../auth/users/student.interface';
+import { Student } from '../../student/student.interface';
 import { playerProperties } from '../players/players';
 import { getMaxTeamRank } from './get-max-team-rank';
 

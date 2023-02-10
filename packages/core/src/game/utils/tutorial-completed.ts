@@ -1,4 +1,4 @@
-import { Student } from '../../auth/users/student.interface';
+import { Student } from '../../student/student.interface';
 
 export const tutorialCompleted = (student: Student) => {
   return !!(

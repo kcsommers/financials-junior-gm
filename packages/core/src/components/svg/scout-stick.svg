@@ -1,5 +1,5 @@
 <svg id="Scout_Button_-_Main" data-name="Scout Button - Main" xmlns="http://www.w3.org/2000/svg" width="456"
-  height="242" viewBox="0 0 456 242">
+  viewBox="0 0 456 242">
   <defs>
     <filter id="shadow" x="61" y="103" width="358" height="130" filter-units="userSpaceOnUse">
       <feOffset dx="6" dy="12" />

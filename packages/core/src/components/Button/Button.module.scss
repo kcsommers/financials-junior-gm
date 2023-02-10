@@ -1,4 +1,4 @@
-div.btn {
+.btn {
   cursor: pointer;
   display: inline-flex;
   position: relative;
@@ -12,12 +12,12 @@ div.btn {
   z-index: 1;
 }
 
-div.btn.btn_small {
+.btn.btn_small {
   height: 64px;
   width: 225px;
 }
 
-div.btn.disabled {
+.btn.disabled {
   opacity: 0.5;
 }
 

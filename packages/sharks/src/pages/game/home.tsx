@@ -1,5 +1,5 @@
 import { useAuth } from '@statrookie/core/src/auth/context/auth-context';
-import { Student } from '@statrookie/core/src/auth/users/student.interface';
+import { Student } from '@statrookie/core/src/student/student.interface';
 import { LevelStick } from '@statrookie/core/src/components/LevelStick';
 import { LoadingSpinner } from '@statrookie/core/src/components/LoadingSpinner';
 import { ObjectivesBoard } from '@statrookie/core/src/components/ObjectivesBoard';
@@ -47,7 +47,7 @@ const HomePage = () => {
       <div className="nav-container relative" style={{ height: '100px' }}>
         <h1
           className={classNames(
-            'text-xl text-primary text-center flex items-center justify-center',
+            'text-primary text-center flex items-center justify-center',
             'text-h1 text-shadow-secondary absolute left-0 right-0 top-0 bottom-0'
           )}
         >

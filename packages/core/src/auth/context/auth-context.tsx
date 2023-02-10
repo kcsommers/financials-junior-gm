@@ -21,12 +21,13 @@ type AuthProviderProps = PropsWithChildren<{
 }>;
 
 type AuthContext = {
-  authorizedUser?: User;
+  authorizedUser: User;
   authInitialized: boolean;
   isLoggedIn: boolean;
   userRole: UserRole;
   logUserIn: (user: User) => void;
   logUserOut: () => void;
+  setAuthorizedUser: (user: User) => void;
 };
 
 const AUTH_CONTEXT = createContext<AuthContext>({} as AuthContext);
@@ -85,6 +86,7 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children, baseUrl }) => {
       userRole,
       logUserIn,
       logUserOut,
+      setAuthorizedUser,
     }),
     [authorizedUser, isLoggedIn, userRole, authInitialized]
   );

@@ -1,4 +1,4 @@
-import { Student } from '../../auth/users/student.interface';
+import { Student } from '../../student/student.interface';
 import { startingLineupFull } from './starting-lineup-full';
 
 export const budgetPageUnlocked = (student: Student): boolean => {

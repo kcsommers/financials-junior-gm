@@ -1,17 +1,14 @@
 import axios from 'axios';
 import Cookie from 'js-cookie';
-import {
-  GetUserResponse,
-  LoginCredentials,
-  LoginResponse,
-  Student,
-} from '../../auth';
+import { GetUserResponse } from '../../auth/users/get-user-response.interface';
+import { LoginCredentials } from '../../auth/users/login-credentials.interface';
+import { LoginResponse } from '../../auth/users/login-response.interface';
+import { Student } from '../../student/student.interface';
 import { Player } from '../../game/players/players';
 
 const https = require('https');
 
-let myInterceptor;
-
+let myInterceptor: number;
 if (!myInterceptor) {
   myInterceptor = axios.interceptors.request.use(
     (config) => {
@@ -190,8 +187,8 @@ export namespace ApiHelper {
   // update student
   export const updateStudentById = (
     _baseUrl: string,
-    id,
-    data
+    id: string,
+    data: Partial<Student>
   ): Promise<any> => {
     return axios.put(`${_baseUrl}/api/v1/student/${id}`, data);
   };

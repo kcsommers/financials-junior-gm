@@ -1,8 +1,13 @@
 import classnames from 'classnames';
+import Link from 'next/link';
+import { PropsWithChildren } from 'react';
 import { LoadingSpinner } from '../LoadingSpinner';
 import styles from './Button.module.scss';
 
-const getFontSize = (str, btnSize) => {
+const getFontSize = (
+  str: string,
+  btnSize: 'large' | 'medium' | 'small'
+): string => {
   if (str && str.length > 18) {
     return btnSize === 'large' ? '1.5rem' : '1.25rem';
   }
@@ -10,51 +15,80 @@ const getFontSize = (str, btnSize) => {
   return btnSize === 'large' ? '2rem' : '1.5rem';
 };
 
-type ButtonProps = {
+type ButtonProps = PropsWithChildren<{
   text: string;
   onClick?: (e: React.MouseEvent) => void;
-  background?: string;
-  color?: string;
   isLoading?: boolean;
   isDisabled?: boolean;
   size?: 'large' | 'medium' | 'small';
-  image?: string;
-};
+  href?: string;
+  bgColorClass?: string;
+}>;
 
 export const Button = ({
   text,
-  background = '#ea7200',
-  color = '#fff',
+  bgColorClass = 'bg-secondary',
   onClick,
   isLoading,
   isDisabled = false,
   size = 'large',
-  image,
+  children,
+  href,
 }: ButtonProps) => {
-  const inner = image ? (
-    <>
-      <img className={styles.btn_img} src={image} alt={text} />
-      <span className="outline-black">{text}</span>
-    </>
-  ) : (
-    <span className="outline-black">{text}</span>
-  );
-
-  return (
+  return !href ? (
     <div
-      className={classnames(styles.btn, 'box-shadow', styles[`btn_${size}`], {
-        disabled: isDisabled,
-      })}
+      className={classnames(
+        styles.btn,
+        bgColorClass,
+        'shadow-mat text-white',
+        styles[`btn_${size}`],
+        {
+          disabled: isDisabled,
+        }
+      )}
       style={{
-        backgroundColor: background,
-        color: color,
         fontSize: getFontSize(text, size),
       }}
       onClick={onClick}
     >
       <div className={styles.btn_inner}>
-        {!isLoading ? inner : <LoadingSpinner size="small" />}
+        {isLoading ? (
+          <LoadingSpinner size="small" />
+        ) : (
+          <>
+            {children}
+            <span className="outline-black">{text}</span>
+          </>
+        )}
       </div>
     </div>
+  ) : (
+    <Link
+      href={href}
+      className={classnames(
+        styles.btn,
+        bgColorClass,
+        'shadow-mat text-white',
+        styles[`btn_${size}`],
+        {
+          disabled: isDisabled,
+        }
+      )}
+      style={{
+        fontSize: getFontSize(text, size),
+      }}
+      onClick={onClick}
+    >
+      <div className={styles.btn_inner}>
+        {isLoading ? (
+          <LoadingSpinner size="small" />
+        ) : (
+          <>
+            {children}
+            <span className="outline-black ml-2">{text}</span>
+          </>
+        )}
+      </div>
+    </Link>
   );
 };

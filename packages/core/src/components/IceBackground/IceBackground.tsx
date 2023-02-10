@@ -5,7 +5,7 @@ type IceBackgroundProps = PropsWithChildren;
 
 export const IceBackground = ({ children }: IceBackgroundProps) => {
   return (
-    <div className="w-full h-full ice-background absolute top-20 bottom-0 left-0 right-0 flex items-center justify-center z-0">
+    <div className="w-full h-full ice-background absolute bottom-0 left-0 right-0 flex items-center justify-center z-0">
       <Image
         priority={true}
         fill={true}
