@@ -1,5 +1,4 @@
 import { useAuth } from '@statrookie/core/src/auth/context/auth-context';
-import { Student } from '@statrookie/core/src/student/student.interface';
 import { LevelStick } from '@statrookie/core/src/components/LevelStick';
 import { LoadingSpinner } from '@statrookie/core/src/components/LoadingSpinner';
 import { ObjectivesBoard } from '@statrookie/core/src/components/ObjectivesBoard';
@@ -9,17 +8,18 @@ import { StickButton } from '@statrookie/core/src/components/StickButton';
 import BudgetStick from '@statrookie/core/src/components/svg/budget-stick.svg';
 import LogoutStick from '@statrookie/core/src/components/svg/logout-stick.svg';
 import SeasonStick from '@statrookie/core/src/components/svg/season-stick.svg';
-import TrophiesStick from '@statrookie/core/src/components/svg/trophies-stick.svg';
 import TeamStick from '@statrookie/core/src/components/svg/team-stick.svg';
+import TrophiesStick from '@statrookie/core/src/components/svg/trophies-stick.svg';
 import { GameProvider } from '@statrookie/core/src/game/game-context';
-import { getMaxTeamRank } from '@statrookie/core/src/game/utils/get-max-team-rank';
+import { getMaxTeamRank } from '@statrookie/core/src/game/teams/utils/get-max-team-rank';
+import { getTeamRank } from '@statrookie/core/src/game/teams/utils/get-team-rank';
+import { getMoneySpent } from '@statrookie/core/src/game/utils/get-money-spent';
 import {
   budgetPageUnlocked,
   seasonPageUnlocked,
   teamPageUnlocked,
 } from '@statrookie/core/src/game/utils/unlocked-pages';
-import { getMoneySpent } from '@statrookie/core/src/game/utils/get-money-spent';
-import { getTeamRank } from '@statrookie/core/src/game/utils/get-team-rank';
+import { Student } from '@statrookie/core/src/student/student.interface';
 import classNames from 'classnames';
 import { useEffect, useState } from 'react';
 import { API_BASE_URL } from '../../constants/api-base-url';

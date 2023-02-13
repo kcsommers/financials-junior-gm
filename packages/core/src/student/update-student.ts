@@ -14,8 +14,7 @@ const updateStudentById = (
 export const updateStudent = async (
   studentId: string,
   data: Partial<Student>,
-  apiBaseUrl: string,
-  setStudent: (student: Student) => void
+  apiBaseUrl: string
 ): Promise<UpdateStudentResponse> => {
   try {
     const updateStudentRes = await updateStudentById(
@@ -24,7 +23,6 @@ export const updateStudent = async (
       data
     );
     logger.log('Update student res:::: ', updateStudentRes);
-    setStudent(updateStudentRes.updatedStudent);
     return updateStudentRes;
   } catch (error: any) {
     logger.error('Update student error:::: ', error);

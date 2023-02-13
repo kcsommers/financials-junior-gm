@@ -3,11 +3,11 @@ import HockeySticks from '@statrookie/core/src/components/svg/season-sticks.svg'
 import Players from '@statrookie/core/src/components/svg/team-players.svg';
 import Trophy from '@statrookie/core/src/components/svg/trophy.svg';
 import { useAuth } from '../../auth/context/auth-context';
-import { capitalize } from '../../utils/capitalize';
-import { Student } from '../../student/student.interface';
-import { Button } from '../../components/Button';
 import { GamePage } from '../../game/game-page.type';
-import { startingLineupFull } from '../../game/utils/starting-lineup-full';
+import { startingLineupFull } from '../../game/teams/utils/starting-lineup-full';
+import { Student } from '../../student/student.interface';
+import { capitalize } from '../../utils/capitalize';
+import { Button } from '../Button';
 
 type FooterProps = {
   pageLinks: GamePage[];
@@ -63,7 +63,7 @@ export const Footer = ({
         bgColorClass: 'bg-foreground',
         href: '/game/budget',
         // @ts-ignore
-        icon: <DollarSign width={100} />,
+        icon: <DollarSign width={35} />,
         isDisabled,
       },
     };
@@ -82,12 +82,12 @@ export const Footer = ({
   const btnConfigs = getButtonConfigs();
 
   return (
-    <div className="py-3 px-12">
+    <div className="py-3 px-12 h-footer">
       <div className="flex items-center justify-around">
         {pageLinks.map((page: GamePage) => (
           <Button
             key={page}
-            size="small"
+            size="md"
             isDisabled={btnConfigs[page].isDisabled}
             text={capitalize(page)}
             bgColorClass={btnConfigs[page].bgColorClass}

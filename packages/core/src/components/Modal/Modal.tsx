@@ -1,11 +1,13 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { PropsWithChildren } from 'react';
+import { ModalBoard } from '../../components/ModalBoard';
 
 type ModalProps = PropsWithChildren<{
   isVisible: boolean;
+  onClose?: () => void;
 }>;
 
-export const Modal = ({ children, isVisible }: ModalProps) => {
+export const Modal = ({ children, isVisible, onClose }: ModalProps) => {
   const variants = {
     enter: {
       y: '100%',
@@ -32,7 +34,7 @@ export const Modal = ({ children, isVisible }: ModalProps) => {
             backgroundColor: 'rgba(0, 0, 0, 0.4)',
           }}
         >
-          {children}
+          <ModalBoard onClose={onClose}>{children}</ModalBoard>
         </motion.div>
       )}
     </AnimatePresence>

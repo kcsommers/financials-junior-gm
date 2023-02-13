@@ -1,18 +1,15 @@
-import classnames from 'classnames';
+import classNames from 'classnames';
 import Link from 'next/link';
 import { PropsWithChildren } from 'react';
 import { LoadingSpinner } from '../LoadingSpinner';
 import styles from './Button.module.scss';
 
-const getFontSize = (
-  str: string,
-  btnSize: 'large' | 'medium' | 'small'
-): string => {
+const getFontSize = (str: string, btnSize: 'sm' | 'md' | 'lg'): string => {
   if (str && str.length > 18) {
-    return btnSize === 'large' ? '1.5rem' : '1.25rem';
+    return btnSize === 'lg' ? '1.5rem' : '1.25rem';
   }
 
-  return btnSize === 'large' ? '2rem' : '1.5rem';
+  return btnSize === 'lg' ? '2rem' : '1.5rem';
 };
 
 type ButtonProps = PropsWithChildren<{
@@ -20,7 +17,7 @@ type ButtonProps = PropsWithChildren<{
   onClick?: (e: React.MouseEvent) => void;
   isLoading?: boolean;
   isDisabled?: boolean;
-  size?: 'large' | 'medium' | 'small';
+  size?: 'sm' | 'md' | 'lg';
   href?: string;
   bgColorClass?: string;
 }>;
@@ -31,55 +28,13 @@ export const Button = ({
   onClick,
   isLoading,
   isDisabled = false,
-  size = 'large',
+  size = 'lg',
   children,
   href,
 }: ButtonProps) => {
-  return !href ? (
-    <div
-      className={classnames(
-        styles.btn,
-        bgColorClass,
-        'shadow-mat text-white',
-        styles[`btn_${size}`],
-        {
-          disabled: isDisabled,
-        }
-      )}
-      style={{
-        fontSize: getFontSize(text, size),
-      }}
-      onClick={onClick}
-    >
-      <div className={styles.btn_inner}>
-        {isLoading ? (
-          <LoadingSpinner size="small" />
-        ) : (
-          <>
-            {children}
-            <span className="outline-black">{text}</span>
-          </>
-        )}
-      </div>
-    </div>
-  ) : (
-    <Link
-      href={href}
-      className={classnames(
-        styles.btn,
-        bgColorClass,
-        'shadow-mat text-white',
-        styles[`btn_${size}`],
-        {
-          disabled: isDisabled,
-        }
-      )}
-      style={{
-        fontSize: getFontSize(text, size),
-      }}
-      onClick={onClick}
-    >
-      <div className={styles.btn_inner}>
+  const buttonInner = (
+    <>
+      <div className="h-full text-white flex items-center justify-center relative z-10">
         {isLoading ? (
           <LoadingSpinner size="small" />
         ) : (
@@ -89,6 +44,60 @@ export const Button = ({
           </>
         )}
       </div>
+      <span
+        className={classNames(
+          'absolute bottom-0 left-0 w-full h-full',
+          `${size === 'sm' ? 'rounded-md' : 'rounded-xl'}`,
+          'origin-top-left -skew-x-12 z-0',
+          bgColorClass
+        )}
+      ></span>
+      <span
+        className={classNames(
+          'absolute bottom-0 left-0 w-full h-full',
+          'origin-top-right skew-x-12 z-0',
+          `${size === 'sm' ? 'rounded-md' : 'rounded-xl'}`,
+          bgColorClass
+        )}
+      ></span>
+    </>
+  );
+
+  return !href ? (
+    <button
+      className={classNames(
+        styles.btn,
+        styles[size],
+        bgColorClass,
+        'text-white relative text-3xl',
+        `after:bg-inherit before:bg-inherit`,
+        `${size === 'sm' ? 'rounded-md' : 'rounded-xl'}`,
+        { disabled: isDisabled }
+      )}
+      style={{
+        fontSize: getFontSize(text, size),
+      }}
+      onClick={onClick}
+    >
+      {buttonInner}
+    </button>
+  ) : (
+    <Link
+      href={href}
+      className={classNames(
+        styles.btn,
+        styles[size],
+        bgColorClass,
+        'shadow-mat text-white relative text-3xl',
+        `${size === 'sm' ? 'rounded-md' : 'rounded-xl'}`,
+        { disabled: isDisabled }
+      )}
+      style={{
+        fontSize: getFontSize(text, size),
+      }}
+      onClick={onClick}
+    >
+      {buttonInner}
     </Link>
   );
 };

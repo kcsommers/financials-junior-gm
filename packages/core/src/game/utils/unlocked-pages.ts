@@ -1,5 +1,5 @@
 import { Student } from '../../student/student.interface';
-import { startingLineupFull } from './starting-lineup-full';
+import { startingLineupFull } from '../teams/utils/starting-lineup-full';
 
 export const budgetPageUnlocked = (student: Student): boolean => {
   return +student?.level > 1 || !!student?.tutorials?.home;

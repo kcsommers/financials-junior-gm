@@ -369,7 +369,7 @@ const TeacherDashboard = () => {
                   Update
                 </span>
                 <span
-                  className="text-red-700 action-btn"
+                  className="text-red-600 action-btn"
                   role="button"
                   onClick={() => {
                     setIsDelete(true);
@@ -384,12 +384,10 @@ const TeacherDashboard = () => {
           }}
         />
       </div>
-      <Modal isVisible={modalOpen}>
-        <ModalBoard onClose={closeModal}>
-          <div className="h-full flex items-center justify-center">
-            {getModalTemplate()}
-          </div>
-        </ModalBoard>
+      <Modal isVisible={modalOpen} onClose={closeModal}>
+        <div className="h-full flex items-center justify-center p-12">
+          {getModalTemplate()}
+        </div>
       </Modal>
       <Snackbar config={snackbarConfig} isVisible={!!snackbarConfig} />
     </div>

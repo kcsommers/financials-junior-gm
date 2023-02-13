@@ -1,4 +1,6 @@
-export type PlayerPosition = 'forward' | 'defender' | 'goalie';
+import { StartingPlayer, TeamPlayer } from './team';
+
+export type PlayerPosition = 'forward' | 'defender' | 'goalie' | 'defense';
 
 export type PlayerAssignment =
   | 'marketPlayer'
@@ -14,13 +16,25 @@ export type PlayerAssignment =
   | 'benchTwo'
   | 'benchThree';
 
-export const playerProperties = [
+export const startingPlayerProperties: StartingPlayer[] = [
   'fOne',
   'fTwo',
   'fThree',
   'dOne',
   'dTwo',
   'gOne',
+];
+
+export const teamPlayerProperties: TeamPlayer[] = [
+  'fOne',
+  'fTwo',
+  'fThree',
+  'dOne',
+  'dTwo',
+  'gOne',
+  'benchOne',
+  'benchTwo',
+  'benchThree',
 ];
 
 export type Player = {
@@ -35,6 +49,7 @@ export type Player = {
   playerLevel: string;
   playerPicture: string;
   playerCost: string;
+  _id: string;
 };
 
 export const PlayerAssignments = {
@@ -50,14 +65,8 @@ export const PlayerAssignments = {
   G_ONE: 'gOne',
 };
 
-export const PlayerPositions = {
-  FORWARD: 'forward',
-  DEFENSE: 'defense',
-  GOALIE: 'goalie',
-};
-
-export const TeamAssignments = {
-  offense: ['fOne', 'fTwo', 'fThree'],
-  defense: ['dOne', 'dTwo'],
-  goalie: ['gOne'],
-};
+export enum PlayerPositions {
+  FORWARD = 'forward',
+  DEFENSE = 'defense',
+  GOALIE = 'goalie',
+}

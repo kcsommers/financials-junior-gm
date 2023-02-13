@@ -7,7 +7,7 @@ type ModalBoardProps = PropsWithChildren<{
 
 export const ModalBoard = ({ children, onClose }: ModalBoardProps) => {
   return (
-    <div className="flex-1 bg-white px-12 rounded-sm m-16 shadow-lg relative">
+    <div className="flex-1 bg-white rounded-sm m-12 shadow-lg relative">
       {!!onClose && (
         <CloseIcon
           // @ts-ignore

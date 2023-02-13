@@ -89,7 +89,7 @@ const getIndicatorTransformsLarge = (num, denom) => {
 
 export const LevelStick = ({
   type,
-  isLarge = false,
+  size = 'md',
   amount,
   denom = 100,
   indicatorDirection,
@@ -97,9 +97,10 @@ export const LevelStick = ({
   textJsx,
   inverse = false,
 }) => {
-  const transforms = !isLarge
-    ? getIndicatorTransforms(amount, denom)
-    : getIndicatorTransformsLarge(amount, denom);
+  const transforms =
+    size !== 'lg'
+      ? getIndicatorTransforms(amount, denom)
+      : getIndicatorTransformsLarge(amount, denom);
 
   return (
     <div
@@ -107,15 +108,15 @@ export const LevelStick = ({
         display: 'inline-flex',
         alignItems: 'center',
         justifyContent: 'center',
-        width: isLarge ? '220px' : '190px',
-        height: isLarge ? '315px' : '225px',
+        width: size === 'lg' ? '220px' : '190px',
+        height: size === 'lg' ? '315px' : '225px',
         position: 'relative',
-        top: isLarge ? '0px' : '8px',
+        top: size === 'lg' ? '0px' : '8px',
       }}
     >
       <div
         style={
-          isLarge
+          size === 'lg'
             ? {
                 transform: 'scale(1.4)',
               }
@@ -124,7 +125,7 @@ export const LevelStick = ({
       >
         <div
           style={
-            isLarge
+            size === 'lg'
               ? styles[indicatorDirection].imageLg
               : styles[indicatorDirection].image
           }

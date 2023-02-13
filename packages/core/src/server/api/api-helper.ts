@@ -4,7 +4,7 @@ import { GetUserResponse } from '../../auth/users/get-user-response.interface';
 import { LoginCredentials } from '../../auth/users/login-credentials.interface';
 import { LoginResponse } from '../../auth/users/login-response.interface';
 import { Student } from '../../student/student.interface';
-import { Player } from '../../game/players/players';
+import { Player } from '../../game/teams/players';
 
 const https = require('https');
 

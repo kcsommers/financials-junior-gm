@@ -1,8 +1,6 @@
+import { isInjuredPlayer } from '../../game/teams/utils/is-injured-player';
+import { isTeamPlayer } from '../../game/teams/utils/is-team-player';
 import { Student } from '../../student/student.interface';
-import {
-  PlayerAssignments,
-  playerProperties,
-} from '../../game/players/players';
 
 export const getMoneySpent = (student: Student): number => {
   if (!student?.players) {
@@ -11,11 +9,7 @@ export const getMoneySpent = (student: Student): number => {
 
   return Math.min(
     student.players.reduce((total, p) => {
-      if (
-        p &&
-        (playerProperties.includes(p.playerAssignment) ||
-          p.playerAssignment === PlayerAssignments.UNAVAILABLE) // <-- injured
-      ) {
+      if (isTeamPlayer(p) || isInjuredPlayer(p)) {
         total += +p.playerCost;
       }
       return total;

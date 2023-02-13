@@ -23,7 +23,7 @@ export const LoginForm = ({ onLogin, isLoggingIn, loginError, userRole }) => {
     userRole === UserRoles.TEACHER ? 'Username or Email' : 'Username';
 
   return (
-    <form>
+    <form onSubmit={(e) => e.preventDefault()}>
       <div className="bg-neutral-200 p-16 w-1/2 mx-auto rounded-lg relative">
         <div className={styles.login_form_field}>
           <p className={classNames(styles.login_form_label, 'text-center')}>

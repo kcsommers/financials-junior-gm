@@ -1,5 +1,5 @@
 import { User } from '../auth/users/user.interface';
-import { Player } from '../game/players/players';
+import { Player } from '../game/teams/players';
 import { ObjectiveNames } from '../game/objectives/objectives';
 import { GamePage } from '../game/game-page.type';
 
@@ -9,15 +9,15 @@ export interface Student extends User {
   totalBudget: string | number;
   savingsBudget: string | number;
   timeSpent: string;
-  fOne: Player;
-  fTwo: Player;
-  fThree: Player;
-  dOne: Player;
-  dTwo: Player;
-  gOne: Player;
-  benchOne: Player;
-  benchTwo: Player;
-  benchThree: Player;
+  fOne: string;
+  fTwo: string;
+  fThree: string;
+  dOne: string;
+  dTwo: string;
+  gOne: string;
+  benchOne: string;
+  benchTwo: string;
+  benchThree: string;
   rollOverBudget: number | number;
   tutorial: boolean;
   level: string;

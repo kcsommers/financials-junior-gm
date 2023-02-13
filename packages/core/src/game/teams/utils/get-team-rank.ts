@@ -1,6 +1,6 @@
-import { Student } from '../../student/student.interface';
-import { playerProperties } from '../players/players';
+import { Student } from '../../../student/student.interface';
 import { getMaxTeamRank } from './get-max-team-rank';
+import { isStarter } from './is-starter';
 
 export const getTeamRank = (student: Student) => {
   if (!student?.players) {
@@ -9,7 +9,7 @@ export const getTeamRank = (student: Student) => {
 
   return Math.min(
     student.players.reduce((total, p) => {
-      if (p && playerProperties.includes(p.playerAssignment)) {
+      if (isStarter(p)) {
         total += +p.overallRank;
       }
       return total;

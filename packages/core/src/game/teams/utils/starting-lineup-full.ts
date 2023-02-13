@@ -1,6 +1,6 @@
-import { Student } from '../../student/student.interface';
-import { TeamAssignments } from '../../game/players/players';
-import { getAvailableSlots } from './get-available-slots';
+import { Student } from '../../../student/student.interface';
+import { getAvailableSlots } from '../../utils/get-available-slots';
+import { TeamAssignments } from '../team';
 
 export const startingLineupFull = (student: Student): boolean => {
   return (

@@ -6,7 +6,7 @@ import { cloneDeep } from 'lodash';
 import * as moment from 'moment';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Teacher } from '../../auth/users/teacher.interface';
-import { ConfirmModal } from '../../components/ConfirmModal';
+import { ConfirmScreen } from '../../components/ConfirmScreen';
 import { Modal } from '../../components/Modal';
 import ChevronLeft from '../../components/svg/chevron-left-solid.svg';
 import ChevronRight from '../../components/svg/chevron-right-solid.svg';
@@ -663,9 +663,8 @@ export const TeacherBrowser = ({
         ))}
       </div>
       <Modal isVisible={showConfirm}>
-        <ConfirmModal
+        <ConfirmScreen
           isDisabled={false}
-          children={null}
           message={`Are you sure you want to remove ${
             selectedDetails.type === 'teacher'
               ? selectedDetails.name

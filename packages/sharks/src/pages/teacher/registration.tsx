@@ -1,7 +1,6 @@
 import { Button } from '@statrookie/core/src/components/Button';
 import { LoadingSpinner } from '@statrookie/core/src/components/LoadingSpinner';
 import { Modal } from '@statrookie/core/src/components/Modal';
-import { ModalBoard } from '@statrookie/core/src/components/ModalBoard';
 import ArrowLeft from '@statrookie/core/src/components/svg/arrow-left-solid.svg';
 import { ApiHelper } from '@statrookie/core/src/server/api/api-helper';
 import classnames from 'classnames';
@@ -310,50 +309,40 @@ const TeacherRegsitrationPage = () => {
           </form>
         </div>
       </div>
-      <Modal isVisible={modalVisible}>
-        <ModalBoard onClose={() => setModalVisible(false)}>
+      <Modal isVisible={modalVisible} onClose={() => setModalVisible(false)}>
+        <div className="w-full h-full flex flex-col p-12">
+          <div style={{ textAlign: 'center', padding: '3rem' }}>
+            <h3
+              className="color-primary"
+              style={{ marginBottom: '2rem', fontSize: '2.15rem' }}
+            >
+              Thank you for registering for the FINancials Junior GM program
+              presented by Comerica.
+            </h3>
+            <p
+              className="color-primary"
+              style={{ fontSize: '1.75rem', lineHeight: '3rem' }}
+            >
+              Click here to sign in and register your class.
+            </p>
+          </div>
           <div
             style={{
-              width: '100%',
-              height: '100%',
-              padding: '6rem 0 3rem 0',
+              marginTop: '3rem',
               display: 'flex',
-              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'space-around',
+              width: '100%',
             }}
           >
-            <div style={{ textAlign: 'center', padding: '3rem' }}>
-              <h3
-                className="color-primary"
-                style={{ marginBottom: '2rem', fontSize: '2.15rem' }}
-              >
-                Thank you for registering for the FINancials Junior GM program
-                presented by Comerica.
-              </h3>
-              <p
-                className="color-primary"
-                style={{ fontSize: '1.75rem', lineHeight: '3rem' }}
-              >
-                Click here to sign in and register your class.
-              </p>
-            </div>
-            <div
-              style={{
-                marginTop: '3rem',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-around',
-                width: '100%',
+            <Button
+              text="Sign In"
+              onClick={() => {
+                router.push('/teacher/login');
               }}
-            >
-              <Button
-                text="Sign In"
-                onClick={() => {
-                  router.push('/teacher/login');
-                }}
-              />
-            </div>
+            />
           </div>
-        </ModalBoard>
+        </div>
       </Modal>
     </div>
   );

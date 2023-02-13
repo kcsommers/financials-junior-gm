@@ -1,0 +1,179 @@
+div.player_card_wrap {
+  display: inline-flex;
+  flex-direction: column;
+  border-radius: 15px;
+  &.sm {
+    width: 90px;
+    height: 130px;
+  }
+  &.md {
+    width: 200px;
+    height: 310px;
+  }
+  &.lg {
+    width: 300px;
+    height: 480px;
+  }
+}
+
+p.position_text {
+  &.sm {
+    height: 16.25px;
+    font-size: 0.8rem;
+  }
+  &.md {
+    height: 24px;
+    font-size: 1.25rem;
+  }
+  &.lg {
+    height: 40px;
+    font-size: 1.75rem;
+  }
+}
+
+div.player_card_header {
+  width: 100%;
+  position: relative;
+  z-index: 0;
+  background: linear-gradient(
+    to right,
+    rgb(var(--color-secondary-2)),
+    rgb(var(--color-secondary))
+  );
+}
+
+div.player_card_header_inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #fff;
+  border-radius: 5px;
+  padding: 0 0.5rem;
+  &.sm {
+    height: 22px;
+    font-size: 1rem;
+  }
+  &.md {
+    height: 44.03px;
+    font-size: 1.45rem;
+    position: relative;
+  }
+  &.lg {
+    height: 73.39px;
+    font-size: 2rem;
+    position: relative;
+  }
+}
+
+div.player_card_header:before,
+div.player_card_header:after {
+  content: '';
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background: inherit;
+  z-index: -1;
+  bottom: 0;
+  left: 0;
+  border-radius: 5px;
+}
+
+div.player_card_header:after {
+  transform-origin: left bottom;
+  transform: skewX(-12deg);
+}
+
+div.player_card_header:before {
+  transform-origin: right bottom;
+  transform: skewX(12deg);
+}
+
+div.player_card_wrap_large div.player_card_header {
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+
+div.player_card_wrap_large div.player_card_header:before {
+  border-top-left-radius: 20px;
+  transform: skewX(12deg);
+}
+
+div.player_card_wrap_large div.player_card_header:after {
+  border-top-right-radius: 20px;
+  transform: skewX(-12deg);
+}
+
+div.player_card_body {
+  text-align: center;
+  flex: 1;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  padding-top: 0.25rem;
+}
+
+div.player_card_color_shark {
+  background: linear-gradient(to bottom, rgb(var(--color-primary)), #fff);
+}
+
+div.player_card_color_reg {
+  background: linear-gradient(to bottom, #e5e5e5, #fff);
+}
+
+div.player_card_img_wrap {
+  &.sm {
+    width: 45px;
+    height: 45px;
+  }
+  &.md {
+    width: 84px;
+    height: 84px;
+  }
+  &.lg {
+    width: 140px;
+    height: 140px;
+  }
+}
+
+p.player_card_player_name {
+  color: #fff;
+  &.md {
+    font-size: 1.25rem;
+    padding: 0.35rem 0;
+  }
+  &.lg {
+    font-size: 1.65rem;
+    padding: 0.5rem 0;
+  }
+}
+
+div.player_ranks {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.logo {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  height: 100px;
+  left: 50%;
+  position: absolute;
+  transform: translateX(-50%) scale(0.38);
+  border-radius: 100%;
+  background-color: #fff;
+
+  &.lg {
+    transform: translateX(-50%) scale(0.65);
+  }
+}
+
+.player_rank_graphs_container {
+  &.md {
+    padding: 0 1.25rem;
+  }
+  &.lg {
+    padding: 0 2rem;
+  }
+}
