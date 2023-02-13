@@ -25,7 +25,7 @@ export const PlayerCard = ({
   teamIcon,
 }: PlayerCardProps) => {
   return size === 'sm' ? (
-    <motion.div
+    <div
       className={classNames(styles.player_card_wrap, styles[size], {
         'cursor-pointer': !!onClick,
       })}
@@ -101,7 +101,7 @@ export const PlayerCard = ({
             <div className={styles.player_ranks}>
               <PlayerRankPie
                 label="Saves"
-                sliceColorClass="bg-color-foreground"
+                sliceColorClass="bg-foreground"
                 rank={+player.overallRank}
                 max={getPlayerStatMax(+player.playerLevel)}
               />
@@ -130,7 +130,7 @@ export const PlayerCard = ({
           )}
         </div>
       </div>
-    </motion.div>
+    </div>
   ) : (
     <div
       className={classNames(
