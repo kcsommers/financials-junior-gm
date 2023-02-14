@@ -41,12 +41,12 @@ export const StickButton = ({
         className={classNames('w-full h-full inline-block relative btn', {
           disabled: isDisabled,
         })}
-        // onClick={() => {
-        //   const shouldNav = !validateNavigation || validateNavigation();
-        //   if (shouldNav) {
-        //     router.push(href);
-        //   }
-        // }}
+        onClick={(e) => {
+          const shouldNav = !validateNavigation || validateNavigation();
+          if (!shouldNav) {
+            e.preventDefault();
+          }
+        }}
       ></Link>
     </div>
   );

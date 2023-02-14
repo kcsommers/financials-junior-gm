@@ -6,9 +6,14 @@ import HomeStickL from '../svg/home-stick-left.svg';
 
 type HeaderProps = PropsWithChildren<{
   inverse?: boolean;
+  validateNavigation?: () => boolean;
 }>;
 
-export const Header = ({ children, inverse = false }: HeaderProps) => {
+export const Header = ({
+  children,
+  inverse = false,
+  validateNavigation,
+}: HeaderProps) => {
   return (
     <div className="h-header relative flex items-center justify-between">
       {inverse ? (
@@ -22,14 +27,21 @@ export const Header = ({ children, inverse = false }: HeaderProps) => {
           </div>
           {children}
           <div className="translate-x-3">
-            <StickButton href={'/game/home'} inverse={true}>
+            <StickButton
+              href={'/game/home'}
+              inverse={true}
+              validateNavigation={validateNavigation}
+            >
               <HomeStickR />
             </StickButton>
           </div>
         </>
       ) : (
         <>
-          <StickButton href={'/game/home'}>
+          <StickButton
+            href={'/game/home'}
+            validateNavigation={validateNavigation}
+          >
             <HomeStickL />
           </StickButton>
           {children}

@@ -72,4 +72,6 @@ export const getMoneyLevels = (level: number): MoneyLevel[] => {
       },
     ];
   }
+
+  return [];
 };

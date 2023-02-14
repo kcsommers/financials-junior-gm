@@ -19,7 +19,9 @@ export const ObjectivesBoard = ({
   filterComplete = false,
 }: ObjectsBoardProps) => {
   const student = useAuth().authorizedUser as Student;
-  const [currentObjectives, setCurrentObjectives] = useState<Objective[]>([]);
+  const [currentObjectives, setCurrentObjectives] = useState<Objective[]>(
+    cloneDeep(OBJECTIVES)
+  );
 
   // update current objectives whenever student updates
   useEffect(() => {

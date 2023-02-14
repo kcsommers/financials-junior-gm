@@ -24,7 +24,7 @@ module.exports = {
       },
       fontSize: {
         h1: '5.25rem',
-        xxs: '0.6rem',
+        xxs: '0.5rem',
       },
       borderWidth: {
         3: '3px',

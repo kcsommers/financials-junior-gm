@@ -22,6 +22,5 @@ export const seasonPageUnlocked = (student: Student): boolean => {
   if (+student.level > 1) {
     return startingLineupFull(student);
   }
-  console.log('huh:::: ', !!student.tutorials?.season, student.tutorials);
   return !!student.tutorials?.season;
 };

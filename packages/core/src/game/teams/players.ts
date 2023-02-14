@@ -48,7 +48,7 @@ export type Player = {
   playerAssignment: PlayerAssignment;
   playerLevel: string;
   playerPicture: string;
-  playerCost: string;
+  playerCost: string | number;
   _id: string;
 };
 

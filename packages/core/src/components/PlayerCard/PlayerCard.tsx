@@ -69,7 +69,7 @@ export const PlayerCard = ({
                   styles.player_card_color_shark
                 )
               : classNames(
-                  'shadow-mat pb-1',
+                  'shadow-mat',
                   styles.player_card_body,
                   styles.player_card_color_reg
                 )
@@ -88,12 +88,14 @@ export const PlayerCard = ({
           >
             {!!player.playerPicture ? (
               <Image
+                style={{ pointerEvents: 'none' }}
                 src={player.playerPicture}
                 alt={player.playerName}
                 width={45}
                 height={45}
               />
             ) : (
+              // @ts-ignore
               <PlayerIcon width={45} />
             )}
           </div>
@@ -212,12 +214,14 @@ export const PlayerCard = ({
           >
             {!!player.playerPicture ? (
               <Image
+                style={{ pointerEvents: 'none' }}
                 src={player.playerPicture}
                 alt={player.playerName}
                 width={size === 'md' ? 84 : 140}
                 height={size === 'md' ? 84 : 140}
               />
             ) : (
+              // @ts-ignore
               <PlayerIcon width={45} />
             )}
           </div>
