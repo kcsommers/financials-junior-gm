@@ -2,6 +2,7 @@ import { useAuth } from '@statrookie/core/src/auth/context/auth-context';
 import { Button } from '@statrookie/core/src/components/Button';
 import { DraggableItem } from '@statrookie/core/src/components/DraggableItem';
 import { DroppableItem } from '@statrookie/core/src/components/DroppableItem';
+import { GamePageWrap } from '@statrookie/core/src/components/GamePageWrap';
 import { Header } from '@statrookie/core/src/components/Header';
 import { LoadingSpinner } from '@statrookie/core/src/components/LoadingSpinner';
 import { Modal } from '@statrookie/core/src/components/Modal';
@@ -11,15 +12,15 @@ import ConfirmIcon from '@statrookie/core/src/components/svg/check-circle-solid.
 import { AddPlayerCard } from '@statrookie/core/src/components/TeamBoard/AddPlayerCard';
 import { GameProvider } from '@statrookie/core/src/game/game-context';
 import {
-  getMoneyLevels,
-  MoneyLevel,
-} from '@statrookie/core/src/game/market/utils/get-money-levels';
-import {
   Player,
-  PlayerAssignments,
   PlayerAssignment,
+  PlayerAssignments,
 } from '@statrookie/core/src/game/teams/players';
 import { getMarket } from '@statrookie/core/src/game/teams/utils/get-market';
+import {
+  getMoneyLevels,
+  MoneyLevel,
+} from '@statrookie/core/src/game/teams/utils/get-money-levels';
 import { getPlayerMinMaxRank } from '@statrookie/core/src/game/teams/utils/get-player-minmax-rank';
 import { Student } from '@statrookie/core/src/student/student.interface';
 import { updateStudent } from '@statrookie/core/src/student/update-student';
@@ -32,6 +33,8 @@ import { Preview } from 'react-dnd-preview';
 import { TouchBackend } from 'react-dnd-touch-backend';
 import FinancialsLogo from '../../components/svg/financials-logo-big.svg';
 import { API_BASE_URL } from '../../constants/api-base-url';
+import { opposingTeams } from '../../game/teams/opposing-teams';
+import { studentTeams } from '../../game/teams/student-teams';
 
 type DropData = {
   player: Player;
@@ -98,13 +101,13 @@ const ScoutPage = () => {
     setOfferBoard((prevBoard) => {
       const clonedBoard = cloneDeep(prevBoard);
       clonedBoard[offer.offerRow][offer.offerRowSlot] = offer.item.player;
-      if (!offer.item.playerBoardIndex) {
+      if (!offer.item.playerBoardIndex && offer.item.playerBoardIndex !== 0) {
         clonedBoard[offer.item.offerRow][offer.item.offerRowSlot] = null;
       }
       return clonedBoard;
     });
 
-    if (!offer.item.playerBoardIndex) {
+    if (!offer.item.playerBoardIndex && offer.item.playerBoardIndex !== 0) {
       return;
     }
     setPlayerBoard((prevBoard) => {
@@ -218,7 +221,7 @@ const ScoutPage = () => {
   };
 
   return !student ? (
-    <LoadingSpinner />
+    <LoadingSpinner isFullPage={true} />
   ) : (
     <div className="flex flex-col h-full">
       <Header
@@ -400,7 +403,13 @@ const ScoutPage = () => {
 const ProtectedScoutPage = () => {
   return (
     <ProtectedRoute apiBaseUrl={API_BASE_URL} permittedRoles="*">
-      <ScoutPage />
+      <GamePageWrap
+        studentTeams={studentTeams}
+        opposingTeams={opposingTeams}
+        apiBaseUrl={API_BASE_URL}
+      >
+        <ScoutPage />
+      </GamePageWrap>
     </ProtectedRoute>
   );
 };
@@ -415,7 +424,11 @@ const generatePreview = ({ itemType, item, style }) => {
 
 ProtectedScoutPage.getLayout = function getLayout(page: any) {
   return (
-    <GameProvider>
+    <GameProvider
+      studentTeams={studentTeams}
+      opposingTeams={opposingTeams}
+      apiBaseUrl={API_BASE_URL}
+    >
       <DndProvider backend={TouchBackend} options={{ enableMouseEvents: true }}>
         {page}
         <Preview>{generatePreview}</Preview>

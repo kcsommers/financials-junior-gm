@@ -3,7 +3,7 @@
  */
 const nextConfig = {
   images: {
-    domains: ['res.cloudinary.com'],
+    domains: ['res.cloudinary.com', 'sharks-assets.s3.us-west-2.amazonaws.com'],
   },
   webpack(config, options) {
     config.module.rules.push({

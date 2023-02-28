@@ -1,8 +1,9 @@
 import { useMemo, useState } from 'react';
-import { signPlayer } from '../../game/market/utils/sign-player';
 import { Player, PlayerAssignment } from '../../game/teams/players';
+import { StudentTeam } from '../../game/teams/student-team.type';
 import { TeamAssignments } from '../../game/teams/team';
-import { getAvailableSlots } from '../../game/utils/get-available-slots';
+import { getAvailableSlots } from '../../game/teams/utils/get-available-slots';
+import { signPlayer } from '../../game/teams/utils/sign-player';
 import { Student } from '../../student/student.interface';
 import { MarketPlayersBoard } from '../MarketPlayersBoard/MarketPlayersBoard';
 import { TeamBudgetState } from '../TeamBudgetState';
@@ -11,14 +12,16 @@ import { PlayerSignSuccess } from './PlayerSignSuccess';
 
 type SignPlayerBoardProps = {
   student: Student;
-  setStudent: (student: Student) => void;
+  studentTeam: StudentTeam;
+  onPlayerSigned: (student: Student, completedScenario?: boolean) => void;
   slotAssignment: PlayerAssignment;
   apiBaseUrl: string;
 };
 
 export const SignPlayerBoard = ({
   student,
-  setStudent,
+  studentTeam,
+  onPlayerSigned,
   slotAssignment,
   apiBaseUrl,
 }: SignPlayerBoardProps) => {
@@ -42,21 +45,31 @@ export const SignPlayerBoard = ({
         slotAssignment,
         apiBaseUrl
       );
-      setStudent(signPlayerRes.updatedStudent);
       setPlayerSigned(true);
+      onPlayerSigned(
+        signPlayerRes.updatedStudent,
+        signPlayerRes.completedScenario
+      );
     } catch (error: any) {
       // @TODO error handle
     }
   };
 
   if (playerSigned) {
-    return <PlayerSignSuccess student={student} player={signingPlayer} />;
+    return (
+      <PlayerSignSuccess
+        student={student}
+        player={signingPlayer}
+        studentTeam={studentTeam}
+      />
+    );
   }
 
   if (signingPlayer) {
     return (
       <ConfirmSignPlayer
         student={student}
+        studentTeam={studentTeam}
         player={signingPlayer}
         cancel={() => setSigningPlayer(null)}
         confirm={signPlayerConfirmed}
@@ -67,7 +80,7 @@ export const SignPlayerBoard = ({
   return (
     <div className="p-12 h-full flex flex-col justify-between">
       <div className="flex">
-        <TeamBudgetState student={student} />
+        <TeamBudgetState student={student} studentTeam={studentTeam} />
         <div className="flex-1 pl-8">
           <h3 className="text-primary text-2xl">Spaces On Your Team</h3>
           <div className="border-4 border-neutral-700 p-4 rounded-md">
@@ -96,7 +109,6 @@ export const SignPlayerBoard = ({
       <MarketPlayersBoard
         student={student}
         slotAssignment={slotAssignment}
-        players={student.players}
         marketConfig={{ action: 'sign' }}
         onSignPlayer={setSigningPlayer}
       />

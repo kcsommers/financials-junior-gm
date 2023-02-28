@@ -5,6 +5,7 @@ module.exports = {
     extend: {
       colors: {
         primary: 'rgb(var(--color-primary) / <alpha-value>)',
+        'primary-2': 'rgb(var(--color-primary-2) / <alpha-value>)',
         secondary: 'rgb(var(--color-secondary) / <alpha-value>)',
         'secondary-2': 'rgb(var(--color-secondary-2) / <alpha-value>)',
         highlight: 'rgb(var(--color-highlight) / <alpha-value>)',
@@ -27,6 +28,7 @@ module.exports = {
         xxs: '0.5rem',
       },
       borderWidth: {
+        1: '1px',
         3: '3px',
         5: '5px',
         6: '6px',
@@ -41,5 +43,10 @@ module.exports = {
       },
     },
   },
+  safelist: [
+    {
+      pattern: /(.)-(foreground|highlight|primary|secondary|secondary-2)/,
+    },
+  ],
   plugins: [],
 };

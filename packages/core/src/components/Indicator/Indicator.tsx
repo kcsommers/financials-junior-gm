@@ -1,74 +1,75 @@
 import classNames from 'classnames';
+import { isThemeColor } from '../../theme/colors/colors';
 import { getDollarString } from '../../utils/get-dollar-string';
 import styles from './Indicator.module.scss';
 
-const getFontSize = (amount) => {
-  const _amount = typeof amount !== 'string' ? String(amount) : amount;
+type IndicatorProps = {
+  value: number;
+  direction?: 'left' | 'right' | 'top' | 'bottom';
+  isMoney?: boolean;
+  rotate?: number;
+  textColor?: string;
+  bgColor?: string;
+  size?: 'sm' | 'md' | 'lg';
+};
 
-  if (!_amount) {
+const getFontSize = (value: number, size: 'sm' | 'md' | 'lg'): string => {
+  const strValue = String(value);
+  if (!strValue) {
+    if (size === 'sm') {
+      return '1.3rem';
+    }
+    if (size === 'md') {
+      return '2rem';
+    }
+  }
+  if (strValue.length >= 4) {
+    if (size === 'sm') {
+      return '0.6rem';
+    }
+    if (size === 'md') {
+      return '0.9rem';
+    }
+  }
+  if (strValue.length >= 3) {
+    if (size === 'sm') {
+      return '0.767rem';
+    }
+    if (size === 'md') {
+      return '1.15rem';
+    }
+  }
+  if (strValue.length >= 2) {
+    if (size === 'sm') {
+      return '1rem';
+    }
+    if (size === 'md') {
+      return '1.5rem';
+    }
+  }
+  if (size === 'sm') {
+    return '1.3rem';
+  }
+  if (size === 'md') {
     return '2rem';
   }
-
-  if (_amount.length >= 4) {
-    return '0.9rem';
-  }
-
-  if (_amount.length >= 3) {
-    return '1.15rem';
-  }
-
-  if (_amount.length >= 2) {
-    return '1.5rem';
-  }
-
-  return '2rem';
 };
 
 export const Indicator = ({
-  amount,
+  value = 0,
   direction,
-  isMoney,
+  isMoney = false,
   rotate,
-  color = '#00788a',
-  borderColor = '#4b4b4b',
-  isComericaBtn = false,
-}: any) => {
-  const validAmount = Math.max(amount, 0);
+  textColor = 'primary',
+  bgColor = 'neutral-700',
+  size = 'md',
+}: IndicatorProps) => {
+  const validAmount = Math.max(value, 0);
 
-  const comericaBtn = (
-    <div
-      style={{
-        width: '75px',
-        height: '75px',
-        borderRadius: '100%',
-        border: '5px solid #002f6d',
-        display: 'inline-flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: '2px',
-      }}
-    >
-      <div
-        style={{
-          width: '100%',
-          height: '100%',
-          borderRadius: '100%',
-          backgroundColor: '#002f6d',
-          display: 'inline-flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          color: '#fff',
-        }}
-      >
-        {getDollarString(validAmount, true)}
-      </div>
-    </div>
-  );
-
-  return !isComericaBtn ? (
+  return (
     <div
       className={classNames(
-        styles.amount_indicator_wrap,
+        'inline-block relative',
         direction ? styles[`amount_indicator_${direction}`] : ''
       )}
       style={{
@@ -80,32 +81,37 @@ export const Indicator = ({
     >
       {direction && (
         <div
-          className={styles.amount_indicator_pointer}
-          style={{ backgroundColor: borderColor }}
+          className={classNames(
+            styles.amount_indicator_pointer,
+            styles[size],
+            `absolute right-0 top-1/2 bg-${bgColor}`
+          )}
         ></div>
       )}
-      <div className={styles.amount_indicator} style={{ borderColor }}>
+      <div
+        className={classNames(
+          styles.amount_indicator,
+          styles[size],
+          'relative shadow-mat bg-white rounded-full flex items-center justify-center',
+          `border-${bgColor}`
+        )}
+      >
         <p
-          className={classNames(
-            styles.amount_indicator_amount,
-            'text-primary',
-            { [styles.amount_indicator_amount_money]: isMoney }
-          )}
+          className={styles.amount_indicator_amount}
           style={{
             transform:
               direction === 'right'
                 ? `rotate(-${rotate}deg)`
                 : `rotate(${rotate}deg)`,
-            fontSize: getFontSize(validAmount),
-            color: color,
-            transition: 'all 0.3s ease',
+            fontSize: getFontSize(validAmount, size),
+            color: isThemeColor(textColor)
+              ? `rgb(var(--color-${textColor}))`
+              : textColor,
           }}
         >
           {isMoney ? getDollarString(validAmount, true) : validAmount}
         </p>
       </div>
     </div>
-  ) : (
-    comericaBtn
   );
 };

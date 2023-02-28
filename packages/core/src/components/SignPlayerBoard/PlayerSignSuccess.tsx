@@ -1,4 +1,5 @@
 import { Player } from '../../game/teams/players';
+import { StudentTeam } from '../../game/teams/student-team.type';
 import { Student } from '../../student/student.interface';
 import { PlayerCard } from '../PlayerCard';
 import NotepadIcon from '../svg/notepaper-pen.svg';
@@ -6,12 +7,14 @@ import { TeamBudgetState } from '../TeamBudgetState';
 
 type PlayerSignSuccessProps = {
   student: Student;
+  studentTeam: StudentTeam;
   player: Player;
 };
 
 export const PlayerSignSuccess = ({
   player,
   student,
+  studentTeam,
 }: PlayerSignSuccessProps) => {
   return (
     <div className="py-16">
@@ -20,7 +23,11 @@ export const PlayerSignSuccess = ({
       </h2>
       <div className="flex flex-1 justify-around px-16">
         <div className="flex justify-center pt-6">
-          <TeamBudgetState student={student} size="lg" />
+          <TeamBudgetState
+            student={student}
+            studentTeam={studentTeam}
+            size="lg"
+          />
         </div>
         <div className="flex-1 flex flex-col items-center justify-center">
           <div className="flex-1">

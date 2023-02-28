@@ -1,4 +1,5 @@
 import { Player } from '../../game/teams/players';
+import { StudentTeam } from '../../game/teams/student-team.type';
 import { Student } from '../../student/student.interface';
 import { ConfirmScreen } from '../ConfirmScreen';
 import { PlayerCard } from '../PlayerCard';
@@ -9,6 +10,7 @@ type ConfirmSignPlayerProps = {
   cancel: () => void;
   player: Player;
   student: Student;
+  studentTeam: StudentTeam;
 };
 
 export const ConfirmSignPlayer = ({
@@ -16,6 +18,7 @@ export const ConfirmSignPlayer = ({
   cancel,
   player,
   student,
+  studentTeam,
 }: ConfirmSignPlayerProps) => {
   return (
     <ConfirmScreen
@@ -27,6 +30,7 @@ export const ConfirmSignPlayer = ({
         <div className="flex-1">
           <TeamBudgetState
             student={student}
+            studentTeam={studentTeam}
             changes={{
               playerCost: +player.playerCost,
               playerRank: +player.overallRank,

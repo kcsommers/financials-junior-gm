@@ -36,7 +36,7 @@ export const Button = ({
     <>
       <div className="h-full text-white flex items-center justify-center relative z-10">
         {isLoading ? (
-          <LoadingSpinner size="small" />
+          <LoadingSpinner size="sm" />
         ) : (
           <>
             {children}

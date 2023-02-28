@@ -49,7 +49,7 @@ export const ProtectedRoute = ({
 
   if (!authInitialized) {
     return (
-      <div className="text-center py-8">
+      <div className="text-center py-8 h-full flex items-center justify-center">
         <LoadingSpinner />
       </div>
     );

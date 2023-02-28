@@ -1,5 +1,5 @@
 import { Student } from '../../../student/student.interface';
-import { getAvailableSlots } from '../../utils/get-available-slots';
+import { getAvailableSlots } from './get-available-slots';
 import { TeamAssignments } from '../team';
 
 export const startingLineupFull = (student: Student): boolean => {

@@ -11,15 +11,9 @@ import { Button } from '../Button';
 
 type FooterProps = {
   pageLinks: GamePage[];
-  inTransition?: boolean;
-  tutorialActive?: boolean;
 };
 
-export const Footer = ({
-  pageLinks,
-  inTransition = false,
-  tutorialActive = false,
-}: FooterProps) => {
+export const Footer = ({ pageLinks }: FooterProps) => {
   const student = useAuth().authorizedUser as Student;
 
   const allTutorialsViewed =
@@ -32,11 +26,7 @@ export const Footer = ({
     student.tutorials.season;
 
   const getButtonConfigs = () => {
-    const isDisabled = !!(
-      inTransition ||
-      tutorialActive ||
-      !allTutorialsViewed
-    );
+    const isDisabled = !allTutorialsViewed;
     const btnConfigs = {
       team: {
         bgColorClass: 'bg-secondary',
@@ -80,7 +70,6 @@ export const Footer = ({
   };
 
   const btnConfigs = getButtonConfigs();
-
   return (
     <div className="py-3 px-12 h-footer">
       <div className="flex items-center justify-around">

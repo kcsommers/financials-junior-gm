@@ -1,5 +1,17 @@
 import { Indicator } from '../../components/Indicator';
+import { isThemeColor } from '../../theme/colors/colors';
 import { LevelStickSvg } from './LevelStickSvg';
+
+type LevelStickProps = {
+  value: number;
+  denom: number;
+  isMoney?: boolean;
+  size?: 'sm' | 'md' | 'lg';
+  indicatorDirection?: 'right' | 'left' | 'top' | 'bottom';
+  color?: string; // <-- tailwind color
+  label?: string;
+  inverse?: boolean;
+};
 
 const styles = {
   right: {
@@ -20,7 +32,6 @@ const styles = {
       top: 0,
     },
     text: {
-      color: '#ea7200',
       display: 'inline-block',
       fontSize: '1rem',
       marginRight: '0.25rem',
@@ -46,7 +57,6 @@ const styles = {
       top: 0,
     },
     text: {
-      color: '#002f6c',
       display: 'inline-block',
       fontSize: '1rem',
       marginLeft: '0.25rem',
@@ -88,19 +98,19 @@ const getIndicatorTransformsLarge = (num, denom) => {
 };
 
 export const LevelStick = ({
-  type,
+  isMoney = false,
   size = 'md',
-  amount,
+  value = 0,
   denom = 100,
-  indicatorDirection,
+  indicatorDirection = 'left',
   color,
-  textJsx,
+  label,
   inverse = false,
-}) => {
+}: LevelStickProps) => {
   const transforms =
     size !== 'lg'
-      ? getIndicatorTransforms(amount, denom)
-      : getIndicatorTransformsLarge(amount, denom);
+      ? getIndicatorTransforms(value, denom)
+      : getIndicatorTransformsLarge(value, denom);
 
   return (
     <div
@@ -131,7 +141,7 @@ export const LevelStick = ({
           }
         >
           <LevelStickSvg
-            num={Math.max(amount, 0)}
+            num={Math.max(value, 0)}
             denom={denom}
             color={color}
             inverse={inverse}
@@ -146,25 +156,65 @@ export const LevelStick = ({
       >
         {indicatorDirection === 'right' || indicatorDirection === 'bottom' ? (
           <>
-            <span style={styles[indicatorDirection].text}>{textJsx}</span>
+            {label && (
+              <span
+                className={`text-${color}`}
+                style={styles[indicatorDirection].text}
+              >
+                {label.split('\\n').map((str, i) => (
+                  <span key={str}>
+                    {i === 0 ? (
+                      str
+                    ) : (
+                      <>
+                        <br />
+                        {str}
+                      </>
+                    )}
+                  </span>
+                ))}
+              </span>
+            )}
             <Indicator
-              amount={amount}
+              value={value}
               direction={indicatorDirection}
-              isMoney={type === 'budget'}
+              isMoney={isMoney}
               rotate={transforms.rotate}
-              color={color}
+              textColor={color}
             />
           </>
         ) : (
           <>
             <Indicator
-              amount={amount}
+              value={value}
               direction={indicatorDirection}
-              isMoney={type === 'budget'}
+              isMoney={isMoney}
               rotate={transforms.rotate}
-              color={color}
+              textColor={color}
             />
-            <span style={styles[indicatorDirection].text}>{textJsx}</span>
+            {label && (
+              <span
+                style={{
+                  ...styles[indicatorDirection].text,
+                  color: isThemeColor(color)
+                    ? `rgb(var(--color-${color}))`
+                    : color,
+                }}
+              >
+                {label.split('\\n').map((str, i) => (
+                  <span key={str}>
+                    {i === 0 ? (
+                      str
+                    ) : (
+                      <>
+                        <br />
+                        {str}
+                      </>
+                    )}
+                  </span>
+                ))}
+              </span>
+            )}
           </>
         )}
       </div>

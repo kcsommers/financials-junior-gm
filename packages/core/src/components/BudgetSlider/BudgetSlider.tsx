@@ -1,7 +1,6 @@
-import { motion } from 'framer-motion';
-import { Student } from '../../student/student.interface';
 import { Indicator } from '../../components/Indicator';
 import { Budget } from '../../game/budget/budget';
+import { Student } from '../../student/student.interface';
 import { getDollarString } from '../../utils/get-dollar-string';
 import styles from './BudgetSlider.module.scss';
 import { BudgetSliderSvg } from './BudgetSliderSvg';
@@ -21,13 +20,6 @@ export const BudgetSlider = ({
   spendingLabel = 'Spending Budget',
   totalDisplay = '',
 }: BudgetSliderProps) => {
-  // const sliderAnimationState = useAppSelector(
-  //   (state) => state.tutorial.budget.slider
-  // );
-  // const indicatorAnimationState = useAppSelector(
-  //   (state) => state.tutorial.budget.savingsIndicator
-  // );
-
   const getSavingsIndicatorPosition = () => {
     const pct =
       (budget.savingsBudget / (budget.totalBudget - budget.moneySpent)) * 100;
@@ -77,11 +69,7 @@ export const BudgetSlider = ({
   }
 
   return (
-    <motion.div
-      className={styles.budget_slider_wrap}
-      transition={{ default: { duration: 1 } }}
-      // animate={sliderAnimationState}
-    >
+    <div className={styles.budget_slider_wrap}>
       <div className={styles.top_indicators_container}>
         {budget.moneySpent > 0 && (
           <div className={styles.spent_indicator_wrap}>
@@ -120,19 +108,18 @@ export const BudgetSlider = ({
             }}
           >
             <div className={styles.slider_input_wrap_inner}>
-              <motion.div
+              <div
                 className={styles.savings_indicator_wrap}
                 style={getSavingsIndicatorPosition()}
-                // animate={indicatorAnimationState}
               >
                 <Indicator
-                  amount={budget.savingsBudget}
+                  value={budget.savingsBudget}
                   direction="top"
-                  borderColor="#ffd782"
+                  bgColor="highlight"
                   isMoney={true}
                 />
                 <p className="text-primary">Savings</p>
-              </motion.div>
+              </div>
               <input
                 type="range"
                 min="0"
@@ -149,6 +136,6 @@ export const BudgetSlider = ({
           </div>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 };

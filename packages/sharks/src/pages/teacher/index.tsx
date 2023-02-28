@@ -5,7 +5,6 @@ import { logger } from '@statrookie/core/src/auth/utils/logger';
 import { StorageKeys } from '@statrookie/core/src/auth/utils/storage-keys.constants';
 import { LoadingSpinner } from '@statrookie/core/src/components/LoadingSpinner';
 import { Modal } from '@statrookie/core/src/components/Modal';
-import { ModalBoard } from '@statrookie/core/src/components/ModalBoard';
 import { ProtectedRoute } from '@statrookie/core/src/components/ProtectedRoute';
 import { Snackbar } from '@statrookie/core/src/components/Snackbar';
 import { Table } from '@statrookie/core/src/components/Table';

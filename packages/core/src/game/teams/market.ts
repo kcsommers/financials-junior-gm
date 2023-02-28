@@ -1,5 +1,12 @@
 import { Player } from './players';
 
+export type MarketAction = 'release' | 'sign' | 'trade';
+
+export type MarketConfig = {
+  action: MarketAction;
+  tradedPlayer?: Player;
+};
+
 export type Market = {
   forwards: Player[];
   defense: Player[];

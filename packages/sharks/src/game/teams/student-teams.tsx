@@ -5,24 +5,33 @@ import SharksLogo from '../../components/svg/sjsharks-logo.svg';
 
 export const studentTeams: StudentTeam[] = [
   {
-    nickName: 'Jr. Sharks',
+    name: 'Jr. Sharks',
     city: 'San Jose',
-    stats: { wins: 0, losses: 0, points: 0 },
-    logo: <JrSharksLogo />,
+    stats: { wins: 0, losses: 0, points: 0, standing: 13, rank: 0 },
+    getLogo: (props = {}) => (
+      // @ts-ignore
+      <JrSharksLogo {...props} />
+    ),
     players: {},
   },
   {
-    nickName: 'Barracuda',
+    name: 'Barracuda',
     city: 'San Jose',
-    stats: { wins: 0, losses: 0, points: 0 },
-    logo: <BarracudaLogo />,
+    stats: { wins: 0, losses: 0, points: 0, standing: 13, rank: 0 },
+    getLogo: (props = { width: '80px' }) => (
+      // @ts-ignore
+      <BarracudaLogo {...props} />
+    ),
     players: {},
   },
   {
-    nickName: 'Sharks',
+    name: 'Sharks',
     city: 'San Jose',
-    stats: { wins: 0, losses: 0, points: 0 },
-    logo: <SharksLogo />,
+    stats: { wins: 0, losses: 0, points: 0, standing: 13, rank: 0 },
+    getLogo: (props = { width: '80px' }) => (
+      // @ts-ignore
+      <SharksLogo {...props} />
+    ),
     players: {},
   },
 ];

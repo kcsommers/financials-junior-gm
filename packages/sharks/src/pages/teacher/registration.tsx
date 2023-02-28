@@ -298,7 +298,7 @@ const TeacherRegsitrationPage = () => {
             <div className={classnames(styles.form_submit_wrap)}>
               {isRegistering ? (
                 <span className={styles.reg_form_spinner_wrap}>
-                  <LoadingSpinner size="small" />
+                  <LoadingSpinner size="sm" />
                 </span>
               ) : (
                 <button className="btn-secondary text-center text-base w-full">

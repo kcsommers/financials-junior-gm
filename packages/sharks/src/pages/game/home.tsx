@@ -1,6 +1,9 @@
 import { useAuth } from '@statrookie/core/src/auth/context/auth-context';
+import { ConfirmScreen } from '@statrookie/core/src/components/ConfirmScreen';
+import { GamePageWrap } from '@statrookie/core/src/components/GamePageWrap';
 import { LevelStick } from '@statrookie/core/src/components/LevelStick';
 import { LoadingSpinner } from '@statrookie/core/src/components/LoadingSpinner';
+import { Modal } from '@statrookie/core/src/components/Modal';
 import { ObjectivesBoard } from '@statrookie/core/src/components/ObjectivesBoard';
 import { ProtectedRoute } from '@statrookie/core/src/components/ProtectedRoute';
 import { RestartButton } from '@statrookie/core/src/components/RestartButton';
@@ -10,10 +13,10 @@ import LogoutStick from '@statrookie/core/src/components/svg/logout-stick.svg';
 import SeasonStick from '@statrookie/core/src/components/svg/season-stick.svg';
 import TeamStick from '@statrookie/core/src/components/svg/team-stick.svg';
 import TrophiesStick from '@statrookie/core/src/components/svg/trophies-stick.svg';
-import { GameProvider } from '@statrookie/core/src/game/game-context';
+import { getMoneySpent } from '@statrookie/core/src/game/budget/get-money-spent';
+import { GameProvider, useGame } from '@statrookie/core/src/game/game-context';
+import { postResetSeason } from '@statrookie/core/src/game/season/reset-season';
 import { getMaxTeamRank } from '@statrookie/core/src/game/teams/utils/get-max-team-rank';
-import { getTeamRank } from '@statrookie/core/src/game/teams/utils/get-team-rank';
-import { getMoneySpent } from '@statrookie/core/src/game/utils/get-money-spent';
 import {
   budgetPageUnlocked,
   seasonPageUnlocked,
@@ -21,28 +24,47 @@ import {
 } from '@statrookie/core/src/game/utils/unlocked-pages';
 import { Student } from '@statrookie/core/src/student/student.interface';
 import classNames from 'classnames';
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { API_BASE_URL } from '../../constants/api-base-url';
+import { opposingTeams } from '../../game/teams/opposing-teams';
+import { studentTeams } from '../../game/teams/student-teams';
 
 const HomePage = () => {
-  const student = useAuth().authorizedUser as Student;
-  const [teamRank, setTeamRank] = useState(0);
+  const { authorizedUser, setAuthorizedUser } = useAuth();
+  const student = authorizedUser as Student;
   const [moneySpent, setMoneySpent] = useState(0);
+  const [showResetSeasonModal, setShowResetSeasonModal] = useState(false);
+
+  const { seasonState, dispatch } = useGame();
+
+  const router = useRouter();
 
   useEffect(() => {
-    setTeamRank(getTeamRank(student));
     setMoneySpent(getMoneySpent(student));
   }, [student]);
 
-  if (!student) {
-    return (
-      <div>
-        <LoadingSpinner />
-      </div>
-    );
-  }
+  const handleResetSeason = async () => {
+    try {
+      const resetSeasonRes = await postResetSeason(student, API_BASE_URL);
+      setAuthorizedUser(resetSeasonRes.updatedStudent);
+      dispatch({
+        type: 'INIT_SEASON',
+        payload: {
+          student: resetSeasonRes.updatedStudent,
+          studentTeams: studentTeams,
+          opposingTeams: opposingTeams,
+        },
+      });
+      setShowResetSeasonModal(false);
+    } catch (error) {
+      // @TODO error handle
+    }
+  };
 
-  return (
+  return !student || !seasonState.studentTeam ? (
+    <LoadingSpinner isFullPage={true} />
+  ) : (
     <div className="home-page-container">
       <div className="nav-container relative" style={{ height: '100px' }}>
         <h1
@@ -53,13 +75,17 @@ const HomePage = () => {
         >
           HOME
         </h1>
-        <div className="flex items-center justify-between pr-8 h-full">
+        <div className="flex items-center justify-between pr-8 h-full relative z-50">
           <LogoutStick
             // @ts-ignore
             className="ml-8 cursor-pointer"
             style={{ transform: 'translateY(-100px)' }}
           />
-          <RestartButton onClick={() => {}} />
+          <RestartButton
+            onClick={() => {
+              setShowResetSeasonModal(true);
+            }}
+          />
         </div>
       </div>
       <div className="flex items-start justify-around px-4">
@@ -74,17 +100,11 @@ const HomePage = () => {
           }}
         >
           <LevelStick
-            type="teamRank"
-            amount={teamRank}
+            value={seasonState.studentTeam?.stats.rank}
             denom={getMaxTeamRank(+student.level)}
-            color="#e06d00"
+            color="secondary"
             indicatorDirection="right"
-            textJsx={
-              <span>
-                Team <br />
-                Rank
-              </span>
-            }
+            label="Team\nRank"
           />
         </div>
         <ObjectivesBoard />
@@ -99,21 +119,16 @@ const HomePage = () => {
           }}
         >
           <LevelStick
-            type="budget"
-            amount={Math.max(
+            isMoney={true}
+            value={Math.max(
               +student.totalBudget - moneySpent - +student.savingsBudget,
               0
             )}
             denom={+student.totalBudget}
-            color="#002f6c"
+            color="foreground"
             indicatorDirection="left"
             inverse={true}
-            textJsx={
-              <span>
-                Spending <br />
-                Budget
-              </span>
-            }
+            label="Spending\nBudget"
           />
         </div>
       </div>
@@ -142,7 +157,6 @@ const HomePage = () => {
             <p className="text-primary text-xl">Manage your team's money!</p>
           </div>
         </div>
-        <div className="flex items-center justify-between"></div>
       </div>
       <div className="flex items-center justify-between mt-11 relative z-10">
         <div className="z-1 relative -left-3">
@@ -164,7 +178,16 @@ const HomePage = () => {
           <p className="text-primary text-xl">See your badges and trophies!</p>
         </div>
       </div>
-      <div className="flex items-center justify-between"></div>
+      <Modal
+        isVisible={showResetSeasonModal}
+        onClose={() => setShowResetSeasonModal(false)}
+      >
+        <ConfirmScreen
+          confirm={handleResetSeason}
+          cancel={() => setShowResetSeasonModal(false)}
+          message="Would you like to restart the season?"
+        />
+      </Modal>
     </div>
   );
 };
@@ -172,13 +195,27 @@ const HomePage = () => {
 const ProtectedHomePage = () => {
   return (
     <ProtectedRoute apiBaseUrl={API_BASE_URL} permittedRoles="*">
-      <HomePage />
+      <GamePageWrap
+        studentTeams={studentTeams}
+        opposingTeams={opposingTeams}
+        apiBaseUrl={API_BASE_URL}
+      >
+        <HomePage />
+      </GamePageWrap>
     </ProtectedRoute>
   );
 };
 
 ProtectedHomePage.getLayout = function getLayout(page: any) {
-  return <GameProvider>{page}</GameProvider>;
+  return (
+    <GameProvider
+      studentTeams={studentTeams}
+      opposingTeams={opposingTeams}
+      apiBaseUrl={API_BASE_URL}
+    >
+      {page}
+    </GameProvider>
+  );
 };
 
 export default ProtectedHomePage;

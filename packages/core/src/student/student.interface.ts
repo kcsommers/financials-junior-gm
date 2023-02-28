@@ -1,7 +1,9 @@
+import { GameResult } from '@statrookie/core/src/game/season/game-result';
 import { User } from '../auth/users/user.interface';
-import { Player } from '../game/teams/players';
-import { ObjectiveNames } from '../game/objectives/objectives';
 import { GamePage } from '../game/game-page.type';
+import { ObjectiveNames } from '../game/objectives/objectives';
+import { SeasonAwards } from '../game/season/season-awards';
+import { Player } from '../game/teams/players';
 
 export interface Student extends User {
   firstName: string;
@@ -18,13 +20,11 @@ export interface Student extends User {
   benchOne: string;
   benchTwo: string;
   benchThree: string;
-  rollOverBudget: number | number;
+  rollOverBudget: number;
   tutorial: boolean;
-  level: string;
+  level: string | number;
   wonGame: boolean;
-  // seasons: {
-  //   type: Array;
-  // };
+  seasons: GameResult[][];
   players: Player[];
   pagesVisited: GamePage[];
   tutorials: {
@@ -38,9 +38,6 @@ export interface Student extends User {
   //   type: String;
   //   default: '0';
   // };
-  // awards: {
-  //   type: Array;
-  //   default: [];
-  // };
-  objectives: { [key in ObjectiveNames]: boolean };
+  awards: SeasonAwards[];
+  objectives: { [key in ObjectiveNames]?: boolean };
 }

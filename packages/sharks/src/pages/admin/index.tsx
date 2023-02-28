@@ -94,7 +94,7 @@ const AdminPage = () => {
                   {formatNumber(allTeachers.length)}
                 </span>
               ) : (
-                <LoadingSpinner size="small" />
+                <LoadingSpinner size="sm" />
               )}{' '}
               <span className="ml-4 text-4xl">Total Teachers</span>
             </div>
@@ -114,7 +114,7 @@ const AdminPage = () => {
                   {formatNumber(allStudents.length)}
                 </span>
               ) : (
-                <LoadingSpinner size="small" />
+                <LoadingSpinner size="sm" />
               )}
               <span className="ml-4 text-4xl">Total Students</span>
             </div>
@@ -132,7 +132,7 @@ const AdminPage = () => {
                   {totalTimeSpent} Hours
                 </span>
               ) : (
-                <LoadingSpinner size="small" />
+                <LoadingSpinner size="sm" />
               )}
               <span className="ml-4 text-4xl">Total Time Spent</span>
             </div>

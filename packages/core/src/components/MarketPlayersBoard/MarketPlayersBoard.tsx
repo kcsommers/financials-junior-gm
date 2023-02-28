@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
-import { logger } from '../../auth/utils/logger';
-import { getStudentBudget } from '../../game/budget/utils/get-student-budget';
-import { MarketConfig } from '../../game/market/market';
+import { getStudentBudget } from '../../game/budget/get-student-budget';
+import { scenarioActive } from '../../game/season/scenario-active';
+import { MarketConfig } from '../../game/teams/market';
 import { Player, PlayerAssignment } from '../../game/teams/players';
 import { getAssignmentPosition } from '../../game/teams/utils/get-assignment-position';
 import { getMarket } from '../../game/teams/utils/get-market';
@@ -13,7 +13,6 @@ import { PlayerCard } from '../PlayerCard';
 type MarketPlayersBoardProps = {
   student: Student;
   slotAssignment: PlayerAssignment;
-  players: Player[];
   marketConfig: MarketConfig;
   onSignPlayer: (player: Player) => void;
 };
@@ -21,14 +20,17 @@ type MarketPlayersBoardProps = {
 export const MarketPlayersBoard = ({
   student,
   slotAssignment,
-  players,
   marketConfig,
   onSignPlayer,
 }: MarketPlayersBoardProps) => {
   const position = getAssignmentPosition(slotAssignment);
-  const displayedPlayers = useMemo(() => {
-    const market = getMarket(players);
-    return market[`${position}${position !== 'defense' ? 's' : ''}`] || [];
+  const displayedPlayers = useMemo<Player[]>(() => {
+    const market = getMarket(student.players);
+    const displayedProp = `${position}${position !== 'defense' ? 's' : ''}`;
+    if (scenarioActive(student)) {
+      return market.offeredScout[displayedProp] || [];
+    }
+    return market[displayedProp] || [];
   }, []);
 
   const checkBudget = (signingPlayer: Player) => {
@@ -41,7 +43,6 @@ export const MarketPlayersBoard = ({
     const insufficientFunds =
       budget.spendingBudget - +signingPlayer.playerCost < 0;
     if (insufficientFunds) {
-      logger.log('Insufficient funds:::: ');
       return;
     }
 
@@ -55,14 +56,18 @@ export const MarketPlayersBoard = ({
         <Button text="Defense" size="sm" isDisabled={position !== 'defense'} />
         <Button text="Goalies" size="sm" isDisabled={position !== 'goalie'} />
       </div>
-      <div className="border-4 border-neutral-700 rounded-md pt-2 pb-4 m">
+      <div className="border-4 border-neutral-700 rounded-md pt-2 pb-4 h-[205px]">
         <p className="text-primary text-xl text-center">
           {capitalize(position)}
           {position !== 'defense' && 's'} you can sign
         </p>
         <div className="flex justify-around">
           {displayedPlayers.map((player) => (
-            <PlayerCard player={player} onClick={checkBudget} />
+            <PlayerCard
+              key={player._id}
+              player={player}
+              onClick={checkBudget}
+            />
           ))}
         </div>
       </div>

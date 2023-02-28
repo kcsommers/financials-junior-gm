@@ -1,7 +1,12 @@
 import axios from 'axios';
 import { logger } from '../auth/utils/logger';
 import { Student } from './student.interface';
-import { UpdateStudentResponse } from './update-student-response.type';
+
+export type UpdateStudentResponse = {
+  message: string;
+  success: boolean;
+  updatedStudent: Student;
+};
 
 const updateStudentById = (
   baseUrl: string,

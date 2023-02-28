@@ -625,7 +625,7 @@ export const TeacherBrowser = ({
                         </div>
                       </>
                     ) : (
-                      <LoadingSpinner size="small" />
+                      <LoadingSpinner size="sm" />
                     )}
                   </div>
                   <div

@@ -1,12 +1,14 @@
-import { LevelStick } from '../../components/LevelStick';
 import { useEffect, useState } from 'react';
-import { getMoneySpent } from '../../game/utils/get-money-spent';
-import { getTeamRank } from '../../game/teams/utils/get-team-rank';
-import { Student } from '../../student/student.interface';
+import { LevelStick } from '../../components/LevelStick';
+import { getMoneySpent } from '../../game/budget/get-money-spent';
+import { useGame } from '../../game/game-context';
+import { StudentTeam } from '../../game/teams/student-team.type';
 import { getMaxTeamRank } from '../../game/teams/utils/get-max-team-rank';
+import { Student } from '../../student/student.interface';
 
 type TeamBudgetStateProps = {
   student: Student;
+  studentTeam: StudentTeam;
   size?: 'sm' | 'md' | 'lg';
   changes?: {
     playerCost: number;
@@ -16,14 +18,13 @@ type TeamBudgetStateProps = {
 
 export const TeamBudgetState = ({
   student,
+  studentTeam,
   size = 'md',
   changes,
 }: TeamBudgetStateProps) => {
-  const [teamRank, setTeamRank] = useState(0);
   const [moneySpent, setMoneySpent] = useState(0);
 
   useEffect(() => {
-    setTeamRank(getTeamRank(student));
     setMoneySpent(getMoneySpent(student));
   }, [student]);
 
@@ -44,18 +45,12 @@ export const TeamBudgetState = ({
       >
         <div style={{ position: 'relative' }}>
           <LevelStick
-            type="teamRank"
-            amount={teamRank}
+            value={studentTeam.stats.rank}
             denom={getMaxTeamRank(+student?.level)}
-            color="#e06d00"
+            color="secondary"
             indicatorDirection="right"
             size={size}
-            textJsx={
-              <span>
-                Team <br />
-                Rank
-              </span>
-            }
+            label="Team\nRank"
           />
           {!!changes?.playerRank && (
             <span className="absolute bottom-0 right-1/2 text-3xl text-primary">
@@ -65,30 +60,16 @@ export const TeamBudgetState = ({
         </div>
         <div className="relative">
           <LevelStick
-            type="budget"
+            isMoney={true}
             size={size}
-            amount={Math.max(
+            value={Math.max(
               +student.totalBudget - moneySpent - +student.savingsBudget,
               0
             )}
-            // amount={
-            //   tutorialState
-            //     ? tutorialState.budget
-            //     : Math.max(
-            //         +student.totalBudget - moneySpent - +student.savingsBudget,
-            //         0
-            //       )
-            // }
             denom={+student.totalBudget}
-            color="#002f6c"
-            indicatorDirection="left"
+            color="foreground"
             inverse={true}
-            textJsx={
-              <span>
-                Spending <br />
-                Budget
-              </span>
-            }
+            label="Spending\nBudget"
           />
           {!!changes?.playerCost && (
             <span className="absolute bottom-0 left-1/2 text-3xl text-red-600">

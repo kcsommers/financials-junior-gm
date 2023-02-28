@@ -93,7 +93,7 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children, baseUrl }) => {
 
   return (
     <AUTH_CONTEXT.Provider value={memoedValue}>
-      {authInitialized && children}
+      {children}
     </AUTH_CONTEXT.Provider>
   );
 };

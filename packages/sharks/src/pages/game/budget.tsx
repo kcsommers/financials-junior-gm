@@ -2,17 +2,22 @@ import { useAuth } from '@statrookie/core/src/auth/context/auth-context';
 import { BudgetEquation } from '@statrookie/core/src/components/BudgetEquation';
 import { BudgetSlider } from '@statrookie/core/src/components/BudgetSlider';
 import { Footer } from '@statrookie/core/src/components/Footer';
+import { GamePageWrap } from '@statrookie/core/src/components/GamePageWrap';
 import { Header } from '@statrookie/core/src/components/Header';
+import { LoadingSpinner } from '@statrookie/core/src/components/LoadingSpinner';
 import { ProtectedRoute } from '@statrookie/core/src/components/ProtectedRoute';
 import { Budget } from '@statrookie/core/src/game/budget/budget';
-import { getStudentBudget } from '@statrookie/core/src/game/budget/utils/get-student-budget';
+import { getStudentBudget } from '@statrookie/core/src/game/budget/get-student-budget';
 import { GameProvider } from '@statrookie/core/src/game/game-context';
+import { checkBudgetObjective } from '@statrookie/core/src/game/objectives/check-budget-objective';
 import { Student } from '@statrookie/core/src/student/student.interface';
 import { updateStudent } from '@statrookie/core/src/student/update-student';
 import { useDebounce } from '@statrookie/core/src/utils/hooks/use-debounce';
 import { useEffect, useState } from 'react';
 import FinancialsLogo from '../../components/svg/financials-logo-big.svg';
 import { API_BASE_URL } from '../../constants/api-base-url';
+import { opposingTeams } from '../../game/teams/opposing-teams';
+import { studentTeams } from '../../game/teams/student-teams';
 
 const BudgetPage = () => {
   const { authorizedUser, setAuthorizedUser } = useAuth();
@@ -34,7 +39,21 @@ const BudgetPage = () => {
     })();
   }, [debouncedSavings]);
 
-  return (
+  useEffect(() => {
+    (async () => {
+      const updateStudentRes = await checkBudgetObjective(
+        student,
+        API_BASE_URL
+      );
+      if (updateStudentRes) {
+        setAuthorizedUser(updateStudentRes.updatedStudent);
+      }
+    })();
+  }, []);
+
+  return !student ? (
+    <LoadingSpinner isFullPage={true} />
+  ) : (
     <div className="flex flex-col h-full">
       <Header inverse={true}>
         <FinancialsLogo
@@ -55,16 +74,6 @@ const BudgetPage = () => {
           <div className="-translate-y-2">
             <BudgetSlider
               budget={budget}
-              // budget={
-              //   tutorialState.isActive
-              //     ? tutorialBudget
-              //     : {
-              //         total: +student.totalBudget,
-              //         savings: +student.savingsBudget,
-              //         spent: moneySpent,
-              //       }
-              // }
-              // setValue={updateSavings}
               onSavingsChange={(val: number) => {
                 setBudget((prevBudget) => ({
                   ...prevBudget,
@@ -84,13 +93,27 @@ const BudgetPage = () => {
 const ProtectedBudgetPage = () => {
   return (
     <ProtectedRoute apiBaseUrl={API_BASE_URL} permittedRoles="*">
-      <BudgetPage />
+      <GamePageWrap
+        studentTeams={studentTeams}
+        opposingTeams={opposingTeams}
+        apiBaseUrl={API_BASE_URL}
+      >
+        <BudgetPage />
+      </GamePageWrap>
     </ProtectedRoute>
   );
 };
 
 ProtectedBudgetPage.getLayout = function getLayout(page: any) {
-  return <GameProvider>{page}</GameProvider>;
+  return (
+    <GameProvider
+      studentTeams={studentTeams}
+      opposingTeams={opposingTeams}
+      apiBaseUrl={API_BASE_URL}
+    >
+      {page}
+    </GameProvider>
+  );
 };
 
 export default ProtectedBudgetPage;

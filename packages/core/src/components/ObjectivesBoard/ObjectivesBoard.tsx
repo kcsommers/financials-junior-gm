@@ -2,10 +2,14 @@ import classNames from 'classnames';
 import { cloneDeep } from 'lodash';
 import { useEffect, useMemo, useState } from 'react';
 import { useAuth } from '../../auth/context/auth-context';
-import { Student } from '../../student/student.interface';
 import { LoadingSpinner } from '../../components/LoadingSpinner';
-import { Objective, OBJECTIVES } from '../../game/objectives/objectives';
-import styles from './ObjectivesBoard.module.scss';
+import {
+  Objective,
+  ObjectiveNames,
+  OBJECTIVES,
+} from '../../game/objectives/objectives';
+import { scenarioActive } from '../../game/season/scenario-active';
+import { Student } from '../../student/student.interface';
 
 type ObjectsBoardProps = {
   size?: 'large' | 'small';
@@ -26,6 +30,7 @@ export const ObjectivesBoard = ({
   // update current objectives whenever student updates
   useEffect(() => {
     if (!student?.objectives) {
+      setCurrentObjectives(cloneDeep(OBJECTIVES));
       return;
     }
     const clonedObjectives = OBJECTIVES.map((o) => {
@@ -33,11 +38,19 @@ export const ObjectivesBoard = ({
       clonedO.isComplete = student.objectives[clonedO.name];
       return clonedO;
     });
+    if (scenarioActive(student)) {
+      clonedObjectives.unshift({
+        name: ObjectiveNames.SEASON_SCENARIO,
+        message: 'Replace the injured player',
+        isComplete: false,
+        isUrgent: true,
+      });
+    }
     setCurrentObjectives(clonedObjectives);
   }, [student]);
 
   const hasUrgent = useMemo(() => {
-    (currentObjectives || []).some((o) => o.isUrgent);
+    return (currentObjectives || []).some((o) => o.isUrgent);
   }, [currentObjectives]);
 
   const objectivesView: any[] = [];
@@ -68,9 +81,9 @@ export const ObjectivesBoard = ({
   ) : (
     <div
       className={classNames(
-        'border-10 border-primary rounded-md px-4 py-2',
+        'border-10 rounded-md px-4 pt-2',
         'text-white shadow-mat bg-neutral-700',
-        { 'border-highlight': hasUrgent }
+        hasUrgent ? 'border-highlight' : 'border-primary'
       )}
       style={{ width: size === 'small' ? '350px' : '425px' }}
     >
@@ -78,7 +91,11 @@ export const ObjectivesBoard = ({
         <div>Objectives</div>
         <div>Level {student.level}</div>
       </div>
-      <ol className={styles.ordered_list}>{objectivesView}</ol>
+      {!!objectivesView.length ? (
+        <ol className="list-inside list-decimal">{objectivesView}</ol>
+      ) : (
+        <span>Season is complete!</span>
+      )}
     </div>
   );
 };

@@ -1,12 +1,7 @@
-import { ReactElement } from 'react';
 import { Player } from './players';
 import { TeamPlayer } from './team';
-import { TeamStatistics } from './team-statistics.type';
+import { Team } from './team.type';
 
-export type StudentTeam = {
-  nickName: string;
-  city: string;
-  stats: TeamStatistics;
-  logo: ReactElement;
+export type StudentTeam = Team & {
   players: { [key in TeamPlayer]?: Player };
 };

@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { releasePlayer } from '../../game/market/utils/release-player';
 import { Player } from '../../game/teams/players';
+import { StudentTeam } from '../../game/teams/student-team.type';
+import { releasePlayer } from '../../game/teams/utils/release-player';
 import { Student } from '../../student/student.interface';
 import { Button } from '../Button';
 import { PlayerCard } from '../PlayerCard';
@@ -9,14 +10,16 @@ import { PlayerReleaseSuccess } from './PlayerReleaseSuccess';
 
 type ReleasePlayerBoardProps = {
   student: Student;
-  setStudent: (student: Student) => void;
+  studentTeam: StudentTeam;
+  onPlayerReleased: (student: Student) => void;
   player: Player;
   apiBaseUrl: string;
 };
 
 export const ReleasePlayerBoard = ({
   student,
-  setStudent,
+  studentTeam,
+  onPlayerReleased,
   apiBaseUrl,
   player,
 }: ReleasePlayerBoardProps) => {
@@ -26,7 +29,7 @@ export const ReleasePlayerBoard = ({
   const releasePlayerConfirmed = async () => {
     try {
       const releasePlayerRes = await releasePlayer(student, player, apiBaseUrl);
-      setStudent(releasePlayerRes.updatedStudent);
+      onPlayerReleased(releasePlayerRes.updatedStudent);
       setPlayerReleased(true);
     } catch (error: any) {
       // @TODO error handle
@@ -34,13 +37,20 @@ export const ReleasePlayerBoard = ({
   };
 
   if (playerReleased) {
-    return <PlayerReleaseSuccess student={student} player={player} />;
+    return (
+      <PlayerReleaseSuccess
+        student={student}
+        studentTeam={studentTeam}
+        player={player}
+      />
+    );
   }
 
   if (showConfirm) {
     return (
       <ConfirmReleasePlayer
         student={student}
+        studentTeam={studentTeam}
         player={player}
         cancel={() => setShowConfirm(false)}
         confirm={releasePlayerConfirmed}
