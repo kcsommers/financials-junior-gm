@@ -1,15 +1,31 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
-export const useKeydown = (code: string, handler: () => void, deps?: any[]) => {
+export const useKeydown = (
+  code: string,
+  callback: () => void,
+  isListening = true
+) => {
+  const savedCallback = useRef(callback);
+
+  useEffect(() => {
+    savedCallback.current = callback;
+  }, [callback]);
+
+  useEffect(() => {}, []);
+
   useEffect(() => {
     const keydown = (event: KeyboardEvent) => {
       if (event.code === code) {
-        handler();
+        savedCallback.current();
       }
     };
-    window.addEventListener('keydown', keydown);
+    if (isListening) {
+      window.addEventListener('keydown', keydown);
+    } else {
+      window.removeEventListener('keydown', keydown);
+    }
     return () => {
       window.removeEventListener('keydown', keydown);
     };
-  }, deps || []);
+  }, [isListening]);
 };

@@ -9,7 +9,7 @@ import { SeasonCompleteModal } from '@statrookie/core/src/components/SeasonCompl
 import TrophyIcon from '@statrookie/core/src/components/svg/trophy.svg';
 import { GameProvider, useGame } from '@statrookie/core/src/game/game-context';
 import { postNextSeason } from '@statrookie/core/src/game/season/next-season';
-import { postResetSeason } from '@statrookie/core/src/game/season/reset-season';
+import { postRepeatSeason } from '@statrookie/core/src/game/season/repeat-season';
 import {
   Award,
   getSeasonAwards,
@@ -45,9 +45,9 @@ const TrophiesPage = () => {
     return rows;
   }, [student]);
 
-  const resetSeason = async () => {
+  const repeatSeason = async () => {
     try {
-      const resetSeasonRes = await postResetSeason(student, API_BASE_URL);
+      const resetSeasonRes = await postRepeatSeason(student, API_BASE_URL);
       setAuthorizedUser(resetSeasonRes.updatedStudent);
       dispatch({
         type: 'INIT_SEASON',
@@ -63,15 +63,18 @@ const TrophiesPage = () => {
     }
   };
 
-  const nextSeason = async () => {
+  const acceptPromotion = async () => {
     try {
       const prevLevel = +student.level;
-      const resetSeasonRes = await postNextSeason(student, API_BASE_URL);
-      setAuthorizedUser(resetSeasonRes.updatedStudent);
+      const nextSeasonRes =
+        prevLevel === 3
+          ? await postRepeatSeason(student, API_BASE_URL)
+          : await postNextSeason(student, API_BASE_URL);
+      setAuthorizedUser(nextSeasonRes.updatedStudent);
       dispatch({
         type: 'INIT_SEASON',
         payload: {
-          student: resetSeasonRes.updatedStudent,
+          student: nextSeasonRes.updatedStudent,
           studentTeams: studentTeams,
           opposingTeams: opposingTeams,
         },
@@ -109,29 +112,23 @@ const TrophiesPage = () => {
               <>
                 <button
                   className="btn-secondary btn-small text-base mx-2"
-                  onClick={resetSeason}
+                  onClick={repeatSeason}
                 >
                   Repeat Season
                 </button>
                 {isPromoted && (
                   <button
                     className="btn-secondary btn-small text-base mx-2"
-                    onClick={nextSeason}
+                    onClick={acceptPromotion}
                   >
                     {+student.level === 3 ? 'Accept Award' : 'Accept Promotion'}
                   </button>
                 )}
               </>
             ) : (
-              <button
-                className="btn-secondary btn-small text-base mx-2"
-                onClick={nextSeason}
-              >
-                Accept Promotion
-              </button>
-              // <p className="text-primary text-xl">
-              //   Tap a trophy to learn more about it!
-              // </p>
+              <p className="text-primary text-xl">
+                Tap a trophy to learn more about it!
+              </p>
             )}
           </div>
 

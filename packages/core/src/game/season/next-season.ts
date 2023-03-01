@@ -30,7 +30,7 @@ export const postNextSeason = async (
     };
     return res;
   } catch (error: any) {
-    logger.error('resetSeason error:::: ', error);
+    logger.error('postNextSeason error:::: ', error);
     throw error;
   }
 };

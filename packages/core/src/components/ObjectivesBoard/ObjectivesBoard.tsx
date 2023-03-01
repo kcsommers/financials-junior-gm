@@ -94,7 +94,7 @@ export const ObjectivesBoard = ({
       {!!objectivesView.length ? (
         <ol className="list-inside list-decimal">{objectivesView}</ol>
       ) : (
-        <span>Season is complete!</span>
+        <p className="text-lg py-2">Season is complete!</p>
       )}
     </div>
   );

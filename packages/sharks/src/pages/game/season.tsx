@@ -1,4 +1,5 @@
 import { useAuth } from '@statrookie/core/src/auth/context/auth-context';
+import { Cheermeter } from '@statrookie/core/src/components/Cheermeter';
 import { Footer } from '@statrookie/core/src/components/Footer';
 import { GameButton } from '@statrookie/core/src/components/GameButton';
 import { GamePageWrap } from '@statrookie/core/src/components/GamePageWrap';
@@ -25,7 +26,7 @@ import { updateStudent } from '@statrookie/core/src/student/update-student';
 import { useInterval } from '@statrookie/core/src/utils/hooks/use-interval';
 import { cloneDeep } from 'lodash';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import FinancialsLogo from '../../components/svg/financials-logo-big.svg';
 import { API_BASE_URL } from '../../constants/api-base-url';
 import { opposingTeams } from '../../game/teams/opposing-teams';
@@ -38,6 +39,7 @@ const SeasonPage = () => {
   const [pageInitialized, setPageInitialized] = useState(false);
   const [gamePhaseTimer, setGamePhaseTimer] = useState<number>(null);
   const [showStatsModal, setShowStatsModal] = useState(false);
+  const [cheerPoints, setCheerPoints] = useState(0);
 
   const router = useRouter();
 
@@ -68,6 +70,10 @@ const SeasonPage = () => {
       // @TODO erro handle
     }
   };
+
+  const nextGamePhase = useCallback(() => {
+    dispatch({ type: 'NEXT_GAME_PHASE', payload: { cheerPoints } });
+  }, [cheerPoints]);
 
   const nextGame = () => {
     if (
@@ -122,18 +128,20 @@ const SeasonPage = () => {
     nextGame();
   }, []);
 
+  const gamesPlayed = useMemo(() => {
+    return ((student.seasons || [])[+student.level - 1] || []).length;
+  }, [student]);
   useEffect(() => {
-    const gamesPlayed = (student.seasons || [])[+student.level - 1] || [];
-    const isLastGame = gamesPlayed.length === seasonState.opposingTeams.length;
+    const isLastGame = gamesPlayed === seasonState.opposingTeams.length;
     const noScenario = !scenarioActive(student) && !scenarioCompleted(student);
 
     let shouldShowStats = false;
     let shouldThrowScenario = false;
-    if (gamesPlayed.length && !isLastGame && noScenario) {
-      if (gamesPlayed.length % 2 === 0) {
+    if (gamesPlayed && !isLastGame && noScenario) {
+      if (gamesPlayed % 2 === 0) {
         shouldShowStats = true;
       }
-      if (gamesPlayed.length % 4 === 0) {
+      if (gamesPlayed % 4 === 0) {
         shouldThrowScenario = true;
       }
     }
@@ -145,7 +153,7 @@ const SeasonPage = () => {
     } else if (pageInitialized && !scenarioActive(student)) {
       nextGame();
     }
-  }, [(student.seasons || [])[+student.level - 1] || []]);
+  }, [gamesPlayed]);
 
   // GAME_OVER effect
   useEffect(() => {
@@ -166,7 +174,7 @@ const SeasonPage = () => {
   }, [seasonState.gamePhase?.name]);
 
   useInterval(() => {
-    dispatch({ type: 'NEXT_GAME_PHASE' });
+    nextGamePhase();
   }, gamePhaseTimer);
 
   // game timer effect
@@ -180,7 +188,7 @@ const SeasonPage = () => {
       return;
     }
     if (seasonState.gamePhase?.name === GamePhases.READY) {
-      dispatch({ type: 'NEXT_GAME_PHASE' });
+      nextGamePhase();
     }
   };
 
@@ -202,7 +210,7 @@ const SeasonPage = () => {
           <div className="ml-3 -translate-x-16 mt-4">
             <LevelStick
               isMoney={false}
-              value={seasonState.studentTeam.stats.rank}
+              value={seasonState.studentTeam.stats.rank + cheerPoints}
               denom={getMaxTeamRank(+student.level)}
               color="secondary"
               indicatorDirection="right"
@@ -225,7 +233,7 @@ const SeasonPage = () => {
           </div>
         </div>
         <div className="flex justify-center">
-          <Jumbotron />
+          <Jumbotron nextGamePhase={nextGamePhase} />
         </div>
         <div className="flex-1 flex items-center justify-between relative">
           <span className="absolute left-1/2 bottom-0 -translate-x-1/2 flex flex-col items-center">
@@ -245,7 +253,12 @@ const SeasonPage = () => {
             </span>
           </span>
           <div className="flex flex-1 items-center justify-between">
-            <div></div>
+            <div>
+              <Cheermeter
+                gamePhase={seasonState.gamePhase}
+                setCheerPoints={setCheerPoints}
+              />
+            </div>
             <StandingsBoard
               studentTeam={seasonState.studentTeam}
               opposingTeams={seasonState.opposingTeams}

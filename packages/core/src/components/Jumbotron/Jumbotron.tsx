@@ -11,7 +11,11 @@ import { InjuredPlayerView } from './InjuredPlayerView';
 import { ReadyView } from './ReadyView';
 import { ScoreView } from './ScoreView';
 
-export const Jumbotron = () => {
+type JumbotronProps = {
+  nextGamePhase: () => void;
+};
+
+export const Jumbotron = ({ nextGamePhase }: JumbotronProps) => {
   const student = useAuth().authorizedUser as Student;
   const { seasonState, dispatch } = useGame();
   const {
@@ -30,7 +34,7 @@ export const Jumbotron = () => {
 
   const nextPhaseMessage = useCallback(() => {
     if (phaseMessageIndex === gamePhase?.messages?.length - 1) {
-      dispatch({ type: 'NEXT_GAME_PHASE' });
+      nextGamePhase();
       return;
     }
     dispatch({ type: 'NEXT_PHASE_MESSAGE' });
@@ -80,7 +84,7 @@ export const Jumbotron = () => {
                 <GameHighlightView
                   currentOpponent={currentOpponent}
                   studentTeam={seasonState.studentTeam}
-                  onEnded={() => dispatch({ type: 'NEXT_GAME_PHASE' })}
+                  onEnded={nextGamePhase}
                 />
               )}
               {gamePhase.name === GamePhases.GAME_ON && (

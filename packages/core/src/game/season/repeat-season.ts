@@ -1,13 +1,13 @@
 import { cloneDeep } from 'lodash';
 import { logger } from '../../auth/utils/logger';
-import { initPlayersByLevel } from '../../game/teams/api/init-players-by-level';
+import { initPlayersByLevel } from '../teams/api/init-players-by-level';
 import { Student } from '../../student/student.interface';
 import {
   updateStudent,
   UpdateStudentResponse,
 } from '../../student/update-student';
 
-export const postResetSeason = async (
+export const postRepeatSeason = async (
   student: Student,
   apiBaseUrl: string
 ): Promise<UpdateStudentResponse> => {

@@ -16,7 +16,7 @@ import TeamStick from '@statrookie/core/src/components/svg/team-stick.svg';
 import TrophiesStick from '@statrookie/core/src/components/svg/trophies-stick.svg';
 import { getMoneySpent } from '@statrookie/core/src/game/budget/get-money-spent';
 import { GameProvider, useGame } from '@statrookie/core/src/game/game-context';
-import { postResetSeason } from '@statrookie/core/src/game/season/reset-season';
+import { postRepeatSeason } from '@statrookie/core/src/game/season/repeat-season';
 import { getMaxTeamRank } from '@statrookie/core/src/game/teams/utils/get-max-team-rank';
 import {
   budgetPageUnlocked,
@@ -60,12 +60,12 @@ const HomePage = () => {
 
   const handleResetSeason = async () => {
     try {
-      const resetSeasonRes = await postResetSeason(student, API_BASE_URL);
-      setAuthorizedUser(resetSeasonRes.updatedStudent);
+      const repeatSeasonRes = await postRepeatSeason(student, API_BASE_URL);
+      setAuthorizedUser(repeatSeasonRes.updatedStudent);
       dispatch({
         type: 'INIT_SEASON',
         payload: {
-          student: resetSeasonRes.updatedStudent,
+          student: repeatSeasonRes.updatedStudent,
           studentTeams: studentTeams,
           opposingTeams: opposingTeams,
         },

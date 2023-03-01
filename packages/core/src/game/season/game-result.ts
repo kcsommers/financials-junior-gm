@@ -80,7 +80,8 @@ export const possibleScores: [number, number][][] = [
 
 export const getGameResult = (
   studentTeam: StudentTeam,
-  opposingTeam: OpposingTeam
+  opposingTeam: OpposingTeam,
+  cheerPoints: number
 ): GameResult => {
   const rankDiff = Math.abs(studentTeam.stats.rank - opposingTeam.stats.rank);
 
@@ -104,7 +105,7 @@ export const getGameResult = (
   let studentPoints: number;
   let oppScore: number;
   let studentScore: number;
-  if (studentTeam.stats.rank >= opposingTeam.stats.rank) {
+  if (studentTeam.stats.rank + cheerPoints >= opposingTeam.stats.rank) {
     studentWin = true;
     studentPoints = 2;
     oppScore = Math.min(score[0], score[1]);

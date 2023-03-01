@@ -4,7 +4,7 @@ import { useAuth } from '../../auth';
 import { useGame } from '../../game/game-context';
 import { GamePage } from '../../game/game-page.type';
 import { postNextSeason } from '../../game/season/next-season';
-import { postResetSeason } from '../../game/season/reset-season';
+import { postRepeatSeason as postRepeatSeason } from '@statrookie/core/src/game/season/repeat-season';
 import { OpposingTeam } from '../../game/teams/opposing-team.type';
 import { StudentTeam } from '../../game/teams/student-team.type';
 import { Student } from '../../student/student.interface';
@@ -32,7 +32,7 @@ export const GamePageWrap = ({
 
   const repeatSeason = async () => {
     try {
-      const resetSeasonRes = await postResetSeason(student, apiBaseUrl);
+      const resetSeasonRes = await postRepeatSeason(student, apiBaseUrl);
       setAuthorizedUser(resetSeasonRes.updatedStudent);
       dispatch({
         type: 'INIT_SEASON',
@@ -49,20 +49,27 @@ export const GamePageWrap = ({
     }
   };
 
-  const nextSeason = async () => {
+  const acceptPromotion = async () => {
     try {
       const prevLevel = +student.level;
-      const resetSeasonRes = await postNextSeason(student, apiBaseUrl);
-      setAuthorizedUser(resetSeasonRes.updatedStudent);
+      const nextSeasonRes =
+        prevLevel === 3
+          ? await postRepeatSeason(student, apiBaseUrl)
+          : await postNextSeason(student, apiBaseUrl);
+      setAuthorizedUser(nextSeasonRes.updatedStudent);
       dispatch({
         type: 'INIT_SEASON',
         payload: {
-          student: resetSeasonRes.updatedStudent,
+          student: nextSeasonRes.updatedStudent,
           studentTeams: studentTeams,
           opposingTeams: opposingTeams,
         },
       });
-      router.push('/game/home', { query: { promotion: prevLevel } });
+      setShowNextSeasonModal(false);
+      router.push({
+        pathname: '/game/home',
+        query: { promotion: prevLevel },
+      });
     } catch (error: any) {
       // @TODO error handle
     }
@@ -97,7 +104,7 @@ export const GamePageWrap = ({
         <NextSeasonModal
           student={student}
           onRepeatSeason={repeatSeason}
-          onNextSeason={nextSeason}
+          onNextSeason={acceptPromotion}
         />
       </Modal>
     </>

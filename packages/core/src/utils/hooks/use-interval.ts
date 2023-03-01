@@ -16,5 +16,12 @@ export const useInterval = (callback: () => void, delay: number) => {
     }
   }, [delay]);
 
-  return intervalRef;
+  const reset = () => {
+    if (intervalRef.current) {
+      window.clearInterval(intervalRef.current);
+      intervalRef.current = window.setInterval(savedCallback.current, delay);
+    }
+  };
+
+  return { intervalRef, reset };
 };

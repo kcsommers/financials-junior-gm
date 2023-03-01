@@ -16,6 +16,7 @@ export type SeasonAction =
     }
   | {
       type: 'NEXT_GAME_PHASE';
+      payload: { cheerPoints: number };
     }
   | {
       type: 'NEXT_PHASE_MESSAGE';
@@ -89,7 +90,11 @@ export const seasonReducer = (
       let updatedStudentTeam: StudentTeam;
       let updatedOpposingTeams: OpposingTeam[];
       if (gameComplete) {
-        gameResult = getGameResult(state.studentTeam, state.currentOpponent);
+        gameResult = getGameResult(
+          state.studentTeam,
+          state.currentOpponent,
+          action.payload?.cheerPoints || 0
+        );
         const { studentTeam, opposingTeams } = handleGameResult(
           state.studentTeam,
           state.opposingTeams,

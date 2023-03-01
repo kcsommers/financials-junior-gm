@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import { useMemo } from 'react';
 import { getStudentBudget } from '../../game/budget/get-student-budget';
 import { scenarioActive } from '../../game/season/scenario-active';
@@ -63,11 +64,14 @@ export const MarketPlayersBoard = ({
         </p>
         <div className="flex justify-around">
           {displayedPlayers.map((player) => (
-            <PlayerCard
+            <span
               key={player._id}
-              player={player}
-              onClick={checkBudget}
-            />
+              className={classNames({
+                'scale-90': displayedPlayers.length >= 9,
+              })}
+            >
+              <PlayerCard player={player} onClick={checkBudget} />
+            </span>
           ))}
         </div>
       </div>
