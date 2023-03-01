@@ -14,12 +14,10 @@ import { TeamBoard } from '@statrookie/core/src/components/TeamBoard';
 import { TeamBudgetState } from '@statrookie/core/src/components/TeamBudgetState';
 import { GameProvider, useGame } from '@statrookie/core/src/game/game-context';
 import { checkTeamObjective } from '@statrookie/core/src/game/objectives/check-team-objective';
-import { scenarioActive } from '@statrookie/core/src/game/season/scenario-active';
 import {
   Player,
   PlayerAssignment,
 } from '@statrookie/core/src/game/teams/players';
-import { startingLineupFull } from '@statrookie/core/src/game/teams/utils/starting-lineup-full';
 import { Student } from '@statrookie/core/src/student/student.interface';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
@@ -62,12 +60,10 @@ const TeamPage = () => {
     setAuthorizedUser(student);
     const payload: any = {
       student,
-      studentTeams,
     };
     if (completedScenario) {
       payload.injuredPlayer = null;
     }
-    console.log('market actoin payload:::: ', payload);
     dispatch({ type: 'MARKET_ACTION', payload });
   };
 

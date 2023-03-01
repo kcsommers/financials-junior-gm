@@ -3,7 +3,6 @@ import { useCallback, useEffect, useState } from 'react';
 import { useAuth } from '../../auth/context/auth-context';
 import { useGame } from '../../game/game-context';
 import { GamePhases } from '../../game/season/game-phases';
-import { scenarioActive } from '../../game/season/scenario-active';
 import { Student } from '../../student/student.interface';
 import { useInterval } from '../../utils/hooks/use-interval';
 import { GameHighlightView } from './GameHighlightView';
@@ -41,8 +40,6 @@ export const Jumbotron = () => {
   useEffect(() => {
     setPhaseMessageTimer(gamePhase?.messageTimer);
   }, [gamePhase?.name]);
-
-  console.log('injred player:::: ', seasonState.injuredPlayer);
 
   return (
     <div className="flex flex-col justify-center items-center">

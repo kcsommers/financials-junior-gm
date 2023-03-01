@@ -1,13 +1,13 @@
-import { isEmpty } from 'lodash';
+import { cloneDeep, isEmpty } from 'lodash';
 import { OpposingTeam } from '../../game/teams/opposing-team.type';
 import { Player } from '../../game/teams/players';
 import { StudentTeam } from '../../game/teams/student-team.type';
-import { getStudentTeam } from '../../game/teams/utils/get-student-team';
+import { updateStudentTeamRank } from '../../game/teams/team-statistics';
+import { initializeTeams } from '../../game/teams/utils/initialize-teams';
 import { Student } from '../../student/student.interface';
 import { GamePhase, GamePhases, getGamePhase } from './game-phases';
 import { GameResult, getGameResult } from './game-result';
 import { handleGameResult } from './handle-game-result';
-import { initializeTeams } from './initialize-teams';
 
 export type SeasonAction =
   | {
@@ -32,7 +32,6 @@ export type SeasonAction =
       type: 'MARKET_ACTION';
       payload: {
         student: Student;
-        studentTeams: StudentTeam[];
         injuredPlayer?: Player;
       };
     }
@@ -153,9 +152,11 @@ export const seasonReducer = (
       };
     }
     case 'MARKET_ACTION': {
-      const { student, studentTeams } = action.payload;
+      const { student } = action.payload;
+      const clonedStudentTeam = cloneDeep(state.studentTeam);
+      updateStudentTeamRank(student, clonedStudentTeam);
       const updates: Partial<SeasonState> = {
-        studentTeam: getStudentTeam(student, studentTeams),
+        studentTeam: clonedStudentTeam,
       };
       if (action.payload.hasOwnProperty('injuredPlayer')) {
         updates.injuredPlayer = action.payload.injuredPlayer;

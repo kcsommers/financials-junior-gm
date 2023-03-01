@@ -27,16 +27,11 @@ export const GameHighlightView = ({
       className="w-full h-full object-cover"
       autoPlay
       muted
-      controls
       poster="https://res.cloudinary.com/ddbcnnu7h/image/upload/v1676866443/game-on-bg_najxwc.png"
       onEnded={onEnded}
       onError={onEnded}
-      onLoadStart={() => {
-        logger.log('video load started:::::');
-      }}
-      onLoadedData={() => {
-        console.log('vid data loaded::::');
-      }}
+      onLoadStart={() => logger.log('video load started:::::')}
+      onLoadedData={() => logger.log('vid data loaded::::')}
     >
       <source
         src={

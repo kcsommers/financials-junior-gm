@@ -1,4 +1,4 @@
-import { Team } from '../../game/teams/team.type';
+import { Team } from '../../game/teams/team';
 import { addOrdinalSuffix } from '../../utils/add-ordinal-suffix';
 
 type TeamCardProps = {

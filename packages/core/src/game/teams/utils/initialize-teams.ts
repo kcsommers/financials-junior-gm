@@ -1,23 +1,22 @@
 import { cloneDeep } from 'lodash';
-import { OpposingTeam } from '../../game/teams/opposing-team.type';
-import { Student } from '../../student/student.interface';
-import { StudentTeam } from '../teams/student-team.type';
-import { getStudentTeam } from '../teams/utils/get-student-team';
-import { getRandomStat, getRandomTeamRank } from './stats';
+import { Student } from '../../../student/student.interface';
+import { getRandomStat, getRandomTeamRank } from '../../season/stats';
+import { OpposingTeam } from '../opposing-team.type';
+import { StudentTeam } from '../student-team.type';
+import { updateStandings, updateStudentTeamRank } from '../team-statistics';
 
 export const initializeTeams = (
   student: Student,
   studentTeams: StudentTeam[],
   opposingTeams: OpposingTeam[][]
 ): { levelOpposingTeams: OpposingTeam[]; studentTeam: StudentTeam } => {
-  const studentTeam = getStudentTeam(student, studentTeams);
-  const clonedTeams = cloneDeep(opposingTeams[+student.level - 1]);
+  const studentTeam = cloneDeep(studentTeams[+student?.level - 1]);
+  const levelOpposingTeams = cloneDeep(opposingTeams[+student.level - 1]);
   const gamesPlayed = student.seasons[+student.level - 1] || [];
 
   let studentWins = 0;
   let studentLosses = 0;
   let studentPoints = 0;
-
   gamesPlayed.forEach((game) => {
     studentPoints += game.studentPoints;
     if (game.studentWin) {
@@ -26,7 +25,7 @@ export const initializeTeams = (
       studentLosses++;
     }
 
-    clonedTeams.forEach((team) => {
+    levelOpposingTeams.forEach((team) => {
       team.stats.rank = getRandomTeamRank(+student.level);
       if (team.name !== game.opposingTeam.name) {
         team.stats.points += getRandomStat(3);
@@ -42,11 +41,8 @@ export const initializeTeams = (
   studentTeam.stats.losses = studentLosses;
   studentTeam.stats.points = studentPoints;
 
-  [...clonedTeams, studentTeam]
-    .sort((a, b) => b.stats.points - a.stats.points)
-    .forEach((team, i) => {
-      team.stats.standing = i + 1;
-    });
+  updateStudentTeamRank(student, studentTeam);
+  updateStandings(studentTeam, levelOpposingTeams);
 
-  return { levelOpposingTeams: clonedTeams, studentTeam };
+  return { levelOpposingTeams, studentTeam };
 };

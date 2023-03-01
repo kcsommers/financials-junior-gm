@@ -1,4 +1,4 @@
-import { Team } from './team.type';
+import { Team } from './team';
 
 export type OpposingTeam = Team & {
   color: string;

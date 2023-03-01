@@ -51,6 +51,7 @@ export const GamePageWrap = ({
 
   const nextSeason = async () => {
     try {
+      const prevLevel = +student.level;
       const resetSeasonRes = await postNextSeason(student, apiBaseUrl);
       setAuthorizedUser(resetSeasonRes.updatedStudent);
       dispatch({
@@ -61,7 +62,7 @@ export const GamePageWrap = ({
           opposingTeams: opposingTeams,
         },
       });
-      router.push('/game/home');
+      router.push('/game/home', { query: { promotion: prevLevel } });
     } catch (error: any) {
       // @TODO error handle
     }

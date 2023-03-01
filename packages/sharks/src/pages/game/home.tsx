@@ -5,6 +5,7 @@ import { LevelStick } from '@statrookie/core/src/components/LevelStick';
 import { LoadingSpinner } from '@statrookie/core/src/components/LoadingSpinner';
 import { Modal } from '@statrookie/core/src/components/Modal';
 import { ObjectivesBoard } from '@statrookie/core/src/components/ObjectivesBoard';
+import { PromotionModal } from '@statrookie/core/src/components/PromotionModal';
 import { ProtectedRoute } from '@statrookie/core/src/components/ProtectedRoute';
 import { RestartButton } from '@statrookie/core/src/components/RestartButton';
 import { StickButton } from '@statrookie/core/src/components/StickButton';
@@ -30,6 +31,12 @@ import { API_BASE_URL } from '../../constants/api-base-url';
 import { opposingTeams } from '../../game/teams/opposing-teams';
 import { studentTeams } from '../../game/teams/student-teams';
 
+const PROMOTION_VIDEOS = [
+  'https://sharks-assets.s3.us-west-2.amazonaws.com/videos/FINancials_Junior_GM_LVL_01.mp4',
+  'https://sharks-assets.s3.us-west-2.amazonaws.com/videos/FINancials_Junior_GM_LVL_02.mp4',
+  'https://sharks-assets.s3.us-west-2.amazonaws.com/videos/FINancials_Junior_GM_LVL_03.mp4',
+];
+
 const HomePage = () => {
   const { authorizedUser, setAuthorizedUser } = useAuth();
   const student = authorizedUser as Student;
@@ -37,12 +44,19 @@ const HomePage = () => {
   const [showResetSeasonModal, setShowResetSeasonModal] = useState(false);
 
   const { seasonState, dispatch } = useGame();
+  const [showPromotionModal, setShowPromotionModal] = useState(false);
 
   const router = useRouter();
 
   useEffect(() => {
     setMoneySpent(getMoneySpent(student));
   }, [student]);
+
+  useEffect(() => {
+    if (router.query?.promotion) {
+      setShowPromotionModal(true);
+    }
+  }, [router]);
 
   const handleResetSeason = async () => {
     try {
@@ -186,6 +200,19 @@ const HomePage = () => {
           confirm={handleResetSeason}
           cancel={() => setShowResetSeasonModal(false)}
           message="Would you like to restart the season?"
+        />
+      </Modal>
+      <Modal
+        isVisible={showPromotionModal}
+        onClose={() => {
+          router.push({ query: '' });
+          setShowPromotionModal(false);
+        }}
+      >
+        <PromotionModal
+          student={student}
+          videos={PROMOTION_VIDEOS}
+          promotedFrom={+router.query?.promotion}
         />
       </Modal>
     </div>

@@ -65,6 +65,7 @@ const TrophiesPage = () => {
 
   const nextSeason = async () => {
     try {
+      const prevLevel = +student.level;
       const resetSeasonRes = await postNextSeason(student, API_BASE_URL);
       setAuthorizedUser(resetSeasonRes.updatedStudent);
       dispatch({
@@ -75,7 +76,10 @@ const TrophiesPage = () => {
           opposingTeams: opposingTeams,
         },
       });
-      router.push('/game/home');
+      router.push({
+        pathname: '/game/home',
+        query: { promotion: prevLevel },
+      });
     } catch (error: any) {
       // @TODO error handle
     }
@@ -119,9 +123,15 @@ const TrophiesPage = () => {
                 )}
               </>
             ) : (
-              <p className="text-primary text-xl">
-                Tap a trophy to learn more about it!
-              </p>
+              <button
+                className="btn-secondary btn-small text-base mx-2"
+                onClick={nextSeason}
+              >
+                Accept Promotion
+              </button>
+              // <p className="text-primary text-xl">
+              //   Tap a trophy to learn more about it!
+              // </p>
             )}
           </div>
 

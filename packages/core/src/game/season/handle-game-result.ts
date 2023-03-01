@@ -1,5 +1,6 @@
 import { cloneDeep } from 'lodash';
 import { OpposingTeam } from '../../game/teams/opposing-team.type';
+import { updateStandings } from '../../game/teams/team-statistics';
 import { StudentTeam } from '../teams/student-team.type';
 import { GameResult } from './game-result';
 import { getRandomStat } from './stats';
@@ -41,11 +42,7 @@ export const handleGameResult = (
     }
   });
 
-  [...clonedOpposingTeams, clonedStudentTeam]
-    .sort((a, b) => b.stats.points - a.stats.points)
-    .forEach((team, i) => {
-      team.stats.standing = i + 1;
-    });
+  updateStandings(clonedStudentTeam, clonedOpposingTeams);
 
   return { studentTeam: clonedStudentTeam, opposingTeams: clonedOpposingTeams };
 };

@@ -6,28 +6,30 @@ import { Header } from '@statrookie/core/src/components/Header';
 import { Jumbotron } from '@statrookie/core/src/components/Jumbotron';
 import { LevelStick } from '@statrookie/core/src/components/LevelStick';
 import { LoadingSpinner } from '@statrookie/core/src/components/LoadingSpinner';
+import { Modal } from '@statrookie/core/src/components/Modal';
 import { ProtectedRoute } from '@statrookie/core/src/components/ProtectedRoute';
+import { SeasonStatsModal } from '@statrookie/core/src/components/SeasonStatsModal';
 import { StandingsBoard } from '@statrookie/core/src/components/StandingsBoard';
 import { GameProvider, useGame } from '@statrookie/core/src/game/game-context';
 import { ObjectiveNames } from '@statrookie/core/src/game/objectives/objectives';
 import { gameCompleted } from '@statrookie/core/src/game/season/game-completed';
 import { GamePhases } from '@statrookie/core/src/game/season/game-phases';
+import { getInjuredPlayer } from '@statrookie/core/src/game/season/get-injured-player';
 import { scenarioActive } from '@statrookie/core/src/game/season/scenario-active';
 import { scenarioCompleted } from '@statrookie/core/src/game/season/scenario-completed';
-import { getInjuredPlayer } from '@statrookie/core/src/game/season/get-injured-player';
 import { updateSeasonAwards } from '@statrookie/core/src/game/season/season-awards';
+import { PlayerAssignments } from '@statrookie/core/src/game/teams/players';
 import { getMaxTeamRank } from '@statrookie/core/src/game/teams/utils/get-max-team-rank';
 import { Student } from '@statrookie/core/src/student/student.interface';
 import { updateStudent } from '@statrookie/core/src/student/update-student';
 import { useInterval } from '@statrookie/core/src/utils/hooks/use-interval';
+import { cloneDeep } from 'lodash';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import FinancialsLogo from '../../components/svg/financials-logo-big.svg';
 import { API_BASE_URL } from '../../constants/api-base-url';
 import { opposingTeams } from '../../game/teams/opposing-teams';
 import { studentTeams } from '../../game/teams/student-teams';
-import { PlayerAssignments } from '@statrookie/core/src/game/teams/players';
-import { cloneDeep } from 'lodash';
 
 const SeasonPage = () => {
   const { authorizedUser, setAuthorizedUser } = useAuth();
@@ -35,6 +37,7 @@ const SeasonPage = () => {
   const { seasonState, dispatch } = useGame();
   const [pageInitialized, setPageInitialized] = useState(false);
   const [gamePhaseTimer, setGamePhaseTimer] = useState<number>(null);
+  const [showStatsModal, setShowStatsModal] = useState(false);
 
   const router = useRouter();
 
@@ -107,7 +110,7 @@ const SeasonPage = () => {
       setAuthorizedUser(updateStudentRes.updatedStudent);
       dispatch({
         type: 'MARKET_ACTION',
-        payload: { student, studentTeams, injuredPlayer },
+        payload: { student, injuredPlayer },
       });
     } catch (error: any) {
       // @TODO error handle
@@ -119,26 +122,30 @@ const SeasonPage = () => {
     nextGame();
   }, []);
 
-  const gamesPlayed = (student.seasons || [])[+student.level - 1] || [];
   useEffect(() => {
-    const shouldThrowScenario =
-      gamesPlayed.length &&
-      gamesPlayed.length % 2 === 0 &&
-      !scenarioActive(student) &&
-      !scenarioCompleted(student);
+    const gamesPlayed = (student.seasons || [])[+student.level - 1] || [];
+    const isLastGame = gamesPlayed.length === seasonState.opposingTeams.length;
+    const noScenario = !scenarioActive(student) && !scenarioCompleted(student);
 
-    console.log(
-      'should throw:::: ',
-      gamesPlayed.length,
-      scenarioActive(student),
-      scenarioCompleted(student)
-    );
+    let shouldShowStats = false;
+    let shouldThrowScenario = false;
+    if (gamesPlayed.length && !isLastGame && noScenario) {
+      if (gamesPlayed.length % 2 === 0) {
+        shouldShowStats = true;
+      }
+      if (gamesPlayed.length % 4 === 0) {
+        shouldThrowScenario = true;
+      }
+    }
+    if (shouldShowStats) {
+      setShowStatsModal(true);
+    }
     if (shouldThrowScenario) {
       throwScenario();
     } else if (pageInitialized && !scenarioActive(student)) {
       nextGame();
     }
-  }, [gamesPlayed.length]);
+  }, [(student.seasons || [])[+student.level - 1] || []]);
 
   // GAME_OVER effect
   useEffect(() => {
@@ -247,6 +254,19 @@ const SeasonPage = () => {
         </div>
       </div>
       <Footer pageLinks={['team', 'budget', 'trophies']} />
+      <Modal
+        isVisible={showStatsModal}
+        onClose={() => setShowStatsModal(false)}
+      >
+        <SeasonStatsModal
+          student={student}
+          seasonState={seasonState}
+          onContinue={() => setShowStatsModal(false)}
+          onSaveAndExit={() => {
+            // @TODO logout
+          }}
+        />
+      </Modal>
     </div>
   );
 };
