@@ -26,20 +26,24 @@ import { updateStudent } from '@statrookie/core/src/student/update-student';
 import { useInterval } from '@statrookie/core/src/utils/hooks/use-interval';
 import { cloneDeep } from 'lodash';
 import { useRouter } from 'next/router';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import FinancialsLogo from '../../components/svg/financials-logo-big.svg';
 import { API_BASE_URL } from '../../constants/api-base-url';
 import { opposingTeams } from '../../game/teams/opposing-teams';
 import { studentTeams } from '../../game/teams/student-teams';
+import { getTeamLogo } from '../../game/utils/get-team-logo';
+import { validateProPlayer } from '../../game/utils/validate-pro-player';
 
 const SeasonPage = () => {
   const { authorizedUser, setAuthorizedUser } = useAuth();
   const student = authorizedUser as Student;
   const { seasonState, dispatch } = useGame();
-  const [pageInitialized, setPageInitialized] = useState(false);
   const [gamePhaseTimer, setGamePhaseTimer] = useState<number>(null);
   const [showStatsModal, setShowStatsModal] = useState(false);
   const [cheerPoints, setCheerPoints] = useState(0);
+  const [pageInitialized, setPageInitialized] = useState(false);
+  const gameOverTimerEnded = useRef(false);
+  const studentGamesUpdated = useRef(false);
 
   const router = useRouter();
 
@@ -71,11 +75,21 @@ const SeasonPage = () => {
     }
   };
 
-  const nextGamePhase = useCallback(() => {
-    dispatch({ type: 'NEXT_GAME_PHASE', payload: { cheerPoints } });
-  }, [cheerPoints]);
+  const nextGamePhase = () => {
+    if (
+      seasonState.gamePhase.name === GamePhases.GAME_OVER &&
+      studentGamesUpdated.current
+    ) {
+      nextGame();
+    } else {
+      dispatch({ type: 'NEXT_GAME_PHASE', payload: { cheerPoints } });
+    }
+  };
 
   const nextGame = () => {
+    studentGamesUpdated.current = false;
+    gameOverTimerEnded.current = false;
+    setCheerPoints(0);
     if (
       seasonState.currentOpponentIndex ===
       seasonState.opposingTeams.length - 1
@@ -131,6 +145,7 @@ const SeasonPage = () => {
   const gamesPlayed = useMemo(() => {
     return ((student.seasons || [])[+student.level - 1] || []).length;
   }, [student]);
+
   useEffect(() => {
     const isLastGame = gamesPlayed === seasonState.opposingTeams.length;
     const noScenario = !scenarioActive(student) && !scenarioCompleted(student);
@@ -150,7 +165,11 @@ const SeasonPage = () => {
     }
     if (shouldThrowScenario) {
       throwScenario();
-    } else if (pageInitialized && !scenarioActive(student)) {
+    } else if (
+      pageInitialized &&
+      !scenarioActive(student) &&
+      gameOverTimerEnded.current
+    ) {
       nextGame();
     }
   }, [gamesPlayed]);
@@ -166,6 +185,7 @@ const SeasonPage = () => {
             API_BASE_URL
           );
           setAuthorizedUser(gameCompletedRes.updatedStudent);
+          studentGamesUpdated.current = true;
         } catch (error: any) {
           // @TODO error handle
         }
@@ -173,9 +193,7 @@ const SeasonPage = () => {
     }
   }, [seasonState.gamePhase?.name]);
 
-  useInterval(() => {
-    nextGamePhase();
-  }, gamePhaseTimer);
+  useInterval(nextGamePhase, gamePhaseTimer);
 
   // game timer effect
   useEffect(() => {
@@ -233,7 +251,11 @@ const SeasonPage = () => {
           </div>
         </div>
         <div className="flex justify-center">
-          <Jumbotron nextGamePhase={nextGamePhase} />
+          <Jumbotron
+            nextGamePhase={nextGamePhase}
+            validateProPlayer={validateProPlayer}
+            getTeamLogo={getTeamLogo}
+          />
         </div>
         <div className="flex-1 flex items-center justify-between relative">
           <span className="absolute left-1/2 bottom-0 -translate-x-1/2 flex flex-col items-center">

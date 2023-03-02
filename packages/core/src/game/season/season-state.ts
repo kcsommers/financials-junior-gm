@@ -63,6 +63,7 @@ export const seasonReducer = (
       const seasonGames = (student.seasons || [])[+student.level - 1] || [];
       const currentOpponentIndex = seasonGames.length;
       const currentOpponent = state.opposingTeams[currentOpponentIndex];
+      console.log('curr opp:::: ', currentOpponent);
       const gamePhase = getGamePhase(0, state.studentTeam, currentOpponent);
 
       return {
@@ -111,6 +112,8 @@ export const seasonReducer = (
         state.currentOpponent,
         gameResult
       );
+
+      console.log('gamephase::::: ', gamePhase);
 
       return {
         ...state,

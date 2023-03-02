@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { useMemo } from 'react';
+import { ReactElement, useMemo } from 'react';
 import { getStudentBudget } from '../../game/budget/get-student-budget';
 import { scenarioActive } from '../../game/season/scenario-active';
 import { MarketConfig } from '../../game/teams/market';
@@ -16,6 +16,8 @@ type MarketPlayersBoardProps = {
   slotAssignment: PlayerAssignment;
   marketConfig: MarketConfig;
   onSignPlayer: (player: Player) => void;
+  isProPlayer: boolean;
+  getTeamLogo: (props?: { [key: string]: any }) => ReactElement;
 };
 
 export const MarketPlayersBoard = ({
@@ -23,6 +25,8 @@ export const MarketPlayersBoard = ({
   slotAssignment,
   marketConfig,
   onSignPlayer,
+  isProPlayer,
+  getTeamLogo,
 }: MarketPlayersBoardProps) => {
   const position = getAssignmentPosition(slotAssignment);
   const displayedPlayers = useMemo<Player[]>(() => {
@@ -70,7 +74,12 @@ export const MarketPlayersBoard = ({
                 'scale-90': displayedPlayers.length >= 9,
               })}
             >
-              <PlayerCard player={player} onClick={checkBudget} />
+              <PlayerCard
+                player={player}
+                onClick={checkBudget}
+                isProPlayer={isProPlayer}
+                getTeamLogo={getTeamLogo}
+              />
             </span>
           ))}
         </div>

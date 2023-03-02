@@ -1,3 +1,4 @@
+import { ReactElement } from 'react';
 import { Player } from '../../game/teams/players';
 import { StudentTeam } from '../../game/teams/student-team.type';
 import { Student } from '../../student/student.interface';
@@ -11,6 +12,8 @@ type ConfirmReleasePlayerProps = {
   player: Player;
   student: Student;
   studentTeam: StudentTeam;
+  isProPlayer: boolean;
+  getTeamLogo: (props?: { [key: string]: any }) => ReactElement;
 };
 
 export const ConfirmReleasePlayer = ({
@@ -19,6 +22,8 @@ export const ConfirmReleasePlayer = ({
   player,
   student,
   studentTeam,
+  isProPlayer,
+  getTeamLogo,
 }: ConfirmReleasePlayerProps) => {
   return (
     <ConfirmScreen
@@ -31,7 +36,12 @@ export const ConfirmReleasePlayer = ({
           <TeamBudgetState student={student} studentTeam={studentTeam} />
         </div>
         <div className="flex-1 -translate-y-6">
-          <PlayerCard size="md" player={player} />
+          <PlayerCard
+            size="md"
+            player={player}
+            isProPlayer={isProPlayer}
+            getTeamLogo={getTeamLogo}
+          />
         </div>
       </div>
     </ConfirmScreen>

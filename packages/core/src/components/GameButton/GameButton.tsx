@@ -19,8 +19,7 @@ export const GameButton = ({
   onClick,
   student,
 }: GameButtonProps) => {
-  useKeydown('Space', onClick, false);
-  // useKeydown('Space', onClick, gamePhase.name === GamePhases.READY);
+  useKeydown('Space', onClick, gamePhase.name === GamePhases.READY);
 
   return (
     <button

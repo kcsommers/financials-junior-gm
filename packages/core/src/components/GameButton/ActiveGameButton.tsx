@@ -1,6 +1,8 @@
+import classNames from 'classnames';
 import { GamePhase, GamePhases } from '../../game/season/game-phases';
 import { scenarioActive } from '../../game/season/scenario-active';
 import { Student } from '../../student/student.interface';
+import styles from './GameButton.module.scss';
 
 type ActiveGameButtonProps = {
   gamePhase: GamePhase;
@@ -13,7 +15,7 @@ export const ActiveGameButton = ({
   cheerLevel,
   student,
 }: ActiveGameButtonProps) => {
-  const getClassNames = () => {
+  const getPuckBorderClassNames = () => {
     if (scenarioActive(student)) {
       return 'fill-highlight stroke-highlight';
     }
@@ -24,7 +26,7 @@ export const ActiveGameButton = ({
       return 'fill-primary stroke-primary';
     }
     if (cheerLevel <= 10) {
-      return 'fill-secondary stroke secondary';
+      return 'fill-secondary stroke-secondary';
     }
     return 'fill-red-700 stroke-red-700';
   };
@@ -36,6 +38,10 @@ export const ActiveGameButton = ({
       width="120"
       height="120"
       viewBox="0 0 120 120"
+      className={classNames({
+        [styles.warming_up]: gamePhase.name === GamePhases.WARMING_UP,
+        [styles.game_on]: gamePhase.name === GamePhases.GAME_ON,
+      })}
     >
       <defs>
         <radialGradient
@@ -80,7 +86,10 @@ export const ActiveGameButton = ({
             transform="translate(451 321)"
             strokeWidth="1"
             style={{ transition: 'fill 0.5s ease' }}
-            className={getClassNames()}
+            className={classNames(
+              getPuckBorderClassNames(),
+              styles.puck_border
+            )}
           >
             <circle cx="60" cy="60" r="60" stroke="none" />
             <circle cx="60" cy="60" r="59.5" fill="none" />

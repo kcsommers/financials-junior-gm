@@ -1,3 +1,4 @@
+import { ReactElement } from 'react';
 import { Player, PlayerAssignment } from '../../game/teams/players';
 import { StudentTeam } from '../../game/teams/student-team.type';
 import { Student } from '../../student/student.interface';
@@ -10,12 +11,16 @@ type TeamBoardProps = {
   studentTeam: StudentTeam;
   onPlayerSelected: (player: Player) => void;
   onAddPlayer: (assignment: PlayerAssignment) => void;
+  getTeamLogo: (props?: { [key: string]: any }) => ReactElement;
+  validateProPlayer: (player: Player) => boolean;
 };
 
 export const TeamBoard = ({
   studentTeam,
+  getTeamLogo,
   onPlayerSelected,
   onAddPlayer,
+  validateProPlayer,
 }: TeamBoardProps) => {
   return (
     <div
@@ -40,6 +45,8 @@ export const TeamBoard = ({
               <PlayerCard
                 player={studentTeam.players[assignment]}
                 onClick={onPlayerSelected}
+                isProPlayer={validateProPlayer(studentTeam.players[assignment])}
+                getTeamLogo={getTeamLogo}
               />
             ) : (
               <AddPlayerCard
@@ -62,6 +69,8 @@ export const TeamBoard = ({
             {!!studentTeam.players[assignment] ? (
               <PlayerCard
                 player={studentTeam.players[assignment]}
+                isProPlayer={validateProPlayer(studentTeam.players[assignment])}
+                getTeamLogo={getTeamLogo}
                 onClick={onPlayerSelected}
               />
             ) : (

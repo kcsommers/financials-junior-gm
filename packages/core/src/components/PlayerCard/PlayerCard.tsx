@@ -1,5 +1,7 @@
 import classNames from 'classnames';
-import { motion } from 'framer-motion';
+import Image from 'next/image';
+import { ReactElement } from 'react';
+import PlayerIcon from '../../components/svg/player-image.svg';
 import { Player } from '../../game/teams/players';
 import { getPlayerStatMax } from '../../game/teams/utils/get-player-stat-max';
 import { capitalize } from '../../utils/capitalize';
@@ -7,22 +9,21 @@ import { getDollarString } from '../../utils/get-dollar-string';
 import styles from './PlayerCard.module.scss';
 import { PlayerRankGraph } from './PlayerRankGraph';
 import { PlayerRankPie } from './PlayerRankPie';
-import PlayerIcon from '../../components/svg/player-image.svg';
-import Image from 'next/image';
-import { ReactElement } from 'react';
 
 type PlayerCardProps = {
   player: Player;
   size?: 'sm' | 'md' | 'lg';
   onClick?: (player: Player) => void;
-  teamIcon?: ReactElement;
+  getTeamLogo: (props?: { [key: string]: any }) => ReactElement;
+  isProPlayer: boolean;
 };
 
 export const PlayerCard = ({
   player,
   size = 'sm',
   onClick,
-  teamIcon,
+  getTeamLogo,
+  isProPlayer,
 }: PlayerCardProps) => {
   return size === 'sm' ? (
     <div
@@ -62,7 +63,7 @@ export const PlayerCard = ({
         </div>
         <div
           className={
-            player.sharkPlayer === 'TRUE'
+            isProPlayer
               ? classNames(
                   'shadow-mat',
                   styles.player_card_body,
@@ -173,9 +174,9 @@ export const PlayerCard = ({
             {player.playerCost && (
               <span>{getDollarString(player.playerCost)}</span>
             )}
-            {player.sharkPlayer === 'TRUE' && (
+            {isProPlayer && !!getTeamLogo && (
               <span className={classNames(styles.logo, styles[size])}>
-                {teamIcon}
+                {getTeamLogo()}
               </span>
             )}
           </div>

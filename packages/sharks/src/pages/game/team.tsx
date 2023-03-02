@@ -25,6 +25,8 @@ import FinancialsLogo from '../../components/svg/financials-logo-big.svg';
 import { API_BASE_URL } from '../../constants/api-base-url';
 import { opposingTeams } from '../../game/teams/opposing-teams';
 import { studentTeams } from '../../game/teams/student-teams';
+import { getTeamLogo } from '../../game/utils/get-team-logo';
+import { validateProPlayer } from '../../game/utils/validate-pro-player';
 
 const TeamPage = () => {
   const { authorizedUser, setAuthorizedUser } = useAuth();
@@ -100,8 +102,10 @@ const TeamPage = () => {
             <TeamBoard
               student={student}
               studentTeam={seasonState.studentTeam}
+              validateProPlayer={validateProPlayer}
               onPlayerSelected={setSelectedPlayer}
               onAddPlayer={setSelectedAssignment}
+              getTeamLogo={getTeamLogo}
             />
           </div>
         </div>
@@ -128,6 +132,8 @@ const TeamPage = () => {
           studentTeam={seasonState.studentTeam}
           onPlayerSigned={onMarketAction}
           slotAssignment={selectedAssignment}
+          getTeamLogo={getTeamLogo}
+          isProPlayer={validateProPlayer(selectedPlayer)}
         />
       </Modal>
       <Modal
@@ -140,6 +146,8 @@ const TeamPage = () => {
           onPlayerReleased={onMarketAction}
           player={selectedPlayer}
           apiBaseUrl={API_BASE_URL}
+          getTeamLogo={getTeamLogo}
+          isProPlayer={validateProPlayer(selectedPlayer)}
         />
       </Modal>
       <Modal

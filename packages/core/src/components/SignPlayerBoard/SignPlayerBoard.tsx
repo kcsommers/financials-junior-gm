@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { ReactElement, useMemo, useState } from 'react';
 import { Player, PlayerAssignment } from '../../game/teams/players';
 import { StudentTeam } from '../../game/teams/student-team.type';
 import { TeamAssignments } from '../../game/teams/team';
@@ -16,6 +16,8 @@ type SignPlayerBoardProps = {
   onPlayerSigned: (student: Student, completedScenario?: boolean) => void;
   slotAssignment: PlayerAssignment;
   apiBaseUrl: string;
+  isProPlayer: boolean;
+  getTeamLogo: (props: any) => ReactElement;
 };
 
 export const SignPlayerBoard = ({
@@ -24,6 +26,8 @@ export const SignPlayerBoard = ({
   onPlayerSigned,
   slotAssignment,
   apiBaseUrl,
+  isProPlayer,
+  getTeamLogo,
 }: SignPlayerBoardProps) => {
   const [signingPlayer, setSigningPlayer] = useState<Player>();
   const [playerSigned, setPlayerSigned] = useState(false);
@@ -61,6 +65,8 @@ export const SignPlayerBoard = ({
         student={student}
         player={signingPlayer}
         studentTeam={studentTeam}
+        isProPlayer={isProPlayer}
+        getTeamLogo={getTeamLogo}
       />
     );
   }
@@ -73,6 +79,8 @@ export const SignPlayerBoard = ({
         player={signingPlayer}
         cancel={() => setSigningPlayer(null)}
         confirm={signPlayerConfirmed}
+        isProPlayer={isProPlayer}
+        getTeamLogo={getTeamLogo}
       />
     );
   }
@@ -111,6 +119,8 @@ export const SignPlayerBoard = ({
         slotAssignment={slotAssignment}
         marketConfig={{ action: 'sign' }}
         onSignPlayer={setSigningPlayer}
+        isProPlayer={isProPlayer}
+        getTeamLogo={getTeamLogo}
       />
     </div>
   );

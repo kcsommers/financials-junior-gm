@@ -17,9 +17,9 @@ export const GameHighlightView = ({
   const studentWin = studentTeam.stats.rank >= currentOpponent.stats.rank;
 
   useTimeout(() => {
-    // move on if video takes longer than 5 seconds to load
+    // move on if video takes longer than 10 seconds to load
     onEnded();
-  }, 5000);
+  }, 10000);
 
   return (
     <video

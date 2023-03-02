@@ -1,8 +1,9 @@
 import classNames from 'classnames';
-import { useCallback, useEffect, useState } from 'react';
+import { ReactElement, useCallback, useEffect, useState } from 'react';
 import { useAuth } from '../../auth/context/auth-context';
 import { useGame } from '../../game/game-context';
 import { GamePhases } from '../../game/season/game-phases';
+import { Player } from '../../game/teams/players';
 import { Student } from '../../student/student.interface';
 import { useInterval } from '../../utils/hooks/use-interval';
 import { GameHighlightView } from './GameHighlightView';
@@ -13,9 +14,15 @@ import { ScoreView } from './ScoreView';
 
 type JumbotronProps = {
   nextGamePhase: () => void;
+  validateProPlayer: (player: Player) => boolean;
+  getTeamLogo: (props?: { [key: string]: any }) => ReactElement;
 };
 
-export const Jumbotron = ({ nextGamePhase }: JumbotronProps) => {
+export const Jumbotron = ({
+  nextGamePhase,
+  validateProPlayer,
+  getTeamLogo,
+}: JumbotronProps) => {
   const student = useAuth().authorizedUser as Student;
   const { seasonState, dispatch } = useGame();
   const {
@@ -61,6 +68,8 @@ export const Jumbotron = ({ nextGamePhase }: JumbotronProps) => {
             <InjuredPlayerView
               player={seasonState.injuredPlayer}
               studentTeam={seasonState.studentTeam}
+              isProPlayer={validateProPlayer(seasonState.injuredPlayer)}
+              getTeamLogo={getTeamLogo}
             />
           ) : (
             <>
@@ -78,6 +87,7 @@ export const Jumbotron = ({ nextGamePhase }: JumbotronProps) => {
                   studentTeam={seasonState.studentTeam}
                   currentOpponent={currentOpponent}
                   gameResult={seasonState.gameResult}
+                  gamePhase={gamePhase}
                 />
               )}
               {gamePhase.name === GamePhases.GAME_HIGHLIGHT && (

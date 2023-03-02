@@ -73,8 +73,7 @@ export const Cheermeter = ({ gamePhase, setCheerPoints }: CheermeterProps) => {
     prevCheerCount.current = cheerCounter;
   }, [cheerCounter]);
 
-  useKeydown('Space', onCheer, true);
-  // useKeydown('Space', onCheer, gamePhase?.name === GamePhases.GAME_ON);
+  useKeydown('Space', onCheer, gamePhase?.name === GamePhases.GAME_ON);
 
   const prevCheerLevel = useRef<number>(cheerLevel);
   useEffect(() => {

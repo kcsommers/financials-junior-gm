@@ -478,36 +478,62 @@ export const opposingTeams: OpposingTeam[][] = [
         },
       },
     },
-    //   {
-    //     teamRank: 455,
-    //     logo: flamesLogo,
-    //     name: 'Calgary Flames',
-    //     stats: { wins: 0, losses: 0, points: 0 },
-    //     standings: '6th',
-    //     color: '#DD0024',
-    //     videos: {
-    //       gameOn: `${DRIVE_BASE_URL}1G_Ioyiet_9cbi5Rpds4hnNkhwyxp7-5y`,
-    //       gameOver: {
-    //         loss: `${DRIVE_BASE_URL}1DdV-IXh_tbDz_JotqQuC7NveLoe2zfnt`,
-    //         win: `${DRIVE_BASE_URL}1iAU9azLhply4wFojyCguhMCdiDrqGw73`,
-    //       },
-    //     },
-    //   },
-    //   {
-    //     teamRank: 480,
-    //     logo: oilersLogo,
-    //     name: 'Edmonton Oilers',
-    //     stats: { wins: 0, losses: 0, points: 0 },
-    //     standings: '6th',
-    //     color: '#002147',
-    //     videos: {
-    //       gameOn: `${DRIVE_BASE_URL}1wPBJ2lZJo5K6Ywba7FoudL9Ey188BnBL`,
-    //       gameOver: {
-    //         loss: `${DRIVE_BASE_URL}1C40cdlpPEahpTHnJt11AFgjPjKMoyvB4`,
-    //         win: `${DRIVE_BASE_URL}1tbmsIS19EVH9YAUGbF39nJjRcmVl_-Rr`,
-    //       },
-    //     },
-    //   },
+    {
+      getLogo: (props = {}) => (
+        <Image
+          src="https://sharks-assets.s3.us-west-2.amazonaws.com/images/arizonacoyotes.png"
+          alt="Arizona Coyote"
+          fill={true}
+          sizes="150px"
+          style={{ objectFit: 'contain', padding: '0.25rem' }}
+          {...omit(props, ['className'])}
+        />
+      ),
+      name: 'Calgary Flames',
+      stats: {
+        wins: 0,
+        losses: 0,
+        points: 0,
+        rank: getRandomTeamRank(3),
+        standing: 3,
+      },
+      color: '#DD0024',
+      videos: {
+        gameOn: `${DRIVE_BASE_URL}1G_Ioyiet_9cbi5Rpds4hnNkhwyxp7-5y`,
+        gameHighlight: {
+          loss: `${DRIVE_BASE_URL}1DdV-IXh_tbDz_JotqQuC7NveLoe2zfnt`,
+          win: `${DRIVE_BASE_URL}1iAU9azLhply4wFojyCguhMCdiDrqGw73`,
+        },
+      },
+    },
+    {
+      getLogo: (props = {}) => (
+        <Image
+          src="https://sharks-assets.s3.us-west-2.amazonaws.com/images/arizonacoyotes.png"
+          alt="Arizona Coyote"
+          fill={true}
+          sizes="150px"
+          style={{ objectFit: 'contain', padding: '0.25rem' }}
+          {...omit(props, ['className'])}
+        />
+      ),
+      name: 'Edmonton Oilers',
+      stats: {
+        wins: 0,
+        losses: 0,
+        points: 0,
+        rank: getRandomTeamRank(3),
+        standing: 4,
+      },
+      color: '#002147',
+      videos: {
+        gameOn: `${DRIVE_BASE_URL}1wPBJ2lZJo5K6Ywba7FoudL9Ey188BnBL`,
+        gameHighlight: {
+          loss: `${DRIVE_BASE_URL}1C40cdlpPEahpTHnJt11AFgjPjKMoyvB4`,
+          win: `${DRIVE_BASE_URL}1tbmsIS19EVH9YAUGbF39nJjRcmVl_-Rr`,
+        },
+      },
+    },
     //   {
     //     teamRank: 465,
     //     logo: kingsLogo,

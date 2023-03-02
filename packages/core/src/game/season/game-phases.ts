@@ -55,17 +55,17 @@ export const getGamePhase = (
         'Coming up next',
         `${studentTeam.name} vs ${opposingTeam?.name}`,
       ],
-      messageTimer: 500,
+      messageTimer: 2000,
     },
     {
       name: GamePhases.WARMING_UP,
       messages: ['The players are warming up'],
-      timer: 1000,
+      timer: 5000,
     },
     {
       name: GamePhases.GAME_ON,
       messages: ['1st Period', '2nd Period', '3rd Period'],
-      messageTimer: 1000,
+      messageTimer: 5000,
     },
   ];
 
@@ -78,6 +78,7 @@ export const getGamePhase = (
   phases.push({
     name: GamePhases.GAME_OVER,
     messages: [getGameOverMessage(studentTeam, gameResult)],
+    timer: 5000,
   });
 
   return phases[phaseIndex];

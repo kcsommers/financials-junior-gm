@@ -35,6 +35,8 @@ import FinancialsLogo from '../../components/svg/financials-logo-big.svg';
 import { API_BASE_URL } from '../../constants/api-base-url';
 import { opposingTeams } from '../../game/teams/opposing-teams';
 import { studentTeams } from '../../game/teams/student-teams';
+import { getTeamLogo } from '../../game/utils/get-team-logo';
+import { validateProPlayer } from '../../game/utils/validate-pro-player';
 
 type DropData = {
   player: Player;
@@ -165,6 +167,8 @@ const ScoutPage = () => {
             >
               <PlayerCard
                 player={player}
+                isProPlayer={validateProPlayer(player)}
+                getTeamLogo={getTeamLogo}
                 onClick={() => setSelectedPlayer(player)}
               />
             </DraggableItem>
@@ -279,6 +283,8 @@ const ScoutPage = () => {
                       >
                         <PlayerCard
                           player={player}
+                          isProPlayer={validateProPlayer(player)}
+                          getTeamLogo={getTeamLogo}
                           onClick={() => setSelectedPlayer(player)}
                         />
                       </DraggableItem>
@@ -313,7 +319,7 @@ const ScoutPage = () => {
                   className="bg-white border-4 border-neutral-700 rounded-md flex items-center justify-center relative"
                   style={{ height: '142px' }}
                 >
-                  <span className="absolute text-2xl text-primary left-2 top-2">
+                  <span className="absolute text-xl text-primary left-2 top-2">
                     ${level.amount}
                   </span>
                   {getMoneyLevelRow(level, i)}
@@ -328,7 +334,12 @@ const ScoutPage = () => {
         onClose={() => setSelectedPlayer(null)}
       >
         <div className="h-full flex items-center justify-center">
-          <PlayerCard player={selectedPlayer} size="lg" />
+          <PlayerCard
+            player={selectedPlayer}
+            size="lg"
+            isProPlayer={validateProPlayer(selectedPlayer)}
+            getTeamLogo={getTeamLogo}
+          />
         </div>
       </Modal>
       <Modal
@@ -417,7 +428,11 @@ const ProtectedScoutPage = () => {
 const generatePreview = ({ itemType, item, style }) => {
   return (
     <div style={style}>
-      <PlayerCard player={item.player} />
+      <PlayerCard
+        player={item.player}
+        isProPlayer={validateProPlayer(item.player)}
+        getTeamLogo={getTeamLogo}
+      />
     </div>
   );
 };

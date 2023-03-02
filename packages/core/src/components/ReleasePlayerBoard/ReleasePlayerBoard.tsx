@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { ReactElement, useState } from 'react';
 import { Player } from '../../game/teams/players';
 import { StudentTeam } from '../../game/teams/student-team.type';
 import { releasePlayer } from '../../game/teams/utils/release-player';
@@ -14,6 +14,8 @@ type ReleasePlayerBoardProps = {
   onPlayerReleased: (student: Student) => void;
   player: Player;
   apiBaseUrl: string;
+  isProPlayer: boolean;
+  getTeamLogo: (props: any) => ReactElement;
 };
 
 export const ReleasePlayerBoard = ({
@@ -22,6 +24,8 @@ export const ReleasePlayerBoard = ({
   onPlayerReleased,
   apiBaseUrl,
   player,
+  getTeamLogo,
+  isProPlayer,
 }: ReleasePlayerBoardProps) => {
   const [showConfirm, setShowConfirm] = useState(false);
   const [playerReleased, setPlayerReleased] = useState(false);
@@ -42,6 +46,8 @@ export const ReleasePlayerBoard = ({
         student={student}
         studentTeam={studentTeam}
         player={player}
+        isProPlayer={isProPlayer}
+        getTeamLogo={getTeamLogo}
       />
     );
   }
@@ -54,13 +60,20 @@ export const ReleasePlayerBoard = ({
         player={player}
         cancel={() => setShowConfirm(false)}
         confirm={releasePlayerConfirmed}
+        isProPlayer={isProPlayer}
+        getTeamLogo={getTeamLogo}
       />
     );
   }
 
   return (
     <div className="p-12 h-full flex flex-col items-center justify-center">
-      <PlayerCard size="lg" player={player} />
+      <PlayerCard
+        size="lg"
+        player={player}
+        getTeamLogo={getTeamLogo}
+        isProPlayer={isProPlayer}
+      />
       <div className="mt-8">
         <Button text="Release" onClick={() => setShowConfirm(true)} />
       </div>

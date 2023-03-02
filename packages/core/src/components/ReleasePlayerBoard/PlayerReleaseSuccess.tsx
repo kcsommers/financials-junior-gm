@@ -1,3 +1,4 @@
+import { ReactElement } from 'react';
 import { Player } from '../../game/teams/players';
 import { StudentTeam } from '../../game/teams/student-team.type';
 import { Student } from '../../student/student.interface';
@@ -9,12 +10,16 @@ type PlayerReleaseSuccessProps = {
   student: Student;
   studentTeam: StudentTeam;
   player: Player;
+  isProPlayer: boolean;
+  getTeamLogo: (props?: { [key: string]: any }) => ReactElement;
 };
 
 export const PlayerReleaseSuccess = ({
   player,
   student,
   studentTeam,
+  isProPlayer,
+  getTeamLogo,
 }: PlayerReleaseSuccessProps) => {
   return (
     <div className="py-16">
@@ -31,7 +36,12 @@ export const PlayerReleaseSuccess = ({
         </div>
         <div className="flex-1 flex flex-col items-center justify-center">
           <div className="flex-1">
-            <PlayerCard size="md" player={player} />
+            <PlayerCard
+              size="md"
+              player={player}
+              isProPlayer={isProPlayer}
+              getTeamLogo={getTeamLogo}
+            />
           </div>
           <NotepadIcon
             // @ts-ignore
