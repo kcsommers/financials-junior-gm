@@ -12,6 +12,7 @@ import Binoculars from '@statrookie/core/src/components/svg/binoculars.svg';
 import ScoutStick from '@statrookie/core/src/components/svg/scout-stick.svg';
 import { TeamBoard } from '@statrookie/core/src/components/TeamBoard';
 import { TeamBudgetState } from '@statrookie/core/src/components/TeamBudgetState';
+import { TradePlayerBoard } from '@statrookie/core/src/components/TradePlayerBoard';
 import { GameProvider, useGame } from '@statrookie/core/src/game/game-context';
 import { checkTeamObjective } from '@statrookie/core/src/game/objectives/check-team-objective';
 import {
@@ -133,22 +134,34 @@ const TeamPage = () => {
           onPlayerSigned={onMarketAction}
           slotAssignment={selectedAssignment}
           getTeamLogo={getTeamLogo}
-          isProPlayer={validateProPlayer(selectedPlayer)}
+          validateProPlayer={validateProPlayer}
         />
       </Modal>
       <Modal
         isVisible={!!selectedPlayer}
         onClose={() => setSelectedPlayer(null)}
       >
-        <ReleasePlayerBoard
-          student={student}
-          studentTeam={seasonState.studentTeam}
-          onPlayerReleased={onMarketAction}
-          player={selectedPlayer}
-          apiBaseUrl={API_BASE_URL}
-          getTeamLogo={getTeamLogo}
-          isProPlayer={validateProPlayer(selectedPlayer)}
-        />
+        {seasonState.seasonActive ? (
+          <TradePlayerBoard
+            student={student}
+            studentTeam={seasonState.studentTeam}
+            onPlayersTraded={onMarketAction}
+            releasingPlayer={selectedPlayer}
+            apiBaseUrl={API_BASE_URL}
+            getTeamLogo={getTeamLogo}
+            validateProPlayer={validateProPlayer}
+          />
+        ) : (
+          <ReleasePlayerBoard
+            student={student}
+            studentTeam={seasonState.studentTeam}
+            onPlayerReleased={onMarketAction}
+            player={selectedPlayer}
+            apiBaseUrl={API_BASE_URL}
+            getTeamLogo={getTeamLogo}
+            validateProPlayer={validateProPlayer}
+          />
+        )}
       </Modal>
       <Modal
         isVisible={showScoutCompleteModal}

@@ -6,7 +6,7 @@ import { PlayerCard } from '../PlayerCard';
 import NotepadIcon from '../svg/notepaper-pen.svg';
 import { TeamBudgetState } from '../TeamBudgetState';
 
-type PlayerSignSuccessProps = {
+type ReleasePlayerSuccessProps = {
   student: Student;
   studentTeam: StudentTeam;
   player: Player;
@@ -14,24 +14,24 @@ type PlayerSignSuccessProps = {
   getTeamLogo: (props?: { [key: string]: any }) => ReactElement;
 };
 
-export const PlayerSignSuccess = ({
+export const ReleasePlayerSuccess = ({
   player,
   student,
   studentTeam,
   isProPlayer,
   getTeamLogo,
-}: PlayerSignSuccessProps) => {
+}: ReleasePlayerSuccessProps) => {
   return (
     <div className="py-16">
       <h2 className="text-primary text-center mb-8 text-5xl">
-        {player.playerName} has been signed!
+        {player.playerName} has been released!
       </h2>
       <div className="flex flex-1 justify-around px-16">
         <div className="flex justify-center pt-6">
           <TeamBudgetState
             student={student}
-            studentTeam={studentTeam}
             size="lg"
+            studentTeam={studentTeam}
           />
         </div>
         <div className="flex-1 flex flex-col items-center justify-center">

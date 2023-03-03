@@ -12,7 +12,7 @@ import { handleGameResult } from './handle-game-result';
 export type SeasonAction =
   | {
       type: 'NEXT_GAME';
-      payload: { student: Student };
+      payload: { student: Student; seasonActive?: boolean };
     }
   | {
       type: 'NEXT_GAME_PHASE';
@@ -51,6 +51,7 @@ export type SeasonState = {
   studentTeam: StudentTeam;
   seasonComplete: boolean;
   injuredPlayer: Player;
+  seasonActive: boolean;
 };
 
 export const seasonReducer = (
@@ -59,12 +60,14 @@ export const seasonReducer = (
 ): SeasonState => {
   switch (action.type) {
     case 'NEXT_GAME': {
-      const { student } = action.payload;
+      const { student, seasonActive } = action.payload;
       const seasonGames = (student.seasons || [])[+student.level - 1] || [];
       const currentOpponentIndex = seasonGames.length;
       const currentOpponent = state.opposingTeams[currentOpponentIndex];
-      console.log('curr opp:::: ', currentOpponent);
       const gamePhase = getGamePhase(0, state.studentTeam, currentOpponent);
+
+      const seasonGamesPlayed =
+        (student.seasons || [])[+student.level - 1] || [];
 
       return {
         ...state,
@@ -74,6 +77,7 @@ export const seasonReducer = (
         gamePhaseIndex: 0,
         phaseMessageIndex: 0,
         gameResult: null,
+        seasonActive: !!(seasonActive || seasonGamesPlayed.length),
       };
     }
 
@@ -113,8 +117,6 @@ export const seasonReducer = (
         gameResult
       );
 
-      console.log('gamephase::::: ', gamePhase);
-
       return {
         ...state,
         studentTeam: updatedStudentTeam || state.studentTeam,
@@ -143,6 +145,7 @@ export const seasonReducer = (
 
       const seasonGamesPlayed =
         (student.seasons || [])[+student.level - 1] || [];
+      const seasonActive = !!seasonGamesPlayed.length;
       const seasonComplete =
         seasonGamesPlayed.length === levelOpposingTeams.length;
 
@@ -157,6 +160,7 @@ export const seasonReducer = (
         studentTeam,
         seasonComplete,
         injuredPlayer: null,
+        seasonActive,
       };
     }
     case 'MARKET_ACTION': {

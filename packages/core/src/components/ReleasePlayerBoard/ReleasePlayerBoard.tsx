@@ -6,7 +6,7 @@ import { Student } from '../../student/student.interface';
 import { Button } from '../Button';
 import { PlayerCard } from '../PlayerCard';
 import { ConfirmReleasePlayer } from './ConfirmReleasePlayer';
-import { PlayerReleaseSuccess } from './PlayerReleaseSuccess';
+import { ReleasePlayerSuccess } from './ReleasePlayerSuccess';
 
 type ReleasePlayerBoardProps = {
   student: Student;
@@ -14,7 +14,7 @@ type ReleasePlayerBoardProps = {
   onPlayerReleased: (student: Student) => void;
   player: Player;
   apiBaseUrl: string;
-  isProPlayer: boolean;
+  validateProPlayer: (player: Player) => boolean;
   getTeamLogo: (props: any) => ReactElement;
 };
 
@@ -25,7 +25,7 @@ export const ReleasePlayerBoard = ({
   apiBaseUrl,
   player,
   getTeamLogo,
-  isProPlayer,
+  validateProPlayer,
 }: ReleasePlayerBoardProps) => {
   const [showConfirm, setShowConfirm] = useState(false);
   const [playerReleased, setPlayerReleased] = useState(false);
@@ -42,11 +42,11 @@ export const ReleasePlayerBoard = ({
 
   if (playerReleased) {
     return (
-      <PlayerReleaseSuccess
+      <ReleasePlayerSuccess
         student={student}
         studentTeam={studentTeam}
         player={player}
-        isProPlayer={isProPlayer}
+        isProPlayer={validateProPlayer(player)}
         getTeamLogo={getTeamLogo}
       />
     );
@@ -60,7 +60,7 @@ export const ReleasePlayerBoard = ({
         player={player}
         cancel={() => setShowConfirm(false)}
         confirm={releasePlayerConfirmed}
-        isProPlayer={isProPlayer}
+        isProPlayer={validateProPlayer(player)}
         getTeamLogo={getTeamLogo}
       />
     );
@@ -72,7 +72,7 @@ export const ReleasePlayerBoard = ({
         size="lg"
         player={player}
         getTeamLogo={getTeamLogo}
-        isProPlayer={isProPlayer}
+        isProPlayer={validateProPlayer(player)}
       />
       <div className="mt-8">
         <Button text="Release" onClick={() => setShowConfirm(true)} />

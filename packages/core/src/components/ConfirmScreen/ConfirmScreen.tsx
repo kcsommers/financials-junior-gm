@@ -22,7 +22,7 @@ export const ConfirmScreen = ({
   return (
     <div
       className={classnames(
-        'w-full h-full flex items-center',
+        'w-full h-full flex items-center max-w-[928px]',
         'justify-center flex-col text-center p-12',
         { disabled: isDisabled }
       )}

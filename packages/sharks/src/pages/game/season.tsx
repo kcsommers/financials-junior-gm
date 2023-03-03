@@ -80,13 +80,13 @@ const SeasonPage = () => {
       seasonState.gamePhase.name === GamePhases.GAME_OVER &&
       studentGamesUpdated.current
     ) {
-      nextGame();
+      nextGame(true);
     } else {
       dispatch({ type: 'NEXT_GAME_PHASE', payload: { cheerPoints } });
     }
   };
 
-  const nextGame = () => {
+  const nextGame = (seasonActive?: boolean) => {
     studentGamesUpdated.current = false;
     gameOverTimerEnded.current = false;
     setCheerPoints(0);
@@ -98,7 +98,7 @@ const SeasonPage = () => {
     } else {
       dispatch({
         type: 'NEXT_GAME',
-        payload: { student },
+        payload: { student, seasonActive },
       });
     }
   };
@@ -146,6 +146,8 @@ const SeasonPage = () => {
     return ((student.seasons || [])[+student.level - 1] || []).length;
   }, [student]);
 
+  console.log('thew:::: ', seasonState.seasonActive);
+
   useEffect(() => {
     const isLastGame = gamesPlayed === seasonState.opposingTeams.length;
     const noScenario = !scenarioActive(student) && !scenarioCompleted(student);
@@ -170,7 +172,7 @@ const SeasonPage = () => {
       !scenarioActive(student) &&
       gameOverTimerEnded.current
     ) {
-      nextGame();
+      nextGame(true);
     }
   }, [gamesPlayed]);
 

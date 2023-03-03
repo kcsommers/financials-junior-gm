@@ -8,7 +8,7 @@ import { Student } from '../../student/student.interface';
 import { MarketPlayersBoard } from '../MarketPlayersBoard/MarketPlayersBoard';
 import { TeamBudgetState } from '../TeamBudgetState';
 import { ConfirmSignPlayer } from './ConfirmSignPlayer';
-import { PlayerSignSuccess } from './PlayerSignSuccess';
+import { SignPlayerSuccess } from './SignPlayerSuccess';
 
 type SignPlayerBoardProps = {
   student: Student;
@@ -16,7 +16,7 @@ type SignPlayerBoardProps = {
   onPlayerSigned: (student: Student, completedScenario?: boolean) => void;
   slotAssignment: PlayerAssignment;
   apiBaseUrl: string;
-  isProPlayer: boolean;
+  validateProPlayer: (player: Player) => boolean;
   getTeamLogo: (props: any) => ReactElement;
 };
 
@@ -26,7 +26,7 @@ export const SignPlayerBoard = ({
   onPlayerSigned,
   slotAssignment,
   apiBaseUrl,
-  isProPlayer,
+  validateProPlayer,
   getTeamLogo,
 }: SignPlayerBoardProps) => {
   const [signingPlayer, setSigningPlayer] = useState<Player>();
@@ -61,11 +61,11 @@ export const SignPlayerBoard = ({
 
   if (playerSigned) {
     return (
-      <PlayerSignSuccess
+      <SignPlayerSuccess
         student={student}
         player={signingPlayer}
         studentTeam={studentTeam}
-        isProPlayer={isProPlayer}
+        isProPlayer={validateProPlayer(signingPlayer)}
         getTeamLogo={getTeamLogo}
       />
     );
@@ -79,7 +79,7 @@ export const SignPlayerBoard = ({
         player={signingPlayer}
         cancel={() => setSigningPlayer(null)}
         confirm={signPlayerConfirmed}
-        isProPlayer={isProPlayer}
+        isProPlayer={validateProPlayer(signingPlayer)}
         getTeamLogo={getTeamLogo}
       />
     );
@@ -87,39 +87,12 @@ export const SignPlayerBoard = ({
 
   return (
     <div className="p-12 h-full flex flex-col justify-between">
-      <div className="flex">
-        <TeamBudgetState student={student} studentTeam={studentTeam} />
-        <div className="flex-1 pl-8">
-          <h3 className="text-primary text-2xl">Spaces On Your Team</h3>
-          <div className="border-4 border-neutral-700 p-4 rounded-md">
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-primary text-3xl">Forwards:</span>
-              <span className="text-secondary text-4xl">
-                {availableSlots.forwards}
-              </span>
-            </div>
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-primary text-3xl">Defense:</span>
-              <span className="text-secondary text-4xl">
-                {availableSlots.defense}
-              </span>
-            </div>
-            <div className="flex items-center justify-between">
-              <span className="text-primary text-3xl">Goalie:</span>
-              <span className="text-secondary text-4xl">
-                {availableSlots.goalie}
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-
       <MarketPlayersBoard
         student={student}
+        studentTeam={studentTeam}
         slotAssignment={slotAssignment}
-        marketConfig={{ action: 'sign' }}
         onSignPlayer={setSigningPlayer}
-        isProPlayer={isProPlayer}
+        validateProPlayer={validateProPlayer}
         getTeamLogo={getTeamLogo}
       />
     </div>

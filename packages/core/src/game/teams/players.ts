@@ -14,7 +14,8 @@ export type PlayerAssignment =
   | 'dTwo'
   | 'benchOne'
   | 'benchTwo'
-  | 'benchThree';
+  | 'benchThree'
+  | 'traded';
 
 export const startingPlayerProperties: StartingPlayer[] = [
   'fOne',
@@ -56,6 +57,7 @@ export const PlayerAssignments = {
   MARKET: 'marketPlayer',
   SCOUT: 'scoutPlayer',
   OFFERED_SCOUT: 'offeredScoutPlayer',
+  TRADED: 'traded',
   UNAVAILABLE: null,
   F_ONE: 'fOne',
   F_TWO: 'fTwo',
