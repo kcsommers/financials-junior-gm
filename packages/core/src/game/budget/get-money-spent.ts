@@ -6,17 +6,6 @@ export const getMoneySpent = (student: Student): number => {
   if (!student?.players) {
     return 0;
   }
-
-  console.log(
-    'moneyspent:::: ',
-    student.players.reduce((total, p) => {
-      if (isTeamPlayer(p) || isInjuredPlayer(p)) {
-        console.log('player:::: ', p.playerName);
-        total += +p.playerCost;
-      }
-      return total;
-    }, 0)
-  );
   return Math.min(
     student.players.reduce((total, p) => {
       if (isTeamPlayer(p) || isInjuredPlayer(p)) {
