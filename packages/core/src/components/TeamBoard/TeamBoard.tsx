@@ -2,6 +2,7 @@ import { ReactElement } from 'react';
 import { Player, PlayerAssignment } from '../../game/teams/players';
 import { StudentTeam } from '../../game/teams/student-team.type';
 import { Student } from '../../student/student.interface';
+import { TeamTutorialComponents } from '@statrookie/core/src/tutorial/component-configs/team-tutorial-components';
 import { PlayerCard } from '../PlayerCard';
 import IceBg from '../svg/ice-bg-small.svg';
 import { AddPlayerCard } from './AddPlayerCard';
@@ -9,6 +10,7 @@ import { AddPlayerCard } from './AddPlayerCard';
 type TeamBoardProps = {
   student: Student;
   studentTeam: StudentTeam;
+  tutorialComponents: TeamTutorialComponents;
   onPlayerSelected: (player: Player) => void;
   onAddPlayer: (assignment: PlayerAssignment) => void;
   getTeamLogo: (props?: { [key: string]: any }) => ReactElement;
@@ -17,6 +19,7 @@ type TeamBoardProps = {
 
 export const TeamBoard = ({
   studentTeam,
+  tutorialComponents,
   getTeamLogo,
   onPlayerSelected,
   onAddPlayer,
@@ -50,6 +53,7 @@ export const TeamBoard = ({
               />
             ) : (
               <AddPlayerCard
+                componentConfig={tutorialComponents.forwardCards}
                 slotAssignment={assignment as PlayerAssignment}
                 onClick={onAddPlayer}
               />
@@ -75,6 +79,11 @@ export const TeamBoard = ({
               />
             ) : (
               <AddPlayerCard
+                componentConfig={
+                  assignment === 'gOne'
+                    ? tutorialComponents.goalieCard
+                    : tutorialComponents.defenseCards
+                }
                 slotAssignment={assignment as PlayerAssignment}
                 onClick={onAddPlayer}
               />

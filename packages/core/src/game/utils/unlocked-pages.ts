@@ -17,7 +17,6 @@ export const seasonPageUnlocked = (student: Student): boolean => {
   //   return startingLineupFull(student);
   // }
   return !!(
-    student?.tutorials?.season &&
     student?.objectives?.LEARN_BUDGET &&
     student?.objectives?.FILL_TEAM &&
     !scenarioActive(student)

@@ -2,6 +2,7 @@ import { useAuth } from '@statrookie/core/src/auth/context/auth-context';
 import { Footer } from '@statrookie/core/src/components/Footer';
 import { GamePageWrap } from '@statrookie/core/src/components/GamePageWrap';
 import { Header } from '@statrookie/core/src/components/Header';
+import { HelpButton } from '@statrookie/core/src/components/HelpButton';
 import { LoadingSpinner } from '@statrookie/core/src/components/LoadingSpinner';
 import { Modal } from '@statrookie/core/src/components/Modal';
 import { ProtectedRoute } from '@statrookie/core/src/components/ProtectedRoute';
@@ -13,6 +14,8 @@ import ScoutStick from '@statrookie/core/src/components/svg/scout-stick.svg';
 import { TeamBoard } from '@statrookie/core/src/components/TeamBoard';
 import { TeamBudgetState } from '@statrookie/core/src/components/TeamBudgetState';
 import { TradePlayerBoard } from '@statrookie/core/src/components/TradePlayerBoard';
+import { FaqBoard } from '@statrookie/core/src/faqs/FaqBoard';
+import { teamFaqs } from '@statrookie/core/src/faqs/team-faqs';
 import { GameProvider, useGame } from '@statrookie/core/src/game/game-context';
 import { checkTeamObjective } from '@statrookie/core/src/game/objectives/check-team-objective';
 import {
@@ -20,9 +23,20 @@ import {
   PlayerAssignment,
 } from '@statrookie/core/src/game/teams/players';
 import { Student } from '@statrookie/core/src/student/student.interface';
+import {
+  TeamTutorialComponents,
+  TeamTutorialSlideEvent,
+} from '@statrookie/core/src/tutorial/component-configs/team-tutorial-components';
+import { Tutorial } from '@statrookie/core/src/tutorial/Tutorial';
+import { useTutorial } from '@statrookie/core/src/tutorial/use-tutorial';
+import classNames from 'classnames';
+import { AnimatePresence, motion } from 'framer-motion';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import { confirmStartTutorialSlide } from 'src/tutorial/slides/confirm-start-tutorial-slide';
+import { teamSlides } from 'src/tutorial/slides/team-slides';
 import FinancialsLogo from '../../components/svg/financials-logo-big.svg';
+import SharkieButton from '../../components/svg/sharkie-btn.svg';
 import { API_BASE_URL } from '../../constants/api-base-url';
 import { opposingTeams } from '../../game/teams/opposing-teams';
 import { studentTeams } from '../../game/teams/student-teams';
@@ -35,6 +49,21 @@ const TeamPage = () => {
   const student = authorizedUser as Student;
   const router = useRouter();
   const [showScoutCompleteModal, setShowScoutCompleteModal] = useState(false);
+  const [showFaqModal, setShowFaqModal] = useState(false);
+
+  const {
+    activeTutorial,
+    requestedTutorial,
+    setRequestedTutorial,
+    tutorialComponentConfigs,
+    setTutorialComponentConfigs,
+    onTutorialExit,
+    tutorialEventListener,
+    setTutorialEventListener,
+  } = useTutorial<TeamTutorialComponents, TeamTutorialSlideEvent>(
+    'team',
+    API_BASE_URL
+  );
 
   const [selectedAssignment, setSelectedAssignment] =
     useState<PlayerAssignment>();
@@ -70,6 +99,24 @@ const TeamPage = () => {
     dispatch({ type: 'MARKET_ACTION', payload });
   };
 
+  const onTutorialSlideEvent = (slideEvent: TeamTutorialSlideEvent) => {
+    switch (slideEvent.name) {
+      case 'SHOW_MARKET':
+      case 'SHOW_PLAYER_DETAILS':
+      case 'SHOW_CONFIRM_SIGN_PLAYER': {
+        setSelectedAssignment(slideEvent.payload.player.playerAssignment);
+        if (tutorialEventListener.current) {
+          tutorialEventListener.current(slideEvent);
+        }
+        break;
+      }
+      case 'CLOSE_MODAL': {
+        setSelectedAssignment(null);
+        break;
+      }
+    }
+  };
+
   return !student || !seasonState.studentTeam ? (
     <LoadingSpinner isFullPage={true} />
   ) : (
@@ -88,7 +135,15 @@ const TeamPage = () => {
           </h2>
           <div className="flex items-center justify-between h-full">
             {seasonState.studentTeam.getLogo()}
-            <div></div>
+            <span className="mt-2">
+              <HelpButton
+                text="CALL S.J. SHARKIE!"
+                textPosition="left"
+                onClick={() => setShowFaqModal(true)}
+              >
+                <SharkieButton />
+              </HelpButton>
+            </span>
           </div>
         </div>
 
@@ -99,16 +154,24 @@ const TeamPage = () => {
               studentTeam={seasonState.studentTeam}
             />
           </div>
-          <div className="flex-1 pl-4">
+          <motion.div
+            animate="animate"
+            variants={tutorialComponentConfigs.teamBoard?.variants || {}}
+            transition={
+              tutorialComponentConfigs.teamBoard?.transition || { duration: 1 }
+            }
+            className="flex-1 pl-4"
+          >
             <TeamBoard
               student={student}
               studentTeam={seasonState.studentTeam}
+              tutorialComponents={tutorialComponentConfigs}
               validateProPlayer={validateProPlayer}
               onPlayerSelected={setSelectedPlayer}
               onAddPlayer={setSelectedAssignment}
               getTeamLogo={getTeamLogo}
             />
-          </div>
+          </motion.div>
         </div>
 
         <div className="absolute bottom-2" style={{ left: '-42px' }}>
@@ -121,25 +184,36 @@ const TeamPage = () => {
           </StickButton>
         </div>
       </div>
+      <div
+        className={classNames({
+          'z-0': !!(activeTutorial || requestedTutorial),
+        })}
+      >
+        <Footer pageLinks={['season', 'budget', 'trophies']} />
+      </div>
 
-      <Footer pageLinks={['season', 'budget', 'trophies']} />
       <Modal
         isVisible={!!selectedAssignment}
-        onClose={() => setSelectedAssignment(null)}
+        onClose={!activeTutorial ? () => setSelectedAssignment(null) : null}
       >
         <SignPlayerBoard
           apiBaseUrl={API_BASE_URL}
           student={student}
           studentTeam={seasonState.studentTeam}
-          onPlayerSigned={onMarketAction}
           slotAssignment={selectedAssignment}
+          isDisabled={!!activeTutorial}
+          setTutorialSlideEventListener={
+            !!activeTutorial && setTutorialEventListener
+          }
           getTeamLogo={getTeamLogo}
           validateProPlayer={validateProPlayer}
+          onPlayerSigned={onMarketAction}
         />
       </Modal>
+
       <Modal
         isVisible={!!selectedPlayer}
-        onClose={() => setSelectedPlayer(null)}
+        onClose={!activeTutorial ? () => setSelectedPlayer(null) : null}
       >
         {seasonState.seasonActive ? (
           <TradePlayerBoard
@@ -163,6 +237,7 @@ const TeamPage = () => {
           />
         )}
       </Modal>
+
       <Modal
         isVisible={showScoutCompleteModal}
         onClose={() => {
@@ -179,6 +254,31 @@ const TeamPage = () => {
             The players you scouted can now be signed!
           </p>
         </div>
+      </Modal>
+
+      {/* @ts-ignore */}
+      <AnimatePresence>
+        {!!(activeTutorial || requestedTutorial) && (
+          <Tutorial<TeamTutorialComponents, TeamTutorialSlideEvent>
+            activeTutorial={activeTutorial}
+            requestedTutorial={requestedTutorial}
+            slides={requestedTutorial ? confirmStartTutorialSlide : teamSlides}
+            onExit={onTutorialExit}
+            setComponentConfigs={setTutorialComponentConfigs}
+            slideEventListener={onTutorialSlideEvent}
+          />
+        )}
+      </AnimatePresence>
+
+      <Modal isVisible={showFaqModal} onClose={() => setShowFaqModal(false)}>
+        <FaqBoard
+          faqs={teamFaqs}
+          title="Team Page FAQs"
+          onWatchTutorial={() => {
+            setShowFaqModal(false);
+            setRequestedTutorial('team');
+          }}
+        />
       </Modal>
     </div>
   );

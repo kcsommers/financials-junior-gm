@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import { OpposingTeam } from '../../game/teams/opposing-team.type';
 import { StudentTeam } from '../../game/teams/student-team.type';
-import { addOrdinalSuffix } from '../../utils/add-ordinal-suffix';
+import { SeasonTutorialComponents } from '../../tutorial/component-configs/season-tutorial-components';
 import { Indicator } from '../Indicator';
 import { LoadingSpinner } from '../LoadingSpinner';
 import { StudentTeamStatsView } from './StudentTeamStatsView';
@@ -10,19 +10,24 @@ type ReadyViewProps = {
   studentTeam: StudentTeam;
   currentOpponent: OpposingTeam;
   upcomingOpponents: OpposingTeam[];
+  tutorialComponentConfigs: SeasonTutorialComponents;
 };
 
 export const ReadyView = ({
   studentTeam,
   currentOpponent,
   upcomingOpponents,
+  tutorialComponentConfigs,
 }: ReadyViewProps) => {
   return !studentTeam || !currentOpponent ? (
     <LoadingSpinner />
   ) : (
     <div className="flex">
       <div className="flex-1">
-        <StudentTeamStatsView studentTeam={studentTeam} />
+        <StudentTeamStatsView
+          studentTeam={studentTeam}
+          tutorialComponentConfigs={tutorialComponentConfigs}
+        />
       </div>
 
       <div className="flex-1">

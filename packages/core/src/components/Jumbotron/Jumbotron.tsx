@@ -5,6 +5,7 @@ import { useGame } from '../../game/game-context';
 import { GamePhases } from '../../game/season/game-phases';
 import { Player } from '../../game/teams/players';
 import { Student } from '../../student/student.interface';
+import { SeasonTutorialComponents } from '../../tutorial/component-configs/season-tutorial-components';
 import { useInterval } from '../../utils/hooks/use-interval';
 import { GameHighlightView } from './GameHighlightView';
 import { GameOnView } from './GameOnView';
@@ -15,10 +16,12 @@ import { ScoreView } from './ScoreView';
 type JumbotronProps = {
   nextGamePhase: () => void;
   validateProPlayer: (player: Player) => boolean;
+  tutorialComponentConfigs: SeasonTutorialComponents;
   getTeamLogo: (props?: { [key: string]: any }) => ReactElement;
 };
 
 export const Jumbotron = ({
+  tutorialComponentConfigs,
   nextGamePhase,
   validateProPlayer,
   getTeamLogo,
@@ -78,6 +81,7 @@ export const Jumbotron = ({
                   studentTeam={seasonState.studentTeam}
                   currentOpponent={currentOpponent}
                   upcomingOpponents={upcomingOpponents}
+                  tutorialComponentConfigs={tutorialComponentConfigs}
                 />
               )}
               {(gamePhase.name === GamePhases.UP_NEXT ||

@@ -1,11 +1,12 @@
 import { useMemo } from 'react';
+import { v4 as uuid } from 'uuid';
 import { isThemeColor } from '../../theme/colors/colors';
 
 export const LevelStickSvg = ({ num, denom, color, inverse }) => {
   const stickHeight = 210;
   const clipY = Math.max(stickHeight * (num / denom), 0);
 
-  const guid = useMemo(() => Math.floor(Math.random() * 1000000), []);
+  const guid = useMemo(() => uuid(), []);
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

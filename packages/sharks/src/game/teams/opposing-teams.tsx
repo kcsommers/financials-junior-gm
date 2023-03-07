@@ -60,193 +60,193 @@ export const opposingTeams: OpposingTeam[][] = [
           'https://sharks-assets.s3.us-west-2.amazonaws.com/videos/Sharkie+Make+Noise.mp4',
       },
     },
-    // {
-    //   name: 'Purple Panthers',
-    //   getLogo: (props = {}) => (
-    //     // @ts-ignore
-    //     <PurplePanthersLogo {...props} />
-    //   ),
-    //   stats: {
-    //     wins: 0,
-    //     losses: 0,
-    //     points: 0,
-    //     standing: 3,
-    //     rank: getRandomTeamRank(1),
-    //   },
-    //   color: '#20124E',
-    //   videos: {
-    //     gameOn:
-    //       'https://sharks-assets.s3.us-west-2.amazonaws.com/videos/Sharkie+Make+Noise4.mp4',
-    //   },
-    // },
-    // {
-    //   name: 'White Wolves',
-    //   getLogo: (props = {}) => (
-    //     // @ts-ignore
-    //     <WhiteWolvesLogo {...props} />
-    //   ),
-    //   stats: {
-    //     wins: 0,
-    //     losses: 0,
-    //     points: 0,
-    //     standing: 4,
-    //     rank: getRandomTeamRank(1),
-    //   },
-    //   color: '#00FFDA',
-    //   videos: {
-    //     gameOn:
-    //       'https://sharks-assets.s3.us-west-2.amazonaws.com/videos/Sharkie+Make+Noise3.mp4',
-    //   },
-    // },
-    // {
-    //   name: 'Green Giraffes',
-    //   getLogo: (props = {}) => (
-    //     // @ts-ignore
-    //     <GreenGiraffesLogo {...props} />
-    //   ),
-    //   stats: {
-    //     wins: 0,
-    //     losses: 0,
-    //     points: 0,
-    //     standing: 5,
-    //     rank: getRandomTeamRank(1),
-    //   },
-    //   color: '#00EA3D',
-    //   videos: {
-    //     gameOn:
-    //       'https://sharks-assets.s3.us-west-2.amazonaws.com/videos/Sharkie+Make+Noise42.mp4',
-    //   },
-    // },
-    // {
-    //   name: 'Pink Pandas',
-    //   getLogo: (props = {}) => (
-    //     // @ts-ignore
-    //     <PinkPandasLogo {...props} />
-    //   ),
-    //   stats: {
-    //     wins: 0,
-    //     losses: 0,
-    //     points: 0,
-    //     standing: 6,
-    //     rank: getRandomTeamRank(1),
-    //   },
-    //   color: '#E1B7EA',
-    //   videos: {
-    //     gameOn:
-    //       'https://sharks-assets.s3.us-west-2.amazonaws.com/videos/Sharkie+Make+Noise4.mp4',
-    //   },
-    // },
-    // {
-    //   name: 'Orange Owls',
-    //   getLogo: (props = {}) => (
-    //     // @ts-ignore
-    //     <OrangeOwlsLogo {...props} />
-    //   ),
-    //   stats: {
-    //     wins: 0,
-    //     losses: 0,
-    //     points: 0,
-    //     standing: 7,
-    //     rank: getRandomTeamRank(1),
-    //   },
-    //   color: '#FFBC4F',
-    //   videos: {
-    //     gameOn:
-    //       'https://sharks-assets.s3.us-west-2.amazonaws.com/videos/Sharkie+Make+Noise.mp4',
-    //   },
-    // },
-    // {
-    //   name: 'Silver Spiders',
-    //   getLogo: (props = {}) => (
-    //     // @ts-ignore
-    //     <SilverSpidersLogo {...props} />
-    //   ),
-    //   stats: {
-    //     wins: 0,
-    //     losses: 0,
-    //     points: 0,
-    //     standing: 8,
-    //     rank: getRandomTeamRank(1),
-    //   },
-    //   color: '#CBCBCB',
-    //   videos: {
-    //     gameOn:
-    //       'https://sharks-assets.s3.us-west-2.amazonaws.com/videos/Sharkie+Make+Noise3.mp4',
-    //   },
-    // },
-    // {
-    //   name: 'Golden Geckos',
-    //   getLogo: (props = {}) => (
-    //     // @ts-ignore
-    //     <GoldenGeckosLogo {...props} />
-    //   ),
-    //   stats: {
-    //     wins: 0,
-    //     losses: 0,
-    //     points: 0,
-    //     standing: 9,
-    //     rank: getRandomTeamRank(1),
-    //   },
-    //   color: '#F9E535',
-    //   videos: {
-    //     gameOn:
-    //       'https://sharks-assets.s3.us-west-2.amazonaws.com/videos/Sharkie+Make+Noise2.mp4',
-    //   },
-    // },
-    // {
-    //   name: 'Yellow Yaks',
-    //   getLogo: (props = {}) => (
-    //     // @ts-ignore
-    //     <YellowYaksLogo {...props} />
-    //   ),
-    //   stats: {
-    //     wins: 0,
-    //     losses: 0,
-    //     points: 0,
-    //     standing: 10,
-    //     rank: getRandomTeamRank(1),
-    //   },
-    //   color: '#F8EE90',
-    //   videos: {
-    //     gameOn:
-    //       'https://sharks-assets.s3.us-west-2.amazonaws.com/videos/Sharkie+Make+Noise.mp4',
-    //   },
-    // },
-    // {
-    //   name: 'Black Beavers',
-    //   getLogo: (props = {}) => (
-    //     // @ts-ignore
-    //     <BlackBeaversLogo {...props} />
-    //   ),
-    //   stats: {
-    //     wins: 0,
-    //     losses: 0,
-    //     points: 0,
-    //     standing: 11,
-    //     rank: getRandomTeamRank(1),
-    //   },
-    //   color: '#3F3F3F',
-    //   videos: {
-    //     gameOn:
-    //       'https://sharks-assets.s3.us-west-2.amazonaws.com/videos/Sharkie+Make+Noise3.mp4',
-    //   },
-    // },
-    // {
-    //   name: 'Gray Grasshoppers',
-    //   getLogo: (props = {}) => <GrayGrasshoppersLogo {...props} />,
-    //   stats: {
-    //     wins: 0,
-    //     losses: 0,
-    //     points: 0,
-    //     standing: 12,
-    //     rank: getRandomTeamRank(1),
-    //   },
-    //   color: '#CECECE',
-    //   videos: {
-    //     gameOn:
-    //       'https://sharks-assets.s3.us-west-2.amazonaws.com/videos/Sharkie+Make+Noise4.mp4',
-    //   },
-    // },
+    {
+      name: 'Purple Panthers',
+      getLogo: (props = {}) => (
+        // @ts-ignore
+        <PurplePanthersLogo {...props} />
+      ),
+      stats: {
+        wins: 0,
+        losses: 0,
+        points: 0,
+        standing: 3,
+        rank: getRandomTeamRank(1),
+      },
+      color: '#20124E',
+      videos: {
+        gameOn:
+          'https://sharks-assets.s3.us-west-2.amazonaws.com/videos/Sharkie+Make+Noise4.mp4',
+      },
+    },
+    {
+      name: 'White Wolves',
+      getLogo: (props = {}) => (
+        // @ts-ignore
+        <WhiteWolvesLogo {...props} />
+      ),
+      stats: {
+        wins: 0,
+        losses: 0,
+        points: 0,
+        standing: 4,
+        rank: getRandomTeamRank(1),
+      },
+      color: '#00FFDA',
+      videos: {
+        gameOn:
+          'https://sharks-assets.s3.us-west-2.amazonaws.com/videos/Sharkie+Make+Noise3.mp4',
+      },
+    },
+    {
+      name: 'Green Giraffes',
+      getLogo: (props = {}) => (
+        // @ts-ignore
+        <GreenGiraffesLogo {...props} />
+      ),
+      stats: {
+        wins: 0,
+        losses: 0,
+        points: 0,
+        standing: 5,
+        rank: getRandomTeamRank(1),
+      },
+      color: '#00EA3D',
+      videos: {
+        gameOn:
+          'https://sharks-assets.s3.us-west-2.amazonaws.com/videos/Sharkie+Make+Noise42.mp4',
+      },
+    },
+    {
+      name: 'Pink Pandas',
+      getLogo: (props = {}) => (
+        // @ts-ignore
+        <PinkPandasLogo {...props} />
+      ),
+      stats: {
+        wins: 0,
+        losses: 0,
+        points: 0,
+        standing: 6,
+        rank: getRandomTeamRank(1),
+      },
+      color: '#E1B7EA',
+      videos: {
+        gameOn:
+          'https://sharks-assets.s3.us-west-2.amazonaws.com/videos/Sharkie+Make+Noise4.mp4',
+      },
+    },
+    {
+      name: 'Orange Owls',
+      getLogo: (props = {}) => (
+        // @ts-ignore
+        <OrangeOwlsLogo {...props} />
+      ),
+      stats: {
+        wins: 0,
+        losses: 0,
+        points: 0,
+        standing: 7,
+        rank: getRandomTeamRank(1),
+      },
+      color: '#FFBC4F',
+      videos: {
+        gameOn:
+          'https://sharks-assets.s3.us-west-2.amazonaws.com/videos/Sharkie+Make+Noise.mp4',
+      },
+    },
+    {
+      name: 'Silver Spiders',
+      getLogo: (props = {}) => (
+        // @ts-ignore
+        <SilverSpidersLogo {...props} />
+      ),
+      stats: {
+        wins: 0,
+        losses: 0,
+        points: 0,
+        standing: 8,
+        rank: getRandomTeamRank(1),
+      },
+      color: '#CBCBCB',
+      videos: {
+        gameOn:
+          'https://sharks-assets.s3.us-west-2.amazonaws.com/videos/Sharkie+Make+Noise3.mp4',
+      },
+    },
+    {
+      name: 'Golden Geckos',
+      getLogo: (props = {}) => (
+        // @ts-ignore
+        <GoldenGeckosLogo {...props} />
+      ),
+      stats: {
+        wins: 0,
+        losses: 0,
+        points: 0,
+        standing: 9,
+        rank: getRandomTeamRank(1),
+      },
+      color: '#F9E535',
+      videos: {
+        gameOn:
+          'https://sharks-assets.s3.us-west-2.amazonaws.com/videos/Sharkie+Make+Noise2.mp4',
+      },
+    },
+    {
+      name: 'Yellow Yaks',
+      getLogo: (props = {}) => (
+        // @ts-ignore
+        <YellowYaksLogo {...props} />
+      ),
+      stats: {
+        wins: 0,
+        losses: 0,
+        points: 0,
+        standing: 10,
+        rank: getRandomTeamRank(1),
+      },
+      color: '#F8EE90',
+      videos: {
+        gameOn:
+          'https://sharks-assets.s3.us-west-2.amazonaws.com/videos/Sharkie+Make+Noise.mp4',
+      },
+    },
+    {
+      name: 'Black Beavers',
+      getLogo: (props = {}) => (
+        // @ts-ignore
+        <BlackBeaversLogo {...props} />
+      ),
+      stats: {
+        wins: 0,
+        losses: 0,
+        points: 0,
+        standing: 11,
+        rank: getRandomTeamRank(1),
+      },
+      color: '#3F3F3F',
+      videos: {
+        gameOn:
+          'https://sharks-assets.s3.us-west-2.amazonaws.com/videos/Sharkie+Make+Noise3.mp4',
+      },
+    },
+    {
+      name: 'Gray Grasshoppers',
+      getLogo: (props = {}) => <GrayGrasshoppersLogo {...props} />,
+      stats: {
+        wins: 0,
+        losses: 0,
+        points: 0,
+        standing: 12,
+        rank: getRandomTeamRank(1),
+      },
+      color: '#CECECE',
+      videos: {
+        gameOn:
+          'https://sharks-assets.s3.us-west-2.amazonaws.com/videos/Sharkie+Make+Noise4.mp4',
+      },
+    },
   ],
   [
     {

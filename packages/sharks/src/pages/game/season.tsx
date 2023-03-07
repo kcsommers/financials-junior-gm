@@ -4,6 +4,7 @@ import { Footer } from '@statrookie/core/src/components/Footer';
 import { GameButton } from '@statrookie/core/src/components/GameButton';
 import { GamePageWrap } from '@statrookie/core/src/components/GamePageWrap';
 import { Header } from '@statrookie/core/src/components/Header';
+import { HelpButton } from '@statrookie/core/src/components/HelpButton';
 import { Jumbotron } from '@statrookie/core/src/components/Jumbotron';
 import { LevelStick } from '@statrookie/core/src/components/LevelStick';
 import { LoadingSpinner } from '@statrookie/core/src/components/LoadingSpinner';
@@ -11,6 +12,8 @@ import { Modal } from '@statrookie/core/src/components/Modal';
 import { ProtectedRoute } from '@statrookie/core/src/components/ProtectedRoute';
 import { SeasonStatsModal } from '@statrookie/core/src/components/SeasonStatsModal';
 import { StandingsBoard } from '@statrookie/core/src/components/StandingsBoard';
+import { FaqBoard } from '@statrookie/core/src/faqs/FaqBoard';
+import { seasonFaqs } from '@statrookie/core/src/faqs/season-faqs';
 import { GameProvider, useGame } from '@statrookie/core/src/game/game-context';
 import { ObjectiveNames } from '@statrookie/core/src/game/objectives/objectives';
 import { gameCompleted } from '@statrookie/core/src/game/season/game-completed';
@@ -23,16 +26,24 @@ import { PlayerAssignments } from '@statrookie/core/src/game/teams/players';
 import { getMaxTeamRank } from '@statrookie/core/src/game/teams/utils/get-max-team-rank';
 import { Student } from '@statrookie/core/src/student/student.interface';
 import { updateStudent } from '@statrookie/core/src/student/update-student';
+import { SeasonTutorialComponents } from '@statrookie/core/src/tutorial/component-configs/season-tutorial-components';
+import { Tutorial } from '@statrookie/core/src/tutorial/Tutorial';
+import { useTutorial } from '@statrookie/core/src/tutorial/use-tutorial';
 import { useInterval } from '@statrookie/core/src/utils/hooks/use-interval';
+import classNames from 'classnames';
+import { AnimatePresence, motion } from 'framer-motion';
 import { cloneDeep } from 'lodash';
 import { useRouter } from 'next/router';
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { confirmStartTutorialSlide } from 'src/tutorial/slides/confirm-start-tutorial-slide';
 import FinancialsLogo from '../../components/svg/financials-logo-big.svg';
+import SharkieButton from '../../components/svg/sharkie-btn.svg';
 import { API_BASE_URL } from '../../constants/api-base-url';
 import { opposingTeams } from '../../game/teams/opposing-teams';
 import { studentTeams } from '../../game/teams/student-teams';
 import { getTeamLogo } from '../../game/utils/get-team-logo';
 import { validateProPlayer } from '../../game/utils/validate-pro-player';
+import { seasonSlides } from '../../tutorial/slides/season-slides';
 
 const SeasonPage = () => {
   const { authorizedUser, setAuthorizedUser } = useAuth();
@@ -43,7 +54,16 @@ const SeasonPage = () => {
   const [cheerPoints, setCheerPoints] = useState(0);
   const [pageInitialized, setPageInitialized] = useState(false);
   const gameOverTimerEnded = useRef(false);
+  const [showFaqModal, setShowFaqModal] = useState(false);
   const studentGamesUpdated = useRef(false);
+  const {
+    activeTutorial,
+    requestedTutorial,
+    setRequestedTutorial,
+    tutorialComponentConfigs,
+    setTutorialComponentConfigs,
+    onTutorialExit,
+  } = useTutorial<SeasonTutorialComponents, {}>('season', API_BASE_URL);
 
   const router = useRouter();
 
@@ -145,8 +165,6 @@ const SeasonPage = () => {
   const gamesPlayed = useMemo(() => {
     return ((student.seasons || [])[+student.level - 1] || []).length;
   }, [student]);
-
-  console.log('thew:::: ', seasonState.seasonActive);
 
   useEffect(() => {
     const isLastGame = gamesPlayed === seasonState.opposingTeams.length;
@@ -257,26 +275,56 @@ const SeasonPage = () => {
             nextGamePhase={nextGamePhase}
             validateProPlayer={validateProPlayer}
             getTeamLogo={getTeamLogo}
+            tutorialComponentConfigs={tutorialComponentConfigs}
           />
         </div>
         <div className="flex-1 flex items-center justify-between relative">
-          <span className="absolute left-1/2 bottom-0 -translate-x-1/2 flex flex-col items-center">
+          <motion.span
+            className="absolute left-1/2 bottom-0 -translate-x-1/2 flex flex-col items-center"
+            animate="animate"
+            variants={{
+              animate: {
+                zIndex:
+                  tutorialComponentConfigs.gameButton?.variants.animate
+                    .zIndex || 'auto',
+              },
+            }}
+          >
             {scenarioActive(student) && (
               <p className="text-primary text-base mb-1">
                 Click the puck to sign a new player!
               </p>
             )}
-            <GameButton
-              student={student}
-              gamePhase={seasonState.gamePhase}
-              onClick={gameButtonClicked}
-            />
+            <motion.span
+              animate="animate"
+              variants={tutorialComponentConfigs.gameButton?.variants}
+              transition={
+                tutorialComponentConfigs.gameButton?.transition || {
+                  duration: 1,
+                }
+              }
+            >
+              <GameButton
+                student={student}
+                gamePhase={seasonState.gamePhase}
+                onClick={gameButtonClicked}
+              />
+            </motion.span>
             <span className="mt-2 text-lg">
               Game {seasonState.currentOpponentIndex + 1} of{' '}
               {seasonState.opposingTeams?.length}
             </span>
-          </span>
-          <div className="flex flex-1 items-center justify-between">
+          </motion.span>
+          <div className="relative flex flex-1 items-center justify-between">
+            <span className="absolute -left-6 -top-10">
+              <HelpButton
+                text="CALL S.J. SHARKIE!"
+                textPosition="right"
+                onClick={() => setShowFaqModal(true)}
+              >
+                <SharkieButton />
+              </HelpButton>
+            </span>
             <div>
               <Cheermeter
                 gamePhase={seasonState.gamePhase}
@@ -286,11 +334,18 @@ const SeasonPage = () => {
             <StandingsBoard
               studentTeam={seasonState.studentTeam}
               opposingTeams={seasonState.opposingTeams}
+              tutorialComponentConfigs={tutorialComponentConfigs}
             />
           </div>
         </div>
       </div>
-      <Footer pageLinks={['team', 'budget', 'trophies']} />
+      <div
+        className={classNames({
+          'z-0': !!(activeTutorial || requestedTutorial),
+        })}
+      >
+        <Footer pageLinks={['team', 'budget', 'trophies']} />
+      </div>
       <Modal
         isVisible={showStatsModal}
         onClose={() => setShowStatsModal(false)}
@@ -301,6 +356,32 @@ const SeasonPage = () => {
           onContinue={() => setShowStatsModal(false)}
           onSaveAndExit={() => {
             // @TODO logout
+          }}
+        />
+      </Modal>
+
+      {/* @ts-ignore */}
+      <AnimatePresence>
+        {!!(activeTutorial || requestedTutorial) && (
+          <Tutorial<SeasonTutorialComponents>
+            activeTutorial={activeTutorial}
+            requestedTutorial={requestedTutorial}
+            slides={
+              requestedTutorial ? confirmStartTutorialSlide : seasonSlides
+            }
+            onExit={onTutorialExit}
+            setComponentConfigs={setTutorialComponentConfigs}
+          />
+        )}
+      </AnimatePresence>
+
+      <Modal isVisible={showFaqModal} onClose={() => setShowFaqModal(false)}>
+        <FaqBoard
+          faqs={seasonFaqs}
+          title="Season Page FAQs"
+          onWatchTutorial={() => {
+            setShowFaqModal(false);
+            setRequestedTutorial('season');
           }}
         />
       </Modal>

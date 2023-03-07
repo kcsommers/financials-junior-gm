@@ -54,17 +54,17 @@ export type Player = {
 };
 
 export const PlayerAssignments = {
-  MARKET: 'marketPlayer',
-  SCOUT: 'scoutPlayer',
-  OFFERED_SCOUT: 'offeredScoutPlayer',
-  TRADED: 'traded',
-  UNAVAILABLE: null,
-  F_ONE: 'fOne',
-  F_TWO: 'fTwo',
-  F_THREE: 'fThree',
-  D_ONE: 'dOne',
-  D_TWO: 'dTwo',
-  G_ONE: 'gOne',
+  MARKET: 'marketPlayer' as PlayerAssignment,
+  SCOUT: 'scoutPlayer' as PlayerAssignment,
+  OFFERED_SCOUT: 'offeredScoutPlayer' as PlayerAssignment,
+  TRADED: 'traded' as PlayerAssignment,
+  UNAVAILABLE: null as PlayerAssignment,
+  F_ONE: 'fOne' as PlayerAssignment,
+  F_TWO: 'fTwo' as PlayerAssignment,
+  F_THREE: 'fThree' as PlayerAssignment,
+  D_ONE: 'dOne' as PlayerAssignment,
+  D_TWO: 'dTwo' as PlayerAssignment,
+  G_ONE: 'gOne' as PlayerAssignment,
 };
 
 export enum PlayerPositions {

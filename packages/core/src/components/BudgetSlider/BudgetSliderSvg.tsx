@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+import { v4 as uuid } from 'uuid';
 import { Budget } from '../../game/budget/budget';
 
 type BudgetSliderSvgProps = {
@@ -9,7 +10,7 @@ export const BudgetSliderSvg = ({ budget }: BudgetSliderSvgProps) => {
   const savingsPct = budget.savingsBudget / budget.totalBudget;
   const spentPct = budget.moneySpent / budget.totalBudget;
 
-  const guid = useMemo(() => Math.floor(Math.random() * 1000000), []);
+  const guid = useMemo(() => uuid(), []);
 
   return (
     <svg

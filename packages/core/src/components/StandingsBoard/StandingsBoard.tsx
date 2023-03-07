@@ -1,16 +1,20 @@
 import classNames from 'classnames';
+import { motion } from 'framer-motion';
 import { useMemo } from 'react';
 import { OpposingTeam } from '../../game/teams/opposing-team.type';
 import { StudentTeam } from '../../game/teams/student-team.type';
+import { SeasonTutorialComponents } from '../../tutorial/component-configs/season-tutorial-components';
 
 type StandingsBoardProps = {
   studentTeam: StudentTeam;
   opposingTeams: OpposingTeam[];
+  tutorialComponentConfigs: SeasonTutorialComponents;
 };
 
 export const StandingsBoard = ({
   studentTeam,
   opposingTeams,
+  tutorialComponentConfigs,
 }: StandingsBoardProps) => {
   const standings = useMemo(
     () =>
@@ -28,7 +32,14 @@ export const StandingsBoard = ({
   return (
     <div>
       <p className="text-center text-xl">Standings</p>
-      <div className="rounded-md border-5 border-neutral-600 bg-white flex flex-col h-[150px] w-[320px]">
+      <motion.div
+        className="relative rounded-md border-5 border-neutral-600 bg-white flex flex-col h-[150px] w-[320px]"
+        animate="animate"
+        variants={tutorialComponentConfigs.standingsBoard?.variants}
+        transition={
+          tutorialComponentConfigs.standingsBoard?.transition || { duration: 1 }
+        }
+      >
         <div className="h-5 border-b-1 text-[0.8rem] border-neutral-700 flex pl-2">
           <p className="text-neutral-700 flex-1">Team</p>
           <p className="text-neutral-700 border-l-1 border-neutral-700 m-w flex justify-center items-center min-w-[75px] max-w-[75px]">
@@ -61,7 +72,7 @@ export const StandingsBoard = ({
             </p>
           </div>
         ))}
-      </div>
+      </motion.div>
     </div>
   );
 };

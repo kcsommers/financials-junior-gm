@@ -83,6 +83,16 @@ button.btn-secondary {
   cursor: pointer;
 }
 
+a.btn-secondary-2,
+button.btn-secondary-2 {
+  background-color: rgb(var(--color-secondary-2));
+  color: #fff;
+  box-shadow: var(--box-shadow-mat);
+  padding: 1rem 1.5rem;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
 a.btn-danger,
 div.btn-danger,
 button.btn-danger {

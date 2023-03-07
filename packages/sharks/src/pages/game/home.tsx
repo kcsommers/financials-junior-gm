@@ -1,6 +1,7 @@
 import { useAuth } from '@statrookie/core/src/auth/context/auth-context';
 import { ConfirmScreen } from '@statrookie/core/src/components/ConfirmScreen';
 import { GamePageWrap } from '@statrookie/core/src/components/GamePageWrap';
+import { HelpButton } from '@statrookie/core/src/components/HelpButton';
 import { LevelStick } from '@statrookie/core/src/components/LevelStick';
 import { LoadingSpinner } from '@statrookie/core/src/components/LoadingSpinner';
 import { Modal } from '@statrookie/core/src/components/Modal';
@@ -14,22 +15,35 @@ import LogoutStick from '@statrookie/core/src/components/svg/logout-stick.svg';
 import SeasonStick from '@statrookie/core/src/components/svg/season-stick.svg';
 import TeamStick from '@statrookie/core/src/components/svg/team-stick.svg';
 import TrophiesStick from '@statrookie/core/src/components/svg/trophies-stick.svg';
+import { FaqBoard } from '@statrookie/core/src/faqs/FaqBoard';
+import { homeFaqs } from '@statrookie/core/src/faqs/home-faqs';
 import { getMoneySpent } from '@statrookie/core/src/game/budget/get-money-spent';
 import { GameProvider, useGame } from '@statrookie/core/src/game/game-context';
 import { postRepeatSeason } from '@statrookie/core/src/game/season/repeat-season';
 import { getMaxTeamRank } from '@statrookie/core/src/game/teams/utils/get-max-team-rank';
+import { startingLineupFull } from '@statrookie/core/src/game/teams/utils/starting-lineup-full';
 import {
   budgetPageUnlocked,
   seasonPageUnlocked,
   teamPageUnlocked,
 } from '@statrookie/core/src/game/utils/unlocked-pages';
 import { Student } from '@statrookie/core/src/student/student.interface';
+import { Tutorial } from '@statrookie/core/src/tutorial/Tutorial';
+import { useTutorial } from '@statrookie/core/src/tutorial/use-tutorial';
 import classNames from 'classnames';
+import { AnimatePresence } from 'framer-motion';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import { confirmStartTutorialSlide } from 'src/tutorial/slides/confirm-start-tutorial-slide';
+import SharkieButton from '../../components/svg/sharkie-btn.svg';
 import { API_BASE_URL } from '../../constants/api-base-url';
 import { opposingTeams } from '../../game/teams/opposing-teams';
 import { studentTeams } from '../../game/teams/student-teams';
+import {
+  homeSlides,
+  seasonTransitionSlides,
+  teamTransitionSlides,
+} from '../../tutorial/slides/home-slides';
 
 const PROMOTION_VIDEOS = [
   'https://sharks-assets.s3.us-west-2.amazonaws.com/videos/FINancials_Junior_GM_LVL_01.mp4',
@@ -40,13 +54,30 @@ const PROMOTION_VIDEOS = [
 const HomePage = () => {
   const { authorizedUser, setAuthorizedUser } = useAuth();
   const student = authorizedUser as Student;
+  const [showFaqModal, setShowFaqModal] = useState(false);
   const [moneySpent, setMoneySpent] = useState(0);
   const [showResetSeasonModal, setShowResetSeasonModal] = useState(false);
-
   const { seasonState, dispatch } = useGame();
   const [showPromotionModal, setShowPromotionModal] = useState(false);
-
   const router = useRouter();
+
+  const {
+    activeTutorial,
+    requestedTutorial,
+    setRequestedTutorial,
+    onTutorialExit,
+  } = useTutorial<{}, {}>(() => {
+    if (!student.tutorials?.home) {
+      return 'home';
+    }
+    if (student.tutorials?.budget && !student.tutorials?.team) {
+      return 'teamTransition';
+    }
+    if (!student.tutorials?.season && startingLineupFull(student)) {
+      return 'seasonTransition';
+    }
+    return null;
+  }, API_BASE_URL);
 
   useEffect(() => {
     setMoneySpent(getMoneySpent(student));
@@ -89,7 +120,12 @@ const HomePage = () => {
         >
           HOME
         </h1>
-        <div className="flex items-center justify-between pr-8 h-full relative z-50">
+        <div
+          className={classNames(
+            'flex items-center justify-between pr-8 h-full relative',
+            { 'z-50': !activeTutorial && !requestedTutorial }
+          )}
+        >
           <LogoutStick
             // @ts-ignore
             className="ml-8 cursor-pointer"
@@ -102,7 +138,7 @@ const HomePage = () => {
           />
         </div>
       </div>
-      <div className="flex items-start justify-around px-4">
+      <div className="flex items-start justify-around px-4 relative">
         <div
           className={classNames(
             'mx-8 flex justify-center items-center rounded-md',
@@ -145,9 +181,20 @@ const HomePage = () => {
             label="Spending\nBudget"
           />
         </div>
+        <span className="absolute top-full -translate-y-2/3">
+          <HelpButton
+            text="CALL S.J. SHARKIE!"
+            onClick={() => setShowFaqModal(true)}
+          >
+            <SharkieButton />
+          </HelpButton>
+        </span>
       </div>
-
-      <div className="mt-11 relative z-20">
+      <div
+        className={classNames('mt-11 relative', {
+          'z-20': !activeTutorial && !requestedTutorial,
+        })}
+      >
         <div className="flex items-center justify-between relative">
           <div className="z-2 relative -left-6">
             <StickButton
@@ -172,7 +219,12 @@ const HomePage = () => {
           </div>
         </div>
       </div>
-      <div className="flex items-center justify-between mt-11 relative z-10">
+      <div
+        className={classNames(
+          'flex items-center justify-between mt-11 relative',
+          { 'z-10': !activeTutorial && !requestedTutorial }
+        )}
+      >
         <div className="z-1 relative -left-3">
           <StickButton
             href="/game/season"
@@ -215,6 +267,35 @@ const HomePage = () => {
           promotedFrom={+router.query?.promotion}
         />
       </Modal>
+      <Modal isVisible={showFaqModal} onClose={() => setShowFaqModal(false)}>
+        <FaqBoard
+          faqs={homeFaqs}
+          title="Home Page FAQs"
+          onWatchTutorial={() => {
+            setShowFaqModal(false);
+            setRequestedTutorial('home');
+          }}
+        />
+      </Modal>
+      {/* @ts-ignore */}
+      <AnimatePresence>
+        {!!(activeTutorial || requestedTutorial) && (
+          <Tutorial
+            activeTutorial={activeTutorial}
+            requestedTutorial={requestedTutorial}
+            slides={
+              requestedTutorial
+                ? confirmStartTutorialSlide
+                : activeTutorial === 'home'
+                ? homeSlides
+                : activeTutorial === 'teamTransition'
+                ? teamTransitionSlides
+                : seasonTransitionSlides
+            }
+            onExit={onTutorialExit}
+          />
+        )}
+      </AnimatePresence>
     </div>
   );
 };

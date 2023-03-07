@@ -4,12 +4,15 @@ import { DraggableItem } from '@statrookie/core/src/components/DraggableItem';
 import { DroppableItem } from '@statrookie/core/src/components/DroppableItem';
 import { GamePageWrap } from '@statrookie/core/src/components/GamePageWrap';
 import { Header } from '@statrookie/core/src/components/Header';
+import { HelpButton } from '@statrookie/core/src/components/HelpButton';
 import { LoadingSpinner } from '@statrookie/core/src/components/LoadingSpinner';
 import { Modal } from '@statrookie/core/src/components/Modal';
 import { PlayerCard } from '@statrookie/core/src/components/PlayerCard';
 import { ProtectedRoute } from '@statrookie/core/src/components/ProtectedRoute';
 import ConfirmIcon from '@statrookie/core/src/components/svg/check-circle-solid.svg';
 import { AddPlayerCard } from '@statrookie/core/src/components/TeamBoard/AddPlayerCard';
+import { FaqBoard } from '@statrookie/core/src/faqs/FaqBoard';
+import { scoutFaqs } from '@statrookie/core/src/faqs/scout-faqs';
 import { GameProvider } from '@statrookie/core/src/game/game-context';
 import {
   Player,
@@ -24,14 +27,21 @@ import {
 import { getPlayerMinMaxRank } from '@statrookie/core/src/game/teams/utils/get-player-minmax-rank';
 import { Student } from '@statrookie/core/src/student/student.interface';
 import { updateStudent } from '@statrookie/core/src/student/update-student';
+import { ScoutTutorialComponents } from '@statrookie/core/src/tutorial/component-configs/scout-tutorial-components';
+import { Tutorial } from '@statrookie/core/src/tutorial/Tutorial';
+import { useTutorial } from '@statrookie/core/src/tutorial/use-tutorial';
 import classNames from 'classnames';
+import { AnimatePresence, motion } from 'framer-motion';
 import { cloneDeep } from 'lodash';
 import { useRouter } from 'next/router';
 import { useEffect, useMemo, useState } from 'react';
 import { DndProvider } from 'react-dnd';
 import { Preview } from 'react-dnd-preview';
 import { TouchBackend } from 'react-dnd-touch-backend';
+import { confirmStartTutorialSlide } from 'src/tutorial/slides/confirm-start-tutorial-slide';
+import { scoutSlides } from 'src/tutorial/slides/scout-slides';
 import FinancialsLogo from '../../components/svg/financials-logo-big.svg';
+import SharkieButton from '../../components/svg/sharkie-btn.svg';
 import { API_BASE_URL } from '../../constants/api-base-url';
 import { opposingTeams } from '../../game/teams/opposing-teams';
 import { studentTeams } from '../../game/teams/student-teams';
@@ -62,7 +72,16 @@ const ScoutPage = () => {
   const [showBadOfferModal, setShowBadOfferModal] = useState(false);
   const [pendingOffer, setPendingOffer] = useState<Offer>();
   const [showNavBlockModal, setShowNavBlockModal] = useState(false);
+  const [showFaqModal, setShowFaqModal] = useState(false);
   const [showErrorModal, setShowErrorModal] = useState(false);
+  const {
+    activeTutorial,
+    requestedTutorial,
+    setRequestedTutorial,
+    tutorialComponentConfigs,
+    setTutorialComponentConfigs,
+    onTutorialExit,
+  } = useTutorial<ScoutTutorialComponents, {}>('scout', API_BASE_URL);
   const router = useRouter();
 
   const [offerBoard, setOfferBoard] = useState<Player[][]>([
@@ -247,11 +266,26 @@ const ScoutPage = () => {
             <br /> them to a contract level!
           </p>
           <div className="flex flex-1 items-center justify-between">
-            <div></div>
-            <div
+            <span className="mt-4 -ml-4">
+              <HelpButton
+                text="CALL S.J. SHARKIE!"
+                textPosition="right"
+                onClick={() => setShowFaqModal(true)}
+              >
+                <SharkieButton />
+              </HelpButton>
+            </span>
+            <motion.div
               className={classNames('flex items-center', {
                 disabled: !boardFull,
               })}
+              animate="animate"
+              variants={tutorialComponentConfigs.finishedBtn?.variants}
+              transition={
+                tutorialComponentConfigs.finishedBtn?.transition || {
+                  duration: 1,
+                }
+              }
             >
               <span className="text-primary mr-2 text-right">
                 Click here when <br /> you finish!
@@ -260,7 +294,7 @@ const ScoutPage = () => {
                 {/** @ts-ignore */}
                 <ConfirmIcon width={50} className="fill-primary" />
               </button>
-            </div>
+            </motion.div>
           </div>
         </div>
 
@@ -269,7 +303,16 @@ const ScoutPage = () => {
             <p className="text-primary text-xs text-center">
               Remember to tap a player to learn more about them!
             </p>
-            <div className="flex-1 border-4 border-neutral-700 rounded-md bg-white">
+            <motion.div
+              className="flex-1 border-4 border-neutral-700 rounded-md bg-white"
+              animate="animate"
+              variants={tutorialComponentConfigs.playerBoard?.variants}
+              transition={
+                tutorialComponentConfigs.playerBoard?.transition || {
+                  duration: 1,
+                }
+              }
+            >
               <div className="grid grid-cols-3 h-full">
                 {playerBoard.map((player, i) => (
                   <div
@@ -307,16 +350,31 @@ const ScoutPage = () => {
                   </div>
                 ))}
               </div>
-            </div>
+            </motion.div>
           </div>
           <div className="flex-1 flex flex-col justify-between pl-2">
             {moneyLevels.map((level, i) => (
-              <div key={`level-${level.level}`}>
+              <motion.div
+                className="border-neutral-700"
+                key={`level-${level.level}`}
+                animate="animate"
+                variants={
+                  tutorialComponentConfigs[`moneyLevel${i + 1}`]
+                    ? tutorialComponentConfigs[`moneyLevel${i + 1}`].variants
+                    : {}
+                }
+                transition={
+                  tutorialComponentConfigs[`moneyLevel${i + 1}`] &&
+                  tutorialComponentConfigs[`moneyLevel${i + 1}`].transition
+                    ? tutorialComponentConfigs[`moneyLevel${i + 1}`].transition
+                    : { duration: 1 }
+                }
+              >
                 <p className="text-primary text-xs text-center">
                   These players get a {level.long} contract offered
                 </p>
                 <div
-                  className="bg-white border-4 border-neutral-700 rounded-md flex items-center justify-center relative"
+                  className="bg-white border-4 rounded-md flex items-center justify-center relative border-inherit"
                   style={{ height: '142px' }}
                 >
                   <span className="absolute text-xl text-primary left-2 top-2">
@@ -324,7 +382,7 @@ const ScoutPage = () => {
                   </span>
                   {getMoneyLevelRow(level, i)}
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
@@ -406,6 +464,28 @@ const ScoutPage = () => {
             }}
           />
         </div>
+      </Modal>
+      {/* @ts-ignore */}
+      <AnimatePresence>
+        {!!(activeTutorial || requestedTutorial) && (
+          <Tutorial<ScoutTutorialComponents>
+            activeTutorial={activeTutorial}
+            requestedTutorial={requestedTutorial}
+            slides={requestedTutorial ? confirmStartTutorialSlide : scoutSlides}
+            onExit={onTutorialExit}
+            setComponentConfigs={setTutorialComponentConfigs}
+          />
+        )}
+      </AnimatePresence>
+      <Modal isVisible={showFaqModal} onClose={() => setShowFaqModal(false)}>
+        <FaqBoard
+          faqs={scoutFaqs}
+          title="Scout Page FAQs"
+          onWatchTutorial={() => {
+            setShowFaqModal(false);
+            setRequestedTutorial('scout');
+          }}
+        />
       </Modal>
     </div>
   );
