@@ -5,11 +5,7 @@ import typescript from 'rollup-plugin-typescript2';
 import pkg from './package.json';
 import svgr from '@svgr/rollup';
 
-const input = [
-  './src/index.ts',
-  './src/components/LoadingSpinner/index.ts',
-  './src/components/Button/index.ts',
-];
+const input = ['./src/index.ts'];
 
 const external = [
   ...Object.keys(pkg.dependencies || {}),

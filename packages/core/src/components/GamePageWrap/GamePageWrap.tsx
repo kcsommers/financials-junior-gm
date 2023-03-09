@@ -1,12 +1,13 @@
+import { postRepeatSeason } from '@statrookie/core/src/game/season/repeat-season';
 import { useRouter } from 'next/router';
 import { PropsWithChildren, useEffect } from 'react';
-import { useAuth } from '../../auth';
+import { useAuth } from '../../auth/context/auth-context';
 import { useGame } from '../../game/game-context';
-import { GamePage } from '../../game/game-page.type';
+import { GamePage } from '../../game/game-page';
 import { postNextSeason } from '../../game/season/next-season';
-import { postRepeatSeason as postRepeatSeason } from '@statrookie/core/src/game/season/repeat-season';
 import { OpposingTeam } from '../../game/teams/opposing-team.type';
 import { StudentTeam } from '../../game/teams/student-team.type';
+import { updateVideoCache } from '../../game/update-video-cache';
 import { Student } from '../../student/student.interface';
 import { updateStudent } from '../../student/update-student';
 import { Modal } from '../Modal';
@@ -15,6 +16,7 @@ import { NextSeasonModal } from '../NextSeasonModal';
 type GameLayoutProps = PropsWithChildren<{
   studentTeams: StudentTeam[];
   opposingTeams: OpposingTeam[][];
+  promotionVideos: string[];
   apiBaseUrl: string;
 }>;
 
@@ -22,9 +24,11 @@ export const GamePageWrap = ({
   children,
   studentTeams,
   opposingTeams,
+  promotionVideos,
   apiBaseUrl,
 }: GameLayoutProps) => {
-  const { showNextSeasonModal, setShowNextSeasonModal, dispatch } = useGame();
+  const { showNextSeasonModal, setShowNextSeasonModal, dispatch, videoCache } =
+    useGame();
   const { authorizedUser, setAuthorizedUser } = useAuth();
   const student = authorizedUser as Student;
 
@@ -66,6 +70,12 @@ export const GamePageWrap = ({
         },
       });
       setShowNextSeasonModal(false);
+      updateVideoCache(
+        nextSeasonRes.updatedStudent,
+        opposingTeams,
+        promotionVideos,
+        videoCache
+      );
       router.push({
         pathname: '/game/home',
         query: { promotion: prevLevel },

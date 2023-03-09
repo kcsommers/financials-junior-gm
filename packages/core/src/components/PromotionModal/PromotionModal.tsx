@@ -1,4 +1,5 @@
 import { logger } from '../../auth/utils/logger';
+import { useGame } from '../../game/game-context';
 import { Student } from '../../student/student.interface';
 
 type PromotionModalProps = {
@@ -12,14 +13,17 @@ export const PromotionModal = ({
   videos,
   promotedFrom,
 }: PromotionModalProps) => {
-  console.log('student::::: ', student.level);
+  const { videoCache } = useGame();
+
   const getVideoSrc = () => {
+    let videoSrc: string;
     if (+student.level === promotedFrom) {
       // game over after level three so level equals promotedFrom
-      return videos[2];
+      videoSrc = videos[2];
+    } else {
+      videoSrc = videos[+student.level - 2];
     }
-
-    return videos[+student.level - 2];
+    return videoCache[+student.level - 1][videoSrc] || videoSrc;
   };
 
   return (
@@ -29,7 +33,6 @@ export const PromotionModal = ({
         className="w-full bg-neutral-200"
         autoPlay
         loop
-        controls
         onError={(e) => logger.error('promotion video error:::: ', e)}
         onLoadStart={() => logger.log('video load started:::::')}
         onLoadedData={() => logger.log('vid data loaded::::')}

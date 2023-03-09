@@ -1,6 +1,6 @@
 import { GameResult } from '@statrookie/core/src/game/season/game-result';
 import { User } from '../auth/users/user.interface';
-import { GamePage } from '../game/game-page.type';
+import { GamePage } from '../game/game-page';
 import { ObjectiveNames } from '../game/objectives/objectives';
 import { SeasonAwards } from '../game/season/season-awards';
 import { Player } from '../game/teams/players';

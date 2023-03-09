@@ -79,7 +79,7 @@ export const LoginForm = ({ onLogin, isLoggingIn, loginError, userRole }) => {
         </Link>
         {userRole === UserRoles.TEACHER && (
           <div>
-            <Link href="/forgot-password" className="text-primary mt-2">
+            <Link href="/teacher/forgot-password" className="text-primary mt-2">
               Forgot Password
             </Link>
           </div>

@@ -18,9 +18,9 @@ export const StudentTeamStatsView = ({
       <motion.div
         className="flex items-center justify-between max-w-[195px] border-4 box-content border-transparent bg-neutral-500 rounded-md"
         animate="animate"
-        variants={tutorialComponentConfigs.statsBoard?.variants}
+        variants={tutorialComponentConfigs?.statsBoard?.variants}
         transition={
-          tutorialComponentConfigs.statsBoard?.transition || { duration: 1 }
+          tutorialComponentConfigs?.statsBoard?.transition || { duration: 1 }
         }
       >
         <span className="flex flex-col items-center justify-center">

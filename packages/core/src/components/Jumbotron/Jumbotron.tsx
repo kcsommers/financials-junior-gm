@@ -96,13 +96,17 @@ export const Jumbotron = ({
               )}
               {gamePhase.name === GamePhases.GAME_HIGHLIGHT && (
                 <GameHighlightView
+                  student={student}
                   currentOpponent={currentOpponent}
                   studentTeam={seasonState.studentTeam}
                   onEnded={nextGamePhase}
                 />
               )}
               {gamePhase.name === GamePhases.GAME_ON && (
-                <GameOnView currentOpponent={currentOpponent} />
+                <GameOnView
+                  currentOpponent={currentOpponent}
+                  student={student}
+                />
               )}
             </>
           )}

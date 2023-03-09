@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import { PropsWithChildren, useEffect, useState } from 'react';
 import { useAuth } from '../../auth/context/auth-context';
 import { UserRole } from '../../auth/users/user-roles';
-import { ApiHelper } from '../../server/api/api-helper';
+import { ApiHelper } from '../../api/api-helper';
 import { LoadingSpinner } from '../LoadingSpinner';
 
 type ProtectedRouteProps = PropsWithChildren<{

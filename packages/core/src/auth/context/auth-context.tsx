@@ -9,12 +9,12 @@ import {
   useMemo,
   useState,
 } from 'react';
+import { ApiHelper } from '../../api/api-helper';
 import { UserRole } from '../../auth/users/user-roles';
 import { User } from '../../auth/users/user.interface';
 import { clearAuthStorage } from '../../auth/utils/clear-auth-storage';
 import { logger } from '../../auth/utils/logger';
 import { StorageKeys } from '../../auth/utils/storage-keys.constants';
-import { ApiHelper } from '../../server/api/api-helper';
 
 type AuthProviderProps = PropsWithChildren<{
   baseUrl: string;

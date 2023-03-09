@@ -1,17 +1,17 @@
-import { LoadingSpinner } from '@statrookie/core/src/components/LoadingSpinner';
-import { ApiHelper } from '@statrookie/core/src/server/api/api-helper';
-import { useDebounce } from '@statrookie/core/src/utils/hooks/use-debounce';
 import classnames from 'classnames';
 import { cloneDeep } from 'lodash';
 import * as moment from 'moment';
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { ApiHelper } from '../../api/api-helper';
 import { Teacher } from '../../auth/users/teacher.interface';
 import { ConfirmScreen } from '../../components/ConfirmScreen';
+import { LoadingSpinner } from '../../components/LoadingSpinner';
 import { Modal } from '../../components/Modal';
 import ChevronLeft from '../../components/svg/chevron-left-solid.svg';
 import ChevronRight from '../../components/svg/chevron-right-solid.svg';
 import DownloadIcon from '../../components/svg/download-solid.svg';
 import TrashIcon from '../../components/svg/trash-solid.svg';
+import { useDebounce } from '../../utils/hooks/use-debounce';
 import styles from './TeacherBrowser.module.scss';
 
 const teacherDetails = [

@@ -1,6 +1,6 @@
 import { cloneDeep, isEmpty } from 'lodash';
 import { OpposingTeam } from '../../game/teams/opposing-team.type';
-import { Player } from '../../game/teams/players';
+import { Player, PlayerAssignments } from '../../game/teams/players';
 import { StudentTeam } from '../../game/teams/student-team.type';
 import { updateStudentTeamRank } from '../../game/teams/team-statistics';
 import { initializeTeams } from '../../game/teams/utils/initialize-teams';
@@ -37,6 +37,9 @@ export type SeasonAction =
       };
     }
   | {
+      type: 'SCOUTING_COMPLETE';
+    }
+  | {
       type: 'SEASON_COMPLETE';
     };
 
@@ -52,6 +55,8 @@ export type SeasonState = {
   seasonComplete: boolean;
   injuredPlayer: Player;
   seasonActive: boolean;
+  gameTally: number;
+  scoutingComplete: boolean;
 };
 
 export const seasonReducer = (
@@ -68,7 +73,6 @@ export const seasonReducer = (
 
       const seasonGamesPlayed =
         (student.seasons || [])[+student.level - 1] || [];
-
       return {
         ...state,
         currentOpponent,
@@ -78,6 +82,7 @@ export const seasonReducer = (
         phaseMessageIndex: 0,
         gameResult: null,
         seasonActive: !!(seasonActive || seasonGamesPlayed.length),
+        gameTally: state.gameTally + 1,
       };
     }
 
@@ -149,6 +154,11 @@ export const seasonReducer = (
       const seasonComplete =
         seasonGamesPlayed.length === levelOpposingTeams.length;
 
+      const scoutingComplete = (student?.players || []).some((p) => {
+        // if any player is assigned OFFERED_SCOUT, it means student has scouted
+        return p.playerAssignment === PlayerAssignments.OFFERED_SCOUT;
+      });
+
       return {
         gameResult: null,
         gamePhase: null,
@@ -161,6 +171,8 @@ export const seasonReducer = (
         seasonComplete,
         injuredPlayer: null,
         seasonActive,
+        gameTally: 0,
+        scoutingComplete,
       };
     }
     case 'MARKET_ACTION': {
@@ -183,6 +195,12 @@ export const seasonReducer = (
       return {
         ...state,
         ...updates,
+      };
+    }
+    case 'SCOUTING_COMPLETE': {
+      return {
+        ...state,
+        scoutingComplete: true,
       };
     }
     case 'SEASON_COMPLETE': {

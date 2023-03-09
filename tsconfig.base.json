@@ -19,16 +19,6 @@
     "resolveJsonModule": true,
     "isolatedModules": false,
     "noEmit": true,
-    "noImplicitAny": false,
-    "paths": {
-      "@components": ["app/components/public-api.ts"],
-      "@core": ["app/core/public-api.ts"],
-      "@data/*": ["app/data/*"],
-      "@css/*": ["assets/css/*"],
-      "@images/*": ["assets/images/*"],
-      "@tutorial": ["app/tutorial/public-api.ts"],
-      "@redux": ["app/redux/public-api.ts"],
-      "@utils": ["app/utils"]
-    }
+    "noImplicitAny": false
   }
 }

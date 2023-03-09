@@ -3,7 +3,7 @@ import HockeySticks from '@statrookie/core/src/components/svg/season-sticks.svg'
 import Players from '@statrookie/core/src/components/svg/team-players.svg';
 import Trophy from '@statrookie/core/src/components/svg/trophy.svg';
 import { useAuth } from '../../auth/context/auth-context';
-import { GamePage } from '../../game/game-page.type';
+import { GamePage } from '../../game/game-page';
 import { startingLineupFull } from '../../game/teams/utils/starting-lineup-full';
 import { Student } from '../../student/student.interface';
 import { capitalize } from '../../utils/capitalize';
