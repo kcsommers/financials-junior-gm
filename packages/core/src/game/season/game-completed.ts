@@ -8,7 +8,7 @@ import {
 import { GameResult } from './game-result';
 import { scenarioCompleted } from './scenario-completed';
 
-export const gameCompleted = async (
+export const postGameCompleted = async (
   student: Student,
   gameResult: GameResult,
   apiBaseUrl: string

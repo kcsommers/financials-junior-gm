@@ -29,15 +29,15 @@ export const SeasonStatsModal = ({
       <div className="stats-container mt-8 w-1/2">
         <div className="stat-wrap text-primary mt-4 flex items-center justify-between text-base">
           <span>Wins</span>
-          <span>{seasonState.studentTeam.stats.wins}</span>
+          <span>{seasonState?.studentTeam.stats.wins}</span>
         </div>
         <div className="stat-wrap text-primary mt-4 flex items-center justify-between text-base">
           <span>Losses</span>
-          <span>{seasonState.studentTeam.stats.losses}</span>
+          <span>{seasonState?.studentTeam.stats.losses}</span>
         </div>
         <div className="stat-wrap text-primary mt-4 flex items-center justify-between text-base">
           <span>Team Standing</span>
-          <span>{seasonState.studentTeam.stats.standing}</span>
+          <span>{seasonState?.studentTeam.stats.standing}</span>
         </div>
         <div className="stat-wrap text-primary mt-4 flex items-center justify-between text-base">
           <span>Money Spent</span>

@@ -57,7 +57,6 @@ export const MarketPlayersBoard = ({
     if (releasingPlayer) {
       budget.spendingBudget += +releasingPlayer.playerCost;
     }
-    console.log('spending:::: ', budget.spendingBudget);
     const insufficientFunds =
       budget.spendingBudget - +signingPlayer.playerCost < 0;
     if (insufficientFunds) {

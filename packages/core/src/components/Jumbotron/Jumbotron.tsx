@@ -35,7 +35,7 @@ export const Jumbotron = ({
     currentOpponentIndex,
   } = seasonState;
 
-  const upcomingOpponents = seasonState.opposingTeams.slice(
+  const upcomingOpponents = seasonState?.opposingTeams.slice(
     currentOpponentIndex + 1,
     currentOpponentIndex + 3
   );
@@ -69,16 +69,16 @@ export const Jumbotron = ({
         <div className="w-full h-full absolute top-0 bg-neutral-500">
           {!!seasonState?.injuredPlayer ? (
             <InjuredPlayerView
-              player={seasonState.injuredPlayer}
-              studentTeam={seasonState.studentTeam}
-              isProPlayer={validateProPlayer(seasonState.injuredPlayer)}
+              player={seasonState?.injuredPlayer}
+              studentTeam={seasonState?.studentTeam}
+              isProPlayer={validateProPlayer(seasonState?.injuredPlayer)}
               getTeamLogo={getTeamLogo}
             />
           ) : (
             <>
               {gamePhase.name === GamePhases.READY && (
                 <ReadyView
-                  studentTeam={seasonState.studentTeam}
+                  studentTeam={seasonState?.studentTeam}
                   currentOpponent={currentOpponent}
                   upcomingOpponents={upcomingOpponents}
                   tutorialComponentConfigs={tutorialComponentConfigs}
@@ -88,9 +88,9 @@ export const Jumbotron = ({
                 gamePhase.name === GamePhases.WARMING_UP ||
                 gamePhase.name === GamePhases.GAME_OVER) && (
                 <ScoreView
-                  studentTeam={seasonState.studentTeam}
+                  studentTeam={seasonState?.studentTeam}
                   currentOpponent={currentOpponent}
-                  gameResult={seasonState.gameResult}
+                  gameResult={seasonState?.gameResult}
                   gamePhase={gamePhase}
                 />
               )}
@@ -98,7 +98,7 @@ export const Jumbotron = ({
                 <GameHighlightView
                   student={student}
                   currentOpponent={currentOpponent}
-                  studentTeam={seasonState.studentTeam}
+                  studentTeam={seasonState?.studentTeam}
                   onEnded={nextGamePhase}
                 />
               )}

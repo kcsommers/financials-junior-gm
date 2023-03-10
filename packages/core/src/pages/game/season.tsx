@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { cloneDeep } from 'lodash';
 import { useRouter } from 'next/router';
 import { ReactElement, useEffect, useMemo, useRef, useState } from 'react';
+import { ApiHelper } from '../../api/api-helper';
 import { useAuth } from '../../auth/context/auth-context';
 import { Cheermeter } from '../../components/Cheermeter';
 import { Footer } from '../../components/Footer';
@@ -19,16 +20,16 @@ import { FaqBoard } from '../../faqs/FaqBoard';
 import { seasonFaqs } from '../../faqs/season-faqs';
 import { useGame } from '../../game/game-context';
 import { ObjectiveNames } from '../../game/objectives/objectives';
-import { gameCompleted } from '../../game/season/game-completed';
+import { postGameCompleted } from '../../game/season/game-completed';
 import { GamePhases } from '../../game/season/game-phases';
 import { getInjuredPlayer } from '../../game/season/get-injured-player';
 import { scenarioActive } from '../../game/season/scenario-active';
 import { scenarioCompleted } from '../../game/season/scenario-completed';
 import { updateSeasonAwards } from '../../game/season/season-awards';
+import { useCheermeter } from '../../components/Cheermeter/use-cheermeter';
 import { Player, PlayerAssignments } from '../../game/teams/players';
 import { getMaxTeamRank } from '../../game/teams/utils/get-max-team-rank';
 import { startingLineupFull } from '../../game/teams/utils/starting-lineup-full';
-import { ApiHelper } from '../../api/api-helper';
 import { Student } from '../../student/student.interface';
 import { updateStudent } from '../../student/update-student';
 import { SeasonTutorialComponents } from '../../tutorial/component-configs/season-tutorial-components';
@@ -58,7 +59,7 @@ export const CoreSeasonPage = ({
   const { seasonState, dispatch, audioCache } = useGame();
   const [gamePhaseTimer, setGamePhaseTimer] = useState<number>(null);
   const [showStatsModal, setShowStatsModal] = useState(false);
-  const [cheerPoints, setCheerPoints] = useState(0);
+  const { cheerPoints, onCheer, cheerLevel } = useCheermeter();
   const [pageInitialized, setPageInitialized] = useState(false);
   const gameOverTimerEnded = useRef(false);
   const [showFaqModal, setShowFaqModal] = useState(false);
@@ -91,7 +92,7 @@ export const CoreSeasonPage = ({
     try {
       const updatedAwards = updateSeasonAwards(
         student,
-        seasonState.studentTeam
+        seasonState?.studentTeam
       );
       const updateStudentRes = await updateStudent(
         student._id,
@@ -117,7 +118,7 @@ export const CoreSeasonPage = ({
 
   const nextGamePhase = () => {
     if (
-      seasonState.gamePhase.name === GamePhases.GAME_OVER &&
+      seasonState?.gamePhase.name === GamePhases.GAME_OVER &&
       studentGamesUpdated.current
     ) {
       nextGame(true);
@@ -129,10 +130,9 @@ export const CoreSeasonPage = ({
   const nextGame = (seasonActive?: boolean) => {
     studentGamesUpdated.current = false;
     gameOverTimerEnded.current = false;
-    setCheerPoints(0);
     if (
-      seasonState.currentOpponentIndex ===
-      seasonState.opposingTeams.length - 1
+      seasonState?.currentOpponentIndex ===
+      seasonState?.opposingTeams.length - 1
     ) {
       completeSeason();
     } else {
@@ -188,7 +188,7 @@ export const CoreSeasonPage = ({
 
   useEffect(() => {
     let shouldThrowScenario = false;
-    const isLastGame = gamesPlayed === seasonState.opposingTeams.length;
+    const isLastGame = gamesPlayed === seasonState?.opposingTeams.length;
     const noScenario = !scenarioActive(student) && !scenarioCompleted(student);
     if (!isLastGame && noScenario && gamesPlayed && gamesPlayed % 4 === 0) {
       shouldThrowScenario = true;
@@ -205,25 +205,25 @@ export const CoreSeasonPage = ({
   }, [gamesPlayed]);
 
   useEffect(() => {
-    const isLastGame = gamesPlayed === seasonState.opposingTeams.length;
+    const isLastGame = gamesPlayed === seasonState?.opposingTeams.length;
     const noScenario = !scenarioActive(student) && !scenarioCompleted(student);
     if (
       !isLastGame &&
       noScenario &&
-      seasonState.gameTally - 1 &&
-      (seasonState.gameTally - 1) % 2 === 0
+      seasonState?.gameTally - 1 &&
+      (seasonState?.gameTally - 1) % 2 === 0
     ) {
       setShowStatsModal(true);
     }
-  }, [seasonState.gameTally, gamesPlayed]);
+  }, [seasonState?.gameTally, gamesPlayed]);
 
   useEffect(() => {
-    if (seasonState.gamePhase?.name === GamePhases.GAME_OVER) {
+    if (seasonState?.gamePhase?.name === GamePhases.GAME_OVER) {
       (async () => {
         try {
-          const gameCompletedRes = await gameCompleted(
+          const gameCompletedRes = await postGameCompleted(
             student,
-            seasonState.gameResult,
+            seasonState?.gameResult,
             apiBaseUrl
           );
           setAuthorizedUser(gameCompletedRes.updatedStudent);
@@ -233,34 +233,37 @@ export const CoreSeasonPage = ({
         }
       })();
     }
-  }, [seasonState.gamePhase?.name]);
+  }, [seasonState?.gamePhase?.name]);
 
   useEffect(() => {
     if (!cheerAudioRef.current) {
       return;
     }
-    if (seasonState.gamePhase?.name === GamePhases.GAME_ON) {
+    if (seasonState?.gamePhase?.name === GamePhases.GAME_ON) {
       cheerAudioRef.current.play();
     } else {
       cheerAudioRef.current.pause();
       cheerAudioRef.current.currentTime = 0;
     }
-  }, [seasonState.gamePhase?.name]);
+  }, [seasonState?.gamePhase?.name]);
 
   useInterval(nextGamePhase, gamePhaseTimer);
 
   // game timer effect
   useEffect(() => {
-    setGamePhaseTimer(seasonState.gamePhase?.timer);
-  }, [seasonState.gamePhase?.name]);
+    setGamePhaseTimer(seasonState?.gamePhase?.timer);
+  }, [seasonState?.gamePhase?.name]);
 
   const gameButtonClicked = () => {
     if (scenarioActive(student)) {
       router.push('/game/team');
       return;
     }
-    if (seasonState.gamePhase?.name === GamePhases.READY) {
+    if (seasonState?.gamePhase?.name === GamePhases.READY) {
       nextGamePhase();
+    }
+    if (seasonState?.gamePhase?.name === GamePhases.GAME_ON) {
+      onCheer();
     }
   };
 
@@ -275,8 +278,8 @@ export const CoreSeasonPage = ({
   };
 
   return !student ||
-    !seasonState.studentTeam ||
-    !seasonState.currentOpponent ||
+    !seasonState?.studentTeam ||
+    !seasonState?.currentOpponent ||
     !checkedRedirect ? (
     <LoadingSpinner isFullPage={true} />
   ) : (
@@ -287,7 +290,7 @@ export const CoreSeasonPage = ({
           <div className="ml-3 -translate-x-16 mt-4">
             <LevelStick
               isMoney={false}
-              value={seasonState.studentTeam.stats.rank + cheerPoints}
+              value={seasonState?.studentTeam.stats.rank + cheerPoints}
               denom={getMaxTeamRank(+student.level)}
               color="secondary"
               indicatorDirection="right"
@@ -299,9 +302,9 @@ export const CoreSeasonPage = ({
           <div className="mr-3 translate-x-16 mt-4">
             <LevelStick
               isMoney={false}
-              value={seasonState.currentOpponent.stats.rank}
+              value={seasonState?.currentOpponent.stats.rank}
               denom={getMaxTeamRank(+student.level)}
-              color={seasonState.currentOpponent.color}
+              color={seasonState?.currentOpponent.color}
               indicatorDirection="left"
               size="lg"
               inverse={true}
@@ -335,6 +338,11 @@ export const CoreSeasonPage = ({
                 Click the puck to sign a new player!
               </p>
             )}
+            {seasonState?.gamePhase?.name === GamePhases.GAME_ON && (
+              <p className="text-primary text-base mb-1">
+                Click the puck or tap the spacebar to cheer for your team!
+              </p>
+            )}
             <motion.span
               animate="animate"
               variants={tutorialComponentConfigs.gameButton?.variants}
@@ -346,13 +354,13 @@ export const CoreSeasonPage = ({
             >
               <GameButton
                 student={student}
-                gamePhase={seasonState.gamePhase}
+                gamePhase={seasonState?.gamePhase}
                 onClick={gameButtonClicked}
               />
             </motion.span>
-            <span className="mt-2 text-lg">
-              Game {seasonState.currentOpponentIndex + 1} of{' '}
-              {seasonState.opposingTeams?.length}
+            <span className="-mt-1 mb-2 text-lg">
+              Game {seasonState?.currentOpponentIndex + 1} of{' '}
+              {seasonState?.opposingTeams?.length}
             </span>
           </motion.span>
           <div className="relative flex flex-1 items-center justify-between">
@@ -365,15 +373,10 @@ export const CoreSeasonPage = ({
                 {helpButtonIcon}
               </HelpButton>
             </span>
-            <div>
-              <Cheermeter
-                gamePhase={seasonState.gamePhase}
-                setCheerPoints={setCheerPoints}
-              />
-            </div>
+            <Cheermeter cheerLevel={cheerLevel} />
             <StandingsBoard
-              studentTeam={seasonState.studentTeam}
-              opposingTeams={seasonState.opposingTeams}
+              studentTeam={seasonState?.studentTeam}
+              opposingTeams={seasonState?.opposingTeams}
               tutorialComponentConfigs={tutorialComponentConfigs}
             />
           </div>

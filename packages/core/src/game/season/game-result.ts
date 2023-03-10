@@ -83,6 +83,8 @@ export const getGameResult = (
   opposingTeam: OpposingTeam,
   cheerPoints: number
 ): GameResult => {
+  console.log('game result:::: ', cheerPoints);
+
   const rankDiff = Math.abs(studentTeam.stats.rank - opposingTeam.stats.rank);
 
   let scoresIndex: number;

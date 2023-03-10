@@ -127,7 +127,7 @@ export const CoreTeamPage = ({
     }
   };
 
-  return !student || !seasonState.studentTeam || !checkedRedirect ? (
+  return !student || !seasonState?.studentTeam || !checkedRedirect ? (
     <LoadingSpinner isFullPage={true} />
   ) : (
     <div className="flex flex-col h-full">
@@ -135,10 +135,10 @@ export const CoreTeamPage = ({
       <div className="relative bg-neutral-200 rounded-md border-4 border-neutral-700 px-4 pb-4 flex-1 mt-4 mx-14">
         <div className="h-80 relative">
           <h2 className="text-primary text-4xl font-bold absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2">
-            {`${seasonState.studentTeam.city} ${seasonState.studentTeam.name}`}
+            {`${seasonState?.studentTeam.city} ${seasonState?.studentTeam.name}`}
           </h2>
           <div className="flex items-center justify-between h-full">
-            {seasonState.studentTeam.getLogo()}
+            {seasonState?.studentTeam.getLogo()}
             <span className="mt-2">
               <HelpButton
                 text="CALL S.J. SHARKIE!"
@@ -155,7 +155,7 @@ export const CoreTeamPage = ({
           <div className="flex-75">
             <TeamBudgetState
               student={student}
-              studentTeam={seasonState.studentTeam}
+              studentTeam={seasonState?.studentTeam}
             />
           </div>
           <motion.div
@@ -168,7 +168,7 @@ export const CoreTeamPage = ({
           >
             <TeamBoard
               student={student}
-              studentTeam={seasonState.studentTeam}
+              studentTeam={seasonState?.studentTeam}
               tutorialComponents={tutorialComponentConfigs}
               validateProPlayer={validateProPlayer}
               onPlayerSelected={setSelectedPlayer}
@@ -182,7 +182,7 @@ export const CoreTeamPage = ({
           <StickButton
             size="small"
             href="/game/scout"
-            isDisabled={seasonState.scoutingComplete}
+            isDisabled={seasonState?.scoutingComplete}
           >
             <ScoutStick />
           </StickButton>
@@ -203,7 +203,7 @@ export const CoreTeamPage = ({
         <SignPlayerBoard
           apiBaseUrl={apiBaseUrl}
           student={student}
-          studentTeam={seasonState.studentTeam}
+          studentTeam={seasonState?.studentTeam}
           slotAssignment={selectedAssignment}
           isDisabled={!!activeTutorial}
           setTutorialSlideEventListener={
@@ -219,10 +219,10 @@ export const CoreTeamPage = ({
         isVisible={!!selectedPlayer}
         onClose={!activeTutorial ? () => setSelectedPlayer(null) : null}
       >
-        {seasonState.seasonActive ? (
+        {seasonState?.seasonActive ? (
           <TradePlayerBoard
             student={student}
-            studentTeam={seasonState.studentTeam}
+            studentTeam={seasonState?.studentTeam}
             onPlayersTraded={onMarketAction}
             releasingPlayer={selectedPlayer}
             apiBaseUrl={apiBaseUrl}
@@ -232,7 +232,7 @@ export const CoreTeamPage = ({
         ) : (
           <ReleasePlayerBoard
             student={student}
-            studentTeam={seasonState.studentTeam}
+            studentTeam={seasonState?.studentTeam}
             onPlayerReleased={onMarketAction}
             player={selectedPlayer}
             apiBaseUrl={apiBaseUrl}

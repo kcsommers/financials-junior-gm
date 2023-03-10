@@ -122,7 +122,7 @@ export const CoreHomePage = ({
     }
   };
 
-  return !student || !seasonState.studentTeam ? (
+  return !student || !seasonState?.studentTeam ? (
     <LoadingSpinner isFullPage={true} />
   ) : (
     <div className="home-page-container">
@@ -167,7 +167,7 @@ export const CoreHomePage = ({
           }}
         >
           <LevelStick
-            value={seasonState.studentTeam?.stats.rank}
+            value={seasonState?.studentTeam?.stats.rank}
             denom={getMaxTeamRank(+student?.level)}
             color="secondary"
             indicatorDirection="right"

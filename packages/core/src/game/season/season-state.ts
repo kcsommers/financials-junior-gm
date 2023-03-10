@@ -99,7 +99,12 @@ export const seasonReducer = (
       let gameResult: GameResult;
       let updatedStudentTeam: StudentTeam;
       let updatedOpposingTeams: OpposingTeam[];
+
       if (gameComplete) {
+        console.log(
+          'getting game result:::::',
+          action.payload?.cheerPoints || 0
+        );
         gameResult = getGameResult(
           state.studentTeam,
           state.currentOpponent,

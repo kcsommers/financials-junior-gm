@@ -71,4 +71,7 @@ export default ({ Component, pageProps }: AppPropsWithLayout) => {
   );
 };
 
-// @TODO cheermeter reset
+// @TODO Admin total time
+// @TODO check cheer points
+// @TODO double header broken
+// @TODO injured player shows too soon

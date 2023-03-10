@@ -93,7 +93,7 @@ export const CoreScoutPage = ({
 
   useEffect(() => {
     const shouldRedirect =
-      !student?.tutorials?.team || seasonState.scoutingComplete;
+      !student?.tutorials?.team || seasonState?.scoutingComplete;
     if (shouldRedirect) {
       router.push('/game/team');
     } else {

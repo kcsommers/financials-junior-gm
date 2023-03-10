@@ -19,14 +19,21 @@ export const GameButton = ({
   onClick,
   student,
 }: GameButtonProps) => {
-  useKeydown('Space', onClick, gamePhase.name === GamePhases.READY);
+  useKeydown(
+    'Space',
+    onClick,
+    gamePhase?.name === GamePhases.READY ||
+      gamePhase?.name === GamePhases.GAME_ON
+  );
 
   return (
     <button
       onClick={onClick}
       className={classNames({
         'pointer-events-none':
-          gamePhase.name !== GamePhases.READY && !scenarioActive(student),
+          gamePhase.name !== GamePhases.READY &&
+          gamePhase.name !== GamePhases.GAME_ON &&
+          !scenarioActive(student),
         disabled: !seasonPageUnlocked(student) && !scenarioActive(student),
       })}
     >

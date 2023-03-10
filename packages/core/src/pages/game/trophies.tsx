@@ -27,17 +27,17 @@ export const CoreTrophiesPage = ({
   const student = authorizedUser as Student;
   const { seasonState, dispatch, showNextSeasonModal, videoCache } = useGame();
   const [showSeasonCompleteModal, setShowSeasonCompleteModal] = useState(
-    seasonState.seasonComplete
+    seasonState?.seasonComplete
   );
   const [selectedAward, setSelectedAward] = useState<Award>();
 
   const router = useRouter();
 
   useEffect(() => {
-    if (seasonState.seasonComplete && !showNextSeasonModal) {
+    if (seasonState?.seasonComplete && !showNextSeasonModal) {
       setShowSeasonCompleteModal(true);
     }
-  }, [seasonState.seasonComplete, showNextSeasonModal]);
+  }, [seasonState?.seasonComplete, showNextSeasonModal]);
 
   const trophyRows = useMemo<Award[][]>(() => {
     const rows = [3, 2, 1].map((level) => getSeasonAwards(student, level));
@@ -99,7 +99,7 @@ export const CoreTrophiesPage = ({
     student.awards[+student.level - 1].thirdCup &&
     student.awards[+student.level - 1].savingsCup;
 
-  return !student || !seasonState.studentTeam ? (
+  return !student || !seasonState?.studentTeam ? (
     <LoadingSpinner isFullPage={true} />
   ) : (
     <div className="flex flex-col h-full">
@@ -107,7 +107,7 @@ export const CoreTrophiesPage = ({
       <div className="flex flex-col relative bg-neutral-200 rounded-md border-4 border-neutral-700 px-4 pb-4 flex-1 mt-4 mx-14">
         <div className="h-80 relative">
           <div className="absolute left-0 top-0 h-full w-full flex items-center justify-center">
-            {seasonState.seasonComplete ? (
+            {seasonState?.seasonComplete ? (
               <>
                 <button
                   className="btn-secondary btn-small text-base mx-2"
@@ -132,7 +132,7 @@ export const CoreTrophiesPage = ({
           </div>
 
           <div className="flex items-center h-full">
-            {seasonState.studentTeam.getLogo()}
+            {seasonState?.studentTeam.getLogo()}
           </div>
         </div>
         <div className="flex-1 flex flex-col w-4/5 rounded-md border-[#4D3629] border-4 mx-auto">
@@ -178,7 +178,7 @@ export const CoreTrophiesPage = ({
         onClose={() => setShowSeasonCompleteModal(false)}
       >
         <SeasonCompleteModal
-          studentTeam={seasonState.studentTeam}
+          studentTeam={seasonState?.studentTeam}
           onClose={() => setShowSeasonCompleteModal(false)}
         />
       </Modal>
