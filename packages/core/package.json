@@ -6,10 +6,9 @@
   "main": "dist/bundles",
   "module": "dist/esm-bundles",
   "scripts": {
+    "dev": "npx rollup -c -w",
     "build": "npx rollup -c rollup.config.js",
-    "build-next": "npx rollup -c rollup.config.js",
-    "clean": "rimraf dist",
-    "start": "npx rollup -c -w"
+    "start": "echo No start script in core"
   },
   "author": "",
   "license": "ISC",
