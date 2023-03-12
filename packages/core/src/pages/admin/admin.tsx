@@ -49,10 +49,9 @@ export const CoreAdminPage = ({ apiBaseUrl }: AdminPageProps) => {
     ApiHelper.getTimeSpent(apiBaseUrl)
       .then((res) => {
         setTotalTimeSpent(
-          moment
-            .duration(res.data?.totalTimeSpent || 0)
-            .asHours()
-            .toFixed(2)
+          formatNumber(
+            moment.duration(res?.totalTimeSpent || 0).asHours()
+          ) as string
         );
       })
       .catch((err) => console.error(err));
