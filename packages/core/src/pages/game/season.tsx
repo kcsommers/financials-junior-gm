@@ -61,7 +61,6 @@ export const CoreSeasonPage = ({
   const [showStatsModal, setShowStatsModal] = useState(false);
   const { cheerPoints, onCheer, cheerLevel } = useCheermeter();
   const [pageInitialized, setPageInitialized] = useState(false);
-  const gameOverTimerEnded = useRef(false);
   const [showFaqModal, setShowFaqModal] = useState(false);
   const studentGamesUpdated = useRef(false);
   const {
@@ -129,7 +128,6 @@ export const CoreSeasonPage = ({
 
   const nextGame = (seasonActive?: boolean) => {
     studentGamesUpdated.current = false;
-    gameOverTimerEnded.current = false;
     if (
       seasonState?.currentOpponentIndex ===
       seasonState?.opposingTeams.length - 1
@@ -178,44 +176,12 @@ export const CoreSeasonPage = ({
   };
 
   useEffect(() => {
+    if (pageInitialized) {
+      return;
+    }
     setPageInitialized(true);
     nextGame();
   }, []);
-
-  const gamesPlayed = useMemo(() => {
-    return ((student?.seasons || [])[+student?.level - 1] || []).length;
-  }, [student]);
-
-  useEffect(() => {
-    let shouldThrowScenario = false;
-    const isLastGame = gamesPlayed === seasonState?.opposingTeams.length;
-    const noScenario = !scenarioActive(student) && !scenarioCompleted(student);
-    if (!isLastGame && noScenario && gamesPlayed && gamesPlayed % 4 === 0) {
-      shouldThrowScenario = true;
-    }
-    if (shouldThrowScenario) {
-      throwScenario();
-    } else if (
-      pageInitialized &&
-      !scenarioActive(student) &&
-      gameOverTimerEnded.current
-    ) {
-      nextGame(true);
-    }
-  }, [gamesPlayed]);
-
-  useEffect(() => {
-    const isLastGame = gamesPlayed === seasonState?.opposingTeams.length;
-    const noScenario = !scenarioActive(student) && !scenarioCompleted(student);
-    if (
-      !isLastGame &&
-      noScenario &&
-      seasonState?.gameTally - 1 &&
-      (seasonState?.gameTally - 1) % 2 === 0
-    ) {
-      setShowStatsModal(true);
-    }
-  }, [seasonState?.gameTally, gamesPlayed]);
 
   useEffect(() => {
     if (seasonState?.gamePhase?.name === GamePhases.GAME_OVER) {
@@ -226,7 +192,8 @@ export const CoreSeasonPage = ({
             seasonState?.gameResult,
             apiBaseUrl
           );
-          setAuthorizedUser(gameCompletedRes.updatedStudent);
+          const { updatedStudent } = gameCompletedRes;
+          setAuthorizedUser(updatedStudent);
           studentGamesUpdated.current = true;
         } catch (error: any) {
           // @TODO error handle
@@ -234,6 +201,62 @@ export const CoreSeasonPage = ({
       })();
     }
   }, [seasonState?.gamePhase?.name]);
+
+  const gamesPlayed = useMemo(
+    () => ((student?.seasons || [])[+student?.level - 1] || []).length,
+    [student]
+  );
+  useEffect(() => {
+    if (pageInitialized) {
+      dispatch({ type: 'INCREASE_GAME_TALLY' });
+    }
+  }, [gamesPlayed]);
+
+  const gamesPlayedRef = useRef(gamesPlayed);
+  const isLastGame = useMemo(
+    () => gamesPlayed === seasonState?.opposingTeams.length,
+    [gamesPlayed]
+  );
+  const noScenario = useMemo(
+    () => !scenarioActive(student) && !scenarioCompleted(student),
+    [student]
+  );
+  useEffect(() => {
+    if (
+      gamesPlayedRef.current !== gamesPlayed &&
+      seasonState?.gamePhase?.name === GamePhases.READY
+    ) {
+      gamesPlayedRef.current = gamesPlayed;
+      const shouldThrowScenario =
+        !isLastGame && noScenario && gamesPlayed > 0 && gamesPlayed % 4 === 0;
+      if (shouldThrowScenario) {
+        throwScenario();
+      }
+    }
+  }, [gamesPlayed, isLastGame, noScenario, seasonState?.gamePhase?.name]);
+
+  const gameTallyRef = useRef(seasonState?.gameTally);
+  useEffect(() => {
+    if (
+      gameTallyRef.current !== seasonState?.gameTally &&
+      seasonState?.gamePhase?.name === GamePhases.READY
+    ) {
+      gameTallyRef.current = seasonState?.gameTally;
+      const shouldShowStats =
+        !isLastGame &&
+        noScenario &&
+        gameTallyRef.current > 0 &&
+        gameTallyRef.current % 2 === 0;
+      if (shouldShowStats) {
+        setShowStatsModal(true);
+      }
+    }
+  }, [
+    seasonState?.gameTally,
+    isLastGame,
+    noScenario,
+    seasonState?.gamePhase?.name,
+  ]);
 
   useEffect(() => {
     if (!cheerAudioRef.current) {
@@ -249,7 +272,6 @@ export const CoreSeasonPage = ({
 
   useInterval(nextGamePhase, gamePhaseTimer);
 
-  // game timer effect
   useEffect(() => {
     setGamePhaseTimer(seasonState?.gamePhase?.timer);
   }, [seasonState?.gamePhase?.name]);

@@ -71,7 +71,4 @@ export default ({ Component, pageProps }: AppPropsWithLayout) => {
   );
 };
 
-// @TODO Admin total time
-// @TODO check cheer points
-// @TODO double header broken
-// @TODO injured player shows too soon
+// @TODO disable cancel while signing player

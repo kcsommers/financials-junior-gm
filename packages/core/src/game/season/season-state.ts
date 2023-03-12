@@ -40,6 +40,9 @@ export type SeasonAction =
       type: 'SCOUTING_COMPLETE';
     }
   | {
+      type: 'INCREASE_GAME_TALLY';
+    }
+  | {
       type: 'SEASON_COMPLETE';
     };
 
@@ -55,8 +58,8 @@ export type SeasonState = {
   seasonComplete: boolean;
   injuredPlayer: Player;
   seasonActive: boolean;
-  gameTally: number;
   scoutingComplete: boolean;
+  gameTally: number;
 };
 
 export const seasonReducer = (
@@ -73,6 +76,7 @@ export const seasonReducer = (
 
       const seasonGamesPlayed =
         (student.seasons || [])[+student.level - 1] || [];
+
       return {
         ...state,
         currentOpponent,
@@ -82,7 +86,6 @@ export const seasonReducer = (
         phaseMessageIndex: 0,
         gameResult: null,
         seasonActive: !!(seasonActive || seasonGamesPlayed.length),
-        gameTally: state.gameTally + 1,
       };
     }
 
@@ -101,10 +104,6 @@ export const seasonReducer = (
       let updatedOpposingTeams: OpposingTeam[];
 
       if (gameComplete) {
-        console.log(
-          'getting game result:::::',
-          action.payload?.cheerPoints || 0
-        );
         gameResult = getGameResult(
           state.studentTeam,
           state.currentOpponent,
@@ -145,6 +144,13 @@ export const seasonReducer = (
       };
     }
 
+    case 'INCREASE_GAME_TALLY': {
+      return {
+        ...state,
+        gameTally: state.gameTally + 1,
+      };
+    }
+
     case 'INIT_SEASON': {
       const { student, opposingTeams, studentTeams } = action.payload;
       const { levelOpposingTeams, studentTeam } = initializeTeams(
@@ -176,8 +182,8 @@ export const seasonReducer = (
         seasonComplete,
         injuredPlayer: null,
         seasonActive,
-        gameTally: 0,
         scoutingComplete,
+        gameTally: 0,
       };
     }
     case 'MARKET_ACTION': {
