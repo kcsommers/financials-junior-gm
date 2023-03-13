@@ -1,0 +1,25 @@
+.login_form_field {
+  margin-bottom: 1rem;
+}
+
+.login_form_label {
+  color: #070707;
+  font-size: 1.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.login_form_ip {
+  height: 48px;
+}
+
+.login_error_text {
+  font-size: 1rem;
+  color: red !important;
+  width: 100%;
+  text-align: center;
+  display: inline-block;
+  position: absolute;
+  left: 50%;
+  bottom: 2rem;
+  transform: translateX(-50%);
+}

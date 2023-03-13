@@ -1,0 +1,14 @@
+.btn {
+  height: 78px;
+  width: 274px;
+
+  &.sm {
+    height: 50px;
+    width: 175px;
+  }
+
+  &.md {
+    height: 64px;
+    width: 225px;
+  }
+}

@@ -26,6 +26,18 @@ yarn-error.log*
 
 .eslintcache
 
+lerna-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# All packages
+packages/*/build
+packages/*/dist
+packages/*/coverage
+packages/*/node_modules
+
+packages/*/.eslintcache
+
 .next
 dist
 build

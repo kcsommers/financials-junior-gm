@@ -1,0 +1,20 @@
+div.market-players-board-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.sign-player-question {
+  text-align: center;
+  font-size: 2.25rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  color: #006d75;
+  position: relative;
+  transform: translateY(50%);
+  -webkit-text-stroke: 0.05px black;
+}
+
+.sign-player-options {
+  transform: scale(0.75);
+}

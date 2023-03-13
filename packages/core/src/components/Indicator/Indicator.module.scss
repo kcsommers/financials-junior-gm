@@ -1,0 +1,55 @@
+div.amount_indicator {
+  &.sm {
+    width: 55px;
+    height: 55px;
+    border-width: 6.667px;
+  }
+  &.md {
+    width: 75px;
+    height: 75px;
+    border-width: 10px;
+  }
+}
+
+div.amount_indicator_pointer {
+  &.sm {
+    width: 10px;
+    height: 10px;
+  }
+  &.md {
+    width: 15px;
+    height: 15px;
+  }
+}
+
+div.amount_indicator_right div.amount_indicator_pointer {
+  right: 0;
+  transform: translate(5px, -50%) rotate(45deg);
+}
+
+div.amount_indicator_left div.amount_indicator_pointer {
+  left: 0;
+  transform: translate(-5px, -50%) rotate(45deg);
+}
+
+div.amount_indicator_bottom div.amount_indicator_pointer {
+  top: 100%;
+  left: 50%;
+  transform: translate(-50%, -9px) rotate(45deg);
+}
+
+div.amount_indicator_top div.amount_indicator_pointer {
+  top: 0%;
+  left: 50%;
+  transform: translate(-50%, -5px) rotate(45deg);
+}
+
+p.amount_indicator_amount {
+  transition: all 0.3s ease;
+  letter-spacing: 0.1rem;
+}
+
+p.indicator_label {
+  font-size: 1.2rem;
+  padding: 0.5rem 0;
+}

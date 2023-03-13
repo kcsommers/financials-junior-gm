@@ -1,0 +1,22 @@
+<svg id="Play" xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120">
+  <defs>
+    <radialGradient id="radial-gradient" cx="0.5" cy="0.5" r="1.006"
+      gradient-transform="matrix(0.992, 0.126, -0.126, 0.992, 0.067, -0.059)" gradient-units="objectBoundingBox">
+      <stop offset="0" stop-color="rgb(var(--color-secondary))" />
+      <stop offset="1" stop-color="#595959" />
+    </radialGradient>
+  </defs>
+  <g id="Help">
+    <g fill="rgb(var(--color-secondary))" id="Ellipse_2" data-name="Ellipse 2" stroke="#707070" stroke-width="1">
+      <circle cx="60" cy="60" r="60" stroke="none" />
+      <circle cx="60" cy="60" r="59.5" fill="none" />
+    </g>
+    <g id="Ellipse_3" data-name="Ellipse 3" transform="translate(12 12)" stroke="#fff" stroke-width="1"
+      fill="url(#radial-gradient)">
+      <circle cx="48" cy="48" r="48" stroke="none" />
+      <circle cx="48" cy="48" r="47.5" fill="none" />
+    </g>
+  </g>
+  <path id="Polygon_1" data-name="Polygon 1" d="M36.25,0,72.5,35H0Z" transform="translate(83.977 23) rotate(90)"
+    fill="rgb(var(--color-primary))" />
+</svg>

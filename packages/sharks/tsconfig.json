@@ -1,0 +1,22 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "composite": true,
+    "declaration": true,
+    "declarationMap": true,
+    "noEmit": false,
+    "outDir": "build",
+    "rootDir": "src",
+    "incremental": true,
+    "isolatedModules": true,
+    "jsx": "preserve"
+  },
+  "include": ["src", "src/type-declarations"],
+  "exclude": ["node_modules", "src/app", "src/index.tsx"],
+  "references": [
+    {
+      "path": "../core"
+    }
+  ]
+}

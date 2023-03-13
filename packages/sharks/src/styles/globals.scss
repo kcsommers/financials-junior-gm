@@ -1,0 +1,196 @@
+@import './reset.scss';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-primary: 0 120 138;
+    --color-primary-2: 0 120 138;
+    --color-secondary: 234 114 0;
+    --color-secondary-2: 243 144 29;
+    --color-highlight: 255 215 130;
+    --color-foreground: 0 47 108;
+    --color-danger: 220 45 45;
+    --color-dark: 18, 18, 16;
+    --color-light: 229 229 229;
+    --font-primary: made-tommy, sans-serif;
+    --box-shadow-mat: 0 3px 6px rgba(0, 0, 0, 0.16),
+      0 3px 6px rgba(0, 0, 0, 0.23);
+  }
+}
+
+@font-face {
+  font-family: 'interstate';
+  src: url('../assets/fonts/interstate-regular-comp-58b641cc0aca1.otf');
+}
+
+@font-face {
+  font-family: 'made-tommy';
+  src: url('../assets/fonts/MADE_TOMMY/MADE\ TOMMY\ Regular.otf');
+}
+
+@font-face {
+  font-family: 'made-tommy-outline';
+  src: url('../assets/fonts/MADE_TOMMY_OUTLINE/MADE\ TOMMY\ Regular\ Outline.otf');
+}
+
+@font-face {
+  font-family: 'made-tommy-bold';
+  src: url('../assets/fonts/MADE_TOMMY/MADE\ TOMMY\ Bold.otf');
+}
+
+html {
+  background-color: #eee;
+}
+
+body {
+  font-family: var(--font-primary);
+
+  &.dragging-item,
+  &.dragging-item * {
+    cursor: move;
+  }
+}
+
+.btn {
+  background: none;
+  outline: none;
+  border: none;
+}
+
+a.btn-primary,
+input[type='submit'],
+button.btn-primary {
+  background-color: rgb(var(--color-primary));
+  color: #fff;
+  box-shadow: var(--box-shadow-mat);
+  padding: 1rem 1.5rem;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+a.btn-secondary,
+div.btn-secondary,
+input[type='submit'],
+button.btn-secondary {
+  background-color: rgb(var(--color-secondary));
+  color: #fff;
+  box-shadow: var(--box-shadow-mat);
+  padding: 1rem 1.5rem;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+a.btn-secondary-2,
+button.btn-secondary-2 {
+  background-color: rgb(var(--color-secondary-2));
+  color: #fff;
+  box-shadow: var(--box-shadow-mat);
+  padding: 1rem 1.5rem;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+a.btn-danger,
+div.btn-danger,
+button.btn-danger {
+  background-color: #dc3545;
+  color: #fff;
+  box-shadow: var(--box-shadow-mat);
+  padding: 1rem 1.5rem;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+a.btn-small,
+button.btn-small {
+  padding: 0.5rem 1.5rem;
+  font-size: 1rem;
+}
+
+a.btn-full-width,
+div.btn-full-width,
+button.btn-full-width {
+  width: 100%;
+}
+
+.outline-black {
+  text-shadow: 0 0 5px #000, 0 0 5px #000, 0 0 5px #000, 0 0 5px #000;
+}
+
+.outline-secondary {
+  text-shadow: 0 0 5px rgb(var(--color-secondary)),
+    0 0 5px rgb(var(--color-secondary)), 0 0 5px rgb(var(--color-secondary)),
+    0 0 5px rgb(var(--color-secondary));
+}
+
+.check-btn {
+  width: 60px;
+  height: 60px;
+  min-width: 60px;
+  min-height: 60px;
+  max-width: 60px;
+  max-height: 60px;
+  box-sizing: border-box;
+  border: 8.5px solid #4b4b4b;
+  border-radius: 50%;
+  background-color: #00788a;
+  display: inline-block;
+  position: relative;
+}
+
+.check-btn:after {
+  opacity: 1;
+  height: 24px;
+  width: 10.3px;
+  transform-origin: left top;
+  border-right: 8.5px solid #f3901d;
+  border-bottom: 8.5px solid #f3901d;
+  content: '';
+  left: 25.7px;
+  top: 0px;
+  position: absolute;
+  transform: rotate(45deg);
+}
+
+.check-btn-small {
+  width: 35px;
+  height: 35px;
+  min-width: 35px;
+  min-height: 35px;
+  max-width: 35px;
+  max-height: 35px;
+  box-sizing: border-box;
+  border: 5px solid #4b4b4b;
+  border-radius: 50%;
+  background-color: #00788a;
+  display: inline-block;
+  position: relative;
+}
+
+.check-btn-small:after {
+  opacity: 1;
+  height: 14px;
+  width: 6px;
+  transform-origin: left top;
+  border-right: 5px solid #f3901d;
+  border-bottom: 5px solid #f3901d;
+  content: '';
+  left: 15px;
+  top: 0px;
+  position: absolute;
+  transform: rotate(45deg);
+}
+
+.disabled {
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.text-shadow-secondary {
+  text-shadow: 0 0 5px rgb(var(--color-secondary)),
+    0 0 5px rgb(var(--color-secondary)), 0 0 5px rgb(var(--color-secondary)),
+    0 0 5px rgb(var(--color-secondary));
+}

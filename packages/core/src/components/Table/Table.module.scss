@@ -1,0 +1,95 @@
+div.table_wrap {
+  background-color: #fff;
+  border-radius: 3px;
+}
+
+div.table_header_row,
+div.table_row_wrap:not(:last-child) {
+  border-bottom: 1px solid rgb(var(--color-primary));
+}
+
+div.table_row {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  font-size: 1rem;
+}
+
+div.table_header_row {
+  padding: 0.75rem 1rem;
+  cursor: initial;
+  color: #00788a;
+  border-bottom: 2.5px solid rgb(var(--color-primary));
+}
+
+div.table_header_row > div {
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+div.table_row > div {
+  flex: 1;
+  text-align: left;
+}
+
+span.table_arrow_wrap {
+  min-width: 3rem;
+  max-width: 3rem;
+  text-align: center;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}
+
+span.table_arrow {
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+div.table_pagination_wrap {
+  font-size: 1.1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+div.table_expandable_content {
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+input.current_page_input:focus {
+  border-color: rgb(var(--color-secondary));
+}
+
+div.current_page_wrap > span {
+  display: inline-block;
+  cursor: pointer;
+}
+
+div.current_page_wrap > span:first-child {
+  margin-right: 0.75rem;
+}
+
+div.current_page_wrap > span:last-child {
+  margin-left: 0.75rem;
+}
+
+input.current_page_input {
+  background: none;
+  margin: 0 0.5rem;
+  outline: none;
+  border: 1px solid rgb(var(--color-primary));
+  border-radius: 3px;
+  width: 50px;
+  text-align: center;
+  padding: 0.25rem 0;
+}
+
+div.empty_table_wrap {
+  height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
