@@ -117,7 +117,7 @@ export const CoreSeasonPage = ({
 
   const nextGamePhase = () => {
     if (
-      seasonState?.gamePhase.name === GamePhases.GAME_OVER &&
+      seasonState?.gamePhase?.name === GamePhases.GAME_OVER &&
       studentGamesUpdated.current
     ) {
       nextGame(true);

@@ -25,7 +25,6 @@ export const updateSeasonAwards = (
     thirdCup,
     savingsCup,
   };
-  console.log('firstCup:::: ', firstCup, thirdCup, savingsCup);
   return clonedAwards;
 };
 

@@ -15,6 +15,8 @@ export const postNextSeason = async (
       student._id,
       {
         level: +student.level + 1,
+        rollOverBudget: 0,
+        savingsBudget: 0,
         objectives: {},
         pagesVisited: [],
       },

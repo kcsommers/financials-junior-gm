@@ -31,13 +31,13 @@ export const GameButton = ({
       onClick={onClick}
       className={classNames({
         'pointer-events-none':
-          gamePhase.name !== GamePhases.READY &&
-          gamePhase.name !== GamePhases.GAME_ON &&
+          gamePhase?.name !== GamePhases.READY &&
+          gamePhase?.name !== GamePhases.GAME_ON &&
           !scenarioActive(student),
         disabled: !seasonPageUnlocked(student) && !scenarioActive(student),
       })}
     >
-      {gamePhase.name === GamePhases.READY && !scenarioActive(student) ? (
+      {gamePhase?.name === GamePhases.READY && !scenarioActive(student) ? (
         <PlayButton />
       ) : (
         <ActiveGameButton gamePhase={gamePhase} student={student} />
