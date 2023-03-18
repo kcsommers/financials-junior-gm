@@ -1,5 +1,7 @@
 import classnames from 'classnames';
 import { PropsWithChildren } from 'react';
+import { useAsyncState } from '../../utils/context/async-state.context';
+import { LoadingSpinner } from '../LoadingSpinner';
 import ConfirmIcon from '../svg/check-circle-solid.svg';
 import CancelIcon from '../svg/circle-xmark-solid.svg';
 
@@ -19,12 +21,14 @@ export const ConfirmScreen = ({
   cancel,
   confirm,
 }: ConfirmScreenProps) => {
+  const { isLoading } = useAsyncState();
+
   return (
     <div
       className={classnames(
         'w-full h-full flex items-center max-w-[928px]',
         'justify-center flex-col text-center p-12',
-        { disabled: isDisabled }
+        { 'pointer-events-none': isDisabled }
       )}
     >
       {children && <div className="w-full flex-1 mb-8">{children}</div>}
@@ -40,14 +44,20 @@ export const ConfirmScreen = ({
             <p>Cancel</p>
             <button className="mt-1" onClick={cancel}>
               {/** @ts-ignore */}
-              <CancelIcon width={150} className="fill-red-600" />
+              <CancelIcon width={150} className="fill-red-700" />
             </button>
           </div>
           <div>
             <p>Confirm</p>
             <button className="mt-1" onClick={confirm}>
-              {/** @ts-ignore */}
-              <ConfirmIcon width={150} className="fill-primary" />
+              {isLoading ? (
+                <span className="w-[150px] h-[150px] rounded-full bg-primary flex items-center justify-center">
+                  <LoadingSpinner color="secondary" />
+                </span>
+              ) : (
+                // @ts-ignore
+                <ConfirmIcon width={155} className="fill-primary" />
+              )}
             </button>
           </div>
         </div>
