@@ -212,6 +212,7 @@ export const CoreTeamPage = ({
           getTeamLogo={getTeamLogo}
           validateProPlayer={validateProPlayer}
           onPlayerSigned={onMarketAction}
+          close={() => setSelectedAssignment(null)}
         />
       </Modal>
 
@@ -228,6 +229,7 @@ export const CoreTeamPage = ({
             apiBaseUrl={apiBaseUrl}
             getTeamLogo={getTeamLogo}
             validateProPlayer={validateProPlayer}
+            close={() => setSelectedPlayer(null)}
           />
         ) : (
           <ReleasePlayerBoard

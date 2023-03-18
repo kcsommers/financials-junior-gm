@@ -1,8 +1,10 @@
 import { ReactElement, useState } from 'react';
+import { logger } from '../../utils/logger';
 import { Player } from '../../game/teams/players';
 import { StudentTeam } from '../../game/teams/student-team.type';
 import { releasePlayer } from '../../game/teams/utils/release-player';
 import { Student } from '../../student/student.interface';
+import { useAsyncState } from '../../utils/context/async-state.context';
 import { Button } from '../Button';
 import { PlayerCard } from '../PlayerCard';
 import { ConfirmReleasePlayer } from './ConfirmReleasePlayer';
@@ -29,14 +31,21 @@ export const ReleasePlayerBoard = ({
 }: ReleasePlayerBoardProps) => {
   const [showConfirm, setShowConfirm] = useState(false);
   const [playerReleased, setPlayerReleased] = useState(false);
+  const { setIsLoading, setErrorMessage } = useAsyncState();
 
   const releasePlayerConfirmed = async () => {
+    setIsLoading(true);
     try {
       const releasePlayerRes = await releasePlayer(student, player, apiBaseUrl);
       onPlayerReleased(releasePlayerRes.updatedStudent);
       setPlayerReleased(true);
+      setIsLoading(false);
     } catch (error: any) {
-      // @TODO error handle
+      logger.error('ReleasePlayerBoard.releasePlayerConfirmed:::: ', error);
+      setIsLoading(false);
+      setErrorMessage(
+        'There was an unexpected error releasing player. Please try again.'
+      );
     }
   };
 

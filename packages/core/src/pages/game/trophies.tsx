@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import { useRouter } from 'next/router';
 import { useEffect, useMemo, useState } from 'react';
 import { useAuth } from '../../auth/context/auth-context';
+import { logger } from '../../utils/logger';
 import { Footer } from '../../components/Footer';
 import { Header } from '../../components/Header';
 import { LoadingSpinner } from '../../components/LoadingSpinner';
@@ -14,6 +15,7 @@ import { postRepeatSeason } from '../../game/season/repeat-season';
 import { Award, getSeasonAwards } from '../../game/season/season-awards';
 import { updateVideoCache } from '../../game/update-video-cache';
 import { Student } from '../../student/student.interface';
+import { useAsyncState } from '../../utils/context/async-state.context';
 import { GamePageProps } from './game-page-props';
 
 export const CoreTrophiesPage = ({
@@ -30,6 +32,7 @@ export const CoreTrophiesPage = ({
     seasonState?.seasonComplete
   );
   const [selectedAward, setSelectedAward] = useState<Award>();
+  const { setIsLoading, setShowAppSpinner, setErrorMessage } = useAsyncState();
 
   const router = useRouter();
 
@@ -45,24 +48,35 @@ export const CoreTrophiesPage = ({
   }, [student]);
 
   const repeatSeason = async () => {
+    setIsLoading(true);
+    setShowAppSpinner(true);
     try {
-      const resetSeasonRes = await postRepeatSeason(student, apiBaseUrl);
-      setAuthorizedUser(resetSeasonRes.updatedStudent);
+      const repeatSeasonRes = await postRepeatSeason(student, apiBaseUrl);
+      setAuthorizedUser(repeatSeasonRes.updatedStudent);
       dispatch({
         type: 'INIT_SEASON',
         payload: {
-          student: resetSeasonRes.updatedStudent,
+          student: repeatSeasonRes.updatedStudent,
           studentTeams: studentTeams,
           opposingTeams: opposingTeams,
         },
       });
+      setIsLoading(false);
+      setShowAppSpinner(false);
       router.push('/game/home');
     } catch (error: any) {
-      // @TODO error handle
+      logger.error('CoreThrophiesPage.repeatSeason:::: ', error);
+      setIsLoading(false);
+      setShowAppSpinner(false);
+      setErrorMessage(
+        'There was an unexpected error repeating season. Please try again.'
+      );
     }
   };
 
   const acceptPromotion = async () => {
+    setIsLoading(true);
+    setShowAppSpinner(true);
     try {
       const prevLevel = +student.level;
       const nextSeasonRes =
@@ -84,12 +98,19 @@ export const CoreTrophiesPage = ({
         promotionVideos,
         videoCache
       );
+      setIsLoading(false);
+      setShowAppSpinner(false);
       router.push({
         pathname: '/game/home',
         query: { promotion: prevLevel },
       });
     } catch (error: any) {
-      // @TODO error handle
+      logger.error('CoreThrophiesPage.acceptPromotion:::: ', error);
+      setIsLoading(false);
+      setShowAppSpinner(false);
+      setErrorMessage(
+        'There was an unexpected error accepting promotion. Please try again.'
+      );
     }
   };
 

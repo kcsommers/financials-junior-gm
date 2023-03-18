@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { ReactElement, useMemo } from 'react';
+import { ReactElement, useMemo, useState } from 'react';
 import { getStudentBudget } from '../../game/budget/get-student-budget';
 import { scenarioActive } from '../../game/season/scenario-active';
 import { Player, PlayerAssignment } from '../../game/teams/players';
@@ -22,6 +22,7 @@ type MarketPlayersBoardProps = {
   onSignPlayer: (player: Player) => void;
   validateProPlayer: (player: Player) => boolean;
   getTeamLogo: (props?: { [key: string]: any }) => ReactElement;
+  close: () => void;
 };
 
 export const MarketPlayersBoard = ({
@@ -32,6 +33,7 @@ export const MarketPlayersBoard = ({
   onSignPlayer,
   validateProPlayer,
   getTeamLogo,
+  close,
 }: MarketPlayersBoardProps) => {
   const position = getAssignmentPosition(slotAssignment);
   const displayedPlayers = useMemo<Player[]>(() => {
@@ -52,6 +54,8 @@ export const MarketPlayersBoard = ({
     []
   );
 
+  const [showInsufficientFunds, setShowInsufficientFunds] = useState(false);
+
   const checkBudget = (signingPlayer: Player) => {
     const budget = getStudentBudget(student);
     if (releasingPlayer) {
@@ -60,12 +64,29 @@ export const MarketPlayersBoard = ({
     const insufficientFunds =
       budget.spendingBudget - +signingPlayer.playerCost < 0;
     if (insufficientFunds) {
-      // @TODO insufficient funds modal
+      setShowInsufficientFunds(true);
       return;
     }
 
     onSignPlayer(signingPlayer);
   };
+
+  if (showInsufficientFunds) {
+    return (
+      <div className="flex flex-col items-center justify-center h-full px-8">
+        <h4 className="text-primary text-4xl text-center">
+          You don't have enough money in your budget for this player!
+        </h4>
+        <p className="text-primary text-2xl my-8">
+          You'll have to find a way to increase your budget.
+        </p>
+        <div className="flex items-center justify-around mt-8 w-full">
+          <Button text="Back to Team" onClick={close} />
+          <Button text="Go to Budget" href="/game/budget" />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <>

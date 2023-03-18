@@ -1,8 +1,10 @@
 import { ReactElement, useState } from 'react';
+import { logger } from '../../utils/logger';
 import { Player } from '../../game/teams/players';
 import { StudentTeam } from '../../game/teams/student-team.type';
 import { tradePlayer } from '../../game/teams/utils/trade-players';
 import { Student } from '../../student/student.interface';
+import { useAsyncState } from '../../utils/context/async-state.context';
 import { Button } from '../Button';
 import { MarketPlayersBoard } from '../MarketPlayersBoard';
 import { PlayerCard } from '../PlayerCard';
@@ -17,6 +19,7 @@ type TradePlayerBoardProps = {
   validateProPlayer: (player: Player) => boolean;
   getTeamLogo: (props: any) => ReactElement;
   releasingPlayer: Player;
+  close: () => void;
 };
 
 export const TradePlayerBoard = ({
@@ -27,12 +30,15 @@ export const TradePlayerBoard = ({
   getTeamLogo,
   validateProPlayer,
   releasingPlayer,
+  close,
 }: TradePlayerBoardProps) => {
   const [tradeSuccess, setTradeSuccess] = useState(false);
   const [showMarket, setShowMarket] = useState(false);
   const [signingPlayer, setSigningPlayer] = useState<Player>();
+  const { setIsLoading, setErrorMessage } = useAsyncState();
 
   const tradePlayerConfirmed = async () => {
+    setIsLoading(true);
     try {
       const tradePlayerRes = await tradePlayer(
         student,
@@ -42,8 +48,13 @@ export const TradePlayerBoard = ({
       );
       onPlayersTraded(tradePlayerRes.updatedStudent);
       setTradeSuccess(true);
+      setIsLoading(false);
     } catch (error: any) {
-      // @TODO error handle
+      logger.error('TradePlayerBoard.tradePlayerConfirmed:::: ', error);
+      setIsLoading(false);
+      setErrorMessage(
+        'There was an unexpected error trading players. Please try again.'
+      );
     }
   };
 
@@ -86,6 +97,7 @@ export const TradePlayerBoard = ({
           onSignPlayer={setSigningPlayer}
           getTeamLogo={getTeamLogo}
           validateProPlayer={validateProPlayer}
+          close={close}
         />
       </div>
     );

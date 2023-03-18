@@ -1,4 +1,4 @@
-import { logger } from '../auth/utils/logger';
+import { logger } from '../utils/logger';
 import { Student } from './student.interface';
 import { updateStudent, UpdateStudentResponse } from './update-student';
 
