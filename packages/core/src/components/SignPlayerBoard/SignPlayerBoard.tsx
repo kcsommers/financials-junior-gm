@@ -24,6 +24,7 @@ type SignPlayerBoardProps = {
   setTutorialSlideEventListener?: (
     listener: (slideEvent: TeamTutorialSlideEvent) => void
   ) => void;
+  close: () => void;
 };
 
 export const SignPlayerBoard = ({
@@ -36,6 +37,7 @@ export const SignPlayerBoard = ({
   getTeamLogo,
   onPlayerSigned,
   setTutorialSlideEventListener,
+  close,
 }: SignPlayerBoardProps) => {
   const [signingPlayer, setSigningPlayer] = useState<Player>();
   const [playerDetailsPlayer, setPlayerDetailsPlayer] = useState<Player>();
@@ -155,6 +157,7 @@ export const SignPlayerBoard = ({
         onSignPlayer={setSigningPlayer}
         validateProPlayer={validateProPlayer}
         getTeamLogo={getTeamLogo}
+        close={close}
       />
     </div>
   );

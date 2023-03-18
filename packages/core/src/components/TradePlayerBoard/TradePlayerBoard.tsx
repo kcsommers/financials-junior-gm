@@ -19,6 +19,7 @@ type TradePlayerBoardProps = {
   validateProPlayer: (player: Player) => boolean;
   getTeamLogo: (props: any) => ReactElement;
   releasingPlayer: Player;
+  close: () => void;
 };
 
 export const TradePlayerBoard = ({
@@ -29,6 +30,7 @@ export const TradePlayerBoard = ({
   getTeamLogo,
   validateProPlayer,
   releasingPlayer,
+  close,
 }: TradePlayerBoardProps) => {
   const [tradeSuccess, setTradeSuccess] = useState(false);
   const [showMarket, setShowMarket] = useState(false);
@@ -95,6 +97,7 @@ export const TradePlayerBoard = ({
           onSignPlayer={setSigningPlayer}
           getTeamLogo={getTeamLogo}
           validateProPlayer={validateProPlayer}
+          close={close}
         />
       </div>
     );
