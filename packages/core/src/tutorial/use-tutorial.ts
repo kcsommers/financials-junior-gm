@@ -1,6 +1,6 @@
 import { useCallback, useRef, useState } from 'react';
 import { useAuth } from '../auth/context/auth-context';
-import { logger } from '../auth/utils/logger';
+import { logger } from '../utils/logger';
 import { Student } from '../student/student.interface';
 import { postTutorialCompleted } from './post-tutorial-completed';
 import { TutorialName } from './tutorial-name';

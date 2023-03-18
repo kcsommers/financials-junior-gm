@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { ApiHelper } from '../../api/api-helper';
 import { useAuth } from '../../auth/context/auth-context';
-import { logger } from '../../auth/utils/logger';
+import { logger } from '../../utils/logger';
 import { ConfirmScreen } from '../../components/ConfirmScreen';
 import { HelpButton } from '../../components/HelpButton';
 import { LevelStick } from '../../components/LevelStick';

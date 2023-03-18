@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { logger } from '../auth/utils/logger';
+import { logger } from '../utils/logger';
 import { Student } from './student.interface';
 
 export type UpdateStudentResponse = {

@@ -1,5 +1,5 @@
 import { cloneDeep } from 'lodash';
-import { logger } from '../../auth/utils/logger';
+import { logger } from '../../utils/logger';
 import { initPlayersByLevel } from '../teams/api/init-players-by-level';
 import { Student } from '../../student/student.interface';
 import {

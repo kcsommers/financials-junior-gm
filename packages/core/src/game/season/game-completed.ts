@@ -1,5 +1,5 @@
 import { cloneDeep } from 'lodash';
-import { logger } from '../../auth/utils/logger';
+import { logger } from '../../utils/logger';
 import { Student } from '../../student/student.interface';
 import {
   updateStudent,

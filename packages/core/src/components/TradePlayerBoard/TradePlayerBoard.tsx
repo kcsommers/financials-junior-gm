@@ -1,5 +1,5 @@
 import { ReactElement, useState } from 'react';
-import { logger } from '../../auth/utils/logger';
+import { logger } from '../../utils/logger';
 import { Player } from '../../game/teams/players';
 import { StudentTeam } from '../../game/teams/student-team.type';
 import { tradePlayer } from '../../game/teams/utils/trade-players';

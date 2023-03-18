@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import { useRouter } from 'next/router';
 import { useEffect, useMemo, useState } from 'react';
 import { useAuth } from '../../auth/context/auth-context';
-import { logger } from '../../auth/utils/logger';
+import { logger } from '../../utils/logger';
 import { Footer } from '../../components/Footer';
 import { Header } from '../../components/Header';
 import { LoadingSpinner } from '../../components/LoadingSpinner';

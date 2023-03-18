@@ -1,4 +1,4 @@
-import { logger } from '../../auth/utils/logger';
+import { logger } from '../../utils/logger';
 import { initPlayersByLevel } from '../../game/teams/api/init-players-by-level';
 import { Student } from '../../student/student.interface';
 import {

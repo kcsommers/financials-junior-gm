@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { ReactElement, useEffect, useMemo, useRef, useState } from 'react';
 import { ApiHelper } from '../../api/api-helper';
 import { useAuth } from '../../auth/context/auth-context';
-import { logger } from '../../auth/utils/logger';
+import { logger } from '../../utils/logger';
 import { Cheermeter } from '../../components/Cheermeter';
 import { useCheermeter } from '../../components/Cheermeter/use-cheermeter';
 import { Footer } from '../../components/Footer';

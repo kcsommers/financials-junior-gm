@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { ReactElement, useState } from 'react';
 import { useAuth } from '../../auth/context/auth-context';
 import { UserRoles } from '../../auth/users/user-roles';
-import { logger } from '../../auth/utils/logger';
+import { logger } from '../../utils/logger';
 import { LoginForm } from '../../components/LoginForm';
 import { ApiHelper } from '../../api/api-helper';
 

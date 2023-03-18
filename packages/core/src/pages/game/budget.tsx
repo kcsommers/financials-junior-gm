@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useAuth } from '../../auth/context/auth-context';
-import { logger } from '../../auth/utils/logger';
+import { logger } from '../../utils/logger';
 import { BudgetEquation } from '../../components/BudgetEquation';
 import { BudgetSlider } from '../../components/BudgetSlider';
 import { Footer } from '../../components/Footer';

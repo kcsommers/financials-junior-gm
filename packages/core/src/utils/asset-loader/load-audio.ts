@@ -1,4 +1,4 @@
-import { logger } from '../../auth/utils/logger';
+import { logger } from '../logger';
 
 export const loadAudio = (
   audioUrls: string[],

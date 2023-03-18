@@ -11,7 +11,7 @@ import {
   useState,
 } from 'react';
 import { useAuth } from '../auth/context/auth-context';
-import { logger } from '../auth/utils/logger';
+import { logger } from '../utils/logger';
 import { postStudentTimeSpent } from '../student/post-student-time-spent';
 import { Student } from '../student/student.interface';
 import { loadAudio } from '../utils/asset-loader/load-audio';

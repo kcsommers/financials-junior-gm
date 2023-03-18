@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import { ReactElement, useEffect, useState } from 'react';
-import { logger } from '../../auth/utils/logger';
+import { logger } from '../../utils/logger';
 import { Player, PlayerAssignment } from '../../game/teams/players';
 import { StudentTeam } from '../../game/teams/student-team.type';
 import { signPlayer } from '../../game/teams/utils/sign-player';

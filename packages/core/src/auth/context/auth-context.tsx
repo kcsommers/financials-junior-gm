@@ -13,7 +13,7 @@ import { ApiHelper } from '../../api/api-helper';
 import { UserRole } from '../../auth/users/user-roles';
 import { User } from '../../auth/users/user.interface';
 import { clearAuthStorage } from '../../auth/utils/clear-auth-storage';
-import { logger } from '../../auth/utils/logger';
+import { logger } from '../../utils/logger';
 import { StorageKeys } from '../../auth/utils/storage-keys.constants';
 
 type AuthProviderProps = PropsWithChildren<{

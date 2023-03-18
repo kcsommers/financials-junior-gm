@@ -1,4 +1,4 @@
-import { logger } from '../../auth/utils/logger';
+import { logger } from '../../utils/logger';
 import { useGame } from '../../game/game-context';
 import { OpposingTeam } from '../../game/teams/opposing-team.type';
 import { StudentTeam } from '../../game/teams/student-team.type';

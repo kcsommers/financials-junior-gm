@@ -2,7 +2,7 @@ import { postRepeatSeason } from '@statrookie/core/src/game/season/repeat-season
 import { useRouter } from 'next/router';
 import { PropsWithChildren, useEffect } from 'react';
 import { useAuth } from '../../auth/context/auth-context';
-import { logger } from '../../auth/utils/logger';
+import { logger } from '../../utils/logger';
 import { useGame } from '../../game/game-context';
 import { GamePage } from '../../game/game-page';
 import { postNextSeason } from '../../game/season/next-season';
