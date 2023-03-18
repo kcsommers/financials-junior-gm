@@ -15,6 +15,7 @@ import { logger } from '../auth/utils/logger';
 import { postStudentTimeSpent } from '../student/post-student-time-spent';
 import { Student } from '../student/student.interface';
 import { loadAudio } from '../utils/asset-loader/load-audio';
+import { useAsyncState } from '../utils/context/async-state.context';
 import { useUnload } from '../utils/hooks/use-unload';
 import {
   SeasonAction,
@@ -71,6 +72,7 @@ export const GameProvider = ({
     ],
     []
   );
+  const { setIsLoading, setShowAppSpinner, setErrorMessage } = useAsyncState();
 
   const startTime = useRef<number>();
   const updateTimeSpent = useCallback(
@@ -104,6 +106,8 @@ export const GameProvider = ({
       return;
     }
     (async () => {
+      setIsLoading(true);
+      setShowAppSpinner(true);
       try {
         let updatedStudent = student;
         if (!student.players?.length) {
@@ -127,8 +131,15 @@ export const GameProvider = ({
         if (!audioCache.size) {
           loadAudio(audioUrls, audioCache);
         }
+        setIsLoading(false);
+        setShowAppSpinner(false);
       } catch (error: any) {
-        // @TODO error handle
+        logger.error('GameProvider.useEffect:::: ', error);
+        setIsLoading(false);
+        setShowAppSpinner(false);
+        setErrorMessage(
+          'There was an unexpected error initializing the game. Please refresh the page and try again.'
+        );
       }
     })();
   }, [student, studentInitialized]);

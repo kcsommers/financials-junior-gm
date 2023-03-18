@@ -2,6 +2,7 @@ import { postRepeatSeason } from '@statrookie/core/src/game/season/repeat-season
 import { useRouter } from 'next/router';
 import { PropsWithChildren, useEffect } from 'react';
 import { useAuth } from '../../auth/context/auth-context';
+import { logger } from '../../auth/utils/logger';
 import { useGame } from '../../game/game-context';
 import { GamePage } from '../../game/game-page';
 import { postNextSeason } from '../../game/season/next-season';
@@ -10,6 +11,7 @@ import { StudentTeam } from '../../game/teams/student-team.type';
 import { updateVideoCache } from '../../game/update-video-cache';
 import { Student } from '../../student/student.interface';
 import { updateStudent } from '../../student/update-student';
+import { useAsyncState } from '../../utils/context/async-state.context';
 import { Modal } from '../Modal';
 import { NextSeasonModal } from '../NextSeasonModal';
 
@@ -31,10 +33,13 @@ export const GamePageWrap = ({
     useGame();
   const { authorizedUser, setAuthorizedUser } = useAuth();
   const student = authorizedUser as Student;
+  const { setIsLoading, setErrorMessage, setShowAppSpinner } = useAsyncState();
 
   const router = useRouter();
 
   const repeatSeason = async () => {
+    setIsLoading(true);
+    setShowAppSpinner(true);
     try {
       const resetSeasonRes = await postRepeatSeason(student, apiBaseUrl);
       setAuthorizedUser(resetSeasonRes.updatedStudent);
@@ -47,13 +52,22 @@ export const GamePageWrap = ({
         },
       });
       setShowNextSeasonModal(false);
+      setIsLoading(false);
+      setShowAppSpinner(false);
       router.push('/game/home');
     } catch (error: any) {
-      // @TODO error handle
+      logger.error('GamePageWrap.repeatSeason:::: ', error);
+      setIsLoading(false);
+      setShowAppSpinner(false);
+      setErrorMessage(
+        'There was an unexpected error repeating season. Please try again.'
+      );
     }
   };
 
   const acceptPromotion = async () => {
+    setIsLoading(true);
+    setShowAppSpinner(true);
     try {
       const prevLevel = +student.level;
       const nextSeasonRes =
@@ -76,12 +90,19 @@ export const GamePageWrap = ({
         promotionVideos,
         videoCache
       );
+      setIsLoading(false);
+      setShowAppSpinner(false);
       router.push({
         pathname: '/game/home',
         query: { promotion: prevLevel },
       });
     } catch (error: any) {
-      // @TODO error handle
+      logger.error('GamePageWrap.acceptPromotion:::: ', error);
+      setIsLoading(false);
+      setShowAppSpinner(false);
+      setErrorMessage(
+        'There was an unexpected error accepting promotion. Please try again.'
+      );
     }
   };
 
@@ -101,7 +122,7 @@ export const GamePageWrap = ({
           );
           setAuthorizedUser(updateStudentRes.updatedStudent);
         } catch (error: any) {
-          // @TODO error handle
+          logger.error('GamePageWrap.useEffect:::: ', error);
         }
       })();
     }

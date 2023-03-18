@@ -1,21 +1,21 @@
 import ComericaLogo from '@statrookie/core/src/components/svg/comerica-logo.svg';
 import { useState } from 'react';
 import { Student } from '../../student/student.interface';
+import { useAsyncState } from '../../utils/context/async-state.context';
 import { BudgetSlider } from '../BudgetSlider';
 import { Button } from '../Button';
 
 type RollOverBudgetModalProps = {
   student: Student;
-  apiBaseUrl: string;
   onUseRollOverBudget: (newTotalBudget: number) => void;
 };
 
 export const RollOverBudgetModal = ({
   student,
-  apiBaseUrl,
   onUseRollOverBudget,
 }: RollOverBudgetModalProps) => {
   const [rollOverToAdd, setRollOverToAdd] = useState(0);
+  const { isLoading } = useAsyncState();
 
   return (
     <div className="w-full h-full flex items-center flex-col py-8">
@@ -46,6 +46,7 @@ export const RollOverBudgetModal = ({
         <Button
           onClick={() => onUseRollOverBudget(+rollOverToAdd)}
           text="Add to Total Budget"
+          isLoading={isLoading}
         />
       </div>
     </div>

@@ -5,7 +5,9 @@ import { useRouter } from 'next/router';
 import { ReactElement, useEffect, useMemo, useRef, useState } from 'react';
 import { ApiHelper } from '../../api/api-helper';
 import { useAuth } from '../../auth/context/auth-context';
+import { logger } from '../../auth/utils/logger';
 import { Cheermeter } from '../../components/Cheermeter';
+import { useCheermeter } from '../../components/Cheermeter/use-cheermeter';
 import { Footer } from '../../components/Footer';
 import { GameButton } from '../../components/GameButton';
 import { Header } from '../../components/Header';
@@ -26,7 +28,6 @@ import { getInjuredPlayer } from '../../game/season/get-injured-player';
 import { scenarioActive } from '../../game/season/scenario-active';
 import { scenarioCompleted } from '../../game/season/scenario-completed';
 import { updateSeasonAwards } from '../../game/season/season-awards';
-import { useCheermeter } from '../../components/Cheermeter/use-cheermeter';
 import { Player, PlayerAssignments } from '../../game/teams/players';
 import { getMaxTeamRank } from '../../game/teams/utils/get-max-team-rank';
 import { startingLineupFull } from '../../game/teams/utils/starting-lineup-full';
@@ -35,6 +36,7 @@ import { updateStudent } from '../../student/update-student';
 import { SeasonTutorialComponents } from '../../tutorial/component-configs/season-tutorial-components';
 import { Tutorial } from '../../tutorial/Tutorial';
 import { useTutorial } from '../../tutorial/use-tutorial';
+import { useAsyncState } from '../../utils/context/async-state.context';
 import { useInterval } from '../../utils/hooks/use-interval';
 import { GamePageProps } from './game-page-props';
 
@@ -74,6 +76,7 @@ export const CoreSeasonPage = ({
   const [checkedRedirect, setCheckedRedirect] = useState(false);
   const router = useRouter();
   const cheerAudioRef = useRef<HTMLAudioElement>();
+  const { setIsLoading, setErrorMessage } = useAsyncState();
 
   useEffect(() => {
     const shouldRedirect =
@@ -88,6 +91,7 @@ export const CoreSeasonPage = ({
   }, []);
 
   const completeSeason = async () => {
+    setIsLoading(true);
     try {
       const updatedAwards = updateSeasonAwards(
         student,
@@ -109,9 +113,14 @@ export const CoreSeasonPage = ({
       );
       dispatch({ type: 'SEASON_COMPLETE' });
       setAuthorizedUser(updateStudentRes.updatedStudent);
+      setIsLoading(false);
       router.push('/game/trophies');
     } catch (error: any) {
-      // @TODO erro handle
+      logger.error('CoreSeasonPage.completeSeason:::: ', error);
+      setIsLoading(false);
+      setErrorMessage(
+        'There was an unexpected error completing the season. Please refresh the page.'
+      );
     }
   };
 
@@ -171,7 +180,7 @@ export const CoreSeasonPage = ({
         payload: { student, injuredPlayer },
       });
     } catch (error: any) {
-      // @TODO error handle
+      logger.error('CoreSeasonPage.throwScenario:::: ', error);
     }
   };
 
@@ -186,6 +195,7 @@ export const CoreSeasonPage = ({
   useEffect(() => {
     if (seasonState?.gamePhase?.name === GamePhases.GAME_OVER) {
       (async () => {
+        setIsLoading(true);
         try {
           const gameCompletedRes = await postGameCompleted(
             student,
@@ -195,8 +205,13 @@ export const CoreSeasonPage = ({
           const { updatedStudent } = gameCompletedRes;
           setAuthorizedUser(updatedStudent);
           studentGamesUpdated.current = true;
+          setIsLoading(false);
         } catch (error: any) {
-          // @TODO error handle
+          logger.error('CoreSeasonPage.useEffect:::: ', error);
+          setIsLoading(false);
+          setErrorMessage(
+            'There was an unexpected error saving game results. Please refresh the page.'
+          );
         }
       })();
     }
@@ -290,12 +305,18 @@ export const CoreSeasonPage = ({
   };
 
   const logout = async () => {
+    setIsLoading(true);
     try {
       await ApiHelper.logout(apiBaseUrl);
       logUserOut();
+      setIsLoading(false);
       router.push('/');
     } catch (error) {
-      // @TODO error handle
+      logger.error('CoreSeasonPage.logout:::: ', error);
+      setIsLoading(false);
+      setErrorMessage(
+        'There was an unexpected error logging out. Please try again.'
+      );
     }
   };
 

@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useAuth } from '../../auth/context/auth-context';
+import { logger } from '../../auth/utils/logger';
 import { BudgetEquation } from '../../components/BudgetEquation';
 import { BudgetSlider } from '../../components/BudgetSlider';
 import { Footer } from '../../components/Footer';
@@ -22,6 +23,7 @@ import { updateStudent } from '../../student/update-student';
 import { BudgetTutorialComponents } from '../../tutorial/component-configs/budget-tutorial-components';
 import { Tutorial } from '../../tutorial/Tutorial';
 import { useTutorial } from '../../tutorial/use-tutorial';
+import { useAsyncState } from '../../utils/context/async-state.context';
 import { getDollarString } from '../../utils/get-dollar-string';
 import { useDebounce } from '../../utils/hooks/use-debounce';
 import { GamePageProps } from './game-page-props';
@@ -50,6 +52,7 @@ export const CoreBudgetPage = ({
     tutorialActionListener,
     setTutorialActionListener,
   } = useTutorial<BudgetTutorialComponents, {}>('budget', apiBaseUrl);
+  const { setIsLoading, setErrorMessage } = useAsyncState();
 
   useEffect(() => {
     const shouldRedirect = !student?.tutorials?.home;
@@ -61,7 +64,6 @@ export const CoreBudgetPage = ({
   }, []);
 
   useEffect(() => {
-    // @TODO set tutorial budget
     if (activeTutorial) {
       setBudget({
         totalBudget: 15,
@@ -112,11 +114,12 @@ export const CoreBudgetPage = ({
   }, []);
 
   const onUseRollOverBudget = async (rollOverToAdd: number) => {
-    setShowRolloverBudgetModal(false);
     if (!rollOverToAdd) {
+      setShowRolloverBudgetModal(false);
       return;
     }
 
+    setIsLoading(true);
     const newTotalBudget = +student.totalBudget + rollOverToAdd;
     const newRollOverBudget = +student.rollOverBudget - rollOverToAdd;
 
@@ -131,8 +134,14 @@ export const CoreBudgetPage = ({
       );
       setAuthorizedUser(updateStudentRes.updatedStudent);
       setBudget(getStudentBudget(updateStudentRes.updatedStudent));
+      setIsLoading(false);
+      setShowRolloverBudgetModal(false);
     } catch (error) {
-      // @TODO error handle
+      logger.error('CoreBudgetPage.onUseRollOverBudget:::: ', error);
+      setIsLoading(false);
+      setErrorMessage(
+        'There was an unexpected error updating rollover budget. Please try again.'
+      );
     }
   };
 
@@ -245,7 +254,6 @@ export const CoreBudgetPage = ({
       >
         <RollOverBudgetModal
           student={student}
-          apiBaseUrl={apiBaseUrl}
           onUseRollOverBudget={onUseRollOverBudget}
         />
       </Modal>

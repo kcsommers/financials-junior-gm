@@ -12,13 +12,21 @@ type AsyncStateContext = {
   setIsLoading: Dispatch<SetStateAction<boolean>>;
   errorMessage: string;
   setErrorMessage: Dispatch<SetStateAction<string>>;
+  showAppSpinner: boolean;
+  setShowAppSpinner: Dispatch<SetStateAction<boolean>>;
 };
 
 const ASYNC_STATE_CONTEXT = createContext({} as AsyncStateContext);
 
 export const AsyncStateProvider = ({ children }) => {
+  // using this state affects the entire app. When isLoading is true, all user actions are disabled
   const [isLoading, setIsLoading] = useState(false);
+
+  // triggers an error modal in _app.js
   const [errorMessage, setErrorMessage] = useState('');
+
+  // overlays a loading spinner over entire app
+  const [showAppSpinner, setShowAppSpinner] = useState(false);
 
   const memoizedValue = useMemo(
     () => ({
@@ -26,8 +34,10 @@ export const AsyncStateProvider = ({ children }) => {
       setIsLoading,
       errorMessage,
       setErrorMessage,
+      showAppSpinner,
+      setShowAppSpinner,
     }),
-    [isLoading, errorMessage]
+    [isLoading, errorMessage, showAppSpinner]
   );
 
   return (

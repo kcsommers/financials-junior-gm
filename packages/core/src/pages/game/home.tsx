@@ -2,7 +2,9 @@ import classNames from 'classnames';
 import { AnimatePresence } from 'framer-motion';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import { ApiHelper } from '../../api/api-helper';
 import { useAuth } from '../../auth/context/auth-context';
+import { logger } from '../../auth/utils/logger';
 import { ConfirmScreen } from '../../components/ConfirmScreen';
 import { HelpButton } from '../../components/HelpButton';
 import { LevelStick } from '../../components/LevelStick';
@@ -29,11 +31,11 @@ import {
   seasonPageUnlocked,
   teamPageUnlocked,
 } from '../../game/utils/unlocked-pages';
-import { ApiHelper } from '../../api/api-helper';
 import { Student } from '../../student/student.interface';
 import { Tutorial } from '../../tutorial/Tutorial';
 import { TutorialSlide } from '../../tutorial/tutorial-slide';
 import { useTutorial } from '../../tutorial/use-tutorial';
+import { useAsyncState } from '../../utils/context/async-state.context';
 import { GamePageProps } from './game-page-props';
 
 type HomePageProps = GamePageProps & {
@@ -62,6 +64,7 @@ export const CoreHomePage = ({
   const { seasonState, dispatch } = useGame();
   const [showPromotionModal, setShowPromotionModal] = useState(false);
   const router = useRouter();
+  const { setIsLoading, setErrorMessage } = useAsyncState();
 
   const {
     activeTutorial,
@@ -95,6 +98,7 @@ export const CoreHomePage = ({
   }, [router]);
 
   const handleResetSeason = async () => {
+    setIsLoading(true);
     try {
       const repeatSeasonRes = await postRepeatSeason(student, apiBaseUrl);
       setAuthorizedUser(repeatSeasonRes.updatedStudent);
@@ -107,18 +111,29 @@ export const CoreHomePage = ({
         },
       });
       setShowResetSeasonModal(false);
+      setIsLoading(false);
     } catch (error) {
-      // @TODO error handle
+      logger.error('CoreHomePage.handleResetSeason:::: ', error);
+      setIsLoading(false);
+      setErrorMessage(
+        'There was an unexpected error resetting season. Please try again.'
+      );
     }
   };
 
   const logout = async () => {
+    setIsLoading(true);
     try {
       await ApiHelper.logout(apiBaseUrl);
       logUserOut();
+      setIsLoading(false);
       router.push('/');
     } catch (error) {
-      // @TODO error handle
+      logger.error('CoreHomePage.logout:::: ', error);
+      setIsLoading(false);
+      setErrorMessage(
+        'There was an unexpected error logging out. Please try again.'
+      );
     }
   };
 

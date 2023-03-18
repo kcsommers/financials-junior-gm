@@ -1,10 +1,12 @@
 import classNames from 'classnames';
 import { ReactElement, useEffect, useState } from 'react';
+import { logger } from '../../auth/utils/logger';
 import { Player, PlayerAssignment } from '../../game/teams/players';
 import { StudentTeam } from '../../game/teams/student-team.type';
 import { signPlayer } from '../../game/teams/utils/sign-player';
 import { Student } from '../../student/student.interface';
 import { TeamTutorialSlideEvent } from '../../tutorial/component-configs/team-tutorial-components';
+import { useAsyncState } from '../../utils/context/async-state.context';
 import { MarketPlayersBoard } from '../MarketPlayersBoard/MarketPlayersBoard';
 import { PlayerCard } from '../PlayerCard';
 import { ConfirmSignPlayer } from './ConfirmSignPlayer';
@@ -38,8 +40,10 @@ export const SignPlayerBoard = ({
   const [signingPlayer, setSigningPlayer] = useState<Player>();
   const [playerDetailsPlayer, setPlayerDetailsPlayer] = useState<Player>();
   const [playerSigned, setPlayerSigned] = useState(false);
+  const { setIsLoading, setErrorMessage } = useAsyncState();
 
   const signPlayerConfirmed = async () => {
+    setIsLoading(true);
     try {
       const signPlayerRes = await signPlayer(
         student,
@@ -52,8 +56,13 @@ export const SignPlayerBoard = ({
         signPlayerRes.updatedStudent,
         signPlayerRes.completedScenario
       );
+      setIsLoading(false);
     } catch (error: any) {
-      // @TODO error handle
+      logger.error('SignPlayerBoard.signPlayerConfirmed::::', error);
+      setIsLoading(false);
+      setErrorMessage(
+        'There was an unexpected error signing this player. Please try again.'
+      );
     }
   };
 

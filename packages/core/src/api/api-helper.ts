@@ -203,7 +203,6 @@ export namespace ApiHelper {
   };
 
   // get time spent
-  // @TODO
   export const getTimeSpent = (
     _baseUrl: string,
     teacherId?: number
