@@ -7,6 +7,7 @@ import {
   AsyncStateProvider,
   useAsyncState,
 } from '@statrookie/core/src/utils/context/async-state.context';
+import classNames from 'classnames';
 import { NextPage } from 'next';
 import { AppProps } from 'next/app';
 import { ReactElement, ReactNode, useState } from 'react';
@@ -33,7 +34,10 @@ const App = ({ Component, pageProps }: AppPropsWithLayout) => {
 
   return (
     <div
-      className="relative overflow-hidden bg-white m-auto shadow-mat"
+      className={classNames(
+        'relative overflow-hidden bg-white m-auto shadow-mat',
+        { 'pointer-events-none': isLoading }
+      )}
       style={{
         width: '1024px',
         height: '768px',
