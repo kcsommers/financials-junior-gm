@@ -1,0 +1,41 @@
+div.admin_page_header {
+  min-height: 125px;
+  max-height: 125px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1rem;
+}
+
+div.admin_page_body_container {
+  padding: 3rem;
+  background-color: rgba(238, 238, 238, 0.5);
+  flex: 1;
+  min-height: calc(100% - 125px);
+  overflow-y: auto;
+}
+
+div.admin_total_wrap {
+  background-color: #fff;
+  border-radius: 3px;
+  padding: 1rem 1rem 1rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+div.admin_total_wrap {
+  margin-bottom: 2rem;
+}
+
+div.admin_total_left {
+  display: flex;
+  align-items: center;
+}
+
+div.admin_loading_wrap {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
