@@ -7,5 +7,7 @@ export const SharksThemeColors: ThemeColors = {
   'secondary-2': [243, 144, 29],
   highlight: [255, 215, 130],
   foreground: [0, 47, 108],
-  danger: [220, 45, 45],
+  danger: [185, 28, 28],
+  light: [229, 229, 229],
+  dark: [18, 18, 16],
 };

@@ -53,8 +53,7 @@ export const CoreTeachersPage = ({ apiBaseUrl }: TeachersPageProps) => {
       </div>
       <div className={styles.admin_page_body_container}>
         <Link
-          className="justify-center inline-flex items-center mb-4 cursor-pointer text-sm"
-          style={{ color: '#F3901D' }}
+          className="justify-center inline-flex items-center mb-4 cursor-pointer text-sm text-secondary"
           href="/admin"
         >
           {/* @ts-ignore */}

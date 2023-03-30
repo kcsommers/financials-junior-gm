@@ -72,7 +72,7 @@ export const TeamBudgetState = ({
             label="Spending\nBudget"
           />
           {!!changes?.playerCost && (
-            <span className="absolute bottom-0 left-1/2 text-3xl text-red-600">
+            <span className="absolute bottom-0 left-1/2 text-3xl text-danger">
               -{changes.playerCost}
             </span>
           )}

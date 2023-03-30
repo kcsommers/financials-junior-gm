@@ -44,7 +44,7 @@ export const ConfirmScreen = ({
             <p>Cancel</p>
             <button className="mt-1" onClick={cancel}>
               {/** @ts-ignore */}
-              <CancelIcon width={150} className="fill-red-700" />
+              <CancelIcon width={150} className="fill-danger" />
             </button>
           </div>
           <div>

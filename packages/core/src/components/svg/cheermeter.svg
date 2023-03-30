@@ -4,10 +4,11 @@
       <g id="Group_625" data-name="Group 625" transform="translate(138.739 494)">
         <g id="XMLID_501_" transform="translate(0.994 15.184)">
           <path id="XMLID_502_" d="M90,40l54.957,108.654L199.914,40Z" transform="translate(-19.341 -35.322)"
-            fill="#ea7200" />
-          <path id="XMLID_503_" d="M125.616,148.654H0L70.659,40Z" transform="translate(0 -35.322)" fill="#00788a" />
+            class='fill-secondary' />
+          <path id="XMLID_503_" d="M125.616,148.654H0L70.659,40Z" transform="translate(0 -35.322)"
+            class='fill-primary' />
           <path id="XMLID_504_" d="M160,153.332H282.026L213.386,40Z" transform="translate(-34.384 -40)"
-            fill="#fe3400" />
+            class='fill-danger' />
         </g>
         <g id="Path_2099" data-name="Path 2099" transform="translate(1.896 2)" fill="none">
           <path
@@ -26,17 +27,17 @@
     </text>
     <g id="Labels" transform="translate(-96.485 -503.269)">
       <text id="LOUD_" data-name="LOUD
-" transform="matrix(0.616, -0.788, 0.788, 0.616, 96.485, 629.351)" fill="#00788a" font-size="16"
+" transform="matrix(0.616, -0.788, 0.788, 0.616, 96.485, 629.351)" class='fill-primary' font-size="16"
         font-family="MADETOMMY-Bold, MADE TOMMY" font-weight="700">
         <tspan x="58.384" y="16">LOUD</tspan>
       </text>
       <text id="LOUDER_" data-name="LOUDER
-" transform="translate(164.08 514)" fill="#ea7200" font-size="16" font-family="MADETOMMY-Bold, MADE TOMMY"
+" transform="translate(164.08 514)" class='fill-secondary' font-size="16" font-family="MADETOMMY-Bold, MADE TOMMY"
         font-weight="700">
         <tspan x="48.872" y="16">LOUDER</tspan>
       </text>
       <text id="LOUDEST_" data-name="LOUDEST
-" transform="matrix(0.616, 0.788, -0.788, 0.616, 297.494, 509.135)" fill="#fe3400" font-size="16"
+" transform="matrix(0.616, 0.788, -0.788, 0.616, 297.494, 509.135)" class='fill-danger' font-size="16"
         font-family="MADETOMMY-Bold, MADE TOMMY" font-weight="700">
         <tspan x="44.824" y="16">LOUDEST</tspan>
       </text>

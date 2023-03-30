@@ -236,6 +236,7 @@ export const PlayerCard = ({
               <PlayerRankGraph
                 label="Saves"
                 rgb={[0, 47, 108]}
+                colorClass="foreground"
                 rank={+player.overallRank}
                 isSmall={size === 'md'}
                 max={getPlayerStatMax(+player.playerLevel)}
@@ -252,6 +253,7 @@ export const PlayerCard = ({
                 label="Offense"
                 rgb={[220, 45, 45]}
                 rank={+player.offensiveRank}
+                colorClass="danger"
                 isSmall={size === 'md'}
                 max={getPlayerStatMax(+player.playerLevel)}
               />
@@ -259,6 +261,7 @@ export const PlayerCard = ({
                 label="Passing"
                 rank={+player.passRank}
                 rgb={[0, 120, 138]}
+                colorClass="primary"
                 isSmall={size === 'md'}
                 max={getPlayerStatMax(+player.playerLevel)}
               />
@@ -266,6 +269,7 @@ export const PlayerCard = ({
                 label="Defense"
                 rank={+player.defensiveRank}
                 rgb={[0, 47, 108]}
+                colorClass="foreground"
                 isSmall={size === 'md'}
                 max={getPlayerStatMax(+player.playerLevel)}
               />

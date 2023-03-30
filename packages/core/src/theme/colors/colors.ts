@@ -5,7 +5,9 @@ export type ThemeColor =
   | 'secondary-2'
   | 'highlight'
   | 'foreground'
-  | 'danger';
+  | 'danger'
+  | 'light'
+  | 'dark';
 
 export const themeColors: ThemeColor[] = [
   'primary',
@@ -15,6 +17,8 @@ export const themeColors: ThemeColor[] = [
   'secondary-2',
   'foreground',
   'danger',
+  'light',
+  'dark',
 ];
 
 export const isThemeColor = (color: any): boolean => {

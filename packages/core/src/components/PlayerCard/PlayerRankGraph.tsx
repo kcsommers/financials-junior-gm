@@ -1,4 +1,7 @@
-const getGradientPct = (rank, circleIndex, max) => {
+import classNames from 'classnames';
+import { range } from 'lodash';
+
+const getGradientPct = (rank: number, circleIndex: number, max: number) => {
   const circleTotal = max / 5;
   const filledCircles = rank / circleTotal;
 
@@ -14,93 +17,53 @@ const getGradientPct = (rank, circleIndex, max) => {
   return 0;
 };
 
-const styles = (rgb, rank, index, isSmall, max) => {
-  const gradientPct = getGradientPct(rank, index, max);
-  return {
-    inner: {
-      width: '100%',
-      height: '100%',
-      borderRadius: '100%',
-      background: `linear-gradient(to right, rgba(${rgb.join(
-        ','
-      )}, 1) ${gradientPct}%, rgba(0, 0, 0, 0) ${gradientPct}%)`,
-    },
-    outer: {
-      backgroundColor: `rgba(${rgb.join(',')}, 0.3)`,
-      width: isSmall ? '20px' : '35px',
-      height: isSmall ? '20px' : '35px',
-      borderRadius: '100%',
-    },
-  };
+type PlayerRankGraphProps = {
+  label: string;
+  rgb: [number, number, number];
+  colorClass: string;
+  rank: number;
+  isSmall: boolean;
+  max: number;
 };
 
-export const PlayerRankGraph = ({ label, rgb, rank, isSmall, max }) => {
+export const PlayerRankGraph = ({
+  label,
+  rgb,
+  colorClass,
+  rank,
+  isSmall,
+  max,
+}: PlayerRankGraphProps) => {
   return (
-    <div className='graph-wrap'>
+    <div className="graph-wrap">
       <p
-        style={{
-          color: `rgb(${rgb})`,
-          fontSize: isSmall ? '0.75rem' : '0.8rem',
-          textAlign: 'left',
-          fontWeight: 'bold',
-        }}
+        className={classNames(
+          'text-left font-bold',
+          `text-${colorClass}`,
+          isSmall ? ' text-xs' : 'text-[0.8rem]'
+        )}
       >
         {label}
       </p>
-      <div
-        className='graph-circles-wrap'
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          padding: '0 0.5rem',
-        }}
-      >
-        <div
-          className='graph-circle-wrap'
-          style={styles(rgb, rank, 1, isSmall, max).outer}
-        >
+      <div className="graph-circles-wrap flex items-center justify-between px-2">
+        {range(5).map((i) => (
           <div
-            className='graph-circle'
-            style={styles(rgb, rank, 1, isSmall, max).inner}
-          ></div>
-        </div>
-        <div
-          className='graph-circle-wrap'
-          style={styles(rgb, rank, 2, isSmall, max).outer}
-        >
-          <div
-            className='graph-circle'
-            style={styles(rgb, rank, 2, isSmall, max).inner}
-          ></div>
-        </div>
-        <div
-          className='graph-circle-wrap'
-          style={styles(rgb, rank, 3, isSmall, max).outer}
-        >
-          <div
-            className='graph-circle'
-            style={styles(rgb, rank, 3, isSmall, max).inner}
-          ></div>
-        </div>
-        <div
-          className='graph-circle-wrap'
-          style={styles(rgb, rank, 4, isSmall, max).outer}
-        >
-          <div
-            className='graph-circle'
-            style={styles(rgb, rank, 4, isSmall, max).inner}
-          ></div>
-        </div>
-        <div
-          className='graph-circle-wrap'
-          style={styles(rgb, rank, 5, isSmall, max).outer}
-        >
-          <div
-            className='graph-circle'
-            style={styles(rgb, rank, 5, isSmall, max).inner}
-          ></div>
-        </div>
+            key={`rank-graph-${label}-${i}`}
+            className={classNames(
+              'graph-circle-wrap rounded-full overflow-hidden text-left',
+              `bg-opacity-30 bg-${colorClass}`,
+              isSmall ? 'w-[20px] h-[20px]' : 'w-[35px] h-[35px]'
+            )}
+          >
+            <span
+              className={classNames(
+                'inline-block w-full h-full',
+                `bg-${colorClass}`
+              )}
+              style={{ width: `${getGradientPct(rank, i + 1, max)}%` }}
+            ></span>
+          </div>
+        ))}
       </div>
     </div>
   );

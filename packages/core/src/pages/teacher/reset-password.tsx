@@ -86,7 +86,7 @@ export const CoreResetPasswordPage = ({
         <div className="flex flex-col items-center justify-center mt-8">
           <div className="icon-wrap">
             {/* @ts-ignore */}
-            <ExclamationIcon className="fill-red-700" width={50} />
+            <ExclamationIcon className="fill-danger" width={50} />
           </div>
           <p className="text-center text-lg my-2">{resetErrorMsg}</p>
           <div className="try-again-wrap">
@@ -147,7 +147,7 @@ export const CoreResetPasswordPage = ({
             />
           </div>
           {!!errorMsg && (
-            <p className="text-base text-red-700 text-center">*{errorMsg}</p>
+            <p className="text-base text-danger text-center">*{errorMsg}</p>
           )}
         </div>
 

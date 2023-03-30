@@ -45,7 +45,8 @@ module.exports = {
   },
   safelist: [
     {
-      pattern: /(.)-(foreground|highlight|primary|secondary|secondary-2)/,
+      pattern:
+        /(.+)-(foreground|highlight|primary|secondary|secondary-2|danger|light|dark)/,
     },
   ],
   plugins: [],

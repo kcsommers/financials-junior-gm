@@ -462,7 +462,7 @@ export const CoreScoutPage = ({
         onClose={() => setShowErrorModal(false)}
       >
         <div className="h-full flex flex-col items-center justify-center text-center p-20">
-          <p className="text-red-700 text-4xl mb-8">
+          <p className="text-danger text-4xl mb-8">
             Oops! Something went wrong. Please try again.
           </p>
           <Button

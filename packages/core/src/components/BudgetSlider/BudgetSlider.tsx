@@ -73,7 +73,7 @@ export const BudgetSlider = ({
       <div className={styles.top_indicators_container}>
         {budget.moneySpent > 0 && (
           <div className={styles.spent_indicator_wrap}>
-            <p className="text-primary">
+            <p className="text-danger font-bold">
               {getDollarString(budget.moneySpent, true)} <br /> Spent
             </p>
           </div>

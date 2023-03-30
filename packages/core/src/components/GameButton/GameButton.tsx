@@ -1,5 +1,4 @@
 import classNames from 'classnames';
-import { useGame } from '../../game/game-context';
 import { GamePhase, GamePhases } from '../../game/season/game-phases';
 import { scenarioActive } from '../../game/season/scenario-active';
 import { seasonPageUnlocked } from '../../game/utils/unlocked-pages';

@@ -8,14 +8,9 @@
     ]
   },
   "scripts": {
-    "build": "npx lerna run build",
-    "start": "npx lerna run start",
-    "dev:core": "npx lerna run dev --scope @statrookie/core",
-    "build:core": "npx lerna run build --scope @statrookie/core",
-    "start:core": "npx lerna run start --scope @statrookie/core",
-    "dev:sharks": "npx concurrently \"yarn run dev:core\" \"npx lerna run dev --scope @statrookie/sharks\"",
-    "build:sharks": "npx lerna run build --scope @statrookie/sharks --verbose",
-    "start:sharks": "npx lerna run start --scope @statrookie/sharks"
+    "dev": "./scripts/dev.sh",
+    "build": "./scripts/build.sh",
+    "start": "./scripts/start.sh"
   },
   "eslintConfig": {
     "extends": "react-app"

@@ -12,8 +12,8 @@
     --color-secondary-2: 243 144 29;
     --color-highlight: 255 215 130;
     --color-foreground: 0 47 108;
-    --color-danger: 220 45 45;
-    --color-dark: 18, 18, 16;
+    --color-danger: 185 28 28;
+    --color-dark: 18 18 16;
     --color-light: 229 229 229;
     --font-primary: made-tommy, sans-serif;
     --box-shadow-mat: 0 3px 6px rgba(0, 0, 0, 0.16),
@@ -96,7 +96,7 @@ button.btn-secondary-2 {
 a.btn-danger,
 div.btn-danger,
 button.btn-danger {
-  background-color: #dc3545;
+  background-color: rgb(var(--color-danger));
   color: #fff;
   box-shadow: var(--box-shadow-mat);
   padding: 1rem 1.5rem;

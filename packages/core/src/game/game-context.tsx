@@ -77,6 +77,9 @@ export const GameProvider = ({
   const startTime = useRef<number>();
   const updateTimeSpent = useCallback(
     async (unloadEvent?: BeforeUnloadEvent) => {
+      if (process.env.NODE_ENV === 'development') {
+        return;
+      }
       if (unloadEvent) {
         unloadEvent.preventDefault();
         unloadEvent.returnValue = false;

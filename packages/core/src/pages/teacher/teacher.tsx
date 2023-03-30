@@ -369,7 +369,7 @@ export const CoreTeacherDashboard = ({ apiBaseUrl }: TeacherDashboardProps) => {
                   Update
                 </span>
                 <span
-                  className="text-red-600 action-btn"
+                  className="text-danger action-btn"
                   role="button"
                   onClick={() => {
                     setIsDelete(true);

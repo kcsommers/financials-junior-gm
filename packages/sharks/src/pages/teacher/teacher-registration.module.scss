@@ -90,15 +90,15 @@ div.teacher_registration_page_form_wrap select {
 }
 
 div.teacher_registration_page_form_wrap select:focus {
-  border-color: rgb(var(--primary-color));
+  border-color: rgb(var(--color-primary));
 }
 
 div.teacher_registration_page_form_wrap select:focus {
-  border-color: rgb(var(--primary-color));
+  border-color: rgb(var(--color-primary));
 }
 
 div.teacher_registration_page_form_wrap p.error {
-  color: #dc2d2d;
+  color: rgb(var(--color-danger));
   font-size: 1rem;
   margin-bottom: 0.25rem;
 }

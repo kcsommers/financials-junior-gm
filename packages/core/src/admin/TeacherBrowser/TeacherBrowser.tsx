@@ -540,7 +540,7 @@ export const TeacherBrowser = ({
                   }}
                 >
                   {/** @ts-ignore */}
-                  <ChevronRight fill="#f3901d" />
+                  <ChevronRight className="fill-secondary" />
                 </span>
               </span>
               <div>{t.name || '--'}</div>
