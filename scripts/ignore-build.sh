@@ -5,6 +5,8 @@ exit_status=$?
 if [ $exit_status -eq 1 ]
 then
   echo "Should build"
+  exit 1
 else
   echo "No build necessary"
+  exit 0
 fi
