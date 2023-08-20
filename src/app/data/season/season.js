@@ -14,15 +14,14 @@ import jrSharksLogo from '@images/icons/jr-sharks-logo-lg.svg';
 import sjbarracudalogo from '@images/icons/sjbarracuda-logo.svg';
 import sjsharkslogo from '@images/icons/sjsharkslogo.svg';
 import condorsLogo from '@images/icons/team-logos/ahl/bakersfieldcondorsLG.png';
-import wolvesLogo from '@images/icons/team-logos/ahl/chicagowolvesLG.png';
 import eaglesLogo from '@images/icons/team-logos/ahl/coloradoeaglesLG.png';
 import silverKnightsLogo from '@images/icons/team-logos/ahl/hendersonsilverknightsLG.png';
 import iowaWildLogo from '@images/icons/team-logos/ahl/iowawildLG.png';
-import mooseLogo from '@images/icons/team-logos/ahl/manitobamooseLG.png';
+import wranglersLogo from '@images/icons/team-logos/ahl/CalgaryWranglers.png';
 import reignLogo from '@images/icons/team-logos/ahl/ontarioreignLG.png';
-import iceHogsLogo from '@images/icons/team-logos/ahl/rockfordicehogsLG.png';
+import cvFirebirdsLogo from '@images/icons/team-logos/ahl/CoachellaValleyFirebirds.png';
 import gullsLogo from '@images/icons/team-logos/ahl/sandiegogullsLG.png';
-import heatLogo from '@images/icons/team-logos/ahl/stocktonheatLG.png';
+import abbcanucksLogo from '@images/icons/team-logos/ahl/AbbotsforCanucks.png';
 import texasStarsLogo from '@images/icons/team-logos/ahl/texasstarsLG.png';
 import roadRunnersLogo from '@images/icons/team-logos/ahl/tucsonroadrunnersLG.png';
 import ducksLogo from '@images/icons/team-logos/nhl/anaheimducksLG.png';
@@ -287,6 +286,10 @@ export const levelTwoOpponents = [
     videos: {
       gameOn:
         'https://www.dropbox.com/s/hdi6y7joiccy5v9/blichy%20goal%202%20against%20bakersfield.mp4?raw=1',
+      gameOver: {
+        loss: 'https://sharks-assets.s3.us-west-2.amazonaws.com/videos/BKF_Save_1.mp4',
+        win: 'https://sharks-assets.s3.us-west-2.amazonaws.com/videos/BKF_Goal_1.mp4',
+      },
     },
   },
   {
@@ -299,18 +302,26 @@ export const levelTwoOpponents = [
     videos: {
       gameOn:
         'https://www.dropbox.com/s/5ikl0phcprh2aej/blichy%20goal%20against%20bakersfield.mp4?raw=1',
+      gameOver: {
+        loss: 'https://sharks-assets.s3.us-west-2.amazonaws.com/videos/SD_Save_1.mp4',
+        win: 'https://sharks-assets.s3.us-west-2.amazonaws.com/videos/SD_Goal_1.mp4',
+      },
     },
   },
   {
     teamRank: 275,
-    logo: heatLogo,
-    name: 'Stockton Heat',
+    logo: abbcanucksLogo,
+    name: 'Abbotsford Canucks',
     stats: { wins: 0, losses: 0, points: 0 },
     standings: '6th',
-    color: '#D01E2D',
+    color: '#00843D',
     videos: {
       gameOn:
         'https://www.dropbox.com/s/74lggon9oy4q00c/reedy%20goal%20against%20stockton.mp4?raw=1',
+      gameOver: {
+        loss: 'https://sharks-assets.s3.us-west-2.amazonaws.com/videos/ABB_Save_1.mp4',
+        win: 'https://sharks-assets.s3.us-west-2.amazonaws.com/videos/ABB_Goal_1.mp4',
+      },
     },
   },
   {
@@ -323,6 +334,10 @@ export const levelTwoOpponents = [
     videos: {
       gameOn:
         'https://www.dropbox.com/s/o3xjalf45ag66hs/Gregor%20goal%20against%20Colorado.mp4?raw=1',
+      gameOver: {
+        loss: 'https://sharks-assets.s3.us-west-2.amazonaws.com/videos/COL_Save_1.mp4',
+        win: 'https://sharks-assets.s3.us-west-2.amazonaws.com/videos/COL_Goal_1.mp4',
+      },
     },
   },
   {
@@ -335,6 +350,10 @@ export const levelTwoOpponents = [
     videos: {
       gameOn:
         'https://www.dropbox.com/s/hv5butczqfn5wtn/Leonard%20goal%20against%20Colorado.mp4?raw=1',
+      gameOver: {
+        loss: 'https://sharks-assets.s3.us-west-2.amazonaws.com/videos/ONT_Save_1.mp4',
+        win: 'https://sharks-assets.s3.us-west-2.amazonaws.com/videos/ONT_Goal_1.mp4',
+      },
     },
   },
   {
@@ -347,6 +366,10 @@ export const levelTwoOpponents = [
     videos: {
       gameOn:
         'https://www.dropbox.com/s/vjiggj8wnq7u2pe/Meloche%20goal%20against%20Colorado.mp4?raw=1',
+      gameOver: {
+        loss: 'https://sharks-assets.s3.us-west-2.amazonaws.com/videos/HSK_Save_1.mp4',
+        win: 'https://sharks-assets.s3.us-west-2.amazonaws.com/videos/HSK_Goal_1.mp4',
+      },
     },
   },
   {
@@ -359,6 +382,10 @@ export const levelTwoOpponents = [
     videos: {
       gameOn:
         'https://www.dropbox.com/s/o83k48zsln7gn7v/Merkley%20goal%20against%20Colorado.mp4?raw=1',
+      gameOver: {
+        loss: 'https://sharks-assets.s3.us-west-2.amazonaws.com/videos/TUC_Save_1.mp4',
+        win: 'https://sharks-assets.s3.us-west-2.amazonaws.com/videos/TUC_Goal_1.mp4',
+      },
     },
   },
   {
@@ -371,6 +398,10 @@ export const levelTwoOpponents = [
     videos: {
       gameOn:
         'https://www.dropbox.com/s/dt23j4yq2w82mql/Reedy%20goal%20against%20bakersfield.mp4?raw=1',
+      gameOver: {
+        loss: 'https://sharks-assets.s3.us-west-2.amazonaws.com/videos/TEX_Save_1.mp4',
+        win: 'https://sharks-assets.s3.us-west-2.amazonaws.com/videos/TEX_Goal_1.mp4',
+      },
     },
   },
   {
@@ -383,42 +414,58 @@ export const levelTwoOpponents = [
     videos: {
       gameOn:
         'https://www.dropbox.com/s/c7195lmj0a8wv94/save%20against%20bakersfield%201.mp4?raw=1',
+      gameOver: {
+        loss: 'https://sharks-assets.s3.us-west-2.amazonaws.com/videos/IA_Save_1.mp4',
+        win: 'https://sharks-assets.s3.us-west-2.amazonaws.com/videos/IA_Goal_1.mp4',
+      },
     },
   },
   {
     teamRank: 270,
-    logo: mooseLogo,
-    name: 'Manitoba Moose',
+    logo: wranglersLogo,
+    name: 'Calgary Wranglers',
     stats: { wins: 0, losses: 0, points: 0 },
     standings: '12th',
-    color: '#0E2749',
+    color: '#CE0F2D',
     videos: {
       gameOn:
         'https://www.dropbox.com/s/ij6kiv1l9mbgexd/save%20against%20stockton%202.mp4?raw=1',
+      gameOver: {
+        loss: 'https://sharks-assets.s3.us-west-2.amazonaws.com/videos/Calgary+Save.mp4',
+        win: 'https://sharks-assets.s3.us-west-2.amazonaws.com/videos/Calgary+Goal.mp4',
+      },
     },
   },
   {
     teamRank: 275,
-    logo: iceHogsLogo,
-    name: 'Rockford Icehogs',
+    logo: cvFirebirdsLogo,
+    name: 'Coachella Valley Firebirds',
     stats: { wins: 0, losses: 0, points: 0 },
     standings: '10th',
-    color: '#AA272E',
+    color: '#DD0024',
     videos: {
       gameOn:
         'https://www.dropbox.com/s/6jy409p6qwui9rw/save%20against%20stockton%203.mp4?raw=1',
+      gameOver: {
+        loss: 'https://sharks-assets.s3.us-west-2.amazonaws.com/videos/CV_Save_1.mp4',
+        win: 'https://sharks-assets.s3.us-west-2.amazonaws.com/videos/CV_Goal_1.mp4',
+      },
     },
   },
   {
     teamRank: 270,
-    logo: wolvesLogo,
-    name: 'Chicago Wolves',
+    logo: wranglersLogo,
+    name: 'Calgary Wranglers',
     stats: { wins: 0, losses: 0, points: 0 },
     standings: '6th',
-    color: '#929283',
+    color: '#CE0F2D',
     videos: {
       gameOn:
         'https://www.dropbox.com/s/4k95ctegfqtirrm/save%20against%20stockton%204.mp4?raw=1',
+      gameOver: {
+        loss: 'https://sharks-assets.s3.us-west-2.amazonaws.com/videos/CV_Save_1.mp4',
+        win: 'https://sharks-assets.s3.us-west-2.amazonaws.com/videos/CV_Goal_1.mp4',
+      },
     },
   },
 ];
