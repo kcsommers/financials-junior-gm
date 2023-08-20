@@ -481,8 +481,8 @@ export const levelThreeOpponents = [
     videos: {
       gameOn: `${BASE_URL}1oPh4X6k_bY5M8rYYFvklzvXwtkQEXmFp`,
       gameOver: {
-        loss: `${BASE_URL}16eGdmNdbxWXYh6PsZ_XEDC14wK-Ac87P`,
-        win: `${BASE_URL}18V-3NoSaKkBhfnXfDI_Az2lefB4Xh7C4`,
+        loss: 'https://sharks-assets.s3.us-west-2.amazonaws.com/videos/08_20_2023_level_3/ANA_SAVE.mp4',
+        win: 'https://sharks-assets.s3.us-west-2.amazonaws.com/videos/08_20_2023_level_3/ANA_GOAL.mp4',
       },
     },
   },
@@ -496,8 +496,8 @@ export const levelThreeOpponents = [
     videos: {
       gameOn: `${BASE_URL}1dd2pjPatwHz4mIwFetxeF56rKZ02Axt_`,
       gameOver: {
-        win: `${BASE_URL}1frVTBwuhDPEpRKd9gK2WF0xFMAWEdlDS`,
-        loss: `${BASE_URL}1nv6s08mnibCkMOGHQyG-zxZT-R5vFc_E`,
+        loss: 'https://sharks-assets.s3.us-west-2.amazonaws.com/videos/08_20_2023_level_3/ARI_SAVE.mp4',
+        win: 'https://sharks-assets.s3.us-west-2.amazonaws.com/videos/08_20_2023_level_3/ARI_GOAL.mp4',
       },
     },
   },
@@ -511,8 +511,8 @@ export const levelThreeOpponents = [
     videos: {
       gameOn: `${BASE_URL}1G_Ioyiet_9cbi5Rpds4hnNkhwyxp7-5y`,
       gameOver: {
-        loss: `${BASE_URL}1DdV-IXh_tbDz_JotqQuC7NveLoe2zfnt`,
-        win: `${BASE_URL}1iAU9azLhply4wFojyCguhMCdiDrqGw73`,
+        loss: 'https://sharks-assets.s3.us-west-2.amazonaws.com/videos/08_20_2023_level_3/CGY_SAVE.mp4',
+        win: 'https://sharks-assets.s3.us-west-2.amazonaws.com/videos/08_20_2023_level_3/CGY_GOAL.mp4',
       },
     },
   },
@@ -526,8 +526,8 @@ export const levelThreeOpponents = [
     videos: {
       gameOn: `${BASE_URL}1wPBJ2lZJo5K6Ywba7FoudL9Ey188BnBL`,
       gameOver: {
-        loss: `${BASE_URL}1C40cdlpPEahpTHnJt11AFgjPjKMoyvB4`,
-        win: `${BASE_URL}1tbmsIS19EVH9YAUGbF39nJjRcmVl_-Rr`,
+        loss: 'https://sharks-assets.s3.us-west-2.amazonaws.com/videos/08_20_2023_level_3/EDM_SAVE.mp4',
+        win: 'https://sharks-assets.s3.us-west-2.amazonaws.com/videos/08_20_2023_level_3/EDM_GOAL.mp4',
       },
     },
   },
@@ -541,8 +541,8 @@ export const levelThreeOpponents = [
     videos: {
       gameOn: `${BASE_URL}1oPh4X6k_bY5M8rYYFvklzvXwtkQEXmFp`,
       gameOver: {
-        loss: `${BASE_URL}154_Yjpz8zr93rJlnfAjuSwXgvAUyM3MX`,
-        win: `${BASE_URL}1SaKMEvxj7UTnQSXUMp4uCz9bYYt4LGM-`,
+        loss: 'https://sharks-assets.s3.us-west-2.amazonaws.com/videos/08_20_2023_level_3/LAK_SAVE.mp4',
+        win: 'https://sharks-assets.s3.us-west-2.amazonaws.com/videos/08_20_2023_level_3/LAK_GOAL.mp4',
       },
     },
   },
@@ -556,8 +556,8 @@ export const levelThreeOpponents = [
     videos: {
       gameOn: `${BASE_URL}1dd2pjPatwHz4mIwFetxeF56rKZ02Axt_`,
       gameOver: {
-        win: `${BASE_URL}16qHCeq_NyQ2hK94k9JyDL_Py4IyjaWw1`,
-        loss: `${BASE_URL}1F2mjDyzKbln95tQaevV1PlnLFEiRFIXf`,
+        loss: 'https://sharks-assets.s3.us-west-2.amazonaws.com/videos/08_20_2023_level_3/VAN_SAVE.mp4',
+        win: 'https://sharks-assets.s3.us-west-2.amazonaws.com/videos/08_20_2023_level_3/VAN_GOAL.mp4',
       },
     },
   },
@@ -571,8 +571,8 @@ export const levelThreeOpponents = [
     videos: {
       gameOn: `${BASE_URL}1G_Ioyiet_9cbi5Rpds4hnNkhwyxp7-5y`,
       gameOver: {
-        win: `${BASE_URL}1G8dOcYotW73_akjM16hxhQ0Q-4Gd8opO`,
-        loss: `${BASE_URL}1JcZz5ghEu117qPwtpQNax4QBOgNf8OQ0`,
+        loss: 'https://sharks-assets.s3.us-west-2.amazonaws.com/videos/08_20_2023_level_3/VGK_SAVE.mp4',
+        win: 'https://sharks-assets.s3.us-west-2.amazonaws.com/videos/08_20_2023_level_3/VGK_GOAL.mp4',
       },
     },
   },
@@ -586,8 +586,8 @@ export const levelThreeOpponents = [
     videos: {
       gameOn: `${BASE_URL}1wPBJ2lZJo5K6Ywba7FoudL9Ey188BnBL`,
       gameOver: {
-        win: `${BASE_URL}1ClF4BaO7oquZc5OFMN1Nxc0Ey--esNID`,
-        loss: `${BASE_URL}1hHfMzIaVIgJ6D1j-AVYqcLK0jZ_LqwZK`,
+        loss: 'https://sharks-assets.s3.us-west-2.amazonaws.com/videos/08_20_2023_level_3/DAL_SAVE.mp4',
+        win: 'https://sharks-assets.s3.us-west-2.amazonaws.com/videos/08_20_2023_level_3/DAL_GOAL.mp4',
       },
     },
   },
@@ -601,8 +601,8 @@ export const levelThreeOpponents = [
     videos: {
       gameOn: `${BASE_URL}1oPh4X6k_bY5M8rYYFvklzvXwtkQEXmFp`,
       gameOver: {
-        loss: `${BASE_URL}1-d1MtoO15oC1kEL71FdnVVpbWD4_tKjV`,
-        win: `${BASE_URL}16sLL01blwI6cTJF-HvDrqQB1Tb8Kgayy`,
+        loss: 'https://sharks-assets.s3.us-west-2.amazonaws.com/videos/08_20_2023_level_3/COL_SAVE.mp4',
+        win: 'https://sharks-assets.s3.us-west-2.amazonaws.com/videos/08_20_2023_level_3/COL_GOAL.mp4',
       },
     },
   },
@@ -616,8 +616,8 @@ export const levelThreeOpponents = [
     videos: {
       gameOn: `${BASE_URL}1dd2pjPatwHz4mIwFetxeF56rKZ02Axt_`,
       gameOver: {
-        loss: `${BASE_URL}1eSs9a-q_RG0lTwR3RLMLKsub6_NnoOSi`,
-        win: `${BASE_URL}1Fqf7zF2gTZrlb00DLZnMnuVuwYOQJicV`,
+        loss: 'https://sharks-assets.s3.us-west-2.amazonaws.com/videos/08_20_2023_level_3/WPG_SAVE.mp4',
+        win: 'https://sharks-assets.s3.us-west-2.amazonaws.com/videos/08_20_2023_level_3/WPG_GOAL.mp4',
       },
     },
   },
@@ -631,8 +631,8 @@ export const levelThreeOpponents = [
     videos: {
       gameOn: `${BASE_URL}1G_Ioyiet_9cbi5Rpds4hnNkhwyxp7-5y`,
       gameOver: {
-        win: `${BASE_URL}1RX7CmBJb-BL-H-B7BOcpdefAmBSBMIsF`,
-        loss: `${BASE_URL}1m2AcFM5tgA94jOKSC4WaMKv0yfd2GVsZ`,
+        loss: 'https://sharks-assets.s3.us-west-2.amazonaws.com/videos/08_20_2023_level_3/MIN_SAVE.mp4',
+        win: 'https://sharks-assets.s3.us-west-2.amazonaws.com/videos/08_20_2023_level_3/MIN_GOAL.mp4',
       },
     },
   },
@@ -646,8 +646,8 @@ export const levelThreeOpponents = [
     videos: {
       gameOn: `${BASE_URL}1wPBJ2lZJo5K6Ywba7FoudL9Ey188BnBL`,
       gameOver: {
-        win: `${BASE_URL}1b3XZU0gSup21cYiMzaw5SNQuXM_1IJPl`,
-        loss: `${BASE_URL}1t1CjEDwZGs4W9_kOcBMHT8fmf9_-7Kbi`,
+        loss: 'https://sharks-assets.s3.us-west-2.amazonaws.com/videos/08_20_2023_level_3/STL_SAVE.mp4',
+        win: 'https://sharks-assets.s3.us-west-2.amazonaws.com/videos/08_20_2023_level_3/STL_GOAL.mp4',
       },
     },
   },
