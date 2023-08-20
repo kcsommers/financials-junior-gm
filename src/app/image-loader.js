@@ -12,7 +12,7 @@ import jrSharksLogo from '@images/icons/jr-sharks-logo-lg.svg';
 import notepad from '@images/icons/notepaper-pen.svg';
 import sjbarracudalogo from '@images/icons/sjbarracuda-logo.svg';
 import sjsharkslogo from '@images/icons/sjsharkslogo.svg';
-import abbcanucksLogo from '@images/icons/team-logos/ahl/AbbotsforCanucks.png';
+import abbcanucksLogo from '@images/icons/team-logos/ahl/AbbotsfordCanucks.png';
 import wranglersLogo from '@images/icons/team-logos/ahl/CalgaryWranglers.png';
 import cvFirebirdsLogo from '@images/icons/team-logos/ahl/CoachellaValleyFirebirds.png';
 import condorsLogo from '@images/icons/team-logos/ahl/bakersfieldcondorsLG.png';
