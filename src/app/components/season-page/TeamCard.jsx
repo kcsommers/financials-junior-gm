@@ -15,7 +15,14 @@ export const TeamCard = ({ team, standing }) => {
       {team && (
         <>
           {team.logo ? (
-            <img src={team.logo} alt={team.name + ' logo'} />
+            <img
+              src={team.logo}
+              alt={team.name + ' logo'}
+              style={{
+                display: 'inline-block',
+                maxWidth: '100%',
+              }}
+            />
           ) : (
             <span
               style={{
